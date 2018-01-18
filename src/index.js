@@ -1,8 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { render } from 'react-dom';
+import ImageEditor from './ImageEditor';
 import registerServiceWorker from './registerServiceWorker';
+import 'cropperjs/dist/cropper.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+render(<ImageEditor />, document.getElementById('image-editor'));
+
 registerServiceWorker();

@@ -5,6 +5,7 @@
   "dependencies": {
     "radium": "^0.21.0",
     "react": "^16.2.0",
+    "react-cropper": "^1.0.1",
     "react-dom": "^16.2.0"
   },
   "devDependencies": {
