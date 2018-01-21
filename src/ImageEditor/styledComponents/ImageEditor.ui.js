@@ -8,6 +8,8 @@ const Wrapper = styled.div`
   z-index: 1050;
   width: 100%;
   height: 100%;
+  min-height: 400px;
+  scroll-y: auto;
 `;
 
 export { Wrapper };

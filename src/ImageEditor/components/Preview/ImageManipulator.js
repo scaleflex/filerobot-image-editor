@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 //const Caman = require('caman').Caman;
 //const { Image } = require('canvas');
+
+const Canvas = styled.canvas`
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+  max-height: 100%;
+`;
 
 export default class ImageManipulator extends Component {
   shouldComponentUpdate() {
@@ -8,11 +16,6 @@ export default class ImageManipulator extends Component {
   }
 
   componentDidMount() {
-    console.log(window.Caman)
-    //window.Caman('#scaleflex-image-edit-box', function () {
-    //  debugger;
-    //  this.brightness(5).render();
-    //});
     var canvas = document.getElementById('scaleflex-image-edit-box');
     var ctx = canvas.getContext('2d');
 
@@ -27,22 +30,19 @@ export default class ImageManipulator extends Component {
       ctx.drawImage(img, 0, 0, img.width, img.height);
     }
 
-    var $brightness = document.getElementById('brightnessbtn');
-
-    /* In built filters */
-    $brightness.addEventListener('click', function(e) {
-      window.Caman('#scaleflex-image-edit-box', function() {
-        this.brightness(30).render();
-      });
-    });
+    //var $brightness = document.getElementById('brightnessbtn');
+    //
+    ///* In built filters */
+    //$brightness.addEventListener('click', function(e) {
+    //  window.Caman('#scaleflex-image-edit-box', function() {
+    //    this.brightness(30).render();
+    //  });
+    //});
   }
 
   render() {
     return (
-      <div>
-        <canvas id="scaleflex-image-edit-box"/>
-        <button id="brightnessbtn">Brightness</button>
-      </div>
+      <Canvas id="scaleflex-image-edit-box"/>
     )
   }
 }
