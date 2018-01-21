@@ -1,5 +1,5 @@
 {
   "private": true,
   "name": "image-editor-react",
-  "main": "./image-editor-react.js"
+  "main": "./index.js"
 }

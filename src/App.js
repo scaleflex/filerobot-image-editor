@@ -1,34 +1,50 @@
 import React, { Component } from 'react';
-import ImageEditor from 'components/image-editor-react';
-import logo from './logo.svg';
-import styled from 'styled-components';
+import ImageEditor from './ImageEditor/components/ImageEditor';
+import styled, { injectGlobal, ThemeProvider } from 'styled-components';
+import { darkTheme, Modal } from './lib/styledComponents';
 
-const Header = styled.header`
+
+const Title = styled.h1`
   text-align: center;
-  background: blue;
+  margin: 0;
   padding: 20px;
+  background: lightblue;
+  color: white;
 `;
 
-const Image = styled.img`
-  width: 140px;
+const Wrapper = styled.div`
+  *, *:after, *:before, *::after, *::before {
+    box-sizing: border-box;
+  }
+  *:after, *:before, *::after, *::before {
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    box-sizing: border-box;
+  }
 `;
 
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Header>
-          <Image src={logo} alt="logo"/>
-          <h1 className="App-title">Welcome to React 1</h1>
-        </Header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <ImageEditor>Super great :)</ImageEditor>
-      </div>
+      <ThemeProvider theme={darkTheme}>
+        <Wrapper>
+          <Title>Example of Scaleflex Image Editor</Title>
+
+          <Modal fullScreen>
+            <ImageEditor/>
+          </Modal>
+        </Wrapper>
+      </ThemeProvider>
     );
   }
 }
 
 export default App;
+
+injectGlobal`
+  body {
+    margin: 0;
+  }
+`;
