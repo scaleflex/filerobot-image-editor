@@ -3,13 +3,9 @@
   <component name="ChangeListManager">
     <list id="417e25d5-29de-4b15-9957-a1bd2627ab30" name="working on modules" comment="" />
     <list default="true" id="e0736995-cb3d-4ee1-bb3c-b1e4f7aeaf85" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/hoc/Aux.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/hoc/index.js" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Preview/ImageManipulator.js" afterPath="$PROJECT_DIR$/src/ImageEditor/components/Preview/ImageManipulator.js" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/ImageEditor.ui.js" afterPath="$PROJECT_DIR$/src/ImageEditor/styledComponents/ImageEditor.ui.js" />
-      <change beforePath="$PROJECT_DIR$/src/lib/styledComponents/HOC/Aux.js" afterPath="$PROJECT_DIR$/public/hoc/Aux.js" />
-      <change beforePath="$PROJECT_DIR$/src/lib/styledComponents/HOC/index.js" afterPath="$PROJECT_DIR$/public/hoc/index.js" />
+      <change beforePath="$PROJECT_DIR$/public/hoc/Aux.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/public/hoc/index.js" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,6 +18,10 @@
     <ignored path=".idea/vcs.xml" />
     <ignored path=".idea/" />
     <ignored path="$PROJECT_DIR$/.idea/shelf/" />
+    <ignored path="dist/image-editor-react/image-editor-react.js" />
+    <ignored path="dist/index.js" />
+    <ignored path="dist/image-editor-react/package.json" />
+    <ignored path="pixman.tar.gz" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,21 +37,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="281">
               <caret line="18" column="23" lean-forward="false" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Aux.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/hoc/Aux.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="30" lean-forward="false" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -299,12 +289,6 @@
             <path>
               <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
               <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="hoc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -386,7 +370,7 @@
       <workItem from="1516474069066" duration="9512000" />
       <workItem from="1516515705281" duration="1904000" />
       <workItem from="1516519441080" duration="2229000" />
-      <workItem from="1516521903425" duration="5334000" />
+      <workItem from="1516521903425" duration="5423000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit using create-react-app">
       <created>1516271646855</created>
@@ -465,11 +449,18 @@
       <option name="project" value="LOCAL" />
       <updated>1516527188557</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="working on image editor">
+      <created>1516527657916</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1516527657916</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85951000" />
+    <option name="totallyTimeSpent" value="86040000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
