@@ -1,1 +1,1 @@
-export { default as Aux } from './Aux';
+export { Aux } from './Aux';
