@@ -15,11 +15,11 @@ const PreviewWrapper = styled.div`
   }
 `;
 
-const PreviewImg = styled.img`
+const Canvas = styled.canvas`
   display: inline-block;
   max-height: 100%;
   max-width: 100%;
   vertical-align: middle;
 `;
 
-export { PreviewWrapper, PreviewImg }
+export { PreviewWrapper, Canvas }

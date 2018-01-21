@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-//const Caman = require('caman').Caman;
-//const { Image } = require('canvas');
+import { PreviewImg, Canvas } from '../../styledComponents';
 
-const Canvas = styled.canvas`
-  display: inline-block;
-  vertical-align: middle;
-  max-width: 100%;
-  max-height: 100%;
-`;
 
 export default class ImageManipulator extends Component {
   shouldComponentUpdate() {
