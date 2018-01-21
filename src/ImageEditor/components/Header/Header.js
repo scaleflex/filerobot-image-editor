@@ -8,22 +8,24 @@ import { Toolbar } from '../';
 
 export default class extends Component{
   render() {
+    const { activeTab, onRevert, apply } = this.props;
+
     return (
       <HeaderWrapper>
         <HeaderTop>
-          <Title>Image Editor</Title>
+          <Title>{activeTab || 'Image Editor'}</Title>
           <CloseBtn/>
         </HeaderTop>
 
         <ToolbarWrapper>
           <LeftActions>
-            {/*<Button sm fullSize>Cancel</Button>*/}
+            <Button hide={!activeTab} onClick={onRevert} fullSize>Cancel</Button>
           </LeftActions>
 
-          <Toolbar/>
+          <Toolbar {...this.props}/>
 
           <RightActions>
-            <Button success sm fullSize>Save</Button>
+            <Button onClick={apply} success fullSize>{!activeTab ? 'Save' : 'Apply'}</Button>
           </RightActions>
         </ToolbarWrapper>
       </HeaderWrapper>

@@ -4,10 +4,13 @@ import { ToolWrapper, ToolIcon, ToolLabel } from '../../styledComponents/index';
 
 export default class extends Component {
   render() {
-    const { name } = this.props;
+    const { name, activeTab } = this.props;
 
     return (
-      <ToolWrapper>
+      <ToolWrapper
+        active={activeTab === name}
+        onClick={this.props.updateState.bind(this, { activeTab: name })}
+      >
         <ToolIcon name={name}/>
         <ToolLabel>{name}</ToolLabel>
       </ToolWrapper>

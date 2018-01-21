@@ -10,7 +10,7 @@ function getModalWidth(props) {
 function getIconStyles(props) {
   return `
     font-family: 'scaleflex-icon-font' !important;
-    color: ${props.theme.textColor};
+    color: ${props.muted ? props.theme.textMuted : props.theme.textColor};
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -23,7 +23,7 @@ function getIconStyles(props) {
     -moz-osx-font-smoothing: grayscale;
     
     :hover {
-      color: ${props.theme.textColorHover};
+      color: ${props.muted ? props.theme.textMuted : props.theme.textColorHover};
     }
   `;
 }

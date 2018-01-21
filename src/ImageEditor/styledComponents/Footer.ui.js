@@ -28,13 +28,13 @@ function getActionIconStyle(props) {
     display: inline-block;
     height: 34px;
     width: 34px;
-    cursor: pointer;
+    cursor: ${props.muted ? 'not-allowed' : 'pointer'};
     text-align: center;
     line-height: 34px;
     border-right: 1px solid ${props.theme.borderDarkColor};
     
     :hover {
-      background: ${props.theme.mainBackgroundColorActive};
+      background: ${props.muted ? 'inherit' : props.theme.mainBackgroundColorActive};
     }
   `;
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Button = styled.button`
   text-transform: ${props => props.tt || props.theme.button.tt || 'none'};
-  display: inline-block;
+  display: ${props => props.hide ? 'none': 'inline-block'};
   padding: ${props => getButtonPadding(props)};
   font-size: ${props => getbuttonFontSize(props)};
   min-width: ${props => props.fullSize ? '100%' : 'auto'};
@@ -274,14 +274,14 @@ function getButtonStyles(props) {
     }
   `;
   else return `
-    color: #292b2c;
-    background-color: #fff;
-    border-color: #ccc;
+    background: #34444c;
+    color: #fff;
+    border-color: #161f24;
     
     :hover {
-      color: #292b2c;
-      background-color: #e6e6e6;
-      border-color: #adadad;
+      color: #fff;
+      background-color: #394952;
+      border-color: #1c272d
     }
     
     :focus {
@@ -290,10 +290,10 @@ function getButtonStyles(props) {
     }
     
     :active {
-      color: #292b2c;
-      background-color: #e6e6e6;
+      color: #fff;
+      background-color: #435661;
       background-image: none;
-      border-color: #adadad;
+      border-color: #202d33
     }
     
     ${props.disabled ? `

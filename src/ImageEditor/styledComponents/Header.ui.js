@@ -30,7 +30,7 @@ const RightActions = styled.div`
 const ToolbarWrapper = styled.div`
   display: flex;
   align-items: center;
-  height: 70px;
+  height: 100px;
   background: ${props => props.theme.mainBackgroundColorHover}
 `;
 
