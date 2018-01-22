@@ -75,6 +75,13 @@ const ModalFullScreen = styled.div`
   background: ${props => props.theme.mainBackgroundColor};
   overflow: hidden;
   z-index: 1045;
+  display: block;
+  animation: scaleflexFadeInAnimation 350ms ease-in-out both;
+  
+  @keyframes scaleflexFadeInAnimation {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
 `;
 
 const Modal = (props) => {

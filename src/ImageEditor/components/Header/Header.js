@@ -6,15 +6,15 @@ import { CloseBtn, Button } from '../../../lib/styledComponents';
 import { Toolbar } from '../';
 
 
-export default class extends Component{
+export default class extends Component {
   render() {
-    const { activeTab, onRevert, apply } = this.props;
+    const { activeTab, onRevert, apply, onClose, onSave } = this.props;
 
     return (
       <HeaderWrapper>
         <HeaderTop>
           <Title>{activeTab || 'Image Editor'}</Title>
-          <CloseBtn/>
+          <CloseBtn onClick={onClose}/>
         </HeaderTop>
 
         <ToolbarWrapper>
@@ -25,7 +25,12 @@ export default class extends Component{
           <Toolbar {...this.props}/>
 
           <RightActions>
-            <Button onClick={apply} success fullSize>{!activeTab ? 'Save' : 'Apply'}</Button>
+            <Button
+              success fullSize
+              onClick={() => { !activeTab ? onSave() : apply() }}
+            >
+              {!activeTab ? 'Save' : 'Apply'}
+            </Button>
           </RightActions>
         </ToolbarWrapper>
       </HeaderWrapper>

@@ -18,6 +18,13 @@ export default class extends Component {
     this.setState({ activeTab: null });
   }
 
+  onSave = () => {
+    const { saveImage } = this.state;
+
+    this.setState({ isShowSpinner: true });
+    saveImage();
+  }
+
   apply = () => {
     const { activeTab, applyChanges } = this.state;
 
@@ -34,9 +41,14 @@ export default class extends Component {
 
   render() {
     const { isShowSpinner, activeTab, operations, currentOperation, isHideCanvas } = this.state;
-    const headerProps = { updateState: this.updateState, activeTab, onRevert: this.onRevert, apply: this.apply };
+    const { src, onClose, onUpdate } = this.props;
+    const headerProps = {
+      updateState: this.updateState, activeTab, onRevert: this.onRevert, apply: this.apply, src, onClose,
+      onSave: this.onSave
+    };
     const previewProps = {
-      updateState: this.updateState, activeTab, isShowSpinner, operations, currentOperation, isHideCanvas
+      updateState: this.updateState, activeTab, isShowSpinner, operations, currentOperation, isHideCanvas,
+      src, onClose, onUpdate
     };
     const footerProps = { operations, currentOperation, redoOperation: this.redoOperation };
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
+import { UPLOADER } from '../../config';
+import { b64toBlob } from '../../utils';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
 
@@ -24,10 +26,14 @@ export default class ImageManipulator extends Component {
   }
 
   componentDidMount() {
+    const src = this.state.src.split('?')[0];
+    const splittedSrc = src.split('/');
+    const imageName = splittedSrc[splittedSrc.length - 1];
     this.props.updateState({
       isShowSpinner: true,
       applyChanges: this.applyChanges,
-      applyOperations: this.applyOperations
+      applyOperations: this.applyOperations,
+      saveImage: this.saveImage
     });
     const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
@@ -35,15 +41,16 @@ export default class ImageManipulator extends Component {
     /* Enable Cross Origin Image Editing */
     const img = new Image();
     img.crossOrigin = '';
-    img.src = '//scaleflex.ultrafast.io/https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/koala.jpg';
+    img.src = src;
 
     img.onload = () => {
+      //TODO: ask Julian to get image type
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0, img.width, img.height);
 
       this.props.updateState({ isShowSpinner: false });
-      this.setState({ originalWidth: img.width, originalHeight: img.height, originalImage: img })
+      this.setState({ originalWidth: img.width, originalHeight: img.height, originalImage: img, imageName })
     }
 
     //var $brightness = document.getElementById('brightnessbtn');
@@ -55,6 +62,54 @@ export default class ImageManipulator extends Component {
     //    this.crop(100, 100, 0, 0);
     //  });
     //});
+  }
+
+  saveImage = () => {
+    const { imageName } = this.state;
+    const { onUpdate, onClose, updateState } = this.props;
+    const canvas = this.getCanvasNode();
+
+    window.Caman(canvas, function () {
+      this.render(function () {
+        const base64 = this.toBase64();
+        const block = base64.split(";");
+        const contentType = block[0].split(":")[1];
+        const realData = block[1].split(",")[1];
+        const blob = b64toBlob(realData, contentType, null);
+        const splittedName = imageName.replace(/-edited/g, '').split('.');
+        const nameLength = splittedName.length;
+        const name = `${splittedName.slice(0, nameLength - 1).join('.')}-edited.${splittedName[nameLength - 1]}`
+        const formData = new FormData();
+        const request = new XMLHttpRequest();
+        const baseUrl = `//${UPLOADER.CONTAINER_TOKEN}.api.airstore.io/v1/`;
+
+        request.addEventListener("load", (data) => {
+          const { srcElement = { } } = data;
+          const { response = '{}' } = srcElement;
+          const responseData = JSON.parse(response) || {};
+
+          if (responseData.status === 'success') {
+            const { file = {} } = responseData;
+
+            updateState({ isShowSpinner: false, isHideCanvas: false });
+            if (!file.url_public) return;
+
+            onUpdate(file.url_public);
+            onClose();
+          }
+          else {
+            updateState({ isShowSpinner: false, isHideCanvas: false });
+            alert(responseData);
+            onClose();
+          }
+        });
+
+        formData.append('files[]', blob, name);
+        request.open("POST", [baseUrl, `upload?dir=image-editor`].join(''));
+        request.setRequestHeader('X-Airstore-Secret-Key', UPLOADER.SECRET_KEY);
+        request.send(formData);
+      });
+    });
   }
 
   getCanvasNode = () => document.getElementById('scaleflex-image-edit-box');
@@ -93,7 +148,7 @@ export default class ImageManipulator extends Component {
   applyCanvasChanges = () => {}
 
   applyCrop = () => {
-    const { cropDetails, operations } = this.state;
+    const { cropDetails, currentOperation, operations } = this.state;
     const { width, height, x, y } = cropDetails;
     const canvas = this.getCanvasNode();
     let operation = {
@@ -102,7 +157,8 @@ export default class ImageManipulator extends Component {
         { name: 'render', arguments: [] }
       ]
     };
-    operations.push(operation);
+
+    this.pushOperation(operations, operation, currentOperation);
     this.destroyCrop();
 
     window.Caman(canvas, function () {
@@ -136,6 +192,16 @@ export default class ImageManipulator extends Component {
   applyOrientation = () => {}
 
   applyResize = () => {}
+
+  pushOperation = (operations, operation, currentOperation) => {
+    const operationIndex = operations.findIndex(operation => operation === currentOperation);
+    const operationsLength = operations.length;
+
+    if (operationsLength && (operationIndex !== operations[operationsLength]))
+      operations.splice(operationIndex + 1, operationsLength);
+
+    operations.push(operation);
+  }
 
   revert = () => {
     const { originalWidth, originalHeight, originalImage } = this.state;
