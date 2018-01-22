@@ -8,14 +8,14 @@ const SpinnerOverlay = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  position: absolute;
+  position: ${props => props.fullScreen ? 'fixed' : 'absolute' };
   background: #0b0b0b;
   opacity: ${props => props.overlay ? '0.4' : '0'};
   z-index: 1042;
 `;
 
 const SpinnerInner = styled.div`
-  position: absolute;
+  position: ${props => props.fullScreen ? 'fixed' : 'absolute' };
   top: 0;
   bottom: 0;
   right: 0;
@@ -26,6 +26,7 @@ const SpinnerInner = styled.div`
   height: 1em;
   border-radius: 50%;
   text-indent: -9999em;
+  z-index: 1042;
   -webkit-animation: scale-flex-loader 1.1s infinite ease;
   animation: scale-flex-loader 1.1s infinite ease;
   -webkit-transform: translateZ(0);
@@ -94,8 +95,8 @@ const Spinner = (props) => {
 
   return (
     <Aux>
-      <SpinnerOverlay overlay={props.overlay}/>
-      <SpinnerInner>Loading...</SpinnerInner>
+      <SpinnerOverlay fullScreen={props.fullScreen} overlay={props.overlay}/>
+      <SpinnerInner fullScreen={props.fullScreen}>Loading...</SpinnerInner>
     </Aux>
   )
 }
