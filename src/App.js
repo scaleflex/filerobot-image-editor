@@ -38,7 +38,6 @@ class App extends Component {
             <Button onClick={() => { this.setState({ showModal: true }); }}>Edit Image</Button>
           </div>
 
-
           {showModal &&
           <Modal fullScreen>
             <ImageEditor src={src} onUpdate={this.updateSource} onClose={this.closeModal}/>
