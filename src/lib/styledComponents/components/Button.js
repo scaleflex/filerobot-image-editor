@@ -245,6 +245,7 @@ function getButtonStyles(props) {
     font-weight: normal;
     color: #0275d8;
     border-radius: 0;
+    background-color: transparent;
     
     :hover {
       border-color: transparent;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ImageEditor from './ImageEditor/components/ImageEditor';
 import styled, { injectGlobal, ThemeProvider } from 'styled-components';
 import { darkTheme, Modal, Button, Spinner } from './lib/styledComponents';
+import { getGlobal } from './lib/styledComponents/styleUtils';
 import { generateUUID } from './ImageEditor/utils';
 
 class App extends Component {
@@ -103,7 +104,5 @@ const Img = styled.img`
 `;
 
 injectGlobal`
-  body {
-    margin: 0;
-  }
+  ${getGlobal()}
 `;

@@ -73,4 +73,6 @@ const EffectLabel = styled.div`
   line-height: 20px;
 `;
 
-export { Toolbar, ToolWrapper, ToolIcon, ToolLabel, EffectsWrapper, EffectWrapper, EffectIcon, EffectLabel };
+export {
+  Toolbar, ToolWrapper, ToolIcon, ToolLabel, EffectsWrapper, EffectWrapper, EffectIcon, EffectLabel
+};

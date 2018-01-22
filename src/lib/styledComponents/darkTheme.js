@@ -13,7 +13,7 @@ const darkTheme = {
   inputBackgroundColor: '#34444c',
 
   // text
-  textColor: '#f2f2f2',
+  textColor: '#e7f1f4',
   textColorHover: '#fff',
   textMuted: '#70777f',
 
@@ -21,6 +21,7 @@ const darkTheme = {
   borderColor: '#70777f',
   borderDarkColor: '#161e23',
 
+  fieldWidth: '120px',
   borderInputColor: '#3b4d54',
   borderInputColorHover: '#52686d',
   borderInputColorActive: '#52686d',
@@ -40,7 +41,7 @@ const darkTheme = {
   btnBorderRadius: '2px',
 
   button: {
-    tt: 'uppercase',
+    tt: 'none',
 
     sm: {
       p: '4px 10px',
