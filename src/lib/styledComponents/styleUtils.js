@@ -62,6 +62,9 @@ function getIconByName(name) {
     case 'ratio':
       char = '\\e90e';
       break;
+    case 'no-ratio':
+      char = '\\e90f';
+      break;
     default:
       return;
   }

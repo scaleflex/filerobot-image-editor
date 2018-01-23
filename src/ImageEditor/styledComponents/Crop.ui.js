@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Button } from '../../lib/styledComponents';
 import { getIconStyles, getIconByName } from '../../lib/styledComponents/styleUtils';
 
+
 const CropWrapper = styled.div`
   color: ${props => props.theme.textColor};
 `;
@@ -11,12 +12,12 @@ const CustomLabel = styled.div`
   color: ${props => props.theme.textColor};
   height: 100px;
   line-height: 100px;
-  padding: 0 20px;
+  padding: 0 20px 0 0;
 `;
 
 const FieldSet = styled.div`
   display: inline-block;
-  width: 150px;
+  width: 100px;
   text-align: center;
 `;
 
@@ -25,7 +26,9 @@ const FieldLabel = styled.label`
   margin-bottom: 5px;
 `;
 
-const FieldInput = styled.input`
+const FieldInput = styled.input.attrs({
+  type: props => props.type ? props.type : 'text'
+})`
   display: inline-block;
   width: ${props => props.fullSize ? '100%' : props.theme.fieldWidth};
   height: 30px;
@@ -33,7 +36,7 @@ const FieldInput = styled.input`
   font-size: 12px;
   line-height: 30px;
   color: rgb(242, 242, 242);
-  background: rgb(52, 68, 76);
+  background: ${props => props.dark ? props.theme.mainBackgroundColor : props.theme.inputBackgroundColor};
   border-radius: 3px;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px inset, rgba(82, 104, 109, 0.4) 0px 1px 0px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -54,6 +57,7 @@ const FieldInput = styled.input`
 
 const BlockRatioWrapper = styled.div`
   display: inline-block;
+  padding: 0 5px;
 `;
 
 const BlockRatioBtn = Button.extend`
@@ -71,12 +75,38 @@ const BlockRatioIcon = styled.span`
   font-size: ${props => props.fz || '28px'};
 
   ${props => getIconStyles(props)}
-  ${getIconByName('ratio')}
+  ${props => getIconByName(props.active ? 'ratio' : 'no-ratio')}
   
   color: ${props => props.theme.textMuted}
 `
 
+const CropBox = styled.div`
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  padding: 0 20px;
+  cursor: pointer;
+  background: ${props => props.active ? props.theme.mainBackgroundColorActive : 'transparent'}
+`;
+
+const CropBoxInner = styled.div`
+  padding: 15px 0;
+  height: 100px;
+  line-height: 100px;
+`;
+
+const CropShape = styled.div`
+  height: 50px;
+  border: 1px solid ${props => props.theme.textColor};
+  width: ${props => 50 * props.ratio}px;
+`;
+
+const CropLabel = styled.div`
+  height: 20px;
+  line-height: 20px;
+`;
 
 export {
-  CropWrapper, CustomLabel, FieldSet, FieldLabel, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon
+  CropWrapper, CustomLabel, FieldSet, FieldLabel, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon,
+  CropBox, CropBoxInner, CropShape, CropLabel
 };

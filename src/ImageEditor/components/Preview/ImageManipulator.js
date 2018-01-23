@@ -33,7 +33,8 @@ export default class ImageManipulator extends Component {
       isShowSpinner: true,
       applyChanges: this.applyChanges,
       applyOperations: this.applyOperations,
-      saveImage: this.saveImage
+      saveImage: this.saveImage,
+      updateCropDetails: this.updateCropDetails
     });
     const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
@@ -44,12 +45,11 @@ export default class ImageManipulator extends Component {
     img.src = src;
 
     img.onload = () => {
-      //TODO: ask Julian to get image type
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0, img.width, img.height);
 
-      this.props.updateState({ isShowSpinner: false });
+      this.props.updateState({ isShowSpinner: false, original: { height: img.height, width: img.width } });
       this.setState({ originalWidth: img.width, originalHeight: img.height, originalImage: img, imageName })
     }
 
@@ -131,8 +131,14 @@ export default class ImageManipulator extends Component {
       scalable: false,
       zoomable: false,
       movable: false,
-      crop: event => { this.setState({ cropDetails: event.detail }); }
+      crop: event => {
+        this.setState({ cropDetails: event.detail });
+        this.props.updateState({ cropDetails: event.detail });
+      }
     });
+
+    window.scaleflexPlugins = window.scaleflexPlugins || {};
+    window.scaleflexPlugins.cropperjs = this.cropper;
   }
 
   initResize = () => {}

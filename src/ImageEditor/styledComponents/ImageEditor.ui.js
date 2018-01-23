@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   height: 100%;
   min-height: 400px;
   scroll-y: auto;
+  font-size: 12px;
 `;
 
 export { Wrapper };

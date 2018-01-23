@@ -9,7 +9,9 @@ export default class extends Component {
     isHideCanvas: false,
     activeTab: null,
     operations: [],
-    currentOperation: null
+    currentOperation: null,
+    original: { width: 300, height: 200 },
+    cropDetails: { width: 300, height: 200 }
   }
 
   updateState = props => { this.setState(props); }
@@ -40,11 +42,13 @@ export default class extends Component {
   }
 
   render() {
-    const { isShowSpinner, activeTab, operations, currentOperation, isHideCanvas } = this.state;
+    const {
+      isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original
+    } = this.state;
     const { src, onClose, onUpdate } = this.props;
     const headerProps = {
       updateState: this.updateState, activeTab, onRevert: this.onRevert, apply: this.apply, src, onClose,
-      onSave: this.onSave
+      onSave: this.onSave, cropDetails, original
     };
     const previewProps = {
       updateState: this.updateState, activeTab, isShowSpinner, operations, currentOperation, isHideCanvas,
