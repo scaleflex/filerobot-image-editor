@@ -11,7 +11,8 @@ export default class extends Component {
     operations: [],
     currentOperation: null,
     original: { width: 300, height: 200 },
-    cropDetails: { width: 300, height: 200 }
+    cropDetails: { width: 300, height: 200 },
+    canvasDimensions: { width: 300, height: 200, ratio: 1.5 }
   }
 
   updateState = props => { this.setState(props); }
@@ -25,6 +26,12 @@ export default class extends Component {
 
     this.setState({ isShowSpinner: true });
     saveImage();
+  }
+
+  onResize = (params) => {
+    const { resize } = this.state;
+
+    resize(params);
   }
 
   apply = () => {
@@ -43,16 +50,34 @@ export default class extends Component {
 
   render() {
     const {
-      isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original
+      isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original,
+      canvasDimensions
     } = this.state;
     const { src, onClose, onUpdate } = this.props;
     const headerProps = {
-      updateState: this.updateState, activeTab, onRevert: this.onRevert, apply: this.apply, src, onClose,
-      onSave: this.onSave, cropDetails, original
+      cropDetails,
+      original,
+      activeTab,
+      src,
+      onClose,
+      updateState: this.updateState,
+      onRevert: this.onRevert,
+      apply: this.apply,
+      onSave: this.onSave,
+      onResize: this.onResize,
+      canvasDimensions
     };
     const previewProps = {
-      updateState: this.updateState, activeTab, isShowSpinner, operations, currentOperation, isHideCanvas,
-      src, onClose, onUpdate
+      activeTab,
+      isShowSpinner,
+      operations,
+      currentOperation,
+      isHideCanvas,
+      src,
+      onClose,
+      onUpdate,
+      canvasDimensions,
+      updateState: this.updateState
     };
     const footerProps = { operations, currentOperation, redoOperation: this.redoOperation };
 

@@ -5,6 +5,7 @@ import Tool from './Tool';
 import Effects from './Effects';
 import Filters from './Filters';
 import Crop from './Crop';
+import Resize from './Resize';
 
 
 export default class extends Component {
@@ -18,6 +19,7 @@ export default class extends Component {
         {activeTab === 'effects' && <Effects {...this.props}/>}
         {activeTab === 'filters' && <Filters {...this.props}/>}
         {activeTab === 'crop' && <Crop {...this.props}/>}
+        {activeTab === 'resize' && <Resize {...this.props}/>}
       </Toolbar>
     )
   }

@@ -34,7 +34,8 @@ export default class ImageManipulator extends Component {
       applyChanges: this.applyChanges,
       applyOperations: this.applyOperations,
       saveImage: this.saveImage,
-      updateCropDetails: this.updateCropDetails
+      updateCropDetails: this.updateCropDetails,
+      resize: this.resize
     });
     const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
@@ -49,7 +50,11 @@ export default class ImageManipulator extends Component {
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0, img.width, img.height);
 
-      this.props.updateState({ isShowSpinner: false, original: { height: img.height, width: img.width } });
+      this.props.updateState({
+        isShowSpinner: false,
+        original: { height: img.height, width: img.width },
+        canvasDimensions: { height: img.height, width: img.width, ratio: img.width / img.height }
+      });
       this.setState({ originalWidth: img.width, originalHeight: img.height, originalImage: img, imageName })
     }
 
@@ -166,14 +171,23 @@ export default class ImageManipulator extends Component {
 
     this.pushOperation(operations, operation, currentOperation);
     this.destroyCrop();
+    this.applyOperation(canvas, operation);
 
+    this.props.updateState({
+      isHideCanvas: false,
+      activeTab: null,
+      operations,
+      currentOperation: operation,
+      canvasDimensions: { width, height, ratio: width / height }
+    });
+  }
+
+  applyOperation = (canvas, operation) => {
     window.Caman(canvas, function () {
       const caman = this;
 
       operation.stack.forEach(handler => { caman[handler.name](...handler.arguments); });
     });
-
-    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
   }
 
   applyOperations = (operations = [], operationIndex) => {
@@ -197,8 +211,6 @@ export default class ImageManipulator extends Component {
 
   applyOrientation = () => {}
 
-  applyResize = () => {}
-
   pushOperation = (operations, operation, currentOperation) => {
     const operationIndex = operations.findIndex(operation => operation === currentOperation);
     const operationsLength = operations.length;
@@ -207,6 +219,23 @@ export default class ImageManipulator extends Component {
       operations.splice(operationIndex + 1, operationsLength);
 
     operations.push(operation);
+  }
+
+  applyResize = () => {
+    const { currentOperation, operations } = this.state;
+    const { canvasDimensions } = this.props;
+    const { width, height } = canvasDimensions;
+    const canvas = this.getCanvasNode();
+    let operation = {
+      stack: [
+        { name: 'resize', arguments: [{ width, height }] },
+        { name: 'render', arguments: [] }
+      ]
+    };
+
+    this.pushOperation(operations, operation, currentOperation);
+    this.applyOperation(canvas, operation);
+    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
   }
 
   revert = () => {
