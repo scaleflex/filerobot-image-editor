@@ -3,7 +3,6 @@ import { Canvas } from '../../styledComponents';
 import { UPLOADER } from '../../config';
 import { b64toBlob } from '../../utils';
 import Cropper from 'cropperjs';
-import 'cropperjs/dist/cropper.css';
 
 
 export default class ImageManipulator extends Component {
