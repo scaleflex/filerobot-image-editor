@@ -4,6 +4,11 @@ import { UPLOADER } from '../../config';
 import { b64toBlob } from '../../utils';
 import Cropper from 'cropperjs';
 
+/*<div style={{ display: 'inline-block', verticalAlign: 'top'}}>*/
+/*<button id={'brightnessbtn'} style={{ position: 'absolute', top: 10, right: 100 }}>Brrritness</button>*/
+/*<button style={{ position: 'absolute', top: 10, right: 10 }} onClick={() => { this.cropper.destroy(); this.forceUpdate() }}>Boom</button>*/
+/*<button id={'brightnessbtn'} style={{ position: 'absolute', top: 10, right: 100 }}>Brrritness</button>*/
+/*</div>*/
 
 export default class ImageManipulator extends Component {
   constructor(props) {
@@ -270,6 +275,8 @@ export default class ImageManipulator extends Component {
       case 'resize':
         this.applyResize();
         break;
+      default:
+        break;
     }
   }
 
@@ -313,12 +320,8 @@ export default class ImageManipulator extends Component {
         break;
       case 'orientation':
         break;
+      default:
+        break;
     }
   }
 }
-
-{/*<div style={{ display: 'inline-block', verticalAlign: 'top'}}>*/}
-{/*<button id={'brightnessbtn'} style={{ position: 'absolute', top: 10, right: 100 }}>Brrritness</button>*/}
-{/*<button style={{ position: 'absolute', top: 10, right: 10 }} onClick={() => { this.cropper.destroy(); this.forceUpdate() }}>Boom</button>*/}
-{/*<button id={'brightnessbtn'} style={{ position: 'absolute', top: 10, right: 100 }}>Brrritness</button>*/}
-{/*</div>*/}

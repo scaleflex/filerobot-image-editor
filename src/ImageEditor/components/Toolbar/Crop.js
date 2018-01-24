@@ -76,7 +76,7 @@ export default class extends Component {
             <FieldInput
               dark={activeRatio === 'custom'}
               fullSize
-              value={parseInt(cropDetails.width)}
+              value={parseInt(cropDetails.width, 10)}
               onChange={this.changeWidth}
             />
           </FieldSet>
@@ -90,7 +90,7 @@ export default class extends Component {
             <FieldInput
               dark={activeRatio === 'custom'}
               fullSize
-              value={parseInt(cropDetails.height)}
+              value={parseInt(cropDetails.height, 10)}
               onChange={this.changeHeight}
             />
           </FieldSet>

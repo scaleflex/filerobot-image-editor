@@ -17,7 +17,7 @@ export default class extends Component {
     let height = canvasDimensions.height;
 
     if (!isBlockRatio)
-      height = width && (width / canvasDimensions.ratio) || 1;
+      height = (width && (width / canvasDimensions.ratio)) || 1;
 
     this.props.updateState({ canvasDimensions: { ...canvasDimensions, width, height } });
   }
@@ -29,7 +29,7 @@ export default class extends Component {
     let width = canvasDimensions.width;
 
     if (!isBlockRatio)
-      width = height && (height * canvasDimensions.ratio) || 1;
+      width = (height && (height * canvasDimensions.ratio)) || 1;
 
     this.props.updateState({ canvasDimensions: { ...canvasDimensions, width, height } });
   }
@@ -49,7 +49,7 @@ export default class extends Component {
             <FieldLabel>width</FieldLabel>
             <FieldInput
               fullSize
-              value={parseInt(canvasDimensions.width) || ''}
+              value={parseInt(canvasDimensions.width, 10) || ''}
               onChange={this.changeWidth}
             />
           </FieldSet>
@@ -62,7 +62,7 @@ export default class extends Component {
             <FieldLabel>height</FieldLabel>
             <FieldInput
               fullSize
-              value={parseInt(canvasDimensions.height) || ''}
+              value={parseInt(canvasDimensions.height, 10) || ''}
               onChange={this.changeHeight}
             />
           </FieldSet>
