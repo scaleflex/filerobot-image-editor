@@ -18,8 +18,17 @@ export default class extends Component {
   updateState = props => { this.setState(props); }
 
   onRevert = () => {
+    const { cleanTemp, activeTab } = this.state;
+
+    if (activeTab === 'effects' || activeTab === 'filters') {
+      this.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
+      cleanTemp();
+      return;
+    }
+
     this.setState({ activeTab: null });
   }
+
 
   onSave = () => {
     const { saveImage } = this.state;

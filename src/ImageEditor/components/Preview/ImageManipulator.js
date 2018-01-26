@@ -17,6 +17,7 @@ export default class ImageManipulator extends Component {
     this.state = {
       ...props,
       queue: Array.from(Array(3).keys()),
+      tempOperation: null
     };
   }
 
@@ -43,7 +44,8 @@ export default class ImageManipulator extends Component {
       saveImage: this.saveImage,
       updateCropDetails: this.updateCropDetails,
       resize: this.resize,
-      addEffect: this.addEffect
+      addEffect: this.addEffect,
+      cleanTemp: this.cleanTemp
     });
     const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
@@ -125,6 +127,13 @@ export default class ImageManipulator extends Component {
     });
   }
 
+  cleanTemp = () => {
+    const { operations, currentOperation} = this.state;
+    this.revert();
+    this.applyOperations(operations, operations.findIndex(operation => operation === currentOperation));
+    this.setState({ tempOperation: null });
+  }
+
   addEffect = name => {
     const effectHandlerName = this.getEffectHandlerName(name);
     const { currentOperation, operations } = this.state;
@@ -136,12 +145,15 @@ export default class ImageManipulator extends Component {
       ]
     };
 
-    this.pushOperation(operations, operation, currentOperation);
+    this.setState({ tempOperation: operation });
+    this.revert();
+    this.applyOperations(operations, operations.findIndex(operation => operation === currentOperation));
+
     window.Caman(canvas, function () {
       this[effectHandlerName]();
       this.render();
 
-      that.props.updateState({ isHideCanvas: false, operations, currentOperation: operation });
+      that.props.updateState({ isHideCanvas: false });
     });
   }
 
