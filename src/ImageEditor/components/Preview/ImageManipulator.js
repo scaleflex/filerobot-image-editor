@@ -14,7 +14,10 @@ export default class ImageManipulator extends Component {
   constructor(props) {
     super();
 
-    this.state = { ...props };
+    this.state = {
+      ...props,
+      queue: Array.from(Array(3).keys()),
+    };
   }
 
   shouldComponentUpdate() { return false; }
@@ -39,7 +42,8 @@ export default class ImageManipulator extends Component {
       applyOperations: this.applyOperations,
       saveImage: this.saveImage,
       updateCropDetails: this.updateCropDetails,
-      resize: this.resize
+      resize: this.resize,
+      addEffect: this.addEffect
     });
     const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
@@ -59,7 +63,7 @@ export default class ImageManipulator extends Component {
         original: { height: img.height, width: img.width },
         canvasDimensions: { height: img.height, width: img.width, ratio: img.width / img.height }
       });
-      this.setState({ originalWidth: img.width, originalHeight: img.height, originalImage: img, imageName })
+      this.setState({ originalWidth: img.width, originalHeight: img.height, originalImage: img, imageName });
     }
 
     //var $brightness = document.getElementById('brightnessbtn');
@@ -87,7 +91,7 @@ export default class ImageManipulator extends Component {
         const blob = b64toBlob(realData, contentType, null);
         const splittedName = imageName.replace(/-edited/g, '').split('.');
         const nameLength = splittedName.length;
-        const name = `${splittedName.slice(0, nameLength - 1).join('.')}-edited.${splittedName[nameLength - 1]}`
+        const name = `${splittedName.slice(0, nameLength - 1).join('.')}-edited.${splittedName[nameLength - 1]}`;
         const formData = new FormData();
         const request = new XMLHttpRequest();
         const baseUrl = `//${UPLOADER.CONTAINER_TOKEN}.api.airstore.io/v1/`;
@@ -118,6 +122,26 @@ export default class ImageManipulator extends Component {
         request.setRequestHeader('X-Airstore-Secret-Key', UPLOADER.SECRET_KEY);
         request.send(formData);
       });
+    });
+  }
+
+  addEffect = name => {
+    const effectHandlerName = this.getEffectHandlerName(name);
+    const { currentOperation, operations } = this.state;
+    const canvas = this.getCanvasNode();
+    const that = this;
+    let operation = {
+      stack: [
+        { name: effectHandlerName, arguments: [], queue: 2 }
+      ]
+    };
+
+    this.pushOperation(operations, operation, currentOperation);
+    window.Caman(canvas, function () {
+      this[effectHandlerName]();
+      this.render();
+
+      that.props.updateState({ isHideCanvas: false, operations, currentOperation: operation });
     });
   }
 
@@ -166,51 +190,55 @@ export default class ImageManipulator extends Component {
     const { cropDetails, currentOperation, operations } = this.state;
     const { width, height, x, y } = cropDetails;
     const canvas = this.getCanvasNode();
+    const that = this;
     let operation = {
       stack: [
-        { name: 'crop', arguments: [width, height, x, y] },
-        { name: 'render', arguments: [] }
+        { name: 'crop', arguments: [width, height, x, y], queue: 0 }
       ]
     };
 
     this.pushOperation(operations, operation, currentOperation);
     this.destroyCrop();
-    this.applyOperation(canvas, operation);
 
-    this.props.updateState({
-      isHideCanvas: false,
-      activeTab: null,
-      operations,
-      currentOperation: operation,
-      canvasDimensions: { width, height, ratio: width / height }
-    });
-  }
-
-  applyOperation = (canvas, operation) => {
     window.Caman(canvas, function () {
-      const caman = this;
+      this.crop(width, height, x, y);
+      this.render();
 
-      operation.stack.forEach(handler => { caman[handler.name](...handler.arguments); });
+      that.props.updateState({
+        isHideCanvas: false,
+        activeTab: null,
+        operations,
+        currentOperation: operation,
+        canvasDimensions: { width, height, ratio: width / height }
+      });
     });
   }
 
   applyOperations = (operations = [], operationIndex) => {
+    const { queue } = this.state;
+    this.props.updateState({ isShowSpinner: true });
     this.revert();
     const canvas = this.getCanvasNode();
+    const that = this;
 
-    operations.forEach((operation, index) => {
-      window.Caman(canvas, function () {
-        if (operationIndex < index) return;
+    window.Caman(canvas, function () {
+      const caman = this;
 
-        const caman = this;
+      queue.forEach(queueIndex => {
+        operations.forEach((operation, index) => {
+          if (operationIndex < index || operationIndex === -1) return;
 
-        operation.stack.forEach(handler => { caman[handler.name](...handler.arguments); });
-      });
+          operation.stack.forEach(handler => {
+            if (handler.queue === queueIndex) caman[handler.name](...handler.arguments);
+          });
+        });
+
+        if (operationIndex > -1) this.render();
+      })
+
+      that.props.updateState({ currentOperation: operations[operationIndex] });
+      setTimeout(function() { that.props.updateState({ isHideCanvas: false, isShowSpinner: false }); });
     });
-
-    setTimeout(() => {
-      this.props.updateState({ isHideCanvas: false, currentOperation: operations[operationIndex] });
-    })
   }
 
   applyOrientation = () => {}
@@ -232,13 +260,15 @@ export default class ImageManipulator extends Component {
     const canvas = this.getCanvasNode();
     let operation = {
       stack: [
-        { name: 'resize', arguments: [{ width, height }] },
-        { name: 'render', arguments: [] }
+        { name: 'resize', arguments: [{ width, height }], queue: 0 }
       ]
     };
 
     this.pushOperation(operations, operation, currentOperation);
-    this.applyOperation(canvas, operation);
+    window.Caman(canvas, function () {
+      this.resize({ width, height });
+      this.render();
+    });
     this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
   }
 
@@ -322,6 +352,21 @@ export default class ImageManipulator extends Component {
         break;
       default:
         break;
+    }
+  }
+
+  getEffectHandlerName = name => {
+    switch (name) {
+      case 'glow_sun':
+        return 'glowingSun';
+      case 'sun_rise':
+        return 'sunrise';
+      case 'edge_enhance':
+        return 'edgeEnhance';
+      case 'hdr_effect':
+        return 'jarques';
+      default:
+        return null;
     }
   }
 }

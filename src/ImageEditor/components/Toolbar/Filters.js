@@ -6,9 +6,11 @@ import Filter from './Filter';
 
 export default class extends Component {
   render() {
+    const { onApplyEffects } = this.props;
+
     return (
       <EffectsWrapper>
-        {FILTERS.map(name => <Filter key={name} name={name}/>)}
+        {FILTERS.map(name => <Filter key={name} name={name} onApplyEffects={onApplyEffects}/>)}
       </EffectsWrapper>
     )
   }

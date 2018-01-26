@@ -34,6 +34,13 @@ export default class extends Component {
     resize(params);
   }
 
+  onApplyEffects = name => {
+    const { addEffect } = this.state;
+
+    this.setState({ isHideCanvas: true });
+    addEffect(name);
+  }
+
   apply = () => {
     const { activeTab, applyChanges } = this.state;
 
@@ -60,12 +67,13 @@ export default class extends Component {
       activeTab,
       src,
       onClose,
+      canvasDimensions,
       updateState: this.updateState,
       onRevert: this.onRevert,
       apply: this.apply,
       onSave: this.onSave,
       onResize: this.onResize,
-      canvasDimensions
+      onApplyEffects: this.onApplyEffects
     };
     const previewProps = {
       activeTab,
