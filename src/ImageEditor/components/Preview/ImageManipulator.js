@@ -17,7 +17,8 @@ export default class ImageManipulator extends Component {
     this.state = {
       ...props,
       queue: Array.from(Array(3).keys()),
-      tempOperation: null
+      tempOperation: null,
+      canvas: null
     };
   }
 
@@ -45,7 +46,8 @@ export default class ImageManipulator extends Component {
       updateCropDetails: this.updateCropDetails,
       resize: this.resize,
       addEffect: this.addEffect,
-      cleanTemp: this.cleanTemp
+      cleanTemp: this.cleanTemp,
+      revert: this.revert
     });
     const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
@@ -65,7 +67,10 @@ export default class ImageManipulator extends Component {
         original: { height: img.height, width: img.width },
         canvasDimensions: { height: img.height, width: img.width, ratio: img.width / img.height }
       });
-      this.setState({ originalWidth: img.width, originalHeight: img.height, originalImage: img, imageName });
+      this.setState({
+        originalWidth: img.width, originalHeight: img.height, originalImage: img, imageName,
+        originalCanvas: canvas
+      });
     }
 
     //var $brightness = document.getElementById('brightnessbtn');
@@ -129,15 +134,22 @@ export default class ImageManipulator extends Component {
 
   cleanTemp = () => {
     const { operations, currentOperation} = this.state;
-    this.revert();
-    this.applyOperations(operations, operations.findIndex(operation => operation === currentOperation));
-    this.setState({ tempOperation: null });
+
+    this.revert(() => {
+      this.applyOperations(
+        operations,
+        operations.findIndex(operation => operation === currentOperation),
+        () => {
+          this.setState({ tempOperation: null });
+          this.props.updateState({ isHideCanvas: false, isShowSpinner: false });
+        }
+      );
+    });
   }
 
   addEffect = name => {
     const effectHandlerName = this.getEffectHandlerName(name);
     const { currentOperation, operations } = this.state;
-    const canvas = this.getCanvasNode();
     const that = this;
     let operation = {
       stack: [
@@ -146,14 +158,23 @@ export default class ImageManipulator extends Component {
     };
 
     this.setState({ tempOperation: operation });
-    this.revert();
-    this.applyOperations(operations, operations.findIndex(operation => operation === currentOperation));
+    this.revert(() => {
+      this.applyOperations(
+        operations,
+        operations.findIndex(operation => operation === currentOperation),
+        () => {
+          const canvas = this.getCanvasNode();
 
-    window.Caman(canvas, function () {
-      this[effectHandlerName]();
-      this.render();
+          window.Caman(canvas, function () {
+            this[effectHandlerName]();
+            this.render();
 
-      that.props.updateState({ isHideCanvas: false });
+            setTimeout(() => {
+              that.props.updateState({ isHideCanvas: false, isShowSpinner: false });
+            }, 200)
+          });
+        }
+      );
     });
   }
 
@@ -226,10 +247,8 @@ export default class ImageManipulator extends Component {
     });
   }
 
-  applyOperations = (operations = [], operationIndex) => {
+  applyOperations = (operations = [], operationIndex, callback) => {
     const { queue } = this.state;
-    this.props.updateState({ isShowSpinner: true });
-    this.revert();
     const canvas = this.getCanvasNode();
     const that = this;
 
@@ -249,7 +268,7 @@ export default class ImageManipulator extends Component {
       })
 
       that.props.updateState({ currentOperation: operations[operationIndex] });
-      setTimeout(function() { that.props.updateState({ isHideCanvas: false, isShowSpinner: false }); });
+      setTimeout(() => { if (callback) callback(); })
     });
   }
 
@@ -284,19 +303,45 @@ export default class ImageManipulator extends Component {
     this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
   }
 
-  revert = () => {
-    const { originalWidth, originalHeight, originalImage } = this.state;
+  applyEffects = () => {
+    const { currentOperation, operations, tempOperation } = this.state;
+    this.pushOperation(operations, tempOperation, currentOperation);
+    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: tempOperation });
+  }
+
+  revert = (callback) => {
+    const oldcanv = document.getElementById('scaleflex-image-edit-box');
+    const container = oldcanv.parentElement;
+    container.removeChild(oldcanv)
+
+    const canv = document.createElement('canvas');
+    canv.id = 'scaleflex-image-edit-box';
+    container.appendChild(canv);
+
     const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
 
-    window.Caman(canvas, function () {
-      const caman = this;
+    /* Enable Cross Origin Image Editing */
+    const img = new Image();
+    img.crossOrigin = '';
+    img.src = this.state.src;
 
-      caman.revert(true);
-      canvas.width = originalWidth;
-      canvas.height = originalHeight;
-      ctx.drawImage(originalImage, 0, 0, originalWidth, originalHeight);
-    });
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+
+      this.props.updateState({
+        original: { height: img.height, width: img.width },
+        canvasDimensions: { height: img.height, width: img.width, ratio: img.width / img.height }
+      });
+      this.setState({
+        originalWidth: img.width, originalHeight: img.height, originalImage: img
+      });
+      if (callback) setTimeout(() => { callback() });
+    }
+
   }
 
   render() { return <Canvas id="scaleflex-image-edit-box"/>; }
@@ -305,6 +350,8 @@ export default class ImageManipulator extends Component {
     switch (activeTab) {
       case 'effects':
       case 'filters':
+        this.applyEffects();
+        break;
       case 'adjust':
         this.applyCanvasChanges();
         break;

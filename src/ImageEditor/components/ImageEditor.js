@@ -26,7 +26,7 @@ export default class extends Component {
       return;
     }
 
-    this.setState({ activeTab: null });
+    this.setState({ activeTab: null, isShowSpinner: false, isHideCanvas: false });
   }
 
 
@@ -46,7 +46,7 @@ export default class extends Component {
   onApplyEffects = name => {
     const { addEffect } = this.state;
 
-    this.setState({ isHideCanvas: true });
+    this.setState({ isHideCanvas: true, isShowSpinner: true });
     addEffect(name);
   }
 
@@ -58,10 +58,14 @@ export default class extends Component {
   }
 
   redoOperation = (operationIndex) => {
-    const { applyOperations, operations } = this.state;
+    const { applyOperations, operations, revert } = this.state;
 
-    this.setState({ activeTab: null, isHideCanvas: true });
-    applyOperations(operations, operationIndex);
+    this.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
+    revert(() => {
+      applyOperations(operations, operationIndex, () => {
+        setTimeout(() => { this.setState({ isHideCanvas: false, isShowSpinner: false }); }, 200);
+      });
+    });
   }
 
   render() {

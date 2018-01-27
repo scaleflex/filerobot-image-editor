@@ -41,9 +41,18 @@ const PreviewImgBox = styled.div`
   img {
     max-width: 100% !important; /* This rule is very important, please do not ignore this! */
   }
+  
+  #scaleflex-image-edit-box {
+    display: ${props => props.hide ? 'none' : 'inline-block'};
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+  }
 `;
 
-const Canvas = styled.canvas`
+const Canvas = styled.canvas.attrs({
+  id: 'scaleflex-image-edit-box'
+})`
   display: ${props => props.hide ? 'none' : 'inline-block'};
   max-height: 100%;
   max-width: 100%;

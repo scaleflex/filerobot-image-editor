@@ -10,7 +10,7 @@ export default class extends Component {
 
     return (
       <PreviewWrapper>
-        <PreviewImgBox hideCanvas={activeTab === 'crop' || isHideCanvas}>
+        <PreviewImgBox id="preview-img-box" hideCanvas={activeTab === 'crop' || isHideCanvas}>
           <ImageManipulator {...this.props}/>
         </PreviewImgBox>
         <Spinner overlay show={isShowSpinner}/>
