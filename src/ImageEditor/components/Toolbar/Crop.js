@@ -22,15 +22,23 @@ export default class extends Component {
   }
 
   changeWidth = (event) => {
-    const { cropDetails } = this.props;
+    const { cropDetails, original } = this.props;
+    const container = document.querySelector('#preview-img-box');
+    const rect = container.getBoundingClientRect();
+    const width = original.width === rect.width ?
+      +event.target.value : ((rect.width / original.width) * +event.target.value);
 
-    window.scaleflexPlugins.cropperjs.setCropBoxData({ ...cropDetails, width: +event.target.value });
+    window.scaleflexPlugins.cropperjs.setCropBoxData({ ...cropDetails, width  });
   }
 
   changeHeight = (event) => {
-    const { cropDetails } = this.props;
+    const { cropDetails, original } = this.props;
+    const container = document.querySelector('#preview-img-box');
+    const rect = container.getBoundingClientRect();
+    const height = original.height === rect.height ?
+      +event.target.value : ((rect.height / original.height) * +event.target.value);
 
-    window.scaleflexPlugins.cropperjs.setCropBoxData({ ...cropDetails, height: +event.target.value });
+    window.scaleflexPlugins.cropperjs.setCropBoxData({ ...cropDetails, height });
   }
 
   toggleRatio = (event) => {
