@@ -7,6 +7,7 @@ import Filters from './Filters';
 import Crop from './Crop';
 import Resize from './Resize';
 import Orientation from './Orientation';
+import Adjust from './Adjust';
 
 
 export default class extends Component {
@@ -21,6 +22,7 @@ export default class extends Component {
         {activeTab === 'crop' && <Crop {...this.props}/>}
         {activeTab === 'resize' && <Resize {...this.props}/>}
         {activeTab === 'orientation' && <Orientation {...this.props}/>}
+        {activeTab === 'adjust' && <Adjust {...this.props}/>}
       </Toolbar>
     )
   }

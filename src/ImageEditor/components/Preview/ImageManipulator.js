@@ -4,12 +4,6 @@ import { UPLOADER } from '../../config';
 import { b64toBlob } from '../../utils';
 import Cropper from 'cropperjs';
 
-/*<div style={{ display: 'inline-block', verticalAlign: 'top'}}>*/
-/*<button id={'brightnessbtn'} style={{ position: 'absolute', top: 10, right: 100 }}>Brrritness</button>*/
-/*<button style={{ position: 'absolute', top: 10, right: 10 }} onClick={() => { this.cropper.destroy(); this.forceUpdate() }}>Boom</button>*/
-/*<button id={'brightnessbtn'} style={{ position: 'absolute', top: 10, right: 100 }}>Brrritness</button>*/
-/*</div>*/
-
 export default class ImageManipulator extends Component {
   constructor(props) {
     super();
@@ -18,7 +12,13 @@ export default class ImageManipulator extends Component {
       ...props,
       queue: Array.from(Array(3).keys()),
       tempOperation: null,
-      canvas: null
+      canvas: null,
+      adjust: {
+        brightness: 0,
+        contrast: 0,
+        gamma: 1,
+        saturation: 0
+      }
     };
   }
 
@@ -48,7 +48,8 @@ export default class ImageManipulator extends Component {
       addEffect: this.addEffect,
       cleanTemp: this.cleanTemp,
       revert: this.revert,
-      rotate: this.rotate
+      rotate: this.rotate,
+      adjust: this.adjust
     });
     const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
@@ -73,16 +74,6 @@ export default class ImageManipulator extends Component {
         originalCanvas: canvas
       });
     }
-
-    //var $brightness = document.getElementById('brightnessbtn');
-    ////
-    /////* In built filters */
-    //$brightness.addEventListener('click', (e) => {
-    //  window.Caman(this.canvas, function() {
-    //    this.brightness(30).render();
-    //    this.crop(100, 100, 0, 0);
-    //  });
-    //});
   }
 
   saveImage = () => {
@@ -151,12 +142,42 @@ export default class ImageManipulator extends Component {
   rotate = (value, total) => {
     const canvas = this.getCanvasNode();
     const that = this;
-console.log(total);
+
     window.Caman(canvas, function () {
       this.rotate(value);
-      this.render();
+      this.render(() => {
+        that.setState({ rotate: total });
+      });
+    });
+  }
 
-      that.setState({ rotate: total });
+  adjust = (handler, value) => {
+    const { operations = [], currentOperation, adjust } = this.state;
+    const that = this;
+
+    Object.assign(adjust, { [handler]: value });
+
+    this.setState(adjust);
+
+    this.revert(() => {
+      this.applyOperations(
+        operations,
+        operations.findIndex(operation => operation === currentOperation),
+        () => {
+          const canvas = this.getCanvasNode();
+
+          window.Caman(canvas, function () {
+            this.brightness(adjust.brightness);
+            this.contrast(adjust.contrast);
+            this.gamma(adjust.gamma);
+            this.saturation(adjust.saturation);
+
+            this.render(() => {
+              that.props.updateState({ isHideCanvas: false, isShowSpinner: false });
+            });
+          });
+        }
+      );
     });
   }
 
@@ -193,11 +214,9 @@ console.log(total);
 
           window.Caman(canvas, function () {
             this[effectHandlerName]();
-            this.render();
-
-            setTimeout(() => {
+            this.render(() => {
               that.props.updateState({ isHideCanvas: false, isShowSpinner: false });
-            }, 200)
+            });
           });
         }
       );
@@ -261,14 +280,14 @@ console.log(total);
 
     window.Caman(canvas, function () {
       this.crop(width, height, x, y);
-      this.render();
-
-      that.props.updateState({
-        isHideCanvas: false,
-        activeTab: null,
-        operations,
-        currentOperation: operation,
-        canvasDimensions: { width, height, ratio: width / height }
+      this.render(() => {
+        that.props.updateState({
+          isHideCanvas: false,
+          activeTab: null,
+          operations,
+          currentOperation: operation,
+          canvasDimensions: { width, height, ratio: width / height }
+        });
       });
     });
   }
@@ -290,11 +309,32 @@ console.log(total);
           });
         });
 
-        if (operationIndex > -1) this.render();
+        if (operationIndex > -1) this.render(() => {
+          that.props.updateState({ currentOperation: operations[operationIndex] });
+          if (callback) callback();
+        });
       })
 
-      that.props.updateState({ currentOperation: operations[operationIndex] });
-      setTimeout(() => { if (callback) callback(); })
+      if (!(operationIndex > -1)) {
+        that.props.updateState({ currentOperation: operations[operationIndex] });
+        setTimeout(() => { if (callback) callback(); })
+      }
+    });
+  }
+
+  applyFilters = (operations = [], callback) => {
+    const canvas = this.getCanvasNode();
+
+    window.Caman(canvas, function () {
+      const caman = this;
+
+      operations.forEach((operation) => {
+        operation.stack.forEach(handler => {
+          if (handler.queue === 2) caman[handler.name](...handler.arguments);
+        });
+      });
+
+      this.render(() => { if (callback) callback(); });
     });
   }
 
@@ -313,6 +353,7 @@ console.log(total);
     const { canvasDimensions } = this.props;
     const { width, height } = canvasDimensions;
     const canvas = this.getCanvasNode();
+    const that = this;
     let operation = {
       stack: [
         { name: 'resize', arguments: [{ width, height }], queue: 0 }
@@ -322,9 +363,10 @@ console.log(total);
     this.pushOperation(operations, operation, currentOperation);
     window.Caman(canvas, function () {
       this.resize({ width, height });
-      this.render();
+      this.render(() => {
+        that.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
+      });
     });
-    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
   }
 
   applyEffects = () => {
@@ -338,11 +380,10 @@ console.log(total);
     const container = oldcanv.parentElement;
     container.removeChild(oldcanv)
 
-    const canv = document.createElement('canvas');
-    canv.id = 'scaleflex-image-edit-box';
-    container.appendChild(canv);
+    const canvas = document.createElement('canvas');
+    canvas.id = 'scaleflex-image-edit-box';
 
-    const canvas = this.getCanvasNode();
+    //const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
 
     /* Enable Cross Origin Image Editing */
@@ -363,7 +404,9 @@ console.log(total);
       this.setState({
         originalWidth: img.width, originalHeight: img.height, originalImage: img
       });
-      if (callback) setTimeout(() => { callback() });
+
+      container.appendChild(canvas);
+      if (callback) setTimeout(() => { callback(); });
     }
 
   }
