@@ -47,7 +47,8 @@ export default class ImageManipulator extends Component {
       resize: this.resize,
       addEffect: this.addEffect,
       cleanTemp: this.cleanTemp,
-      revert: this.revert
+      revert: this.revert,
+      rotate: this.rotate
     });
     const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
@@ -145,6 +146,31 @@ export default class ImageManipulator extends Component {
         }
       );
     });
+  }
+
+  rotate = (value, total) => {
+    const canvas = this.getCanvasNode();
+    const that = this;
+console.log(total);
+    window.Caman(canvas, function () {
+      this.rotate(value);
+      this.render();
+
+      that.setState({ rotate: total });
+    });
+  }
+
+  applyOrientation = () => {
+    const { currentOperation, operations, rotate } = this.state;
+    let operation = {
+      stack: [
+        { name: 'rotate', arguments: [rotate], queue: 0 }
+      ]
+    };
+
+    this.pushOperation(operations, operation, currentOperation);
+    this.setState({ rotate: null });
+    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
   }
 
   addEffect = name => {
@@ -271,8 +297,6 @@ export default class ImageManipulator extends Component {
       setTimeout(() => { if (callback) callback(); })
     });
   }
-
-  applyOrientation = () => {}
 
   pushOperation = (operations, operation, currentOperation) => {
     const operationIndex = operations.findIndex(operation => operation === currentOperation);

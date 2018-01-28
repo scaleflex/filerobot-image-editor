@@ -18,7 +18,7 @@ export default class extends Component {
   updateState = props => { this.setState(props); }
 
   onRevert = () => {
-    const { cleanTemp, activeTab } = this.state;
+    const { cleanTemp, activeTab, revert, applyOperations, operations, operationIndex } = this.state;
 
     if (activeTab === 'effects' || activeTab === 'filters') {
       this.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
@@ -26,9 +26,22 @@ export default class extends Component {
       return;
     }
 
+    if (activeTab === 'orientation') {
+      revert(() => {
+        applyOperations(operations, operations.length - 1, () => {
+          setTimeout(() => { this.setState({ isHideCanvas: false, isShowSpinner: false }); }, 200);
+        });
+      });
+    }
+
     this.setState({ activeTab: null, isShowSpinner: false, isHideCanvas: false });
   }
 
+  onRotate = (value, total) => {
+    const { rotate } = this.state;
+
+    rotate(value, total);
+  }
 
   onSave = () => {
     const { saveImage } = this.state;
@@ -86,7 +99,8 @@ export default class extends Component {
       apply: this.apply,
       onSave: this.onSave,
       onResize: this.onResize,
-      onApplyEffects: this.onApplyEffects
+      onApplyEffects: this.onApplyEffects,
+      onRotate: this.onRotate
     };
     const previewProps = {
       activeTab,

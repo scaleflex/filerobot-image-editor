@@ -65,6 +65,12 @@ function getIconByName(name) {
     case 'no-ratio':
       char = '\\e90f';
       break;
+    case 'left-rotate':
+      char = '\\e902';
+      break;
+    case 'right-rotate':
+      char = '\\e908';
+      break;
     default:
       return;
   }
