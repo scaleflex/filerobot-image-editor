@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { getIconStyles, getIconByName } from '../../lib/styledComponents/styleUtils';
+import { styleUtils } from 'scaleflex-react-modules/dist';
 
+const { getIconStyles, getIconByName } = styleUtils;
 
 const Footer = styled.div`
   background: ${props => props.theme.mainBackgroundColorHover};

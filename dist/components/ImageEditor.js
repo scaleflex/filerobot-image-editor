@@ -9,6 +9,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from 'react';
 import { Wrapper } from '../styledComponents/index';
 import { Header, Preview, Footer } from './';
+import 'scaleflex-react-modules/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
 
 var _class = function (_Component) {
   _inherits(_class, _Component);

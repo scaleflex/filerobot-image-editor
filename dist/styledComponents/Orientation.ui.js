@@ -7,7 +7,11 @@ var _templateObject = _taggedTemplateLiteral(['\n  color: ', ';\n  text-align: c
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 import styled from 'styled-components';
-import { getIconByName, getIconStyles } from '../../lib/styledComponents/styleUtils';
+import { styleUtils } from 'scaleflex-react-modules/dist';
+
+var getIconStyles = styleUtils.getIconStyles,
+    getIconByName = styleUtils.getIconByName;
+
 
 var OrientationWrapper = styled.div(_templateObject, function (props) {
   return props.theme.textColor;

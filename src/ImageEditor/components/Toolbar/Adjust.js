@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AdjustWrapper } from '../../styledComponents';
-import { Button } from '../../../lib/styledComponents';
+import { Button } from 'scaleflex-react-modules/dist';
 
 
 export default class extends Component {

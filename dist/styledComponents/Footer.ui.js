@@ -4,7 +4,11 @@ var _templateObject = _taggedTemplateLiteral(['\n  background: ', ';\n  height: 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 import styled from 'styled-components';
-import { getIconStyles, getIconByName } from '../../lib/styledComponents/styleUtils';
+import { styleUtils } from 'scaleflex-react-modules/dist';
+
+var getIconStyles = styleUtils.getIconStyles,
+    getIconByName = styleUtils.getIconByName;
+
 
 var Footer = styled.div(_templateObject, function (props) {
   return props.theme.mainBackgroundColorHover;

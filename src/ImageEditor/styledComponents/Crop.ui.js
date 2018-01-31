@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { Button } from '../../lib/styledComponents';
-import { getIconStyles, getIconByName } from '../../lib/styledComponents/styleUtils';
+import { Button } from 'scaleflex-react-modules/dist';
+import { styleUtils } from 'scaleflex-react-modules/dist';
 
+const { getIconStyles, getIconByName } = styleUtils;
 
 const CropWrapper = styled.div`
   color: ${props => props.theme.textColor};

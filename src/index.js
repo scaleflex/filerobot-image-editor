@@ -5,8 +5,6 @@ import App from './App';
 import { AppContainer } from 'react-hot-loader';
 import registerServiceWorker from './registerServiceWorker';
 
-import './lib/styledComponents/assets/styles/scaleflex-icon-font.css';
-
 
 const render = Component => {
   ReactDOM.render(

@@ -9,7 +9,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from 'react';
 import { PreviewWrapper, PreviewImgBox } from '../../styledComponents';
 import ImageManipulator from './ImageManipulator';
-import { Spinner } from '../../../lib/styledComponents';
+import { Spinner } from 'scaleflex-react-modules/dist';
 
 var _class = function (_Component) {
   _inherits(_class, _Component);

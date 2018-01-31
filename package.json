@@ -4,6 +4,7 @@
   "private": true,
   "main": "lib/index.js",
   "dependencies": {
+    "scaleflex-react-modules": "git+ssh://git@code.scaleflex.cloud:scaleflex/scaleflex-react-modules.git",
     "autoprefixer": "7.1.6",
     "babel-cli": "^6.26.0",
     "babel-core": "6.26.0",

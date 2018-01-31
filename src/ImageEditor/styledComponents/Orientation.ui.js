@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { getIconByName, getIconStyles } from '../../lib/styledComponents/styleUtils'
+import { styleUtils } from 'scaleflex-react-modules/dist';
+
+const { getIconStyles, getIconByName } = styleUtils;
 
 
 const OrientationWrapper = styled.div`

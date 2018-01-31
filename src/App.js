@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import ImageEditor from './ImageEditor/components/ImageEditor';
 import styled, { injectGlobal, ThemeProvider } from 'styled-components';
-import { darkTheme, Modal, Button, Spinner } from './lib/styledComponents';
-import { getGlobal } from './lib/styledComponents/styleUtils';
+import { darkTheme, Modal, Button, Spinner, styleUtils } from 'scaleflex-react-modules/dist';
 import { generateUUID } from './ImageEditor/utils';
 
 class App extends Component {
@@ -104,5 +103,5 @@ const Img = styled.img`
 `;
 
 injectGlobal`
-  ${getGlobal()}
+  ${styleUtils.getGlobal()}
 `;

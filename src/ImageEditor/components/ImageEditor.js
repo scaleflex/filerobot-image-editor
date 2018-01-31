@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Wrapper } from '../styledComponents/index';
 import { Header, Preview, Footer } from './';
+import 'scaleflex-react-modules/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
 
 
 export default class extends Component {

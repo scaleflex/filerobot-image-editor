@@ -14,8 +14,12 @@ var _templateObject = _taggedTemplateLiteral(['\n  color: ', ';\n'], ['\n  color
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 import styled from 'styled-components';
-import { Button } from '../../lib/styledComponents';
-import { getIconStyles, getIconByName } from '../../lib/styledComponents/styleUtils';
+import { Button } from 'scaleflex-react-modules/dist';
+import { styleUtils } from 'scaleflex-react-modules/dist';
+
+var getIconStyles = styleUtils.getIconStyles,
+    getIconByName = styleUtils.getIconByName;
+
 
 var CropWrapper = styled.div(_templateObject, function (props) {
   return props.theme.textColor;

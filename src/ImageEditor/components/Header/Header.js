@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper
 } from '../../styledComponents';
-import { CloseBtn, Button } from '../../../lib/styledComponents';
+import { CloseBtn, Button } from 'scaleflex-react-modules/dist';
 import { Toolbar } from '../';
 
 
