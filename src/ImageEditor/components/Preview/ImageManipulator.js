@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
 import { UPLOADER } from '../../config';
-import { b64toBlob } from '../../utils';
+import { b64toBlob, generateUUID } from '../../utils';
 import Cropper from 'cropperjs';
 
 export default class ImageManipulator extends Component {
@@ -103,11 +103,15 @@ export default class ImageManipulator extends Component {
           if (responseData.status === 'success') {
             const { file = {} } = responseData;
 
-            updateState({ isShowSpinner: false, isHideCanvas: false });
             if (!file.url_public) return;
 
-            onUpdate(file.url_public);
-            closeOnLoad && onClose();
+            const nweImage = new Image();
+            nweImage.onload = () => {
+              updateState({ isShowSpinner: false, isHideCanvas: false });
+              onUpdate(file.url_public);
+              closeOnLoad && onClose();
+            };
+            nweImage.src = file.url_public + `?hash=${generateUUID()}`;
           }
           else {
             updateState({ isShowSpinner: false, isHideCanvas: false });
