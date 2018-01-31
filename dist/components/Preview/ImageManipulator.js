@@ -31,7 +31,8 @@ var ImageManipulator = function (_Component) {
       var _this$props = _this.props,
           onUpdate = _this$props.onUpdate,
           onClose = _this$props.onClose,
-          updateState = _this$props.updateState;
+          updateState = _this$props.updateState,
+          closeOnLoad = _this$props.closeOnLoad;
 
       var canvas = _this.getCanvasNode();
 
@@ -66,11 +67,11 @@ var ImageManipulator = function (_Component) {
               if (!file.url_public) return;
 
               onUpdate(file.url_public);
-              onClose();
+              closeOnLoad && onClose();
             } else {
               updateState({ isShowSpinner: false, isHideCanvas: false });
               alert(responseData);
-              onClose();
+              closeOnLoad && onClose();
             }
           });
 

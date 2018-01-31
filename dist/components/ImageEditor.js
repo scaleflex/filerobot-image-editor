@@ -130,7 +130,9 @@ var _class = function (_Component) {
       var _props = this.props,
           src = _props.src,
           onClose = _props.onClose,
-          onUpdate = _props.onUpdate;
+          onUpdate = _props.onUpdate,
+          _props$closeOnLoad = _props.closeOnLoad,
+          closeOnLoad = _props$closeOnLoad === undefined ? true : _props$closeOnLoad;
 
       var headerProps = {
         cropDetails: cropDetails,
@@ -158,6 +160,7 @@ var _class = function (_Component) {
         onClose: onClose,
         onUpdate: onUpdate,
         canvasDimensions: canvasDimensions,
+        closeOnLoad: closeOnLoad,
         updateState: this.updateState
       };
       var footerProps = { operations: operations, currentOperation: currentOperation, redoOperation: this.redoOperation };

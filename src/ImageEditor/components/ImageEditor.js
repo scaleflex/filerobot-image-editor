@@ -96,7 +96,7 @@ export default class extends Component {
       isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original,
       canvasDimensions
     } = this.state;
-    const { src, onClose, onUpdate } = this.props;
+    const { src, onClose, onUpdate, closeOnLoad = true } = this.props;
     const headerProps = {
       cropDetails,
       original,
@@ -123,6 +123,7 @@ export default class extends Component {
       onClose,
       onUpdate,
       canvasDimensions,
+      closeOnLoad,
       updateState: this.updateState
     };
     const footerProps = { operations, currentOperation, redoOperation: this.redoOperation };

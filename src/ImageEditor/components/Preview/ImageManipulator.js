@@ -78,7 +78,7 @@ export default class ImageManipulator extends Component {
 
   saveImage = () => {
     const { imageName } = this.state;
-    const { onUpdate, onClose, updateState } = this.props;
+    const { onUpdate, onClose, updateState, closeOnLoad } = this.props;
     const canvas = this.getCanvasNode();
 
     window.Caman(canvas, function () {
@@ -107,12 +107,12 @@ export default class ImageManipulator extends Component {
             if (!file.url_public) return;
 
             onUpdate(file.url_public);
-            onClose();
+            closeOnLoad && onClose();
           }
           else {
             updateState({ isShowSpinner: false, isHideCanvas: false });
             alert(responseData);
-            onClose();
+            closeOnLoad && onClose();
           }
         });
 
