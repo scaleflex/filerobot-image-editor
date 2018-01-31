@@ -3,6 +3,7 @@ import ImageEditor from './ImageEditor/components/ImageEditor';
 import styled, { injectGlobal, ThemeProvider } from 'styled-components';
 import { darkTheme, Modal, Button, Spinner, styleUtils } from 'scaleflex-react-modules/dist';
 import { generateUUID } from './ImageEditor/utils';
+import 'scaleflex-react-modules/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
 
 class App extends Component {
   state = {

@@ -9,8 +9,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from 'react';
 import { Wrapper } from '../styledComponents/index';
 import { Header, Preview, Footer } from './';
-//import 'scaleflex-react-modules/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
 
+// for some reason we cannot import caman.full.js into build
+var script = document.createElement('script');
+script.src = '//jolipage.api.airstore.io/v1/get/_/d93231a3-1e6a-5b0e-8882-342c64c5fb8f/caman.full.min.js';
+document.body.appendChild(script);
 
 var _class = function (_Component) {
   _inherits(_class, _Component);
