@@ -108,7 +108,7 @@ export default class ImageManipulator extends Component {
             const nweImage = new Image();
             nweImage.onload = () => {
               updateState({ isShowSpinner: false, isHideCanvas: false });
-              onUpdate(file.url_public);
+              onUpdate(nweImage.src);
               closeOnLoad && onClose();
             };
             nweImage.src = file.url_public + `?hash=${generateUUID()}`;

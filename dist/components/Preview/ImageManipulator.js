@@ -68,7 +68,7 @@ var ImageManipulator = function (_Component) {
               var nweImage = new Image();
               nweImage.onload = function () {
                 updateState({ isShowSpinner: false, isHideCanvas: false });
-                onUpdate(file.url_public);
+                onUpdate(nweImage.src);
                 closeOnLoad && onClose();
               };
               nweImage.src = file.url_public + ('?hash=' + generateUUID());
