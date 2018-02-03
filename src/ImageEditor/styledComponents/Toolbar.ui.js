@@ -42,15 +42,27 @@ const ToolLabel = styled.div`
 `;
 
 const EffectsWrapper = styled.div`
-
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  
+  
+  ::-webkit-scrollbar {
+    height: 10px !important;
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px #fff;
+  }
 `;
 
 const EffectWrapper = styled.div`
   display: inline-block;
+  vertical-align: top;
   padding: 10px;
   text-align: center;
-  min-width: 100px;
-  height: 100px;
+  min-width: 90px;
+  height: 90px;
   cursor: pointer;
   color: ${props => props.theme.textColor};
   font-size: 12px;
@@ -62,8 +74,8 @@ const EffectWrapper = styled.div`
 
 const EffectIcon = styled.div`
   background: url('${props => props.src}') 50% 50% / cover no-repeat;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   border-radius: 2px;
   overflow: hidden;
   display: inline-block;
