@@ -78,7 +78,6 @@ export default class extends Component {
           active={activeRatio === 'custom'}
           onClick={this.changeRatio.bind(this, { name: 'custom' })}
         >
-          <CustomLabel>Custom</CustomLabel>
           <FieldSet>
             <FieldLabel>width</FieldLabel>
             <FieldInput
@@ -102,6 +101,7 @@ export default class extends Component {
               onChange={this.changeHeight}
             />
           </FieldSet>
+          <CustomLabel>Custom</CustomLabel>
         </CropBox>
 
         {BOXES.map(box => (

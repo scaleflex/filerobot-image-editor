@@ -8,6 +8,18 @@ const Toolbar = styled.div`
   width: calc(100% - 200px);
   border-left: 1px solid ${props => props.theme.borderDarkColor};
   border-right: 1px solid ${props => props.theme.borderDarkColor};
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  
+  ::-webkit-scrollbar {
+    height: 10px !important;
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: #3b4d54;
+    border-radius: 5px;
+  }
 `;
 
 const ToolWrapper = styled.div`
@@ -46,13 +58,13 @@ const EffectsWrapper = styled.div`
   overflow-y: hidden;
   white-space: nowrap;
   
-  
   ::-webkit-scrollbar {
     height: 10px !important;
   }
    
   ::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px #fff;
+    background: #3b4d54;
+    border-radius: 5px;
   }
 `;
 

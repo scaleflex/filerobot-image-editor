@@ -6,24 +6,36 @@ const { getIconStyles, getIconByName } = styleUtils;
 
 const CropWrapper = styled.div`
   color: ${props => props.theme.textColor};
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  
+  ::-webkit-scrollbar {
+    height: 10px !important;
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: #3b4d54;
+    border-radius: 5px;
+  }
 `;
 
 const CustomLabel = styled.div`
-  display: inline-block;
+  display: block;
   color: ${props => props.theme.textColor};
-  height: 100px;
-  line-height: 100px;
-  padding: 0 20px 0 0;
+  height: 30px;
+  line-height: 30px;
 `;
 
 const FieldSet = styled.div`
   display: inline-block;
   width: 100px;
+  padding-top: 10px;
   text-align: center;
 `;
 
 const FieldLabel = styled.label`
-  display: inline-block;
+  display: block;
   margin-bottom: 5px;
 `;
 
@@ -92,7 +104,7 @@ const CropBox = styled.div`
 
 const CropBoxInner = styled.div`
   padding: 15px 0;
-  height: 100px;
+  height: 90px;
   line-height: 100px;
 `;
 
