@@ -107,11 +107,6 @@ var _class = function (_Component) {
             onClick: this.changeRatio.bind(this, { name: 'custom' })
           },
           React.createElement(
-            CustomLabel,
-            null,
-            'Custom'
-          ),
-          React.createElement(
             FieldSet,
             null,
             React.createElement(
@@ -149,6 +144,11 @@ var _class = function (_Component) {
               value: parseInt(cropDetails.height, 10),
               onChange: this.changeHeight
             })
+          ),
+          React.createElement(
+            CustomLabel,
+            null,
+            'Custom'
           )
         ),
         BOXES.map(function (box) {
