@@ -52,7 +52,7 @@
     "react-dev-utils": "^5.0.0",
     "react-dom": "^16.2.0",
     "style-loader": "0.19.0",
-    "styled-components": "^2.4.0",
+    "styled-components": "^3.1.6",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
