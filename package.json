@@ -3,7 +3,9 @@
   "version": "0.1.1",
   "private": true,
   "main": "lib/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "styled-components": "^3.1.6"
+  },
   "devDependencies": {
     "node-sass": "^4.7.2",
     "react-hot-loader": "^3.1.3",

@@ -14,7 +14,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
-import { UPLOADER } from '../../config';
 import { b64toBlob, generateUUID } from '../../utils';
 import Cropper from 'cropperjs';
 
@@ -29,11 +28,12 @@ var ImageManipulator = function (_Component) {
     _this.saveImage = function () {
       var imageName = _this.state.imageName;
       var _this$props = _this.props,
-          onUpdate = _this$props.onUpdate,
+          onUpload = _this$props.onUpload,
           onClose = _this$props.onClose,
           updateState = _this$props.updateState,
           closeOnLoad = _this$props.closeOnLoad;
 
+      var config = _this.props.config;
       var canvas = _this.getCanvasNode();
 
       window.Caman(canvas, function () {
@@ -48,7 +48,7 @@ var ImageManipulator = function (_Component) {
           var name = splittedName.slice(0, nameLength - 1).join('.') + '-edited.' + splittedName[nameLength - 1];
           var formData = new FormData();
           var request = new XMLHttpRequest();
-          var baseUrl = '//' + UPLOADER.CONTAINER_TOKEN + '.api.airstore.io/v1/';
+          var baseUrl = '//' + config.CONTAINER_TOKEN + '.api.airstore.io/v1/';
 
           request.addEventListener("load", function (data) {
             var _data$srcElement = data.srcElement,
@@ -68,7 +68,7 @@ var ImageManipulator = function (_Component) {
               var nweImage = new Image();
               nweImage.onload = function () {
                 updateState({ isShowSpinner: false, isHideCanvas: false });
-                onUpdate(nweImage.src);
+                onUpload(nweImage.src);
                 closeOnLoad && onClose();
               };
               nweImage.src = file.url_public + ('?hash=' + generateUUID());
@@ -81,7 +81,7 @@ var ImageManipulator = function (_Component) {
 
           formData.append('files[]', blob, name);
           request.open("POST", [baseUrl, 'upload?dir=image-editor'].join(''));
-          request.setRequestHeader('X-Airstore-Secret-Key', UPLOADER.SECRET_KEY);
+          request.setRequestHeader('X-Airstore-Secret-Key', config.SECRET_KEY);
           request.send(formData);
         });
       });

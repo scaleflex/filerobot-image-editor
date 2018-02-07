@@ -26,7 +26,9 @@ export default class extends Component {
 
           <RightActions>
             <Button
-              success fullSize
+              success={activeTab}
+              themeBtn={!activeTab}
+              fullSize
               onClick={() => { !activeTab ? onSave() : apply() }}
             >
               {!activeTab ? 'Save' : 'Apply'}

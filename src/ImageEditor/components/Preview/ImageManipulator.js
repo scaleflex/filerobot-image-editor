@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
-import { UPLOADER } from '../../config';
 import { b64toBlob, generateUUID } from '../../utils';
 import Cropper from 'cropperjs';
 
@@ -78,7 +77,8 @@ export default class ImageManipulator extends Component {
 
   saveImage = () => {
     const { imageName } = this.state;
-    const { onUpdate, onClose, updateState, closeOnLoad } = this.props;
+    const { onUpload, onClose, updateState, closeOnLoad } = this.props;
+    const config = this.props.config;
     const canvas = this.getCanvasNode();
 
     window.Caman(canvas, function () {
@@ -93,7 +93,7 @@ export default class ImageManipulator extends Component {
         const name = `${splittedName.slice(0, nameLength - 1).join('.')}-edited.${splittedName[nameLength - 1]}`;
         const formData = new FormData();
         const request = new XMLHttpRequest();
-        const baseUrl = `//${UPLOADER.CONTAINER_TOKEN}.api.airstore.io/v1/`;
+        const baseUrl = `//${config.CONTAINER_TOKEN}.api.airstore.io/v1/`;
 
         request.addEventListener("load", (data) => {
           const { srcElement = { } } = data;
@@ -108,7 +108,7 @@ export default class ImageManipulator extends Component {
             const nweImage = new Image();
             nweImage.onload = () => {
               updateState({ isShowSpinner: false, isHideCanvas: false });
-              onUpdate(nweImage.src);
+              onUpload(nweImage.src);
               closeOnLoad && onClose();
             };
             nweImage.src = file.url_public + `?hash=${generateUUID()}`;
@@ -122,7 +122,7 @@ export default class ImageManipulator extends Component {
 
         formData.append('files[]', blob, name);
         request.open("POST", [baseUrl, `upload?dir=image-editor`].join(''));
-        request.setRequestHeader('X-Airstore-Secret-Key', UPLOADER.SECRET_KEY);
+        request.setRequestHeader('X-Airstore-Secret-Key', config.SECRET_KEY);
         request.send(formData);
       });
     });

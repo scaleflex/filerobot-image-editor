@@ -63,7 +63,9 @@ var _class = function (_Component) {
             React.createElement(
               Button,
               {
-                success: true, fullSize: true,
+                success: activeTab,
+                themeBtn: !activeTab,
+                fullSize: true,
                 onClick: function onClick() {
                   !activeTab ? onSave() : apply();
                 }

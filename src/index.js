@@ -1,25 +1,23 @@
+import { render, unmountComponentAtNode } from 'react-dom';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { AppContainer } from 'react-hot-loader';
+import ImageEditorWrapper from './ImageEditorWrapper';
+import 'scaleflex-react-modules/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
 import registerServiceWorker from './registerServiceWorker';
 
 
-const render = Component => {
-  ReactDOM.render(
-    <AppContainer>
-      <Component/>
-    </AppContainer>,
-    document.getElementById('root'),
-  )
-};
+function init(options = {}, isOpened = false) {
+  const editor = document.getElementById('airstore-image-editor');
+  options = Object.assign({}, options || {});
+  options.onUpload = options.onUpload || function (src) { console.log(src) };
 
-render(App);
+  const renderApp = Component => render(<Component config={options} onUpload={options.onUpload}/>, editor);
 
-// Webpack Hot Module Replacement API
-if (module.hot) {
-  module.hot.accept('./App', () => { render(App); });
+  window.AirstoreImageEditor = renderApp(ImageEditorWrapper);
+  window.AirstoreImageEditor.init = init;
+  window.AirstoreImageEditor.unmount = () => unmountComponentAtNode(editor);
+
+  registerServiceWorker();
 }
 
-registerServiceWorker();
+window.AirstoreImageEditor = window.AirstoreImageEditor || {};
+window.AirstoreImageEditor.init = init;

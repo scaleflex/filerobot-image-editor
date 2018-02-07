@@ -129,8 +129,9 @@ var _class = function (_Component) {
           canvasDimensions = _state.canvasDimensions;
       var _props = this.props,
           src = _props.src,
+          config = _props.config,
           onClose = _props.onClose,
-          onUpdate = _props.onUpdate,
+          onUpload = _props.onUpload,
           _props$closeOnLoad = _props.closeOnLoad,
           closeOnLoad = _props$closeOnLoad === undefined ? true : _props$closeOnLoad;
 
@@ -158,9 +159,10 @@ var _class = function (_Component) {
         isHideCanvas: isHideCanvas,
         src: src,
         onClose: onClose,
-        onUpdate: onUpdate,
+        onUpload: onUpload,
         canvasDimensions: canvasDimensions,
         closeOnLoad: closeOnLoad,
+        config: config,
         updateState: this.updateState
       };
       var footerProps = { operations: operations, currentOperation: currentOperation, redoOperation: this.redoOperation };
