@@ -1,55 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list id="417e25d5-29de-4b15-9957-a1bd2627ab30" name="working on modules" comment="" />
-    <list default="true" id="e0736995-cb3d-4ee1-bb3c-b1e4f7aeaf85" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Footer/Footer.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Header/Header.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/ImageEditor.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Preview/ImageManipulator.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Preview/Preview.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Toolbar/Adjust.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Toolbar/Crop.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Toolbar/Effect.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Toolbar/Effects.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Toolbar/Filter.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Toolbar/Filters.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Toolbar/Orientation.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Toolbar/Resize.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Toolbar/Tool.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/Toolbar/Toolbar.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/components/index.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/config.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/package.json" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/photo.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/styledComponents/Adjust.ui.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/styledComponents/Crop.ui.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/styledComponents/Footer.ui.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/styledComponents/Header.ui.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/styledComponents/ImageEditor.ui.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/styledComponents/Orientation.ui.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/styledComponents/Preview.ui.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/styledComponents/Resize.ui.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/styledComponents/Toolbar.ui.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/styledComponents/index.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dist/utils.js" />
+    <list default="true" id="ec7cc45c-5041-49d3-be20-4994e04e2264" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/build/static/js/main.f3ea91d6.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/build/static/js/main.f3ea91d6.js.map" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" afterPath="$PROJECT_DIR$/build/asset-manifest.json" />
+      <change beforePath="$PROJECT_DIR$/build/example.js" afterPath="$PROJECT_DIR$/build/example.js" />
+      <change beforePath="$PROJECT_DIR$/build/index.html" afterPath="$PROJECT_DIR$/build/index.html" />
+      <change beforePath="$PROJECT_DIR$/build/service-worker.js" afterPath="$PROJECT_DIR$/build/service-worker.js" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.303d4ae2.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.303d4ae2.js.map" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/dist/components/Preview/ImageManipulator.js" afterPath="$PROJECT_DIR$/dist/components/Preview/ImageManipulator.js" />
+      <change beforePath="$PROJECT_DIR$/dist/config.js" afterPath="$PROJECT_DIR$/dist/config.js" />
+      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change beforePath="$PROJECT_DIR$/public/example.js" afterPath="$PROJECT_DIR$/public/example.js" />
+      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Preview/ImageManipulator.js" afterPath="$PROJECT_DIR$/src/ImageEditor/components/Preview/ImageManipulator.js" />
+      <change beforePath="$PROJECT_DIR$/src/ImageEditor/config.js" afterPath="$PROJECT_DIR$/src/ImageEditor/config.js" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
     </list>
+    <ignored path="$PROJECT_DIR$/.idea/shelf/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
-    <ignored path=".idea/image-editor-reactjs.iml" />
-    <ignored path=".idea/markdown-exported-files.xml" />
-    <ignored path=".idea/modules.xml" />
-    <ignored path=".idea/markdown-navigator/profiles_settings.xml" />
-    <ignored path=".idea/inspectionProfiles/Project_Default.xml" />
-    <ignored path=".idea/vcs.xml" />
-    <ignored path=".idea/" />
-    <ignored path="$PROJECT_DIR$/.idea/shelf/" />
-    <ignored path="dist/image-editor-react/image-editor-react.js" />
-    <ignored path="dist/index.js" />
-    <ignored path="dist/image-editor-react/package.json" />
-    <ignored path="pixman.tar.gz" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,11 +38,73 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ImageManipulator.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ImageEditor.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/ImageEditor.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2376">
+              <caret line="134" column="12" lean-forward="false" selection-start-line="134" selection-start-column="12" selection-end-line="134" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ImageEditor/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="58" lean-forward="false" selection-start-line="0" selection-start-column="58" selection-end-line="0" selection-end-column="58" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageEditorWrapper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ImageEditorWrapper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="720">
+              <caret line="44" column="19" lean-forward="false" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#59#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="example.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/example.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="11" column="63" lean-forward="false" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="63" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageManipulator.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Preview/ImageManipulator.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="491" column="20" lean-forward="false" selection-start-line="491" selection-start-column="20" selection-end-line="491" selection-end-column="20" />
+            <state relative-caret-position="303">
+              <caret line="418" column="0" lean-forward="false" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -77,11 +112,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/package.json">
+      <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ImageEditor/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="71" column="23" lean-forward="true" selection-start-line="71" selection-start-column="23" selection-end-line="71" selection-end-column="23" />
+            <state relative-caret-position="288">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="47" column="30" lean-forward="false" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -91,45 +136,34 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>resize</find>
-      <find>onRevert</find>
-      <find>activeTab</find>
-      <find>applyChanges</find>
-      <find>applyEffects</find>
-      <find>destroyCrop</find>
-      <find>caman</find>
-      <find>scaleflex-image-edit-box</find>
-      <find>ctx</find>
-      <find>canvasDimensions</find>
-      <find>attr</find>
-      <find>this.revert();</find>
-      <find>apply</find>
-      <find>cleanTemp</find>
-      <find>cropDetails</find>
-      <find>addEff</find>
-      <find>applyOrientation</find>
-      <find>onRotate</find>
-      <find>icon</find>
-      <find>Icon</find>
-      <find>getIconByName</find>
+      <find>onClose</find>
       <find>getIcon</find>
-      <find>render</find>
-      <find>applyFilters</find>
-      <find>operationIndex</find>
-      <find>applyOperations</find>
-      <find>applyCanvasChanges</find>
-      <find>revert</find>
-      <find>setTime</find>
-      <find>adjust</find>
+      <find>getIconStyles</find>
+      <find>getIconByName</find>
+      <find>react-hot</find>
+      <find>med</find>
+      <find>import 'scaleflex-react-modules/dist/styledComponents/assets/styles/scaleflex-icon-font.css';</find>
+      <find>image edito</find>
+      <find>styled-components</find>
+      <find>styled-component</find>
+      <find>dist/</find>
+      <find>UPLOADER</find>
+      <find>closeModal</find>
+      <find>imageEditor</find>
+      <find>onUpload</find>
+      <find>Component</find>
+      <find>onUpdate</find>
+      <find>styled</find>
+      <find>SECRET_KEY</find>
+      <find>UPLOAD_KE</find>
+      <find>config</find>
+      <find>CONTAINER_TOKEN</find>
     </findStrings>
     <replaceStrings>
-      <replace>&quot;</replace>
-      <replace>ImageEditorReact</replace>
-      <replace>scaleflex-icon-font</replace>
-      <replace>scale-flex-loader</replace>
+      <replace>close</replace>
+      <replace>onUpload</replace>
     </replaceStrings>
     <dirStrings>
-      <dir>$PROJECT_DIR$/node_modules/canvas</dir>
       <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/src</dir>
     </dirStrings>
@@ -140,67 +174,24 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/styledComponents/ImageEditor.ui.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/Preview/Preview.js" />
-        <option value="$PROJECT_DIR$/src/styledComponents/Preview.ui.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/ImageEditor.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/index.js" />
-        <option value="$PROJECT_DIR$/node_modules/canvas/lib/context2d.js" />
-        <option value="$PROJECT_DIR$/src/lib/camanjs/caman.js" />
-        <option value="$PROJECT_DIR$/src/lib/styledComponents/hoc/Aux.js" />
-        <option value="$PROJECT_DIR$/src/lib/styledComponents/hoc/index.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Tool.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/styledComponents/Header.ui.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/FIlter.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/styledComponents/Footer.ui.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Footer/Footer.js" />
-        <option value="$PROJECT_DIR$/src/lib/styledComponents/components/Modal.js" />
-        <option value="$PROJECT_DIR$/src/lib/styledComponents/index.js" />
-        <option value="$PROJECT_DIR$/src/lib/styledComponents/components/Hidden.js" />
         <option value="$PROJECT_DIR$/src/ImageEditor/config.js" />
-        <option value="$PROJECT_DIR$/src/lib/styledComponents/components/Spinner.js" />
+        <option value="$PROJECT_DIR$/dist/config.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/lib/styledComponents/darkTheme.js" />
-        <option value="$PROJECT_DIR$/src/lib/styledComponents/components/Button.js" />
-        <option value="$PROJECT_DIR$/config/polyfills.js" />
-        <option value="$PROJECT_DIR$/.babelrc" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/styledComponents/Crop.ui.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/styledComponents/Toolbar.ui.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/styledComponents/Resize.ui.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/styledComponents/ImageEditor.ui.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Resize.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/utils.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Effect.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Effects.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Filter.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Filters.js" />
-        <option value="$PROJECT_DIR$/config/webpack.config.prod.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Header/Header.js" />
-        <option value="$PROJECT_DIR$/public/lib/camanjs/caman.full.min.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Preview/Preview.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/styledComponents/Preview.ui.js" />
-        <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Crop.js" />
-        <option value="$PROJECT_DIR$/src/lib/styledComponents/styleUtils.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Orientation.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/styledComponents/Orientation.ui.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Toolbar.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/styledComponents/index.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/styledComponents/Adjust.ui.js" />
         <option value="$PROJECT_DIR$/src/ImageEditor/components/ImageEditor.js" />
-        <option value="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Adjust.js" />
+        <option value="$PROJECT_DIR$/src/ImageEditorWrapper.js" />
+        <option value="$PROJECT_DIR$/src/ImageEditor/components/Header/Header.js" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/public/example.js" />
+        <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/ImageEditor/components/Preview/ImageManipulator.js" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsFlowSettings">
-    <service-enabled>false</service-enabled>
-    <exe-path />
-    <annotation-enable>false</annotation-enable>
-    <other-services-enabled>false</other-services-enabled>
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
@@ -209,37 +200,12 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="25" />
     <option name="y" value="23" />
-    <option name="width" value="1440" />
+    <option name="width" value="1415" />
     <option name="height" value="822" />
   </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>Code quality toolsJavaScript</id>
-          </State>
-          <State>
-            <id>JavaScript</id>
-          </State>
-          <State>
-            <id>Spelling</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>SpellCheckingInspection</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
-  </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -262,6 +228,60 @@
               <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
               <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="main.f3ea91d6.js" type="620a8d5e:NestingTreeNode" />
+            </path>
+            <path>
+              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="ImageEditor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="ImageEditor" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -271,31 +291,11 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
-    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
-    <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.tslint" value="" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/lib/camanjs" />
-      <recent name="$PROJECT_DIR$/src/ImageEditor" />
-      <recent name="$PROJECT_DIR$/src/ImageEditor/components" />
-      <recent name="$PROJECT_DIR$/src/lib/styledComponents/assets/styles" />
-      <recent name="$PROJECT_DIR$/src/lib/styledComponents/assets" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public/lib/camanjs_old" />
-      <recent name="$PROJECT_DIR$/public/lib/camanjs" />
-      <recent name="$PROJECT_DIR$/public/libs" />
-      <recent name="$PROJECT_DIR$/public" />
-      <recent name="$PROJECT_DIR$/src/lib/styledComponents/assets" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -313,277 +313,138 @@
     <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
-    <configuration>$USER_HOME$/.subversion</configuration>
+    <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e0736995-cb3d-4ee1-bb3c-b1e4f7aeaf85" name="Default" comment="" />
-      <changelist id="417e25d5-29de-4b15-9957-a1bd2627ab30" name="working on modules" comment="" />
-      <created>1516265207904</created>
+      <changelist id="ec7cc45c-5041-49d3-be20-4994e04e2264" name="Default" comment="" />
+      <created>1517401285831</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1516265207904</updated>
-      <workItem from="1516265210236" duration="11942000" />
-      <workItem from="1516340607289" duration="9071000" />
-      <workItem from="1516361894128" duration="42748000" />
-      <workItem from="1516468547945" duration="3005000" />
-      <workItem from="1516473765853" duration="206000" />
-      <workItem from="1516474069066" duration="9512000" />
-      <workItem from="1516515705281" duration="1904000" />
-      <workItem from="1516519441080" duration="2229000" />
-      <workItem from="1516521903425" duration="64620000" />
-      <workItem from="1516629774784" duration="23847000" />
-      <workItem from="1516777841339" duration="30181000" />
-      <workItem from="1516997853439" duration="240000" />
-      <workItem from="1517059580533" duration="13690000" />
-      <workItem from="1517124048207" duration="9669000" />
-      <workItem from="1517296916429" duration="167000" />
+      <updated>1517401285831</updated>
+      <workItem from="1517401286950" duration="12559000" />
+      <workItem from="1517649864115" duration="1032000" />
+      <workItem from="1517651092325" duration="702000" />
+      <workItem from="1517652150195" duration="33000" />
+      <workItem from="1517655466288" duration="612000" />
+      <workItem from="1517663307352" duration="8370000" />
+      <workItem from="1517737372431" duration="814000" />
+      <workItem from="1517813038523" duration="1574000" />
+      <workItem from="1517825780402" duration="680000" />
+      <workItem from="1517845546296" duration="82000" />
+      <workItem from="1517845928367" duration="702000" />
+      <workItem from="1517900470953" duration="1285000" />
+      <workItem from="1517997757378" duration="9275000" />
+      <workItem from="1518012649268" duration="170000" />
+      <workItem from="1518183129084" duration="1302000" />
+      <workItem from="1518263923049" duration="48000" />
+      <workItem from="1518379755562" duration="1430000" />
+      <workItem from="1519246043006" duration="997000" />
     </task>
-    <task id="LOCAL-00001" summary="initial commit using create-react-app">
-      <created>1516271646855</created>
+    <task id="LOCAL-00001" summary="extract styledComponents">
+      <created>1517401366872</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1516271646855</updated>
+      <updated>1517401366872</updated>
     </task>
-    <task id="LOCAL-00002" summary="working on crop">
-      <created>1516292994516</created>
+    <task id="LOCAL-00002" summary="remove import of fonts">
+      <created>1517403300317</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1516292994516</updated>
+      <updated>1517403300317</updated>
     </task>
-    <task id="LOCAL-00003" summary="working on modules">
-      <created>1516332555348</created>
+    <task id="LOCAL-00003" summary="include camanjs via javascrit script tag">
+      <created>1517412564093</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1516332555348</updated>
+      <updated>1517412564093</updated>
     </task>
-    <task id="LOCAL-00004" summary="working on modules">
-      <created>1516339043839</created>
+    <task id="LOCAL-00004" summary="add param closeOnLoad by default true">
+      <created>1517425072268</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1516339043839</updated>
+      <updated>1517425072268</updated>
     </task>
-    <task id="LOCAL-00005" summary="creating npm package like app">
-      <created>1516340431089</created>
+    <task id="LOCAL-00005" summary="download image first then close editor">
+      <created>1517425455863</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1516340431089</updated>
+      <updated>1517425455863</updated>
     </task>
-    <task id="LOCAL-00006" summary="creating npm package like app">
-      <created>1516366735626</created>
+    <task id="LOCAL-00006" summary="fix bug with src">
+      <created>1517426693950</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1516366735626</updated>
+      <updated>1517426693950</updated>
     </task>
-    <task id="LOCAL-00007" summary="working on image editor">
-      <created>1516515394099</created>
+    <task id="LOCAL-00007" summary="add dist">
+      <created>1517736751149</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1516515394099</updated>
+      <updated>1517736751149</updated>
     </task>
-    <task id="LOCAL-00008" summary="working on image editor">
-      <created>1516525839054</created>
+    <task id="LOCAL-00008" summary="update library">
+      <created>1517813315843</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1516525839054</updated>
+      <updated>1517813315843</updated>
     </task>
-    <task id="LOCAL-00009" summary="working on image editor">
-      <created>1516526885249</created>
+    <task id="LOCAL-00009" summary="move styled-components to peerDependency">
+      <created>1517816070370</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1516526885249</updated>
+      <updated>1517816070370</updated>
     </task>
-    <task id="LOCAL-00010" summary="working on image editor">
-      <created>1516527059157</created>
+    <task id="LOCAL-00010" summary="make as standalone app">
+      <created>1518011622957</created>
       <option name="number" value="00010" />
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
-      <updated>1516527059157</updated>
+      <updated>1518011622957</updated>
     </task>
-    <task id="LOCAL-00011" summary="working on image editor">
-      <created>1516527188557</created>
+    <task id="LOCAL-00011" summary="add build">
+      <created>1518012166707</created>
       <option name="number" value="00011" />
       <option name="presentableId" value="LOCAL-00011" />
       <option name="project" value="LOCAL" />
-      <updated>1516527188557</updated>
+      <updated>1518012166707</updated>
     </task>
-    <task id="LOCAL-00012" summary="working on image editor">
-      <created>1516527657916</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1516527657916</updated>
-    </task>
-    <task id="LOCAL-00013" summary="working on image editor">
-      <created>1516527744671</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1516527744672</updated>
-    </task>
-    <task id="LOCAL-00014" summary="working on image editor">
-      <created>1516528984432</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1516528984432</updated>
-    </task>
-    <task id="LOCAL-00015" summary="working on image editor implement crop;">
-      <created>1516568104418</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1516568104418</updated>
-    </task>
-    <task id="LOCAL-00016" summary="add possibility to open modal and save image; connect to airstore;">
-      <created>1516612893132</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1516612893132</updated>
-    </task>
-    <task id="LOCAL-00017" summary="add possibility to use spinner as fullScreen overlay">
-      <created>1516614606963</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1516614606963</updated>
-    </task>
-    <task id="LOCAL-00018" summary="code style">
-      <created>1516614619150</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1516614619150</updated>
-    </task>
-    <task id="LOCAL-00019" summary="fix build problems; improve crop;">
-      <created>1516631412740</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1516631412740</updated>
-    </task>
-    <task id="LOCAL-00020" summary="add croper chapes">
-      <created>1516690149132</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1516690149132</updated>
-    </task>
-    <task id="LOCAL-00021" summary="add resize functionality">
-      <created>1516694969863</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1516694969863</updated>
-    </task>
-    <task id="LOCAL-00022" summary="remove external css; change crop styles;">
-      <created>1516779065652</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1516779065652</updated>
-    </task>
-    <task id="LOCAL-00023" summary="fix warnings">
-      <created>1516779505726</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1516779505726</updated>
-    </task>
-    <task id="LOCAL-00024" summary="fix build;">
-      <created>1516949293506</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1516949293506</updated>
-    </task>
-    <task id="LOCAL-00025" summary="add initial possibility to add effects filters">
-      <created>1516949360828</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1516949360828</updated>
-    </task>
-    <task id="LOCAL-00026" summary="add possibility to switch between effects/filters and cancel them;">
-      <created>1516952458610</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1516952458610</updated>
-    </task>
-    <task id="LOCAL-00027" summary="fix bug on redo steps and revert canvas add possibility to add filters/effects;">
-      <created>1517073855473</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1517073855473</updated>
-    </task>
-    <task id="LOCAL-00028" summary="bug fix with crop;">
-      <created>1517076856340</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1517076856340</updated>
-    </task>
-    <task id="LOCAL-00029" summary="add orientation component">
-      <created>1517128045135</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1517128045135</updated>
-    </task>
-    <task id="LOCAL-00030" summary="add adjust component">
-      <created>1517140901178</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1517140901178</updated>
-    </task>
-    <option name="localTasksCounter" value="31" />
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="223031000" />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
+    <option name="totallyTimeSpent" value="41667000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="822" extended-state="0" />
+    <frame x="22" y="23" width="1415" height="877" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2642706" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21807748" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4630682" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35177866" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20738636" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.314888" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -620,238 +481,64 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="initial commit using create-react-app" />
-    <MESSAGE value="working on crop" />
-    <MESSAGE value="working on modules" />
-    <MESSAGE value="creating npm package like app" />
-    <MESSAGE value="working on image editor" />
-    <MESSAGE value="working on image editor implement crop;" />
-    <MESSAGE value="add possibility to open modal and save image; connect to airstore;" />
-    <MESSAGE value="add possibility to use spinner as fullScreen overlay" />
-    <MESSAGE value="code style" />
-    <MESSAGE value="fix build problems; improve crop;" />
-    <MESSAGE value="add croper chapes" />
-    <MESSAGE value="add resize functionality" />
-    <MESSAGE value="remove external css; change crop styles;" />
-    <MESSAGE value="fix warnings" />
-    <MESSAGE value="fix build;" />
-    <MESSAGE value="add initial possibility to add effects filters" />
-    <MESSAGE value="add possibility to switch between effects/filters and cancel them;" />
-    <MESSAGE value="fix bug on redo steps and revert canvas add possibility to add filters/effects;" />
-    <MESSAGE value="bug fix with crop;" />
-    <MESSAGE value="add orientation component" />
-    <MESSAGE value="add adjust component" />
-    <option name="LAST_COMMIT_MESSAGE" value="add adjust component" />
+    <MESSAGE value="extract styledComponents" />
+    <MESSAGE value="remove import of fonts" />
+    <MESSAGE value="include camanjs via javascrit script tag" />
+    <MESSAGE value="add param closeOnLoad by default true" />
+    <MESSAGE value="download image first then close editor" />
+    <MESSAGE value="fix bug with src" />
+    <MESSAGE value="add dist" />
+    <MESSAGE value="update library" />
+    <MESSAGE value="move styled-components to peerDependency" />
+    <MESSAGE value="make as standalone app" />
+    <MESSAGE value="add build" />
+    <option name="LAST_COMMIT_MESSAGE" value="add build" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <option name="time" value="1" />
-    </breakpoint-manager>
+    <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Footer.ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="25" column="36" lean-forward="true" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib/styledComponents/components/Modal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-72">
-          <caret line="70" column="13" lean-forward="true" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib/styledComponents/components/Hidden.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib/styledComponents/components/Spinner.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="92" column="28" lean-forward="true" selection-start-line="92" selection-start-column="28" selection-end-line="92" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib/styledComponents/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="24" lean-forward="true" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib/styledComponents/components/CloseBtn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="17" column="42" lean-forward="false" selection-start-line="5" selection-start-column="2" selection-end-line="17" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/polyfills.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Toolbar.ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="76" column="99" lean-forward="false" selection-start-line="76" selection-start-column="99" selection-end-line="76" selection-end-column="99" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="27" lean-forward="true" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="24" lean-forward="false" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/cropperjs/dist/cropper.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5364">
-          <caret line="298" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="306" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/ImageEditor.ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4628">
-          <caret line="10" column="18" lean-forward="false" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="5" column="15" lean-forward="false" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="58" column="3" lean-forward="false" selection-start-line="47" selection-start-column="2" selection-end-line="58" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Effect.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="62" lean-forward="false" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Effects.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="12" column="32" lean-forward="false" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Filters.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="13" column="23" lean-forward="false" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.babelrc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/webpack.config.dev.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="5" lean-forward="false" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/webpackDevServer.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="30" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/webpack.config.prod.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3134">
-          <caret line="427" column="17" lean-forward="true" selection-start-line="427" selection-start-column="17" selection-end-line="427" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/babel-cli/lib/_babel-node.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="124" column="28" lean-forward="false" selection-start-line="124" selection-start-column="28" selection-end-line="124" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="22" column="8" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib/styledComponents/commonTheme.js">
+    <entry file="file://$PROJECT_DIR$/node_modules/scaleflex-react-modules/dist/styledComponents/assets/styles/scaleflex-icon-font.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
+    <entry file="file://$PROJECT_DIR$/config/webpack.config.dev.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+        <state relative-caret-position="3708">
+          <caret line="206" column="16" lean-forward="false" selection-start-line="206" selection-start-column="16" selection-end-line="206" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib/camanjs/caman.js" />
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Footer/Footer.js">
+    <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        <state relative-caret-position="414">
+          <caret line="23" column="9" lean-forward="false" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Filter.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="44" lean-forward="false" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="44" />
+        <state relative-caret-position="234">
+          <caret line="13" column="28" lean-forward="false" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib/styledComponents/darkTheme.js">
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Preview/ImageManipulator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="28" lean-forward="false" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+        <state relative-caret-position="1890">
+          <caret line="109" column="50" lean-forward="false" selection-start-line="109" selection-start-column="50" selection-end-line="109" selection-end-column="50" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib/styledComponents/components/Button.js">
+    <entry file="file://$PROJECT_DIR$/node_modules/scaleflex-react-modules/dist/styledComponents/assets/styles/scaleflex-icon-font.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -859,11 +546,209 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/scaleflex-react-modules/src/lib/styledComponents/styleUtils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1044">
+          <caret line="58" column="16" lean-forward="true" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/components/ImageEditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Orientation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="22" column="3" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="22" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Toolbar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="19" column="39" lean-forward="false" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Effects.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="12" column="34" lean-forward="false" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Effect.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="60" lean-forward="false" selection-start-line="12" selection-start-column="56" selection-end-line="12" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="47" column="17" lean-forward="false" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/react.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="3725" column="12" lean-forward="false" selection-start-line="3725" selection-start-column="12" selection-end-line="3725" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="1" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Adjust.ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Footer.ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-99">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Header.ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Orientation.ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Preview.ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="39" column="12" lean-forward="false" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Resize.ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="10" lean-forward="true" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Toolbar.ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/scaleflex-react-modules/dist/styledComponents/components/Spinner.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2682">
+          <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/webpackDevServer.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Crop.ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="31" column="15" lean-forward="false" selection-start-line="31" selection-start-column="15" selection-end-line="31" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.babelrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="1" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/env.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1278">
+          <caret line="71" column="20" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/scaleflex-react-modules/dist/styledComponents/styleUtils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1260">
+          <caret line="70" column="9" lean-forward="false" selection-start-line="70" selection-start-column="9" selection-end-line="70" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="59" lean-forward="false" selection-start-line="0" selection-start-column="59" selection-end-line="0" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Preview/Preview.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="6" column="15" lean-forward="false" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/ImageEditor.ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="5" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/lib/camanjs/caman.full.min.js">
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Header/Header.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="38" column="5" lean-forward="false" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/static/js/main.bef3b216.js" />
+    <entry file="file://$PROJECT_DIR$/dist/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -871,166 +756,121 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/lib/camanjs/caman.full.min.js">
+    <entry file="file://$PROJECT_DIR$/build/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="244" column="17" lean-forward="true" selection-start-line="244" selection-start-column="17" selection-end-line="244" selection-end-column="17" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Crop.ui.js">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="28" column="31" lean-forward="true" selection-start-line="28" selection-start-column="31" selection-end-line="30" selection-end-column="2" />
+        <state relative-caret-position="306">
+          <caret line="17" column="14" lean-forward="false" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Preview.ui.js">
+    <entry file="file://$PROJECT_DIR$/config/webpack.config.dev.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="846">
-          <caret line="47" column="20" lean-forward="true" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+        <state relative-caret-position="810">
+          <caret line="45" column="31" lean-forward="false" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/webpack.config.prod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="28" column="25" lean-forward="false" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="16" column="28" lean-forward="true" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+        <state relative-caret-position="330">
+          <caret line="47" column="30" lean-forward="false" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Crop.js">
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Preview/Preview.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="15" lean-forward="false" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Resize.ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="2" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="16" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Resize.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="10" column="3" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="72" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib/styledComponents/styleUtils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-385">
-          <caret line="67" column="21" lean-forward="false" selection-start-line="67" selection-start-column="10" selection-end-line="67" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Orientation.ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="23" column="25" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="35" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/Adjust.ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="21" lean-forward="true" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/styledComponents/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="16" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Orientation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Header/Header.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="24" column="15" lean-forward="false" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Toolbar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="12" lean-forward="true" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Adjust.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="21" lean-forward="false" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+        <state relative-caret-position="288">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/ImageEditor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1458">
-          <caret line="83" column="21" lean-forward="false" selection-start-line="83" selection-start-column="6" selection-end-line="83" selection-end-column="21" />
+        <state relative-caret-position="2376">
+          <caret line="134" column="12" lean-forward="false" selection-start-line="134" selection-start-column="12" selection-end-line="134" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditor/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="58" lean-forward="false" selection-start-line="0" selection-start-column="58" selection-end-line="0" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImageEditorWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="44" column="19" lean-forward="false" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/example.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="11" column="63" lean-forward="false" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="63" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ImageEditor/components/Preview/ImageManipulator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="491" column="20" lean-forward="false" selection-start-line="491" selection-start-column="20" selection-end-line="491" selection-end-column="20" />
+        <state relative-caret-position="303">
+          <caret line="418" column="0" lean-forward="false" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="71" column="23" lean-forward="true" selection-start-line="71" selection-start-column="23" selection-end-line="71" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="hg4idea.settings">
-    <option name="CHECK_INCOMING_OUTGOING" value="true" />
-    <option name="ROOT_SYNC" value="DONT_SYNC" />
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>

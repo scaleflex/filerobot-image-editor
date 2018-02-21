@@ -10,8 +10,8 @@ var EFFECTS = ['edge_enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'radial_blur'
 var FILTERS = ['cross_process', 'glow_sun', 'jarques', 'love', 'old_boot', 'orange_peel', 'pin_hole', 'sepia', 'sun_rise', 'vintage'];
 
 var UPLOADER = {
-  SECRET_KEY: '0cbe9ccc4f164bf8be26bd801d53b132',
-  CONTAINER_TOKEN: 'example'
+  UPLOAD_KEY: '0cbe9ccc4f164bf8be26bd801d53b132',
+  CONTAINER: 'example'
 };
 
 export { TOOLS, EFFECTS, FILTERS, UPLOADER };

@@ -48,7 +48,7 @@ var ImageManipulator = function (_Component) {
           var name = splittedName.slice(0, nameLength - 1).join('.') + '-edited.' + splittedName[nameLength - 1];
           var formData = new FormData();
           var request = new XMLHttpRequest();
-          var baseUrl = '//' + config.CONTAINER_TOKEN + '.api.airstore.io/v1/';
+          var baseUrl = '//' + config.CONTAINER + '.api.airstore.io/v1/';
 
           request.addEventListener("load", function (data) {
             var _data$srcElement = data.srcElement,
@@ -81,7 +81,7 @@ var ImageManipulator = function (_Component) {
 
           formData.append('files[]', blob, name);
           request.open("POST", [baseUrl, 'upload?dir=image-editor'].join(''));
-          request.setRequestHeader('X-Airstore-Secret-Key', config.SECRET_KEY);
+          request.setRequestHeader('X-Airstore-Secret-Key', config.UPLOAD_KEY);
           request.send(formData);
         });
       });

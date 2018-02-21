@@ -6,8 +6,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 
 function init(options = {}, isOpened = false) {
-  const editor = document.getElementById('airstore-image-editor');
-  options = Object.assign({}, options || {});
+  const editor = document.getElementById(options.ELEMENT_ID || 'airstore-image-editor');
+  options = Object.assign(options || {});
   options.onUpload = options.onUpload || function (src) { console.log(src) };
 
   const renderApp = Component => render(<Component config={options} onUpload={options.onUpload}/>, editor);
