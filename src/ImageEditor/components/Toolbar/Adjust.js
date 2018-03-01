@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AdjustWrapper } from '../../styledComponents';
-import { Button } from 'scaleflex-react-modules/dist';
+import { Button } from 'scaleflex-react-ui-kit/dist';
 
 
 export default class extends Component {

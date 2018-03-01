@@ -10,7 +10,7 @@ var _templateObject = _taggedTemplateLiteral(['\n  height: 100px;\n  width: calc
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 import styled from 'styled-components';
-import { styleUtils } from 'scaleflex-react-modules/dist';
+import { styleUtils } from 'scaleflex-react-ui-kit/dist';
 
 var getIconStyles = styleUtils.getIconStyles,
     getIconByName = styleUtils.getIconByName;

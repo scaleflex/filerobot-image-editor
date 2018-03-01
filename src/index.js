@@ -1,7 +1,7 @@
 import { render, unmountComponentAtNode } from 'react-dom';
 import React from 'react';
 import ImageEditorWrapper from './ImageEditorWrapper';
-import 'scaleflex-react-modules/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
+import 'scaleflex-react-ui-kit/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
 import registerServiceWorker from './registerServiceWorker';
 
 

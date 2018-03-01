@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { styleUtils } from 'scaleflex-react-modules/dist';
+import { styleUtils } from 'scaleflex-react-ui-kit/dist';
 
 const { getIconStyles, getIconByName } = styleUtils;
 

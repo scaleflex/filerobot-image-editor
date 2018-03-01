@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PreviewWrapper, PreviewImgBox } from '../../styledComponents';
 import ImageManipulator from './ImageManipulator';
-import { Spinner } from 'scaleflex-react-modules/dist';
+import { Spinner } from 'scaleflex-react-ui-kit/dist';
 
 
 export default class extends Component {

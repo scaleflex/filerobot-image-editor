@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ImageEditor from './ImageEditor/components/ImageEditor';
 import styled, { ThemeProvider } from 'styled-components';
-import { darkTheme, Modal } from 'scaleflex-react-modules/dist';
-import 'scaleflex-react-modules/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
+import { getTheme, Modal } from 'scaleflex-react-ui-kit/dist';
+import 'scaleflex-react-ui-kit/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
 
 
 class ImageEditorWrapper extends Component {
@@ -19,7 +19,7 @@ class ImageEditorWrapper extends Component {
     if (!src) return null;
 
     return (
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={getTheme('dark')}>
         <Wrapper>
           {showModal &&
           <Modal fullScreen={'lg'}>

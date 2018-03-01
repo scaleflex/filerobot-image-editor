@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Button } from 'scaleflex-react-modules/dist';
-import { styleUtils } from 'scaleflex-react-modules/dist';
+import { Button } from 'scaleflex-react-ui-kit/dist';
+import { styleUtils } from 'scaleflex-react-ui-kit/dist';
 
 const { getIconStyles, getIconByName } = styleUtils;
 
