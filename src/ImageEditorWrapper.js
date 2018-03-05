@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import ImageEditor from './ImageEditor/components/ImageEditor';
-import styled, { ThemeProvider } from 'styled-components';
-import { getTheme, Modal } from 'scaleflex-react-ui-kit/dist';
+import styled, { ThemeProvider, injectGlobal } from 'styled-components';
+import { getTheme, Modal, getGlobal } from 'scaleflex-react-ui-kit/dist';
 import 'scaleflex-react-ui-kit/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
 
+injectGlobal`
+  ${getGlobal()}
+`;
 
 class ImageEditorWrapper extends Component {
   state = { showModal: false };
@@ -40,10 +43,6 @@ export default ImageEditorWrapper;
 
 
 const Wrapper = styled.div`
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  
   *, *:after, *:before, *::after, *::before {
     box-sizing: border-box;
   }
