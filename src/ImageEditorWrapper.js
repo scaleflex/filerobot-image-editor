@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ImageEditor from './ImageEditor/components/ImageEditor';
 import styled, { ThemeProvider, injectGlobal } from 'styled-components';
-import { getTheme, Modal, getGlobal } from 'scaleflex-react-ui-kit/dist';
+import { getDesignSystem, Modal, getGlobal } from 'scaleflex-react-ui-kit/dist';
 import 'scaleflex-react-ui-kit/dist/styledComponents/assets/styles/scaleflex-icon-font.css';
 
 injectGlobal`
@@ -22,7 +22,7 @@ class ImageEditorWrapper extends Component {
     if (!src) return null;
 
     return (
-      <ThemeProvider theme={getTheme('dark')}>
+      <ThemeProvider theme={getDesignSystem('dark')}>
         <Wrapper>
           {showModal &&
           <Modal fullScreen={'lg'}>
