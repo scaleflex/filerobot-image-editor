@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 
 const ResizeWrapper = styled.div`
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.colors.text.base};
   text-align: center;
 `;
 

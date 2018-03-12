@@ -30,13 +30,13 @@ const ToolWrapper = styled.div`
   min-height: 100px;
   text-align: center;
   font-size: 12px;
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.colors.text.base};
   text-transform: ${props => props.tt || 'capitalize'};
-  background: ${props => props.active ? props.theme.mainBackgroundColorActive : 'inherit'};
+  background: ${props => props.active ? props.theme.colors.primary.lighter : 'inherit'};
   
   :hover {
-    color: ${props => props.theme.textColorHover};
-    background: ${props => props.theme.mainBackgroundColorActive};
+    color: ${props => props.theme.colors.text.light};
+    background: ${props => props.theme.colors.primary.lighter};
   }
 `;
 
@@ -80,7 +80,7 @@ const EffectWrapper = styled.div`
   font-size: 12px;
   
   :hover {
-    background: ${props => props.theme.mainBackgroundColorActive};
+    background: ${props => props.theme.colors.primary.lighter};
   }
 `;
 

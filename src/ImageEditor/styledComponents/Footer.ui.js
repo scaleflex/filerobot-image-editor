@@ -4,7 +4,7 @@ import { styleUtils } from 'scaleflex-react-ui-kit/dist';
 const { getIconStyles, getIconByName } = styleUtils;
 
 const Footer = styled.div`
-  background: ${props => props.theme.mainBackgroundColorHover};
+  background: ${props => props.theme.colors.primary.light};
   height: 34px;
   position: relative;
   z-index: 1;
@@ -35,7 +35,7 @@ function getActionIconStyle(props) {
     border-right: 1px solid ${props.theme.borderDarkColor};
     
     :hover {
-      background: ${props.muted ? 'inherit' : props.theme.mainBackgroundColorActive};
+      background: ${props.muted ? 'inherit' : props.theme.colors.primary.lighter};
     }
   `;
 }

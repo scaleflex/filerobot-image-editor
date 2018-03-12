@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   position: relative;
-  background: ${props => props.theme.mainBackgroundColor};
+  background: ${props => props.theme.colors.dark.base};
   font-size: ${props => props.theme.textFontSize};
   z-index: 1050;
   width: 100%;

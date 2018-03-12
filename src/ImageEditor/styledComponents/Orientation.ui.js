@@ -5,7 +5,7 @@ const { getIconStyles, getIconByName } = styleUtils;
 
 
 const OrientationWrapper = styled.div`
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.colors.text.base};
   text-align: center;
 `;
 

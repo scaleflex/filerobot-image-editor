@@ -5,7 +5,7 @@ import { styleUtils } from 'scaleflex-react-ui-kit/dist';
 const { getIconStyles, getIconByName } = styleUtils;
 
 const CropWrapper = styled.div`
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.colors.text.base};
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
@@ -22,7 +22,7 @@ const CropWrapper = styled.div`
 
 const CustomLabel = styled.div`
   display: block;
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.colors.text.base};
   height: 30px;
   line-height: 30px;
 `;
@@ -49,7 +49,7 @@ const FieldInput = styled.input.attrs({
   font-size: 12px;
   line-height: 30px;
   color: rgb(242, 242, 242);
-  background: ${props => props.dark ? props.theme.mainBackgroundColor : props.theme.inputBackgroundColor};
+  background: ${props => props.dark ? props.theme.colors.dark.base : props.theme.colors.primary.lighter};
   border-radius: 3px;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px inset, rgba(82, 104, 109, 0.4) 0px 1px 0px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -62,7 +62,7 @@ const FieldInput = styled.input.attrs({
   }
   
   :focus {
-    border: 1px solid ${props => props.theme.mainThemeColor};
+    border: 1px solid ${props => props.theme.colors.secondary.base};
     outline: none;
     box-shadow: rgba(0, 112, 124, 0.5) 0px 1px 1px inset, rgba(0, 112, 124, 0.4) 0px 1px 0px;
   }
@@ -77,7 +77,7 @@ const BlockRatioBtn = Button.extend`
   padding: 0;
   
   > span {
-    color: ${props => props.active ? props.theme.textColorHover : props.theme.textMuted} !important;
+    color: ${props => props.active ? props.theme.colors.text.light : props.theme.colors.text.mute} !important;
    }
 `;
 
@@ -99,7 +99,7 @@ const CropBox = styled.div`
   text-align: center;
   padding: 0 20px;
   cursor: pointer;
-  background: ${props => props.active ? props.theme.mainBackgroundColorActive : 'transparent'}
+  background: ${props => props.active ? props.theme.colors.primary.lighter : 'transparent'}
 `;
 
 const CropBoxInner = styled.div`

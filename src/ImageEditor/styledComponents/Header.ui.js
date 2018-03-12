@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const HeaderWrapper = styled.div`
-  background: ${props => props.theme.mainBackgroundColorHover};
+  background: ${props => props.theme.colors.primary.light};
 `;
 
 const HeaderTop = styled.div`
@@ -12,7 +12,7 @@ const HeaderTop = styled.div`
 const Title = styled.div`
   text-align: center;
   text-transform: capitalize;
-  color: ${props => props.theme.textColor}
+  color: ${props => props.theme.colors.text.base}
 `;
 
 const LeftActions = styled.div`
@@ -31,7 +31,7 @@ const ToolbarWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 100px;
-  background: ${props => props.theme.mainBackgroundColorHover}
+  background: ${props => props.theme.colors.primary.light}
 `;
 
 export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper };
