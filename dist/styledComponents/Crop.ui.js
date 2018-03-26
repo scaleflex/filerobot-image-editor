@@ -22,11 +22,11 @@ var getIconStyles = styleUtils.getIconStyles,
 
 
 var CropWrapper = styled.div(_templateObject, function (props) {
-  return props.theme.textColor;
+  return props.theme.colors.text.base;
 });
 
 var CustomLabel = styled.div(_templateObject2, function (props) {
-  return props.theme.textColor;
+  return props.theme.colors.text.base;
 });
 
 var FieldSet = styled.div(_templateObject3);
@@ -40,15 +40,15 @@ var FieldInput = styled.input.attrs({
 })(_templateObject5, function (props) {
   return props.fullSize ? '100%' : props.theme.fieldWidth;
 }, function (props) {
-  return props.dark ? props.theme.mainBackgroundColor : props.theme.inputBackgroundColor;
+  return props.dark ? props.theme.colors.dark.base : props.theme.colors.primary.lighter;
 }, function (props) {
-  return props.theme.mainThemeColor;
+  return props.theme.colors.secondary.base;
 });
 
 var BlockRatioWrapper = styled.div(_templateObject6);
 
 var BlockRatioBtn = Button.extend(_templateObject7, function (props) {
-  return props.active ? props.theme.textColorHover : props.theme.textMuted;
+  return props.active ? props.theme.colors.text.light : props.theme.colors.text.mute;
 });
 
 var BlockRatioIcon = styled.span(_templateObject8, function (props) {
@@ -62,7 +62,7 @@ var BlockRatioIcon = styled.span(_templateObject8, function (props) {
 });
 
 var CropBox = styled.div(_templateObject9, function (props) {
-  return props.active ? props.theme.mainBackgroundColorActive : 'transparent';
+  return props.active ? props.theme.colors.primary.lighter : 'transparent';
 });
 
 var CropBoxInner = styled.div(_templateObject10);

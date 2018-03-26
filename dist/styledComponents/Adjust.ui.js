@@ -5,7 +5,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 import styled from 'styled-components';
 
 var AdjustWrapper = styled.div(_templateObject, function (props) {
-  return props.theme.textColor;
+  return props.theme.colors.text.base;
 });
 
 export { AdjustWrapper };

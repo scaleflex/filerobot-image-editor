@@ -14,7 +14,7 @@ var getIconStyles = styleUtils.getIconStyles,
 
 
 var OrientationWrapper = styled.div(_templateObject, function (props) {
-  return props.theme.textColor;
+  return props.theme.colors.text.base;
 });
 
 var RotateWrapper = styled.div(_templateObject2);

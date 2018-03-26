@@ -23,15 +23,15 @@ var Toolbar = styled.div(_templateObject, function (props) {
 });
 
 var ToolWrapper = styled.div(_templateObject2, function (props) {
-  return props.theme.textColor;
+  return props.theme.colors.text.base;
 }, function (props) {
   return props.tt || 'capitalize';
 }, function (props) {
-  return props.active ? props.theme.mainBackgroundColorActive : 'inherit';
+  return props.active ? props.theme.colors.primary.lighter : 'inherit';
 }, function (props) {
-  return props.theme.textColorHover;
+  return props.theme.colors.text.light;
 }, function (props) {
-  return props.theme.mainBackgroundColorActive;
+  return props.theme.colors.primary.lighter;
 });
 
 var ToolIcon = styled.div(_templateObject3, function (props) {
@@ -47,7 +47,7 @@ var EffectsWrapper = styled.div(_templateObject5);
 var EffectWrapper = styled.div(_templateObject6, function (props) {
   return props.theme.textColor;
 }, function (props) {
-  return props.theme.mainBackgroundColorActive;
+  return props.theme.colors.primary.lighter;
 });
 
 var EffectIcon = styled.div(_templateObject7, function (props) {

@@ -6,7 +6,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 import styled from 'styled-components';
 
 var ResizeWrapper = styled.div(_templateObject, function (props) {
-  return props.theme.textColor;
+  return props.theme.colors.text.base;
 });
 
 var ResizeBox = styled.div(_templateObject2);

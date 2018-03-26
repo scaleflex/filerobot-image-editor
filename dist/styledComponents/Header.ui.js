@@ -9,7 +9,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 import styled from 'styled-components';
 
 var HeaderWrapper = styled.div(_templateObject, function (props) {
-  return props.theme.mainBackgroundColorHover;
+  return props.theme.colors.primary.light;
 });
 
 var HeaderTop = styled.div(_templateObject2, function (props) {
@@ -17,7 +17,7 @@ var HeaderTop = styled.div(_templateObject2, function (props) {
 });
 
 var Title = styled.div(_templateObject3, function (props) {
-  return props.theme.textColor;
+  return props.theme.colors.text.base;
 });
 
 var LeftActions = styled.div(_templateObject4);
@@ -25,7 +25,7 @@ var LeftActions = styled.div(_templateObject4);
 var RightActions = styled.div(_templateObject4);
 
 var ToolbarWrapper = styled.div(_templateObject5, function (props) {
-  return props.theme.mainBackgroundColorHover;
+  return props.theme.colors.primary.light;
 });
 
 export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper };

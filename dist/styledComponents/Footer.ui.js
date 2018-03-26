@@ -11,7 +11,7 @@ var getIconStyles = styleUtils.getIconStyles,
 
 
 var Footer = styled.div(_templateObject, function (props) {
-  return props.theme.mainBackgroundColorHover;
+  return props.theme.colors.primary.light;
 });
 
 var PreviousBtn = styled.div(_templateObject2, function (props) {
@@ -27,7 +27,7 @@ var NextBtn = styled.div(_templateObject2, function (props) {
 });
 
 function getActionIconStyle(props) {
-  return '\n    display: inline-block;\n    height: 34px;\n    width: 34px;\n    cursor: ' + (props.muted ? 'not-allowed' : 'pointer') + ';\n    text-align: center;\n    line-height: 34px;\n    border-right: 1px solid ' + props.theme.borderDarkColor + ';\n    \n    :hover {\n      background: ' + (props.muted ? 'inherit' : props.theme.mainBackgroundColorActive) + ';\n    }\n  ';
+  return '\n    display: inline-block;\n    height: 34px;\n    width: 34px;\n    cursor: ' + (props.muted ? 'not-allowed' : 'pointer') + ';\n    text-align: center;\n    line-height: 34px;\n    border-right: 1px solid ' + props.theme.borderDarkColor + ';\n    \n    :hover {\n      background: ' + (props.muted ? 'inherit' : props.theme.colors.primary.lighter) + ';\n    }\n  ';
 }
 
 export { Footer, PreviousBtn, NextBtn };
