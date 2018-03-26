@@ -2,7 +2,7 @@ var _templateObject = _taggedTemplateLiteral(['\n  color: ', ';\n  text-align: c
     _templateObject2 = _taggedTemplateLiteral(['\n  display: inline-block;\n  padding: 20px;\n'], ['\n  display: inline-block;\n  padding: 20px;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n\n'], ['\n\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  margin-top: 10px;\n  \n  button:focus,  button:active {\n    outline: none !important;\n    box-shadow: none !important;\n  }\n'], ['\n  margin-top: 10px;\n  \n  button:focus,  button:active {\n    outline: none !important;\n    box-shadow: none !important;\n  }\n']),
-    _templateObject5 = _taggedTemplateLiteral(['\n  height: 14px;\n  font-size: 14px;\n  \n  ', '\n  ', '\n'], ['\n  height: 14px;\n  font-size: 14px;\n  \n  ', '\n  ', '\n']);
+    _templateObject5 = _taggedTemplateLiteral(['\n  ', '\n  ', '\n  height: 14px;\n  font-size: 14px;\n  color: ', ';\n'], ['\n  ', '\n  ', '\n  height: 14px;\n  font-size: 14px;\n  color: ', ';\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -27,6 +27,8 @@ var RotateIcon = styled.span(_templateObject5, function (props) {
   return getIconStyles(props);
 }, function (props) {
   return getIconByName(props.name);
+}, function (props) {
+  return props.theme.colors.dark.base;
 });
 
 export { OrientationWrapper, RotateWrapper, RotateButton, RotateLabel, RotateIcon };

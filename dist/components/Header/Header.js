@@ -7,7 +7,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
-import { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper } from '../../styledComponents';
+import { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn } from '../../styledComponents';
 import { CloseBtn, Button } from 'scaleflex-react-ui-kit/dist';
 import { Toolbar } from '../';
 
@@ -51,8 +51,8 @@ var _class = function (_Component) {
             LeftActions,
             null,
             React.createElement(
-              Button,
-              { hide: !activeTab, onClick: onRevert, fullSize: true },
+              CancelBtn,
+              { hide: !activeTab, onClick: onRevert, sm: true, 'default': true, fullSize: true },
               'Cancel'
             )
           ),
@@ -63,14 +63,16 @@ var _class = function (_Component) {
             React.createElement(
               Button,
               {
-                success: activeTab,
-                themeBtn: !activeTab,
+                themeColor: true,
+                sm: true,
+                success: !activeTab,
+                themeBtn: activeTab,
                 fullSize: true,
                 onClick: function onClick() {
                   !activeTab ? onSave() : apply();
                 }
               },
-              !activeTab ? 'Save' : 'Apply'
+              !activeTab ? 'SAVE' : 'APPLY'
             )
           )
         )

@@ -17,9 +17,9 @@ var getIconStyles = styleUtils.getIconStyles,
 
 
 var Toolbar = styled.div(_templateObject, function (props) {
-  return props.theme.borderDarkColor;
+  return props.theme.colors.dark.base;
 }, function (props) {
-  return props.theme.borderDarkColor;
+  return props.theme.colors.dark.base;
 });
 
 var ToolWrapper = styled.div(_templateObject2, function (props) {
