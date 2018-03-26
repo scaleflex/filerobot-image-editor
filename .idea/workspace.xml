@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ec7cc45c-5041-49d3-be20-4994e04e2264" name="Default" comment="add">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/working_on_modules.xml" afterPath="$PROJECT_DIR$/.idea/shelf/working_on_modules.xml" />
+    <list default="true" id="ec7cc45c-5041-49d3-be20-4994e04e2264" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/build/static/js/main.6618f631.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/build/static/js/main.6618f631.js.map" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" afterPath="$PROJECT_DIR$/build/asset-manifest.json" />
-      <change beforePath="$PROJECT_DIR$/build/index.html" afterPath="$PROJECT_DIR$/build/index.html" />
-      <change beforePath="$PROJECT_DIR$/build/service-worker.js" afterPath="$PROJECT_DIR$/build/service-worker.js" />
-      <change beforePath="$PROJECT_DIR$/config/webpack.config.prod.js" afterPath="$PROJECT_DIR$/config/webpack.config.prod.js" />
       <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/shelf/" />
@@ -44,8 +41,8 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="63" column="14" lean-forward="false" selection-start-line="63" selection-start-column="14" selection-end-line="63" selection-end-column="14" />
+            <state relative-caret-position="289">
+              <caret line="37" column="9" lean-forward="false" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -54,8 +51,8 @@
       <file leaf-file-name="webpack.config.prod.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/webpack.config.prod.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="894">
-              <caret line="379" column="27" lean-forward="false" selection-start-line="379" selection-start-column="27" selection-end-line="379" selection-end-column="27" />
+            <state relative-caret-position="266">
+              <caret line="381" column="7" lean-forward="false" selection-start-line="381" selection-start-column="7" selection-end-line="382" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -117,7 +114,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>image edito</find>
       <find>styled-components</find>
       <find>styled-component</find>
       <find>dist/</find>
@@ -145,8 +141,9 @@
       <find>Image Editor</find>
       <find>npm-che</find>
       <find>npm-c</find>
-      <find>mome</find>
       <find>extra</find>
+      <find>mome</find>
+      <find>banner</find>
     </findStrings>
     <replaceStrings>
       <replace>close</replace>
@@ -226,32 +223,6 @@
             <path>
               <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
               <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="image-editor-reactjs" type="462c0819:PsiDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="main.6618f631.js" type="620a8d5e:NestingTreeNode" />
             </path>
             <path>
               <item name="image-editor-reactjs" type="b2602c69:ProjectViewProjectNode" />
@@ -569,18 +540,25 @@
       <option name="project" value="LOCAL" />
       <updated>1522068534229</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="update project and add timestamp">
+      <created>1522072258546</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1522072258546</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60669000" />
+    <option name="totallyTimeSpent" value="61127000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.7505721" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42791763" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5652174" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -659,7 +637,8 @@
     <MESSAGE value="fix name of version" />
     <MESSAGE value="update according last ui-kit" />
     <MESSAGE value="fix style bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix style bugs" />
+    <MESSAGE value="update project and add timestamp" />
+    <option name="LAST_COMMIT_MESSAGE" value="update project and add timestamp" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -977,14 +956,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="63" column="14" lean-forward="false" selection-start-line="63" selection-start-column="14" selection-end-line="63" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/static/js/main.6618f631.js.map">
       <provider editor-type-id="sourcemapFileViewerProvider">
         <state />
@@ -1006,10 +977,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="37" column="9" lean-forward="false" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/config/webpack.config.prod.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="894">
-          <caret line="379" column="27" lean-forward="false" selection-start-line="379" selection-start-column="27" selection-end-line="379" selection-end-column="27" />
+        <state relative-caret-position="266">
+          <caret line="381" column="7" lean-forward="false" selection-start-line="381" selection-start-column="7" selection-end-line="382" selection-end-column="37" />
           <folding />
         </state>
       </provider>
