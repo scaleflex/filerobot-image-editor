@@ -57,7 +57,8 @@
     "whatwg-fetch": "2.0.3"
   },
   "peerDependencies": {
-    "styled-components": "^3.1.6"
+    "styled-components": "^3.1.6",
+    "scaleflex-react-ui-kit": "git+ssh://git@code.scaleflex.cloud:scaleflex/scaleflex-react-ui-kit.git"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -107,9 +108,5 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "dependencies": {
-    "styled-components": "^3.1.6",
-    "scaleflex-react-ui-kit": "git+ssh://git@code.scaleflex.cloud:scaleflex/scaleflex-react-ui-kit.git"
   }
 }
