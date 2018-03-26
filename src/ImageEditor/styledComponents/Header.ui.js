@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button, getHoverColor } from 'scaleflex-react-ui-kit/dist';
 
 const HeaderWrapper = styled.div`
   background: ${props => props.theme.colors.primary.light};
@@ -6,7 +7,8 @@ const HeaderWrapper = styled.div`
 
 const HeaderTop = styled.div`
   line-height: 35px;
-  border-bottom: 1px solid ${props => props.theme.borderDarkColor};
+  border-bottom: 1px solid ${props => props.theme.colors.dark.base};
+  background: ${props => props.theme.colors.dark.base};
 `;
 
 const Title = styled.div`
@@ -34,4 +36,17 @@ const ToolbarWrapper = styled.div`
   background: ${props => props.theme.colors.primary.light}
 `;
 
-export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper };
+const CancelBtn = Button.extend`
+  background: ${props => props.theme.colors.dark.base};
+  border-color: ${props => props.theme.colors.dark.base};
+  color: ${props => props.theme.colors.text.base};
+  text-transform: uppercase;
+  
+  :hover {
+    background: ${props => getHoverColor(props.theme.colors.dark.base)};
+    border-color: ${props => props.theme.colors.dark.base};
+    color: ${props => props.theme.colors.text.base};  
+  }
+`;
+
+export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn };

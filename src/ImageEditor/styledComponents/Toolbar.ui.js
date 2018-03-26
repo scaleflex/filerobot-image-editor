@@ -6,8 +6,8 @@ const { getIconStyles, getIconByName } = styleUtils;
 const Toolbar = styled.div`
   height: 100px;
   width: calc(100% - 200px);
-  border-left: 1px solid ${props => props.theme.borderDarkColor};
-  border-right: 1px solid ${props => props.theme.borderDarkColor};
+  border-left: 1px solid ${props => props.theme.colors.dark.base};
+  border-right: 1px solid ${props => props.theme.colors.dark.base};
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;

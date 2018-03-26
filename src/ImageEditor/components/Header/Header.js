@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper
+  HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn
 } from '../../styledComponents';
 import { CloseBtn, Button } from 'scaleflex-react-ui-kit/dist';
 import { Toolbar } from '../';
@@ -19,19 +19,21 @@ export default class extends Component {
 
         <ToolbarWrapper>
           <LeftActions>
-            <Button hide={!activeTab} onClick={onRevert} fullSize>Cancel</Button>
+            <CancelBtn hide={!activeTab} onClick={onRevert} sm default fullSize>Cancel</CancelBtn>
           </LeftActions>
 
           <Toolbar {...this.props}/>
 
           <RightActions>
             <Button
-              success={activeTab}
-              themeBtn={!activeTab}
+              themeColor
+              sm
+              success={!activeTab}
+              themeBtn={activeTab}
               fullSize
               onClick={() => { !activeTab ? onSave() : apply() }}
             >
-              {!activeTab ? 'Save' : 'Apply'}
+              {!activeTab ? 'SAVE' : 'APPLY'}
             </Button>
           </RightActions>
         </ToolbarWrapper>
