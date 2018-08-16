@@ -10,7 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { Component } from 'react';
 import { Toolbar } from '../../styledComponents';
-import { TOOLS } from '../../config';
+import { TOOLS, CLOUDIMAGE_OPERATIONS } from '../../config';
 import Tool from './Tool';
 import Effects from './Effects';
 import Filters from './Filters';
@@ -33,13 +33,20 @@ var _class = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var activeTab = this.props.activeTab;
+      var _props = this.props,
+          activeTab = _props.activeTab,
+          processWithCloudimage = _props.processWithCloudimage;
 
+      var allowedTools = TOOLS;
+
+      if (processWithCloudimage) allowedTools = TOOLS.filter(function (tool) {
+        return CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1;
+      });
 
       return React.createElement(
         Toolbar,
         null,
-        !activeTab && TOOLS.map(function (name) {
+        !activeTab && allowedTools.map(function (name) {
           return React.createElement(Tool, _extends({ name: name, key: name }, _this2.props));
         }),
         activeTab === 'effects' && React.createElement(Effects, this.props),

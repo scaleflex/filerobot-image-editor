@@ -1,5 +1,7 @@
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -15,6 +17,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
 import { b64toBlob, generateUUID } from '../../utils';
+import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
 
 var ImageManipulator = function (_Component) {
@@ -26,71 +29,144 @@ var ImageManipulator = function (_Component) {
     var _this = _possibleConstructorReturn(this, (ImageManipulator.__proto__ || Object.getPrototypeOf(ImageManipulator)).call(this));
 
     _this.saveImage = function () {
-      var imageName = _this.state.imageName;
+      var _this$state = _this.state,
+          imageName = _this$state.imageName,
+          operations = _this$state.operations;
       var _this$props = _this.props,
           onUpload = _this$props.onUpload,
           onClose = _this$props.onClose,
           updateState = _this$props.updateState,
-          closeOnLoad = _this$props.closeOnLoad;
+          closeOnLoad = _this$props.closeOnLoad,
+          config = _this$props.config,
+          processWithCloudimage = _this$props.processWithCloudimage;
 
-      var config = _this.props.config;
+      var src = _this.state.src.split('?')[0];
       var canvas = _this.getCanvasNode();
 
-      window.Caman(canvas, function () {
-        this.render(function () {
-          var base64 = this.toBase64();
-          var block = base64.split(";");
-          var contentType = block[0].split(":")[1];
-          var realData = block[1].split(",")[1];
-          var blob = b64toBlob(realData, contentType, null);
-          var splittedName = imageName.replace(/-edited/g, '').split('.');
-          var nameLength = splittedName.length;
-          var name = splittedName.slice(0, nameLength - 1).join('.') + '-edited.' + splittedName[nameLength - 1];
-          var formData = new FormData();
-          var request = new XMLHttpRequest();
-          var baseUrl = '//' + config.CONTAINER + '.api.airstore.io/v1/';
+      if (!processWithCloudimage) {
+        window.Caman(canvas, function () {
+          this.render(function () {
+            var base64 = this.toBase64();
+            var block = base64.split(";");
+            var contentType = block[0].split(":")[1];
+            var realData = block[1].split(",")[1];
+            var blob = b64toBlob(realData, contentType, null);
+            var splittedName = imageName.replace(/-edited/g, '').split('.');
+            var nameLength = splittedName.length;
+            var name = splittedName.slice(0, nameLength - 1).join('.') + '-edited.' + splittedName[nameLength - 1];
+            var formData = new FormData();
+            var request = new XMLHttpRequest();
+            var baseUrl = '//' + config.CONTAINER + '.api.airstore.io/v1/';
 
-          request.addEventListener("load", function (data) {
-            var _data$srcElement = data.srcElement,
-                srcElement = _data$srcElement === undefined ? {} : _data$srcElement;
-            var _srcElement$response = srcElement.response,
-                response = _srcElement$response === undefined ? '{}' : _srcElement$response;
+            request.addEventListener("load", function (data) {
+              var _data$srcElement = data.srcElement,
+                  srcElement = _data$srcElement === undefined ? {} : _data$srcElement;
+              var _srcElement$response = srcElement.response,
+                  response = _srcElement$response === undefined ? '{}' : _srcElement$response;
 
-            var responseData = JSON.parse(response) || {};
+              var responseData = JSON.parse(response) || {};
 
-            if (responseData.status === 'success') {
-              var _responseData$file = responseData.file,
-                  file = _responseData$file === undefined ? {} : _responseData$file;
+              if (responseData.status === 'success') {
+                var _responseData$file = responseData.file,
+                    file = _responseData$file === undefined ? {} : _responseData$file;
 
 
-              if (!file.url_public) return;
+                if (!file.url_public) return;
 
-              var nweImage = new Image();
-              nweImage.onload = function () {
+                var nweImage = new Image();
+                nweImage.onload = function () {
+                  updateState({ isShowSpinner: false, isHideCanvas: false });
+                  onUpload(nweImage.src);
+                  closeOnLoad && onClose();
+                };
+                nweImage.src = file.url_public + ('?hash=' + generateUUID());
+              } else {
                 updateState({ isShowSpinner: false, isHideCanvas: false });
-                onUpload(nweImage.src);
+                alert(responseData);
                 closeOnLoad && onClose();
-              };
-              nweImage.src = file.url_public + ('?hash=' + generateUUID());
-            } else {
-              updateState({ isShowSpinner: false, isHideCanvas: false });
-              alert(responseData);
-              closeOnLoad && onClose();
-            }
-          });
+              }
+            });
 
-          formData.append('files[]', blob, name);
-          request.open("POST", [baseUrl, 'upload?dir=image-editor'].join(''));
-          request.setRequestHeader('X-Airstore-Secret-Key', config.UPLOAD_KEY);
-          request.send(formData);
+            formData.append('files[]', blob, name);
+            request.open("POST", [baseUrl, 'upload?dir=image-editor'].join(''));
+            request.setRequestHeader('X-Airstore-Secret-Key', config.UPLOAD_KEY);
+            request.send(formData);
+          });
+        });
+      } else {
+        var operation = _this.getOperationInStack(operations);
+        var url = _this.generateCloudimageURL(operation, operations);
+        var original = src.replace(/https?:\/\/scaleflex.ultrafast.io\//, '');
+
+        var nweImage = new Image();
+        nweImage.onload = function () {
+          updateState({ isShowSpinner: false, isHideCanvas: false });
+          onUpload(url + original);
+          closeOnLoad && onClose();
+        };
+        nweImage.src = url + original + ('?hash=' + generateUUID());
+      }
+    };
+
+    _this.generateCloudimageURL = function (operation, operations) {
+      var config = _this.props.config;
+
+      var cloudUrl = config.CLOUDIMAGE_TOKEN + '.cloudimg.io' + '/';
+      var operationQ = _this.getOperationQuery(operation);
+      var operationParams = _this.getOperationParamsQuery(operation, operations);
+
+      var _operationParams = _slicedToArray(operationParams, 4),
+          width = _operationParams[0],
+          height = _operationParams[1],
+          x = _operationParams[2],
+          y = _operationParams[3];
+
+      return 'https://' + cloudUrl + operationQ + '/' + x + ',' + y + ',' + (x + width) + ',' + (y + height) + '-' + width + 'x' + height + '/n/';
+    };
+
+    _this.getOperationQuery = function (operation) {
+      switch (operation) {
+        case 'crop':
+          return 'crop_px';
+        default:
+          return 'cdn';
+      }
+    };
+
+    _this.getOperationParamsQuery = function (operation, operations) {
+      var params = null;
+      operations.forEach(function (_ref) {
+        var stack = _ref.stack;
+        return stack.forEach(function (obj) {
+          if (obj.name === operation) params = obj.arguments;
         });
       });
+
+      params = params.map(function (value) {
+        return parseInt(value);
+      });
+
+      return params;
+    };
+
+    _this.getOperationInStack = function (operations) {
+      var operation = null;
+
+      operations.map(function (_ref2, index) {
+        var stack = _ref2.stack;
+
+        var current = stack[0].name;
+
+        if (CLOUDIMAGE_OPERATIONS.indexOf(current) > -1) operation = current;
+      });
+
+      return operation;
     };
 
     _this.cleanTemp = function () {
-      var _this$state = _this.state,
-          operations = _this$state.operations,
-          currentOperation = _this$state.currentOperation;
+      var _this$state2 = _this.state,
+          operations = _this$state2.operations,
+          currentOperation = _this$state2.currentOperation;
 
 
       _this.revert(function () {
@@ -116,11 +192,11 @@ var ImageManipulator = function (_Component) {
     };
 
     _this.adjust = function (handler, value) {
-      var _this$state2 = _this.state,
-          _this$state2$operatio = _this$state2.operations,
-          operations = _this$state2$operatio === undefined ? [] : _this$state2$operatio,
-          currentOperation = _this$state2.currentOperation,
-          adjust = _this$state2.adjust;
+      var _this$state3 = _this.state,
+          _this$state3$operatio = _this$state3.operations,
+          operations = _this$state3$operatio === undefined ? [] : _this$state3$operatio,
+          currentOperation = _this$state3.currentOperation,
+          adjust = _this$state3.adjust;
 
       var that = _this;
 
@@ -149,10 +225,10 @@ var ImageManipulator = function (_Component) {
     };
 
     _this.applyOrientation = function () {
-      var _this$state3 = _this.state,
-          currentOperation = _this$state3.currentOperation,
-          operations = _this$state3.operations,
-          rotate = _this$state3.rotate;
+      var _this$state4 = _this.state,
+          currentOperation = _this$state4.currentOperation,
+          operations = _this$state4.operations,
+          rotate = _this$state4.rotate;
 
       var operation = {
         stack: [{ name: 'rotate', arguments: [rotate], queue: 0 }]
@@ -165,9 +241,9 @@ var ImageManipulator = function (_Component) {
 
     _this.addEffect = function (name) {
       var effectHandlerName = _this.getEffectHandlerName(name);
-      var _this$state4 = _this.state,
-          currentOperation = _this$state4.currentOperation,
-          operations = _this$state4.operations;
+      var _this$state5 = _this.state,
+          currentOperation = _this$state5.currentOperation,
+          operations = _this$state5.operations;
 
       var that = _this;
       var operation = {
@@ -235,10 +311,10 @@ var ImageManipulator = function (_Component) {
     _this.applyCanvasChanges = function () {};
 
     _this.applyCrop = function () {
-      var _this$state5 = _this.state,
-          cropDetails = _this$state5.cropDetails,
-          currentOperation = _this$state5.currentOperation,
-          operations = _this$state5.operations;
+      var _this$state6 = _this.state,
+          cropDetails = _this$state6.cropDetails,
+          currentOperation = _this$state6.currentOperation,
+          operations = _this$state6.operations;
       var width = cropDetails.width,
           height = cropDetails.height,
           x = cropDetails.x,
@@ -338,9 +414,9 @@ var ImageManipulator = function (_Component) {
     };
 
     _this.applyResize = function () {
-      var _this$state6 = _this.state,
-          currentOperation = _this$state6.currentOperation,
-          operations = _this$state6.operations;
+      var _this$state7 = _this.state,
+          currentOperation = _this$state7.currentOperation,
+          operations = _this$state7.operations;
       var canvasDimensions = _this.props.canvasDimensions;
       var width = canvasDimensions.width,
           height = canvasDimensions.height;
@@ -361,10 +437,10 @@ var ImageManipulator = function (_Component) {
     };
 
     _this.applyEffects = function () {
-      var _this$state7 = _this.state,
-          currentOperation = _this$state7.currentOperation,
-          operations = _this$state7.operations,
-          tempOperation = _this$state7.tempOperation;
+      var _this$state8 = _this.state,
+          currentOperation = _this$state8.currentOperation,
+          operations = _this$state8.operations,
+          tempOperation = _this$state8.tempOperation;
 
       _this.pushOperation(operations, tempOperation, currentOperation);
       _this.props.updateState({ isHideCanvas: false, activeTab: null, operations: operations, currentOperation: tempOperation });

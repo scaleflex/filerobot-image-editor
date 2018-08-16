@@ -18,18 +18,17 @@ document.body.appendChild(script);
 var _class = function (_Component) {
   _inherits(_class, _Component);
 
-  function _class() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
+  function _class(props) {
     _classCallCheck(this, _class);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+    _initialiseProps.call(_this);
+
+    var PROCESS_WITH_CLOUDIMAGE = props.config.PROCESS_WITH_CLOUDIMAGE;
+
+
+    _this.state = {
       isShowSpinner: true,
       isHideCanvas: false,
       activeTab: null,
@@ -37,82 +36,10 @@ var _class = function (_Component) {
       currentOperation: null,
       original: { width: 300, height: 200 },
       cropDetails: { width: 300, height: 200 },
-      canvasDimensions: { width: 300, height: 200, ratio: 1.5 }
-    }, _this.updateState = function (props) {
-      _this.setState(props);
-    }, _this.onRevert = function () {
-      var _this$state = _this.state,
-          cleanTemp = _this$state.cleanTemp,
-          activeTab = _this$state.activeTab,
-          revert = _this$state.revert,
-          applyOperations = _this$state.applyOperations,
-          operations = _this$state.operations;
-
-
-      if (activeTab === 'effects' || activeTab === 'filters') {
-        _this.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
-        cleanTemp();
-        return;
-      }
-
-      if (activeTab === 'orientation') {
-        revert(function () {
-          applyOperations(operations, operations.length - 1, function () {
-            _this.setState({ isHideCanvas: false, isShowSpinner: false });
-          });
-        });
-      }
-
-      _this.setState({ activeTab: null, isShowSpinner: false, isHideCanvas: false });
-    }, _this.onAdjust = function (handler, value) {
-      var adjust = _this.state.adjust;
-
-
-      adjust(handler, value);
-    }, _this.onRotate = function (value, total) {
-      var rotate = _this.state.rotate;
-
-
-      rotate(value, total);
-    }, _this.onSave = function () {
-      var saveImage = _this.state.saveImage;
-
-
-      _this.setState({ isShowSpinner: true });
-      saveImage();
-    }, _this.onResize = function (params) {
-      var resize = _this.state.resize;
-
-
-      resize(params);
-    }, _this.onApplyEffects = function (name) {
-      var addEffect = _this.state.addEffect;
-
-
-      _this.setState({ isHideCanvas: true, isShowSpinner: true });
-      addEffect(name);
-    }, _this.apply = function () {
-      var _this$state2 = _this.state,
-          activeTab = _this$state2.activeTab,
-          applyChanges = _this$state2.applyChanges;
-
-
-      _this.setState({ isHideCanvas: true });
-      applyChanges(activeTab);
-    }, _this.redoOperation = function (operationIndex) {
-      var _this$state3 = _this.state,
-          applyOperations = _this$state3.applyOperations,
-          operations = _this$state3.operations,
-          revert = _this$state3.revert;
-
-
-      _this.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
-      revert(function () {
-        applyOperations(operations, operationIndex, function () {
-          _this.setState({ isHideCanvas: false, isShowSpinner: false });
-        });
-      });
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+      canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
+      processWithCloudimage: PROCESS_WITH_CLOUDIMAGE
+    };
+    return _this;
   }
 
   _createClass(_class, [{
@@ -126,7 +53,8 @@ var _class = function (_Component) {
           isHideCanvas = _state.isHideCanvas,
           cropDetails = _state.cropDetails,
           original = _state.original,
-          canvasDimensions = _state.canvasDimensions;
+          canvasDimensions = _state.canvasDimensions,
+          processWithCloudimage = _state.processWithCloudimage;
       var _props = this.props,
           src = _props.src,
           config = _props.config,
@@ -142,6 +70,7 @@ var _class = function (_Component) {
         src: src,
         onClose: onClose,
         canvasDimensions: canvasDimensions,
+        processWithCloudimage: processWithCloudimage,
         updateState: this.updateState,
         onRevert: this.onRevert,
         apply: this.apply,
@@ -163,9 +92,16 @@ var _class = function (_Component) {
         canvasDimensions: canvasDimensions,
         closeOnLoad: closeOnLoad,
         config: config,
+        processWithCloudimage: processWithCloudimage,
         updateState: this.updateState
       };
-      var footerProps = { operations: operations, currentOperation: currentOperation, redoOperation: this.redoOperation };
+      var footerProps = {
+        operations: operations,
+        currentOperation: currentOperation,
+        processWithCloudimage: processWithCloudimage,
+        updateState: this.updateState,
+        redoOperation: this.redoOperation
+      };
 
       return React.createElement(
         Wrapper,
@@ -179,5 +115,101 @@ var _class = function (_Component) {
 
   return _class;
 }(Component);
+
+var _initialiseProps = function _initialiseProps() {
+  var _this2 = this;
+
+  this.updateState = function (props) {
+    _this2.setState(props);
+  };
+
+  this.onRevert = function () {
+    var _state2 = _this2.state,
+        cleanTemp = _state2.cleanTemp,
+        activeTab = _state2.activeTab,
+        revert = _state2.revert,
+        applyOperations = _state2.applyOperations,
+        operations = _state2.operations;
+
+
+    if (activeTab === 'effects' || activeTab === 'filters') {
+      _this2.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
+      cleanTemp();
+      return;
+    }
+
+    if (activeTab === 'orientation') {
+      revert(function () {
+        applyOperations(operations, operations.length - 1, function () {
+          _this2.setState({ isHideCanvas: false, isShowSpinner: false });
+        });
+      });
+    }
+
+    _this2.setState({ activeTab: null, isShowSpinner: false, isHideCanvas: false });
+  };
+
+  this.onAdjust = function (handler, value) {
+    var adjust = _this2.state.adjust;
+
+
+    adjust(handler, value);
+  };
+
+  this.onRotate = function (value, total) {
+    var rotate = _this2.state.rotate;
+
+
+    rotate(value, total);
+  };
+
+  this.onSave = function () {
+    var saveImage = _this2.state.saveImage;
+
+
+    _this2.setState({ isShowSpinner: true });
+    saveImage();
+  };
+
+  this.onResize = function (params) {
+    var resize = _this2.state.resize;
+
+
+    resize(params);
+  };
+
+  this.onApplyEffects = function (name) {
+    var addEffect = _this2.state.addEffect;
+
+
+    _this2.setState({ isHideCanvas: true, isShowSpinner: true });
+    addEffect(name);
+  };
+
+  this.apply = function () {
+    var _state3 = _this2.state,
+        activeTab = _state3.activeTab,
+        applyChanges = _state3.applyChanges;
+
+
+    _this2.setState({ isHideCanvas: true });
+    applyChanges(activeTab);
+  };
+
+  this.redoOperation = function (operationIndex) {
+    var _state4 = _this2.state,
+        applyOperations = _state4.applyOperations,
+        operations = _state4.operations,
+        revert = _state4.revert;
+
+
+    _this2.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
+    revert(function () {
+      applyOperations(operations, operationIndex, function () {
+        _this2.setState({ isHideCanvas: false, isShowSpinner: false });
+      });
+    });
+  };
+};
 
 export default _class;

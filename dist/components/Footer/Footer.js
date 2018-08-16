@@ -7,7 +7,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
-import { Footer, PreviousBtn, NextBtn } from '../../styledComponents/index';
+import { Footer, PreviousBtn, NextBtn, Switcher } from '../../styledComponents/index';
 
 var _class = function (_Component) {
   _inherits(_class, _Component);
@@ -26,7 +26,9 @@ var _class = function (_Component) {
           operations = _props$operations === undefined ? [] : _props$operations,
           _props$currentOperati = _props.currentOperation,
           currentOperation = _props$currentOperati === undefined ? null : _props$currentOperati,
-          redoOperation = _props.redoOperation;
+          redoOperation = _props.redoOperation,
+          updateState = _props.updateState,
+          processWithCloudimage = _props.processWithCloudimage;
 
       var currentOperationIndex = operations.findIndex(function (operation) {
         return operation === currentOperation;
@@ -49,6 +51,14 @@ var _class = function (_Component) {
             !isNextForbidden && redoOperation(currentOperationIndex + 1);
           },
           muted: isNextForbidden
+        }),
+        React.createElement(Switcher, {
+          id: 'cloudimage-url-generator-switch',
+          checked: processWithCloudimage,
+          handleChange: function handleChange(processWithCloudimage) {
+            updateState({ processWithCloudimage: processWithCloudimage });
+          },
+          text: 'Process with cloudimage'
         })
       );
     }
