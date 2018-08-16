@@ -8,6 +8,17 @@ import {
 export default class extends Component {
   state = {
     isBlockRatio: false
+  };
+
+  componentDidMount() {
+    const { operations, processWithCloudimage, updateState, forceApplyOperations } = this.props;
+    const cropOperationIndex = operations.findIndex(({ stack }) => stack[0].name === 'resize');
+
+    if (cropOperationIndex > -1 && processWithCloudimage) {
+      operations.splice(cropOperationIndex, 1);
+      updateState({ operations });
+      forceApplyOperations(operations, 'resize');
+    }
   }
 
   changeWidth = (event) => {

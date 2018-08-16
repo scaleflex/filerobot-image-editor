@@ -28,7 +28,7 @@ export default class extends Component {
     if (cropOperationIndex > -1 && processWithCloudimage) {
       operations.splice(cropOperationIndex, 1);
       updateState({ operations });
-      forceApplyOperations(operations);
+      forceApplyOperations(operations, 'crop');
     }
   }
 

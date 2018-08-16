@@ -49,14 +49,14 @@ export default class extends Component {
     this.setState({ activeTab: null, isShowSpinner: false, isHideCanvas: false });
   }
 
-  forceApplyOperations = (operations) => {
+  forceApplyOperations = (operations, activeTab) => {
     const { revert, applyOperations  } = this.state;
 
     this.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
 
     revert(() => {
       applyOperations(operations, operations.length, () => {
-        this.setState({ isHideCanvas: false, isShowSpinner: false, activeTab: 'crop' });
+        this.setState({ isHideCanvas: false, isShowSpinner: false, activeTab: activeTab });
       });
     });
   }

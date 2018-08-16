@@ -129,8 +129,8 @@ export default class ImageManipulator extends Component {
         });
       });
     } else {
-      const operation = this.getOperationInStack(operations);
-      const url = this.generateCloudimageURL(operation, operations);
+      const allowedOperations = operations.filter(({ stack }) => CLOUDIMAGE_OPERATIONS.indexOf(stack[0].name) > -1);
+      const url = this.generateCloudimageURL(allowedOperations);
       const original = src.replace(/https?:\/\/scaleflex.ultrafast.io\//, '');
 
       const nweImage = new Image();
@@ -143,47 +143,53 @@ export default class ImageManipulator extends Component {
     }
   }
 
-  generateCloudimageURL = (operation, operations) => {
+  generateCloudimageURL = (operations) => {
     const { config } = this.props;
     const cloudUrl = config.CLOUDIMAGE_TOKEN + '.cloudimg.io' + '/';
-    const operationQ = this.getOperationQuery(operation);
-    const operationParams = this.getOperationParamsQuery(operation, operations);
-    const [ width, height, x, y ] = operationParams;
+    const cropOperation = this.isOperationExist(operations, 'crop');
+    const resizeOperation = this.isOperationExist(operations, 'resize');
+    const operationQ = this.getOperationQuery(cropOperation, resizeOperation);
+    let cropParams = null;
+    let resizeParams = null;
 
-    return 'https://' + cloudUrl + operationQ + '/' + x + ',' + y + ',' + (x + width) +',' + (y + height) + '-' + width + 'x' + height + '/n/';
+    if (cropOperation)
+      cropParams = this.getCropArguments(cropOperation);
+
+    let [ cropWidth, cropHeight, x, y ] = cropParams || [];
+
+    if (resizeOperation)
+      resizeParams = this.getResizeArguments(resizeOperation);
+
+    let [resizeWidth, resizeHeight] = resizeParams || [];
+
+    const cropQuery = cropOperation  ? (x + ',' + y + ',' + (x + cropWidth) +',' + (y + cropHeight) + '-') : '';
+    const resizeQuery = (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight);
+
+    return 'https://' + cloudUrl + operationQ + '/' + cropQuery + resizeQuery + '/n/';
   }
 
-  getOperationQuery = (operation) => {
-    switch (operation) {
-      case 'crop':
-        return 'crop_px'
-      default :
-        return 'cdn'
-    }
+  isOperationExist = (operations, type) => operations.find(({ stack }) => stack[0].name === type);
+
+  getOperationQuery = (isCrop, isResize) => {
+    if (isCrop && isResize) return 'crop_px';
+    else if (isResize) return 'width';
+    else return 'cdn';
   }
 
-  getOperationParamsQuery = (operation, operations) => {
-    let params = null;
-    operations.forEach(({ stack }) => stack.forEach(obj  => {
-      if (obj.name === operation) params = obj.arguments;
-    }));
+  getCropArguments = (operation = {}) => {
+    const { stack = [] } = operation;
+    let params = stack[0] && stack[0].arguments;
 
     params = params.map(value => parseInt(value));
 
     return params;
   }
 
-  getOperationInStack = (operations) => {
-    let operation = null;
+  getResizeArguments = (operation = {}) => {
+    const { stack = [] } = operation;
+    let props = stack[0] && stack[0].arguments && stack[0].arguments[0];
 
-    operations.map(({ stack }, index) => {
-      const current = stack[0].name;
-
-      if (CLOUDIMAGE_OPERATIONS.indexOf(current) > -1)
-        operation = current;
-    });
-
-    return operation;
+    return [parseInt(props.width), parseInt(props.height)];
   }
 
   cleanTemp = () => {
