@@ -28,8 +28,9 @@ export default class extends Component {
 
   updateState = props => { this.setState(props); }
 
-  onRevert = () => {
+  onRevert = (all) => {
     const { cleanTemp, activeTab, revert, applyOperations, operations } = this.state;
+    const index = all ? 0 : operations.length - 1;
 
     if (activeTab === 'effects' || activeTab === 'filters') {
       this.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
@@ -39,13 +40,25 @@ export default class extends Component {
 
     if (activeTab === 'orientation') {
       revert(() => {
-        applyOperations(operations, operations.length - 1, () => {
+        applyOperations(operations, index, () => {
           this.setState({ isHideCanvas: false, isShowSpinner: false });
         });
       });
     }
 
     this.setState({ activeTab: null, isShowSpinner: false, isHideCanvas: false });
+  }
+
+  forceApplyOperations = (operations) => {
+    const { revert, applyOperations  } = this.state;
+
+    this.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
+
+    revert(() => {
+      applyOperations(operations, operations.length, () => {
+        this.setState({ isHideCanvas: false, isShowSpinner: false, activeTab: 'crop' });
+      });
+    });
   }
 
   onAdjust = (handler, value) => {
@@ -112,6 +125,9 @@ export default class extends Component {
       onClose,
       canvasDimensions,
       processWithCloudimage,
+      operations,
+      isShowSpinner,
+      forceApplyOperations: this.forceApplyOperations,
       updateState: this.updateState,
       onRevert: this.onRevert,
       apply: this.apply,
@@ -140,6 +156,7 @@ export default class extends Component {
       operations,
       currentOperation,
       processWithCloudimage,
+      forceApplyOperations: this.forceApplyOperations,
       updateState: this.updateState,
       redoOperation: this.redoOperation
     };

@@ -21,6 +21,17 @@ export default class extends Component {
     activeRatio: 'custom'
   }
 
+  componentDidMount() {
+    const { operations, processWithCloudimage, updateState, forceApplyOperations } = this.props;
+    const cropOperationIndex = operations.findIndex(({ stack }) => stack[0].name === 'crop');
+
+    if (cropOperationIndex > -1 && processWithCloudimage) {
+      operations.splice(cropOperationIndex, 1);
+      updateState({ operations });
+      forceApplyOperations(operations);
+    }
+  }
+
   changeWidth = (event) => {
     const { cropDetails, original } = this.props;
     const container = document.querySelector('#preview-img-box');

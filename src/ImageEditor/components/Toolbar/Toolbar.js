@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Toolbar } from '../../styledComponents';
+import { Toolbar, NoClickOverlay } from '../../styledComponents';
 import { TOOLS, CLOUDIMAGE_OPERATIONS } from '../../config';
 import Tool from './Tool';
 import Effects from './Effects';
@@ -12,7 +12,7 @@ import Adjust from './Adjust';
 
 export default class extends Component {
   render() {
-    const { activeTab, processWithCloudimage } = this.props;
+    const { activeTab, processWithCloudimage, isShowSpinner } = this.props;
     let allowedTools = TOOLS;
 
     if (processWithCloudimage)
@@ -27,6 +27,7 @@ export default class extends Component {
         {activeTab === 'resize' && <Resize {...this.props}/>}
         {activeTab === 'orientation' && <Orientation {...this.props}/>}
         {activeTab === 'adjust' && <Adjust {...this.props}/>}
+        {isShowSpinner && <NoClickOverlay/>}
       </Toolbar>
     )
   }

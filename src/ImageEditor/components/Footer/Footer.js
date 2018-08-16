@@ -3,8 +3,19 @@ import { Footer, PreviousBtn, NextBtn, Switcher } from '../../styledComponents/i
 
 
 export default class extends Component {
+  onChangeProcessWithCloudimageSwitcher = (processWithCloudimage) => {
+    const { updateState, onRevert, forceApplyOperations } = this.props;
+
+    updateState({ processWithCloudimage });
+
+    if (processWithCloudimage) {
+      forceApplyOperations([]);
+      updateState({ operations: [], activeTab: null });
+    }
+  }
+
   render() {
-    const { operations = [], currentOperation = null, redoOperation, updateState, processWithCloudimage } = this.props;
+    const { operations = [], currentOperation = null, redoOperation, processWithCloudimage } = this.props;
     const currentOperationIndex = operations.findIndex(operation => operation === currentOperation);
     const isCurrentOperationLast = currentOperation && (operations[operations.length - 1] === currentOperation);
     const isPrevForbidden = (operations.length < 1) || (currentOperationIndex === -1);
@@ -25,7 +36,7 @@ export default class extends Component {
         <Switcher
           id="cloudimage-url-generator-switch"
           checked={processWithCloudimage}
-          handleChange={(processWithCloudimage) => { updateState({ processWithCloudimage }) }}
+          handleChange={this.onChangeProcessWithCloudimageSwitcher}
           text={'Process with cloudimage'}
         />
       </Footer>
