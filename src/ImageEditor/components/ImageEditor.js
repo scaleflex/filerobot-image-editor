@@ -8,15 +8,22 @@ script.src = '//jolipage.api.airstore.io/v1/get/_/d93231a3-1e6a-5b0e-8882-342c64
 document.body.appendChild(script);
 
 export default class extends Component {
-  state = {
-    isShowSpinner: true,
-    isHideCanvas: false,
-    activeTab: null,
-    operations: [],
-    currentOperation: null,
-    original: { width: 300, height: 200 },
-    cropDetails: { width: 300, height: 200 },
-    canvasDimensions: { width: 300, height: 200, ratio: 1.5 }
+  constructor(props) {
+    super();
+
+    const { PROCESS_WITH_CLOUDIMAGE } = props.config;
+
+   this.state = {
+     isShowSpinner: true,
+     isHideCanvas: false,
+     activeTab: null,
+     operations: [],
+     currentOperation: null,
+     original: { width: 300, height: 200 },
+     cropDetails: { width: 300, height: 200 },
+     canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
+     processWithCloudimage: PROCESS_WITH_CLOUDIMAGE
+   }
   }
 
   updateState = props => { this.setState(props); }
@@ -94,7 +101,7 @@ export default class extends Component {
   render() {
     const {
       isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original,
-      canvasDimensions
+      canvasDimensions, processWithCloudimage
     } = this.state;
     const { src, config, onClose, onUpload, closeOnLoad = true } = this.props;
     const headerProps = {
@@ -104,6 +111,7 @@ export default class extends Component {
       src,
       onClose,
       canvasDimensions,
+      processWithCloudimage,
       updateState: this.updateState,
       onRevert: this.onRevert,
       apply: this.apply,
@@ -125,9 +133,16 @@ export default class extends Component {
       canvasDimensions,
       closeOnLoad,
       config,
+      processWithCloudimage,
       updateState: this.updateState
     };
-    const footerProps = { operations, currentOperation, redoOperation: this.redoOperation };
+    const footerProps = {
+      operations,
+      currentOperation,
+      processWithCloudimage,
+      updateState: this.updateState,
+      redoOperation: this.redoOperation
+    };
 
     return (
       <Wrapper>

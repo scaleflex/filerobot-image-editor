@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
 import { b64toBlob, generateUUID } from '../../utils';
+import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
 
 export default class ImageManipulator extends Component {
@@ -76,56 +77,113 @@ export default class ImageManipulator extends Component {
   }
 
   saveImage = () => {
-    const { imageName } = this.state;
-    const { onUpload, onClose, updateState, closeOnLoad } = this.props;
-    const config = this.props.config;
+    const { imageName, operations } = this.state;
+    const { onUpload, onClose, updateState, closeOnLoad, config, processWithCloudimage } = this.props;
+    const src = this.state.src.split('?')[0];
     const canvas = this.getCanvasNode();
 
-    window.Caman(canvas, function () {
-      this.render(function () {
-        const base64 = this.toBase64();
-        const block = base64.split(";");
-        const contentType = block[0].split(":")[1];
-        const realData = block[1].split(",")[1];
-        const blob = b64toBlob(realData, contentType, null);
-        const splittedName = imageName.replace(/-edited/g, '').split('.');
-        const nameLength = splittedName.length;
-        const name = `${splittedName.slice(0, nameLength - 1).join('.')}-edited.${splittedName[nameLength - 1]}`;
-        const formData = new FormData();
-        const request = new XMLHttpRequest();
-        const baseUrl = `//${config.CONTAINER}.api.airstore.io/v1/`;
+    if (!processWithCloudimage) {
+      window.Caman(canvas, function () {
+        this.render(function () {
+          const base64 = this.toBase64();
+          const block = base64.split(";");
+          const contentType = block[0].split(":")[1];
+          const realData = block[1].split(",")[1];
+          const blob = b64toBlob(realData, contentType, null);
+          const splittedName = imageName.replace(/-edited/g, '').split('.');
+          const nameLength = splittedName.length;
+          const name = `${splittedName.slice(0, nameLength - 1).join('.')}-edited.${splittedName[nameLength - 1]}`;
+          const formData = new FormData();
+          const request = new XMLHttpRequest();
+          const baseUrl = `//${config.CONTAINER}.api.airstore.io/v1/`;
 
-        request.addEventListener("load", (data) => {
-          const { srcElement = { } } = data;
-          const { response = '{}' } = srcElement;
-          const responseData = JSON.parse(response) || {};
+          request.addEventListener("load", (data) => {
+            const { srcElement = { } } = data;
+            const { response = '{}' } = srcElement;
+            const responseData = JSON.parse(response) || {};
 
-          if (responseData.status === 'success') {
-            const { file = {} } = responseData;
+            if (responseData.status === 'success') {
+              const { file = {} } = responseData;
 
-            if (!file.url_public) return;
+              if (!file.url_public) return;
 
-            const nweImage = new Image();
-            nweImage.onload = () => {
+              const nweImage = new Image();
+              nweImage.onload = () => {
+                updateState({ isShowSpinner: false, isHideCanvas: false });
+                onUpload(nweImage.src);
+                closeOnLoad && onClose();
+              };
+              nweImage.src = file.url_public + `?hash=${generateUUID()}`;
+            }
+            else {
               updateState({ isShowSpinner: false, isHideCanvas: false });
-              onUpload(nweImage.src);
+              alert(responseData);
               closeOnLoad && onClose();
-            };
-            nweImage.src = file.url_public + `?hash=${generateUUID()}`;
-          }
-          else {
-            updateState({ isShowSpinner: false, isHideCanvas: false });
-            alert(responseData);
-            closeOnLoad && onClose();
-          }
-        });
+            }
+          });
 
-        formData.append('files[]', blob, name);
-        request.open("POST", [baseUrl, `upload?dir=image-editor`].join(''));
-        request.setRequestHeader('X-Airstore-Secret-Key', config.UPLOAD_KEY);
-        request.send(formData);
+          formData.append('files[]', blob, name);
+          request.open("POST", [baseUrl, `upload?dir=image-editor`].join(''));
+          request.setRequestHeader('X-Airstore-Secret-Key', config.UPLOAD_KEY);
+          request.send(formData);
+        });
       });
+    } else {
+      const operation = this.getOperationInStack(operations);
+      const url = this.generateCloudimageURL(operation, operations);
+      const original = src.replace(/https?:\/\/scaleflex.ultrafast.io\//, '');
+
+      const nweImage = new Image();
+      nweImage.onload = () => {
+        updateState({ isShowSpinner: false, isHideCanvas: false });
+        onUpload(url + original);
+        closeOnLoad && onClose();
+      };
+      nweImage.src = url + original + `?hash=${generateUUID()}`;
+    }
+  }
+
+  generateCloudimageURL = (operation, operations) => {
+    const { config } = this.props;
+    const cloudUrl = config.CLOUDIMAGE_TOKEN + '.cloudimg.io' + '/';
+    const operationQ = this.getOperationQuery(operation);
+    const operationParams = this.getOperationParamsQuery(operation, operations);
+    const [ width, height, x, y ] = operationParams;
+
+    return 'https://' + cloudUrl + operationQ + '/' + x + ',' + y + ',' + (x + width) +',' + (y + height) + '-' + width + 'x' + height + '/n/';
+  }
+
+  getOperationQuery = (operation) => {
+    switch (operation) {
+      case 'crop':
+        return 'crop_px'
+      default :
+        return 'cdn'
+    }
+  }
+
+  getOperationParamsQuery = (operation, operations) => {
+    let params = null;
+    operations.forEach(({ stack }) => stack.forEach(obj  => {
+      if (obj.name === operation) params = obj.arguments;
+    }));
+
+    params = params.map(value => parseInt(value));
+
+    return params;
+  }
+
+  getOperationInStack = (operations) => {
+    let operation = null;
+
+    operations.map(({ stack }, index) => {
+      const current = stack[0].name;
+
+      if (CLOUDIMAGE_OPERATIONS.indexOf(current) > -1)
+        operation = current;
     });
+
+    return operation;
   }
 
   cleanTemp = () => {
