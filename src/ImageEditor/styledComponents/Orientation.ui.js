@@ -32,7 +32,7 @@ const RotateIcon = styled.span`
   ${props => getIconByName(props.name)}
   height: 14px;
   font-size: 14px;
-  color: ${props => props.theme.colors.dark.base};
+  color: ${props => props.theme.colors.text.base};
 `;
 
 export { OrientationWrapper, RotateWrapper, RotateButton, RotateLabel, RotateIcon }

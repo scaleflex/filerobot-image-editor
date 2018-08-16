@@ -49,4 +49,6 @@ const CancelBtn = Button.extend`
   }
 `;
 
-export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn };
+const DarkBtn = CancelBtn.extend``;
+
+export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn, DarkBtn };
