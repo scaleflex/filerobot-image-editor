@@ -148,9 +148,11 @@ export default class ImageManipulator extends Component {
     const cloudUrl = config.CLOUDIMAGE_TOKEN + '.cloudimg.io' + '/';
     const cropOperation = this.isOperationExist(operations, 'crop');
     const resizeOperation = this.isOperationExist(operations, 'resize');
-    const operationQ = this.getOperationQuery(cropOperation, resizeOperation);
+    const orientationOperation = this.isOperationExist(operations, 'rotate')
+    let operationQ = this.getOperationQuery(cropOperation, resizeOperation);
     let cropParams = null;
     let resizeParams = null;
+    let orientationParams = null;
 
     if (cropOperation)
       cropParams = this.getCropArguments(cropOperation);
@@ -160,12 +162,20 @@ export default class ImageManipulator extends Component {
     if (resizeOperation)
       resizeParams = this.getResizeArguments(resizeOperation);
 
+    if (orientationOperation)
+      orientationParams = this.getOrientationArguments(orientationOperation);
+
     let [resizeWidth, resizeHeight] = resizeParams || [];
 
-    const cropQuery = cropOperation  ? (x + ',' + y + ',' + (x + cropWidth) +',' + (y + cropHeight) + '-') : '';
-    const resizeQuery = (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight);
+    const cropQ = cropOperation  ? (x + ',' + y + ',' + (x + cropWidth) +',' + (y + cropHeight) + '-') : '';
+    const resizeQ = resizeOperation ? (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight) : '';
+    const sizesQ = cropQ ||resizeQ ? cropQ + resizeQ : 'n';
+    const rotateQ = orientationParams ? orientationParams : '';
+    const filtersQ = rotateQ ? `r${rotateQ}` : 'n';
 
-    return 'https://' + cloudUrl + operationQ + '/' + cropQuery + resizeQuery + '/n/';
+    if (operationQ === 'cdn' && filtersQ) operationQ = 'cdno';
+
+    return 'https://' + cloudUrl + operationQ + '/' + sizesQ + '/' + filtersQ +'/';
   }
 
   isOperationExist = (operations, type) => operations.find(({ stack }) => stack[0].name === type);
@@ -190,6 +200,12 @@ export default class ImageManipulator extends Component {
     let props = stack[0] && stack[0].arguments && stack[0].arguments[0];
 
     return [parseInt(props.width), parseInt(props.height)];
+  }
+
+  getOrientationArguments = (operation = {}) => {
+    const { stack = [] } = operation;
+
+    return  stack[0] && stack[0].arguments && stack[0].arguments[0] || 0;
   }
 
   cleanTemp = () => {
@@ -493,7 +509,7 @@ export default class ImageManipulator extends Component {
       case 'crop':
         this.applyCrop();
         break;
-      case 'orientation':
+      case 'rotate':
         this.applyOrientation();
         break;
       case 'resize':
@@ -521,7 +537,7 @@ export default class ImageManipulator extends Component {
       case 'resize':
         this.initResize();
         break;
-      case 'orientation':
+      case 'rotate':
         this.initOrientation();
         break;
       default:
@@ -542,7 +558,7 @@ export default class ImageManipulator extends Component {
         break;
       case 'resize':
         break;
-      case 'orientation':
+      case 'rotate':
         break;
       default:
         break;

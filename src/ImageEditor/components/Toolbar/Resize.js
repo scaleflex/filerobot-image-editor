@@ -12,10 +12,10 @@ export default class extends Component {
 
   componentDidMount() {
     const { operations, processWithCloudimage, updateState, forceApplyOperations } = this.props;
-    const cropOperationIndex = operations.findIndex(({ stack }) => stack[0].name === 'resize');
+    const operationIndex = operations.findIndex(({ stack }) => stack[0].name === 'resize');
 
-    if (cropOperationIndex > -1 && processWithCloudimage) {
-      operations.splice(cropOperationIndex, 1);
+    if (operationIndex > -1 && processWithCloudimage) {
+      operations.splice(operationIndex, 1);
       updateState({ operations });
       forceApplyOperations(operations, 'resize');
     }
@@ -51,7 +51,7 @@ export default class extends Component {
 
   render() {
     const { isBlockRatio } = this.state;
-    const { canvasDimensions } = this.props;
+    const { canvasDimensions, processWithCloudimage } = this.props;
 
     return (
       <ResizeWrapper>
@@ -65,8 +65,13 @@ export default class extends Component {
             />
           </FieldSet>
           <BlockRatioWrapper>
-            <BlockRatioBtn active={!isBlockRatio} link onClick={this.toggleRatio}>
-              <BlockRatioIcon active={!isBlockRatio}/>
+            <BlockRatioBtn
+              active={!isBlockRatio}
+              style={processWithCloudimage ? { cursor: 'not-allowed' } : {}}
+              link
+              onClick={() => { !processWithCloudimage && this.toggleRatio(); }}
+            >
+              <BlockRatioIcon active={!isBlockRatio} style={processWithCloudimage ? { cursor: 'not-allowed' } : {}}/>
             </BlockRatioBtn>
           </BlockRatioWrapper>
           <FieldSet>

@@ -23,10 +23,10 @@ export default class extends Component {
 
   componentDidMount() {
     const { operations, processWithCloudimage, updateState, forceApplyOperations } = this.props;
-    const cropOperationIndex = operations.findIndex(({ stack }) => stack[0].name === 'crop');
+    const operationIndex = operations.findIndex(({ stack }) => stack[0].name === 'crop');
 
-    if (cropOperationIndex > -1 && processWithCloudimage) {
-      operations.splice(cropOperationIndex, 1);
+    if (operationIndex > -1 && processWithCloudimage) {
+      operations.splice(operationIndex, 1);
       updateState({ operations });
       forceApplyOperations(operations, 'crop');
     }

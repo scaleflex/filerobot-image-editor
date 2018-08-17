@@ -38,7 +38,7 @@ export default class extends Component {
       return;
     }
 
-    if (activeTab === 'orientation') {
+    if (activeTab === 'rotate') {
       revert(() => {
         applyOperations(operations, index, () => {
           this.setState({ isHideCanvas: false, isShowSpinner: false });

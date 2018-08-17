@@ -1,6 +1,6 @@
-// 'effects', 'filters', 'adjust', 'crop', 'resize', 'orientation'
+// 'effects', 'filters', 'adjust', 'crop', 'resize', 'rotate'
 const TOOLS = [
-  'effects', 'filters', 'crop', 'resize', 'orientation'
+  'effects', 'filters', 'crop', 'resize', 'rotate'
 ];
 
 // 'clarity', 'edge_enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'noise', 'old_paper', 'posterize', 'radial_blur',
@@ -15,7 +15,7 @@ const FILTERS = [
   'cross_process', 'glow_sun', 'jarques', 'love', 'old_boot', 'orange_peel', 'pin_hole', 'sepia', 'sun_rise', 'vintage'
 ];
 
-const CLOUDIMAGE_OPERATIONS = ['crop', 'resize'];
+const CLOUDIMAGE_OPERATIONS = ['crop', 'resize', 'rotate'];
 
 const UPLOADER = {
   UPLOAD_KEY: '0cbe9ccc4f164bf8be26bd801d53b132',

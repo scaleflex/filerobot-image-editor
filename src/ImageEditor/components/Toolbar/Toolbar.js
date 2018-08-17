@@ -12,11 +12,15 @@ import Adjust from './Adjust';
 
 export default class extends Component {
   render() {
-    const { activeTab, processWithCloudimage, isShowSpinner } = this.props;
+    const { activeTab, processWithCloudimage, isShowSpinner, operations } = this.props;
+    const resizeOperationIndex = operations.findIndex(({ stack }) => stack[0].name === 'resize');
     let allowedTools = TOOLS;
 
     if (processWithCloudimage)
       allowedTools = TOOLS.filter(tool => CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1);
+
+    if (processWithCloudimage && resizeOperationIndex > -1)
+      allowedTools = allowedTools.filter(tool => tool !== 'resize');
 
     return (
       <Toolbar>
@@ -25,7 +29,7 @@ export default class extends Component {
         {activeTab === 'filters' && <Filters {...this.props}/>}
         {activeTab === 'crop' && <Crop {...this.props}/>}
         {activeTab === 'resize' && <Resize {...this.props}/>}
-        {activeTab === 'orientation' && <Orientation {...this.props}/>}
+        {activeTab === 'rotate' && <Orientation {...this.props}/>}
         {activeTab === 'adjust' && <Adjust {...this.props}/>}
         {isShowSpinner && <NoClickOverlay/>}
       </Toolbar>

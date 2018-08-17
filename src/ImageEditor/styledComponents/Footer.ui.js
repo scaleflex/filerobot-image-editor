@@ -98,7 +98,6 @@ const SwitcherBlock = styled.div`
   display: inline-block;
   vertical-align: middle;
   margin-left: calc(100% - 280px);
-  cursor: pointer;
 `;
 
 const SwitcherText = styled.div`
@@ -108,19 +107,26 @@ const SwitcherText = styled.div`
   color: #aaaaaa;
   margin-bottom: 3px;
   cursor: pointer;
+  cursor: pointer;
 `;
 
 
 const Switcher = ({ id, handleChange, text, checked, ...otherProps }) => (
-  <SwitcherBlock onClick={() => { handleChange(!checked); }}>
+  <SwitcherBlock>
     <SwitcherWrapper>
-      <SwitcherInput type="checkbox" name={id} id={id} onChange={() => {}} checked={checked}/>
-      <SwitcherLabel for={id}>
+      <SwitcherInput
+        type="checkbox"
+        name={id}
+        id={id}
+        onChange={() => { handleChange(!checked); }}
+        checked={checked}
+      />
+      <SwitcherLabel htmlFor={id}>
         <SwitcherInner checked={checked}/>
         <SwitcherSwitch checked={checked}/>
       </SwitcherLabel>
     </SwitcherWrapper>
-    {text && <SwitcherText>{text}</SwitcherText>}
+    {text && <SwitcherText onClick={() => { handleChange(!checked); }}>{text}</SwitcherText>}
   </SwitcherBlock>
 );
 
