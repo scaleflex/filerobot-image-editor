@@ -28,7 +28,7 @@ var RotateIcon = styled.span(_templateObject5, function (props) {
 }, function (props) {
   return getIconByName(props.name);
 }, function (props) {
-  return props.theme.colors.dark.base;
+  return props.theme.colors.text.base;
 });
 
 export { OrientationWrapper, RotateWrapper, RotateButton, RotateLabel, RotateIcon };

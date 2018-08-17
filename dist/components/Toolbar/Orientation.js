@@ -7,8 +7,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
-import { OrientationWrapper, RotateWrapper, RotateButton, RotateLabel, RotateIcon } from '../../styledComponents';
-import { Button } from 'scaleflex-react-ui-kit/dist';
+import { OrientationWrapper, RotateWrapper, RotateButton, RotateLabel, RotateIcon, DarkBtn } from '../../styledComponents';
 
 var _class = function (_Component) {
   _inherits(_class, _Component);
@@ -42,6 +41,26 @@ var _class = function (_Component) {
   }
 
   _createClass(_class, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _props = this.props,
+          operations = _props.operations,
+          processWithCloudimage = _props.processWithCloudimage,
+          updateState = _props.updateState,
+          forceApplyOperations = _props.forceApplyOperations;
+
+      var operationIndex = operations.findIndex(function (_ref2) {
+        var stack = _ref2.stack;
+        return stack[0].name === 'rotate';
+      });
+
+      if (operationIndex > -1 && processWithCloudimage) {
+        operations.splice(operationIndex, 1);
+        updateState({ operations: operations });
+        forceApplyOperations(operations, 'rotate');
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
@@ -59,12 +78,12 @@ var _class = function (_Component) {
             RotateButton,
             null,
             React.createElement(
-              Button,
+              DarkBtn,
               { onClick: this.leftRotate },
               React.createElement(RotateIcon, { name: 'left-rotate' })
             ),
             React.createElement(
-              Button,
+              DarkBtn,
               { onClick: this.rightRotate },
               React.createElement(RotateIcon, { name: 'right-rotate' })
             )

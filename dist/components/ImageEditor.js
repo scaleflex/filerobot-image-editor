@@ -71,6 +71,9 @@ var _class = function (_Component) {
         onClose: onClose,
         canvasDimensions: canvasDimensions,
         processWithCloudimage: processWithCloudimage,
+        operations: operations,
+        isShowSpinner: isShowSpinner,
+        forceApplyOperations: this.forceApplyOperations,
         updateState: this.updateState,
         onRevert: this.onRevert,
         apply: this.apply,
@@ -99,6 +102,7 @@ var _class = function (_Component) {
         operations: operations,
         currentOperation: currentOperation,
         processWithCloudimage: processWithCloudimage,
+        forceApplyOperations: this.forceApplyOperations,
         updateState: this.updateState,
         redoOperation: this.redoOperation
       };
@@ -123,7 +127,7 @@ var _initialiseProps = function _initialiseProps() {
     _this2.setState(props);
   };
 
-  this.onRevert = function () {
+  this.onRevert = function (all) {
     var _state2 = _this2.state,
         cleanTemp = _state2.cleanTemp,
         activeTab = _state2.activeTab,
@@ -131,6 +135,7 @@ var _initialiseProps = function _initialiseProps() {
         applyOperations = _state2.applyOperations,
         operations = _state2.operations;
 
+    var index = all ? 0 : operations.length - 1;
 
     if (activeTab === 'effects' || activeTab === 'filters') {
       _this2.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
@@ -138,15 +143,30 @@ var _initialiseProps = function _initialiseProps() {
       return;
     }
 
-    if (activeTab === 'orientation') {
+    if (activeTab === 'rotate') {
       revert(function () {
-        applyOperations(operations, operations.length - 1, function () {
+        applyOperations(operations, index, function () {
           _this2.setState({ isHideCanvas: false, isShowSpinner: false });
         });
       });
     }
 
     _this2.setState({ activeTab: null, isShowSpinner: false, isHideCanvas: false });
+  };
+
+  this.forceApplyOperations = function (operations, activeTab) {
+    var _state3 = _this2.state,
+        revert = _state3.revert,
+        applyOperations = _state3.applyOperations;
+
+
+    _this2.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
+
+    revert(function () {
+      applyOperations(operations, operations.length, function () {
+        _this2.setState({ isHideCanvas: false, isShowSpinner: false, activeTab: activeTab });
+      });
+    });
   };
 
   this.onAdjust = function (handler, value) {
@@ -187,9 +207,9 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.apply = function () {
-    var _state3 = _this2.state,
-        activeTab = _state3.activeTab,
-        applyChanges = _state3.applyChanges;
+    var _state4 = _this2.state,
+        activeTab = _state4.activeTab,
+        applyChanges = _state4.applyChanges;
 
 
     _this2.setState({ isHideCanvas: true });
@@ -197,10 +217,10 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.redoOperation = function (operationIndex) {
-    var _state4 = _this2.state,
-        applyOperations = _state4.applyOperations,
-        operations = _state4.operations,
-        revert = _state4.revert;
+    var _state5 = _this2.state,
+        applyOperations = _state5.applyOperations,
+        operations = _state5.operations,
+        revert = _state5.revert;
 
 
     _this2.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });

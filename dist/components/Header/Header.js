@@ -30,6 +30,7 @@ var _class = function (_Component) {
           onClose = _props.onClose,
           onSave = _props.onSave;
 
+      var filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
 
       return React.createElement(
         HeaderWrapper,
@@ -40,7 +41,7 @@ var _class = function (_Component) {
           React.createElement(
             Title,
             null,
-            activeTab || 'Image Editor'
+            filteredName || 'Image Editor'
           ),
           React.createElement(CloseBtn, { onClick: onClose })
         ),

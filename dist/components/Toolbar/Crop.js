@@ -85,6 +85,26 @@ var _class = function (_Component) {
   }
 
   _createClass(_class, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _props = this.props,
+          operations = _props.operations,
+          processWithCloudimage = _props.processWithCloudimage,
+          updateState = _props.updateState,
+          forceApplyOperations = _props.forceApplyOperations;
+
+      var operationIndex = operations.findIndex(function (_ref2) {
+        var stack = _ref2.stack;
+        return stack[0].name === 'crop';
+      });
+
+      if (operationIndex > -1 && processWithCloudimage) {
+        operations.splice(operationIndex, 1);
+        updateState({ operations: operations });
+        forceApplyOperations(operations, 'crop');
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -92,9 +112,9 @@ var _class = function (_Component) {
       var _state = this.state,
           aspectRatio = _state.aspectRatio,
           activeRatio = _state.activeRatio;
-      var _props = this.props,
-          cropDetails = _props.cropDetails,
-          original = _props.original;
+      var _props2 = this.props,
+          cropDetails = _props2.cropDetails,
+          original = _props2.original;
 
 
       return React.createElement(

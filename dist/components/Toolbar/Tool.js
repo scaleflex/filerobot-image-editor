@@ -25,6 +25,7 @@ var _class = function (_Component) {
           name = _props.name,
           activeTab = _props.activeTab;
 
+      var filteredName = name === 'rotate' ? 'orientation' : name;
 
       return React.createElement(
         ToolWrapper,
@@ -36,7 +37,7 @@ var _class = function (_Component) {
         React.createElement(
           ToolLabel,
           null,
-          name
+          filteredName
         )
       );
     }

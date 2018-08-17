@@ -5,8 +5,8 @@ var _templateObject = _taggedTemplateLiteral(['\n  background: ', ';\n  height: 
     _templateObject5 = _taggedTemplateLiteral(['\n  display: block; \n  overflow: hidden; \n  cursor: pointer;\n  border: 2px solid #36464d; \n  border-radius: 12px;\n  margin: 0;\n'], ['\n  display: block; \n  overflow: hidden; \n  cursor: pointer;\n  border: 2px solid #36464d; \n  border-radius: 12px;\n  margin: 0;\n']),
     _templateObject6 = _taggedTemplateLiteral(['\n  display: block; \n  width: 200%; \n  margin-left: ', ';\n  transition: margin 0.3s ease-in 0s;\n  \n  &:before, &:after {\n    display: block; float: left; width: 50%; height: 19px; padding: 0; line-height: 19px;\n    font-size: 10px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;\n    box-sizing: border-box;\n  }\n  \n  &:before {\n    content: "ON";\n    padding-left: 10px;\n    background-color: #01717d; \n    color: #FFFFFF;\n  }\n  \n  &:after {\n    content: "OFF";\n    padding-right: 10px;\n    background-color: #1e262c; \n    color: #aaaaaa;\n    text-align: right;\n  }\n'], ['\n  display: block; \n  width: 200%; \n  margin-left: ', ';\n  transition: margin 0.3s ease-in 0s;\n  \n  &:before, &:after {\n    display: block; float: left; width: 50%; height: 19px; padding: 0; line-height: 19px;\n    font-size: 10px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;\n    box-sizing: border-box;\n  }\n  \n  &:before {\n    content: "ON";\n    padding-left: 10px;\n    background-color: #01717d; \n    color: #FFFFFF;\n  }\n  \n  &:after {\n    content: "OFF";\n    padding-right: 10px;\n    background-color: #1e262c; \n    color: #aaaaaa;\n    text-align: right;\n  }\n']),
     _templateObject7 = _taggedTemplateLiteral(['\n    display: block; \n    width: 10px;\n    height: 10px;\n    margin: 5.5px;\n    background: ', ';\n    position: absolute; top: 0; bottom: 0;\n    right:  ', ';\n    border: 2px solid #36464d; \n    border-radius: 12px;\n    transition: all 0.3s ease-in 0s;\n'], ['\n    display: block; \n    width: 10px;\n    height: 10px;\n    margin: 5.5px;\n    background: ', ';\n    position: absolute; top: 0; bottom: 0;\n    right:  ', ';\n    border: 2px solid #36464d; \n    border-radius: 12px;\n    transition: all 0.3s ease-in 0s;\n']),
-    _templateObject8 = _taggedTemplateLiteral(['\n  display: inline-block;\n  vertical-align: middle;\n  margin-left: calc(100% - 280px);\n  cursor: pointer;\n'], ['\n  display: inline-block;\n  vertical-align: middle;\n  margin-left: calc(100% - 280px);\n  cursor: pointer;\n']),
-    _templateObject9 = _taggedTemplateLiteral(['\n  margin-left: 8px;\n  display: inline-block;\n  vertical-align: middle;\n  color: #aaaaaa;\n  margin-bottom: 3px;\n  cursor: pointer;\n'], ['\n  margin-left: 8px;\n  display: inline-block;\n  vertical-align: middle;\n  color: #aaaaaa;\n  margin-bottom: 3px;\n  cursor: pointer;\n']);
+    _templateObject8 = _taggedTemplateLiteral(['\n  display: inline-block;\n  vertical-align: middle;\n  margin-left: calc(100% - 280px);\n'], ['\n  display: inline-block;\n  vertical-align: middle;\n  margin-left: calc(100% - 280px);\n']),
+    _templateObject9 = _taggedTemplateLiteral(['\n  margin-left: 8px;\n  display: inline-block;\n  vertical-align: middle;\n  color: #aaaaaa;\n  margin-bottom: 3px;\n  cursor: pointer;\n  cursor: pointer;\n'], ['\n  margin-left: 8px;\n  display: inline-block;\n  vertical-align: middle;\n  color: #aaaaaa;\n  margin-bottom: 3px;\n  cursor: pointer;\n  cursor: pointer;\n']);
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
@@ -65,23 +65,31 @@ var Switcher = function Switcher(_ref) {
 
   return React.createElement(
     SwitcherBlock,
-    { onClick: function onClick() {
-        handleChange(!checked);
-      } },
+    null,
     React.createElement(
       SwitcherWrapper,
       null,
-      React.createElement(SwitcherInput, { type: 'checkbox', name: id, id: id, onChange: function onChange() {}, checked: checked }),
+      React.createElement(SwitcherInput, {
+        type: 'checkbox',
+        name: id,
+        id: id,
+        onChange: function onChange() {
+          handleChange(!checked);
+        },
+        checked: checked
+      }),
       React.createElement(
         SwitcherLabel,
-        { 'for': id },
+        { htmlFor: id },
         React.createElement(SwitcherInner, { checked: checked }),
         React.createElement(SwitcherSwitch, { checked: checked })
       )
     ),
     text && React.createElement(
       SwitcherText,
-      null,
+      { onClick: function onClick() {
+          handleChange(!checked);
+        } },
       text
     )
   );

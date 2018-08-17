@@ -13,9 +13,30 @@ var _class = function (_Component) {
   _inherits(_class, _Component);
 
   function _class() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, _class);
 
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _this.onChangeProcessWithCloudimageSwitcher = function (processWithCloudimage) {
+      var _this$props = _this.props,
+          updateState = _this$props.updateState,
+          onRevert = _this$props.onRevert,
+          forceApplyOperations = _this$props.forceApplyOperations;
+
+
+      updateState({ processWithCloudimage: processWithCloudimage });
+
+      if (processWithCloudimage) {
+        forceApplyOperations([]);
+        updateState({ operations: [], activeTab: null });
+      }
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(_class, [{
@@ -27,7 +48,6 @@ var _class = function (_Component) {
           _props$currentOperati = _props.currentOperation,
           currentOperation = _props$currentOperati === undefined ? null : _props$currentOperati,
           redoOperation = _props.redoOperation,
-          updateState = _props.updateState,
           processWithCloudimage = _props.processWithCloudimage;
 
       var currentOperationIndex = operations.findIndex(function (operation) {
@@ -55,9 +75,7 @@ var _class = function (_Component) {
         React.createElement(Switcher, {
           id: 'cloudimage-url-generator-switch',
           checked: processWithCloudimage,
-          handleChange: function handleChange(processWithCloudimage) {
-            updateState({ processWithCloudimage: processWithCloudimage });
-          },
+          handleChange: this.onChangeProcessWithCloudimageSwitcher,
           text: 'Process with cloudimage'
         })
       );

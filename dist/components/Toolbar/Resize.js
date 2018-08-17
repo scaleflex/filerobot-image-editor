@@ -54,10 +54,34 @@ var _class = function (_Component) {
   }
 
   _createClass(_class, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _props = this.props,
+          operations = _props.operations,
+          processWithCloudimage = _props.processWithCloudimage,
+          updateState = _props.updateState,
+          forceApplyOperations = _props.forceApplyOperations;
+
+      var operationIndex = operations.findIndex(function (_ref2) {
+        var stack = _ref2.stack;
+        return stack[0].name === 'resize';
+      });
+
+      if (operationIndex > -1 && processWithCloudimage) {
+        operations.splice(operationIndex, 1);
+        updateState({ operations: operations });
+        forceApplyOperations(operations, 'resize');
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var isBlockRatio = this.state.isBlockRatio;
-      var canvasDimensions = this.props.canvasDimensions;
+      var _props2 = this.props,
+          canvasDimensions = _props2.canvasDimensions,
+          processWithCloudimage = _props2.processWithCloudimage;
 
 
       return React.createElement(
@@ -85,8 +109,15 @@ var _class = function (_Component) {
             null,
             React.createElement(
               BlockRatioBtn,
-              { active: !isBlockRatio, link: true, onClick: this.toggleRatio },
-              React.createElement(BlockRatioIcon, { active: !isBlockRatio })
+              {
+                active: !isBlockRatio,
+                style: processWithCloudimage ? { cursor: 'not-allowed' } : {},
+                link: true,
+                onClick: function onClick() {
+                  !processWithCloudimage && _this2.toggleRatio();
+                }
+              },
+              React.createElement(BlockRatioIcon, { active: !isBlockRatio, style: processWithCloudimage ? { cursor: 'not-allowed' } : {} })
             )
           ),
           React.createElement(
