@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <meta name="theme-color" content="#000000">
   <!--
     manifest.json provides metadata used when your web app is added to the
@@ -32,20 +33,77 @@
   -->
   <title>React App</title>
 </head>
-<body>
+<body style="font-size: 14px;">
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.js"></script>-->
 <!--<script src="%PUBLIC_URL%/lib/camanjs/caman.full.min.js"></script>-->
 <!--<script src="%PUBLIC_URL%/lib/camanjs/caman.full.min.js"></script>-->
 <noscript>
   You need to enable JavaScript to run this app.
 </noscript>
-<h1>Image Editor React</h1>
-<h3>Click on image to edit</h3>
-<img
-   id="image"
-   src="//scaleflex.ultrafast.io/https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/koala.jpg"
-/>
-<div id="airstore-image-editor"></div>
+
+<div class="jumbotron" style="color: #fff; background: rgb(84,135,255);background: -moz-linear-gradient(left, rgba(84,135,255,1) 0%, rgba(117,158,255,1) 100%);background: -webkit-linear-gradient(left, rgba(84,135,255,1) 0%,rgba(117,158,255,1) 100%);background: linear-gradient(to right, rgba(84,135,255,1) 0%,rgba(117,158,255,1) 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5487ff', endColorstr='#759eff',GradientType=1 );">
+  <h1 style="font-size: 42px;">Cloudimage Image Editor</h1>
+</div>
+
+<div class="container">
+  <h3>Click on image to edit</h3>
+  <img
+     id="image"
+     src="//scaleflex.ultrafast.io/https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/koala.jpg"
+  />
+  <div id="airstore-image-editor"></div>
+</div>
+
+
+<div class="container quick-start">
+
+  <h2>Quick start</h2>
+  <h5 class="no-bg">Include <b>image-editor.last.js</b> into your project</h5>
+  <pre>&lt;script src="https://js.filerobot.com/image-editor.last.js"/&gt;&lt;/script&gt;</pre>
+  <h5 class="no-bg">Initialize AirstoreImageEditor</h5>
+
+  <pre>(function() {
+  window.onload = function() {
+    if (window.AirstoreImageEditor) {
+      let options = {
+        // optional default: 'airstore-image-editor' | image editor root element to boost the plugin
+        //ELEMENT_ID: 'airstore-image-editor',
+        // * required if PROCESS_WITH_CLOUDIMAGE set to false | Airstore uploaded key
+        UPLOAD_KEY: '0cbe9ccc4f164bf8be26bd801d53b132',
+        // * required if PROCESS_WITH_CLOUDIMAGE set to false | Airstore uploaded key
+        UPLOAD_CONTAINER: 'example',
+        // optional | use cloudimage operations to generate final url
+        PROCESS_WITH_CLOUDIMAGE: true,
+        // * required if PROCESS_WITH_CLOUDIMAGE set to true | cloudimage token
+        CLOUDIMAGE_TOKEN: 'demo',
+
+        // required | handle callback
+        onUpload: function (newUrl) { // newUrl - result image url
+          const image = document.getElementById('image');
+
+          image.src = newUrl;
+          // close the editor
+          window.AirstoreImageEditor.close();
+        }
+      };
+
+      window.AirstoreImageEditor.init(options);
+
+      // Open Image Editor and pass source of image
+      const image = document.getElementById('image');
+
+      if (image) image.onclick = function(event) {
+        // open the editor
+        window.AirstoreImageEditor.open(event.target.src);
+      }
+    }
+  }
+})();</pre>
+
+
+  <h2>Any questions?</h2>
+  <p>Contact us at <a href="mailto:hello@cloudimage.io">hello@cloudimage.io</a>, our experts will be happy to help!</p>
+</div>
 <script src="%PUBLIC_URL%/example.js"></script>
 <!--
   This HTML file is a template.
