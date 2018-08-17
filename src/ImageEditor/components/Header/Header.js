@@ -9,11 +9,12 @@ import { Toolbar } from '../';
 export default class extends Component {
   render() {
     const { activeTab, onRevert, apply, onClose, onSave } = this.props;
+    const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
 
     return (
       <HeaderWrapper>
         <HeaderTop>
-          <Title>{activeTab || 'Image Editor'}</Title>
+          <Title>{filteredName || 'Image Editor'}</Title>
           <CloseBtn onClick={onClose}/>
         </HeaderTop>
 

@@ -5,6 +5,7 @@ import { ToolWrapper, ToolIcon, ToolLabel } from '../../styledComponents/index';
 export default class extends Component {
   render() {
     const { name, activeTab } = this.props;
+    const filteredName = name === 'rotate' ? 'orientation' : name;
 
     return (
       <ToolWrapper
@@ -12,7 +13,7 @@ export default class extends Component {
         onClick={this.props.updateState.bind(this, { activeTab: name })}
       >
         <ToolIcon name={name}/>
-        <ToolLabel>{name}</ToolLabel>
+        <ToolLabel>{filteredName}</ToolLabel>
       </ToolWrapper>
     )
   }

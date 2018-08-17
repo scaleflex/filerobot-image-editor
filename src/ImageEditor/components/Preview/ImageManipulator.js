@@ -204,8 +204,17 @@ export default class ImageManipulator extends Component {
 
   getOrientationArguments = (operation = {}) => {
     const { stack = [] } = operation;
+    const rotate = stack[0] && stack[0].arguments && stack[0].arguments[0] || 0;
 
-    return  stack[0] && stack[0].arguments && stack[0].arguments[0] || 0;
+    // todo: need to find better way or ask julian to redo it on server
+    switch(rotate) {
+      case 90:
+        return 270;
+      case -90:
+        return 90;
+      default:
+        return rotate;
+    }
   }
 
   cleanTemp = () => {
