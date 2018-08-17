@@ -95,7 +95,7 @@ export default class ImageManipulator extends Component {
           const name = `${splittedName.slice(0, nameLength - 1).join('.')}-edited.${splittedName[nameLength - 1]}`;
           const formData = new FormData();
           const request = new XMLHttpRequest();
-          const baseUrl = `//${config.CONTAINER}.api.airstore.io/v1/`;
+          const baseUrl = `//${config.UPLOAD_CONTAINER}.api.airstore.io/v1/`;
 
           request.addEventListener("load", (data) => {
             const { srcElement = { } } = data;
