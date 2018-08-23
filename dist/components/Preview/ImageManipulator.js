@@ -232,12 +232,12 @@ var _initialiseProps = function _initialiseProps() {
         resizeHeight = _ref5[1];
 
     var cropQ = cropOperation ? x + ',' + y + ',' + (x + cropWidth) + ',' + (y + cropHeight) + '-' : '';
-    var resizeQ = resizeOperation ? (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight) : '';
+    var resizeQ = (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight);
     var sizesQ = cropQ || resizeQ ? cropQ + resizeQ : 'n';
     var rotateQ = orientationParams ? orientationParams : '';
     var filtersQ = rotateQ ? 'r' + rotateQ : 'n';
 
-    if (operationQ === 'cdn' && filtersQ) operationQ = 'cdno';
+    if (operationQ === 'cdn' && filtersQ !== 'n') operationQ = 'cdno';
 
     return 'https://' + cloudUrl + operationQ + '/' + sizesQ + '/' + filtersQ + '/';
   };
@@ -250,7 +250,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.getOperationQuery = function (isCrop, isResize) {
-    if (isCrop && isResize) return 'crop_px';else if (isResize) return 'width';else return 'cdn';
+    if (isCrop) return 'crop_px';else if (isResize) return 'width';else return 'cdn';
   };
 
   this.getCropArguments = function () {

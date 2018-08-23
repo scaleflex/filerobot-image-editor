@@ -50,7 +50,7 @@ var _class = function (_Component) {
       });
 
       if (processWithCloudimage && resizeOperationIndex > -1) allowedTools = allowedTools.filter(function (tool) {
-        return tool !== 'resize';
+        return tool !== 'crop';
       });
 
       return React.createElement(
