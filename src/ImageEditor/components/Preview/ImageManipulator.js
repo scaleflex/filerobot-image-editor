@@ -168,12 +168,12 @@ export default class ImageManipulator extends Component {
     let [resizeWidth, resizeHeight] = resizeParams || [];
 
     const cropQ = cropOperation  ? (x + ',' + y + ',' + (x + cropWidth) +',' + (y + cropHeight) + '-') : '';
-    const resizeQ = resizeOperation ? (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight) : '';
+    const resizeQ = (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight);
     const sizesQ = cropQ ||resizeQ ? cropQ + resizeQ : 'n';
     const rotateQ = orientationParams ? orientationParams : '';
     const filtersQ = rotateQ ? `r${rotateQ}` : 'n';
 
-    if (operationQ === 'cdn' && filtersQ) operationQ = 'cdno';
+    if ((operationQ === 'cdn') && (filtersQ !== 'n')) operationQ = 'cdno';
 
     return 'https://' + cloudUrl + operationQ + '/' + sizesQ + '/' + filtersQ +'/';
   }
@@ -181,7 +181,7 @@ export default class ImageManipulator extends Component {
   isOperationExist = (operations, type) => operations.find(({ stack }) => stack[0].name === type);
 
   getOperationQuery = (isCrop, isResize) => {
-    if (isCrop && isResize) return 'crop_px';
+    if (isCrop) return 'crop_px';
     else if (isResize) return 'width';
     else return 'cdn';
   }

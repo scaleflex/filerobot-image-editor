@@ -20,7 +20,7 @@ export default class extends Component {
       allowedTools = TOOLS.filter(tool => CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1);
 
     if (processWithCloudimage && resizeOperationIndex > -1)
-      allowedTools = allowedTools.filter(tool => tool !== 'resize');
+      allowedTools = allowedTools.filter(tool => tool !== 'crop');
 
     return (
       <Toolbar>
