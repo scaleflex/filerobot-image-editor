@@ -14,12 +14,8 @@ var _templateObject = _taggedTemplateLiteral(['\n  color: ', ';\n  overflow-x: a
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 import styled from 'styled-components';
-import { Button } from 'scaleflex-react-ui-kit/dist';
-import { styleUtils } from 'scaleflex-react-ui-kit/dist';
-
-var getIconStyles = styleUtils.getIconStyles,
-    getIconByName = styleUtils.getIconByName;
-
+import { Button } from './Button';
+import { getIconStyles, getIconByName } from './styleUtils';
 
 var CropWrapper = styled.div(_templateObject, function (props) {
   return props.theme.colors.text.base;
@@ -47,7 +43,7 @@ var FieldInput = styled.input.attrs({
 
 var BlockRatioWrapper = styled.div(_templateObject6);
 
-var BlockRatioBtn = Button.extend(_templateObject7, function (props) {
+var BlockRatioBtn = styled(Button)(_templateObject7, function (props) {
   return props.active ? props.theme.colors.text.light : props.theme.colors.text.mute;
 });
 

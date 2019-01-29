@@ -9,7 +9,8 @@ var _templateObject = _taggedTemplateLiteral(['\n  background: ', ';\n'], ['\n  
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 import styled from 'styled-components';
-import { Button, getHoverColor } from 'scaleflex-react-ui-kit/dist';
+import { Button } from './Button';
+import { getHoverColor } from './styleUtils';
 
 var HeaderWrapper = styled.div(_templateObject, function (props) {
   return props.theme.colors.primary.light;
@@ -33,7 +34,7 @@ var ToolbarWrapper = styled.div(_templateObject5, function (props) {
   return props.theme.colors.primary.light;
 });
 
-var CancelBtn = Button.extend(_templateObject6, function (props) {
+var CancelBtn = styled(Button)(_templateObject6, function (props) {
   return props.theme.colors.dark.base;
 }, function (props) {
   return props.theme.colors.dark.base;
@@ -47,6 +48,6 @@ var CancelBtn = Button.extend(_templateObject6, function (props) {
   return props.theme.colors.text.base;
 });
 
-var DarkBtn = CancelBtn.extend(_templateObject7);
+var DarkBtn = styled(CancelBtn)(_templateObject7);
 
 export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn, DarkBtn };

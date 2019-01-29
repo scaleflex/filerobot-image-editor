@@ -14,11 +14,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 import React from 'react';
 import styled from 'styled-components';
-import { styleUtils } from 'scaleflex-react-ui-kit/dist';
-
-var getIconStyles = styleUtils.getIconStyles,
-    getIconByName = styleUtils.getIconByName;
-
+import { getIconStyles, getIconByName } from './styleUtils';
 
 var Footer = styled.div(_templateObject, function (props) {
   return props.theme.colors.primary.light;

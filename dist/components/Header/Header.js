@@ -8,7 +8,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { Component } from 'react';
 import { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn } from '../../styledComponents';
-import { CloseBtn, Button } from 'scaleflex-react-ui-kit/dist';
+import { Button, CloseBtn } from '../../styledComponents';
 import { Toolbar } from '../';
 
 var _class = function (_Component) {
