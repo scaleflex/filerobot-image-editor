@@ -158,7 +158,8 @@ export default class extends Component {
       processWithCloudimage,
       forceApplyOperations: this.forceApplyOperations,
       updateState: this.updateState,
-      redoOperation: this.redoOperation
+      redoOperation: this.redoOperation,
+      config
     };
 
     return (

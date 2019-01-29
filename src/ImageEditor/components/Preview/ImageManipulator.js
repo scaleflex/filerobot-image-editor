@@ -96,6 +96,8 @@ export default class ImageManipulator extends Component {
           const formData = new FormData();
           const request = new XMLHttpRequest();
           const baseUrl = `//${config.UPLOAD_CONTAINER}.api.airstore.io/v1/`;
+          const uploadParams = config.UPLOAD_PARAMS || {};
+          const dir = uploadParams.dir || 'image-editor';
 
           request.addEventListener("load", (data) => {
             const { srcElement = { } } = data;
@@ -123,7 +125,7 @@ export default class ImageManipulator extends Component {
           });
 
           formData.append('files[]', blob, name);
-          request.open("POST", [baseUrl, `upload?dir=image-editor`].join(''));
+          request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
           request.setRequestHeader('X-Airstore-Secret-Key', config.UPLOAD_KEY);
           request.send(formData);
         });

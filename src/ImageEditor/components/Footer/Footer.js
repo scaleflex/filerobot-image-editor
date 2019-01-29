@@ -15,7 +15,8 @@ export default class extends Component {
   }
 
   render() {
-    const { operations = [], currentOperation = null, redoOperation, processWithCloudimage } = this.props;
+    const { operations = [], currentOperation = null, redoOperation, processWithCloudimage, config } = this.props;
+    const { HIDE_CLOUDIMAGE_PROCESS } = config;
     const currentOperationIndex = operations.findIndex(operation => operation === currentOperation);
     const isCurrentOperationLast = currentOperation && (operations[operations.length - 1] === currentOperation);
     const isPrevForbidden = (operations.length < 1) || (currentOperationIndex === -1);
@@ -33,12 +34,13 @@ export default class extends Component {
           muted={isNextForbidden}
         />
 
+        {!HIDE_CLOUDIMAGE_PROCESS &&
         <Switcher
           id="cloudimage-url-generator-switch"
           checked={processWithCloudimage}
           handleChange={this.onChangeProcessWithCloudimageSwitcher}
           text={'Process with cloudimage'}
-        />
+        />}
       </Footer>
     )
   }
