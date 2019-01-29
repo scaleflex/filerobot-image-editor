@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { styleUtils } from 'scaleflex-react-ui-kit/dist';
+import { getIconStyles, getIconByName } from './styleUtils';
 
-const { getIconStyles, getIconByName } = styleUtils;
 
 const Toolbar = styled.div`
   height: 100px;

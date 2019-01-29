@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { Button } from 'scaleflex-react-ui-kit/dist';
-import { styleUtils } from 'scaleflex-react-ui-kit/dist';
+import { Button } from './Button';
+import { getIconStyles, getIconByName } from './styleUtils';
 
-const { getIconStyles, getIconByName } = styleUtils;
 
 const CropWrapper = styled.div`
   color: ${props => props.theme.colors.text.base};
@@ -73,7 +72,7 @@ const BlockRatioWrapper = styled.div`
   padding: 0 5px;
 `;
 
-const BlockRatioBtn = Button.extend`
+const BlockRatioBtn = styled(Button)`
   padding: 0;
   
   > span {
