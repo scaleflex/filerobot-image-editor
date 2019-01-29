@@ -92,7 +92,7 @@ export default class ImageManipulator extends Component {
           const blob = b64toBlob(realData, contentType, null);
           const splittedName = imageName.replace(/-edited/g, '').split('.');
           const nameLength = splittedName.length;
-          const name = `${splittedName.slice(0, nameLength - 1).join('.')}-edited.${splittedName[nameLength - 1]}`;
+          const name = `${splittedName.slice(0, nameLength - 1).join('.')}-${generateUUID().substr(-6)}.${splittedName[nameLength - 1]}`;
           const formData = new FormData();
           const request = new XMLHttpRequest();
           const baseUrl = `//${config.UPLOAD_CONTAINER}.api.airstore.io/v1/`;
