@@ -147,6 +147,8 @@ var _initialiseProps = function _initialiseProps() {
           var formData = new FormData();
           var request = new XMLHttpRequest();
           var baseUrl = '//' + config.UPLOAD_CONTAINER + '.api.airstore.io/v1/';
+          var uploadParams = config.UPLOAD_PARAMS || {};
+          var dir = uploadParams.dir || 'image-editor';
 
           request.addEventListener("load", function (data) {
             var _data$srcElement = data.srcElement,
@@ -178,7 +180,7 @@ var _initialiseProps = function _initialiseProps() {
           });
 
           formData.append('files[]', blob, name);
-          request.open("POST", [baseUrl, 'upload?dir=image-editor'].join(''));
+          request.open("POST", [baseUrl, 'upload?dir=' + dir].join(''));
           request.setRequestHeader('X-Airstore-Secret-Key', config.UPLOAD_KEY);
           request.send(formData);
         });

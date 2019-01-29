@@ -48,7 +48,9 @@ var _class = function (_Component) {
           _props$currentOperati = _props.currentOperation,
           currentOperation = _props$currentOperati === undefined ? null : _props$currentOperati,
           redoOperation = _props.redoOperation,
-          processWithCloudimage = _props.processWithCloudimage;
+          processWithCloudimage = _props.processWithCloudimage,
+          config = _props.config;
+      var HIDE_CLOUDIMAGE_PROCESS = config.HIDE_CLOUDIMAGE_PROCESS;
 
       var currentOperationIndex = operations.findIndex(function (operation) {
         return operation === currentOperation;
@@ -72,7 +74,7 @@ var _class = function (_Component) {
           },
           muted: isNextForbidden
         }),
-        React.createElement(Switcher, {
+        !HIDE_CLOUDIMAGE_PROCESS && React.createElement(Switcher, {
           id: 'cloudimage-url-generator-switch',
           checked: processWithCloudimage,
           handleChange: this.onChangeProcessWithCloudimageSwitcher,

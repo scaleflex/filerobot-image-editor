@@ -104,7 +104,8 @@ var _class = function (_Component) {
         processWithCloudimage: processWithCloudimage,
         forceApplyOperations: this.forceApplyOperations,
         updateState: this.updateState,
-        redoOperation: this.redoOperation
+        redoOperation: this.redoOperation,
+        config: config
       };
 
       return React.createElement(
