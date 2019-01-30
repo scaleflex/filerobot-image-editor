@@ -168,7 +168,7 @@ var _initialiseProps = function _initialiseProps() {
               var nweImage = new Image();
               nweImage.onload = function () {
                 updateState({ isShowSpinner: false, isHideCanvas: false });
-                onUpload(nweImage.src);
+                onUpload(nweImage.src, file);
                 closeOnLoad && onClose();
               };
               nweImage.src = file.url_public + ('?hash=' + generateUUID());
