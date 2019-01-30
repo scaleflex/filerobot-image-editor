@@ -28,9 +28,12 @@ var _class = function (_Component) {
           onRevert = _props.onRevert,
           apply = _props.apply,
           onClose = _props.onClose,
-          onSave = _props.onSave;
+          onSave = _props.onSave,
+          showGoBackBtn = _props.showGoBackBtn,
+          operations = _props.operations;
 
       var filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
+      var atLeastOneOperationApplied = !!operations.length;
 
       return React.createElement(
         HeaderWrapper,
@@ -55,6 +58,11 @@ var _class = function (_Component) {
               CancelBtn,
               { hide: !activeTab, onClick: onRevert, sm: true, 'default': true, fullSize: true },
               'Cancel'
+            ),
+            showGoBackBtn && React.createElement(
+              CancelBtn,
+              { hide: activeTab, onClick: onClose, sm: true, 'default': true, fullSize: true },
+              'Go back'
             )
           ),
           React.createElement(Toolbar, this.props),
@@ -66,6 +74,7 @@ var _class = function (_Component) {
               {
                 themeColor: true,
                 sm: true,
+                disabled: !atLeastOneOperationApplied && !activeTab,
                 success: !activeTab,
                 themeBtn: activeTab,
                 fullSize: true,

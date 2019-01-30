@@ -61,7 +61,9 @@ var _class = function (_Component) {
           onClose = _props.onClose,
           onUpload = _props.onUpload,
           _props$closeOnLoad = _props.closeOnLoad,
-          closeOnLoad = _props$closeOnLoad === undefined ? true : _props$closeOnLoad;
+          closeOnLoad = _props$closeOnLoad === undefined ? true : _props$closeOnLoad,
+          _props$showGoBackBtn = _props.showGoBackBtn,
+          showGoBackBtn = _props$showGoBackBtn === undefined ? false : _props$showGoBackBtn;
 
       var headerProps = {
         cropDetails: cropDetails,
@@ -73,6 +75,7 @@ var _class = function (_Component) {
         processWithCloudimage: processWithCloudimage,
         operations: operations,
         isShowSpinner: isShowSpinner,
+        showGoBackBtn: showGoBackBtn,
         forceApplyOperations: this.forceApplyOperations,
         updateState: this.updateState,
         onRevert: this.onRevert,
