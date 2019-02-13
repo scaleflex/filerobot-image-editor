@@ -192,11 +192,12 @@ var _initialiseProps = function _initialiseProps() {
       });
       var url = _this3.generateCloudimageURL(allowedOperations);
       var original = src.replace(/https?:\/\/scaleflex.ultrafast.io\//, '');
+      var resultUrl = url + original;
 
       var nweImage = new Image();
       nweImage.onload = function () {
         updateState({ isShowSpinner: false, isHideCanvas: false });
-        onUpload(url + original);
+        onUpload(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
         closeOnLoad && onClose();
       };
       nweImage.src = url + original + ('?hash=' + generateUUID());
@@ -234,7 +235,7 @@ var _initialiseProps = function _initialiseProps() {
         resizeHeight = _ref5[1];
 
     var cropQ = cropOperation ? x + ',' + y + ',' + (x + cropWidth) + ',' + (y + cropHeight) + '-' : '';
-    var resizeQ = (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight);
+    var resizeQ = resizeWidth || cropWidth ? (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight) : '';
     var sizesQ = cropQ || resizeQ ? cropQ + resizeQ : 'n';
     var rotateQ = orientationParams ? orientationParams : '';
     var filtersQ = rotateQ ? 'r' + rotateQ : 'n';
