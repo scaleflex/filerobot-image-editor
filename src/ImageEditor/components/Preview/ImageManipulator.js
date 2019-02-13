@@ -134,11 +134,12 @@ export default class ImageManipulator extends Component {
       const allowedOperations = operations.filter(({ stack }) => CLOUDIMAGE_OPERATIONS.indexOf(stack[0].name) > -1);
       const url = this.generateCloudimageURL(allowedOperations);
       const original = src.replace(/https?:\/\/scaleflex.ultrafast.io\//, '');
+      const resultUrl = url + original;
 
       const nweImage = new Image();
       nweImage.onload = () => {
         updateState({ isShowSpinner: false, isHideCanvas: false });
-        onUpload(url + original);
+        onUpload(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
         closeOnLoad && onClose();
       };
       nweImage.src = url + original + `?hash=${generateUUID()}`;
@@ -170,7 +171,7 @@ export default class ImageManipulator extends Component {
     let [resizeWidth, resizeHeight] = resizeParams || [];
 
     const cropQ = cropOperation  ? (x + ',' + y + ',' + (x + cropWidth) +',' + (y + cropHeight) + '-') : '';
-    const resizeQ = (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight);
+    const resizeQ = (resizeWidth || cropWidth) ? (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight) : '';
     const sizesQ = cropQ ||resizeQ ? cropQ + resizeQ : 'n';
     const rotateQ = orientationParams ? orientationParams : '';
     const filtersQ = rotateQ ? `r${rotateQ}` : 'n';
