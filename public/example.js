@@ -5,9 +5,11 @@
         // optional default: 'airstore-image-editor' | image editor root element to boost the plugin
         //ELEMENT_ID: 'airstore-image-editor',
         // * required if PROCESS_WITH_CLOUDIMAGE set to false | Airstore uploaded key
-        UPLOAD_KEY: '0cbe9ccc4f164bf8be26bd801d53b132',
+        //UPLOAD_KEY: '0cbe9ccc4f164bf8be26bd801d53b132',
+        UPLOAD_KEY: '7cc1f659309c480cbc8a608dc6ba5f03',
         // * required if PROCESS_WITH_CLOUDIMAGE set to false | Airstore uploaded key
-        UPLOAD_CONTAINER: 'example',
+        //UPLOAD_CONTAINER: 'example',
+        UPLOAD_CONTAINER: 'scaleflex-tests-v5a',
         // optional | use cloudimage operations to generate final url
         PROCESS_WITH_CLOUDIMAGE: true,
         // * required if PROCESS_WITH_CLOUDIMAGE set to true | cloudimage token
