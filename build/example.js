@@ -11,7 +11,9 @@
         //UPLOAD_CONTAINER: 'example',
         UPLOAD_CONTAINER: 'scaleflex-tests-v5a',
         // optional | use cloudimage operations to generate final url
-        PROCESS_WITH_CLOUDIMAGE: true,
+        PROCESS_WITH_CLOUDIMAGE: false,
+        // optional | upload cloudimage image
+        UPLOAD_CLOUDIMAGE_IMAGE: false,
         // * required if PROCESS_WITH_CLOUDIMAGE set to true | cloudimage token
         CLOUDIMAGE_TOKEN: 'demo',
 

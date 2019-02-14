@@ -25,7 +25,10 @@ var _class = function (_Component) {
 
     _initialiseProps.call(_this);
 
-    var PROCESS_WITH_CLOUDIMAGE = props.config.PROCESS_WITH_CLOUDIMAGE;
+    var _props$config = props.config,
+        PROCESS_WITH_CLOUDIMAGE = _props$config.PROCESS_WITH_CLOUDIMAGE,
+        _props$config$UPLOAD_ = _props$config.UPLOAD_CLOUDIMAGE_IMAGE,
+        UPLOAD_CLOUDIMAGE_IMAGE = _props$config$UPLOAD_ === undefined ? false : _props$config$UPLOAD_;
 
 
     _this.state = {
@@ -37,7 +40,8 @@ var _class = function (_Component) {
       original: { width: 300, height: 200 },
       cropDetails: { width: 300, height: 200 },
       canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
-      processWithCloudimage: PROCESS_WITH_CLOUDIMAGE
+      processWithCloudimage: PROCESS_WITH_CLOUDIMAGE,
+      uploadCloudimageImage: UPLOAD_CLOUDIMAGE_IMAGE
     };
     return _this;
   }
@@ -54,7 +58,8 @@ var _class = function (_Component) {
           cropDetails = _state.cropDetails,
           original = _state.original,
           canvasDimensions = _state.canvasDimensions,
-          processWithCloudimage = _state.processWithCloudimage;
+          processWithCloudimage = _state.processWithCloudimage,
+          uploadCloudimageImage = _state.uploadCloudimageImage;
       var _props = this.props,
           src = _props.src,
           config = _props.config,
@@ -99,6 +104,7 @@ var _class = function (_Component) {
         closeOnLoad: closeOnLoad,
         config: config,
         processWithCloudimage: processWithCloudimage,
+        uploadCloudimageImage: uploadCloudimageImage,
         updateState: this.updateState
       };
       var footerProps = {

@@ -128,10 +128,15 @@ var _initialiseProps = function _initialiseProps() {
         updateState = _props.updateState,
         closeOnLoad = _props.closeOnLoad,
         config = _props.config,
-        processWithCloudimage = _props.processWithCloudimage;
+        processWithCloudimage = _props.processWithCloudimage,
+        uploadCloudimageImage = _props.uploadCloudimageImage;
 
     var src = _this3.state.src.split('?')[0];
     var canvas = _this3.getCanvasNode();
+    var baseUrl = '//' + config.UPLOAD_CONTAINER + '.api.airstore.io/v1/';
+    var uploadParams = config.UPLOAD_PARAMS || {};
+    var dir = uploadParams.dir || 'image-editor';
+    var self = _this3;
 
     if (!processWithCloudimage) {
       window.Caman(canvas, function () {
@@ -146,38 +151,8 @@ var _initialiseProps = function _initialiseProps() {
           var name = splittedName.slice(0, nameLength - 1).join('.') + '-' + generateUUID().substr(-6) + '.' + splittedName[nameLength - 1];
           var formData = new FormData();
           var request = new XMLHttpRequest();
-          var baseUrl = '//' + config.UPLOAD_CONTAINER + '.api.airstore.io/v1/';
-          var uploadParams = config.UPLOAD_PARAMS || {};
-          var dir = uploadParams.dir || 'image-editor';
 
-          request.addEventListener("load", function (data) {
-            var _data$srcElement = data.srcElement,
-                srcElement = _data$srcElement === undefined ? {} : _data$srcElement;
-            var _srcElement$response = srcElement.response,
-                response = _srcElement$response === undefined ? '{}' : _srcElement$response;
-
-            var responseData = JSON.parse(response) || {};
-
-            if (responseData.status === 'success') {
-              var _responseData$file = responseData.file,
-                  file = _responseData$file === undefined ? {} : _responseData$file;
-
-
-              if (!file.url_public) return;
-
-              var nweImage = new Image();
-              nweImage.onload = function () {
-                updateState({ isShowSpinner: false, isHideCanvas: false });
-                onUpload(nweImage.src, file);
-                closeOnLoad && onClose();
-              };
-              nweImage.src = file.url_public + ('?hash=' + generateUUID());
-            } else {
-              updateState({ isShowSpinner: false, isHideCanvas: false });
-              alert(responseData);
-              closeOnLoad && onClose();
-            }
-          });
+          request.addEventListener("load", self.onFileLoad);
 
           formData.append('files[]', blob, name);
           request.open("POST", [baseUrl, 'upload?dir=' + dir].join(''));
@@ -193,14 +168,59 @@ var _initialiseProps = function _initialiseProps() {
       var url = _this3.generateCloudimageURL(allowedOperations);
       var original = src.replace(/https?:\/\/scaleflex.ultrafast.io\//, '');
       var resultUrl = url + original;
+      var nweImage = new Image();
+
+      if (uploadCloudimageImage) {
+        var request = new XMLHttpRequest();
+
+        request.addEventListener("load", _this3.onFileLoad);
+
+        request.open("POST", [baseUrl, 'upload?dir=' + dir].join(''));
+        request.setRequestHeader('X-Airstore-Secret-Key', config.UPLOAD_KEY);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify({ files_urls: [resultUrl] }));
+      } else {
+        nweImage.onload = function () {
+          updateState({ isShowSpinner: false, isHideCanvas: false });
+          onUpload(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
+          closeOnLoad && onClose();
+        };
+        nweImage.src = url + original + ('?hash=' + generateUUID());
+      }
+    }
+  };
+
+  this.onFileLoad = function (data) {
+    var _props2 = _this3.props,
+        onUpload = _props2.onUpload,
+        onClose = _props2.onClose,
+        updateState = _props2.updateState,
+        closeOnLoad = _props2.closeOnLoad;
+    var _data$srcElement = data.srcElement,
+        srcElement = _data$srcElement === undefined ? {} : _data$srcElement;
+    var _srcElement$response = srcElement.response,
+        response = _srcElement$response === undefined ? '{}' : _srcElement$response;
+
+    var responseData = JSON.parse(response) || {};
+
+    if (responseData.status === 'success') {
+      var _responseData$file = responseData.file,
+          file = _responseData$file === undefined ? {} : _responseData$file;
+
+
+      if (!file.url_public) return;
 
       var nweImage = new Image();
       nweImage.onload = function () {
         updateState({ isShowSpinner: false, isHideCanvas: false });
-        onUpload(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
+        onUpload(nweImage.src, file);
         closeOnLoad && onClose();
       };
-      nweImage.src = url + original + ('?hash=' + generateUUID());
+      nweImage.src = file.url_public + ('?hash=' + generateUUID());
+    } else {
+      updateState({ isShowSpinner: false, isHideCanvas: false });
+      alert(responseData);
+      closeOnLoad && onClose();
     }
   };
 
