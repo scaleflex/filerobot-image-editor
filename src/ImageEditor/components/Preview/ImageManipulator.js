@@ -78,9 +78,13 @@ export default class ImageManipulator extends Component {
 
   saveImage = () => {
     const { imageName, operations } = this.state;
-    const { onUpload, onClose, updateState, closeOnLoad, config, processWithCloudimage } = this.props;
+    const { onUpload, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage } = this.props;
     const src = this.state.src.split('?')[0];
     const canvas = this.getCanvasNode();
+    const baseUrl = `//${config.UPLOAD_CONTAINER}.api.airstore.io/v1/`;
+    const uploadParams = config.UPLOAD_PARAMS || {};
+    const dir = uploadParams.dir || 'image-editor';
+    const self = this;
 
     if (!processWithCloudimage) {
       window.Caman(canvas, function () {
@@ -95,34 +99,8 @@ export default class ImageManipulator extends Component {
           const name = `${splittedName.slice(0, nameLength - 1).join('.')}-${generateUUID().substr(-6)}.${splittedName[nameLength - 1]}`;
           const formData = new FormData();
           const request = new XMLHttpRequest();
-          const baseUrl = `//${config.UPLOAD_CONTAINER}.api.airstore.io/v1/`;
-          const uploadParams = config.UPLOAD_PARAMS || {};
-          const dir = uploadParams.dir || 'image-editor';
 
-          request.addEventListener("load", (data) => {
-            const { srcElement = { } } = data;
-            const { response = '{}' } = srcElement;
-            const responseData = JSON.parse(response) || {};
-
-            if (responseData.status === 'success') {
-              const { file = {} } = responseData;
-
-              if (!file.url_public) return;
-
-              const nweImage = new Image();
-              nweImage.onload = () => {
-                updateState({ isShowSpinner: false, isHideCanvas: false });
-                onUpload(nweImage.src, file);
-                closeOnLoad && onClose();
-              };
-              nweImage.src = file.url_public + `?hash=${generateUUID()}`;
-            }
-            else {
-              updateState({ isShowSpinner: false, isHideCanvas: false });
-              alert(responseData);
-              closeOnLoad && onClose();
-            }
-          });
+          request.addEventListener("load", self.onFileLoad);
 
           formData.append('files[]', blob, name);
           request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
@@ -135,14 +113,51 @@ export default class ImageManipulator extends Component {
       const url = this.generateCloudimageURL(allowedOperations);
       const original = src.replace(/https?:\/\/scaleflex.ultrafast.io\//, '');
       const resultUrl = url + original;
+      const nweImage = new Image();
+
+      if (uploadCloudimageImage) {
+        const request = new XMLHttpRequest();
+
+        request.addEventListener("load", this.onFileLoad);
+
+        request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
+        request.setRequestHeader('X-Airstore-Secret-Key', config.UPLOAD_KEY);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify({ files_urls: [resultUrl] }));
+      } else {
+        nweImage.onload = () => {
+          updateState({ isShowSpinner: false, isHideCanvas: false });
+          onUpload(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
+          closeOnLoad && onClose();
+        };
+        nweImage.src = url + original + `?hash=${generateUUID()}`;
+      }
+    }
+  }
+
+  onFileLoad = (data) => {
+    const { onUpload, onClose, updateState, closeOnLoad } = this.props;
+    const { srcElement = { } } = data;
+    const { response = '{}' } = srcElement;
+    const responseData = JSON.parse(response) || {};
+
+    if (responseData.status === 'success') {
+      const { file = {} } = responseData;
+
+      if (!file.url_public) return;
 
       const nweImage = new Image();
       nweImage.onload = () => {
         updateState({ isShowSpinner: false, isHideCanvas: false });
-        onUpload(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
+        onUpload(nweImage.src, file);
         closeOnLoad && onClose();
       };
-      nweImage.src = url + original + `?hash=${generateUUID()}`;
+      nweImage.src = file.url_public + `?hash=${generateUUID()}`;
+    }
+    else {
+      updateState({ isShowSpinner: false, isHideCanvas: false });
+      alert(responseData);
+      closeOnLoad && onClose();
     }
   }
 

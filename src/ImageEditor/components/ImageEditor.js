@@ -11,7 +11,7 @@ export default class extends Component {
   constructor(props) {
     super();
 
-    const { PROCESS_WITH_CLOUDIMAGE } = props.config;
+    const { PROCESS_WITH_CLOUDIMAGE, UPLOAD_CLOUDIMAGE_IMAGE = false } = props.config;
 
    this.state = {
      isShowSpinner: true,
@@ -22,7 +22,8 @@ export default class extends Component {
      original: { width: 300, height: 200 },
      cropDetails: { width: 300, height: 200 },
      canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
-     processWithCloudimage: PROCESS_WITH_CLOUDIMAGE
+     processWithCloudimage: PROCESS_WITH_CLOUDIMAGE,
+     uploadCloudimageImage: UPLOAD_CLOUDIMAGE_IMAGE
    }
   }
 
@@ -114,7 +115,7 @@ export default class extends Component {
   render() {
     const {
       isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original,
-      canvasDimensions, processWithCloudimage
+      canvasDimensions, processWithCloudimage, uploadCloudimageImage
     } = this.state;
     const { src, config, onClose, onUpload, closeOnLoad = true, showGoBackBtn = false } = this.props;
     const headerProps = {
@@ -151,6 +152,7 @@ export default class extends Component {
       closeOnLoad,
       config,
       processWithCloudimage,
+      uploadCloudimageImage,
       updateState: this.updateState
     };
     const footerProps = {
