@@ -30,7 +30,11 @@ class ImageEditorWrapper extends Component {
   }
 
   close = () => {
-    this.setState({ isVisible: false });
+    const { onClose } = this.props;
+
+    this.setState({ isVisible: false }, () => {
+      if (onClose) onClose();
+    });
   }
 
   render() {
