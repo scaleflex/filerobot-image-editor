@@ -181,15 +181,21 @@ export const variables = {
 
     sm: {
       p: '4px 10px',
-      fz: '12px'
+      fz: '12px',
+      lh: '1.5',
+      br: '5px'
     },
     md: {
       p: '6px 12px',
-      fz: '14px'
+      fz: '14px',
+      lh: '1.5',
+      br: '5px'
     },
     lg: {
       p: '8px 14px',
-      fz: '16px'
+      fz: '16px',
+      lh: '1.5',
+      br: '5px'
     }
   },
 

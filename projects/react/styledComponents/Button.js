@@ -5,9 +5,9 @@ import { getWithOpacity, variables } from './styleUtils';
 const Button = styled.button`
   text-transform: ${props => props.tt || (variables.button && variables.button.tt) || 'none'};
   display: ${props => props.hide ? 'none': 'inline-block'};
-  padding: ${props => getElementStylesBySize(props, 'button', 'padding')};
-  font-size: ${props => getElementStylesBySize(props, 'button', 'fontSize')};
-  line-height:  ${props => getElementStylesBySize(props, 'button', 'lineHeight')};
+  padding: ${props => getElementStylesBySize(props, 'button', 'p')};
+  font-size: ${props => getElementStylesBySize(props, 'button', 'fz')};
+  line-height:  ${props => getElementStylesBySize(props, 'button', 'lh')};
   min-width: ${props => props.fullSize ? '100%' : 'auto'};
   font-weight: 400;
   text-align: center;
@@ -24,7 +24,7 @@ const Button = styled.button`
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
-  border-radius: ${props => getElementStylesBySize(props, 'button', 'borderRadius')};
+  border-radius: ${props => getElementStylesBySize(props, 'button', 'br')};
   
   :focus, :hover {
     text-decoration: none;

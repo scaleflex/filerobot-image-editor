@@ -31,7 +31,7 @@ export default class extends Component {
           <RightActions>
             <Button
               themeColor
-              sm
+              md
               disabled={!atLeastOneOperationApplied && !activeTab}
               success={!activeTab}
               themeBtn={activeTab}
