@@ -66,14 +66,14 @@ const SwitcherInner = styled.span`
   
   &:before {
     content: "ON";
-    padding-left: 10px;
+    padding-left: 10px !important;
     background-color: #01717d; 
     color: #FFFFFF;
   }
   
   &:after {
     content: "OFF";
-    padding-right: 10px;
+    padding-right: 10px !important;
     background-color: #1e262c; 
     color: #aaaaaa;
     text-align: right;
