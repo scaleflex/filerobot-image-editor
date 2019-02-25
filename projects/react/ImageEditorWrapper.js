@@ -62,7 +62,6 @@ export default ImageEditorWrapper;
 
 const Wrapper = styled.div`
   height: 100%;
-  min-height: 520px;
   overflow-y: auto;
 
   *, *:after, *:before, *::after, *::before {
