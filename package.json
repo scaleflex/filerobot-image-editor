@@ -1,119 +1,68 @@
 {
-  "name": "image-editor-reactjs",
-  "version": "0.1.1",
-  "private": true,
-  "main": "lib/index.js",
+  "name": "filerobot-image-editor",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "description": "Filerobot Image Editor",
+  "author": "scaleflex",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scaleflex/filerobot-image-editor"
+  },
+  "homepage": "https://github.com/scaleflex/filerobot-image-editor#readme",
+  "keywords": [
+    "image editor"
+  ],
   "dependencies": {
-    "moment": "^2.21.0"
+    "cropperjs": "^1.2.2",
+    "moment": "^2.21.0",
+    "react-loadable": "^5.5.0",
+    "styled-components": "^3.1.6"
   },
   "devDependencies": {
-    "autoprefixer": "7.1.6",
-    "babel-cli": "^6.26.0",
-    "babel-core": "6.26.0",
-    "babel-eslint": "7.2.3",
-    "babel-jest": "20.0.3",
-    "babel-loader": "7.1.2",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-react-app": "^3.1.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-runtime": "6.26.0",
-    "bcrypt": "^1.0.3",
-    "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "chalk": "1.1.3",
-    "cropperjs": "^1.2.2",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.3",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-syntax-jsx": "^7.2.0",
+    "@babel/plugin-transform-arrow-functions": "^7.2.0",
+    "@babel/plugin-transform-object-assign": "^7.2.0",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "ajv": "^6.9.2",
+    "ajv-keywords": "^3.4.0",
+    "babel-loader": "^8.0.5",
     "css-loader": "0.28.7",
-    "dotenv": "4.0.0",
-    "dotenv-expand": "4.0.1",
-    "eslint": "4.10.0",
-    "eslint-config-react-app": "^2.1.0",
-    "eslint-loader": "1.9.0",
-    "eslint-plugin-flowtype": "2.39.1",
-    "eslint-plugin-import": "2.8.0",
-    "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.4.0",
-    "extract-text-webpack-plugin": "3.0.2",
-    "fibers": "^2.0.0",
-    "file-loader": "1.1.5",
-    "fs-extra": "3.0.1",
-    "html-webpack-plugin": "2.29.0",
-    "jest": "20.0.4",
-    "node-pre-gyp": "^0.6.39",
-    "node-sass": "^4.7.2",
-    "npm": "^4.6.1",
-    "object-assign": "4.1.1",
-    "postcss-flexbugs-fixes": "3.2.0",
-    "postcss-loader": "2.0.8",
-    "promise": "8.0.1",
-    "raf": "3.4.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-dev-utils": "^5.0.0",
+    "gh-pages": "^2.0.1",
+    "highlight.js": "9.13.1",
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-hot-loader": "^3.1.3",
-    "sass-loader": "^6.0.6",
     "style-loader": "0.19.0",
-    "sw-precache-webpack-plugin": "0.11.4",
-    "url-loader": "0.6.2",
-    "webpack": "3.8.1",
-    "webpack-dev-server": "2.9.4",
-    "webpack-manifest-plugin": "1.3.2",
-    "whatwg-fetch": "2.0.3",
-    "styled-components": "^3.1.6",
-    "scaleflex-react-ui-kit": "git+ssh://git@code.scaleflex.cloud:scaleflex/scaleflex-react-ui-kit.git"
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "3.0.1-beta.0"
   },
   "peerDependencies": {
     "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "styled-components": "^3.1.6",
-    "scaleflex-react-ui-kit": "git+ssh://git@code.scaleflex.cloud:scaleflex/scaleflex-react-ui-kit.git"
+    "react-dom": "^16.2.0"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "dist": "npm run clean && NODE_ENV=production babel src/ImageEditor --out-dir dist --copy-files",
-    "clean": "rm -rf dist",
-    "test": "node scripts/test.js --env=jsdom"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,mjs}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "mjs",
-      "js",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "start-demo-js": "webpack-dev-server --mode development --config config/webpack.demo-js-config.js",
+    "start-demo-react": "webpack-dev-server --mode development --config config/webpack.demo-react-config.js",
+    "clean-demo-js": "rm -rf examples/js/dist",
+    "build-demo-js": "npm run clean-demo-js && webpack --mode production --config config/webpack.demo-js-config.js",
+    "clean-demo-react": "rm -rf examples/react/dist",
+    "build-demo-react": "npm run clean-demo-react && webpack --mode production --config config/webpack.demo-react-config.js",
+    "clean-build": "rm -rf build",
+    "build": "npm run clean-build && webpack --mode production --config config/webpack.js-config.js",
+    "clean-dist": "rm -rf dist",
+    "dist": "npm run clean-dist && npx babel projects/react --out-dir dist --copy-files",
+    "deploy": "gh-pages -d examples/js/dist",
+    "publish-demo": "npm run build-demo-js && npm run deploy"
   }
 }

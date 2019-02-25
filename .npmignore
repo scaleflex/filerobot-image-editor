@@ -1,0 +1,8 @@
+# .npmignore
+projects
+examples
+config
+build
+.babelrc
+.gitignore
+.idea
