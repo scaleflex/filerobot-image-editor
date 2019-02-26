@@ -183,13 +183,13 @@ export const variables = {
       p: '4px 10px',
       fz: '12px',
       lh: '1.5',
-      br: '5px'
+      br: '3px'
     },
     md: {
       p: '6px 12px',
       fz: '14px',
       lh: '1.5',
-      br: '5px'
+      br: '3px'
     },
     lg: {
       p: '8px 14px',
