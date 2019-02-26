@@ -1,28 +1,50 @@
-import '../../../projects/js/index';
+import './style.css';
+import './assets/fonts/helvetica-neue.css';
+import './filerobot-init-example';
 
+// Highlighting of code
+import hljs from 'highlight.js/lib/highlight';
+import javascript from 'highlight.js/lib/languages/javascript';
+import 'highlight.js/styles/github.css';
+hljs.registerLanguage('javascript', javascript);
+hljs.initHighlightingOnLoad();
 
-const config = {
-  filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
-  filerobotContainer: 'scaleflex-tests-v5a',
-  processWithCloudimage: false,
-  uploadWithCloudimageLink: false,
-  cloudimageToken: 'demo',
-  // elementId: '',
-  // hideCloudimageSwitcher: false,
-  // uploadParams: {},
-};
+const jsBtn = document.getElementById('js-btn');
+const reactBtn = document.getElementById('react-btn');
+const jsBox = document.getElementById('js-version-box');
+const reactBox = document.getElementById('react-version-box');
+const resultModal = document.getElementById('result-modal');
 
-const onUpload = function(newUrl) {
-  const image = document.getElementById('image');
+jsBtn.onclick = function() {
+  if (jsBtn.className.indexOf('btn-primary') === -1) {
+    jsBtn.classList.remove('btn-default');
+    jsBtn.classList.add('btn-primary');
+    reactBtn.classList.remove('btn-primary');
+    reactBtn.classList.add('btn-default');
 
-  image.src = newUrl;
-  FilerobotImageEditor.close();
+    reactBox.style.display = 'none';
+    jsBox.style.display = 'block';
+  }
 }
 
-FilerobotImageEditor.init(config, onUpload);
+reactBtn.onclick = function() {
+  if (reactBtn.className.indexOf('btn-primary') === -1) {
+    reactBtn.classList.remove('btn-default');
+    reactBtn.classList.add('btn-primary');
+    jsBtn.classList.remove('btn-primary');
+    jsBtn.classList.add('btn-default');
 
-const image = document.getElementById('image');
-
-image.onclick = function(event) {
- FilerobotImageEditor.open(event.target.src);
+    jsBox.style.display = 'none'
+    reactBox.style.display = 'block';
+  }
 }
+
+const modalBtns = document.querySelectorAll('[data-dismiss="modal"]');
+
+modalBtns.forEach(btn => {
+  btn.onclick = () => {
+    resultModal.style.display = 'none';
+  }
+});
+
+

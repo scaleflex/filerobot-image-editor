@@ -11,7 +11,7 @@ export default class extends Component {
   constructor(props) {
     super();
 
-    const { processWithCloudimage, uploadWithCloudimageLink = false } = props.config;
+    const { processWithCloudimage, uploadWithCloudimageLink } = props.config;
 
    this.state = {
      isShowSpinner: true,

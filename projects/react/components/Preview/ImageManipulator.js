@@ -130,7 +130,8 @@ export default class ImageManipulator extends Component {
           onUpload(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
           closeOnLoad && onClose();
         };
-        nweImage.src = url + original + `?hash=${generateUUID()}`;
+        nweImage.src = url + original;
+        //nweImage.src = url + original + `?hash=${generateUUID()}`;
       }
     }
   }
@@ -152,7 +153,8 @@ export default class ImageManipulator extends Component {
         onUpload(nweImage.src, file);
         closeOnLoad && onClose();
       };
-      nweImage.src = file.url_public + `?hash=${generateUUID()}`;
+      nweImage.src = file.url_public;
+      //nweImage.src = file.url_public + `?hash=${generateUUID()}`;
     }
     else {
       updateState({ isShowSpinner: false, isHideCanvas: false });

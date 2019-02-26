@@ -15,7 +15,7 @@ export default class extends Component {
     return (
       <HeaderWrapper>
         <HeaderTop>
-          <Title>{filteredName || 'Image Editor'}</Title>
+          <Title>{filteredName || 'Filerobot Image Editor'}</Title>
           <CloseBtn onClick={onClose}/>
         </HeaderTop>
 

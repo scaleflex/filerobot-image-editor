@@ -20,6 +20,11 @@ const CLOUDIMAGE_OPERATIONS = ['crop', 'resize', 'rotate'];
 const UPLOADER = {
   filerobotUploadKey: '0cbe9ccc4f164bf8be26bd801d53b132',
   filerobotContainer: 'example',
+  processWithCloudimage: false,
+  uploadWithCloudimageLink: false,
+  cloudimageToken: null,
+  elementId: null,
+  uploadParams: {}
 }
 
 export { TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS };

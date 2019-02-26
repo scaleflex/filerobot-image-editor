@@ -3,92 +3,231 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <meta name="theme-color" content="#000000">
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto+Mono|Yantramanav:300,400,500,700">
-  <style>
-    #image {
-      cursor: pointer;
-      transition: opacity 0.4s;
-      opacity: 1;
-    }
-    #image:hover {
-      opacity: 0.6;
-    }
-  </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <title>Filerobot Image Editor</title>
 </head>
-<body style="font-size: 14px;">
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.js"></script>-->
-<!--<script src="%PUBLIC_URL%/lib/camanjs/caman.full.min.js"></script>-->
-<!--<script src="%PUBLIC_URL%/lib/camanjs/caman.full.min.js"></script>-->
-<noscript>
-  You need to enable JavaScript to run this app.
-</noscript>
+<body>
 
-<div class="container">
-  <div class="jumbotron" style="color: #fff; background: rgb(84,135,255);background: -moz-linear-gradient(left, rgba(84,135,255,1) 0%, rgba(117,158,255,1) 100%);background: -webkit-linear-gradient(left, rgba(84,135,255,1) 0%,rgba(117,158,255,1) 100%);background: linear-gradient(to right, rgba(84,135,255,1) 0%,rgba(117,158,255,1) 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5487ff', endColorstr='#759eff',GradientType=1 );">
-    <h1 style="font-size: 42px;">Cloudimage Image Editor</h1>
+<section class="home">
+  <div class="container">
+    <a class="logo" href="/">Filerobot Image Editor</a>
+    <h1>Edit, resize, and filter any image!</h1>
+    <h2>Whether your goal is to boost conversions or engage visitors, using Filerobot Image Editor, a photo/image editor
+      plugin, is the missing puzzle piece to help you achieve it.</h2>
+
+    <div class="actions-wrapper">
+      <button id="edit-btn" class="btn btn-default btn-lg">Edit image</button>
+      <a
+         id="view-github-btn"
+         href="https://github.com/scaleflex/filerobot-image-editor"
+         class="btn btn-primary btn-lg"
+         target="_blank"
+      >View on Github</a>
+      <!--<button id="download-btn" class="btn btn-info btn-lg">Download</button>-->
+    </div>
   </div>
-</div>
 
-<div class="container">
-  <h3>Click on image to edit</h3>
+  <a href="https://github.com/scaleflex/filerobot-image-editor" target="_blank">
+    <img
+       class="fork-me-on-github"
+       src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+       alt="Fork me on GitHub">
+  </a>
+</section>
+
+<section class="image-wrapper">
   <img
      id="image"
-     src="//scaleflex.ultrafast.io/https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/koala.jpg"
+     src="//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.png"
   />
-</div>
+</section>
+
+<section class="ready-to-start features">
+  <div class="container">
+    <h2>Your image editor will look great everywhere</h2>
+    <p>It only takes a few clicks to make your website more powerful with Filerobot Image Editor. Get started for free and
+      start seeing the improvements you can get from using a image/photo editor plugin today!</p>
+  </div>
+</section>
+
+<section class="container ready-to-start">
+  <h2>Ready to get started?</h2>
+  <p>To use the plugin, you will need a Filerobot token. Don't worry, it only takes seconds to get one by registering <a
+     href="https://www.filerobot.com/en/home">here</a>. Once your token is created, you can configure it as described below.
+    This token allows you to use 25GB of image cache and 25GB of worldwide CDN traffic per month for free.</p>
+</section>
+
+<section class="container">
+  <div class="text-center">
+    <div id="plugin-version-switcher" class="plugin-version-switcher btn-group btn-toggle">
+      <button id="js-btn" class="btn btn-primary">JS version</button>
+      <button id="react-btn" class="btn btn-default">React version</button>
+    </div>
+  </div>
+
+  <div id="react-version-box" style="display: none;">
+    <div class="action-wrapper first-action">
+      <p>
+        Install Filerobot image editor via npm
+      </p>
+      <figure class="highlight">
+        <pre><code class="javascript">npm i filerobot-image-editor --save</code></pre>
+      </figure>
+    </div>
+
+    <div class="action-wrapper second-action">
+      <p>
+        Simple usage
+      </p>
+      <figure class="highlight">
+        <pre><code class="javascript">import React, { Component } from 'react';
+import { render } from 'react-dom';
+import FilerobotImageEditor from 'filerobot-image-editor';
 
 
-<div class="container quick-start">
+const config = {
+  filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
+  filerobotContainer: 'scaleflex-tests-v5a',
+};
 
-  <h2>Quick start</h2>
-  <h5 class="no-bg">Include <b>image-editor.last.js</b> into your project</h5>
-  <pre>&lt;script src="https://js.filerobot.com/image-editor.last.js"/&gt;&lt;/script&gt;</pre>
-  <h5 class="no-bg">Initialize AirstoreImageEditor</h5>
+class App extends Component {
+  constructor() {
+    super();
 
-  <pre>(function() {
-  window.onload = function() {
-    if (window.AirstoreImageEditor) {
-      let options = {
-        // optional default: 'airstore-image-editor' | image editor root element to boost the plugin
-        //ELEMENT_ID: 'airstore-image-editor',
-        // * required if processWithCloudimage set to false | Airstore uploaded key
-        filerobotUploadKey: '0cbe9ccc4f164bf8be26bd801d53b132',
-        // * required if processWithCloudimage set to false | Airstore uploaded key
-        filerobotContainer: 'example',
-        // optional | use cloudimage operations to generate final url
-        processWithCloudimage: true,
-        // * required if processWithCloudimage set to true | cloudimage token
-        cloudimageToken: 'demo',
-
-        // required | handle callback
-        onUpload: function (newUrl) { // newUrl - result image url
-          const image = document.getElementById('image');
-
-          image.src = newUrl;
-          // close the editor
-          window.AirstoreImageEditor.close();
-        }
-      };
-
-      window.AirstoreImageEditor.init(options);
-
-      // Open Image Editor and pass source of image
-      const image = document.getElementById('image');
-
-      if (image) image.onclick = function(event) {
-        // open the editor
-        window.AirstoreImageEditor.open(event.target.src);
-      }
+    this.state = {
+      isShow: false,
+      imgSrc: '//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.png'
     }
   }
-})();</pre>
+
+  showImageEditor = () => {
+    this.setState({ isShow: true });
+  }
+
+  onUpload = (newUrl) => {
+    this.setState({ imgSrc: newUrl });
+  }
+
+  onClose = () => {
+    this.setState({ isShow: false });
+  }
+
+  render() {
+    const { imgSrc, isShow } = this.state;
+
+    return (
+      &lt;div>
+        &lt;h1>Filerobot Image Editor&lt;/h1>
+
+          &lt;img src={imgSrc} onClick={this.showImageEditor} alt="example image"/>
+
+        &lt;FilerobotImageEditor
+           show={isShow}
+           src={imgSrc}
+           config={config}
+           onUpload={this.onUpload}
+           onClose={this.onClose}
+        />
+      &lt;/div>
+    )
+  }
+}
+
+render(&lt;App/>, document.getElementById('app'));</code></pre>
+      </figure>
+    </div>
+
+    <div class="action-wrapper third-action">
+      <p>
+        …and you're done! <a href="https://github.com/scaleflex/filerobot-image-editor">See the full documentation here.</a>
+      </p>
+    </div>
+  </div>
+
+  <div id="js-version-box" class="">
+    <div class="action-wrapper first-action">
+      <p>
+        Include the following script into your project
+      </p>
+      <figure class="highlight">
+        <pre><code class="javascript">&lt;script src="https://js.filerobot.com/image-editor.last.js"/&gt;&lt;/script&gt;</code></pre>
+      </figure>
+    </div>
+
+    <div class="action-wrapper second-action">
+      <p>
+        Initialize Filerobot Image Editor
+      </p>
+      <figure class="highlight">
+        <pre><code class="javascript">&lt;script/&gt;
+  const config = {
+    filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
+    filerobotContainer: 'scaleflex-tests-v5a'
+  };
+
+  const onUpload = function(url) {
+    // do something with new url
+  }
+
+  FilerobotImageEditor.init(config, onUpload);
+&lt;/script&gt;</code></pre>
+      </figure>
+    </div>
+
+    <div class="action-wrapper third-action">
+      <p>
+        Open Filerobot Image Editor passing the image url which should be edited
+      </p>
+      <figure class="highlight">
+        <pre><code class="javascript">&lt;script/&gt;
+  FilerobotImageEditor.open('https://via.placeholder.com/450x150');
+&lt;/script&gt;</code></pre>
+      </figure>
+    </div>
+
+    <div class="action-wrapper forth-action">
+      <p>
+        …and you're done!
+        <a href="https://github.com/scaleflex/filerobot-image-editor" target="_blank">
+          Visit the full documentation here.
+        </a>
+      </p>
+    </div>
+
+  </div>
 
 
-  <h2>Any questions?</h2>
-  <p>Contact us at <a href="mailto:hello@cloudimage.io">hello@cloudimage.io</a>, our experts will be happy to help!</p>
+</section>
+
+<footer>
+  <div class="container ready-to-start">
+    <h2>Any questions?</h2>
+    <p>Contact us at <a href="mailto:hello@filerobot.com">hello@filerobot.com</a>, our experts will be happy to help!</p>
+  </div>
+</footer>
+
+
+<div class="modal" id="result-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Your edited image</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <img id="result-image" src="" alt="result image after editing" style="max-width: 100%;">
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
 </div>
 </body>
 </html>
