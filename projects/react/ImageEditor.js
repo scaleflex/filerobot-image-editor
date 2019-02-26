@@ -117,7 +117,7 @@ export default class extends Component {
       isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original,
       canvasDimensions, processWithCloudimage, uploadCloudimageImage
     } = this.state;
-    const { src, config, onClose, onUpload, closeOnLoad = true, showGoBackBtn = false } = this.props;
+    const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false } = this.props;
     const headerProps = {
       cropDetails,
       original,
@@ -147,7 +147,7 @@ export default class extends Component {
       isHideCanvas,
       src,
       onClose,
-      onUpload,
+      onComplete,
       canvasDimensions,
       closeOnLoad,
       config,

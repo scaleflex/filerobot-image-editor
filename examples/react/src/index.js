@@ -6,11 +6,7 @@ import FilerobotImageEditor from '../../../projects/react';
 const config = {
   filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
   filerobotContainer: 'scaleflex-tests-v5a',
-  cloudimageToken: 'demo'
-  //processWithCloudimage: false,
-  //uploadWithCloudimageLink: false,
   // elementId: '',
-  // hideCloudimageSwitcher: false,
   // uploadParams: {},
 };
 
@@ -28,7 +24,7 @@ class App extends Component {
     this.setState({ isShow: true });
   }
 
-  onUpload = (newUrl) => {
+  onComplete = (newUrl) => {
     this.setState({ imgSrc: newUrl });
   }
 
@@ -49,7 +45,7 @@ class App extends Component {
           show={isShow}
           src={imgSrc}
           config={config}
-          onUpload={this.onUpload}
+          onComplete={this.onComplete}
           onClose={this.onClose}
         />
       </div>

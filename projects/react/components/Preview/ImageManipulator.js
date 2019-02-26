@@ -78,7 +78,7 @@ export default class ImageManipulator extends Component {
 
   saveImage = () => {
     const { imageName, operations } = this.state;
-    const { onUpload, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage } = this.props;
+    const { onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage } = this.props;
     const src = this.state.src.split('?')[0];
     const canvas = this.getCanvasNode();
     const baseUrl = `//${config.filerobotContainer}.api.airstore.io/v1/`;
@@ -127,7 +127,7 @@ export default class ImageManipulator extends Component {
       } else {
         nweImage.onload = () => {
           updateState({ isShowSpinner: false, isHideCanvas: false });
-          onUpload(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
+          onComplete(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
           closeOnLoad && onClose();
         };
         nweImage.src = url + original;
@@ -137,7 +137,7 @@ export default class ImageManipulator extends Component {
   }
 
   onFileLoad = (data) => {
-    const { onUpload, onClose, updateState, closeOnLoad } = this.props;
+    const { onComplete, onClose, updateState, closeOnLoad } = this.props;
     const { srcElement = { } } = data;
     const { response = '{}' } = srcElement;
     const responseData = JSON.parse(response) || {};
@@ -150,7 +150,7 @@ export default class ImageManipulator extends Component {
       const nweImage = new Image();
       nweImage.onload = () => {
         updateState({ isShowSpinner: false, isHideCanvas: false });
-        onUpload(nweImage.src, file);
+        onComplete(nweImage.src, file);
         closeOnLoad && onClose();
       };
       nweImage.src = file.url_public;

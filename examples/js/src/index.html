@@ -106,7 +106,7 @@ class App extends Component {
     this.setState({ isShow: true });
   }
 
-  onUpload = (newUrl) => {
+  onComplete = (newUrl) => {
     this.setState({ imgSrc: newUrl });
   }
 
@@ -127,7 +127,7 @@ class App extends Component {
            show={isShow}
            src={imgSrc}
            config={config}
-           onUpload={this.onUpload}
+           onComplete={this.onComplete}
            onClose={this.onClose}
         />
       &lt;/div>
@@ -152,7 +152,7 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
         Include the following script into your project
       </p>
       <figure class="highlight">
-        <pre><code class="javascript">&lt;script src="https://js.filerobot.com/image-editor.last.js"/&gt;&lt;/script&gt;</code></pre>
+        <pre><code class="javascript">&lt;script src="https://scaleflex.airstore.io/filerobot/image-editor/1.0.0/main.min.js"/&gt;&lt;/script&gt;</code></pre>
       </figure>
     </div>
 
@@ -167,11 +167,11 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
     filerobotContainer: 'scaleflex-tests-v5a'
   };
 
-  const onUpload = function(url) {
+  const onComplete = function(url) {
     // do something with new url
   }
 
-  FilerobotImageEditor.init(config, onUpload);
+  FilerobotImageEditor.init(config, onComplete);
 &lt;/script&gt;</code></pre>
       </figure>
     </div>

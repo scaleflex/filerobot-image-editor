@@ -17,9 +17,8 @@ class ImageEditorWrapper extends Component {
       src,
       config: {
         ...UPLOADER,
+        hideCloudimageSwitcher: !config.cloudimageToken,
         ...config,
-
-        hideCloudimageSwitcher: !config.cloudimageToken
       }
     }
   }
@@ -47,7 +46,7 @@ class ImageEditorWrapper extends Component {
 
   render() {
     const { isVisible, src, config } = this.state;
-    const { onUpload } = this.props;
+    const { onComplete } = this.props;
     const colors = colorSchemes['default'];
 
     if (!src || !isVisible) return null;
@@ -59,7 +58,7 @@ class ImageEditorWrapper extends Component {
             <ImageEditor
               src={src}
               config={config}
-              onUpload={onUpload}
+              onComplete={onComplete}
               onClose={this.close}
             />
           </Container>

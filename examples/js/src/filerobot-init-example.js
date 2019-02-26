@@ -6,7 +6,7 @@ const config = {
   cloudimageToken: 'demo'
 };
 
-const onUpload = function(newUrl) {
+const onComplete = function(newUrl) {
   const resultModal = document.getElementById('result-modal');
   const image = document.getElementById('result-image');
 
@@ -16,7 +16,7 @@ const onUpload = function(newUrl) {
   FilerobotImageEditor.close();
 }
 
-FilerobotImageEditor.init(config, onUpload);
+FilerobotImageEditor.init(config, onComplete);
 
 const image = document.getElementById('image');
 const buttonEdit = document.getElementById('edit-btn');

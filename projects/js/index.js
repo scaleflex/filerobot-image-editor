@@ -3,7 +3,7 @@ import React from 'react';
 import ImageEditor from '../react';
 
 
-function init(config = {}, onUpload = (src) => { console.log(src) }, show = false) {
+function init(config = {}, onComplete = (src) => { console.log(src) }, show = false) {
   const containerId = config.elementId || 'airstore-image-editor';
   let container = document.getElementById(containerId);
 
@@ -18,7 +18,7 @@ function init(config = {}, onUpload = (src) => { console.log(src) }, show = fals
     <Component
       show={show}
       config={config}
-      onUpload={onUpload}
+      onComplete={onComplete}
     />, container);
 
   window.FilerobotImageEditor = renderApp(ImageEditor);
