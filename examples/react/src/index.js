@@ -5,10 +5,10 @@ import FilerobotImageEditor from '../../../projects/react';
 
 const config = {
   filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
-  //processWithCloudimage: false,
   filerobotContainer: 'scaleflex-tests-v5a',
-  //uploadWithCloudimageLink: false,
   cloudimageToken: 'demo'
+  //processWithCloudimage: false,
+  //uploadWithCloudimageLink: false,
   // elementId: '',
   // hideCloudimageSwitcher: false,
   // uploadParams: {},
