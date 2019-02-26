@@ -1,12 +1,15 @@
 import '../../../projects/js/index';
 
 
-let config = {
+const config = {
   filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
   filerobotContainer: 'scaleflex-tests-v5a',
   processWithCloudimage: false,
   uploadWithCloudimageLink: false,
   cloudimageToken: 'demo',
+  // elementId: '',
+  // hideCloudimageSwitcher: false,
+  // uploadParams: {},
 };
 
 const onUpload = function(newUrl) {
@@ -17,7 +20,6 @@ const onUpload = function(newUrl) {
 }
 
 FilerobotImageEditor.init(config, onUpload);
-
 
 const image = document.getElementById('image');
 

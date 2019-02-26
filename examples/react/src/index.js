@@ -8,10 +8,10 @@ const config = {
   filerobotContainer: 'scaleflex-tests-v5a',
   processWithCloudimage: false,
   uploadWithCloudimageLink: false,
- // hideCloudimageSwitcher: false,
-  //elementId: '',
-  uploadParams: {},
   cloudimageToken: 'demo'
+  // elementId: '',
+  // hideCloudimageSwitcher: false,
+  // uploadParams: {},
 };
 
 class App extends Component {
