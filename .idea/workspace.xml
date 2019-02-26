@@ -1,133 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ec7cc45c-5041-49d3-be20-4994e04e2264" name="Default" comment="update dist">
-      <change afterPath="$PROJECT_DIR$/.npmignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Changelog.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/babel.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/webpack.demo-js-config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/webpack.demo-react-config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/webpack.js-config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/react/src/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/react/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projects/react/assets/fonts/filerobot-font.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projects/react/assets/styles/colorScheme.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projects/react/components/CloseBtn.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projects/react/components/Modal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.babelrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/dmitry.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/dmitry.xml" afterDir="false" />
+    <list default="true" id="ec7cc45c-5041-49d3-be20-4994e04e2264" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/example.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/camanjs/caman.full.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/camanjs/caman.full.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/service-worker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.fee21a74.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.fee21a74.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/env.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/jest/cssTransform.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/jest/fileTransform.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/paths.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/polyfills.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/webpack.config.dev.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/webpack.config.prod.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/webpackDevServer.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Footer/Footer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Header/Header.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/ImageEditor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Preview/ImageManipulator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Preview/Preview.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Toolbar/Adjust.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Toolbar/Crop.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Toolbar/Effect.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Toolbar/Effects.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Toolbar/Filter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Toolbar/Filters.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Toolbar/Orientation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Toolbar/Resize.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Toolbar/Tool.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/Toolbar/Toolbar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/components/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/photo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Adjust.ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Button.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/CloseBtn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Common.ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Crop.ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Footer.ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Header.ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/ImageEditor.ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Orientation.ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Preview.ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Resize.ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Spinner.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/Toolbar.ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/styledComponents/styleUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/utils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/example.js" beforeDir="false" afterPath="$PROJECT_DIR$/examples/js/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/examples/js/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/camanjs/caman.full.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/lib/camanjs/caman.full.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/start.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Footer/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Footer/Footer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Header/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/ImageEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/ImageEditor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Preview/ImageManipulator.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Preview/ImageManipulator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Preview/Preview.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Preview/Preview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Adjust.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Toolbar/Adjust.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Crop.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Toolbar/Crop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Effect.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Toolbar/Effect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Effects.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Toolbar/Effects.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Filter.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Toolbar/Filter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Toolbar/Filters.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Orientation.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Toolbar/Orientation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Resize.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Toolbar/Resize.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Tool.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Toolbar/Tool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/Toolbar/Toolbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Toolbar/Toolbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/components/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/photo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Adjust.ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Adjust.ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Button.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Button.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/CloseBtn.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/CloseBtn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Common.ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Common.ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Crop.ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Crop.ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Footer.ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Footer.ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Header.ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Header.ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/ImageEditor.ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/ImageEditor.ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Orientation.ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Orientation.ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Preview.ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Preview.ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Resize.ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Resize.ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Spinner.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Spinner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/Toolbar.ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/Toolbar.ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/styledComponents/styleUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/styledComponents/styleUtils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditor/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageEditorWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/ImageEditorWrapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/js/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/camanjs/caman.full.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/lib/camanjs/caman.full.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/camanjs/caman.full.map" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/lib/camanjs/caman.full.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/camanjs/caman.full.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/lib/camanjs/caman.full.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/registerServiceWorker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/react/components/Header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/projects/react/components/Header/Header.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/shelf/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -151,8 +27,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/react/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="43" column="16" lean-forward="true" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="16" />
+            <state relative-caret-position="261">
+              <caret line="47" column="19" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -160,8 +36,20 @@
       <file leaf-file-name="ImageEditor.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projects/react/ImageEditor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
+            <state relative-caret-position="254">
               <caret line="168" column="12" selection-start-line="168" selection-start-column="12" selection-end-line="168" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageEditorWrapper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/projects/react/ImageEditorWrapper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-60">
+              <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -172,20 +60,31 @@
       <file leaf-file-name="ImageEditor.ui.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projects/react/styledComponents/ImageEditor.ui.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
+            <state relative-caret-position="162">
               <caret line="9" column="2" lean-forward="true" selection-start-line="9" selection-start-column="2" selection-end-line="10" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageEditorWrapper.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/projects/react/ImageEditorWrapper.js">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="144">
+              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="36">
+                <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+              </first_editor>
+              <second_editor>
+                <js_state />
+              </second_editor>
             </state>
           </provider>
         </entry>
@@ -205,8 +104,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projects/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="20" column="25" lean-forward="true" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+            <state relative-caret-position="198">
+              <caret line="11" column="31" lean-forward="true" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
               <folding>
                 <element signature="e#0#59#0" expanded="true" />
               </folding>
@@ -214,41 +113,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/js/src/index.js">
+      <file leaf-file-name="styleUtils.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/projects/react/styledComponents/styleUtils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+            <state relative-caret-position="349">
+              <caret line="190" column="16" lean-forward="true" selection-start-line="190" selection-start-column="16" selection-end-line="190" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageManipulator.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/projects/react/components/Preview/ImageManipulator.js">
+      <file leaf-file-name="Header.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/projects/react/components/Header/Header.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Footer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/projects/react/components/Footer/Footer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/projects/react/config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
+            <state relative-caret-position="387">
+              <caret line="36" column="34" lean-forward="true" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -257,7 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>closeOnLoad</find>
       <find>dir</find>
       <find>updateState</find>
       <find>processWithCloudimage</find>
@@ -282,11 +159,12 @@
       <find>CLOUDIMAGE_OPERATIONS</find>
       <find>UPLOAD_PARAMS</find>
       <find>uploadParams</find>
-      <find>AirstoreImageEditor</find>
       <find>config</find>
       <find>ModalFooter</find>
       <find>height</find>
       <find>Wrapper</find>
+      <find>6px 12p</find>
+      <find>AirstoreImageEditor</find>
     </findStrings>
     <replaceStrings>
       <replace>close</replace>
@@ -319,6 +197,7 @@
     </dirStrings>
   </component>
   <component name="Git.Settings">
+    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -355,7 +234,6 @@
         <option value="$PROJECT_DIR$/src/ImageEditor/components/ImageEditor.js" />
         <option value="$PROJECT_DIR$/src/ImageEditor/components/Preview/ImageManipulator.js" />
         <option value="$PROJECT_DIR$/public/example.js" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/ImageEditor/assets/filerobot-font.css" />
         <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/ImageEditor/assets/styles/colorScheme.js" />
@@ -374,8 +252,10 @@
         <option value="$PROJECT_DIR$/examples/js/src/index.js" />
         <option value="$PROJECT_DIR$/projects/react/components/Modal.js" />
         <option value="$PROJECT_DIR$/projects/react/styledComponents/ImageEditor.ui.js" />
-        <option value="$PROJECT_DIR$/projects/react/ImageEditorWrapper.js" />
+        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/examples/react/src/index.js" />
+        <option value="$PROJECT_DIR$/projects/react/ImageEditorWrapper.js" />
+        <option value="$PROJECT_DIR$/projects/react/components/Header/Header.js" />
       </list>
     </option>
   </component>
@@ -495,6 +375,120 @@
       <recent name="$PROJECT_DIR$/src/ImageEditor/components" />
     </key>
   </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/projects/react/ImageEditorWrapper.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/projects/react/components/Header/Header.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/projects/react/styledComponents/Button.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/projects/react/styledComponents/Footer.ui.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/projects/react/styledComponents/styleUtils.js</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -573,7 +567,7 @@
       <workItem from="1550666860051" duration="12000" />
       <workItem from="1550738920647" duration="1431000" />
       <workItem from="1550851354551" duration="542000" />
-      <workItem from="1550936579401" duration="15702000" />
+      <workItem from="1550936579401" duration="20535000" />
     </task>
     <task id="LOCAL-00001" summary="extract styledComponents">
       <created>1517401366872</created>
@@ -897,26 +891,40 @@
       <option name="project" value="LOCAL" />
       <updated>1550144743464</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="refactoring">
+      <created>1551108483583</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1551108483583</updated>
+    </task>
+    <task id="LOCAL-00048" summary="refactoring">
+      <created>1551115096803</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1551115096803</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147711000" />
+    <option name="totallyTimeSpent" value="152544000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="834" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18463707" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18463707" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.30252102" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.29691878" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.16246499" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32633054" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -986,7 +994,6 @@
     <MESSAGE value="fixed the bug with rotate" />
     <MESSAGE value="add missing file" />
     <MESSAGE value="fix bugs with crop and resize" />
-    <MESSAGE value="refactoring" />
     <MESSAGE value="add possibility to hide cloudimage toggle; add possibility to upload to exact folder" />
     <MESSAGE value="add hash on change image" />
     <MESSAGE value="add Go Back button" />
@@ -997,7 +1004,8 @@
     <MESSAGE value="make build and dist" />
     <MESSAGE value="make possible to upload cloudimage images" />
     <MESSAGE value="make dist build" />
-    <option name="LAST_COMMIT_MESSAGE" value="make dist build" />
+    <MESSAGE value="refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/node_modules/scaleflex-react-ui-kit/dist/styledComponents/components/Button.js">
@@ -1049,13 +1057,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/react/components/Header/Header.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/projects/react/components/Preview/Preview.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1067,18 +1068,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="36">
-            <caret line="2" selection-start-line="2" selection-end-line="2" />
-          </first_editor>
-          <second_editor>
-            <js_state />
-          </second_editor>
         </state>
       </provider>
     </entry>
@@ -1126,13 +1115,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/react/styledComponents/styleUtils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="93" selection-start-line="93" selection-end-line="93" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/projects/react/assets/styles/colorScheme.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1170">
@@ -1142,13 +1124,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LICENSE">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.npmignore">
       <provider selected="true" editor-type-id="text-editor">
@@ -1300,16 +1275,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="25" lean-forward="true" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/js/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -1327,16 +1292,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="36">
+            <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+          </first_editor>
+          <second_editor>
+            <js_state />
+          </second_editor>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/projects/react/styledComponents/ImageEditor.ui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
+        <state relative-caret-position="162">
           <caret line="9" column="2" lean-forward="true" selection-start-line="9" selection-start-column="2" selection-end-line="10" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/projects/react/ImageEditor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
+        <state relative-caret-position="254">
           <caret line="168" column="12" selection-start-line="168" selection-start-column="12" selection-end-line="168" selection-end-column="12" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
@@ -1346,18 +1330,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/react/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="43" column="16" lean-forward="true" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="16" />
+        <state relative-caret-position="261">
+          <caret line="47" column="19" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/projects/react/ImageEditorWrapper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="-60">
+          <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="31" lean-forward="true" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/react/styledComponents/styleUtils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="190" column="16" lean-forward="true" selection-start-line="190" selection-start-column="16" selection-end-line="190" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/react/components/Header/Header.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="36" column="34" lean-forward="true" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
         </state>
       </provider>
     </entry>
