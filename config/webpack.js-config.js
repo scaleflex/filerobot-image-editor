@@ -13,7 +13,7 @@ module.exports = {
     filename: `main.min.js`,
     chunkFilename: `[name].min.js`,
     jsonpFunction: 'webpackJsonp' + Date.now(),
-    publicPath: `https://scaleflex.airstore.io/filerobot/uploader/${VERSION}/`
+    publicPath: `https://scaleflex.airstore.io/filerobot/image-editor/${VERSION}/`
   },
   module: {
     rules: [

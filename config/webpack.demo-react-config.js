@@ -11,8 +11,8 @@ module.exports = (env, options) => {
     entry: path.join(__dirname, "../examples/react/src/index.js"),
     output: {
       path: path.join(__dirname, "../examples/react/dist"),
-      filename: "filerobot-uploader-widget.[chunkhash].js",
-      chunkFilename: 'filerobot-uploader-widget.[name].[chunkhash].js'
+      filename: "filerobot-image-editor.[chunkhash].js",
+      chunkFilename: 'filerobot-image-editor.[name].[chunkhash].js'
     },
     module: {
       rules: [
