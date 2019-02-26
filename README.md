@@ -6,6 +6,14 @@ Edit, resize, and filter any image!
 
 [See demo](https://scaleflex.github.io/filerobot-image-editor/)
 
+## Requirements
+
+To use the plugin, you will need a Filerobot token. Don't worry, it only
+takes seconds to get one by registering [here](https://www.filerobot.com/en/home).
+Once your token is created, you can configure it as described below.
+This token allows you to use 25GB of image cache and 25GB of worldwide
+CDN traffic per month for free.
+
 ## Table of contents
 
 * [Standalone usage](#standalone_usage)
