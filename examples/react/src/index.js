@@ -29,7 +29,11 @@ class App extends Component {
   }
 
   onUpload = (newUrl) => {
-    this.setState({ imgSrc: newUrl, isShow: false });
+    this.setState({ imgSrc: newUrl });
+  }
+
+  onClose = () => {
+    this.setState({ isShow: false });
   }
 
   render() {
@@ -46,6 +50,7 @@ class App extends Component {
           src={imgSrc}
           config={config}
           onUpload={this.onUpload}
+          onClose={this.onClose}
         />
       </div>
     )
