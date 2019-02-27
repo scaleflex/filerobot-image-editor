@@ -192,6 +192,17 @@ html, body {
   left: -50px;
 }
 
+.modal-body .image-wrapper {
+  text-align: center;
+}
+
+.modal-body .image-wrapper .result-image {
+  width: auto;
+  max-width: 100%;
+  display: inline-block;
+  max-height: 300px;
+}
+
 footer {
   background: #fff;
   padding-bottom: 60px;

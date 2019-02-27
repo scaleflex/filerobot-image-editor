@@ -19,10 +19,10 @@ const wrapper = document.getElementById('main');
 
 jsBtn.onclick = function() {
   if (jsBtn.className.indexOf('btn-primary') === -1) {
-    jsBtn.classList.remove('btn-default');
+    jsBtn.classList.remove('btn-light');
     jsBtn.classList.add('btn-primary');
     reactBtn.classList.remove('btn-primary');
-    reactBtn.classList.add('btn-default');
+    reactBtn.classList.add('btn-light');
 
     reactBox.style.display = 'none';
     jsBox.style.display = 'block';
@@ -31,10 +31,10 @@ jsBtn.onclick = function() {
 
 reactBtn.onclick = function() {
   if (reactBtn.className.indexOf('btn-primary') === -1) {
-    reactBtn.classList.remove('btn-default');
+    reactBtn.classList.remove('btn-light');
     reactBtn.classList.add('btn-primary');
     jsBtn.classList.remove('btn-primary');
-    jsBtn.classList.add('btn-default');
+    jsBtn.classList.add('btn-light');
 
     jsBox.style.display = 'none'
     reactBox.style.display = 'block';

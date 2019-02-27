@@ -45,7 +45,7 @@
   <section class="image-wrapper">
     <img
        id="image"
-       src="//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.png"
+       src="//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg"
     />
   </section>
 
@@ -68,7 +68,7 @@
     <div class="text-center">
       <div id="plugin-version-switcher" class="plugin-version-switcher btn-group btn-toggle">
         <button id="js-btn" class="btn btn-primary">JS version</button>
-        <button id="react-btn" class="btn btn-default">React version</button>
+        <button id="react-btn" class="btn btn-light">React version</button>
       </div>
     </div>
 
@@ -103,7 +103,7 @@ class App extends Component {
 
     this.state = {
       isShow: false,
-      imgSrc: '//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.png'
+      imgSrc: '//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg'
     }
   }
 
@@ -224,7 +224,10 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
         </div>
 
         <div class="modal-body">
-          <img id="result-image" src="" alt="result image after editing" style="max-width: 100%;">
+          <figure class="highlight"><pre><code id="result-link" class="javascript"></code></pre></figure>
+          <div class="image-wrapper">
+            <img id="result-image" src="" alt="result image after editing" class="result-image">
+          </div>
         </div>
 
         <div class="modal-footer">

@@ -9,8 +9,10 @@ const config = {
 const onComplete = function(newUrl) {
   const resultModal = document.getElementById('result-modal');
   const image = document.getElementById('result-image');
+  const resultLink = document.getElementById('result-link');
 
   image.src = newUrl;
+  resultLink.innerText = newUrl;
   resultModal.style.display = 'block';
 
   FilerobotImageEditor.close();
