@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Light Example</title>
+</head>
+<body>
+<script src="https://scaleflex.airstore.io/filerobot/image-editor/1.0.0/main.min.js"></script>
+<script>
+  const config = {
+    filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
+    filerobotContainer: 'scaleflex-tests-v5a'
+  };
+
+  const onComplete = function(url) {
+    alert('edited url: ' + url);
+  }
+
+  FilerobotImageEditor.init(config, onComplete);
+
+  FilerobotImageEditor.open('https://scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg');
+</script>
+</body>
+</html>

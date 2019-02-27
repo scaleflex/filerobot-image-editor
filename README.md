@@ -56,7 +56,7 @@ We provide easy way to integrate image editor in your applications
 
     FilerobotImageEditor.init(config, onComplete);
 
-    FilerobotImageEditor.open('https://via.placeholder.com/450x150');
+    FilerobotImageEditor.open('https://scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg');
 </script>
 ```
 
