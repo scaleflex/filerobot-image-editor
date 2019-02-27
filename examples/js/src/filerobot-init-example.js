@@ -3,6 +3,8 @@ import '../../../projects/js/index';
 const config = {
   filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
   filerobotContainer: 'scaleflex-tests-v5a',
+  hideCloudimageSwitcher: false,
+  processWithCloudimage: false,
   cloudimageToken: 'demo'
 };
 

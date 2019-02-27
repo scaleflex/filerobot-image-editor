@@ -20,6 +20,7 @@ const CLOUDIMAGE_OPERATIONS = ['crop', 'resize', 'rotate'];
 const UPLOADER = {
   filerobotUploadKey: '0cbe9ccc4f164bf8be26bd801d53b132',
   filerobotContainer: 'example',
+  hideCloudimageSwitcher: true,
   processWithCloudimage: false,
   uploadWithCloudimageLink: false,
   cloudimageToken: null,

@@ -17,7 +17,7 @@ class ImageEditorWrapper extends Component {
       src,
       config: {
         ...UPLOADER,
-        hideCloudimageSwitcher: !config.cloudimageToken,
+        processWithCloudimage: !!config.cloudimageToken,
         ...config,
       }
     }
