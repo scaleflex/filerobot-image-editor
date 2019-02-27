@@ -45,6 +45,7 @@ html, body {
   font-size: 18px;
   max-width: 770px;
   display: inline-block;
+  padding-bottom: 30px;
 }
 
 .home .actions-wrapper {
