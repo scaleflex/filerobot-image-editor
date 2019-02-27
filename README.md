@@ -4,7 +4,7 @@ Edit, resize, and filter any image!
 
 ![Demo of Image Editor](https://scaleflex.airstore.io/filerobot/assets/filerobotimageeditor3_min.gif?sanitize=true)
 
-> The example of Image Editor configuration using cloudimage service can be found [here](https://github.com/scaleflex/filerobot-image-editor/tree/v1.0.0/examples/js-with-cloudimage).
+> The example of Image Editor configuration using cloudimage service can be found [here](https://github.com/scaleflex/filerobot-image-editor/tree/v1.0.1/examples/js-with-cloudimage).
 
 [See demo](https://scaleflex.github.io/filerobot-image-editor/)
 
@@ -36,7 +36,7 @@ CDN traffic per month for free.
 Use latest CDNized plugin version
 
 ```
-<script src="https://scaleflex.airstore.io/filerobot/image-editor/1.0.0/main.min.js"></script>
+<script src="https://scaleflex.airstore.io/filerobot/image-editor/1.0.1/main.min.js"></script>
 ```
 
 ### <a name="quick_start"></a>Quick start
@@ -50,8 +50,8 @@ We provide easy way to integrate image editor in your applications
       filerobotContainer: 'scaleflex-tests-v5a'
     };
 
-    const onComplete = function(url) {
-      // do something with new url
+    const onComplete = function(url, file) {
+      // do something with new url or file
     }
 
     FilerobotImageEditor.init(config, onComplete);
@@ -165,7 +165,7 @@ Image editor config.
 
 Callback, triggers on close image editor widget.
 
-#### `onComplete(url: string)`: function (required)
+#### `onComplete(url: string, file: object)`: function (required)
 
 Callback, triggers on complete processing image.
 

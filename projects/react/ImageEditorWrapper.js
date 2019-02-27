@@ -9,7 +9,7 @@ import './assets/fonts/filerobot-font.css';
 
 
 class ImageEditorWrapper extends Component {
-  constructor({ show = false, src = '', config = {}}) {
+  constructor({ show = false, src = '', config = {} }) {
     super();
 
     this.state = {
@@ -46,23 +46,36 @@ class ImageEditorWrapper extends Component {
 
   render() {
     const { isVisible, src, config } = this.state;
-    const { onComplete } = this.props;
+    const { onComplete, showGoBackBtn, closeOnLoad, showInModal = true } = this.props;
     const colors = colorSchemes['default'];
 
     if (!src || !isVisible) return null;
 
+    const Inner = (
+      <Container>
+        <ImageEditor
+          src={src}
+          config={config}
+          onComplete={onComplete}
+          onClose={this.close}
+          showGoBackBtn={showGoBackBtn}
+          closeOnLoad={closeOnLoad}
+        />
+      </Container>
+    );
+
     return (
       <ThemeProvider theme={{ ...theme, ...colors }}>
-        <Modal noBorder fullScreen={'lg'} isHideCloseBtn={true} style={{ borderRadius: 5 }} onClose={this.close}>
-          <Container>
-            <ImageEditor
-              src={src}
-              config={config}
-              onComplete={onComplete}
-              onClose={this.close}
-            />
-          </Container>
-        </Modal>
+        {showInModal ?
+          <Modal
+            noBorder
+            fullScreen={'lg'}
+            isHideCloseBtn={true}
+            style={{ borderRadius: 5 }}
+            onClose={this.close}
+          >
+            {Inner}
+          </Modal> : Inner}
       </ThemeProvider>
     );
   }
