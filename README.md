@@ -2,6 +2,8 @@
 
 Edit, resize, and filter any image!
 
+![Demo of Image Editor](https://scaleflex.airstore.io/filerobot/assets/filerobotimageeditor3_min.gif?sanitize=true)
+
 > The example of Image Editor configuration using cloudimage service can be found [here](https://github.com/scaleflex/filerobot-image-editor/tree/v1.0.0/examples/js-with-cloudimage).
 
 [See demo](https://scaleflex.github.io/filerobot-image-editor/)
