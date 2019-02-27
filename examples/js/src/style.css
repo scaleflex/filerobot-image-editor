@@ -158,6 +158,40 @@ html, body {
   opacity: 0.6;
 }
 
+.spinner-grow.text-dark {
+  width: 100px;
+  height: 100px;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}
+
+.wrapper {
+  transition: 0.3s all;
+  opacity: 0;
+}
+
+.wrapper.active {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#edit-btn {
+  position: relative;
+}
+
+.arrow {
+  background: url('https://scaleflex.airstore.io/filerobot/assets/arrow_1.png') 50% 50% / contain no-repeat;
+  width: 100px;
+  height: 250px;
+  position: absolute;
+  top: -33px;
+  left: -50px;
+}
+
 footer {
   background: #fff;
   padding-bottom: 60px;

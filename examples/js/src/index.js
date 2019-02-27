@@ -14,6 +14,8 @@ const reactBtn = document.getElementById('react-btn');
 const jsBox = document.getElementById('js-version-box');
 const reactBox = document.getElementById('react-version-box');
 const resultModal = document.getElementById('result-modal');
+const spinner = document.getElementById('spinner');
+const wrapper = document.getElementById('main');
 
 jsBtn.onclick = function() {
   if (jsBtn.className.indexOf('btn-primary') === -1) {
@@ -47,4 +49,8 @@ modalBtns.forEach(btn => {
   }
 });
 
+setTimeout(() => {
+  wrapper.classList.add('active');
+  spinner.style.display = 'none';
+}, 400);
 

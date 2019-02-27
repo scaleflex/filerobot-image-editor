@@ -4,84 +4,89 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="theme-color" content="#000000">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    .spinner-grow {color: #343a40!important;display: inline-block;vertical-align: text-bottom;background-color: currentColor;border-radius: 50%;opacity: 0;-webkit-animation: spinner-grow .75s linear infinite;animation: spinner-grow .75s linear infinite;width: 100px;height: 100px;z-index: 1;position: absolute;top: 50%;left: 50%;margin-top: -50px;margin-left: -50px;}
+  </style>
   <title>Filerobot Image Editor</title>
 </head>
 <body>
 
-<section class="home">
-  <div class="container">
-    <a class="logo" href="/">Filerobot Image Editor</a>
-    <h1>Edit, resize, and filter any image!</h1>
-    <h2>Whether your goal is to boost conversions or engage visitors, using Filerobot Image Editor, a photo/image editor
-      plugin, is the missing puzzle piece to help you achieve it.</h2>
+<div id="spinner" class="spinner-grow text-dark" role="status"></div>
 
-    <div class="actions-wrapper">
-      <button id="edit-btn" class="btn btn-default btn-lg">Edit image</button>
-      <a
-         id="view-github-btn"
-         href="https://github.com/scaleflex/filerobot-image-editor"
-         class="btn btn-primary btn-lg"
-         target="_blank"
-      >View on Github</a>
-      <!--<button id="download-btn" class="btn btn-info btn-lg">Download</button>-->
+<div id="main" class="wrapper" style="visibility: hidden;">
+  <section class="home">
+    <div class="container">
+      <a class="logo" href="/">Filerobot Image Editor</a>
+      <h1>Edit, resize, and filter any image!</h1>
+      <h2>Whether your goal is to boost conversions or engage visitors, using Filerobot Image Editor, a photo/image editor
+        plugin, is the missing puzzle piece to help you achieve it.</h2>
+
+      <div class="actions-wrapper">
+        <button id="edit-btn" class="btn btn-light btn-lg">Edit image <span class="arrow"></span></button>
+        <a
+           id="view-github-btn"
+           href="https://github.com/scaleflex/filerobot-image-editor"
+           class="btn btn-primary btn-lg"
+           target="_blank"
+        >View on Github</a>
+        <!--<button id="download-btn" class="btn btn-info btn-lg">Download</button>-->
+      </div>
     </div>
-  </div>
 
-  <a href="https://github.com/scaleflex/filerobot-image-editor" target="_blank">
+    <a href="https://github.com/scaleflex/filerobot-image-editor" target="_blank">
+      <img
+         class="fork-me-on-github"
+         src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+         alt="Fork me on GitHub">
+    </a>
+  </section>
+
+  <section class="image-wrapper">
     <img
-       class="fork-me-on-github"
-       src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
-       alt="Fork me on GitHub">
-  </a>
-</section>
+       id="image"
+       src="//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.png"
+    />
+  </section>
 
-<section class="image-wrapper">
-  <img
-     id="image"
-     src="//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.png"
-  />
-</section>
-
-<section class="ready-to-start features">
-  <div class="container">
-    <h2>Your image editor will look great everywhere</h2>
-    <p>It only takes a few clicks to make your website more powerful with Filerobot Image Editor. Get started for free and
-      start seeing the improvements you can get from using a image/photo editor plugin today!</p>
-  </div>
-</section>
-
-<section class="container ready-to-start">
-  <h2>Ready to get started?</h2>
-  <p>To use the plugin, you will need a Filerobot token. Don't worry, it only takes seconds to get one by registering <a
-     href="https://www.filerobot.com/en/home">here</a>. Once your token is created, you can configure it as described below.
-    This token allows you to use 25GB of image cache and 25GB of worldwide CDN traffic per month for free.</p>
-</section>
-
-<section class="container">
-  <div class="text-center">
-    <div id="plugin-version-switcher" class="plugin-version-switcher btn-group btn-toggle">
-      <button id="js-btn" class="btn btn-primary">JS version</button>
-      <button id="react-btn" class="btn btn-default">React version</button>
+  <section class="ready-to-start features">
+    <div class="container">
+      <h2>Your image editor will look great everywhere</h2>
+      <p>It only takes a few clicks to make your website more powerful with Filerobot Image Editor. Get started for free and
+        start seeing the improvements you can get from using a image/photo editor plugin today!</p>
     </div>
-  </div>
+  </section>
 
-  <div id="react-version-box" style="display: none;">
-    <div class="action-wrapper first-action">
-      <p>
-        Install Filerobot image editor via npm
-      </p>
-      <figure class="highlight">
-        <pre><code class="javascript">npm i filerobot-image-editor --save</code></pre>
-      </figure>
+  <section class="container ready-to-start">
+    <h2>Ready to get started?</h2>
+    <p>To use the plugin, you will need a Filerobot token. Don't worry, it only takes seconds to get one by registering <a
+       href="https://www.filerobot.com/en/home">here</a>. Once your token is created, you can configure it as described below.
+      This token allows you to use 25GB of image cache and 25GB of worldwide CDN traffic per month for free.</p>
+  </section>
+
+  <section class="container">
+    <div class="text-center">
+      <div id="plugin-version-switcher" class="plugin-version-switcher btn-group btn-toggle">
+        <button id="js-btn" class="btn btn-primary">JS version</button>
+        <button id="react-btn" class="btn btn-default">React version</button>
+      </div>
     </div>
 
-    <div class="action-wrapper second-action">
-      <p>
-        Simple usage
-      </p>
-      <figure class="highlight">
+    <div id="react-version-box" style="display: none;">
+      <div class="action-wrapper first-action">
+        <p>
+          Install Filerobot image editor via npm
+        </p>
+        <figure class="highlight">
+          <pre><code class="javascript">npm i filerobot-image-editor --save</code></pre>
+        </figure>
+      </div>
+
+      <div class="action-wrapper second-action">
+        <p>
+          Simple usage
+        </p>
+        <figure class="highlight">
         <pre><code class="javascript">import React, { Component } from 'react';
 import { render } from 'react-dom';
 import FilerobotImageEditor from 'filerobot-image-editor';
@@ -136,31 +141,31 @@ class App extends Component {
 }
 
 render(&lt;App/>, document.getElementById('app'));</code></pre>
-      </figure>
+        </figure>
+      </div>
+
+      <div class="action-wrapper third-action">
+        <p>
+          …and you're done! <a href="https://github.com/scaleflex/filerobot-image-editor">See the full documentation here.</a>
+        </p>
+      </div>
     </div>
 
-    <div class="action-wrapper third-action">
-      <p>
-        …and you're done! <a href="https://github.com/scaleflex/filerobot-image-editor">See the full documentation here.</a>
-      </p>
-    </div>
-  </div>
+    <div id="js-version-box" class="">
+      <div class="action-wrapper first-action">
+        <p>
+          Include the following script into your project
+        </p>
+        <figure class="highlight">
+          <pre><code class="javascript">&lt;script src="https://scaleflex.airstore.io/filerobot/image-editor/1.0.0/main.min.js"/&gt;&lt;/script&gt;</code></pre>
+        </figure>
+      </div>
 
-  <div id="js-version-box" class="">
-    <div class="action-wrapper first-action">
-      <p>
-        Include the following script into your project
-      </p>
-      <figure class="highlight">
-        <pre><code class="javascript">&lt;script src="https://scaleflex.airstore.io/filerobot/image-editor/1.0.0/main.min.js"/&gt;&lt;/script&gt;</code></pre>
-      </figure>
-    </div>
-
-    <div class="action-wrapper second-action">
-      <p>
-        Initialize Filerobot Image Editor
-      </p>
-      <figure class="highlight">
+      <div class="action-wrapper second-action">
+        <p>
+          Initialize Filerobot Image Editor
+        </p>
+        <figure class="highlight">
         <pre><code class="javascript">&lt;script/&gt;
   const config = {
     filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
@@ -173,61 +178,63 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
 
   FilerobotImageEditor.init(config, onComplete);
 &lt;/script&gt;</code></pre>
-      </figure>
-    </div>
+        </figure>
+      </div>
 
-    <div class="action-wrapper third-action">
-      <p>
-        Open Filerobot Image Editor passing the image url which should be edited
-      </p>
-      <figure class="highlight">
+      <div class="action-wrapper third-action">
+        <p>
+          Open Filerobot Image Editor passing the image url which should be edited
+        </p>
+        <figure class="highlight">
         <pre><code class="javascript">&lt;script/&gt;
   FilerobotImageEditor.open('https://via.placeholder.com/450x150');
 &lt;/script&gt;</code></pre>
-      </figure>
+        </figure>
+      </div>
+
+      <div class="action-wrapper forth-action">
+        <p>
+          …and you're done!
+          <a href="https://github.com/scaleflex/filerobot-image-editor" target="_blank">
+            Visit the full documentation here.
+          </a>
+        </p>
+      </div>
+
     </div>
 
-    <div class="action-wrapper forth-action">
-      <p>
-        …and you're done!
-        <a href="https://github.com/scaleflex/filerobot-image-editor" target="_blank">
-          Visit the full documentation here.
-        </a>
-      </p>
+
+  </section>
+
+  <footer>
+    <div class="container ready-to-start">
+      <h2>Any questions?</h2>
+      <p>Contact us at <a href="mailto:hello@filerobot.com">hello@filerobot.com</a>, our experts will be happy to help!</p>
     </div>
-
-  </div>
-
-
-</section>
-
-<footer>
-  <div class="container ready-to-start">
-    <h2>Any questions?</h2>
-    <p>Contact us at <a href="mailto:hello@filerobot.com">hello@filerobot.com</a>, our experts will be happy to help!</p>
-  </div>
-</footer>
+  </footer>
 
 
-<div class="modal" id="result-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+  <div class="modal" id="result-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-      <div class="modal-header">
-        <h4 class="modal-title">Your edited image</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-header">
+          <h4 class="modal-title">Your edited image</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <img id="result-image" src="" alt="result image after editing" style="max-width: 100%;">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
       </div>
-
-      <div class="modal-body">
-        <img id="result-image" src="" alt="result image after editing" style="max-width: 100%;">
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
     </div>
   </div>
 </div>
+
 </body>
 </html>
