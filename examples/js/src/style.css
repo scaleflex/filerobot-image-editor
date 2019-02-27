@@ -45,20 +45,12 @@ html, body {
   font-size: 18px;
   max-width: 770px;
   display: inline-block;
-  padding-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 10px;
 }
 
 .home .actions-wrapper {
   margin-top: 20px;
-}
-
-.home button {
-  /*position: absolute;*/
-  /*bottom: -20px;*/
-  /*left: 50%;*/
-  /*width: 140px;*/
-  /*margin-left: -70px;*/
-  /*z-index: 1;*/
 }
 
 .ready-to-start {
