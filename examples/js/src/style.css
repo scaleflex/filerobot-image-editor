@@ -49,6 +49,39 @@ html, body {
   padding-bottom: 10px;
 }
 
+.home .robot-icon {
+  position: absolute;
+  left: 50px;
+  width: 200px;
+  top: 110px;
+  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+  animation-name: example;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@media all and (max-width: 1250px) {
+  .home .robot-icon {
+    left: 45px;
+    width: 100px;
+    top: 15px;
+  }
+}
+
+@media all and (max-width: 555px) {
+  .home  {
+    padding-top: 150px;
+  }
+}
+
+@keyframes example {
+  0%   {transform: translate(0px, 0px);}
+  50%  {transform: translate(5px, 2px) scale(1.02);}
+  100% {transform: translate(0px, 0px);}
+}
+
 .home .actions-wrapper {
   margin-top: 20px;
 }
@@ -198,5 +231,30 @@ html, body {
 
 footer {
   background: #fff;
-  padding-bottom: 60px;
+  padding-bottom: 30px;
+  font-weight: lighter;
+}
+
+footer .copyright {
+  margin-top: 30px;
+}
+
+footer .team-desc {
+  display: inline-block;
+  width: 50%;
+}
+
+footer .footer-menu {
+  text-align: right;
+}
+
+footer .footer-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+footer .footer-menu ul li {
+  display: inline-block;
+  margin-left: 15px;
 }

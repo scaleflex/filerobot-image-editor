@@ -16,6 +16,10 @@ const reactBox = document.getElementById('react-version-box');
 const resultModal = document.getElementById('result-modal');
 const spinner = document.getElementById('spinner');
 const wrapper = document.getElementById('main');
+const robotIcon = document.getElementById('robot-icon');
+const buttonEdit = document.getElementById('edit-btn');
+const image = document.getElementById('image');
+const modalBtns = document.querySelectorAll('[data-dismiss="modal"]');
 
 jsBtn.onclick = function() {
   if (jsBtn.className.indexOf('btn-primary') === -1) {
@@ -41,8 +45,6 @@ reactBtn.onclick = function() {
   }
 }
 
-const modalBtns = document.querySelectorAll('[data-dismiss="modal"]');
-
 modalBtns.forEach(btn => {
   btn.onclick = () => {
     resultModal.style.display = 'none';
@@ -53,4 +55,19 @@ setTimeout(() => {
   wrapper.classList.add('active');
   spinner.style.display = 'none';
 }, 400);
+
+image.onmouseenter = onMouseEnter;
+buttonEdit.onmouseenter = onMouseEnter;
+
+image.onmouseleave = onMouseLeave;
+buttonEdit.onmouseleave = onMouseLeave;
+
+function onMouseEnter() {
+  robotIcon.src = 'https://demo.cloudimg.io/width/500/q35.foil1/https://scaleflex.airstore.io/filerobot/assets/robot-with-smile-left.png';
+}
+
+function onMouseLeave() {
+  robotIcon.src = 'https://demo.cloudimg.io/width/500/q35.foil1/https://scaleflex.airstore.io/filerobot/assets/robot-icon-left.png';
+}
+
 
