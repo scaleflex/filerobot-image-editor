@@ -230,6 +230,12 @@ html, body {
 }
 
 footer {
+  text-align: center;
+  background: #fff;
+  padding-bottom: 60px;
+}
+
+footer {
   background: #fff;
   padding-bottom: 30px;
   font-weight: lighter;
@@ -240,8 +246,7 @@ footer .copyright {
 }
 
 footer .team-desc {
-  display: inline-block;
-  width: 50%;
+  text-align: left;
 }
 
 footer .footer-menu {
@@ -257,4 +262,16 @@ footer .footer-menu ul {
 footer .footer-menu ul li {
   display: inline-block;
   margin-left: 15px;
+  margin-bottom: 5px;
+}
+
+@media all and (max-width: 576px) {
+  footer .team-desc   {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  footer .footer-menu {
+    text-align: center;
+  }
 }
