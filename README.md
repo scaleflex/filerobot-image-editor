@@ -26,7 +26,7 @@
 </p>
 
 <p align="center">
-   Edit, resize, and filter any image!
+   The Filerobot Image Editor is the easiest way to integrate an easy-to-use image editor in your web application. Integrated with few lines of code, your users will be able to apply basic transformations like resize, crop, rotate and various filters to any image. Once edited, the Image Editor will return an URL to the resulting image and deliver it rocket fast over CDN all around the World.
 </p>
 
 <p align="center">
