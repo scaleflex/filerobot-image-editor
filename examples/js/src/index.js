@@ -57,9 +57,11 @@ setTimeout(() => {
 }, 400);
 
 image.onmouseenter = onMouseEnter;
+robotIcon.onmouseenter = onMouseEnter;
 buttonEdit.onmouseenter = onMouseEnter;
 
 image.onmouseleave = onMouseLeave;
+robotIcon.onmouseleave = onMouseLeave;
 buttonEdit.onmouseleave = onMouseLeave;
 
 function onMouseEnter() {
