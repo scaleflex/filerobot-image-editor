@@ -1,12 +1,44 @@
-# Filerobot Image Editor
+[![Release](https://img.shields.io/badge/release-v1.0.1-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
+![Free plan](https://img.shields.io/badge/price-includes%20free%20plan-green.svg)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Scaleflex team](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg)](https://www.scaleflex.it/en/home)
 
-Edit, resize, and filter any image!
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Edit,%20resize,%20and%20filter%20any%20image&url=https://scaleflex.github.io/filerobot-image-editor/&via=filerobot&hashtags=uploader,image_resizing,image_editor,image_cropping)
 
-![Demo of Image Editor](https://scaleflex.airstore.io/filerobot/assets/filerobotimageeditor3_min.gif?sanitize=true)
+<p align="center">
+	<img
+		height="175"
+		alt="The Lounge"
+		src="https://scaleflex.airstore.io/filerobot/assets/robot-icon-left.png?sanitize=true">
+</p>
+
+<h1 align="center">
+   Filerobot Image Editor
+</h1>
+
+<p align="center">
+	<strong>
+		<a href="#table_of_contents">Docs</a>
+		•
+		<a href="https://scaleflex.github.io/filerobot-image-editor/" target="_blank">Demo</a>
+	</strong>
+</p>
+
+<p align="center">
+   Edit, resize, and filter any image!
+</p>
+
+<p align="center">
+	<img
+		width="800"
+		alt="Filerobot Image Editor"
+		src="https://scaleflex.airstore.io/filerobot/assets/filerobotimageeditor3_min.gif?sanitize=true">
+</p>
+
+<p align="center"><a href="https://scaleflex.github.io/filerobot-image-editor/" target="_blank">Demo</a></p>
 
 > The example of Image Editor configuration using cloudimage service can be found [here](https://github.com/scaleflex/filerobot-image-editor/tree/v1.0.0/examples/js-with-cloudimage).
-
-[See demo](https://scaleflex.github.io/filerobot-image-editor/)
 
 ## Requirements
 
@@ -16,7 +48,7 @@ Once your token is created, you can configure it as described below.
 This token allows you to use 25GB of image cache and 25GB of worldwide
 CDN traffic per month for free.
 
-## Table of contents
+## <a name="table_of_contents"></a>Table of contents
 
 * [Standalone usage](#standalone_usage)
     * [Installation](#installation)
@@ -27,7 +59,9 @@ CDN traffic per month for free.
     * [Quick start](#quick_start_react)
     * [Methods/Properties](#methods_react)
 * [Configuration](#configuration)
+* [Filerobot UI Family](#ui_family)
 * [Contributing](#contributing)
+* [License](#license)
 
 ## <a name="standalone_usage"></a>Standalone usage
 
@@ -35,7 +69,7 @@ CDN traffic per month for free.
 
 Use latest CDNized plugin version
 
-```
+```html
 <script src="https://scaleflex.airstore.io/filerobot/image-editor/1.0.1/main.min.js"></script>
 ```
 
@@ -43,7 +77,7 @@ Use latest CDNized plugin version
 
 We provide easy way to integrate image editor in your applications
 
-```
+```html
 <script>
   const config = {
       filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
@@ -92,7 +126,7 @@ $ npm install --save filerobot-image-editor
 
 We provide easy way to integrate image editor in your applications
 
-```
+```javascript
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import FilerobotImageEditor from 'filerobot-image-editor';
@@ -199,7 +233,13 @@ filerobotUploadKey: 'xxxxxxxxxxxx'
     ...
 }
 ```
+## <a name="ui_family"></a>Filerobot UI Familiy
+
+* [Image Uploader](https://github.com/scaleflex/filerobot-uploader)
 
 ## <a name="contributing"></a>Contributing!
 
 All contributions are super welcome!
+
+## <a name="license"></a>License
+Filerobot Image Editor is provided under the [MIT License](https://opensource.org/licenses/MIT)
