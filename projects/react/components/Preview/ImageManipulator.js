@@ -37,7 +37,7 @@ export default class ImageManipulator extends Component {
   }
 
   componentDidMount() {
-    const src = this.state.src.split('?')[0];
+    const src = this.state.src;
     const splittedSrc = src.split('/');
     const imageName = splittedSrc[splittedSrc.length - 1];
     this.props.updateState({
