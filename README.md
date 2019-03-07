@@ -1,4 +1,4 @@
-[![Release](https://img.shields.io/badge/release-v1.0.1-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
+[![Release](https://img.shields.io/badge/release-v1.1.0-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Free plan](https://img.shields.io/badge/price-includes%20free%20plan-green.svg)](https://www.filerobot.com/en/home#2de3fb9f-dd4a-457a-999a-025ad9bd5f3b)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -70,7 +70,7 @@ CDN traffic per month for free.
 Use latest CDNized plugin version
 
 ```html
-<script src="https://scaleflex.airstore.io/filerobot/image-editor/1.0.1/main.min.js"></script>
+<script src="https://scaleflex.airstore.io/filerobot/image-editor/1.1.0/main.min.js"></script>
 ```
 
 ### <a name="quick_start"></a>Quick start
