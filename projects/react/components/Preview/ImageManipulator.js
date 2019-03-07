@@ -3,6 +3,8 @@ import { Canvas } from '../../styledComponents';
 import { b64toBlob, generateUUID } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
+import smartcrop from 'smartcrop';
+
 
 export default class ImageManipulator extends Component {
   constructor(props) {
@@ -58,6 +60,7 @@ export default class ImageManipulator extends Component {
     const img = new Image();
     img.crossOrigin = '';
     img.src = src;
+    this.img = img;
 
     img.onload = () => {
       canvas.width = img.width;
@@ -138,7 +141,7 @@ export default class ImageManipulator extends Component {
 
   onFileLoad = (data) => {
     const { onComplete, onClose, updateState, closeOnLoad } = this.props;
-    const { srcElement = { } } = data;
+    const { srcElement = {} } = data;
     const { response = '{}' } = srcElement;
     const responseData = JSON.parse(response) || {};
 
@@ -177,7 +180,7 @@ export default class ImageManipulator extends Component {
     if (cropOperation)
       cropParams = this.getCropArguments(cropOperation);
 
-    let [ cropWidth, cropHeight, x, y ] = cropParams || [];
+    let [cropWidth, cropHeight, x, y] = cropParams || [];
 
     if (resizeOperation)
       resizeParams = this.getResizeArguments(resizeOperation);
@@ -187,15 +190,15 @@ export default class ImageManipulator extends Component {
 
     let [resizeWidth, resizeHeight] = resizeParams || [];
 
-    const cropQ = cropOperation  ? (x + ',' + y + ',' + (x + cropWidth) +',' + (y + cropHeight) + '-') : '';
+    const cropQ = cropOperation ? (x + ',' + y + ',' + (x + cropWidth) + ',' + (y + cropHeight) + '-') : '';
     const resizeQ = (resizeWidth || cropWidth) ? (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight) : '';
-    const sizesQ = cropQ ||resizeQ ? cropQ + resizeQ : 'n';
+    const sizesQ = cropQ || resizeQ ? cropQ + resizeQ : 'n';
     const rotateQ = orientationParams ? orientationParams : '';
     const filtersQ = rotateQ ? `r${rotateQ}` : 'n';
 
     if ((operationQ === 'cdn') && (filtersQ !== 'n')) operationQ = 'cdno';
 
-    return 'https://' + cloudUrl + operationQ + '/' + sizesQ + '/' + filtersQ +'/';
+    return 'https://' + cloudUrl + operationQ + '/' + sizesQ + '/' + filtersQ + '/';
   }
 
   isOperationExist = (operations, type) => operations.find(({ stack }) => stack[0].name === type);
@@ -227,7 +230,7 @@ export default class ImageManipulator extends Component {
     const rotate = stack[0] && stack[0].arguments && stack[0].arguments[0] || 0;
 
     // todo: need to find better way or ask julian to redo it on server
-    switch(rotate) {
+    switch (rotate) {
       case 90:
         return 270;
       case -90:
@@ -238,7 +241,7 @@ export default class ImageManipulator extends Component {
   }
 
   cleanTemp = () => {
-    const { operations, currentOperation} = this.state;
+    const { operations, currentOperation } = this.state;
 
     this.revert(() => {
       this.applyOperations(
@@ -345,7 +348,10 @@ export default class ImageManipulator extends Component {
   initAdjust = () => {}
 
   initCrop = () => {
+    const { originalWidth, originalHeight } = this.state;
     const canvas = this.getCanvasNode();
+    const rect = canvas.getBoundingClientRect();
+    const zoom = originalWidth / rect.width;
 
     this.cropper = new Cropper(canvas, {
       viewMode: 1,
@@ -358,11 +364,29 @@ export default class ImageManipulator extends Component {
       crop: event => {
         this.setState({ cropDetails: event.detail });
         this.props.updateState({ cropDetails: event.detail });
+      },
+      ready: () => {
+        this.autoCrop(originalWidth, originalHeight, zoom);
       }
     });
 
     window.scaleflexPlugins = window.scaleflexPlugins || {};
     window.scaleflexPlugins.cropperjs = this.cropper;
+  }
+
+  autoCrop = (originalWidth, originalHeight, zoom) => {
+    smartcrop.crop(
+      this.img,
+      { height: originalHeight / 15, width: originalWidth / 15, debug: true, minScale: 0.82 }
+    ).then((result = {}) => {
+      const { topCrop: { height, width, x, y } = {} } = result;
+      this.cropper.setCropBoxData({
+        height: height / zoom,
+        width: width / zoom,
+        left: x / zoom,
+        top: y / zoom
+      });
+    });
   }
 
   initResize = () => {}
