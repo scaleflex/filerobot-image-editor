@@ -156,6 +156,11 @@ export default class ImageManipulator extends Component {
         onComplete(nweImage.src, file);
         closeOnLoad && onClose();
       };
+      nweImage.onerror = () => {
+        alert('Something went wrong... :(');
+        updateState({ isShowSpinner: false, isHideCanvas: false });
+        closeOnLoad && onClose();
+      }
       nweImage.src = file.url_public;
       //nweImage.src = file.url_public + `?hash=${generateUUID()}`;
     }
