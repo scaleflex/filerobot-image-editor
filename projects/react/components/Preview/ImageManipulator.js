@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
-import { b64toBlob, generateUUID } from '../../utils';
+import { b64toBlob, generateUUID, encodePermalink } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
 import smartcrop from 'smartcrop';
@@ -59,7 +59,7 @@ export default class ImageManipulator extends Component {
     /* Enable Cross Origin Image Editing */
     const img = new Image();
     img.crossOrigin = '';
-    img.src = src;
+    img.src = encodePermalink(src);
     this.img = img;
 
     img.onload = () => {
@@ -161,7 +161,7 @@ export default class ImageManipulator extends Component {
         updateState({ isShowSpinner: false, isHideCanvas: false });
         closeOnLoad && onClose();
       }
-      nweImage.src = file.url_public;
+      nweImage.src = encodePermalink(file.url_public);
       //nweImage.src = file.url_public + `?hash=${generateUUID()}`;
     }
     else {

@@ -106,4 +106,6 @@ function getIcon(name) {
   }
 }
 
-export { getLabel, b64toBlob, generateUUID, getIcon };
+const encodePermalink = link => link.replace(/\?/g, '%3F');
+
+export { getLabel, b64toBlob, generateUUID, getIcon, encodePermalink };
