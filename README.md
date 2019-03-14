@@ -10,7 +10,7 @@
 	<img
 		height="175"
 		alt="The Lounge"
-		src="https://scaleflex.airstore.io/filerobot/assets/robot-icon-left.png?sanitize=true">
+		src="https://scaleflex.airstore.io/filerobot/robot-filerobot.png?sanitize=true">
 </p>
 
 <h1 align="center">
