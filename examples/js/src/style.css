@@ -313,3 +313,37 @@ footer .footer-menu ul li {
 .twitter-share-button span {
   vertical-align: top;
 }
+
+.ready-to-start.filerobot-ui-family {
+  padding-bottom: 20px;
+  text-align: left;
+}
+
+.ready-to-start.filerobot-ui-family ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+  font-size: 16px;
+  text-align: left;
+}
+
+.ready-to-start.filerobot-ui-family h5 {
+  font-weight: lighter;
+}
+
+.ready-to-start.filerobot-ui-family ul li {
+  display: inline-block;
+  margin-right: 28px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+  .filerobot-ui-family-label, .filerobot-ui-family-libs {
+    min-width: 100% !important;
+  }
+
+  .ready-to-start.filerobot-ui-family h5 {
+    margin-bottom: 20px;
+  }
+}

@@ -1,3 +1,5 @@
+> Repository includes React version and JS wrapper for standalone usage
+
 [![Release](https://img.shields.io/badge/release-v1.1.3-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Free plan](https://img.shields.io/badge/price-includes%20free%20plan-green.svg)](https://www.filerobot.com/en/home#2de3fb9f-dd4a-457a-999a-025ad9bd5f3b)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
@@ -22,6 +24,8 @@
 		<a href="#table_of_contents">Docs</a>
 		•
 		<a href="https://scaleflex.github.io/filerobot-image-editor/" target="_blank">Demo</a>
+		•
+		<a href="https://codesandbox.io/s/88jpkv2m09" target="_blank">CodeSandbox</a>
 	</strong>
 </p>
 
@@ -30,10 +34,12 @@
 </p>
 
 <p align="center">
-	<img
-		width="800"
-		alt="Filerobot Image Editor"
-		src="https://scaleflex.airstore.io/filerobot/assets/filerobotimageeditor3_min.gif?sanitize=true">
+    <a href="https://scaleflex.github.io/filerobot-image-editor/" target="_blank">
+        <img
+            width="800"
+            alt="Filerobot Image Editor"
+            src="https://scaleflex.airstore.io/filerobot/assets/filerobotimageeditor3_min.gif?sanitize=true">
+    </a>
 </p>
 
 <p align="center"><a href="https://scaleflex.github.io/filerobot-image-editor/" target="_blank">Demo</a></p>
@@ -93,6 +99,7 @@ We provide easy way to integrate image editor in your applications
     FilerobotImageEditor.open('https://scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg');
 </script>
 ```
+<a href="https://codesandbox.io/s/88jpkv2m09"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="edeit on codesandbox"/></a>
 
 ### <a name="methods"></a>Methods
 
@@ -182,6 +189,7 @@ class App extends Component {
 
 render(<App/>, document.getElementById('app'));
 ```
+<a href="https://codesandbox.io/s/k3q9vrk707"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="edeit on codesandbox"/></a>
 
 ### <a name="methods_react"></a>Methods/Properties
 
@@ -236,6 +244,9 @@ filerobotUploadKey: 'xxxxxxxxxxxx'
 ## <a name="ui_family"></a>Filerobot UI Familiy
 
 * [Image Uploader](https://github.com/scaleflex/filerobot-uploader)
+* [JS Cloudimage Responsive](https://github.com/scaleflex/js-cloudimage-responsive)
+* [React Cloudimage Responsive](https://github.com/scaleflex/react-cloudimage-responsive)
+* [Angular Cloudimage Responsive](https://github.com/scaleflex/ng-cloudimage-responsive)
 
 ## <a name="contributing"></a>Contributing!
 
