@@ -76,7 +76,7 @@ CDN traffic per month for free.
 Use latest CDNized plugin version
 
 ```html
-<script src="https://cdn.scaleflex.io/filerobot/image-editor/1.1.3/main.min.js"></script>
+<script src="https://cdn.scaleflex.it/filerobot/image-editor/1.1.3/main.min.js"></script>
 ```
 
 ### <a name="quick_start"></a>Quick start
