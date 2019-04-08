@@ -1,6 +1,19 @@
 const path = require('path');
 const { ReactLoadablePlugin } = require('react-loadable/webpack');
-const VERSION = require("../package.json").version;
+const webpack = require('webpack');
+const pkg = require('../package');
+
+const now = new Date();
+const banner = `
+ ${pkg.name} v${pkg.version}
+ ${pkg.repository.url}
+
+ Copyright (c) 2019 ${pkg.author}
+ Released under the ${pkg.license} license
+
+ Date: ${now.toISOString()}
+`;
+
 
 const reactLoadablePlugin =  new ReactLoadablePlugin({
   filename: '../build/react-loadable.json'
@@ -13,7 +26,7 @@ module.exports = {
     filename: `main.min.js`,
     chunkFilename: `[name].min.js`,
     jsonpFunction: 'webpackJsonp' + Date.now(),
-    publicPath: `https://scaleflex.airstore.io/filerobot/image-editor/${VERSION}/`
+    publicPath: `https://scaleflex.airstore.io/filerobot/image-editor/${pkg.version}/`
   },
   module: {
     rules: [
@@ -28,7 +41,10 @@ module.exports = {
       }
     ]
   },
-  plugins: [reactLoadablePlugin],
+  plugins: [
+    reactLoadablePlugin,
+    new webpack.BannerPlugin(banner)
+  ],
   resolve: {
     extensions: ["*", ".js", ".jsx"]
   },
