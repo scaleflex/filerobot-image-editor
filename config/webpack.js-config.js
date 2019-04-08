@@ -23,10 +23,10 @@ module.exports = {
   entry: path.join(__dirname, "../projects/js/index.js"),
   output: {
     path: path.join(__dirname, "../build"),
-    filename: `main.min.js`,
-    chunkFilename: `[name].min.js`,
+    filename: `v${pkg.version}.min.js`,
+    chunkFilename: `[name].v${pkg.version}.min.js`,
     jsonpFunction: 'webpackJsonp' + Date.now(),
-    publicPath: `https://scaleflex.airstore.io/filerobot/image-editor/${pkg.version}/`
+    publicPath: `https://scaleflex.airstore.io/filerobot/image-editor/`
   },
   module: {
     rules: [
