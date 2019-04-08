@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
-import { b64toBlob, generateUUID, encodePermalink } from '../../utils';
+import { b64toBlob, encodePermalink } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
 import smartcrop from 'smartcrop';
+import uuidv4 from 'uuid/v4';
 
 
 export default class ImageManipulator extends Component {
@@ -80,7 +81,7 @@ export default class ImageManipulator extends Component {
   }
 
   saveImage = () => {
-    const { imageName, operations } = this.state;
+    const { operations } = this.state;
     const { onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage } = this.props;
     const src = this.state.src.split('?')[0];
     const canvas = this.getCanvasNode();
@@ -88,6 +89,7 @@ export default class ImageManipulator extends Component {
     const uploadParams = config.uploadParams || {};
     const dir = uploadParams.dir || 'image-editor';
     const self = this;
+    let { imageName } = this.state;
 
     if (!processWithCloudimage) {
       window.Caman(canvas, function () {
@@ -97,14 +99,29 @@ export default class ImageManipulator extends Component {
           const contentType = block[0].split(":")[1];
           const realData = block[1].split(",")[1];
           const blob = b64toBlob(realData, contentType, null);
-          const splittedName = imageName.replace(/-edited/g, '').split('.');
+          // fix old data problems, should be removed in next version
+          imageName = imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName;
+
+          const splittedName = imageName.replace(/-version-.{6}/g, '').split('.');
           const nameLength = splittedName.length;
-          const name = `${splittedName.slice(0, nameLength - 1).join('.')}-${generateUUID().substr(-6)}.${splittedName[nameLength - 1]}`;
+          let name = '';
+
+          if (nameLength <= 1) {
+            name = `${splittedName.join('.')}-version-${(uuidv4() || '').slice(0,6)}`;
+          } else {
+            name = [
+              splittedName.slice(0, nameLength - 1).join('.'),
+              '-version-',
+              (uuidv4() || '').slice(0,6),
+              '.',
+              splittedName[nameLength - 1]
+            ].join('');
+          }
+
           const formData = new FormData();
           const request = new XMLHttpRequest();
 
           request.addEventListener("load", self.onFileLoad);
-
           formData.append('files[]', blob, name);
           request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
           request.setRequestHeader('X-Airstore-Secret-Key', config.filerobotUploadKey);
@@ -161,6 +178,7 @@ export default class ImageManipulator extends Component {
         updateState({ isShowSpinner: false, isHideCanvas: false });
         closeOnLoad && onClose();
       }
+
       nweImage.src = encodePermalink(file.url_public);
       //nweImage.src = file.url_public + `?hash=${generateUUID()}`;
     }
