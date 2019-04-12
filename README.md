@@ -245,6 +245,7 @@ filerobotUploadKey: 'xxxxxxxxxxxx'
 
 * [Image Uploader](https://github.com/scaleflex/filerobot-uploader)
 * [JS Cloudimage Responsive](https://github.com/scaleflex/js-cloudimage-responsive)
+* [JS Cloudimage 360 view](https://github.com/scaleflex/js-cloudimage-360-view)
 * [React Cloudimage Responsive](https://github.com/scaleflex/react-cloudimage-responsive)
 * [Angular Cloudimage Responsive](https://github.com/scaleflex/ng-cloudimage-responsive)
 
