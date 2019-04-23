@@ -4,7 +4,7 @@ import { Header, Preview, Footer } from './components/index';
 
 // for some reason we cannot import caman.full.js into build
 const script = document.createElement('script');
-script.src = '//jolipage.api.airstore.io/v1/get/_/d93231a3-1e6a-5b0e-8882-342c64c5fb8f/caman.full.min.js';
+script.src = 'https://scaleflex.ultrafast.io/https://jolipage.api.airstore.io/v1/get/_/d93231a3-1e6a-5b0e-8882-342c64c5fb8f/caman.full.min.js';
 document.body.appendChild(script);
 
 export default class extends Component {
