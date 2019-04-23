@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Wrapper } from './styledComponents/index';
 import { Header, Preview, Footer } from './components/index';
+import imageType from 'image-type';
 
 // for some reason we cannot import caman.full.js into build
 const script = document.createElement('script');
@@ -25,6 +26,23 @@ export default class extends Component {
      processWithCloudimage: processWithCloudimage,
      uploadCloudimageImage: uploadWithCloudimageLink
    }
+  }
+
+  componentDidMount() {
+    this.determineImageType();
+  }
+
+  determineImageType = () => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open('GET', this.props.src);
+    xhr.responseType = 'arraybuffer';
+
+    xhr.onload = ({ target }) => {
+      this.setState({ imageMime: imageType(new Uint8Array(target.response)).mime });
+    };
+
+    xhr.send();
   }
 
   updateState = props => { this.setState(props); }
@@ -115,7 +133,7 @@ export default class extends Component {
   render() {
     const {
       isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original,
-      canvasDimensions, processWithCloudimage, uploadCloudimageImage
+      canvasDimensions, processWithCloudimage, uploadCloudimageImage, imageMime
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false } = this.props;
     const headerProps = {
@@ -146,6 +164,7 @@ export default class extends Component {
       currentOperation,
       isHideCanvas,
       src,
+      imageMime,
       onClose,
       onComplete,
       canvasDimensions,

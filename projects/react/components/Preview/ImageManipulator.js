@@ -82,7 +82,9 @@ export default class ImageManipulator extends Component {
 
   saveImage = () => {
     const { operations } = this.state;
-    const { onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage } = this.props;
+    const {
+      onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime
+    } = this.props;
     const src = this.state.src.split('?')[0];
     const canvas = this.getCanvasNode();
     const baseUrl = `//${config.filerobotContainer}.api.airstore.io/v1/`;
@@ -94,11 +96,11 @@ export default class ImageManipulator extends Component {
     if (!processWithCloudimage) {
       window.Caman(canvas, function () {
         this.render(function () {
-          const base64 = this.toBase64();
+          const base64 = canvas.toDataURL(imageMime);
           const block = base64.split(";");
-          const contentType = block[0].split(":")[1];
           const realData = block[1].split(",")[1];
-          const blob = b64toBlob(realData, contentType, null);
+          const blob = b64toBlob(realData, imageMime, null);
+
           // fix old data problems, should be removed in next version
           imageName = imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName;
 
