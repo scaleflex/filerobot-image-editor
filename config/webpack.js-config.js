@@ -15,41 +15,51 @@ const banner = `
 `;
 
 
-const reactLoadablePlugin =  new ReactLoadablePlugin({
+const reactLoadablePlugin = new ReactLoadablePlugin({
   filename: '../build/react-loadable.json'
 });
 
-module.exports = {
-  entry: path.join(__dirname, "../projects/js/index.js"),
-  output: {
-    path: path.join(__dirname, "../build"),
-    filename: `v${pkg.version}.min.js`,
-    chunkFilename: `[name].v${pkg.version}.min.js`,
-    jsonpFunction: 'webpackJsonp' + Date.now(),
-    publicPath: `https://scaleflex.airstore.io/filerobot/image-editor/`
-  },
-  module: {
-    rules: [
+module.exports = (env = {}) => {
+  return {
+    entry: path.join(__dirname, "../projects/js/index.js"),
+    output: env.latest ?
       {
-        test: /\.(js|jsx)$/,
-        use: "babel-loader",
-        exclude: /(node_modules|bower_components)\/(?!pretty-bytes\/).*/,
+        path: path.join(__dirname, `../build/${pkg.version.split('.')[0]}`),
+        filename: `${pkg.name}.min.js`,
+        chunkFilename: `[name].min.js`,
+        jsonpFunction: 'webpackJsonp' + Date.now(),
+        publicPath: `https://scaleflex.airstore.io/filerobot/image-editor/${pkg.version.split('.')[0]}/`
+      } :
+      {
+        path: path.join(__dirname, `../build/${pkg.version}`),
+        filename: `${pkg.name}.min.js`,
+        chunkFilename: `[name].min.js`,
+        jsonpFunction: 'webpackJsonp' + Date.now(),
+        publicPath: `https://scaleflex.airstore.io/filerobot/image-editor/${pkg.version}/`
       },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      }
-    ]
-  },
-  plugins: [
-    reactLoadablePlugin,
-    new webpack.BannerPlugin(banner)
-  ],
-  resolve: {
-    extensions: ["*", ".js", ".jsx"]
-  },
-  devtool: "sourcemap",
-  devServer: {
-    port: 3001
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          use: "babel-loader",
+          exclude: /(node_modules|bower_components)\/(?!pretty-bytes\/).*/,
+        },
+        {
+          test: /\.css$/,
+          use: ["style-loader", "css-loader"]
+        }
+      ]
+    },
+    plugins: [
+      reactLoadablePlugin,
+      new webpack.BannerPlugin(banner)
+    ],
+    resolve: {
+      extensions: ["*", ".js", ".jsx"]
+    },
+    devtool: "sourcemap",
+    devServer: {
+      port: 3001
+    }
   }
 };
