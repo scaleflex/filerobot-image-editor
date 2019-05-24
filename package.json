@@ -1,6 +1,6 @@
 {
   "name": "filerobot-image-editor",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "main": "dist/index.js",
   "description": "Edit, resize, and filter any image!",
   "author": "scaleflex",
@@ -19,6 +19,7 @@
     "cropperjs": "^1.2.2",
     "image-type": "^4.1.0",
     "moment": "^2.21.0",
+    "react-load-script": "0.0.6",
     "react-loadable": "^5.5.0",
     "smartcrop": "^2.0.3",
     "styled-components": "^4.2.0",

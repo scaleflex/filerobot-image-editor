@@ -1,6 +1,6 @@
 > Repository includes React version and JS wrapper for standalone usage
 
-[![Release](https://img.shields.io/badge/release-v1.1.9-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
+[![Release](https://img.shields.io/badge/release-v1.2.0-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Free plan](https://img.shields.io/badge/price-includes%20free%20plan-green.svg)](https://www.filerobot.com/en/home#2de3fb9f-dd4a-457a-999a-025ad9bd5f3b)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -76,14 +76,14 @@ CDN traffic per month for free.
 Use latest CDNized plugin version
 
 ```html
-<script src="https://cdn.scaleflex.it/filerobot/image-editor/1.1.9/filerobot-image-editor.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/1.2.0/filerobot-image-editor.min.js"></script>
 ```
 
 
 You may also use major version number instead of fixed version to have the latest version available.
 
 ```html
-<script src="https://cdn.scaleflex.it/filerobot/image-editor/1/filerobot-image-editor.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/1/filerobot-image-editor.min.js"></script>
 ```
 
 ### <a name="quick_start"></a>Quick start
