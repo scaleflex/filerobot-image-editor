@@ -38,9 +38,9 @@ const FieldLabel = styled.label`
   margin-bottom: 5px;
 `;
 
-const FieldInput = styled.input.attrs({
-  type: props => props.type ? props.type : 'text'
-})`
+const FieldInput = styled.input.attrs(props => ({
+  type: props.type ? props.type : 'text'
+}))`
   display: inline-block;
   width: ${props => props.fullSize ? '100%' : props.theme.fieldWidth};
   height: 30px;

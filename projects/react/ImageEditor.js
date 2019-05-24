@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Wrapper } from './styledComponents/index';
 import { Header, Preview, Footer } from './components/index';
+import { Spinner } from './styledComponents';
+import Script from 'react-load-script';
 import imageType from 'image-type';
 
-// for some reason we cannot import caman.full.js into build
-const script = document.createElement('script');
-script.src = 'https://scaleflex.ultrafast.io/https://jolipage.api.airstore.io/v1/get/_/d93231a3-1e6a-5b0e-8882-342c64c5fb8f/caman.full.min.js';
-document.body.appendChild(script);
 
 export default class extends Component {
   constructor(props) {
@@ -14,18 +12,19 @@ export default class extends Component {
 
     const { processWithCloudimage, uploadWithCloudimageLink } = props.config;
 
-   this.state = {
-     isShowSpinner: true,
-     isHideCanvas: false,
-     activeTab: null,
-     operations: [],
-     currentOperation: null,
-     original: { width: 300, height: 200 },
-     cropDetails: { width: 300, height: 200 },
-     canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
-     processWithCloudimage: processWithCloudimage,
-     uploadCloudimageImage: uploadWithCloudimageLink
-   }
+    this.state = {
+      isShowSpinner: true,
+      isHideCanvas: false,
+      activeTab: null,
+      operations: [],
+      currentOperation: null,
+      original: { width: 300, height: 200 },
+      cropDetails: { width: 300, height: 200 },
+      canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
+      processWithCloudimage: processWithCloudimage,
+      uploadCloudimageImage: uploadWithCloudimageLink,
+      camanLoaded: false
+    }
   }
 
   componentDidMount() {
@@ -69,7 +68,7 @@ export default class extends Component {
   }
 
   forceApplyOperations = (operations, activeTab) => {
-    const { revert, applyOperations  } = this.state;
+    const { revert, applyOperations } = this.state;
 
     this.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
 
@@ -130,10 +129,14 @@ export default class extends Component {
     });
   }
 
+  onLoadCaman = () => {
+    this.setState({ camanLoaded: true });
+  }
+
   render() {
     const {
       isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original,
-      canvasDimensions, processWithCloudimage, uploadCloudimageImage, imageMime
+      canvasDimensions, processWithCloudimage, uploadCloudimageImage, imageMime, camanLoaded
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false } = this.props;
     const headerProps = {
@@ -187,11 +190,22 @@ export default class extends Component {
     return (
       <Wrapper>
 
-        <Header {...headerProps}/>
+        {camanLoaded &&
+        <Fragment>
+          <Header {...headerProps}/>
 
-        <Preview {...previewProps}/>
+          <Preview {...previewProps}/>
 
-        <Footer {...footerProps}/>
+          <Footer {...footerProps}/>
+        </Fragment>}
+
+        <Spinner overlay show={!camanLoaded}/>
+
+        <Script
+          onLoad={this.onLoadCaman}
+          url="https://cdn.scaleflex.it/plugins/common/libs/caman.full.min.js"
+          crossorigin="anonymous"
+        />
 
       </Wrapper>
     )

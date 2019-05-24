@@ -1,17 +1,17 @@
 @font-face {
-  font-family: 'scaleflex-icon-font';
-  src:  url('https://scaleflex.ultrafast.io/https://jolipage.airstore.io/v3/jolipage-editor/fonts/scaleflex/scaleflex-icon-font.eot?j3az6n');
-  src:  url('https://scaleflex.ultrafast.io/https://jolipage.airstore.io/v3/jolipage-editor/fonts/scaleflex/scaleflex-icon-font.eot?j3az6n#iefix') format('embedded-opentype'),
-  url('https://scaleflex.ultrafast.io/https://jolipage.airstore.io/v3/jolipage-editor/fonts/scaleflex/scaleflex-icon-font.ttf?j3az6n') format('truetype'),
-  url('https://scaleflex.ultrafast.io/https://jolipage.airstore.io/v3/jolipage-editor/fonts/scaleflex/scaleflex-icon-font.woff?j3az6n') format('woff'),
-  url('https://scaleflex.ultrafast.io/https://jolipage.airstore.io/v3/jolipage-editor/fonts/scaleflex/scaleflex-icon-font.svg?j3az6n#scaleflex-icon-font') format('svg');
+  font-family: 'filerobot-image-editor-font';
+  src:  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/filerobot-image-editor-font.eot?ua0hzun');
+  src:  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/filerobot-image-editor-font.eot?ua0hzun#iefix') format('embedded-opentype'),
+  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/filerobot-image-editor-font.ttf?ua0hzun') format('truetype'),
+  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/filerobot-image-editor-font.woff?ua0hzun') format('woff'),
+  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/filerobot-image-editor-font.svg?ua0hzun#filerobot-image-editor-font') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 [class^="sf-i-"], [class*=" sf-i-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'scaleflex-icon-font' !important;
+  font-family: 'filerobot-image-editor-font' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;

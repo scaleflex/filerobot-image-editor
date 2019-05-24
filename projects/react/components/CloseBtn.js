@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { variables } from '../styledComponents/styleUtils';
 
-const CloseBtn = styled.span.attrs({
+const CloseBtn = styled.span.attrs(() => ({
   role: 'button'
-})`
+}))`
   cursor: pointer;
   position: absolute;
   font-weight: normal;
@@ -13,8 +13,8 @@ const CloseBtn = styled.span.attrs({
   bottom: ${props => props.b || 'auto'};
   font-size: ${props => props.fz || '18px'};
   z-index: 10;
-  font-family: 'scaleflex-icon-font' !important;
-  color: ${props => variables.modal.colorMuted};
+  font-family: 'filerobot-image-editor-font' !important;
+  color: ${() => variables.modal.colorMuted};
   speak: none;
   font-style: normal;
   font-variant: normal;

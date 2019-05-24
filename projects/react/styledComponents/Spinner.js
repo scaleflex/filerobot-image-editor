@@ -156,7 +156,7 @@ const faSpin = keyframes`
   }
 `
 
-export const InlineSpinner = styled.span.attrs({ className: 'fa fa-spinner' })`
+export const InlineSpinner = styled.span.attrs(() => ({ className: 'fa fa-spinner' }))`
   display: inline-block;
   animation: ${faSpin} 2s infinite linear;
 `;

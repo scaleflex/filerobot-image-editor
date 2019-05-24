@@ -258,7 +258,7 @@ function getFieldColorStyles(props) {
 
 function getIconStyles(props) {
   return `
-    font-family: 'scaleflex-icon-font' !important;
+    font-family: 'filerobot-image-editor-font' !important;
     color: ${props.muted ? variables.colors.text.mute : variables.colors.text.base};
     speak: none;
     font-style: normal;

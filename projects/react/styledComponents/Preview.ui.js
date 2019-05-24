@@ -50,9 +50,9 @@ const PreviewImgBox = styled.div`
   }
 `;
 
-const Canvas = styled.canvas.attrs({
+const Canvas = styled.canvas.attrs(() => ({
   id: 'scaleflex-image-edit-box'
-})`
+}))`
   display: ${props => props.hide ? 'none' : 'inline-block'};
   max-height: 100%;
   max-width: 100%;

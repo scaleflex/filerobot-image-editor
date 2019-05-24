@@ -28,14 +28,14 @@ module.exports = (env = {}) => {
         filename: `${pkg.name}.min.js`,
         chunkFilename: `[name].min.js`,
         jsonpFunction: 'webpackJsonp' + Date.now(),
-        publicPath: `https://cdn.scaleflex.it/filerobot/image-editor/${pkg.version.split('.')[0]}/`
+        publicPath: `https://cdn.scaleflex.it/plugins/${pkg.name}/${pkg.version.split('.')[0]}/`
       } :
       {
         path: path.join(__dirname, `../build/${pkg.version}`),
         filename: `${pkg.name}.min.js`,
         chunkFilename: `[name].min.js`,
         jsonpFunction: 'webpackJsonp' + Date.now(),
-        publicPath: `https://cdn.scaleflex.it/filerobot/image-editor/${pkg.version}/`
+        publicPath: `https://cdn.scaleflex.it/plugins/${pkg.name}/${pkg.version}/`
       },
     module: {
       rules: [

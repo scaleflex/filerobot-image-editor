@@ -36,58 +36,58 @@ function getIcon(name) {
   switch (name) {
     //filters
     case 'colorize':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/colorize.jpg';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/colorize.jpg';
     case 'contrast':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/contrast.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/contrast.png';
     case 'cross_process':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/cross_process.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/cross_process.png';
     case 'glow_sun':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/glow_sun.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/glow_sun.png';
     case 'hdr_effect':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/hdr_effect.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/hdr_effect.png';
     case 'jarques':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/jarques.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/jarques.png';
     case 'love':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/love.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/love.png';
     case 'old_boot':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/old_boot.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/old_boot.png';
     case 'orange_peel':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/orange_peel.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/orange_peel.png';
     case 'pin_hole':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/pin_hole.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/pin_hole.png';
     case 'pleasant':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/pleasant.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/pleasant.png';
     case 'sepia':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/sepia.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/sepia.png';
     case 'sun_rise':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/sun_rise.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/sun_rise.png';
     case 'vintage':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/filters/vintage.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/vintage.png';
     //effets
     case 'clarity':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/clarity.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/clarity.png';
     case 'edge_enhance':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/edge_enhance.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/edge_enhance.png';
     case 'emboss':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/emboss.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/emboss.png';
     case 'grungy':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/grungy.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/grungy.png';
     case 'hazy':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/hazy.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/hazy.png';
     case 'lomo':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/lomo.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/lomo.png';
     case 'noise':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/noise.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/noise.png';
     case 'old_paper':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/old_paper.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/old_paper.png';
     case 'posterize':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/posterize.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/posterize.png';
     case 'radial_blur':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/radial_blur.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/radial_blur.png';
     case 'sin_city':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/sin_city.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/sin_city.png';
     case 'tilt_shift':
-      return 'https://cdn.scaleflex.it/filerobot/image-editor/icons/effects/tilt_shift.png';
+      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/tilt_shift.png';
     default:
       return '';
   }
