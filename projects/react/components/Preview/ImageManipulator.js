@@ -40,7 +40,7 @@ export default class ImageManipulator extends Component {
   componentDidMount() {
     const src = this.state.src;
     const splittedSrc = src.split('/');
-    const imageName = splittedSrc[splittedSrc.length - 1];
+    let imageName = splittedSrc[splittedSrc.length - 1];
     this.props.updateState({
       isShowSpinner: true,
       applyChanges: this.applyChanges,
@@ -60,7 +60,7 @@ export default class ImageManipulator extends Component {
     /* Enable Cross Origin Image Editing */
     const img = new Image();
     img.crossOrigin = '';
-    img.src = encodePermalink(src);
+    img.src = src;
     this.img = img;
 
     img.onload = () => {
@@ -74,7 +74,10 @@ export default class ImageManipulator extends Component {
         canvasDimensions: { height: img.height, width: img.width, ratio: img.width / img.height }
       });
       this.setState({
-        originalWidth: img.width, originalHeight: img.height, originalImage: img, imageName,
+        originalWidth: img.width,
+        originalHeight: img.height,
+        originalImage: img,
+        imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName,
         originalCanvas: canvas
       });
     }
@@ -100,10 +103,6 @@ export default class ImageManipulator extends Component {
           const block = base64.split(";");
           const realData = block[1].split(",")[1];
           const blob = b64toBlob(realData, imageMime, null);
-
-          // fix old data problems, should be removed in next version
-          imageName = imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName;
-
           const splittedName = imageName.replace(/-version-.{6}/g, '').split('.');
           const nameLength = splittedName.length;
           let name = '';
