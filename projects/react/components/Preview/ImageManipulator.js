@@ -395,6 +395,7 @@ export default class ImageManipulator extends Component {
     });
 
     window.scaleflexPlugins = window.scaleflexPlugins || {};
+    window.scaleflexPlugins.zoom = zoom;
     window.scaleflexPlugins.cropperjs = this.cropper;
   }
 

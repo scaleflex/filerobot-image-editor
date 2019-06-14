@@ -33,23 +33,11 @@ export default class extends Component {
   }
 
   changeWidth = (event) => {
-    const { cropDetails, original } = this.props;
-    const container = document.querySelector('#preview-img-box');
-    const rect = container.getBoundingClientRect();
-    const width = original.width === rect.width ?
-      +event.target.value : ((rect.width / original.width) * +event.target.value);
-
-    window.scaleflexPlugins.cropperjs.setCropBoxData({ ...cropDetails, width  });
+    window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +event.target.value / window.scaleflexPlugins.zoom  });
   }
 
   changeHeight = (event) => {
-    const { cropDetails, original } = this.props;
-    const container = document.querySelector('#preview-img-box');
-    const rect = container.getBoundingClientRect();
-    const height = original.height === rect.height ?
-      +event.target.value : ((rect.height / original.height) * +event.target.value);
-
-    window.scaleflexPlugins.cropperjs.setCropBoxData({ ...cropDetails, height });
+    window.scaleflexPlugins.cropperjs.setCropBoxData({ height: +event.target.value / window.scaleflexPlugins.zoom  });
   }
 
   toggleRatio = (event) => {
@@ -61,7 +49,10 @@ export default class extends Component {
     aspectRatio = aspectRatio ? NaN : width / height;
 
     window.scaleflexPlugins.cropperjs.setAspectRatio(aspectRatio);
-    this.autoCrop(width / height);
+    window.scaleflexPlugins.cropperjs.setCropBoxData({
+      width: width / window.scaleflexPlugins.zoom,
+      height: height / window.scaleflexPlugins.zoom
+    });
     this.setState({ aspectRatio });
   }
 
@@ -115,16 +106,13 @@ export default class extends Component {
 
     return (
       <CropWrapper>
-        <CropBox
-          active={activeRatio === 'custom'}
-          onClick={this.changeRatio.bind(this, { name: 'custom' })}
-        >
+        <CropBox active={activeRatio === 'custom'}>
           <FieldSet>
             <FieldLabel>width</FieldLabel>
             <FieldInput
               dark={activeRatio === 'custom'}
               fullSize
-              value={parseInt(cropDetails.width, 10)}
+              value={Math.round(cropDetails.width)}
               onChange={this.changeWidth}
             />
           </FieldSet>
@@ -138,7 +126,7 @@ export default class extends Component {
             <FieldInput
               dark={activeRatio === 'custom'}
               fullSize
-              value={parseInt(cropDetails.height, 10)}
+              value={Math.round(cropDetails.height)}
               onChange={this.changeHeight}
             />
           </FieldSet>
