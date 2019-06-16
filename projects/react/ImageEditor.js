@@ -21,8 +21,7 @@ export default class extends Component {
       cropDetails: { width: 300, height: 200 },
       canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
       processWithCloudimage: processWithCloudimage,
-      uploadCloudimageImage: uploadWithCloudimageLink,
-      camanLoaded: false
+      uploadCloudimageImage: uploadWithCloudimageLink
     }
   }
 
@@ -100,7 +99,6 @@ export default class extends Component {
   onDownloadImage = () => {
     const { downloadImage } = this.state;
 
-    this.setState({ isShowSpinner: true });
     downloadImage();
   }
 
@@ -135,14 +133,10 @@ export default class extends Component {
     });
   }
 
-  onLoadCaman = () => {
-    this.setState({ camanLoaded: true });
-  }
-
   render() {
     const {
       isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original,
-      canvasDimensions, processWithCloudimage, uploadCloudimageImage, imageMime, camanLoaded
+      canvasDimensions, processWithCloudimage, uploadCloudimageImage, imageMime
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false } = this.props;
     const headerProps = {
