@@ -97,7 +97,7 @@ export default class ImageManipulator extends Component {
     let { imageName } = this.state;
 
     if (!processWithCloudimage) {
-      window.Caman(canvas, function () {
+      new window.Caman(canvas, function () {
         this.render(function () {
           const base64 = canvas.toDataURL(imageMime);
           const block = base64.split(";");
@@ -283,7 +283,7 @@ export default class ImageManipulator extends Component {
     const canvas = this.getCanvasNode();
     const that = this;
 
-    window.Caman(canvas, function () {
+    new window.Caman(canvas, function () {
       this.rotate(value);
       this.render(() => {
         that.setState({ rotate: total });
@@ -306,7 +306,7 @@ export default class ImageManipulator extends Component {
         () => {
           const canvas = this.getCanvasNode();
 
-          window.Caman(canvas, function () {
+          new window.Caman(canvas, function () {
             this.brightness(adjust.brightness);
             this.contrast(adjust.contrast);
             this.gamma(adjust.gamma);
@@ -352,7 +352,7 @@ export default class ImageManipulator extends Component {
         () => {
           const canvas = this.getCanvasNode();
 
-          window.Caman(canvas, function () {
+          new window.Caman(canvas, function () {
             this[effectHandlerName]();
             this.render(() => {
               that.props.updateState({ isHideCanvas: false, isShowSpinner: false });
@@ -440,7 +440,7 @@ export default class ImageManipulator extends Component {
     this.pushOperation(operations, operation, currentOperation);
     this.destroyCrop();
 
-    window.Caman(canvas, function () {
+    new window.Caman(canvas, function () {
       this.crop(width, height, x, y);
       this.render(() => {
         that.props.updateState({
@@ -459,7 +459,7 @@ export default class ImageManipulator extends Component {
     const canvas = this.getCanvasNode();
     const that = this;
 
-    window.Caman(canvas, function () {
+    new window.Caman(canvas, function () {
       const caman = this;
 
       queue.forEach(queueIndex => {
@@ -487,7 +487,7 @@ export default class ImageManipulator extends Component {
   applyFilters = (operations = [], callback) => {
     const canvas = this.getCanvasNode();
 
-    window.Caman(canvas, function () {
+    new window.Caman(canvas, function () {
       const caman = this;
 
       operations.forEach((operation) => {
@@ -523,7 +523,7 @@ export default class ImageManipulator extends Component {
     };
 
     this.pushOperation(operations, operation, currentOperation);
-    window.Caman(canvas, function () {
+    new window.Caman(canvas, function () {
       this.resize({ width, height });
       this.render(() => {
         that.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });

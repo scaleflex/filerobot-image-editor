@@ -1,9 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Wrapper } from './styledComponents/index';
 import { Header, Preview, Footer } from './components/index';
-import { Spinner } from './styledComponents';
-import Script from 'react-load-script';
 import imageType from 'image-type';
+import './lib/caman';
 
 
 export default class extends Component {
@@ -190,22 +189,11 @@ export default class extends Component {
     return (
       <Wrapper>
 
-        {camanLoaded &&
-        <Fragment>
-          <Header {...headerProps}/>
+        <Header {...headerProps}/>
 
-          <Preview {...previewProps}/>
+        <Preview {...previewProps}/>
 
-          <Footer {...footerProps}/>
-        </Fragment>}
-
-        <Spinner overlay show={!camanLoaded}/>
-
-        <Script
-          onLoad={this.onLoadCaman}
-          url="https://cdn.scaleflex.it/plugins/common/libs/caman.full.min.js"
-          crossorigin="anonymous"
-        />
+        <Footer {...footerProps}/>
 
       </Wrapper>
     )
