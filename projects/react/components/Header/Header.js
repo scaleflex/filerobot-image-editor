@@ -8,7 +8,7 @@ import { Toolbar } from '../';
 
 export default class extends Component {
   render() {
-    const { activeTab, onRevert, apply, onClose, onSave, showGoBackBtn, operations } = this.props;
+    const { activeTab, onRevert, apply, onClose, onSave, showGoBackBtn, operations, onDownloadImage } = this.props;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
     const atLeastOneOperationApplied = !!operations.length;
 

@@ -52,7 +52,8 @@ export default class ImageManipulator extends Component {
       cleanTemp: this.cleanTemp,
       revert: this.revert,
       rotate: this.rotate,
-      adjust: this.adjust
+      adjust: this.adjust,
+      downloadImage: this.downloadImage
     });
     const canvas = this.getCanvasNode();
     const ctx = canvas.getContext('2d');
@@ -571,6 +572,26 @@ export default class ImageManipulator extends Component {
       if (callback) setTimeout(() => { callback(); });
     }
 
+  }
+
+  downloadImage = () => {
+    const canvas = this.getCanvasNode();
+    const { imageName } = this.state;
+    const { imageMime } = this.props;
+    const lnk = document.createElement('a');
+    let e;
+
+    lnk.download = imageName;
+    lnk.href = canvas.toDataURL(imageMime, 0.8);
+
+    if (document.createEvent) {
+      e = document.createEvent("MouseEvents");
+      e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      lnk.dispatchEvent(e);
+    }
+    else if (lnk.fireEvent) {
+      lnk.fireEvent("onclick");
+    }
   }
 
   render() { return <Canvas id="scaleflex-image-edit-box"/>; }

@@ -97,6 +97,13 @@ export default class extends Component {
     saveImage();
   }
 
+  onDownloadImage = () => {
+    const { downloadImage } = this.state;
+
+    this.setState({ isShowSpinner: true });
+    downloadImage();
+  }
+
   onResize = (params) => {
     const { resize } = this.state;
 
@@ -157,7 +164,8 @@ export default class extends Component {
       onResize: this.onResize,
       onApplyEffects: this.onApplyEffects,
       onRotate: this.onRotate,
-      onAdjust: this.onAdjust
+      onAdjust: this.onAdjust,
+      onDownloadImage: this.onDownloadImage
     };
     const previewProps = {
       activeTab,
