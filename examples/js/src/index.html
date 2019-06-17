@@ -442,6 +442,10 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
   
   function addNewImg(files) {
     const demoImages = document.getElementById("demo-images");
+    const images = demoImages.querySelectorAll('.demo-img');
+    images.forEach(img => {
+      img.classList.remove('active');
+    });
     const uploaderResultImg = document.createElement('div');
     uploaderResultImg.style.backgroundImage = 'url("' + files[0].url_permalink + '")';
     uploaderResultImg.classList.add('custom-image', 'demo-img', 'active');
