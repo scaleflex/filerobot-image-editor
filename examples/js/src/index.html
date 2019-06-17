@@ -128,10 +128,11 @@
              src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/pedro-lastra-unsplash.jpg"
              alt="pedro-lastra-unsplash">
         </div>
-        <div class="col-md-4">
-          <img
-             src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/damian-markutt-unsplash.jpg"
-             alt="damian-markutt-unsplash">
+        <div class="col-md-4" onclick="uploader.open()">
+          <div class="uploader-container">
+            <div class="uploader-icon"></div>
+            <button class="btn btn-dark btn-lg">Upload image</button>
+          </div>
         </div>
         <!--<div class="col-md-3">-->
         <!--<img src="https://scaleflex.airstore.io/demo/austin-distel-unsplash.jpg" alt="austin-distel-unsplash">-->
@@ -143,29 +144,6 @@
 
       <!--<button class="btn btn-light">upload your image</button>-->
     </div>
-
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <h5>Download</h5>
-          <p>Edit the image in the Image Editor and download the result.</p>
-          <button id="edit-btn-download" class="btn btn-dark">Edit & Download</button>
-        </div>
-        <div class="col-md-4">
-          <h5>Upload (requires Filerobot account)</h5>
-          <p>Upload the image in your Filerobot storage container, edit it in the Image Editor and upload the result.
-            Deliver lightning fast over CDN.</p>
-          <button id="edit-btn-upload" class="btn btn-dark">Edit & Upload</button>
-        </div>
-        <div class="col-md-4">
-          <h5>Modify (requires Cloudimage account)</h5>
-          <p>Point the Image Editor to your origin image URL, edit it and deliver the result lightning fast over the
-            Cloudimage image CDN. Limited to the Cloudimage inline transformation features.</p>
-          <button id="edit-btn-modify" class="btn btn-dark">Import & Modify</button>
-        </div>
-      </div>
-    </div>
   </section>
 
 
@@ -175,6 +153,32 @@
   <!--src="https://scaleflex.ultrafast.io/https://scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg"-->
   <!--/>-->
   <!--</section>-->
+
+  <section>
+    <div class="container" style="text-align: center">
+      <h2>Select one of the options:</h2>
+
+      <div class="docs-wrapper">
+        <div class="docs-container">
+          <div class="docs-group">
+            <h2>Download</h2>
+            <p>Edit the image in the Image Editor and download the result.</p>
+            <button id="edit-btn-download" class="btn btn-primary btn-lg">Edit & Download</button>
+          </div>
+          <div class="docs-group">
+            <h2>Upload (requires Filerobot account)</h2>
+            <p>Upload the image in your Filerobot storage container, edit it in the Image Editor and upload the result. Deliver lightning fast over CDN.</p>
+            <button id="edit-btn-upload" class="btn btn-primary btn-lg">Edit & Upload</button>
+          </div>
+          <div class="docs-group">
+            <h2>Modify (requires Cloudimage account)</h2>
+            <p>Point the Image Editor to your origin image URL, edit it and deliver the result lightning fast over the Cloudimage image CDN. Limited to the Cloudimage inline transformation features.</p>
+            <button id="edit-btn-modify" class="btn btn-primary btn-lg">Edit & Modify</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="container ready-to-start">
     <h2>Ready to get started?</h2>
@@ -488,5 +492,34 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
 
 <!--End mc_embed_signup-->
 
+<script src="https://cdn.scaleflex.it/plugins/filerobot-uploader/2/filerobot-uploader.min.js"></script>
+<script>
+  const config = {
+    container: 'fpdlhfjm',
+    filerobotUploadKey: 'bf72d18393ea40d5b4fccd9fb83806fa',
+    dir: '/Github-Image-Editor',
+    modules: ['UPLOAD', 'IMAGES_GALLERY']
+  };
+  const onUpload = (files) => {
+    addNewImg(files)
+  };
+  const uploader = FilerobotUploader.init(config, onUpload);
+  
+  function addNewImg(files) {
+    const demoImages = document.getElementById("demo-images");
+    const uploaderResultImg = document.createElement('img');
+    uploaderResultImg.setAttribute('src', files[0].url_permalink);
+    uploaderResultImg.setAttribute('alt', files[0].name);
+    uploaderResultImg.classList.add('active');
+    const lastDemoImage = demoImages.children[demoImages.children.length-1];
+    while (lastDemoImage.firstChild) {
+      lastDemoImage.removeChild(lastDemoImage.firstChild);
+    }
+    lastDemoImage.appendChild(uploaderResultImg);
+    uploader.close();
+    const  uploaderContainer = document.querySelector('.uploader-container');
+    uploaderContainer.style.display = 'none';
+  }
+</script>
 </body>
 </html>

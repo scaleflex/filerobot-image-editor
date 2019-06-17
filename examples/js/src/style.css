@@ -170,10 +170,6 @@ html, body {
   width: 100%;
 }
 
-.features {
-  background: #fff;
-}
-
 #image {
   cursor: pointer;
   transition: opacity 0.4s;
@@ -475,4 +471,47 @@ footer .footer-menu ul li {
 
 .modal-footer {
   display: block;
+}
+
+.docs-wrapper {
+  background-color: #fff;
+  text-align: center;
+  padding: 30px 20px 20px;
+  font-weight: 300;
+  border: 1px solid #d1d1d1;
+}
+
+.docs-group h2 {
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.docs-group:not(:first-child) {
+  margin-top: 40px;
+}
+
+.docs-container {
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.uploader-container {
+  height: calc(100% - 10px);
+  background-color: #a1a1a1;
+  padding: 40px 10px;
+  text-align: center;
+}
+
+.uploader-container .uploader-icon {
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMS4wLjIsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAxNDggMTE0LjUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDE0OCAxMTQuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2ZpbGw6I0ExQTFBMTt9DQoJLnN0MXtmaWxsOiNENEQxRDE7fQ0KPC9zdHlsZT4NCjxnPg0KCTxnPg0KCQk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTMyLjksMTAwLjhIMTYuNmMtMS4yLDAtMi4yLTEtMi4yLTIuMnYtODNjMC0xLjIsMS0yLjIsMi4yLTIuMmgxMTYuM2MxLjIsMCwyLjIsMSwyLjIsMi4ydjgzDQoJCQlDMTM1LjIsOTkuOCwxMzQuMiwxMDAuOCwxMzIuOSwxMDAuOHoiLz4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTEzNC40LDQuNUgxNS4yQzEwLDQuNSw1LjgsOC44LDUuOCwxNHY4Ni42YzAsNS4yLDQuMiw5LjQsOS40LDkuNGgxMTkuMmM1LjIsMCw5LjQtNC4yLDkuNC05LjRWMTQNCgkJCUMxNDMuOCw4LjgsMTM5LjYsNC41LDEzNC40LDQuNXogTTEyLjcsMTRjMC0xLjQsMS4xLTIuNSwyLjUtMi41aDExOS4yYzEuNCwwLDIuNSwxLjEsMi41LDIuNXY4Ni42YzAsMS40LTEuMSwyLjUtMi41LDIuNUgxNS4yDQoJCQljLTEuNCwwLTIuNS0xLjEtMi41LTIuNVYxNHoiLz4NCgkJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSI4OS4yLDQ2IDY3LjIsNzMuNCA1OC43LDgzLjkgNDUuMiw3My40IDE2LjQsMTAwLjggNDUuMSwxMDAuOCA0NS4yLDEwMC44IDc0LDEwMC44IDg5LjIsMTAwLjggDQoJCQkxMzMuMiwxMDAuOCAxMTEuMiw3My40IAkJIi8+DQoJPC9nPg0KPC9nPg0KPC9zdmc+DQo=");
+  height: 80px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+  display: block;
+  margin: 0 auto 10px auto;
+}
+
+.btn {
+  cursor: pointer;
 }
