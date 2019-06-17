@@ -92,7 +92,7 @@ We provide easy way to integrate image editor in your applications
 
 ### <a name="methods"></a>Methods
 
-#### `FilerobotImageEditor.init(config: {}, uploadHandler: callback)`: function
+#### `FilerobotImageEditor.(config: {}, uploadHandler: callback)`: function
 
 Initialization of Filerobot Image Editor plugin.
 
