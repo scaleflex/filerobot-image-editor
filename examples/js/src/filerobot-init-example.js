@@ -86,9 +86,9 @@ function initImageEditorUpload() {
 
   if (image.tagName === 'DIV') {
     const url = image.style.backgroundImage.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
-    ImageEditorDownload.open(url);
+    ImageEditorUpload.open(url);
   } else if (image.tagName === 'IMG') {
-    ImageEditorDownload.open(image.src.slice(image.src.lastIndexOf('http')));
+    ImageEditorUpload.open(image.src.slice(image.src.lastIndexOf('http')));
   }
 }
 
@@ -100,9 +100,9 @@ function initImageEditorModify() {
 
   if (image.tagName === 'DIV') {
     const url = image.style.backgroundImage.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
-    ImageEditorDownload.open(url);
+    ImageEditorModify.open(url);
   } else if (image.tagName === 'IMG') {
-    ImageEditorDownload.open(image.src.slice(image.src.lastIndexOf('http')));
+    ImageEditorModify.open(image.src.slice(image.src.lastIndexOf('http')));
   }
 }
 
