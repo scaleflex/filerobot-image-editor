@@ -111,7 +111,7 @@ class Caman extends Module {
       // Hack: trick Babel/TypeScript into allowing this before super.
       if (false) { super(); }
       let thisFn = (() => { return this; }).toString();
-      let thisName = thisFn.match(/return (?:_assertThisInitialized\()*(\w+)\)*;/)[1];
+      let thisName = thisFn.match(/return (?:_assertThisInitialized\()*(\w+)\)*;?/)[1];
       eval(`${thisName} = this;`);
     }
     if (arguments.length === 0) { throw "Invalid arguments"; }
