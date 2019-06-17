@@ -484,6 +484,7 @@ footer .footer-menu ul li {
 .docs-group h2 {
   font-weight: 700;
   margin-bottom: 0;
+  font-size: 1.72rem;
 }
 
 .docs-group:not(:first-child) {
