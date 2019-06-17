@@ -465,3 +465,13 @@ footer .footer-menu ul li {
 #result-modal form .input-wrapper {
   width: calc(100% - 100px);
 }
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 550px;
+  }
+}
+
+.modal-footer {
+  display: block;
+}
