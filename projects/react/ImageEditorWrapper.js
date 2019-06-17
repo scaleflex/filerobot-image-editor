@@ -51,7 +51,7 @@ class ImageEditorWrapper extends Component {
 
   render() {
     const { isVisible, src, config } = this.state;
-    const { onComplete, showGoBackBtn, closeOnLoad, showInModal = true } = this.props;
+    const { onComplete = () => {}, showGoBackBtn, closeOnLoad, showInModal = true } = this.props;
     const colors = colorSchemes['default'];
 
     if (!src || !isVisible) return null;
