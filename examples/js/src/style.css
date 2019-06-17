@@ -551,3 +551,8 @@ footer .footer-menu ul li {
     padding: 20px 10px;
   }
 }
+
+.btn-hollow {
+  background: transparent;
+  color: #007bff;
+}
