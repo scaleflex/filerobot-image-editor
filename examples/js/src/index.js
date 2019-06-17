@@ -21,6 +21,11 @@ const modalBtns = document.querySelectorAll('[data-dismiss="modal"]');
 const imagesDemo = document.getElementById('demo-images');
 const copyTooltip = document.getElementById("copy-tooltip");
 const copyTooltipBtn = document.getElementById("copy-tooltip-btn");
+const subscribeBtn = document.getElementById('subscribe');
+const responseMessage = document.getElementById('success-message');
+
+const successText = 'Your request has been sent! Our team will contact you shortly.';
+const errorText = 'Error. Something went wrong. :( Pls, try again.';
 
 jsBtn.onclick = function() {
   if (jsBtn.className.indexOf('btn-primary') === -1) {
@@ -73,6 +78,19 @@ imagesDemo.addEventListener('click', (event) => {
 copyTooltipBtn.addEventListener('click', handleCopyToClipboard);
 copyTooltipBtn.addEventListener('mouseleave', handleMouseLeaveOnCopyTooltip);
 
+subscribeBtn.addEventListener('click', (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+
+  const emailInput = document.getElementById('subscribe-email');
+
+  if (emailInput.value) {
+    subscribe(emailInput.value);
+  }
+
+  return false;
+})
+
 function onMouseEnter() {
   robotIcon.src = 'https://scaleflex.cloudimg.io/width/500/q60.foil1/https://scaleflex.airstore.io/filerobot/assets/robot-with-smile-left.png';
 }
@@ -89,30 +107,31 @@ function clearActiveImages() {
   });
 }
 
-//function subscribe(email) {
-//  const request = new XMLHttpRequest();
-//
-//  request.open("POST", `https://us16.api.mailchimp.com/3.0/lists/a0d8ee3b8e/members`);
-//
-//  //request.addEventListener("load", this.onFileLoad);
-//  //request.setRequestHeader('Cookie', `_AVESTA_ENVIRONMENT=prod;`);
-// // request.setRequestHeader('Cookie', `_mcid=1.0f827344203a539e89ba7954bfd6b6c0`);
-//  request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-//  request.setRequestHeader("Authorization", "Basic " + btoa('emil:bbab7b0738bb2684f0682a30eac8de07-us16'));
-//  request.send(JSON.stringify({
-//    status: 'subscribed',
-//    email_address: email,
-//    tags: [
-//      "github-image-editor"
-//    ],
-//    merge_fields: {
-//      FNAME: 'Dima',
-//      LNAME: 'Stremous'
-//    }
-//  }));
-//}
-//
-//subscribe('booom@mail.ru')
+function subscribe(email) {
+  const request = new XMLHttpRequest();
+
+  responseMessage.style.display = 'block';
+  responseMessage.innerText = 'Sending...';
+
+  request.open("GET", `https://api.scaleflex.cloud/scaleflex/public/register?email=${email}`);
+  request.send();
+
+  request.onreadystatechange = function() {
+    if (request.readyState === 4) {
+      const emailInput = document.getElementById('subscribe-email');
+      const response = JSON.parse(request.responseText);
+
+      if (request.status === 200 && response.status === 'done') {
+        console.log('successful');
+        responseMessage.innerText = successText;
+        emailInput.value = '';
+      } else {
+        responseMessage.innerText = errorText;
+        emailInput.value = '';
+      }
+    }
+  }
+}
 
 function handleCopyToClipboard() {
   const copyText = document.getElementById("copy-text");

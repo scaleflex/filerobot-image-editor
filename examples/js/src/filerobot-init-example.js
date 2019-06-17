@@ -6,6 +6,7 @@ const buttonEditUpload = document.getElementById('edit-btn-upload');
 const buttonEditModify = document.getElementById('edit-btn-modify');
 const resultModal = document.getElementById('result-modal');
 const resultLink = document.getElementById('result-link');
+const responseMessage = document.getElementById('success-message');
 
 
 let ImageEditorDownload, ImageEditorUpload, ImageEditorModify;
@@ -32,6 +33,8 @@ const onCompleteUpload = function(newUrl) {
   const resultImage = document.getElementById('result-image');
   const url = newUrl.replace('https://fpdlhfjm.airstore.io/', 'https://store.filerobot.com/fpdlhfjm/');
 
+  responseMessage.style.display = 'none';
+  responseMessage.innerText = '';
   copyText.value = url;
   resultImage.src = url;
   resultLink.innerText = url;
@@ -53,6 +56,8 @@ const onCompleteModify = function(newUrl) {
   const copyText = document.getElementById("copy-text");
   const resultImage = document.getElementById('result-image');
 
+  responseMessage.style.display = 'none';
+  responseMessage.innerText = '';
   copyText.value = newUrl;
   resultImage.src = newUrl;
   resultLink.innerText = newUrl;

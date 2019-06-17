@@ -280,7 +280,7 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
           Include the following script into your project
         </p>
         <figure class="highlight">
-          <pre><code class="javascript">&lt;script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/1/filerobot-image-editor.min.js"/&gt;&lt;/script&gt;</code></pre>
+          <pre><code class="javascript">&lt;script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/2/filerobot-image-editor.min.js"/&gt;&lt;/script&gt;</code></pre>
         </figure>
       </div>
 
@@ -412,85 +412,20 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
           <form>
             <div class="form-row">
               <div class="input-wrapper col-auto">
-                <input type="text" style="width: 100%;" class="form-control" id="inlineFormInput" placeholder="enter your email">
+                <input type="text" style="width: 100%;" class="form-control" id="subscribe-email" placeholder="enter your email">
               </div>
               <div class="col-auto">
-                <button class="btn btn-primary mb-2">Subscribe</button>
+                <button id="subscribe" class="btn btn-primary mb-2">Subscribe</button>
               </div>
             </div>
           </form>
+          <p id="success-message" style="display: none;"> </p>
         </div>
 
       </div>
     </div>
   </div>
 </div>
-
-<!--<div class="modal" id="subscribe-modal">-->
-<!--<div class="modal-dialog">-->
-<!--<div class="modal-content">-->
-
-<!--<div class="modal-header">-->
-<!--<h4 class="modal-title">Subscribe</h4>-->
-<!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--</div>-->
-
-<!--<div class="modal-body">-->
-<!--<link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">-->
-<!--<style type="text/css">-->
-<!--#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}-->
-<!--/* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.-->
-<!--We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */-->
-<!--</style>-->
-<!--<style type="text/css">-->
-<!--#mc-embedded-subscribe-form input[type=checkbox]{display: inline; width: auto;margin-right: 10px;}-->
-<!--#mergeRow-gdpr {margin-top: 20px;}-->
-<!--#mergeRow-gdpr fieldset label {font-weight: normal;}-->
-<!--#mc-embedded-subscribe-form .mc_fieldset{border:none;min-height: 0px;padding-bottom:0px;}-->
-<!--</style>-->
-<!--<div id="mc_embed_signup">-->
-<!--<form action="https://cloudimage.us16.list-manage.com/subscribe/post?u=280e686069719977e1535ec94&amp;id=a0d8ee3b8e" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>-->
-<!--<div id="mc_embed_signup_scroll">-->
-<!--<label for="mce-EMAIL">Get more information about Filerobot Digital Asset Management</label>-->
-<!--<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>-->
-<!--&lt;!&ndash; real people should not fill this in and expect good things - do not remove this or risk form bot signups&ndash;&gt;-->
-<!--<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_280e686069719977e1535ec94_a0d8ee3b8e" tabindex="-1" value=""></div>-->
-<!--<div class="clear"><input type="submit" value="Submit" name="subscribe" id="mc-embedded-subscribe" class="btn btn-success"></div>-->
-<!--</div>-->
-<!--</form>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!-- Begin Mailchimp Signup Form -->
-<!--<link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">-->
-<!--<style type="text/css">-->
-<!--#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}-->
-<!--/* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.-->
-<!--We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */-->
-<!--</style>-->
-<!--<style type="text/css">-->
-<!--#mc-embedded-subscribe-form input[type=checkbox]{display: inline; width: auto;margin-right: 10px;}-->
-<!--#mergeRow-gdpr {margin-top: 20px;}-->
-<!--#mergeRow-gdpr fieldset label {font-weight: normal;}-->
-<!--#mc-embedded-subscribe-form .mc_fieldset{border:none;min-height: 0px;padding-bottom:0px;}-->
-<!--</style>-->
-<!--<div id="mc_embed_signup">-->
-<!--<form action="https://cloudimage.us16.list-manage.com/subscribe/post?u=280e686069719977e1535ec94&amp;id=a0d8ee3b8e" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>-->
-<!--<div id="mc_embed_signup_scroll">-->
-<!--<label for="mce-EMAIL">Get more information about Filerobot Digital Asset Management</label>-->
-<!--<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>-->
-<!--&lt;!&ndash; real people should not fill this in and expect good things - do not remove this or risk form bot signups&ndash;&gt;-->
-<!--<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_280e686069719977e1535ec94_a0d8ee3b8e" tabindex="-1" value=""></div>-->
-<!--<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>-->
-<!--</div>-->
-<!--</form>-->
-<!--</div>-->
-
-<!--End mc_embed_signup-->
 
 <script src="https://cdn.scaleflex.it/plugins/filerobot-uploader/2/filerobot-uploader.min.js"></script>
 <script>
