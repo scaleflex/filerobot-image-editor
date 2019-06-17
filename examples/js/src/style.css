@@ -358,7 +358,7 @@ footer .footer-menu ul li {
 }
 
 .demo-images img.active {
-  outline: 5px solid #222222ba;
+  outline: 5px solid #222222;
 }
 
 .demo-images .col-md-3 {
@@ -500,18 +500,53 @@ footer .footer-menu ul li {
   background-color: #a1a1a1;
   padding: 40px 10px;
   text-align: center;
+  min-height: 140px;
 }
 
 .uploader-container .uploader-icon {
   background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMS4wLjIsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAxNDggMTE0LjUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDE0OCAxMTQuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2ZpbGw6I0ExQTFBMTt9DQoJLnN0MXtmaWxsOiNENEQxRDE7fQ0KPC9zdHlsZT4NCjxnPg0KCTxnPg0KCQk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTMyLjksMTAwLjhIMTYuNmMtMS4yLDAtMi4yLTEtMi4yLTIuMnYtODNjMC0xLjIsMS0yLjIsMi4yLTIuMmgxMTYuM2MxLjIsMCwyLjIsMSwyLjIsMi4ydjgzDQoJCQlDMTM1LjIsOTkuOCwxMzQuMiwxMDAuOCwxMzIuOSwxMDAuOHoiLz4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTEzNC40LDQuNUgxNS4yQzEwLDQuNSw1LjgsOC44LDUuOCwxNHY4Ni42YzAsNS4yLDQuMiw5LjQsOS40LDkuNGgxMTkuMmM1LjIsMCw5LjQtNC4yLDkuNC05LjRWMTQNCgkJCUMxNDMuOCw4LjgsMTM5LjYsNC41LDEzNC40LDQuNXogTTEyLjcsMTRjMC0xLjQsMS4xLTIuNSwyLjUtMi41aDExOS4yYzEuNCwwLDIuNSwxLjEsMi41LDIuNXY4Ni42YzAsMS40LTEuMSwyLjUtMi41LDIuNUgxNS4yDQoJCQljLTEuNCwwLTIuNS0xLjEtMi41LTIuNVYxNHoiLz4NCgkJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSI4OS4yLDQ2IDY3LjIsNzMuNCA1OC43LDgzLjkgNDUuMiw3My40IDE2LjQsMTAwLjggNDUuMSwxMDAuOCA0NS4yLDEwMC44IDc0LDEwMC44IDg5LjIsMTAwLjggDQoJCQkxMzMuMiwxMDAuOCAxMTEuMiw3My40IAkJIi8+DQoJPC9nPg0KPC9nPg0KPC9zdmc+DQo=");
-  height: 80px;
+  height: 100%;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: contain;
   display: block;
-  margin: 0 auto 10px auto;
+}
+
+.demo-images .btn {
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  left: 50%;
+  margin-left: -70px;
+}
+
+.demo-images div:last-child:hover .btn {
+  visibility: visible;
 }
 
 .btn {
   cursor: pointer;
+}
+
+.thin-title {
+  font-weight: 300;
+}
+
+.custom-image {
+  background-position: 50% 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #a1a1a1;
+  height: calc(100% - 10px);
+}
+
+.custom-image.active {
+  outline: 5px solid #222222;
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .uploader-container {
+    padding: 20px 10px;
+  }
 }

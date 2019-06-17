@@ -69,8 +69,8 @@ robotIcon.onmouseleave = onMouseLeave;
 imagesDemo.addEventListener('click', (event) => {
   clearActiveImages();
 
-  if (event.target.tagName === 'IMG') {
-    event.target.className = 'active';
+  if (event.target.classList.contains('demo-img')) {
+    event.target.classList.add('active');
   }
 
 });
@@ -100,10 +100,10 @@ function onMouseLeave() {
 }
 
 function clearActiveImages() {
-  const images = imagesDemo.querySelectorAll('img');
+  const images = imagesDemo.querySelectorAll('.demo-img');
 
   images.forEach(img => {
-    img.className = '';
+    img.classList.remove('active');
   });
 }
 

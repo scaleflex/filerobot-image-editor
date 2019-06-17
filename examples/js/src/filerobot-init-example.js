@@ -69,25 +69,41 @@ ImageEditorModify = new FilerobotImageEditor(configModify, onCompleteModify);
 
 
 function initImageEditorDownload() {
-  const image = document.querySelector('img.active');
-
-  ImageEditorDownload.open(image.src.slice(image.src.lastIndexOf('http')));
+  const image = document.querySelector('.demo-img.active');
+  if (image.tagName === 'DIV') {
+    const url = image.style.backgroundImage.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+    ImageEditorDownload.open(url);
+  } else if (image.tagName === 'IMG') {
+    ImageEditorDownload.open(image.src.slice(image.src.lastIndexOf('http')));
+  }
 }
 
 function initImageEditorUpload() {
-  const image = document.querySelector('img.active');
+  const image = document.querySelector('.demo-img.active');
   const resultImage = document.getElementById('result-image');
 
   resultImage.src = '';
-  ImageEditorUpload.open(image.src.slice(image.src.lastIndexOf('http')));
+
+  if (image.tagName === 'DIV') {
+    const url = image.style.backgroundImage.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+    ImageEditorDownload.open(url);
+  } else if (image.tagName === 'IMG') {
+    ImageEditorDownload.open(image.src.slice(image.src.lastIndexOf('http')));
+  }
 }
 
 function initImageEditorModify() {
-  const image = document.querySelector('img.active');
+  const image = document.querySelector('.demo-img.active');
   const resultImage = document.getElementById('result-image');
 
   resultImage.src = '';
-  ImageEditorModify.open(image.src.slice(image.src.lastIndexOf('http')));
+
+  if (image.tagName === 'DIV') {
+    const url = image.style.backgroundImage.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+    ImageEditorDownload.open(url);
+  } else if (image.tagName === 'IMG') {
+    ImageEditorDownload.open(image.src.slice(image.src.lastIndexOf('http')));
+  }
 }
 
 buttonEditDownload.onclick = initImageEditorDownload;

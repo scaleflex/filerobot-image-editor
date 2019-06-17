@@ -99,40 +99,40 @@
   </section>
 
   <section class="ready-to-start features demo-section">
-    <div class="container">
-      <h4>Select one of the images or upload your's and:</h4>
+    <div class="container" style="text-align: center">
+      <h4 class="thin-title">Select one of the images or upload your's and:</h4>
 
       <div id="demo-images" class="row demo-images">
         <div class="col-md-4">
-          <img class="active"
+          <img class="demo-img active"
                src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
                alt="stephen-walker-unsplash">
         </div>
         <div class="col-md-4">
-          <img
+          <img class="demo-img"
              src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/spencer-davis-unsplash.jpg"
              alt="spencer-davis-unsplash">
         </div>
         <div class="col-md-4">
-          <img
+          <img class="demo-img"
              src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/rafael-saes-unsplash.jpg"
              alt="rafael-saes-unsplash">
         </div>
         <div class="col-md-4">
-          <img
+          <img class="demo-img"
              src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/pietro-de-grandi-unsplash.jpg"
              alt="pietro-de-grandi-unsplash">
         </div>
         <div class="col-md-4">
-          <img
+          <img class="demo-img"
              src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/pedro-lastra-unsplash.jpg"
              alt="pedro-lastra-unsplash">
         </div>
-        <div class="col-md-4" onclick="uploader.open()">
+        <div class="col-md-4">
           <div class="uploader-container">
             <div class="uploader-icon"></div>
-            <button class="btn btn-dark btn-lg">Upload image</button>
           </div>
+          <button class="btn btn-dark btn-lg" onclick="uploader.open()">Upload image</button>
         </div>
         <!--<div class="col-md-3">-->
         <!--<img src="https://scaleflex.airstore.io/demo/austin-distel-unsplash.jpg" alt="austin-distel-unsplash">-->
@@ -156,7 +156,7 @@
 
   <section>
     <div class="container" style="text-align: center">
-      <h2>Select one of the options:</h2>
+      <h4 class="thin-title">Select one of the options:</h4>
 
       <div class="docs-wrapper">
         <div class="docs-container">
@@ -442,15 +442,13 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
   
   function addNewImg(files) {
     const demoImages = document.getElementById("demo-images");
-    const uploaderResultImg = document.createElement('img');
-    uploaderResultImg.setAttribute('src', files[0].url_permalink);
-    uploaderResultImg.setAttribute('alt', files[0].name);
-    uploaderResultImg.classList.add('active');
-    const lastDemoImage = demoImages.children[demoImages.children.length-1];
-    while (lastDemoImage.firstChild) {
-      lastDemoImage.removeChild(lastDemoImage.firstChild);
-    }
-    lastDemoImage.appendChild(uploaderResultImg);
+    const uploaderResultImg = document.createElement('div');
+    uploaderResultImg.style.backgroundImage = 'url("' + files[0].url_permalink + '")';
+    uploaderResultImg.classList.add('custom-image', 'demo-img', 'active');
+    const lastDemoItem = demoImages.children[demoImages.children.length-1];
+    const customDemoImg = lastDemoItem.querySelector('.custom-image');
+    if (customDemoImg) customDemoImg.remove();
+    lastDemoItem.appendChild(uploaderResultImg);
     uploader.close();
     const  uploaderContainer = document.querySelector('.uploader-container');
     uploaderContainer.style.display = 'none';
