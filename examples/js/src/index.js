@@ -67,9 +67,9 @@ robotIcon.onmouseenter = onMouseEnter;
 robotIcon.onmouseleave = onMouseLeave;
 
 imagesDemo.addEventListener('click', (event) => {
-  clearActiveImages();
-
   if (event.target.classList.contains('demo-img')) {
+    clearActiveImages();
+
     event.target.classList.add('active');
   }
 
