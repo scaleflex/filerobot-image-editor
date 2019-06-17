@@ -58,3 +58,6 @@ Filerobot Container name.
 #### `onComplete(url: string, file: object)`: function (required)
 
 Callback, triggers on complete processing image.
+
+***
+[Go back to Image Editor](https://github.com/scaleflex/filerobot-image-editor)
