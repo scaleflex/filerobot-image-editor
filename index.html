@@ -58,11 +58,10 @@
       <h1>Edit, resize, and filter any images!</h1>
       <h2>The Filerobot Image Editor is the easiest way to integrate an easy-to-use image editor in your web
         application. Integrated with few lines of code, your users will be able to apply basic transformations like
-        resize, crop, rotate and various filters to any image. Once edited, the Image Editor will return an URL to the
-        resulting image and deliver it rocket fast over CDN all around the World.</h2>
+        resize, crop, rotate and various filters to any image.</h2>
 
       <div class="actions-wrapper">
-        <button id="edit-btn" class="btn btn-light btn-lg">Edit image <span class="arrow"></span></button>
+        <!--<button id="edit-btn" class="btn btn-light btn-lg">Edit image <span class="arrow"></span></button>-->
         <a
            id="view-github-btn"
            href="https://github.com/scaleflex/filerobot-image-editor"
@@ -90,13 +89,6 @@
     </a>
   </section>
 
-  <section class="image-wrapper">
-    <img
-       id="image"
-       src="https://scaleflex.ultrafast.io/https://scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg"
-    />
-  </section>
-
   <section class="ready-to-start features">
     <div class="container">
       <h2>Your image editor will look great everywhere</h2>
@@ -106,13 +98,98 @@
     </div>
   </section>
 
+  <section class="ready-to-start features demo-section">
+    <div class="container" style="text-align: center">
+      <h4 class="thin-title">Select one of the images or upload your's and:</h4>
+
+      <div id="demo-images" class="row demo-images">
+        <div class="col-md-4">
+          <img class="demo-img active"
+               src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+               alt="stephen-walker-unsplash">
+        </div>
+        <div class="col-md-4">
+          <img class="demo-img"
+             src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/spencer-davis-unsplash.jpg"
+             alt="spencer-davis-unsplash">
+        </div>
+        <div class="col-md-4">
+          <img class="demo-img"
+             src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/rafael-saes-unsplash.jpg"
+             alt="rafael-saes-unsplash">
+        </div>
+        <div class="col-md-4">
+          <img class="demo-img"
+             src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/pietro-de-grandi-unsplash.jpg"
+             alt="pietro-de-grandi-unsplash">
+        </div>
+        <div class="col-md-4">
+          <img class="demo-img"
+             src="https://scaleflex.cloudimg.io/width/800/q60.foil1/https://scaleflex.airstore.io/demo/pedro-lastra-unsplash.jpg"
+             alt="pedro-lastra-unsplash">
+        </div>
+        <div class="col-md-4">
+          <div class="uploader-container">
+            <div class="uploader-icon"></div>
+          </div>
+          <button class="btn btn-dark btn-lg" onclick="uploader.open()">Upload image</button>
+        </div>
+        <!--<div class="col-md-3">-->
+        <!--<img src="https://scaleflex.airstore.io/demo/austin-distel-unsplash.jpg" alt="austin-distel-unsplash">-->
+        <!--</div>-->
+        <!--<div class="col-md-3">-->
+        <!--<img src="https://scaleflex.airstore.io/demo/andreas-dress-unsplash.jpg" alt="andreas-dress-unsplash">-->
+        <!--</div>-->
+      </div>
+
+      <!--<button class="btn btn-light">upload your image</button>-->
+    </div>
+  </section>
+
+
+  <!--<section class="image-wrapper">-->
+  <!--<img-->
+  <!--id="image"-->
+  <!--src="https://scaleflex.ultrafast.io/https://scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg"-->
+  <!--/>-->
+  <!--</section>-->
+
+  <section>
+    <div class="container" style="text-align: center">
+      <h4 class="thin-title">Select one of the options:</h4>
+
+      <div class="docs-wrapper">
+        <div class="docs-container">
+          <div class="docs-group">
+            <h2>Download</h2>
+            <p>Edit the image in the Image Editor and download the result.</p>
+            <button id="edit-btn-download" class="btn btn-primary btn-lg">Edit & Download</button>
+          </div>
+          <div class="docs-group">
+            <h2>Upload (requires Filerobot account)</h2>
+            <p>Upload the image in your Filerobot storage container, edit it in the Image Editor and upload the result. Deliver lightning fast over CDN.</p>
+            <button id="edit-btn-upload" class="btn btn-primary btn-lg">Edit & Upload</button>
+          </div>
+          <div class="docs-group">
+            <h2>Modify (requires Cloudimage account)</h2>
+            <p>Point the Image Editor to your origin image URL, edit it and deliver the result lightning fast over the Cloudimage image CDN. Limited to the Cloudimage inline transformation features.</p>
+            <button id="edit-btn-modify" class="btn btn-primary btn-lg">Edit & Modify</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="container ready-to-start">
     <h2>Ready to get started?</h2>
-    <p>To use the plugin, you will need a Filerobot token. Don't worry, it only takes seconds to get one by registering
-      <a
-         href="https://www.filerobot.com/en/registration_temp">here</a>. Once your token is created, you can configure
-      it as described below.
-      This token allows you to use 25GB of image cache and 25GB of worldwide CDN traffic per month for free.</p>
+    <p>In the implementation example below you can <strong>edit</strong> the image in the Image Editor and <strong>download</strong> the result.
+      Check out the integration guides with <a title="integration of Filerobot to Image Editor" href="">Filerobot</a>
+      and <a title="integration of Cloudimage to Image Editor" href="">Cloudimage</a></p>
+    <!--<p>To use the plugin, you will need a Filerobot token. Don't worry, it only takes seconds to get one by registering-->
+      <!--<a-->
+         <!--href="https://www.filerobot.com/en/registration_temp">here</a>. Once your token is created, you can configure-->
+      <!--it as described below.-->
+      <!--This token allows you to use 25GB of image cache and 25GB of worldwide CDN traffic per month for free.</p>-->
   </section>
 
   <section class="container">
@@ -143,27 +220,18 @@ import { render } from 'react-dom';
 import FilerobotImageEditor from 'filerobot-image-editor';
 
 
-const config = {
-  filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
-  filerobotContainer: 'scaleflex-tests-v5a',
-};
-
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
       isShow: false,
-      imgSrc: '//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg'
+      imgSrc: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg'
     }
   }
 
   showImageEditor = () => {
     this.setState({ isShow: true });
-  }
-
-  onComplete = (newUrl) => {
-    this.setState({ imgSrc: newUrl });
   }
 
   onClose = () => {
@@ -177,13 +245,11 @@ class App extends Component {
       &lt;div>
         &lt;h1>Filerobot Image Editor&lt;/h1>
 
-          &lt;img src={imgSrc} onClick={this.showImageEditor} alt="example image"/>
+        &lt;img src={imgSrc} onClick={this.showImageEditor} alt="example image"/>
 
         &lt;FilerobotImageEditor
            show={isShow}
            src={imgSrc}
-           config={config}
-           onComplete={this.onComplete}
            onClose={this.onClose}
         />
       &lt;/div>
@@ -214,7 +280,7 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
           Include the following script into your project
         </p>
         <figure class="highlight">
-          <pre><code class="javascript">&lt;script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/1/filerobot-image-editor.min.js"/&gt;&lt;/script&gt;</code></pre>
+          <pre><code class="javascript">&lt;script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/2/filerobot-image-editor.min.js"/&gt;&lt;/script&gt;</code></pre>
         </figure>
       </div>
 
@@ -224,21 +290,10 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
         </p>
         <figure class="highlight">
         <pre><code class="javascript">&lt;script/&gt;
-  const config = {
-    filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
-    filerobotContainer: 'scaleflex-tests-v5a'
-  };
 
-  const onComplete = function(url) {
-    // do something with new url
-  }
-
-  FilerobotImageEditor.init(config, onComplete);
-&lt;/script&gt;</code></pre>
+  const ImageEditor = new FilerobotImageEditor();
+...</code></pre>
         </figure>
-        <p>
-          Get your Filerobot tokens <a href="https://www.filerobot.com/en/registration_temp">here</a>.
-        </p>
       </div>
 
       <div class="action-wrapper third-action">
@@ -246,8 +301,8 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
           Open Filerobot Image Editor passing the image url which should be edited
         </p>
         <figure class="highlight">
-        <pre><code class="javascript">&lt;script/&gt;
-  FilerobotImageEditor.open('https://scaleflex.ultrafast.io/https://scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg');
+        <pre><code class="javascript">...
+  ImageEditor.open('https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg');
 &lt;/script&gt;</code></pre>
         </figure>
       </div>
@@ -286,11 +341,15 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
           </div>
           <div class="col-sm-9 filerobot-ui-family-libs" style="max-width: calc(100% - 200px);">
             <ul>
-              <li><a target="_blank" href="https://github.com/scaleflex/js-cloudimage-responsive">JS Cloudimage Responsive</a></li>
-              <li><a target="_blank" href="https://github.com/scaleflex/react-cloudimage-responsive">React Cloudimage Responsive</a></li>
-              <li><a target="_blank" href="https://github.com/scaleflex/ng-cloudimage-responsive">Angular Cloudimage Responsive</a></li>
-              <li><a target="_blank" href="https://github.com/scaleflex/js-cloudimage-360-view">JS Cloudimage 360 view</a></li>
-              <li><a target="_blank" href="https://github.com/scaleflex/filerobot-uploader">Uploader</a></li>
+              <li><a target="_blank" href="https://github.com/scaleflex/js-cloudimage-responsive">JS Cloudimage
+                Responsive</a></li>
+              <li><a target="_blank" href="https://github.com/scaleflex/react-cloudimage-responsive">React Cloudimage
+                Responsive</a></li>
+              <li><a target="_blank" href="https://github.com/scaleflex/ng-cloudimage-responsive">Angular Cloudimage
+                Responsive</a></li>
+              <li><a target="_blank" href="https://github.com/scaleflex/js-cloudimage-360-view">JS Cloudimage 360
+                view</a></li>
+              <li><a target="_blank" href="https://github.com/scaleflex/filerobot-uploader">Filerobot Uploader</a></li>
             </ul>
           </div>
         </div>
@@ -333,16 +392,34 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
         </div>
 
         <div class="modal-body">
-          <figure class="highlight">
-            <pre><code id="result-link" class="javascript"></code></pre>
-          </figure>
+          <div class="result-code-wrapper">
+            <figure class="highlight">
+              <pre><code id="result-link" class="javascript"></code></pre>
+            </figure>
+            <input type="text" id="copy-text" title="" class="hidden-input">
+            <button id="copy-tooltip-btn" class="tooltip-copy copy-to-clipboard btn btn-light">
+              <span class="tooltiptext" id="copy-tooltip">Copy to clipboard</span>
+              <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjU2MXB4IiBoZWlnaHQ9IjU2MXB4IiB2aWV3Qm94PSIwIDAgNTYxIDU2MSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTYxIDU2MTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPGcgaWQ9ImNvbnRlbnQtY29weSI+DQoJCTxwYXRoIGQ9Ik0zOTUuMjUsMGgtMzA2Yy0yOC4wNSwwLTUxLDIyLjk1LTUxLDUxdjM1N2g1MVY1MWgzMDZWMHogTTQ3MS43NSwxMDJoLTI4MC41Yy0yOC4wNSwwLTUxLDIyLjk1LTUxLDUxdjM1Nw0KCQkJYzAsMjguMDUsMjIuOTUsNTEsNTEsNTFoMjgwLjVjMjguMDUsMCw1MS0yMi45NSw1MS01MVYxNTNDNTIyLjc1LDEyNC45NSw0OTkuOCwxMDIsNDcxLjc1LDEwMnogTTQ3MS43NSw1MTBoLTI4MC41VjE1M2gyODAuNVY1MTANCgkJCXoiLz4NCgk8L2c+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg=="/>
+            </button>
+          </div>
           <div class="image-wrapper">
             <img id="result-image" src="" alt="result image after editing" class="result-image">
           </div>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <p>Enter your email to get in touch with our team and learn more about Filerobot</p>
+          <form>
+            <div class="form-row">
+              <div class="input-wrapper col-auto">
+                <input type="text" style="width: 100%;" class="form-control" id="subscribe-email" placeholder="enter your email">
+              </div>
+              <div class="col-auto">
+                <button id="subscribe" class="btn btn-primary mb-2">Subscribe</button>
+              </div>
+            </div>
+          </form>
+          <p id="success-message" style="display: none;"> </p>
         </div>
 
       </div>
@@ -350,6 +427,36 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
   </div>
 </div>
 
-
-<script type="text/javascript" src="filerobot-image-editor.main.d2613510b742a1b82c42.js"></script></body>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-uploader/2/filerobot-uploader.min.js"></script>
+<script>
+  const config = {
+    container: 'fpdlhfjm',
+    filerobotUploadKey: 'bf72d18393ea40d5b4fccd9fb83806fa',
+    dir: '/Github-Image-Editor',
+    modules: ['UPLOAD', 'IMAGES_GALLERY']
+  };
+  const onUpload = (files) => {
+    addNewImg(files)
+  };
+  const uploader = FilerobotUploader.init(config, onUpload);
+  
+  function addNewImg(files) {
+    const demoImages = document.getElementById("demo-images");
+    const images = demoImages.querySelectorAll('.demo-img');
+    images.forEach(img => {
+      img.classList.remove('active');
+    });
+    const uploaderResultImg = document.createElement('div');
+    uploaderResultImg.style.backgroundImage = 'url("' + files[0].url_permalink + '")';
+    uploaderResultImg.classList.add('custom-image', 'demo-img', 'active');
+    const lastDemoItem = demoImages.children[demoImages.children.length-1];
+    const customDemoImg = lastDemoItem.querySelector('.custom-image');
+    if (customDemoImg) customDemoImg.remove();
+    lastDemoItem.appendChild(uploaderResultImg);
+    uploader.close();
+    const  uploaderContainer = document.querySelector('.uploader-container');
+    uploaderContainer.style.display = 'none';
+  }
+</script>
+<script type="text/javascript" src="filerobot-image-editor.main.fb10afe4c1adc839b200.js"></script></body>
 </html>
