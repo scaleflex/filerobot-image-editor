@@ -1,6 +1,6 @@
 > Repository includes React version and JS wrapper for standalone usage
 
-[![Release](https://img.shields.io/badge/release-v2.0.0-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
+[![Release](https://img.shields.io/badge/release-v2.0.1-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Free plan](https://img.shields.io/badge/price-includes%20free%20plan-green.svg)](https://www.filerobot.com/en/home#2de3fb9f-dd4a-457a-999a-025ad9bd5f3b)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -30,7 +30,7 @@
 </p>
 
 <p align="center">
-   The Filerobot Image Editor is the easiest way to integrate an easy-to-use image editor in your web application. Integrated with few lines of code, your users will be able to apply basic transformations like resize, crop, rotate and various filters to any image. Once edited, the Image Editor will return an URL to the resulting image and deliver it rocket fast over CDN all around the World.
+   The Filerobot Image Editor is the easiest way to integrate an easy-to-use image editor in your web application. Integrated with few lines of code, your users will be able to apply basic transformations like resize, crop, rotate and various filters to any image.
 </p>
 
 <p align="center">
@@ -67,7 +67,7 @@
 Use latest CDNized plugin version
 
 ```html
-<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/2.0.0/filerobot-image-editor.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/2.0.1/filerobot-image-editor.min.js"></script>
 ```
 
 
@@ -193,10 +193,16 @@ Callback, triggers on complete processing image.
 
 ## <a name="filerobot_integration"></a>Filerobot Integration
 
+Upload the image in your Filerobot storage container, edit it in the Image Editor and upload the result.
+Deliver lightning fast over CDN.
+
 The example of Image Editor configuration using Filerobot service can be found
 [here](https://github.com/scaleflex/filerobot-image-editor/tree/master/examples/js-with-filerobot).
 
 ## <a name="cloudimage_integration"></a>Cloudimage Integration
+
+Point the Image Editor to your origin image URL, edit it and deliver the result lightning fast over the Cloudimage image CDN.
+Limited to the Cloudimage inline transformation features.
 
 The example of Image Editor configuration using cloudimage service can be found
 [here](https://github.com/scaleflex/filerobot-image-editor/tree/master/examples/js-with-cloudimage).
