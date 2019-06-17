@@ -9,7 +9,7 @@ export default class extends Component {
   constructor(props) {
     super();
 
-    const { processWithCloudimage, uploadWithCloudimageLink } = props.config;
+    const { processWithCloudimage, processWithFilerobot, uploadWithCloudimageLink } = props.config;
 
     this.state = {
       isShowSpinner: true,
@@ -20,6 +20,7 @@ export default class extends Component {
       original: { width: 300, height: 200 },
       cropDetails: { width: 300, height: 200 },
       canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
+      processWithFilerobot: processWithFilerobot,
       processWithCloudimage: processWithCloudimage,
       uploadCloudimageImage: uploadWithCloudimageLink
     }
@@ -100,6 +101,7 @@ export default class extends Component {
     const { downloadImage } = this.state;
 
     downloadImage();
+    this.props.onClose();
   }
 
   onResize = (params) => {
@@ -136,7 +138,7 @@ export default class extends Component {
   render() {
     const {
       isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original,
-      canvasDimensions, processWithCloudimage, uploadCloudimageImage, imageMime
+      canvasDimensions, processWithCloudimage, processWithFilerobot, uploadCloudimageImage, imageMime
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false } = this.props;
     const headerProps = {
@@ -147,6 +149,7 @@ export default class extends Component {
       onClose,
       canvasDimensions,
       processWithCloudimage,
+      processWithFilerobot,
       operations,
       isShowSpinner,
       showGoBackBtn,

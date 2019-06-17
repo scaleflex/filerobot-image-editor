@@ -26,7 +26,7 @@ const LeftActions = styled.div`
 
 const RightActions = styled.div`
   text-align: center;
-  width: 100px;
+  width: 115px;
   padding: 5px 10px;
 `;
 

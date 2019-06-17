@@ -17,6 +17,7 @@ class ImageEditorWrapper extends Component {
       src,
       config: {
         ...UPLOADER,
+        processWithFilerobot: !!config.filerobotUploadKey && !!config.filerobotContainer,
         processWithCloudimage: !!config.cloudimageToken,
         ...config,
       }

@@ -135,7 +135,6 @@ export default class ImageManipulator extends Component {
       const url = this.generateCloudimageURL(allowedOperations);
       const original = src.replace(/https?:\/\/scaleflex.ultrafast.io\//, '');
       const resultUrl = url + original;
-      const nweImage = new Image();
 
       if (uploadCloudimageImage) {
         const request = new XMLHttpRequest();
@@ -147,13 +146,9 @@ export default class ImageManipulator extends Component {
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify({ files_urls: [resultUrl] }));
       } else {
-        nweImage.onload = () => {
-          updateState({ isShowSpinner: false, isHideCanvas: false });
-          onComplete(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
-          closeOnLoad && onClose();
-        };
-        nweImage.src = url + original;
-        //nweImage.src = url + original + `?hash=${generateUUID()}`;
+        updateState({ isShowSpinner: false, isHideCanvas: false });
+        onComplete(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
+        closeOnLoad && onClose();
       }
     }
   }
@@ -169,20 +164,9 @@ export default class ImageManipulator extends Component {
 
       if (!file.url_public) return;
 
-      const nweImage = new Image();
-      nweImage.onload = () => {
-        updateState({ isShowSpinner: false, isHideCanvas: false });
-        onComplete(nweImage.src, file);
-        closeOnLoad && onClose();
-      };
-      nweImage.onerror = () => {
-        alert('Something went wrong... :(');
-        updateState({ isShowSpinner: false, isHideCanvas: false });
-        closeOnLoad && onClose();
-      }
-
-      nweImage.src = encodePermalink(file.url_public);
-      //nweImage.src = file.url_public + `?hash=${generateUUID()}`;
+      updateState({ isShowSpinner: false, isHideCanvas: false });
+      onComplete(file.url_public, file);
+      closeOnLoad && onClose();
     }
     else {
       updateState({ isShowSpinner: false, isHideCanvas: false });

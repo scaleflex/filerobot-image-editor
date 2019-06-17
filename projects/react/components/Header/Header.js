@@ -7,10 +7,23 @@ import { Toolbar } from '../';
 
 
 export default class extends Component {
+  handleSave = () => {
+    const {  onDownloadImage, processWithFilerobot, processWithCloudimage, onSave } = this.props;
+
+    if (!processWithFilerobot && !processWithCloudimage) {
+      onDownloadImage();
+    } else {
+      onSave();
+    }
+  }
+
   render() {
-    const { activeTab, onRevert, apply, onClose, onSave, showGoBackBtn, operations, onDownloadImage } = this.props;
+    const {
+      activeTab, onRevert, apply, onClose, showGoBackBtn, operations, processWithFilerobot, processWithCloudimage
+    } = this.props;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
     const atLeastOneOperationApplied = !!operations.length;
+    const onFinishButtonLabel = (!processWithFilerobot && !processWithCloudimage) ? 'DOWNLOAD' : 'SAVE';
 
     return (
       <HeaderWrapper>
@@ -36,9 +49,9 @@ export default class extends Component {
               success={!activeTab}
               themeBtn={activeTab}
               fullSize
-              onClick={() => { !activeTab ? onSave() : apply() }}
+              onClick={() => { !activeTab ? this.handleSave() : apply() }}
             >
-              {!activeTab ? 'SAVE' : 'APPLY'}
+              {!activeTab ? onFinishButtonLabel : 'APPLY'}
             </Button>
           </RightActions>
         </ToolbarWrapper>
