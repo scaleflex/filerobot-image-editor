@@ -17,9 +17,10 @@ const resultModal = document.getElementById('result-modal');
 const spinner = document.getElementById('spinner');
 const wrapper = document.getElementById('main');
 const robotIcon = document.getElementById('robot-icon');
-const buttonEdit = document.getElementById('edit-btn');
-const image = document.getElementById('image');
 const modalBtns = document.querySelectorAll('[data-dismiss="modal"]');
+const imagesDemo = document.getElementById('demo-images');
+const copyTooltip = document.getElementById("copy-tooltip");
+const copyTooltipBtn = document.getElementById("copy-tooltip-btn");
 
 jsBtn.onclick = function() {
   if (jsBtn.className.indexOf('btn-primary') === -1) {
@@ -56,20 +57,71 @@ setTimeout(() => {
   spinner.style.display = 'none';
 }, 400);
 
-image.onmouseenter = onMouseEnter;
 robotIcon.onmouseenter = onMouseEnter;
-buttonEdit.onmouseenter = onMouseEnter;
 
-image.onmouseleave = onMouseLeave;
 robotIcon.onmouseleave = onMouseLeave;
-buttonEdit.onmouseleave = onMouseLeave;
+
+imagesDemo.addEventListener('click', (event) => {
+  clearActiveImages();
+
+  if (event.target.tagName === 'IMG') {
+    event.target.className = 'active';
+  }
+
+});
+
+copyTooltipBtn.addEventListener('click', handleCopyToClipboard);
+copyTooltipBtn.addEventListener('mouseleave', handleMouseLeaveOnCopyTooltip);
 
 function onMouseEnter() {
-  robotIcon.src = 'https://demo.cloudimg.io/width/500/q35.foil1/https://scaleflex.airstore.io/filerobot/assets/robot-with-smile-left.png';
+  robotIcon.src = 'https://scaleflex.cloudimg.io/width/500/q35.foil1/https://scaleflex.airstore.io/filerobot/assets/robot-with-smile-left.png';
 }
 
 function onMouseLeave() {
-  robotIcon.src = 'https://demo.cloudimg.io/width/500/q35.foil1/https://scaleflex.airstore.io/filerobot/assets/robot-icon-left.png';
+  robotIcon.src = 'https://scaleflex.cloudimg.io/width/500/q35.foil1/https://scaleflex.airstore.io/filerobot/assets/robot-icon-left.png';
 }
 
+function clearActiveImages() {
+  const images = imagesDemo.querySelectorAll('img');
 
+  images.forEach(img => {
+    img.className = '';
+  });
+}
+
+//function subscribe(email) {
+//  const request = new XMLHttpRequest();
+//
+//  request.open("POST", `https://us16.api.mailchimp.com/3.0/lists/a0d8ee3b8e/members`);
+//
+//  //request.addEventListener("load", this.onFileLoad);
+//  //request.setRequestHeader('Cookie', `_AVESTA_ENVIRONMENT=prod;`);
+// // request.setRequestHeader('Cookie', `_mcid=1.0f827344203a539e89ba7954bfd6b6c0`);
+//  request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+//  request.setRequestHeader("Authorization", "Basic " + btoa('emil:bbab7b0738bb2684f0682a30eac8de07-us16'));
+//  request.send(JSON.stringify({
+//    status: 'subscribed',
+//    email_address: email,
+//    tags: [
+//      "github-image-editor"
+//    ],
+//    merge_fields: {
+//      FNAME: 'Dima',
+//      LNAME: 'Stremous'
+//    }
+//  }));
+//}
+//
+//subscribe('booom@mail.ru')
+
+function handleCopyToClipboard() {
+  const copyText = document.getElementById("copy-text");
+  copyText.select();
+  document.execCommand("copy");
+
+  copyTooltip.innerHTML = "Copied";
+}
+
+function handleMouseLeaveOnCopyTooltip() {
+  copyTooltip.innerHTML = "Copy to clipboard";
+}
