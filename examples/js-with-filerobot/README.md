@@ -17,7 +17,7 @@ cache and 25GB of worldwide CDN traffic per month for free.
 <script>
   const config = {
     filerobot: {
-      token: '******',
+      uploadKey: '******',
       container: '******',
       uploadParams: {
         dir: '/'
@@ -39,7 +39,7 @@ cache and 25GB of worldwide CDN traffic per month for free.
 
 #### `filerobot`: object (required)
 
-#### `filerobot.token`: string (required)
+#### `filerobot.uploadKey`: string (required)
 
 Unique upload key for Filerobot.
 [Subscribe](https://www.filerobot.com/en/registration_temp) for a
