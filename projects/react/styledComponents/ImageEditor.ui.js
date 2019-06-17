@@ -253,6 +253,20 @@ const Wrapper = styled.div`
     opacity: .90;
     width: 20px;
     border-radius: 50%;
+    
+    &:before {
+      content: '';
+      display: table;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: black;
+      opacity: 0.8;
+      z-index: 11;
+      position: absolute;
+      top: calc(50% - 4px);
+      left: calc(50% - 4px);
+    }
   }
   
   .cropper-point.point-e {
