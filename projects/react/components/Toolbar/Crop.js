@@ -3,7 +3,6 @@ import {
   CropWrapper, CustomLabel, FieldSet, FieldLabel, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon,
   CropBox, CropBoxInner, CropShape, CropLabel
 } from '../../styledComponents';
-import smartcrop from 'smartcrop';
 
 
 const BOXES = [
@@ -70,34 +69,7 @@ export default class extends Component {
 
     value = box.name === 'original' ? width / height : box.value;
     window.scaleflexPlugins.cropperjs.setAspectRatio(value);
-    this.autoCrop(value);
     this.setState({ activeRatio: box.name, aspectRatio: value });
-  }
-
-  autoCrop = (value) => {
-    const img = new Image();
-    img.crossOrigin = '';
-
-    img.onload = () => {
-      smartcrop.crop(
-        img,
-        { height: 10 / value, width: 10, minScale: 0.82 }
-      ).then((result = {}) => {
-        const { topCrop: { height, width, x, y } = {} } = result;
-        const canvas = this.getCanvasNode();
-        const rect = canvas.getBoundingClientRect();
-        const zoom = img.width / rect.width;
-
-        window.scaleflexPlugins.cropperjs.setCropBoxData({
-          height: height / zoom,
-          width: width / zoom,
-          left: x / zoom,
-          top: y / zoom
-        });
-      });
-    }
-
-    img.src = this.props.src;
   }
 
   render() {
