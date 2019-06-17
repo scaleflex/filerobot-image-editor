@@ -123,49 +123,30 @@ $ npm install --save filerobot-image-editor
 We provide easy way to integrate image editor in your applications
 
 ```javascript
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { render } from 'react-dom';
 import FilerobotImageEditor from 'filerobot-image-editor';
 
 
-class App extends Component {
-  constructor() {
-    super();
+const App = () => {
+  const src = 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg';
+  const [show, toggle] = useState(false);
 
-    this.state = {
-      isShow: false,
-      imgSrc: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg'
-    }
-  }
 
-  showImageEditor = () => {
-    this.setState({ isShow: true });
-  }
+  return (
+    <div>
+      <h1>Filerobot Image Editor</h1>
 
-  onClose = () => {
-    this.setState({ isShow: false });
-  }
+      <img src={src} onClick={() => { toggle(true) }} alt="example image"/>
 
-  render() {
-    const { imgSrc, isShow } = this.state;
-
-    return (
-      <div>
-        <h1>Filerobot Image Editor</h1>
-
-        <img src={imgSrc} onClick={this.showImageEditor} alt="example image"/>
-
-        <FilerobotImageEditor
-           show={isShow}
-           src={imgSrc}
-           config={{}}
-           onComplete={() => {}}
-           onClose={this.onClose}
-        />
-      </div>
-    )
-  }
-}
+      <FilerobotImageEditor
+        show={show}
+        src={src}
+        onClose={() => { toggle(false) }}
+      />
+    </div>
+  )
+};
 
 render(<App/>, document.getElementById('app'));
 ```
