@@ -34,18 +34,19 @@ function initImageEditorUpload() {
   if (FilerobotImageEditor.unmount) FilerobotImageEditor.unmount();
 
   FilerobotImageEditor.init({
-    filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
-    filerobotContainer: 'scaleflex-tests-v5a',
-    hideCloudimageSwitcher: false,
-    processWithCloudimage: false,
-    cloudimageToken: 'demo'
+    filerobotUploadKey: 'bf72d18393ea40d5b4fccd9fb83806fa',
+    filerobotContainer: 'fpdlhfjm',
+    uploadParams: {
+      dir: '/Github-Image-Editor'
+    }
   }, function(newUrl) {
     const copyText = document.getElementById("copy-text");
     const resultImage = document.getElementById('result-image');
+    const url = newUrl.replace('https://fpdlhfjm.airstore.io/', 'https://store.filerobot.com/fpdlhfjm/');
 
-    copyText.value = newUrl;
-    resultImage.src = newUrl;
-    resultLink.innerText = newUrl;
+    copyText.value = url;
+    resultImage.src = url;
+    resultLink.innerText = url;
     resultModal.style.display = 'block';
 
     FilerobotImageEditor.close();
