@@ -126,7 +126,7 @@ export default class ImageManipulator extends Component {
           request.addEventListener("load", self.onFileLoad);
           formData.append('files[]', blob, name);
           request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
-          request.setRequestHeader('X-Airstore-Secret-Key', filerobot.token);
+          request.setRequestHeader('X-Airstore-Secret-Key', filerobot.uploadKey);
           request.send(formData);
         });
       });
@@ -142,7 +142,7 @@ export default class ImageManipulator extends Component {
         request.addEventListener("load", this.onFileLoad);
 
         request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
-        request.setRequestHeader('X-Airstore-Secret-Key', filerobot.token);
+        request.setRequestHeader('X-Airstore-Secret-Key', filerobot.uploadKey);
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify({ files_urls: [resultUrl] }));
       } else {

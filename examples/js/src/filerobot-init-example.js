@@ -21,7 +21,7 @@ ImageEditorDownload = new FilerobotImageEditor({ elementId: 'image-editor-downlo
 const configUpload = {
   elementId: 'image-editor-upload',
   filerobot: {
-    token: 'bf72d18393ea40d5b4fccd9fb83806fa',
+    uploadKey: 'bf72d18393ea40d5b4fccd9fb83806fa',
     container: 'fpdlhfjm',
     uploadParams: {
       dir: '/Github-Image-Editor'
