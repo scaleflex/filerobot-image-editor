@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
-import { b64toBlob, encodePermalink } from '../../utils';
+import { b64toBlob } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
-import smartcrop from 'smartcrop';
 import uuidv4 from 'uuid/v4';
 
 
@@ -359,7 +358,7 @@ export default class ImageManipulator extends Component {
   initAdjust = () => {}
 
   initCrop = () => {
-    const { originalWidth, originalHeight } = this.state;
+    const { originalWidth } = this.state;
     const canvas = this.getCanvasNode();
     const rect = canvas.getBoundingClientRect();
     const zoom = originalWidth / rect.width;
@@ -375,30 +374,12 @@ export default class ImageManipulator extends Component {
       crop: event => {
         this.setState({ cropDetails: event.detail });
         this.props.updateState({ cropDetails: event.detail });
-      },
-      ready: () => {
-        this.autoCrop(originalWidth, originalHeight, zoom);
       }
     });
 
     window.scaleflexPlugins = window.scaleflexPlugins || {};
     window.scaleflexPlugins.zoom = zoom;
     window.scaleflexPlugins.cropperjs = this.cropper;
-  }
-
-  autoCrop = (originalWidth, originalHeight, zoom) => {
-    smartcrop.crop(
-      this.img,
-      { height: originalHeight / 15, width: originalWidth / 15, debug: true, minScale: 0.82 }
-    ).then((result = {}) => {
-      const { topCrop: { height, width, x, y } = {} } = result;
-      this.cropper.setCropBoxData({
-        height: height / zoom,
-        width: width / zoom,
-        left: x / zoom,
-        top: y / zoom
-      });
-    });
   }
 
   initResize = () => {}
