@@ -8,20 +8,12 @@
   <title>Light Example</title>
 </head>
 <body>
-<script src="https://scaleflex.airstore.io/filerobot/image-editor/1.0.1/main.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/2/filerobot-image-editor.min.js"></script>
+
 <script>
-  const config = {
-    filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
-    filerobotContainer: 'scaleflex-tests-v5a'
-  };
+  const ImageEditor = new FilerobotImageEditor();
 
-  const onComplete = function(url) {
-    alert('edited url: ' + url);
-  }
-
-  FilerobotImageEditor.init(config, onComplete);
-
-  FilerobotImageEditor.open('https://scaleflex.ultrafast.io/https://scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg');
+  ImageEditor.open('https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg');
 </script>
 </body>
 </html>
