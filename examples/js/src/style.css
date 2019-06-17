@@ -433,6 +433,7 @@ footer .footer-menu ul li {
 .highlight code {
   border-radius: 4px;
   margin-right: 30px;
+  padding: 1rem;
 }
 
 #result-link {

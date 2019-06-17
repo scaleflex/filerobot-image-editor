@@ -178,11 +178,14 @@
 
   <section class="container ready-to-start">
     <h2>Ready to get started?</h2>
-    <p>To use the plugin, you will need a Filerobot token. Don't worry, it only takes seconds to get one by registering
-      <a
-         href="https://www.filerobot.com/en/registration_temp">here</a>. Once your token is created, you can configure
-      it as described below.
-      This token allows you to use 25GB of image cache and 25GB of worldwide CDN traffic per month for free.</p>
+    <p>In the implementation example below you can <strong>edit</strong> the image in the Image Editor and <strong>download</strong> the result.
+      Check out the integration guides with <a title="integration of Filerobot to Image Editor" href="">Filerobot</a>
+      and <a title="integration of Cloudimage to Image Editor" href="">Cloudimage</a></p>
+    <!--<p>To use the plugin, you will need a Filerobot token. Don't worry, it only takes seconds to get one by registering-->
+      <!--<a-->
+         <!--href="https://www.filerobot.com/en/registration_temp">here</a>. Once your token is created, you can configure-->
+      <!--it as described below.-->
+      <!--This token allows you to use 25GB of image cache and 25GB of worldwide CDN traffic per month for free.</p>-->
   </section>
 
   <section class="container">
@@ -213,27 +216,18 @@ import { render } from 'react-dom';
 import FilerobotImageEditor from 'filerobot-image-editor';
 
 
-const config = {
-  filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
-  filerobotContainer: 'scaleflex-tests-v5a',
-};
-
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
       isShow: false,
-      imgSrc: '//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg'
+      imgSrc: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg'
     }
   }
 
   showImageEditor = () => {
     this.setState({ isShow: true });
-  }
-
-  onComplete = (newUrl) => {
-    this.setState({ imgSrc: newUrl });
   }
 
   onClose = () => {
@@ -247,13 +241,11 @@ class App extends Component {
       &lt;div>
         &lt;h1>Filerobot Image Editor&lt;/h1>
 
-          &lt;img src={imgSrc} onClick={this.showImageEditor} alt="example image"/>
+        &lt;img src={imgSrc} onClick={this.showImageEditor} alt="example image"/>
 
         &lt;FilerobotImageEditor
            show={isShow}
            src={imgSrc}
-           config={config}
-           onComplete={this.onComplete}
            onClose={this.onClose}
         />
       &lt;/div>
@@ -294,21 +286,10 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
         </p>
         <figure class="highlight">
         <pre><code class="javascript">&lt;script/&gt;
-  const config = {
-    filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
-    filerobotContainer: 'scaleflex-tests-v5a'
-  };
 
-  const onComplete = function(url) {
-    // do something with new url
-  }
-
-  FilerobotImageEditor.init(config, onComplete);
-&lt;/script&gt;</code></pre>
+  const ImageEditor = new FilerobotImageEditor();
+...</code></pre>
         </figure>
-        <p>
-          Get your Filerobot tokens <a href="https://www.filerobot.com/en/registration_temp">here</a>.
-        </p>
       </div>
 
       <div class="action-wrapper third-action">
@@ -316,8 +297,8 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
           Open Filerobot Image Editor passing the image url which should be edited
         </p>
         <figure class="highlight">
-        <pre><code class="javascript">&lt;script/&gt;
-  FilerobotImageEditor.open('https://scaleflex.ultrafast.io/https://scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg');
+        <pre><code class="javascript">...
+  ImageEditor.open('https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg');
 &lt;/script&gt;</code></pre>
         </figure>
       </div>
