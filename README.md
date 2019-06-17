@@ -1,6 +1,6 @@
 > Repository includes React version and JS wrapper for standalone usage
 
-[![Release](https://img.shields.io/badge/release-v1.2.1-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
+[![Release](https://img.shields.io/badge/release-v2.0.0-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Free plan](https://img.shields.io/badge/price-includes%20free%20plan-green.svg)](https://www.filerobot.com/en/home#2de3fb9f-dd4a-457a-999a-025ad9bd5f3b)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -44,16 +44,6 @@
 
 <p align="center"><a href="https://scaleflex.github.io/filerobot-image-editor/" target="_blank">Demo</a></p>
 
-> The example of Image Editor configuration using cloudimage service can be found [here](https://github.com/scaleflex/filerobot-image-editor/tree/v1.0.0/examples/js-with-cloudimage).
-
-## Requirements
-
-To use the plugin, you will need a Filerobot token. Don't worry, it only
-takes seconds to get one by registering [here](https://www.filerobot.com/en/home).
-Once your token is created, you can configure it as described below.
-This token allows you to use 25GB of image cache and 25GB of worldwide
-CDN traffic per month for free.
-
 ## <a name="table_of_contents"></a>Table of contents
 
 * [Standalone usage](#standalone_usage)
@@ -64,7 +54,8 @@ CDN traffic per month for free.
     * [Installation](#installation_react)
     * [Quick start](#quick_start_react)
     * [Methods/Properties](#methods_react)
-* [Configuration](#configuration)
+* [Filerobot Integration](#filerobot_integration)
+* [Cloudimage Integration](#cloudimage_integration)
 * [Filerobot UI Family](#ui_family)
 * [Contributing](#contributing)
 * [License](#license)
@@ -76,14 +67,14 @@ CDN traffic per month for free.
 Use latest CDNized plugin version
 
 ```html
-<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/1.2.1/filerobot-image-editor.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/2.0.0/filerobot-image-editor.min.js"></script>
 ```
 
 
 You may also use major version number instead of fixed version to have the latest version available.
 
 ```html
-<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/1/filerobot-image-editor.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/2/filerobot-image-editor.min.js"></script>
 ```
 
 ### <a name="quick_start"></a>Quick start
@@ -92,18 +83,9 @@ We provide easy way to integrate image editor in your applications
 
 ```html
 <script>
-  const config = {
-      filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
-      filerobotContainer: 'scaleflex-tests-v5a'
-    };
+    const ImageEditor = new FilerobotImageEditor();
 
-    const onComplete = function(url, file) {
-      // do something with new url or file
-    }
-
-    FilerobotImageEditor.init(config, onComplete);
-
-    FilerobotImageEditor.open('https://scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.jpg');
+    ImageEditor.open('https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg');
 </script>
 ```
 <a href="https://codesandbox.io/s/88jpkv2m09"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="edeit on codesandbox"/></a>
@@ -114,17 +96,17 @@ We provide easy way to integrate image editor in your applications
 
 Initialization of Filerobot Image Editor plugin.
 
-#### `FilerobotImageEditor.open(url)`: function
+#### `ImageEditor.open(url)`: function
 
 Open editor modal.
 
 * **url**: string (required) - image url to edit
 
-#### `FilerobotImageEditor.close()`: function
+#### `ImageEditor.close()`: function
 
 Close editor modal.
 
-#### `FilerobotImageEditor.unmount()`: function
+#### `ImageEditor.unmount()`: function
 
 Destroy editor
 
@@ -146,27 +128,18 @@ import { render } from 'react-dom';
 import FilerobotImageEditor from 'filerobot-image-editor';
 
 
-const config = {
-  filerobotUploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
-  filerobotContainer: 'scaleflex-tests-v5a',
-};
-
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
       isShow: false,
-      imgSrc: '//scaleflex.airstore.io/filerobot/assets/filerobot-demo-2-min.png'
+      imgSrc: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg'
     }
   }
 
   showImageEditor = () => {
     this.setState({ isShow: true });
-  }
-
-  onComplete = (newUrl) => {
-    this.setState({ imgSrc: newUrl });
   }
 
   onClose = () => {
@@ -180,13 +153,13 @@ class App extends Component {
       <div>
         <h1>Filerobot Image Editor</h1>
 
-          <img src={imgSrc} onClick={this.showImageEditor} alt="example image"/>
+        <img src={imgSrc} onClick={this.showImageEditor} alt="example image"/>
 
         <FilerobotImageEditor
            show={isShow}
            src={imgSrc}
-           config={config}
-           onComplete={this.onComplete}
+           config={{}}
+           onComplete={() => {}}
            onClose={this.onClose}
         />
       </div>
@@ -214,40 +187,20 @@ Image editor config.
 
 Callback, triggers on close image editor widget.
 
-#### `onComplete(url: string, file: object)`: function (required)
+#### `onComplete()`: function (required)
 
 Callback, triggers on complete processing image.
 
-## <a name="configuration"></a>Configuration
+## <a name="filerobot_integration"></a>Filerobot Integration
 
-#### `filerobotContainer`: string (required)
+The example of Image Editor configuration using Filerobot service can be found
+[here](https://github.com/scaleflex/filerobot-image-editor/tree/master/examples/js-with-filerobot).
 
-Filerobot Container name.
+## <a name="cloudimage_integration"></a>Cloudimage Integration
 
-```
-filerobotContainer: 'demo'
-```
+The example of Image Editor configuration using cloudimage service can be found
+[here](https://github.com/scaleflex/filerobot-image-editor/tree/master/examples/js-with-cloudimage).
 
-#### `filerobotUploadKey`: string (required)
-
-Unique upload key for Filerobot.
-
-```
-filerobotUploadKey: 'xxxxxxxxxxxx'
-```
-
-#### `uploadParams`: object
-
-[see documentation](https://docs.airstore.io/go/airstore-public-documentation/en/airstore-api-reference/upload-files/#od_9911d3cb)
-
-* **dir**: string (default: '/') - specify the folder where you want to upload the file. If the folder doesn't exist, it will be created.
-
-```
- uploadParams: {
-    dir: '/folder_name',
-    ...
-}
-```
 ## <a name="ui_family"></a>Filerobot UI Familiy
 
 * [Image Uploader](https://github.com/scaleflex/filerobot-uploader)
