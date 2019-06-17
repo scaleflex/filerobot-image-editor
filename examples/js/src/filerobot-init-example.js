@@ -36,8 +36,6 @@ const onCompleteUpload = function(newUrl) {
   resultImage.src = url;
   resultLink.innerText = url;
   resultModal.style.display = 'block';
-
-  ImageEditorUpload.close();
 };
 
 ImageEditorUpload = new FilerobotImageEditor(configUpload, onCompleteUpload);
@@ -59,8 +57,6 @@ const onCompleteModify = function(newUrl) {
   resultImage.src = newUrl;
   resultLink.innerText = newUrl;
   resultModal.style.display = 'block';
-
-  ImageEditorModify.close();
 };
 
 ImageEditorModify = new FilerobotImageEditor(configModify, onCompleteModify);
