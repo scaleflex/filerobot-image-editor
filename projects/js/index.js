@@ -3,28 +3,30 @@ import React from 'react';
 import ImageEditor from '../react';
 
 
-function init(config = {}, onComplete = (src) => { console.log(src) }, show = false) {
-  const containerId = config.elementId || 'airstore-image-editor';
-  let container = document.getElementById(containerId);
+class FilerobotImageEditor {
+  constructor(config = {}, onComplete = (src) => { console.log(src) }, show = false) {
+    const containerId = config.elementId || 'filerobot-image-editor';
+    let container = document.getElementById(containerId);
 
-  if (!container) {
-    container = document.createElement('div');
-    container.id = containerId;
+    if (!container) {
+      container = document.createElement('div');
+      container.id = containerId;
 
-    document.body.appendChild(container);
+      document.body.appendChild(container);
+    }
+
+    const renderApp = Component => render(
+      <Component
+        show={show}
+        config={config}
+        onComplete={onComplete}
+      />, container);
+
+    this.component = renderApp(ImageEditor);
+    this.open = this.component.open;
+    this.close = this.component.close;
+    this.unmount = () => unmountComponentAtNode(container);
   }
-
-  const renderApp = Component => render(
-    <Component
-      show={show}
-      config={config}
-      onComplete={onComplete}
-    />, container);
-
-  window.FilerobotImageEditor = renderApp(ImageEditor);
-  window.FilerobotImageEditor.init = init;
-  window.FilerobotImageEditor.unmount = () => unmountComponentAtNode(container);
 }
 
-window.FilerobotImageEditor = window.FilerobotImageEditor || {};
-window.FilerobotImageEditor.init = init;
+window.FilerobotImageEditor = FilerobotImageEditor;
