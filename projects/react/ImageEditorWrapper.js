@@ -15,12 +15,7 @@ class ImageEditorWrapper extends Component {
     this.state = {
       isVisible: show,
       src,
-      config: {
-        ...UPLOADER,
-        processWithFilerobot: !!config.filerobotUploadKey && !!config.filerobotContainer,
-        processWithCloudimage: !!config.cloudimageToken,
-        ...config,
-      }
+      config: this.processConfig(config)
     }
   }
 
@@ -31,6 +26,15 @@ class ImageEditorWrapper extends Component {
       } else
         this.close();
     }
+  }
+
+  processConfig = (config) => {
+    return {
+      ...UPLOADER,
+      processWithFilerobot: !!config.filerobot,
+      processWithCloudimage: !!config.cloudimage,
+      ...config,
+    };
   }
 
   open = (src) => {

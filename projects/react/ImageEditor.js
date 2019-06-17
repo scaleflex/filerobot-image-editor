@@ -101,6 +101,7 @@ export default class extends Component {
     const { downloadImage } = this.state;
 
     downloadImage();
+    this.props.onComplete({ status: 'success' });
     this.props.onClose();
   }
 

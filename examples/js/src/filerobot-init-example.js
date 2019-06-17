@@ -19,10 +19,12 @@ ImageEditorDownload = new FilerobotImageEditor({ elementId: 'image-editor-downlo
 
 const configUpload = {
   elementId: 'image-editor-upload',
-  filerobotUploadKey: 'bf72d18393ea40d5b4fccd9fb83806fa',
-  filerobotContainer: 'fpdlhfjm',
-  uploadParams: {
-    dir: '/Github-Image-Editor'
+  filerobot: {
+    token: 'bf72d18393ea40d5b4fccd9fb83806fa',
+    container: 'fpdlhfjm',
+    uploadParams: {
+      dir: '/Github-Image-Editor'
+    }
   }
 };
 const onCompleteUpload = function(newUrl) {
@@ -44,8 +46,9 @@ ImageEditorUpload = new FilerobotImageEditor(configUpload, onCompleteUpload);
 
 const configModify = {
   elementId: 'image-editor-modify',
-    processWithCloudimage: true,
-  cloudimageToken: 'scaleflex'
+  cloudimage: {
+    token: 'scaleflex'
+  }
 };
 
 const onCompleteModify = function(newUrl) {
@@ -72,14 +75,17 @@ function initImageEditorDownload() {
 
 function initImageEditorUpload() {
   const image = document.querySelector('img.active');
+  const resultImage = document.getElementById('result-image');
 
-
+  resultImage.src = '';
   ImageEditorUpload.open(image.src.slice(image.src.lastIndexOf('http')));
 }
 
 function initImageEditorModify() {
   const image = document.querySelector('img.active');
+  const resultImage = document.getElementById('result-image');
 
+  resultImage.src = '';
   ImageEditorModify.open(image.src.slice(image.src.lastIndexOf('http')));
 }
 

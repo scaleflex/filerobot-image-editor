@@ -89,10 +89,11 @@ export default class ImageManipulator extends Component {
     const {
       onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime
     } = this.props;
+    const { filerobot = {} } = config;
     const src = this.state.src.split('?')[0];
     const canvas = this.getCanvasNode();
-    const baseUrl = `//${config.filerobotContainer}.api.airstore.io/v1/`;
-    const uploadParams = config.uploadParams || {};
+    const baseUrl = `//${filerobot.container}.api.airstore.io/v1/`;
+    const uploadParams = filerobot.uploadParams || {};
     const dir = uploadParams.dir || 'image-editor';
     const self = this;
     let { imageName } = this.state;
@@ -126,7 +127,7 @@ export default class ImageManipulator extends Component {
           request.addEventListener("load", self.onFileLoad);
           formData.append('files[]', blob, name);
           request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
-          request.setRequestHeader('X-Airstore-Secret-Key', config.filerobotUploadKey);
+          request.setRequestHeader('X-Airstore-Secret-Key', filerobot.token);
           request.send(formData);
         });
       });
@@ -142,7 +143,7 @@ export default class ImageManipulator extends Component {
         request.addEventListener("load", this.onFileLoad);
 
         request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
-        request.setRequestHeader('X-Airstore-Secret-Key', config.filerobotUploadKey);
+        request.setRequestHeader('X-Airstore-Secret-Key', filerobot.token);
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify({ files_urls: [resultUrl] }));
       } else {
@@ -177,7 +178,8 @@ export default class ImageManipulator extends Component {
 
   generateCloudimageURL = (operations) => {
     const { config } = this.props;
-    const cloudUrl = config.cloudimageToken + '.cloudimg.io' + '/';
+    const { cloudimage = {} } = config;
+    const cloudUrl = cloudimage.token + '.cloudimg.io' + '/';
     const cropOperation = this.isOperationExist(operations, 'crop');
     const resizeOperation = this.isOperationExist(operations, 'resize');
     const orientationOperation = this.isOperationExist(operations, 'rotate')
