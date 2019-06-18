@@ -16,6 +16,10 @@
 	</a>
 </p>
 
+<p align="center">
+	<a href="https://www.filerobot.com/en/home">Learn more about Filerobot</a>
+</p>
+
 <h1 align="center">
    Filerobot Image Editor
 </h1>
@@ -182,6 +186,8 @@ Deliver lightning fast over CDN.
 The example of Image Editor configuration using Filerobot service can be found
 [here](https://github.com/scaleflex/filerobot-image-editor/tree/master/examples/js-with-filerobot).
 
+[Learn more about Filerobot](https://www.filerobot.com/en/home)
+
 ## <a name="cloudimage_integration"></a>Cloudimage Integration
 
 Point the Image Editor to your origin image URL, edit it and deliver the result lightning fast over the Cloudimage image CDN.
@@ -189,6 +195,8 @@ Limited to the Cloudimage inline transformation features.
 
 The example of Image Editor configuration using cloudimage service can be found
 [here](https://github.com/scaleflex/filerobot-image-editor/tree/master/examples/js-with-cloudimage).
+
+[Learn more about Cloudimage](https://www.cloudimage.io/en/home)
 
 ## <a name="roadmap"></a>What's on the Roadmap for the near future
 
