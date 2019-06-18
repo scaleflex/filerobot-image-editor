@@ -1,4 +1,4 @@
-> Repository includes React version and JS wrapper for standalone usage
+> Repository includes React version and Vanilla JS adapter for standalone usage
 
 [![Release](https://img.shields.io/badge/release-v2.1.0-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
