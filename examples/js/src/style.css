@@ -562,7 +562,10 @@ footer .footer-menu ul li {
 }
 
 .roadmap-wrapper {
+  text-align: center;
+  background: #fff;
   padding: 50px 0;
+  border: 1px solid #d1d1d1;
 }
 
 .roadmap-wrapper h2 {
