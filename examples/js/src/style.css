@@ -481,6 +481,10 @@ footer .footer-menu ul li {
   border: 1px solid #d1d1d1;
 }
 
+.docs-wrapper .btn {
+  margin-top: 5px;
+}
+
 .docs-group h2 {
   font-weight: 700;
   margin-bottom: 0;
