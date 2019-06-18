@@ -31,6 +31,8 @@
 		<a href="https://scaleflex.github.io/filerobot-image-editor/" target="_blank">Demo</a>
 		•
 		<a href="https://codesandbox.io/s/88jpkv2m09" target="_blank">CodeSandbox</a>
+		•
+		<a href="https://www.youtube.com/watch?v=4VdPXvFr4V0" target="_blank">Video tutorial</a>
 	</strong>
 </p>
 
