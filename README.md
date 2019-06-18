@@ -192,24 +192,24 @@ The example of Image Editor configuration using cloudimage service can be found
 ## <a name="roadmap"></a>What's on the Roadmap for the near future
 
 Features
- ⁃ Control image brightness, contrast, exposure, and saturation
- ⁃ Bright theme, plus possibility to make your custom theme
- ⁃ Rounds the corners of images
- ⁃ Mirror images effect
- ⁃ New filters and effects
- ⁃ Load file objects and dataURLs
- ⁃ Transform input images to other image formats
- ⁃ Easily integrate with third party libraries
- ⁃ Compress JPEG images (Optipress)
- ⁃ Set to preview mode to render on top of an existing image
+* Control image brightness, contrast, exposure, and saturation
+* Bright theme, plus possibility to make your custom theme
+* Rounds the corners of images
+* Mirror images effect
+* New filters and effects
+* Load file objects and dataURLs
+* Transform input images to other image formats
+* Easily integrate with third party libraries
+* Compress JPEG images (Optipress)
+* Set to preview mode to render on top of an existing image
 
 
 Adapters
- ⁃ Vanilla JS (done)
- ⁃ React (done)
- ⁃ Angular
- ⁃ Vue
- ⁃ Web Component
+* Vanilla JS (done)
+* React (done)
+* Angular
+* Vue
+* Web Component
 
 ## <a name="ui_family"></a>Filerobot UI Familiy
 
