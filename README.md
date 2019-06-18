@@ -56,6 +56,7 @@
     * [Methods/Properties](#methods_react)
 * [Filerobot Integration](#filerobot_integration)
 * [Cloudimage Integration](#cloudimage_integration)
+* [Roadmap for the near future](#roadmap)
 * [Filerobot UI Family](#ui_family)
 * [Contributing](#contributing)
 * [License](#license)
@@ -187,6 +188,28 @@ Limited to the Cloudimage inline transformation features.
 
 The example of Image Editor configuration using cloudimage service can be found
 [here](https://github.com/scaleflex/filerobot-image-editor/tree/master/examples/js-with-cloudimage).
+
+## <a name="roadmap"></a>What's on the Roadmap for the near future
+
+Features
+ ⁃ Control image brightness, contrast, exposure, and saturation
+ ⁃ Bright theme, plus possibility to make your custom theme
+ ⁃ Rounds the corners of images
+ ⁃ Mirror images effect
+ ⁃ New filters and effects
+ ⁃ Load file objects and dataURLs
+ ⁃ Transform input images to other image formats
+ ⁃ Easily integrate with third party libraries
+ ⁃ Compress JPEG images (Optipress)
+ ⁃ Set to preview mode to render on top of an existing image
+
+
+Adapters
+ ⁃ Vanilla JS (done)
+ ⁃ React (done)
+ ⁃ Angular
+ ⁃ Vue
+ ⁃ Web Component
 
 ## <a name="ui_family"></a>Filerobot UI Familiy
 
