@@ -4,6 +4,7 @@ import { b64toBlob } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
+import { getEffectHandlerName } from '../../utils/effects.utils';
 
 
 export default class ImageManipulator extends Component {
@@ -12,14 +13,15 @@ export default class ImageManipulator extends Component {
 
     this.state = {
       ...props,
-      queue: Array.from(Array(3).keys()),
+      queue: Array.from(Array(4).keys()),
       tempOperation: null,
       canvas: null,
       adjust: {
         brightness: 0,
         contrast: 0,
-        gamma: 1,
-        saturation: 0
+        gamma: 0,
+        saturation: 0,
+        exposure: 0
       }
     };
   }
@@ -47,7 +49,7 @@ export default class ImageManipulator extends Component {
       saveImage: this.saveImage,
       updateCropDetails: this.updateCropDetails,
       resize: this.resize,
-      addEffect: this.addEffect,
+      addEffect: this.addFilterOrEffect,
       cleanTemp: this.cleanTemp,
       revert: this.revert,
       rotate: this.rotate,
@@ -80,6 +82,8 @@ export default class ImageManipulator extends Component {
         imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName,
         originalCanvas: canvas
       });
+
+      this.CamanInstance = new window.Caman(canvas, function () { });
     }
   }
 
@@ -98,37 +102,35 @@ export default class ImageManipulator extends Component {
     let { imageName } = this.state;
 
     if (!processWithCloudimage) {
-      new window.Caman(canvas, function () {
-        this.render(function () {
-          const base64 = canvas.toDataURL(imageMime);
-          const block = base64.split(";");
-          const realData = block[1].split(",")[1];
-          const blob = b64toBlob(realData, imageMime, null);
-          const splittedName = imageName.replace(/-version-.{6}/g, '').split('.');
-          const nameLength = splittedName.length;
-          let name = '';
+      this.CamanInstance.render(function () {
+        const base64 = canvas.toDataURL(imageMime);
+        const block = base64.split(";");
+        const realData = block[1].split(",")[1];
+        const blob = b64toBlob(realData, imageMime, null);
+        const splittedName = imageName.replace(/-version-.{6}/g, '').split('.');
+        const nameLength = splittedName.length;
+        let name = '';
 
-          if (nameLength <= 1) {
-            name = `${splittedName.join('.')}-version-${(uuidv4() || '').slice(0,6)}`;
-          } else {
-            name = [
-              splittedName.slice(0, nameLength - 1).join('.'),
-              '-version-',
-              (uuidv4() || '').slice(0,6),
-              '.',
-              splittedName[nameLength - 1]
-            ].join('');
-          }
+        if (nameLength <= 1) {
+          name = `${splittedName.join('.')}-version-${(uuidv4() || '').slice(0, 6)}`;
+        } else {
+          name = [
+            splittedName.slice(0, nameLength - 1).join('.'),
+            '-version-',
+            (uuidv4() || '').slice(0, 6),
+            '.',
+            splittedName[nameLength - 1]
+          ].join('');
+        }
 
-          const formData = new FormData();
-          const request = new XMLHttpRequest();
+        const formData = new FormData();
+        const request = new XMLHttpRequest();
 
-          request.addEventListener("load", self.onFileLoad);
-          formData.append('files[]', blob, name);
-          request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
-          request.setRequestHeader('X-Airstore-Secret-Key', filerobot.uploadKey);
-          request.send(formData);
-        });
+        request.addEventListener("load", self.onFileLoad);
+        formData.append('files[]', blob, name);
+        request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
+        request.setRequestHeader('X-Airstore-Secret-Key', filerobot.uploadKey);
+        request.send(formData);
       });
     } else {
       const allowedOperations = operations.filter(({ stack }) => CLOUDIMAGE_OPERATIONS.indexOf(stack[0].name) > -1);
@@ -153,6 +155,25 @@ export default class ImageManipulator extends Component {
     }
   }
 
+  downloadImage = () => {
+    const canvas = this.getCanvasNode();
+    const { imageName } = this.state;
+    const { imageMime } = this.props;
+    const lnk = document.createElement('a');
+    let e;
+
+    lnk.download = imageName;
+    lnk.href = canvas.toDataURL(imageMime, 0.8);
+
+    if (document.createEvent) {
+      e = document.createEvent("MouseEvents");
+      e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      lnk.dispatchEvent(e);
+    } else if (lnk.fireEvent) {
+      lnk.fireEvent("onclick");
+    }
+  }
+
   onFileLoad = (data) => {
     const { onComplete, onClose, updateState, closeOnLoad } = this.props;
     const { srcElement = {} } = data;
@@ -167,8 +188,7 @@ export default class ImageManipulator extends Component {
       updateState({ isShowSpinner: false, isHideCanvas: false });
       onComplete(file.url_public, file);
       closeOnLoad && onClose();
-    }
-    else {
+    } else {
       updateState({ isShowSpinner: false, isHideCanvas: false });
       alert(responseData);
       closeOnLoad && onClose();
@@ -211,28 +231,66 @@ export default class ImageManipulator extends Component {
     return 'https://' + cloudUrl + operationQ + '/' + sizesQ + '/' + filtersQ + '/';
   }
 
-  isOperationExist = (operations, type) => operations.find(({ stack }) => stack[0].name === type);
+  /* Filters and Effects */
 
-  getOperationQuery = (isCrop, isResize) => {
-    if (isCrop) return 'crop_px';
-    else if (isResize) return 'width';
-    else return 'cdn';
+  initFiltersOrEffects = () => {}
+
+  addFilterOrEffect = name => {
+    const effectHandlerName = getEffectHandlerName(name);
+    const { currentOperation, operations } = this.state;
+    const that = this;
+    let operation = {
+      stack: [
+        { name: effectHandlerName, arguments: [], queue: 2 }
+      ]
+    };
+
+    this.setState({ tempOperation: operation });
+
+    this.CamanInstance.reset();
+
+    this.applyOperations(
+      operations,
+      operations.findIndex(operation => operation === currentOperation),
+      () => {
+        this.CamanInstance[effectHandlerName]();
+        this.CamanInstance.render(() => {
+          that.props.updateState({ isHideCanvas: false, isShowSpinner: false });
+        });
+      }
+    );
   }
 
-  getCropArguments = (operation = {}) => {
-    const { stack = [] } = operation;
-    let params = stack[0] && stack[0].arguments;
+  applyFilterOrEffect = () => {
+    const { currentOperation, operations, tempOperation } = this.state;
+    this.pushOperation(operations, tempOperation, currentOperation);
+    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: tempOperation });
+  }
+  
+  /* Rotate */
 
-    params = params.map(value => parseInt(value));
+  initOrientation = () => {}
 
-    return params;
+  rotate = (value, total) => {
+    const that = this;
+
+    this.CamanInstance.rotate(value);
+    this.CamanInstance.render(() => {
+      that.setState({ rotate: total });
+    });
   }
 
-  getResizeArguments = (operation = {}) => {
-    const { stack = [] } = operation;
-    let props = stack[0] && stack[0].arguments && stack[0].arguments[0];
+  applyOrientation = () => {
+    const { currentOperation, operations, rotate } = this.state;
+    let operation = {
+      stack: [
+        { name: 'rotate', arguments: [rotate], queue: 0 }
+      ]
+    };
 
-    return [parseInt(props.width), parseInt(props.height)];
+    this.pushOperation(operations, operation, currentOperation);
+    this.setState({ rotate: null });
+    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
   }
 
   getOrientationArguments = (operation = {}) => {
@@ -250,112 +308,7 @@ export default class ImageManipulator extends Component {
     }
   }
 
-  cleanTemp = () => {
-    const { operations, currentOperation } = this.state;
-
-    this.revert(() => {
-      this.applyOperations(
-        operations,
-        operations.findIndex(operation => operation === currentOperation),
-        () => {
-          this.setState({ tempOperation: null });
-          this.props.updateState({ isHideCanvas: false, isShowSpinner: false });
-        }
-      );
-    });
-  }
-
-  rotate = (value, total) => {
-    const canvas = this.getCanvasNode();
-    const that = this;
-
-    new window.Caman(canvas, function () {
-      this.rotate(value);
-      this.render(() => {
-        that.setState({ rotate: total });
-      });
-    });
-  }
-
-  adjust = (handler, value) => {
-    const { operations = [], currentOperation, adjust } = this.state;
-    const that = this;
-
-    Object.assign(adjust, { [handler]: value });
-
-    this.setState(adjust);
-
-    this.revert(() => {
-      this.applyOperations(
-        operations,
-        operations.findIndex(operation => operation === currentOperation),
-        () => {
-          const canvas = this.getCanvasNode();
-
-          new window.Caman(canvas, function () {
-            this.brightness(adjust.brightness);
-            this.contrast(adjust.contrast);
-            this.gamma(adjust.gamma);
-            this.saturation(adjust.saturation);
-
-            this.render(() => {
-              that.props.updateState({ isHideCanvas: false, isShowSpinner: false });
-            });
-          });
-        }
-      );
-    });
-  }
-
-  applyOrientation = () => {
-    const { currentOperation, operations, rotate } = this.state;
-    let operation = {
-      stack: [
-        { name: 'rotate', arguments: [rotate], queue: 0 }
-      ]
-    };
-
-    this.pushOperation(operations, operation, currentOperation);
-    this.setState({ rotate: null });
-    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
-  }
-
-  addEffect = name => {
-    const effectHandlerName = this.getEffectHandlerName(name);
-    const { currentOperation, operations } = this.state;
-    const that = this;
-    let operation = {
-      stack: [
-        { name: effectHandlerName, arguments: [], queue: 2 }
-      ]
-    };
-
-    this.setState({ tempOperation: operation });
-    this.revert(() => {
-      this.applyOperations(
-        operations,
-        operations.findIndex(operation => operation === currentOperation),
-        () => {
-          const canvas = this.getCanvasNode();
-
-          new window.Caman(canvas, function () {
-            this[effectHandlerName]();
-            this.render(() => {
-              that.props.updateState({ isHideCanvas: false, isShowSpinner: false });
-            });
-          });
-        }
-      );
-    });
-  }
-
-  getCanvasNode = () => document.getElementById('scaleflex-image-edit-box');
-
-  initEffects = () => {}
-
-  initFilters = () => {}
-
-  initAdjust = () => {}
+  /* Crop */
 
   initCrop = () => {
     const { originalWidth } = this.state;
@@ -382,18 +335,6 @@ export default class ImageManipulator extends Component {
     window.scaleflexPlugins.cropperjs = this.cropper;
   }
 
-  initResize = () => {}
-
-  initOrientation = () => {}
-
-  destroyCrop = () => {
-    this.cropper.destroy();
-  }
-
-  destroyAll = () => {}
-
-  applyCanvasChanges = () => {}
-
   applyCrop = () => {
     const { cropDetails, currentOperation, operations } = this.state;
     const { width, height, x, y } = cropDetails;
@@ -408,65 +349,117 @@ export default class ImageManipulator extends Component {
     this.pushOperation(operations, operation, currentOperation);
     this.destroyCrop();
 
-    new window.Caman(canvas, function () {
-      this.crop(width, height, x, y);
-      this.render(() => {
-        that.props.updateState({
-          isHideCanvas: false,
-          activeTab: null,
-          operations,
-          currentOperation: operation,
-          canvasDimensions: { width, height, ratio: width / height }
-        });
+
+    this.CamanInstance.crop(width, height, x, y);
+    this.CamanInstance.render(() => {
+      canvas.width = width;
+      canvas.height = height;
+
+      this.CamanInstance = new window.Caman(canvas, function () { });
+
+      that.props.updateState({
+        isHideCanvas: false,
+        activeTab: null,
+        operations,
+        currentOperation: operation,
+        canvasDimensions: { width, height, ratio: width / height }
       });
     });
   }
 
-  applyOperations = (operations = [], operationIndex, callback) => {
-    const { queue } = this.state;
-    const canvas = this.getCanvasNode();
+  destroyCrop = () => {
+    this.cropper.destroy();
+  }
+
+  getCropArguments = (operation = {}) => {
+    const { stack = [] } = operation;
+    let params = stack[0] && stack[0].arguments;
+
+    params = params.map(value => parseInt(value));
+
+    return params;
+  }
+
+  /* Resize */
+
+  initResize = () => {}
+
+  applyResize = () => {
+    const { currentOperation, operations } = this.state;
+    const { canvasDimensions } = this.props;
+    const { width, height } = canvasDimensions;
+    const that = this;
+    let operation = {
+      stack: [
+        { name: 'resize', arguments: [{ width, height }], queue: 0 }
+      ]
+    };
+
+    this.pushOperation(operations, operation, currentOperation);
+
+    this.CamanInstance.resize({ width, height });
+    this.CamanInstance.render(() => {
+      that.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
+    });
+  }
+
+  getResizeArguments = (operation = {}) => {
+    const { stack = [] } = operation;
+    let props = stack[0] && stack[0].arguments && stack[0].arguments[0];
+
+    return [parseInt(props.width), parseInt(props.height)];
+  }
+
+  /* Adjust */
+
+  initAdjust = () => {}
+
+  adjust = (handler, value) => {
+    const { operations = [], currentOperation, adjust } = this.state;
     const that = this;
 
-    new window.Caman(canvas, function () {
-      const caman = this;
+    Object.assign(adjust, { [handler]: value });
 
-      queue.forEach(queueIndex => {
-        operations.forEach((operation, index) => {
-          if (operationIndex < index || operationIndex === -1) return;
+    this.setState(adjust); // ??? todo check if we need it
 
-          operation.stack.forEach(handler => {
-            if (handler.queue === queueIndex) caman[handler.name](...handler.arguments);
-          });
+    if (operations.some(operation => operation.stack.some(stack => stack.name === 'crop' || stack.name === 'resize'))) {
+      this.CamanInstance.reset();
+    } else {
+      this.CamanInstance.revert(false);
+    }
+
+    this.applyOperations(
+      operations,
+      operations.findIndex(operation => operation === currentOperation),
+      () => {
+        this.CamanInstance.brightness(parseInt((adjust.brightness || 0)));
+        this.CamanInstance.contrast(parseInt((adjust.contrast || 0)));
+        this.CamanInstance.exposure(parseFloat((adjust.exposure || 0)));
+        this.CamanInstance.saturation(parseInt((adjust.saturation || 0)));
+
+        this.CamanInstance.render(() => {
+          that.props.updateState({ isHideCanvas: false, isShowSpinner: false });
         });
-
-        if (operationIndex > -1) this.render(() => {
-          that.props.updateState({ currentOperation: operations[operationIndex] });
-          if (callback) callback();
-        });
-      })
-
-      if (!(operationIndex > -1)) {
-        that.props.updateState({ currentOperation: operations[operationIndex] });
-        setTimeout(() => { if (callback) callback(); })
       }
-    });
+    );
   }
 
-  applyFilters = (operations = [], callback) => {
-    const canvas = this.getCanvasNode();
-
-    new window.Caman(canvas, function () {
-      const caman = this;
-
-      operations.forEach((operation) => {
-        operation.stack.forEach(handler => {
-          if (handler.queue === 2) caman[handler.name](...handler.arguments);
-        });
-      });
-
-      this.render(() => { if (callback) callback(); });
-    });
+  applyAdjust = () => {
+    const { currentOperation, operations, adjust } = this.state;
+    let operation = {
+      stack: [
+        { name: 'brightness', arguments: [adjust.brightness], queue: 3 },
+        { name: 'contrast', arguments: [adjust.contrast], queue: 3 },
+        { name: 'saturation', arguments: [adjust.saturation], queue: 3 },
+        { name: 'exposure', arguments: [adjust.exposure], queue: 3 },
+      ]
+    };
+    this.pushOperation(operations, operation, currentOperation);
+    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
   }
+
+
+  /* Operation utils */
 
   pushOperation = (operations, operation, currentOperation) => {
     const operationIndex = operations.findIndex(operation => operation === currentOperation);
@@ -478,32 +471,43 @@ export default class ImageManipulator extends Component {
     operations.push(operation);
   }
 
-  applyResize = () => {
-    const { currentOperation, operations } = this.state;
-    const { canvasDimensions } = this.props;
-    const { width, height } = canvasDimensions;
-    const canvas = this.getCanvasNode();
+  applyOperations = (operations = [], operationIndex, callback) => {
+    const { queue } = this.state;
     const that = this;
-    let operation = {
-      stack: [
-        { name: 'resize', arguments: [{ width, height }], queue: 0 }
-      ]
-    };
 
-    this.pushOperation(operations, operation, currentOperation);
-    new window.Caman(canvas, function () {
-      this.resize({ width, height });
-      this.render(() => {
-        that.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
+
+    queue.forEach(queueIndex => {
+      operations.forEach((operation, index) => {
+        if (operationIndex < index || operationIndex === -1) return;
+
+        operation.stack.forEach(handler => {
+          if (handler.queue === queueIndex) this.CamanInstance[handler.name](...handler.arguments);
+        });
       });
-    });
+
+      if (operationIndex > -1) this.CamanInstance.render(() => {
+        that.props.updateState({ currentOperation: operations[operationIndex] });
+        if (callback) callback();
+      });
+    })
+
+    if (!(operationIndex > -1)) {
+      that.props.updateState({ currentOperation: operations[operationIndex] });
+      setTimeout(() => { if (callback) callback(); })
+    }
   }
 
-  applyEffects = () => {
-    const { currentOperation, operations, tempOperation } = this.state;
-    this.pushOperation(operations, tempOperation, currentOperation);
-    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: tempOperation });
+  isOperationExist = (operations, type) => operations.find(({ stack }) => stack[0].name === type);
+
+  getOperationQuery = (isCrop, isResize) => {
+    if (isCrop) return 'crop_px';
+    else if (isResize) return 'width';
+    else return 'cdn';
   }
+
+
+
+  destroyAll = () => {}
 
   revert = (callback) => {
     const oldcanv = document.getElementById('scaleflex-image-edit-box');
@@ -522,6 +526,8 @@ export default class ImageManipulator extends Component {
     img.src = this.state.src;
 
     img.onload = () => {
+      this.CamanInstance = new window.Caman(canvas, function () { });
+
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -541,36 +547,30 @@ export default class ImageManipulator extends Component {
 
   }
 
-  downloadImage = () => {
-    const canvas = this.getCanvasNode();
-    const { imageName } = this.state;
-    const { imageMime } = this.props;
-    const lnk = document.createElement('a');
-    let e;
+  cleanTemp = () => {
+    const { operations, currentOperation } = this.state;
 
-    lnk.download = imageName;
-    lnk.href = canvas.toDataURL(imageMime, 0.8);
-
-    if (document.createEvent) {
-      e = document.createEvent("MouseEvents");
-      e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-      lnk.dispatchEvent(e);
-    }
-    else if (lnk.fireEvent) {
-      lnk.fireEvent("onclick");
-    }
+    this.CamanInstance.reset();
+    this.applyOperations(
+      operations,
+      operations.findIndex(operation => operation === currentOperation),
+      () => {
+        this.setState({ tempOperation: null });
+        this.props.updateState({ isHideCanvas: false, isShowSpinner: false });
+      }
+    );
   }
 
-  render() { return <Canvas id="scaleflex-image-edit-box"/>; }
+
 
   applyChanges = (activeTab) => {
     switch (activeTab) {
       case 'effects':
       case 'filters':
-        this.applyEffects();
+        this.applyFilterOrEffect();
         break;
       case 'adjust':
-        this.applyCanvasChanges();
+        this.applyAdjust();
         break;
       case 'crop':
         this.applyCrop();
@@ -589,10 +589,8 @@ export default class ImageManipulator extends Component {
   changeTab = (name) => {
     switch (name) {
       case 'effects':
-        this.initEffects();
-        break;
       case 'filters':
-        this.initFilters();
+        this.initFiltersOrEffects();
         break;
       case 'adjust':
         this.initAdjust();
@@ -630,65 +628,8 @@ export default class ImageManipulator extends Component {
         break;
     }
   }
+  
+  getCanvasNode = () => document.getElementById('scaleflex-image-edit-box');
 
-  getEffectHandlerName = name => {
-    switch (name) {
-      //filters
-      case 'colorize':
-        return 'colorize';
-      case 'contrast':
-        return 'contrast';
-      case 'cross_process':
-        return 'crossProcess';
-      case 'glow_sun':
-        return 'glowingSun';
-      case 'hdr_effect':
-        return 'hdr';
-      case 'jarques':
-        return 'jarques';
-      case 'love':
-        return 'love';
-      case 'old_boot':
-        return 'oldBoot';
-      case 'orange_peel':
-        return 'orangePeel';
-      case 'pin_hole':
-        return 'pinhole';
-      case 'pleasant':
-        return 'pleasant';
-      case 'sepia':
-        return 'sepia';
-      case 'sun_rise':
-        return 'sunrise';
-      case 'vintage':
-        return 'vintage';
-      //effets
-      case 'clarity':
-        return '';
-      case 'edge_enhance':
-        return 'edgeEnhance';
-      case 'emboss':
-        return 'emboss';
-      case 'grungy':
-        return 'grungy';
-      case 'hazy':
-        return 'hazyDays';
-      case 'lomo':
-        return 'lomo';
-      case 'noise':
-        return 'noise';
-      case 'old_paper':
-        return 'oldPaper'; //?
-      case 'posterize':
-        return 'posterize';
-      case 'radial_blur':
-        return 'radialBlur';
-      case 'sin_city':
-        return 'sinCity';
-      case 'tilt_shift':
-        return 'tiltShift';
-      default:
-        return null;
-    }
-  }
+  render() { return <Canvas id="scaleflex-image-edit-box"/>; }
 }

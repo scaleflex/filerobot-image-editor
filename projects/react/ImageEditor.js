@@ -49,7 +49,7 @@ export default class extends Component {
     const { cleanTemp, activeTab, revert, applyOperations, operations } = this.state;
     const index = all ? 0 : operations.length - 1;
 
-    if (activeTab === 'effects' || activeTab === 'filters') {
+    if (activeTab === 'effects' || activeTab === 'filters' || activeTab === 'adjust') {
       this.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
       cleanTemp();
       return;

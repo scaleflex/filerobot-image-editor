@@ -1,6 +1,6 @@
 // 'effects', 'filters', 'adjust', 'crop', 'resize', 'rotate'
 const TOOLS = [
-  'effects', 'filters', 'crop', 'resize', 'rotate'
+  'effects', 'filters', 'crop', 'resize', 'rotate', 'adjust'
 ];
 
 // 'clarity', 'edge_enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'noise', 'old_paper', 'posterize', 'radial_blur',
