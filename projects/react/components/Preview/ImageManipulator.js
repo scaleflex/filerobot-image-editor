@@ -422,7 +422,7 @@ export default class ImageManipulator extends Component {
 
     this.setState(adjust); // ??? todo check if we need it
 
-    if (operations.some(operation => operation.stack.some(stack => stack.name === 'crop' || stack.name === 'resize'))) {
+    if (operations.some(operation => operation.stack.some(stack => ['crop', 'resize', 'rotate'].includes(stack.name)))) {
       this.CamanInstance.reset();
     } else {
       this.CamanInstance.revert(false);
