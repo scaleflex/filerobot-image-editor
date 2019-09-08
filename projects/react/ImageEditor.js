@@ -78,27 +78,48 @@ export default class extends Component {
 
     img.onload = () => {
       const canvasDimensions = { width: img.width, height: img.height, ratio: img.width / img.height };
+      const propsOnApply = {
+        activeBody: 'preResize',
+        isShowSpinner: false,
+        img,
+        imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName,
+      };
 
       if (mode === 'manual' && (widthLimit < img.width || heightLimit < img.height)) {
         this.setState({
-          activeBody: 'preResize',
-          img,
-          imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName,
-          isShowSpinner: false,
-          canvasDimensions
+          canvasDimensions,
+          ...propsOnApply
         });
       }
 
       else if (mode === 'auto' && (widthLimit < img.width || heightLimit < img.height)) {
-        if (width >= height) {
+        if (img.width >= img.height) {
+          const ratio = img.width / img.height;
+          const dimensions = { ratio, width: widthLimit, height: widthLimit / ratio };
 
+          this.setState({
+            preCanvasDimensions: { ...dimensions },
+            canvasDimensions: { ...dimensions },
+            ...propsOnApply,
+            activeBody: 'preview',
+            isPreResize: true
+          });
         } else {
+          const ratio = img.height / img.width;
+          const dimensions = { ratio, width: heightLimit / ratio, height: heightLimit };
 
+          this.setState({
+            preCanvasDimensions: { ...dimensions },
+            canvasDimensions: { ...dimensions },
+            ...propsOnApply,
+            activeBody: 'preview',
+            isPreResize: true
+          });
         }
       }
 
       else {
-        this.setState({ activeBody: 'preview', img, imageName });
+        this.setState({ ...propsOnApply });
       }
     }
   }

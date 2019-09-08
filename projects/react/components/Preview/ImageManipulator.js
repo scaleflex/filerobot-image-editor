@@ -91,14 +91,18 @@ export default class ImageManipulator extends Component {
           this.resize({ width: preCanvasDimensions.width, height: preCanvasDimensions.height });
 
           this.render(() => {
-            const resizedCanvas = that.getCanvasNode('scaleflex-image-edit-box');
+            const resizedCanvas = that.replaceWithNewCanvas('scaleflex-image-edit-box');
             const original = {
               height: resizedCanvas.height,
               width: resizedCanvas.width,
               ratio: resizedCanvas.width / resizedCanvas.height
             };
 
-            updateState({ original, canvasDimensions: original, canvasOriginal: resizedCanvas }, () => {
+            updateState({
+              original,
+              canvasDimensions: { ...original },
+              canvasOriginal: that.cloneCanvas(resizedCanvas)
+            }, () => {
               that.initializeCanvases(resizedCanvas);
             });
           });
