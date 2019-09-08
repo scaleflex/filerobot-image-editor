@@ -17,9 +17,8 @@ const PreviewWrapper = styled.div`
 `;
 
 const PreResizeBox = styled('div')`
-  height: 100%;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
   width: 100%;
 `;
 
