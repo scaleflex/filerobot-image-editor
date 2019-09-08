@@ -24,7 +24,11 @@ ImageEditorDownload = new FilerobotImageEditor({
   cropBeforeEdit: {
     width: 400,
     height: 200
-  }
+  },
+  translations: {
+    en: {}
+  },
+  language: 'en'
 });
 
 // Image Editor to upload images and get url in response

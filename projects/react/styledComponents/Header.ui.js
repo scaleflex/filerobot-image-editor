@@ -41,7 +41,7 @@ const CancelBtn = styled(Button)`
   background: ${props => props.theme.colors.dark.base};
   border-color: ${props => props.theme.colors.dark.base};
   color: ${props => props.theme.colors.text.base};
-  text-transform: uppercase;
+  text-transform: capitalize;
   
   :hover {
     background: ${props => getHoverColor(props.theme.colors.dark.base)};

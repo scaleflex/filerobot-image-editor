@@ -62,24 +62,20 @@ export default class extends Component {
 
   render() {
     const { isBlockRatio } = this.state;
-    const { canvasDimensions, processWithCloudimage, onPreResize } = this.props;
+    const { canvasDimensions, processWithCloudimage, onPreResize, t } = this.props;
 
     return (
       <PreResizeBox id="preview-img-box">
 
-        <PreResizeWarning>
-          The resolution of the image is too big for the web. It can cause problems with Image Editor performance.
-        </PreResizeWarning>
+        <PreResizeWarning>{t['warning.too_big_resolution']}</PreResizeWarning>
 
         <PreResizeInner>
-          <h4 style={{ color: '#fff' }}>
-            Would you like to reduce resolution before editing the image?
-          </h4>
+          <h4 style={{ color: '#fff' }}>{t['pre_resize.title']}</h4>
 
           <ResizeWrapper>
             <ResizeBox>
               <FieldSet>
-                <FieldLabel>width</FieldLabel>
+                <FieldLabel>{t['common.width']}</FieldLabel>
                 <FieldInput
                   fullSize
                   value={parseInt(canvasDimensions.width, 10) || ''}
@@ -97,7 +93,7 @@ export default class extends Component {
                 </BlockRatioBtn>
               </BlockRatioWrapper>
               <FieldSet>
-                <FieldLabel>height</FieldLabel>
+                <FieldLabel>{t['common.height']}</FieldLabel>
                 <FieldInput
                   fullSize
                   value={parseInt(canvasDimensions.height, 10) || ''}
@@ -113,18 +109,14 @@ export default class extends Component {
                 themeColor
                 themeBtn={true}
                 onClick={() => { onPreResize('keep'); }}
-              >
-                Keep original resolution
-              </Button>
+              >{t['pre_resize.keep_original_resolution']}</Button>
             </p>
             <p>
               <Button
                 themeColor
                 success={true}
                 onClick={() => { onPreResize('resize'); }}
-              >
-                Resize & Continue
-              </Button>
+              >{t['pre_resize.resize_n_continue']}</Button>
             </p>
           </PreResizeActions>
         </PreResizeInner>

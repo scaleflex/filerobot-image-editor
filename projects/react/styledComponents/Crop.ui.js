@@ -36,6 +36,7 @@ const FieldSet = styled.div`
 const FieldLabel = styled.label`
   display: block;
   margin-bottom: 5px;
+  line-height: 15px;
 `;
 
 const FieldInput = styled.input.attrs(props => ({

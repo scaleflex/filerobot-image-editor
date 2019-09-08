@@ -6,16 +6,24 @@ import { Modal } from './components/Modal';
 import { UPLOADER } from './config';
 import theme, { colorSchemes } from './assets/styles/colorScheme';
 import './assets/fonts/filerobot-font.css';
+import en from './assets/i18n/en';
 
 
 class ImageEditorWrapper extends Component {
   constructor({ show = false, src = '', config = {} }) {
     super();
 
+    config.translations = config.translations || {};
+    config.language = config.language || 'en';
+
     this.state = {
       isVisible: show,
       src,
-      config: this.processConfig(config)
+      config: this.processConfig(config),
+      t: {
+        ...en,
+        ...config.translations[config.language]
+      }
     }
   }
 
@@ -50,7 +58,7 @@ class ImageEditorWrapper extends Component {
   }
 
   render() {
-    const { isVisible, src, config } = this.state;
+    const { isVisible, src, config, t } = this.state;
     const { onComplete = () => {}, showGoBackBtn, closeOnLoad, showInModal = true } = this.props;
     const colors = colorSchemes['default'];
 
@@ -65,6 +73,7 @@ class ImageEditorWrapper extends Component {
           onClose={this.close}
           showGoBackBtn={showGoBackBtn}
           closeOnLoad={closeOnLoad}
+          t={t}
         />
       </Container>
     );

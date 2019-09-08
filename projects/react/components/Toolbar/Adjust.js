@@ -37,14 +37,15 @@ export default class extends Component {
   }
 
   render () {
+    const { t } = this.props;
     const { brightness, contrast, exposure, saturation } = this.state;
 
     return (
       <AdjustWrapper>
-        <Range label={'Brightness'} range={brightness} updateRange={this.updateBrightness}/>
-        <Range label={'Contrast'} range={contrast} updateRange={this.updateContrast}/>
-        <Range label={'Exposure'} range={exposure} updateRange={this.updateExposure}/>
-        <Range label={'Saturation'} range={saturation} updateRange={this.updateSaturation}/>
+        <Range label={t['adjust.brightness']} range={brightness} updateRange={this.updateBrightness}/>
+        <Range label={t['adjust.contrast']} range={contrast} updateRange={this.updateContrast}/>
+        <Range label={t['adjust.exposure']} range={exposure} updateRange={this.updateExposure}/>
+        <Range label={t['adjust.saturation']} range={saturation} updateRange={this.updateSaturation}/>
       </AdjustWrapper>
     );
   }

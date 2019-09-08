@@ -39,13 +39,13 @@ export default class extends Component {
 
   render() {
     const { isBlockRatio } = this.state;
-    const { canvasDimensions, processWithCloudimage } = this.props;
+    const { canvasDimensions, processWithCloudimage, t } = this.props;
 
     return (
       <ResizeWrapper>
         <ResizeBox>
           <FieldSet>
-            <FieldLabel>width</FieldLabel>
+            <FieldLabel>{t['common.width']}</FieldLabel>
             <FieldInput
               fullSize
               value={parseInt(canvasDimensions.width, 10) || ''}
@@ -63,7 +63,7 @@ export default class extends Component {
             </BlockRatioBtn>
           </BlockRatioWrapper>
           <FieldSet>
-            <FieldLabel>height</FieldLabel>
+            <FieldLabel>{t['common.height']}</FieldLabel>
             <FieldInput
               fullSize
               value={parseInt(canvasDimensions.height, 10) || ''}

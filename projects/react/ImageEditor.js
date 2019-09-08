@@ -288,9 +288,10 @@ export default class extends Component {
       flipY,
       adjust
     } = this.state;
-    const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false } = this.props;
+    const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false, t = {} } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
     const headerProps = {
+      t,
       cropDetails,
       original,
       activeTab,
@@ -324,6 +325,7 @@ export default class extends Component {
       ...imageParams
     };
     const previewProps = {
+      t,
       cropDetails,
       original,
       activeTab,
@@ -360,6 +362,7 @@ export default class extends Component {
       ...imageParams
     };
     const footerProps = {
+      t,
       activeBody,
       operations,
       operationsOriginal,
@@ -382,7 +385,7 @@ export default class extends Component {
           {activeBody === 'preview' && <Preview {...previewProps}/>}
           {activeBody === 'preResize' && <PreResize {...previewProps}/>}
 
-          <Spinner overlay show={isShowSpinner}/>
+          <Spinner overlay show={isShowSpinner} label={t['spinner.label']}/>
         </PreviewWrapper>
         <Footer {...footerProps}/>
 

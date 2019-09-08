@@ -70,13 +70,13 @@ export default class extends Component {
 
   render() {
     const { aspectRatio, activeRatio } = this.state;
-    const { cropDetails, original, initialZoom } = this.props;
+    const { cropDetails, original, initialZoom, t } = this.props;
 
     return (
       <CropWrapper>
         <CropBox active={activeRatio === 'custom'}>
           <FieldSet>
-            <FieldLabel>width</FieldLabel>
+            <FieldLabel>{t['common.width']}</FieldLabel>
             <FieldInput
               dark={activeRatio === 'custom'}
               fullSize
@@ -90,7 +90,7 @@ export default class extends Component {
             </BlockRatioBtn>
           </BlockRatioWrapper>
           <FieldSet>
-            <FieldLabel>height</FieldLabel>
+            <FieldLabel>{t['common.height']}</FieldLabel>
             <FieldInput
               dark={activeRatio === 'custom'}
               fullSize
@@ -98,7 +98,7 @@ export default class extends Component {
               onChange={this.changeHeight}
             />
           </FieldSet>
-          <CustomLabel>Custom</CustomLabel>
+          <CustomLabel>{t['common.custom']}</CustomLabel>
         </CropBox>
 
         {BOXES.map(box => (
@@ -106,7 +106,7 @@ export default class extends Component {
             <CropBoxInner>
               <CropShape ratio={box.value || original.width / original.height}/>
               <CropLabel>
-                {box.name}
+                {box.name === 'original' || box.name === 'square' ? t[`common.${box.name}`] : box.name}
               </CropLabel>
             </CropBoxInner>
           </CropBox>

@@ -69,7 +69,7 @@ export const Spinner = (props) => {
           <g>
 </g>
 </svg>
-        <p style={{ color: '#fff'}}>processing...</p>
+        <p style={{ color: '#fff', textAlign: 'center' }}>{props.label}</p>
       </IconWrapper>
     </Fragment>
   )

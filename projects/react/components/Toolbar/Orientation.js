@@ -35,20 +35,17 @@ export default class extends Component {
   }
 
   render() {
-    const { correctionDegree } = this.props;
+    const { correctionDegree, t } = this.props;
 
     return (
       <OrientationWrapper>
         <RotateWrapper>
           <RotateButton>
-            <DarkBtn onClick={this.leftRotate}><RotateIcon name="left-rotate"/> <span>Rotate left</span></DarkBtn>
-            <DarkBtn onClick={this.rightRotate}><RotateIcon name="right-rotate"/> <span>Rotate right</span></DarkBtn>
+            <DarkBtn onClick={this.leftRotate}><RotateIcon name="left-rotate"/> <span>{t['orientation.rotate_l']}</span></DarkBtn>
+            <DarkBtn onClick={this.rightRotate}><RotateIcon name="right-rotate"/> <span>{t['orientation.rotate_r']}</span></DarkBtn>
 
-            {/*<DarkBtn onClick={() => { this.props.onRotate(-5); }}><RotateIcon name="right-rotate"/> 5 degree left</DarkBtn>*/}
-            {/*<DarkBtn onClick={() => { this.props.onRotate(5); }}><RotateIcon name="right-rotate"/> 5 degree right</DarkBtn>*/}
-
-            <DarkBtn onClick={() => { this.onFlip('x'); }}><RotateIcon name="flip-h"/> <span>Flip horizontally</span></DarkBtn>
-            <DarkBtn onClick={() => { this.onFlip('y'); }}><RotateIcon name="flip-v"/> <span>Flip vertically</span></DarkBtn>
+            <DarkBtn onClick={() => { this.onFlip('x'); }}><RotateIcon name="flip-h"/> <span>{t['orientation.flip_h']}</span></DarkBtn>
+            <DarkBtn onClick={() => { this.onFlip('y'); }}><RotateIcon name="flip-v"/> <span>{t['orientation.flip_v']}</span></DarkBtn>
 
             <div>
               <Range min={-30} max={30} step={0.5} range={correctionDegree} updateRange={this.updateCorrectionDegree}/>

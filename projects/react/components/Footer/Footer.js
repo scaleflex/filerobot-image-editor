@@ -1,25 +1,13 @@
 import React, { Component } from 'react';
-import { Footer, PreviousBtn, NextBtn, ResetBtn, Switcher } from '../../styledComponents/index';
+import { Footer, PreviousBtn, NextBtn, ResetBtn } from '../../styledComponents/index';
 
 
 export default class extends Component {
-  onChangeProcessWithCloudimageSwitcher = (processWithCloudimage) => {
-    const { updateState, onRevert, forceApplyOperations } = this.props;
-
-    updateState({ processWithCloudimage });
-
-    if (processWithCloudimage) {
-      forceApplyOperations([]);
-      updateState({ operations: [], activeTab: null });
-    }
-  }
-
   render() {
     const {
       initialZoom, operations, operationsZoomed, currentOperation = null, redoOperation,
-      processWithCloudimage, config, resetOperations, activeBody
+      resetOperations, activeBody, t
     } = this.props;
-    const { hideCloudimageSwitcher } = config;
     const operationList = initialZoom === 1 ? operations : operationsZoomed;
     const currentOperationIndex = operationList.findIndex(operation => operation === currentOperation);
     const isCurrentOperationLast = currentOperation && (operationList[operationList.length - 1] === currentOperation);
@@ -32,27 +20,19 @@ export default class extends Component {
         <ResetBtn
           muted={activeBody !== 'preview'}
           onClick={() => { activeBody === 'preview' && resetOperations(); }}
-          title="reset"
+          title={t['footer.reset']}
         />
 
         <PreviousBtn
           onClick={() => { !isPrevForbidden && redoOperation(currentOperationIndex - 1); }}
           muted={isPrevForbidden}
-          title="undo"
+          title={t['footer.undo']}
         />
         <NextBtn
           onClick={() => { !isNextForbidden && redoOperation(currentOperationIndex + 1); }}
           muted={isNextForbidden}
-          title="redo"
+          title={t['footer.redo']}
         />
-
-        {!hideCloudimageSwitcher &&
-        <Switcher
-          id="cloudimage-url-generator-switch"
-          checked={processWithCloudimage}
-          handleChange={this.onChangeProcessWithCloudimageSwitcher}
-          text={'Process with cloudimage'}
-        />}
       </Footer>
     )
   }
