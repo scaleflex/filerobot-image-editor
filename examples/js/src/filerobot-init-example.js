@@ -18,14 +18,13 @@ ImageEditorDownload = new FilerobotImageEditor({
   isLowQualityPreview: true
 });
 
-
 // Image Editor to upload images and get url in response
 
 const configUpload = {
   elementId: 'image-editor-upload',
   filerobot: {
-    uploadKey: 'bf72d18393ea40d5b4fccd9fb83806fa',
-    container: 'fpdlhfjm',
+    uploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
+    container: 'scaleflex-tests-v5a',
     uploadParams: {
       dir: '/Github-Image-Editor'
     }

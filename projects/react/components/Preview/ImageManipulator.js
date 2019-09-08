@@ -199,11 +199,12 @@ export default class ImageManipulator extends Component {
   saveImage = () => {
     const {
       onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime,
-      operations
+      operations, initialZoom
     } = this.props;
     const { filerobot = {} } = config;
     const src = this.props.src.split('?')[0];
-    const canvas = this.getCanvasNode();
+    const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
+    const canvas = this.getCanvasNode(canvasID);
     const baseUrl = `//${filerobot.container}.api.airstore.io/v1/`;
     const uploadParams = filerobot.uploadParams || {};
     const dir = uploadParams.dir || 'image-editor';
@@ -211,36 +212,34 @@ export default class ImageManipulator extends Component {
     let { imageName } = this.state;
 
     if (!processWithCloudimage) {
-      this.CamanInstance.render(function () {
-        const base64 = canvas.toDataURL(imageMime);
-        const block = base64.split(";");
-        const realData = block[1].split(",")[1];
-        const blob = b64toBlob(realData, imageMime, null);
-        const splittedName = imageName.replace(/-version-.{6}/g, '').split('.');
-        const nameLength = splittedName.length;
-        let name = '';
+      const base64 = canvas.toDataURL(imageMime);
+      const block = base64.split(";");
+      const realData = block[1].split(",")[1];
+      const blob = b64toBlob(realData, imageMime, null);
+      const splittedName = imageName.replace(/-version-.{6}/g, '').split('.');
+      const nameLength = splittedName.length;
+      let name = '';
 
-        if (nameLength <= 1) {
-          name = `${splittedName.join('.')}-version-${(uuidv4() || '').slice(0, 6)}`;
-        } else {
-          name = [
-            splittedName.slice(0, nameLength - 1).join('.'),
-            '-version-',
-            (uuidv4() || '').slice(0, 6),
-            '.',
-            splittedName[nameLength - 1]
-          ].join('');
-        }
+      if (nameLength <= 1) {
+        name = `${splittedName.join('.')}-version-${(uuidv4() || '').slice(0, 6)}`;
+      } else {
+        name = [
+          splittedName.slice(0, nameLength - 1).join('.'),
+          '-version-',
+          (uuidv4() || '').slice(0, 6),
+          '.',
+          splittedName[nameLength - 1]
+        ].join('');
+      }
 
-        const formData = new FormData();
-        const request = new XMLHttpRequest();
+      const formData = new FormData();
+      const request = new XMLHttpRequest();
 
-        request.addEventListener("load", self.onFileLoad);
-        formData.append('files[]', blob, name);
-        request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
-        request.setRequestHeader('X-Airstore-Secret-Key', filerobot.uploadKey);
-        request.send(formData);
-      });
+      request.addEventListener("load", self.onFileLoad);
+      formData.append('files[]', blob, name);
+      request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
+      request.setRequestHeader('X-Airstore-Secret-Key', filerobot.uploadKey);
+      request.send(formData);
     } else {
       const allowedOperations = operations.filter(({ stack }) => CLOUDIMAGE_OPERATIONS.indexOf(stack[0].name) > -1);
       const url = this.generateCloudimageURL(allowedOperations);
@@ -351,23 +350,23 @@ export default class ImageManipulator extends Component {
   applyFilterOrEffect = (type) => {
     const { updateState, initialZoom } = this.props;
 
-    updateState({ isHideCanvas: true, isShowSpinner: true });
+    updateState({ isHideCanvas: true, isShowSpinner: true }, () => {
+      if (initialZoom !== 1) {
+        this.CamanInstanceOriginal.revert(false);
 
-    if (initialZoom !== 1) {
-      this.CamanInstanceOriginal.revert(false);
+        this.CamanInstanceOriginal[getEffectHandlerName(this.props[type])]();
 
-      this.CamanInstanceOriginal[getEffectHandlerName(this.props[type])]();
-
-      this.CamanInstanceOriginal.render(() => {
+        this.CamanInstanceOriginal.render(() => {
+          updateState({ [type]: null }, () => {
+            this.makeCanvasSnapshot({ operation: type });
+          });
+        });
+      } else {
         updateState({ [type]: null }, () => {
           this.makeCanvasSnapshot({ operation: type });
         });
-      });
-    } else {
-      updateState({ [type]: null }, () => {
-        this.makeCanvasSnapshot({ operation: type });
-      });
-    }
+      }
+    });
   }
 
   applyAdjust = () => {
@@ -375,26 +374,26 @@ export default class ImageManipulator extends Component {
     const { brightness, contrast, saturation, exposure } = adjust;
     const resetProps = { brightness: 0, contrast: 0, saturation: 0, exposure: 0 };
 
-    updateState({ isHideCanvas: true, isShowSpinner: true });
+    updateState({ isHideCanvas: true, isShowSpinner: true }, () => {
+      if (initialZoom !== 1) {
+        this.CamanInstanceOriginal.revert(false);
 
-    if (initialZoom !== 1) {
-      this.CamanInstanceOriginal.revert(false);
+        if (brightness.toString() !== '0') this.CamanInstanceOriginal.brightness(parseInt(brightness || '0'));
+        if (contrast.toString() !== '0') this.CamanInstanceOriginal.contrast(parseInt(contrast || '0'));
+        if (saturation.toString() !== '0') this.CamanInstanceOriginal.saturation(parseInt(saturation || '0'));
+        if (exposure.toString() !== '0') this.CamanInstanceOriginal.exposure(parseInt(exposure || '0'));
 
-      if (brightness.toString() !== '0') this.CamanInstanceOriginal.brightness(parseInt(brightness || '0'));
-      if (contrast.toString() !== '0') this.CamanInstanceOriginal.contrast(parseInt(contrast || '0'));
-      if (saturation.toString() !== '0') this.CamanInstanceOriginal.saturation(parseInt(saturation || '0'));
-      if (exposure.toString() !== '0') this.CamanInstanceOriginal.exposure(parseInt(exposure || '0'));
-
-      this.CamanInstanceOriginal.render(() => {
+        this.CamanInstanceOriginal.render(() => {
+          updateState({ ...resetProps }, () => {
+            this.makeCanvasSnapshot({ operation: 'adjust' });
+          });
+        });
+      } else {
         updateState({ ...resetProps }, () => {
           this.makeCanvasSnapshot({ operation: 'adjust' });
         });
-      });
-    } else {
-      updateState({ ...resetProps }, () => {
-        this.makeCanvasSnapshot({ operation: 'adjust' });
-      });
-    }
+      }
+    });
   }
 
   /* Rotate */
@@ -442,25 +441,25 @@ export default class ImageManipulator extends Component {
   applyOrientation = () => {
     const { updateState, initialZoom, rotate, correctionDegree, flipX, flipY } = this.props;
 
-    updateState({ isHideCanvas: true, isShowSpinner: true });
+    updateState({ isHideCanvas: true, isShowSpinner: true }, () => {
+      if (initialZoom !== 1) {
+        this.CamanInstanceOriginal.reset();
 
-    if (initialZoom !== 1) {
-      this.CamanInstanceOriginal.reset();
+        if (flipX) this.CamanInstanceOriginal.flip('x');
+        if (flipY) this.CamanInstanceOriginal.flip('y');
+        if (rotate || correctionDegree) this.CamanInstanceOriginal.rotate((rotate || 0) + (correctionDegree || 0));
 
-      if (flipX) this.CamanInstanceOriginal.flip('x');
-      if (flipY) this.CamanInstanceOriginal.flip('y');
-      if (rotate || correctionDegree) this.CamanInstanceOriginal.rotate((rotate || 0) + (correctionDegree || 0));
-
-      this.CamanInstanceOriginal.render(() => {
+        this.CamanInstanceOriginal.render(() => {
+          updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
+            this.makeCanvasSnapshot({ operation: 'rotate' });
+          });
+        });
+      } else {
         updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
           this.makeCanvasSnapshot({ operation: 'rotate' });
         });
-      });
-    } else {
-      updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
-        this.makeCanvasSnapshot({ operation: 'rotate' });
-      });
-    }
+      }
+    });
   }
 
   getOrientationArguments = (operation = {}) => {
@@ -516,18 +515,18 @@ export default class ImageManipulator extends Component {
     const { initialZoom, updateState, cropDetails } = this.props;
     const { width, height, x, y } = cropDetails;
 
-    updateState({ isShowSpinner: true });
+    updateState({ isShowSpinner: true }, () => {
+      this.destroyCrop();
 
-    this.destroyCrop();
+      if (initialZoom !== 1) {
+        this.CamanInstanceZoomed.crop(width, height, x, y);
+        this.CamanInstanceOriginal.crop(...[width, height, x, y].map(prop => prop * initialZoom));
+      } else {
+        this.CamanInstance.crop(width, height, x, y);
+      }
 
-    if (initialZoom !== 1) {
-      this.CamanInstanceZoomed.crop(width, height, x, y);
-      this.CamanInstanceOriginal.crop(...[width, height, x, y].map(prop => prop * initialZoom));
-    } else {
-      this.CamanInstance.crop(width, height, x, y);
-    }
-
-    this.makeCanvasSnapshot({ operation: 'crop' });
+      this.makeCanvasSnapshot({ operation: 'crop' });
+    });
   }
 
   makeCanvasSnapshot = (operation) => {
