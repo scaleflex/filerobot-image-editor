@@ -5,6 +5,24 @@ import imageType from 'image-type';
 import './lib/caman';
 
 
+const INITIAL_PARAMS = {
+  effect: null,
+  filter: null,
+  crop: null,
+  resize: null,
+  rotate: null,
+  correctionDegree: 0,
+  flipX: false,
+  flipY: false,
+  adjust: {
+    brightness: 0,
+    contrast: 0,
+    saturation: 0,
+    exposure: 0
+  },
+  canvasDimensions: { width: 300, height: 200, ratio: 1.5 }
+};
+
 export default class extends Component {
   constructor(props) {
     super();
@@ -15,14 +33,24 @@ export default class extends Component {
       isShowSpinner: true,
       isHideCanvas: false,
       activeTab: null,
-      operations: [],
       currentOperation: null,
       original: { width: 300, height: 200 },
       cropDetails: { width: 300, height: 200 },
       canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
       processWithFilerobot: processWithFilerobot,
       processWithCloudimage: processWithCloudimage,
-      uploadCloudimageImage: uploadWithCloudimageLink
+      uploadCloudimageImage: uploadWithCloudimageLink,
+
+      operationsOriginal: [],
+      operationsZoomed: [],
+      operations: [],
+
+      canvasZoomed: null,
+      canvasOriginal: null,
+
+      initialZoom: 1,
+
+      ...INITIAL_PARAMS
     }
   }
 
@@ -43,51 +71,36 @@ export default class extends Component {
     xhr.send();
   }
 
-  updateState = props => { this.setState(props); }
-
-  onRevert = (all) => {
-    const { cleanTemp, activeTab, revert, applyOperations, operations } = this.state;
-    const index = all ? 0 : operations.length - 1;
-
-    if (activeTab === 'effects' || activeTab === 'filters' || activeTab === 'adjust') {
-      this.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
-      cleanTemp();
-      return;
-    }
-
-    if (activeTab === 'rotate') {
-      revert(() => {
-        applyOperations(operations, index, () => {
-          this.setState({ isHideCanvas: false, isShowSpinner: false });
-        });
-      });
-    }
-
-    this.setState({ activeTab: null, isShowSpinner: false, isHideCanvas: false });
+  updateState = (props, callback = () => {}) => {
+    this.setState(props, callback);
   }
 
-  forceApplyOperations = (operations, activeTab) => {
-    const { revert, applyOperations } = this.state;
+  onRevert = () => {
+    const { cancelLastOperation, activeTab } = this.state;
 
-    this.setState({ activeTab: null, isShowSpinner: true, isHideCanvas: true });
+    this.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
 
-    revert(() => {
-      applyOperations(operations, operations.length, () => {
-        this.setState({ isHideCanvas: false, isShowSpinner: false, activeTab: activeTab });
-      });
+    cancelLastOperation(activeTab, () => {
+      this.setState({ isHideCanvas: false, isShowSpinner: false, ...INITIAL_PARAMS });
     });
   }
 
   onAdjust = (handler, value) => {
-    const { adjust } = this.state;
+    const { onAdjust } = this.state;
 
-    adjust(handler, value);
+    onAdjust(handler, value);
   }
 
-  onRotate = (value, total) => {
-    const { rotate } = this.state;
+  onRotate = (value, correctionDegree, flipX, flipY) => {
+    const { onRotate } = this.state;
 
-    rotate(value, total);
+    onRotate(value, correctionDegree, flipX, flipY);
+  }
+
+  onFlip = (axis) => {
+    const { flip } = this.state;
+
+    flip(axis);
   }
 
   onSave = () => {
@@ -100,48 +113,104 @@ export default class extends Component {
   onDownloadImage = () => {
     const { downloadImage } = this.state;
 
-    downloadImage();
-    this.props.onComplete({ status: 'success' });
-    this.props.onClose();
-  }
-
-  onResize = (params) => {
-    const { resize } = this.state;
-
-    resize(params);
+    downloadImage(() => {
+      this.props.onComplete({ status: 'success' });
+      this.props.onClose();
+    });
   }
 
   onApplyEffects = name => {
-    const { addEffect } = this.state;
+    const { applyCorrections, effect } = this.state;
+    const nextEffect = effect === name ? null : name;
 
-    this.setState({ isHideCanvas: true, isShowSpinner: true });
-    addEffect(name);
+    this.setState(
+      { isShowSpinner: true, effect: nextEffect },
+      () => {
+        applyCorrections(
+          () => {
+            this.setState({ isShowSpinner: false })
+          }
+        );
+      }
+    );
+  }
+
+  onApplyFilters = name => {
+    const { applyCorrections, filter } = this.state;
+    const nextFilter = filter === name ? null : name;
+
+    this.setState(
+      { isShowSpinner: true, filter: nextFilter },
+      () => {
+        applyCorrections(
+          () => {
+            this.setState({ isShowSpinner: false })
+          }
+        );
+      }
+    );
+  }
+
+  handleSave = () => {
+    const {  processWithFilerobot, processWithCloudimage } = this.state;
+
+    if (!processWithFilerobot && !processWithCloudimage) {
+      this.onDownloadImage();
+    } else {
+      this.onSave();
+    }
   }
 
   apply = () => {
     const { activeTab, applyChanges } = this.state;
 
-    this.setState({ isHideCanvas: true });
     applyChanges(activeTab);
+    this.setState({ activeTab: null });
   }
 
   redoOperation = (operationIndex) => {
-    const { applyOperations, operations, revert } = this.state;
+    const { applyOperations } = this.state;
 
     this.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
-    revert(() => {
-      applyOperations(operations, operationIndex, () => {
-        this.setState({ isHideCanvas: false, isShowSpinner: false });
+
+    applyOperations(
+      operationIndex,
+      () => { this.setState({ isHideCanvas: false, isShowSpinner: false }); },
+    );
+  }
+
+  resetOperations = () => {
+    const { resetAll } = this.state;
+
+    this.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
+
+    resetAll(() => {
+      this.setState({
+        isHideCanvas: false,
+        isShowSpinner: false,
+        ...INITIAL_PARAMS
       });
     });
   }
 
   render() {
     const {
-      isShowSpinner, activeTab, operations, currentOperation, isHideCanvas, cropDetails, original,
-      canvasDimensions, processWithCloudimage, processWithFilerobot, uploadCloudimageImage, imageMime
+      isShowSpinner, activeTab, operations, operationsOriginal, operationsZoomed, currentOperation, isHideCanvas,
+      cropDetails, original, canvasDimensions, processWithCloudimage, processWithFilerobot, uploadCloudimageImage,
+      imageMime, lastOperation, operationList, initialZoom, canvasZoomed, canvasOriginal,
+
+      effect,
+      filter,
+      crop,
+      resize,
+      rotate,
+      correctionDegree,
+      flipX,
+      flipY,
+      adjust
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false } = this.props;
+    const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
     const headerProps = {
       cropDetails,
       original,
@@ -152,23 +221,34 @@ export default class extends Component {
       processWithCloudimage,
       processWithFilerobot,
       operations,
+      operationsOriginal,
+      operationsZoomed,
+      initialZoom,
       isShowSpinner,
       showGoBackBtn,
-      forceApplyOperations: this.forceApplyOperations,
       updateState: this.updateState,
       onRevert: this.onRevert,
       apply: this.apply,
       onSave: this.onSave,
-      onResize: this.onResize,
+      onFlip: this.onFlip,
       onApplyEffects: this.onApplyEffects,
+      onApplyFilters: this.onApplyFilters,
       onRotate: this.onRotate,
       onAdjust: this.onAdjust,
-      onDownloadImage: this.onDownloadImage
+      onDownloadImage: this.onDownloadImage,
+      handleSave: this.handleSave,
+
+      ...imageParams
     };
     const previewProps = {
+      cropDetails,
+      original,
       activeTab,
       isShowSpinner,
       operations,
+      operationsOriginal,
+      operationsZoomed,
+      initialZoom,
       currentOperation,
       isHideCanvas,
       src,
@@ -180,15 +260,25 @@ export default class extends Component {
       config,
       processWithCloudimage,
       uploadCloudimageImage,
-      updateState: this.updateState
+      lastOperation,
+      operationList,
+      canvasZoomed,
+      canvasOriginal,
+      updateState: this.updateState,
+      handleSave: this.handleSave,
+
+      ...imageParams
     };
     const footerProps = {
       operations,
+      operationsOriginal,
+      operationsZoomed,
+      initialZoom,
       currentOperation,
       processWithCloudimage,
-      forceApplyOperations: this.forceApplyOperations,
       updateState: this.updateState,
       redoOperation: this.redoOperation,
+      resetOperations: this.resetOperations,
       config
     };
 

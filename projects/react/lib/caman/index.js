@@ -47,4 +47,5 @@ import './plugins/filters/vintage';
 
 import './plugins/rotate';
 import './plugins/stackBlur';
+import './plugins/flip';
 //import './plugins/threshold';

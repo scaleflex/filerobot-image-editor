@@ -56,6 +56,12 @@ class Caman extends Module {
 
     // @property [Boolean] Should we check the DOM for images with Caman instructions?
     this.autoload = true;
+
+    // @property [Integer] to know how many angles was the image rotated so I can get the correct imageData when rotate the new canvas
+    this.angle = 0;
+
+    // @property [Boolean]  if canvas was rotated
+    this.rotated = false;
   }
 
   // Custom toString()
@@ -554,6 +560,9 @@ class Caman extends Module {
     this.cropCoordinates = {x: 0, y: 0};
     this.resized = false;
 
+    this.angle = 0;
+    this.rotated = false;
+
     return this.replaceCanvas(canvas);
   }
 
@@ -596,6 +605,37 @@ class Caman extends Module {
 
       pixelData = ctx.getImageData(0, 0, this.width, this.height).data;
       ({ width } = this);
+    } else if (this.rotated) {
+      var canvas = document.createElement('canvas');//Canvas for initial state
+
+      canvas.width = this.originalWidth; //give it the original width
+      canvas.height = this.originalHeight; //and original height
+
+      var ctx = canvas.getContext('2d');
+      var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      pixelData = imageData.data;//get the pixelData (length equal to those of initial canvas
+      var _ref = this.originalPixelData; //use it as a reference array
+
+      let i, _i, _len, pixel;
+
+      for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+        pixel = _ref[i];
+        pixelData[i] = pixel; //give pixelData the initial pixels
+      }
+      ctx.putImageData(imageData, 0, 0); //put it back on our canvas
+      var rotatedCanvas = document.createElement('canvas'); //canvas to rotate from initial
+      var rotatedCtx = rotatedCanvas.getContext('2d');
+      rotatedCanvas.width = this.canvas.width;//Our canvas was already rotated so it has been replaced. Caman's canvas attribute is allready rotated, So use that width
+      rotatedCanvas.height = this.canvas.height; //the same
+      var x = rotatedCanvas.width / 2; //for translating
+      var y = rotatedCanvas.height / 2; //same
+      rotatedCtx.save();
+      rotatedCtx.translate(x, y);
+      rotatedCtx.rotate(this.angle * Math.PI / 180); //rotation based on the total angle
+      rotatedCtx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height); //put the image back on canvas
+      rotatedCtx.restore(); //restore it
+      pixelData = rotatedCtx.getImageData(0, 0, rotatedCanvas.width, rotatedCanvas.height).data; //get the pixelData back
+      width = rotatedCanvas.width; //used for returning the pixels in revert function
     } else {
       pixelData = this.originalPixelData;
       width = this.originalWidth;

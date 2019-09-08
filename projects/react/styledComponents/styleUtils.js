@@ -354,6 +354,15 @@ function getIconByName(name) {
   let char = '';
 
   switch (name) {
+    case 'reset':
+      char = '\\e912';
+      break;
+    case 'flip-v':
+      char = '\\e916';
+      break;
+    case 'flip-h':
+      char = '\\e914';
+      break;
     case 'cross':
       char = '\\e90c';
       break;

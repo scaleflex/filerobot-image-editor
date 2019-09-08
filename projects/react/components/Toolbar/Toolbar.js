@@ -25,12 +25,12 @@ export default class extends Component {
     return (
       <Toolbar>
         {!activeTab && allowedTools.map(name => <Tool name={name} key={name} {...this.props}/>)}
+        {activeTab === 'adjust' && <Adjust {...this.props}/>}
         {activeTab === 'effects' && <Effects {...this.props}/>}
         {activeTab === 'filters' && <Filters {...this.props}/>}
+        {activeTab === 'rotate' && <Orientation {...this.props}/>}
         {activeTab === 'crop' && <Crop {...this.props}/>}
         {activeTab === 'resize' && <Resize {...this.props}/>}
-        {activeTab === 'rotate' && <Orientation {...this.props}/>}
-        {activeTab === 'adjust' && <Adjust {...this.props}/>}
         {isShowSpinner && <NoClickOverlay/>}
       </Toolbar>
     )

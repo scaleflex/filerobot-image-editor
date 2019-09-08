@@ -12,7 +12,7 @@ class Range extends Component {
     };
   }
 
-  updateWithDebounce = debounce(100, value => {
+  updateWithDebounce = debounce(10, value => {
     this.props.updateRange(value);
   });
 
@@ -29,7 +29,7 @@ class Range extends Component {
     const { label, min = -100, max = 100, step = 1 } = this.props;
 
     return (
-      <Wrapper>
+      <Wrapper className="image-editor-range-wrapper">
         <input
           id="range"
           type="range"
@@ -57,7 +57,7 @@ const Wrapper = styled('div')`
     display: inline-block;
     width: 100%;
     text-align: center;
-    padding-top: 25px;
+    padding-top: 20px;
   }
   
   :after {
@@ -80,6 +80,7 @@ const Wrapper = styled('div')`
     height: 6px;
     width: 180px;
     border-radius: 5px;
+    margin-bottom: 5px;
     
     &::-webkit-slider-thumb {
       -webkit-appearance: none;

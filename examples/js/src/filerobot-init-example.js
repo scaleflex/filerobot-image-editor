@@ -13,7 +13,10 @@ let ImageEditorDownload, ImageEditorUpload, ImageEditorModify;
 
 // Image Editor to download images
 
-ImageEditorDownload = new FilerobotImageEditor({ elementId: 'image-editor-download' });
+ImageEditorDownload = new FilerobotImageEditor({
+  elementId: 'image-editor-download',
+  isLowQualityPreview: true
+});
 
 
 // Image Editor to upload images and get url in response
@@ -26,7 +29,8 @@ const configUpload = {
     uploadParams: {
       dir: '/Github-Image-Editor'
     }
-  }
+  },
+  isLowQualityPreview: true
 };
 const onCompleteUpload = function(newUrl) {
   const copyText = document.getElementById("copy-text");

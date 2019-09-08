@@ -32,11 +32,16 @@ export default class extends Component {
   }
 
   changeWidth = (event) => {
-    window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +event.target.value / window.scaleflexPlugins.zoom  });
+    const { initialZoom } = this.props;
+
+    window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +event.target.value / initialZoom / window.scaleflexPlugins.zoom  });
   }
 
+
   changeHeight = (event) => {
-    window.scaleflexPlugins.cropperjs.setCropBoxData({ height: +event.target.value / window.scaleflexPlugins.zoom  });
+    const { initialZoom } = this.props;
+
+    window.scaleflexPlugins.cropperjs.setCropBoxData({ height: +event.target.value / initialZoom / window.scaleflexPlugins.zoom  });
   }
 
   toggleRatio = (event) => {
@@ -74,7 +79,7 @@ export default class extends Component {
 
   render() {
     const { aspectRatio, activeRatio } = this.state;
-    const { cropDetails, original } = this.props;
+    const { cropDetails, original, initialZoom } = this.props;
 
     return (
       <CropWrapper>
@@ -84,7 +89,7 @@ export default class extends Component {
             <FieldInput
               dark={activeRatio === 'custom'}
               fullSize
-              value={Math.round(cropDetails.width)}
+              value={Math.floor(cropDetails.width * initialZoom)}
               onChange={this.changeWidth}
             />
           </FieldSet>
@@ -98,7 +103,7 @@ export default class extends Component {
             <FieldInput
               dark={activeRatio === 'custom'}
               fullSize
-              value={Math.round(cropDetails.height)}
+              value={Math.floor(cropDetails.height * initialZoom)}
               onChange={this.changeHeight}
             />
           </FieldSet>

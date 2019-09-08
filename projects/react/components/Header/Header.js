@@ -7,22 +7,12 @@ import { Toolbar } from '../';
 
 
 export default class extends Component {
-  handleSave = () => {
-    const {  onDownloadImage, processWithFilerobot, processWithCloudimage, onSave } = this.props;
-
-    if (!processWithFilerobot && !processWithCloudimage) {
-      onDownloadImage();
-    } else {
-      onSave();
-    }
-  }
-
   render() {
     const {
-      activeTab, onRevert, apply, onClose, showGoBackBtn, operations, processWithFilerobot, processWithCloudimage
+      activeTab, onRevert, apply, onClose, showGoBackBtn, processWithFilerobot, processWithCloudimage,
+      handleSave
     } = this.props;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
-    const atLeastOneOperationApplied = !!operations.length;
     const onFinishButtonLabel = (!processWithFilerobot && !processWithCloudimage) ? 'DOWNLOAD' : 'SAVE';
 
     return (
@@ -34,7 +24,7 @@ export default class extends Component {
 
         <ToolbarWrapper>
           <LeftActions>
-            <CancelBtn hide={!activeTab} onClick={onRevert} sm default fullSize>Cancel</CancelBtn>
+            <CancelBtn hide={!activeTab} onClick={() => { onRevert(); }} sm default fullSize>Cancel</CancelBtn>
             {showGoBackBtn &&
             <CancelBtn hide={activeTab} onClick={onClose} sm default fullSize>Go back</CancelBtn>}
           </LeftActions>
@@ -45,13 +35,13 @@ export default class extends Component {
             <Button
               themeColor
               sm
-              disabled={!atLeastOneOperationApplied && !activeTab}
-              success={!activeTab}
+              //disabled={!activeTab}
+              success={!activeTab || activeTab === 'resize'}
               themeBtn={activeTab}
               fullSize
-              onClick={() => { !activeTab ? this.handleSave() : apply() }}
+              onClick={() => { !activeTab ? handleSave() : apply() }}
             >
-              {!activeTab ? onFinishButtonLabel : 'APPLY'}
+              {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : 'APPLY'}
             </Button>
           </RightActions>
         </ToolbarWrapper>

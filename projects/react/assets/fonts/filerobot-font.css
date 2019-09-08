@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'filerobot-image-editor-font';
-  src:  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/filerobot-image-editor-font.eot?ua0hzun');
-  src:  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/filerobot-image-editor-font.eot?ua0hzun#iefix') format('embedded-opentype'),
-  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/filerobot-image-editor-font.ttf?ua0hzun') format('truetype'),
-  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/filerobot-image-editor-font.woff?ua0hzun') format('woff'),
-  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/filerobot-image-editor-font.svg?ua0hzun#filerobot-image-editor-font') format('svg');
+  src:  url('https://store.filerobot.com/scaleflex/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/v2/filerobot-image-editor-font.eot?ua0hzun');
+  src:  url('https://store.filerobot.com/scaleflex/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/v2/filerobot-image-editor-font.eot?ua0hzun#iefix') format('embedded-opentype'),
+  url('https://store.filerobot.com/scaleflex/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/v2/filerobot-image-editor-font.ttf?ua0hzun') format('truetype'),
+  url('https://store.filerobot.com/scaleflex/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/v2/filerobot-image-editor-font.woff?ua0hzun') format('woff'),
+  url('https://store.filerobot.com/scaleflex/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/v2/filerobot-image-editor-font.svg?ua0hzun#filerobot-image-editor-font') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,10 +24,25 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.sf-i-arrows-back:before {
+.sf-i-reset:before {
+  content: "\e912";
+}
+.sf-i-rotate_right:before {
+  content: "\e913";
+}
+.sf-i-flip_vertically:before {
+  content: "\e914";
+}
+.sf-i-rotate_left:before {
+  content: "\e915";
+}
+.sf-i-flip_horizontally:before {
+  content: "\e916";
+}
+.sf-i-arrows_back:before {
   content: "\e905";
 }
-.sf-i-arrows-forward:before {
+.sf-i-arrows_forward:before {
   content: "\e906";
 }
 .sf-i-filter:before {

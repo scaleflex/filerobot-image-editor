@@ -7,10 +7,10 @@ export default class extends Component {
 
 
   render() {
-    const { name, onApplyEffects } = this.props;
+    const { active, name, onApplyEffects } = this.props;
 
     return (
-      <EffectWrapper onClick={onApplyEffects.bind(null, name)}>
+      <EffectWrapper active={active === name} onClick={onApplyEffects.bind(null, name)}>
         <EffectIcon src={getIcon(name)}/>
         <EffectLabel>{getLabel(name)}</EffectLabel>
       </EffectWrapper>

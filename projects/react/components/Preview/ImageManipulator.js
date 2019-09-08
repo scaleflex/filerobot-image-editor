@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Canvas } from '../../styledComponents';
 import { b64toBlob } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
@@ -7,30 +7,43 @@ import uuidv4 from 'uuid/v4';
 import { getEffectHandlerName } from '../../utils/effects.utils';
 
 
+const INITIAL_PARAMS = {
+  effect: null,
+  filter: null,
+  crop: null,
+  resize: null,
+  rotate: null,
+  correctionDegree: 0,
+  flipX: false,
+  flipY: false,
+  adjust: {
+    brightness: 0,
+    contrast: 0,
+    saturation: 0,
+    exposure: 0
+  },
+  canvasDimensions: { width: 300, height: 200, ratio: 1.5 }
+};
+
+
 export default class ImageManipulator extends Component {
-  constructor(props) {
+  constructor() {
     super();
 
     this.state = {
-      ...props,
-      queue: Array.from(Array(4).keys()),
-      tempOperation: null,
-      canvas: null,
-      adjust: {
-        brightness: 0,
-        contrast: 0,
-        gamma: 0,
-        saturation: 0,
-        exposure: 0
-      }
+      canvas: null
     };
+
+    this.CamanInstance = null;
+    this.CamanInstanceOriginal = null;
+    this.CamanInstanceZoomed = null;
   }
 
   shouldComponentUpdate() { return false; }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.activeTab !== this.state.activeTab) {
-      if (this.state.activeTab) this.destroyMode(this.state.activeTab);
+    if (nextProps.activeTab !== this.props.activeTab) {
+      if (this.props.activeTab) this.destroyMode(this.props.activeTab);
 
       this.changeTab(nextProps.activeTab);
     }
@@ -39,61 +52,157 @@ export default class ImageManipulator extends Component {
   }
 
   componentDidMount() {
-    const src = this.state.src;
+    const that = this;
+    const { config: { isLowQualityPreview } = {}, updateState, src } = this.props;
     const splittedSrc = src.split('/');
-    let imageName = splittedSrc[splittedSrc.length - 1];
+    const imageName = splittedSrc[splittedSrc.length - 1];
+    const img = new Image();
+
+    let initialZoom = 1;
+    let original = null;
+
     this.props.updateState({
       isShowSpinner: true,
       applyChanges: this.applyChanges,
       applyOperations: this.applyOperations,
-      saveImage: this.saveImage,
-      updateCropDetails: this.updateCropDetails,
-      resize: this.resize,
-      addEffect: this.addFilterOrEffect,
-      cleanTemp: this.cleanTemp,
-      revert: this.revert,
-      rotate: this.rotate,
-      adjust: this.adjust,
-      downloadImage: this.downloadImage
-    });
-    const canvas = this.getCanvasNode();
-    const ctx = canvas.getContext('2d');
+      resetAll: this.resetAll,
+      onRotate: this.onRotate,
+      onAdjust: this.onAdjust,
 
-    /* Enable Cross Origin Image Editing */
-    const img = new Image();
-    img.crossOrigin = '';
+      downloadImage: this.downloadImage,
+      saveImage: this.saveImage,
+
+      applyCorrections: this.applyCorrections,
+      restoreAll: this.restoreAll,
+      cancelLastOperation: this.cancelLastOperation
+    });
+
+
+    img.crossOrigin = ''; // Enable Cross Origin Image Editing
     img.src = src;
     this.img = img;
 
     img.onload = () => {
+      const canvas = this.getCanvasNode('scaleflex-image-edit-box');
+      const ctx = canvas.getContext('2d');
+
       canvas.width = img.width;
       canvas.height = img.height;
+
       ctx.drawImage(img, 0, 0, img.width, img.height);
 
-      this.props.updateState({
-        isShowSpinner: false,
-        original: { height: img.height, width: img.width },
-        canvasDimensions: { height: img.height, width: img.width, ratio: img.width / img.height }
-      });
+      original = { height: img.height, width: img.width, ratio: img.width / img.height }
+
+      updateState({ original, canvasDimensions: original });
+
       this.setState({
         originalWidth: img.width,
         originalHeight: img.height,
         originalImage: img,
-        imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName,
-        originalCanvas: canvas
+        imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName
       });
 
-      this.CamanInstance = new window.Caman(canvas, function () { });
+      if (isLowQualityPreview && img.height > 1050) {
+        const canvasOriginal = this.getCanvasNode('scaleflex-image-edit-box-original');
+        const ctxOriginal = canvasOriginal.getContext('2d');
+
+        canvasOriginal.width = img.width;
+        canvasOriginal.height = img.height;
+
+        ctxOriginal.drawImage(img, 0, 0, img.width, img.height);
+
+        initialZoom = img.height / 800;
+
+        const zoomedWidth = img.width / initialZoom;
+        const zoomedHeight = img.height / initialZoom;
+
+        updateState({ initialZoom, canvasOriginal });
+        that.setState({ zoomedWidth, zoomedHeight });
+
+
+        new window.Caman(canvas, function () {
+          this.resize({ width: zoomedWidth, height: zoomedHeight });
+
+          this.render(() => {
+            const canvasZoomed = that.replaceWithNewCanvas('scaleflex-image-edit-box');
+
+            that.CamanInstanceZoomed = new window.Caman(
+              canvasZoomed,
+              function () {
+                that.CamanInstanceOriginal = new window.Caman(canvasOriginal, function () {});
+                updateState({ isShowSpinner: false, canvasZoomed: that.cloneCanvas(canvasZoomed) });
+              }
+            );
+          });
+        });
+      } else {
+        that.CamanInstance = new window.Caman(canvas, function () {
+          updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(canvas) });
+        });
+      }
     }
   }
 
+  cloneCanvas = (oldCanvas) => {
+    //create a new canvas
+    const newCanvas = document.createElement('canvas');
+    const context = newCanvas.getContext('2d');
+
+    //set dimensions
+    newCanvas.width = oldCanvas.width;
+    newCanvas.height = oldCanvas.height;
+
+    // set old id
+    newCanvas.id = oldCanvas.id;
+
+    //apply the old canvas to the new one
+    context.drawImage(oldCanvas, 0, 0);
+
+    //return the new canvas
+    return newCanvas;
+  }
+
+  replaceWithNewCanvas = (id) => {
+    //create a new canvas
+    const oldCanvas = this.getCanvasNode(id);
+    let newCanvas = document.createElement('canvas');
+    let context = newCanvas.getContext('2d');
+    const container = oldCanvas.parentElement;
+    container.removeChild(oldCanvas)
+
+    //set dimensions
+    newCanvas.width = oldCanvas.width;
+    newCanvas.height = oldCanvas.height;
+    newCanvas.id = id;
+
+    //apply the old canvas to the new one
+    context.drawImage(oldCanvas, 0, 0);
+
+    container.appendChild(newCanvas);
+
+    //return the new canvas
+    return newCanvas;
+  }
+
+  replaceCanvas = (newCanvas, id) => {
+    //create a new canvas
+    const oldCanvas = this.getCanvasNode(id);
+    const container = oldCanvas.parentElement;
+    container.removeChild(oldCanvas)
+
+    container.appendChild(newCanvas);
+
+    //return the new canvas
+    return newCanvas;
+  }
+
   saveImage = () => {
-    const { operations } = this.state;
     const {
-      onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime
+      onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime,
+      operations
     } = this.props;
     const { filerobot = {} } = config;
-    const src = this.state.src.split('?')[0];
+    const src = this.props.src.split('?')[0];
     const canvas = this.getCanvasNode();
     const baseUrl = `//${filerobot.container}.api.airstore.io/v1/`;
     const uploadParams = filerobot.uploadParams || {};
@@ -155,10 +264,12 @@ export default class ImageManipulator extends Component {
     }
   }
 
-  downloadImage = () => {
-    const canvas = this.getCanvasNode();
-    const { imageName } = this.state;
+  downloadImage = (callback) => {
+    const { initialZoom } = this.props;
+    const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
+    const canvas = this.getCanvasNode(canvasID);
     const { imageMime } = this.props;
+    const { imageName } = this.state;
     const lnk = document.createElement('a');
     let e;
 
@@ -172,6 +283,8 @@ export default class ImageManipulator extends Component {
     } else if (lnk.fireEvent) {
       lnk.fireEvent("onclick");
     }
+
+    if (callback) callback();
   }
 
   onFileLoad = (data) => {
@@ -233,64 +346,121 @@ export default class ImageManipulator extends Component {
 
   /* Filters and Effects */
 
-  initFiltersOrEffects = () => {}
+  initFiltersOrEffects = () => { }
 
-  addFilterOrEffect = name => {
-    const effectHandlerName = getEffectHandlerName(name);
-    const { currentOperation, operations } = this.state;
-    const that = this;
-    let operation = {
-      stack: [
-        { name: effectHandlerName, arguments: [], queue: 2 }
-      ]
-    };
+  applyFilterOrEffect = (type) => {
+    const { updateState, initialZoom } = this.props;
 
-    this.setState({ tempOperation: operation });
+    updateState({ isHideCanvas: true, isShowSpinner: true });
 
-    this.CamanInstance.reset();
+    if (initialZoom !== 1) {
+      this.CamanInstanceOriginal.revert(false);
 
-    this.applyOperations(
-      operations,
-      operations.findIndex(operation => operation === currentOperation),
-      () => {
-        this.CamanInstance[effectHandlerName]();
-        this.CamanInstance.render(() => {
-          that.props.updateState({ isHideCanvas: false, isShowSpinner: false });
+      this.CamanInstanceOriginal[getEffectHandlerName(this.props[type])]();
+
+      this.CamanInstanceOriginal.render(() => {
+        updateState({ [type]: null }, () => {
+          this.makeCanvasSnapshot({ operation: type });
         });
-      }
-    );
+      });
+    } else {
+      updateState({ [type]: null }, () => {
+        this.makeCanvasSnapshot({ operation: type });
+      });
+    }
   }
 
-  applyFilterOrEffect = () => {
-    const { currentOperation, operations, tempOperation } = this.state;
-    this.pushOperation(operations, tempOperation, currentOperation);
-    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: tempOperation });
+  applyAdjust = () => {
+    const { updateState, initialZoom, adjust } = this.props;
+    const { brightness, contrast, saturation, exposure } = adjust;
+    const resetProps = { brightness: 0, contrast: 0, saturation: 0, exposure: 0 };
+
+    updateState({ isHideCanvas: true, isShowSpinner: true });
+
+    if (initialZoom !== 1) {
+      this.CamanInstanceOriginal.revert(false);
+
+      if (brightness.toString() !== '0') this.CamanInstanceOriginal.brightness(parseInt(brightness || '0'));
+      if (contrast.toString() !== '0') this.CamanInstanceOriginal.contrast(parseInt(contrast || '0'));
+      if (saturation.toString() !== '0') this.CamanInstanceOriginal.saturation(parseInt(saturation || '0'));
+      if (exposure.toString() !== '0') this.CamanInstanceOriginal.exposure(parseInt(exposure || '0'));
+
+      this.CamanInstanceOriginal.render(() => {
+        updateState({ ...resetProps }, () => {
+          this.makeCanvasSnapshot({ operation: 'adjust' });
+        });
+      });
+    } else {
+      updateState({ ...resetProps }, () => {
+        this.makeCanvasSnapshot({ operation: 'adjust' });
+      });
+    }
   }
-  
+
   /* Rotate */
 
   initOrientation = () => {}
 
-  rotate = (value, total) => {
-    const that = this;
+  onRotate = (value = 0, correctionDegree = 0, flipX = false, flipY = false) => {
+    const { initialZoom, rotate, updateState } = this.props;
+    const nextRotateValue = rotate + value;
 
-    this.CamanInstance.rotate(value);
-    this.CamanInstance.render(() => {
-      that.setState({ rotate: total });
+    console.log(nextRotateValue, value, correctionDegree);
+
+    updateState({
+      isHideCanvas: true,
+      isShowSpinner: true,
+      rotate: nextRotateValue,
+      correctionDegree,
+      flipX,
+      flipY
+    }, () => {
+      if (initialZoom !== 1) {
+        this.CamanInstanceZoomed.reset();
+
+        if (flipX) this.CamanInstanceZoomed.flip('x');
+        if (flipY) this.CamanInstanceZoomed.flip('y');
+        if (nextRotateValue || correctionDegree) this.CamanInstanceZoomed.rotate((nextRotateValue || 0) + (correctionDegree || 0));
+
+        this.CamanInstanceZoomed.render(() => {
+          updateState({ isHideCanvas: false, isShowSpinner: false });
+        });
+      } else {
+        this.CamanInstance.reset();
+
+        if (flipX) this.CamanInstance.flip('x');
+        if (flipY) this.CamanInstance.flip('y');
+        if (nextRotateValue || correctionDegree) this.CamanInstance.rotate((nextRotateValue || 0) + (correctionDegree || 0));
+
+        this.CamanInstance.render(() => {
+          updateState({ isHideCanvas: false, isShowSpinner: false });
+        });
+      }
     });
   }
 
   applyOrientation = () => {
-    const { currentOperation, operations, rotate } = this.state;
-    let operation = {
-      stack: [
-        { name: 'rotate', arguments: [rotate], queue: 0 }
-      ]
-    };
+    const { updateState, initialZoom, rotate, correctionDegree, flipX, flipY } = this.props;
 
-    this.pushOperation(operations, operation, currentOperation);
-    this.setState({ rotate: null });
-    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
+    updateState({ isHideCanvas: true, isShowSpinner: true });
+
+    if (initialZoom !== 1) {
+      this.CamanInstanceOriginal.reset();
+
+      if (flipX) this.CamanInstanceOriginal.flip('x');
+      if (flipY) this.CamanInstanceOriginal.flip('y');
+      if (rotate || correctionDegree) this.CamanInstanceOriginal.rotate((rotate || 0) + (correctionDegree || 0));
+
+      this.CamanInstanceOriginal.render(() => {
+        updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
+          this.makeCanvasSnapshot({ operation: 'rotate' });
+        });
+      });
+    } else {
+      updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
+        this.makeCanvasSnapshot({ operation: 'rotate' });
+      });
+    }
   }
 
   getOrientationArguments = (operation = {}) => {
@@ -311,60 +481,105 @@ export default class ImageManipulator extends Component {
   /* Crop */
 
   initCrop = () => {
-    const { originalWidth } = this.state;
-    const canvas = this.getCanvasNode();
-    const rect = canvas.getBoundingClientRect();
-    const zoom = originalWidth / rect.width;
+    const { updateState } = this.props;
 
-    this.cropper = new Cropper(canvas, {
-      viewMode: 1,
-      modal: false,
-      background: false,
-      rotatable: false,
-      scalable: false,
-      zoomable: false,
-      movable: false,
-      crop: event => {
-        this.setState({ cropDetails: event.detail });
-        this.props.updateState({ cropDetails: event.detail });
+    updateState(
+      { isHideCanvas: true, isShowSpinner: true },
+      () => {
+        const canvas = this.getCanvasNode();
+        const rect = canvas.getBoundingClientRect();
+        const zoom = canvas.width / rect.width;
+
+        this.cropper = new Cropper(canvas, {
+          viewMode: 1,
+          modal: false,
+          background: false,
+          rotatable: false,
+          scalable: false,
+          zoomable: false,
+          movable: false,
+          crop: event => {
+            this.props.updateState({ cropDetails: event.detail });
+          }
+        });
+
+        window.scaleflexPlugins = window.scaleflexPlugins || {};
+        window.scaleflexPlugins.zoom = zoom;
+        window.scaleflexPlugins.cropperjs = this.cropper;
+
+        updateState({ isHideCanvas: false, isShowSpinner: false });
       }
-    });
-
-    window.scaleflexPlugins = window.scaleflexPlugins || {};
-    window.scaleflexPlugins.zoom = zoom;
-    window.scaleflexPlugins.cropperjs = this.cropper;
+    );
   }
 
   applyCrop = () => {
-    const { cropDetails, currentOperation, operations } = this.state;
+    const { initialZoom, updateState, cropDetails } = this.props;
     const { width, height, x, y } = cropDetails;
-    const canvas = this.getCanvasNode();
-    const that = this;
-    let operation = {
-      stack: [
-        { name: 'crop', arguments: [width, height, x, y], queue: 0 }
-      ]
-    };
 
-    this.pushOperation(operations, operation, currentOperation);
+    updateState({ isShowSpinner: true });
+
     this.destroyCrop();
 
+    if (initialZoom !== 1) {
+      this.CamanInstanceZoomed.crop(width, height, x, y);
+      this.CamanInstanceOriginal.crop(...[width, height, x, y].map(prop => prop * initialZoom));
+    } else {
+      this.CamanInstance.crop(width, height, x, y);
+    }
 
-    this.CamanInstance.crop(width, height, x, y);
-    this.CamanInstance.render(() => {
-      canvas.width = width;
-      canvas.height = height;
+    this.makeCanvasSnapshot({ operation: 'crop' });
+  }
 
-      this.CamanInstance = new window.Caman(canvas, function () { });
+  makeCanvasSnapshot = (operation) => {
+    const { updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal, operations } = this.props;
 
-      that.props.updateState({
-        isHideCanvas: false,
-        activeTab: null,
-        operations,
-        currentOperation: operation,
-        canvasDimensions: { width, height, ratio: width / height }
+    if (initialZoom !== 1) {
+      const lastOperationIndex = operationsZoomed.indexOf(currentOperation) + 1;
+
+      this.CamanInstanceOriginal.render(() => {
+        const canvasOriginal = this.replaceWithNewCanvas('scaleflex-image-edit-box-original');
+        const nextOperation = {
+          ...operation,
+          canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box-original'))
+        };
+
+        this.CamanInstanceOriginal = new window.Caman(canvasOriginal, () => {
+          updateState({
+            isHideCanvasOriginal: false,
+            isShowSpinnerOriginal: false,
+            operationsOriginal: [...operationsOriginal.slice(0, lastOperationIndex), nextOperation]
+          });
+        });
       });
-    });
+
+      this.CamanInstanceZoomed.render(() => {
+        const canvasZoomed = this.replaceWithNewCanvas('scaleflex-image-edit-box');
+        const nextOperation = { ...operation, canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box')) };
+
+        this.CamanInstanceZoomed = new window.Caman(canvasZoomed, () => {
+          updateState({
+            isHideCanvas: false,
+            isShowSpinner: false,
+            operationsZoomed: [...operationsZoomed.slice(0, lastOperationIndex), nextOperation],
+            currentOperation: nextOperation
+          });
+        });
+      });
+    } else {
+      const lastOperationIndex = operations.indexOf(currentOperation) + 1;
+
+      this.CamanInstance.render(() => {
+        this.replaceWithNewCanvas('scaleflex-image-edit-box');
+        const nextOperation = { ...operation, canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box')) };
+
+        updateState({
+          isHideCanvas: false,
+          isShowSpinner: false,
+          operations: [...operations.slice(0, lastOperationIndex), nextOperation],
+          currentOperation: nextOperation
+        });
+      });
+    }
   }
 
   destroyCrop = () => {
@@ -382,24 +597,33 @@ export default class ImageManipulator extends Component {
 
   /* Resize */
 
-  initResize = () => {}
+  initResize = () => {
+    const { initialZoom, updateState} = this.props;
+    let canvas = this.getCanvasNode(
+      initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box'
+    );
+    const nextCanvasDimensions = { width: canvas.width, height: canvas.height, ratio: canvas.width / canvas.height };
+
+    updateState({ canvasDimensions: nextCanvasDimensions }, () => { });
+  }
 
   applyResize = () => {
-    const { currentOperation, operations } = this.state;
-    const { canvasDimensions } = this.props;
-    const { width, height } = canvasDimensions;
-    const that = this;
-    let operation = {
-      stack: [
-        { name: 'resize', arguments: [{ width, height }], queue: 0 }
-      ]
-    };
+    const { initialZoom, canvasDimensions, updateState, handleSave } = this.props;
 
-    this.pushOperation(operations, operation, currentOperation);
+    updateState({ isHideCanvas: true, isShowSpinner: true }, () => {
+      if (initialZoom !== 1) {
+        this.CamanInstanceOriginal.resize(canvasDimensions);
 
-    this.CamanInstance.resize({ width, height });
-    this.CamanInstance.render(() => {
-      that.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
+        this.CamanInstanceOriginal.render(() => {
+          handleSave();
+        });
+      } else {
+        this.CamanInstance.resize(canvasDimensions);
+
+        this.CamanInstance.render(() => {
+          handleSave();
+        });
+      }
     });
   }
 
@@ -412,52 +636,24 @@ export default class ImageManipulator extends Component {
 
   /* Adjust */
 
-  initAdjust = () => {}
+  initAdjust = () => { }
 
-  adjust = (handler, value) => {
-    const { operations = [], currentOperation, adjust } = this.state;
-    const that = this;
+  onAdjust = (handler, value) => {
+    const { updateState, adjust } = this.props;
 
-    Object.assign(adjust, { [handler]: value });
-
-    this.setState(adjust); // ??? todo check if we need it
-
-    if (operations.some(operation => operation.stack.some(stack => ['crop', 'resize', 'rotate'].includes(stack.name)))) {
-      this.CamanInstance.reset();
-    } else {
-      this.CamanInstance.revert(false);
-    }
-
-    this.applyOperations(
-      operations,
-      operations.findIndex(operation => operation === currentOperation),
-      () => {
-        this.CamanInstance.brightness(parseInt((adjust.brightness || 0)));
-        this.CamanInstance.contrast(parseInt((adjust.contrast || 0)));
-        this.CamanInstance.exposure(parseFloat((adjust.exposure || 0)));
-        this.CamanInstance.saturation(parseInt((adjust.saturation || 0)));
-
-        this.CamanInstance.render(() => {
-          that.props.updateState({ isHideCanvas: false, isShowSpinner: false });
-        });
+    updateState({
+      adjust: {
+        ...adjust,
+        [handler]: value,
+        isHideCanvas: true,
+        isShowSpinner: true,
       }
-    );
+    }, () => {
+      this.applyCorrections(() => {
+        updateState({ isHideCanvas: false, isShowSpinner: false });
+      });
+    });
   }
-
-  applyAdjust = () => {
-    const { currentOperation, operations, adjust } = this.state;
-    let operation = {
-      stack: [
-        { name: 'brightness', arguments: [adjust.brightness], queue: 3 },
-        { name: 'contrast', arguments: [adjust.contrast], queue: 3 },
-        { name: 'saturation', arguments: [adjust.saturation], queue: 3 },
-        { name: 'exposure', arguments: [adjust.exposure], queue: 3 },
-      ]
-    };
-    this.pushOperation(operations, operation, currentOperation);
-    this.props.updateState({ isHideCanvas: false, activeTab: null, operations, currentOperation: operation });
-  }
-
 
   /* Operation utils */
 
@@ -471,29 +667,26 @@ export default class ImageManipulator extends Component {
     operations.push(operation);
   }
 
-  applyOperations = (operations = [], operationIndex, callback) => {
-    const { queue } = this.state;
-    const that = this;
+  applyOperations = (operationIndex, callback) => {
+    const { initialZoom, operations, operationsZoomed, canvasZoomed, canvasOriginal, updateState } = this.props;
 
+    if (initialZoom !== 1) {
+      const nextOperation = operationIndex !== -1 ? operationsZoomed[operationIndex] : { canvas: canvasZoomed };
+      const canvasZoomedNext = this.replaceCanvas(nextOperation.canvas, 'scaleflex-image-edit-box');
 
-    queue.forEach(queueIndex => {
-      operations.forEach((operation, index) => {
-        if (operationIndex < index || operationIndex === -1) return;
+      this.CamanInstanceZoomed = new window.Caman(canvasZoomedNext, () => {
+        updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation });
+        if (callback) callback();
 
-        operation.stack.forEach(handler => {
-          if (handler.queue === queueIndex) this.CamanInstance[handler.name](...handler.arguments);
-        });
       });
+    } else {
+      const nextOperation = operationIndex !== -1 ? operations[operationIndex] : { canvas: canvasOriginal };
+      const canvas = this.replaceCanvas(nextOperation.canvas, 'scaleflex-image-edit-box');
 
-      if (operationIndex > -1) this.CamanInstance.render(() => {
-        that.props.updateState({ currentOperation: operations[operationIndex] });
+      this.CamanInstance = new window.Caman(canvas, () => {
+        updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation });
         if (callback) callback();
       });
-    })
-
-    if (!(operationIndex > -1)) {
-      that.props.updateState({ currentOperation: operations[operationIndex] });
-      setTimeout(() => { if (callback) callback(); })
     }
   }
 
@@ -506,80 +699,84 @@ export default class ImageManipulator extends Component {
   }
 
 
-
   destroyAll = () => {}
 
-  revert = (callback) => {
-    const oldcanv = document.getElementById('scaleflex-image-edit-box');
-    const container = oldcanv.parentElement;
-    container.removeChild(oldcanv)
+  resetAll = (callback) => {
+    this.applyOperations(-1, callback);
+  }
 
-    const canvas = document.createElement('canvas');
-    canvas.id = 'scaleflex-image-edit-box';
+  applyCorrections = (callback = () => {}) => {
+    const { initialZoom, effect, filter, adjust } = this.props;
+    const { brightness, contrast, saturation, exposure } = adjust;
 
-    //const canvas = this.getCanvasNode();
-    const ctx = canvas.getContext('2d');
+    if (initialZoom !== 1) {
+      this.CamanInstanceZoomed.revert(false);
 
-    /* Enable Cross Origin Image Editing */
-    const img = new Image();
-    img.crossOrigin = '';
-    img.src = this.state.src;
+      if (effect) this.CamanInstanceZoomed[getEffectHandlerName(effect)]();
+      if (filter) this.CamanInstanceZoomed[getEffectHandlerName(filter)]();
+      if (brightness.toString() !== '0') this.CamanInstanceZoomed.brightness(parseInt(brightness || '0'));
+      if (contrast.toString() !== '0') this.CamanInstanceZoomed.contrast(parseInt(contrast || '0'));
+      if (saturation.toString() !== '0') this.CamanInstanceZoomed.saturation(parseInt(saturation || '0'));
+      if (exposure.toString() !== '0') this.CamanInstanceZoomed.exposure(parseInt(exposure || '0'));
 
-    img.onload = () => {
-      this.CamanInstance = new window.Caman(canvas, function () { });
+      this.CamanInstanceZoomed.render(callback);
+    } else {
+      this.CamanInstance.revert(false);
 
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, img.width, img.height);
+      if (effect) this.CamanInstance[getEffectHandlerName(effect)]();
+      if (filter) this.CamanInstance[getEffectHandlerName(filter)]();
+      if (brightness.toString() !== '0') this.CamanInstance.brightness(parseInt(brightness || '0'));
+      if (contrast.toString() !== '0') this.CamanInstance.contrast(parseInt(contrast || '0'));
+      if (saturation.toString() !== '0') this.CamanInstance.saturation(parseInt(saturation || '0'));
+      if (exposure.toString() !== '0') this.CamanInstance.exposure(parseInt(exposure || '0'));
 
-      this.props.updateState({
-        original: { height: img.height, width: img.width },
-        canvasDimensions: { height: img.height, width: img.width, ratio: img.width / img.height }
-      });
-      this.setState({
-        originalWidth: img.width, originalHeight: img.height, originalImage: img
-      });
+      this.CamanInstance.render(callback);
+    }
+  }
 
-      container.appendChild(canvas);
-      if (callback) setTimeout(() => { callback(); });
+  cancelLastOperation = (activeTab, callback = () => {}) => {
+    const { initialZoom } = this.props;
+
+    if (activeTab === 'crop') {
+      this.destroyCrop();
     }
 
+    if (initialZoom !== 1) {
+      this.CamanInstanceZoomed.reset();
+      this.CamanInstanceOriginal.reset();
+
+      this.CamanInstanceOriginal.render();
+      this.CamanInstanceZoomed.render(() => {
+        if (callback) callback();
+      });
+    } else {
+      this.CamanInstance.reset();
+
+      this.CamanInstance.render(() => {
+        if (callback) callback();
+      });
+    }
   }
-
-  cleanTemp = () => {
-    const { operations, currentOperation } = this.state;
-
-    this.CamanInstance.reset();
-    this.applyOperations(
-      operations,
-      operations.findIndex(operation => operation === currentOperation),
-      () => {
-        this.setState({ tempOperation: null });
-        this.props.updateState({ isHideCanvas: false, isShowSpinner: false });
-      }
-    );
-  }
-
-
 
   applyChanges = (activeTab) => {
     switch (activeTab) {
-      case 'effects':
-      case 'filters':
-        this.applyFilterOrEffect();
-        break;
       case 'adjust':
         this.applyAdjust();
+        break;
+      case 'effects':
+        this.applyFilterOrEffect('effect');
+        break;
+      case 'filters':
+        this.applyFilterOrEffect('filter');
         break;
       case 'crop':
         this.applyCrop();
         break;
-      case 'rotate':
-        this.applyOrientation();
-        break;
       case 'resize':
         this.applyResize();
+        break;
+      case 'rotate':
+        this.applyOrientation();
         break;
       default:
         break;
@@ -628,8 +825,15 @@ export default class ImageManipulator extends Component {
         break;
     }
   }
-  
-  getCanvasNode = () => document.getElementById('scaleflex-image-edit-box');
 
-  render() { return <Canvas id="scaleflex-image-edit-box"/>; }
+  getCanvasNode = (id = 'scaleflex-image-edit-box') => window.document.getElementById(id);
+
+  render() {
+    return (
+      <Fragment>
+        <Canvas id="scaleflex-image-edit-box-original"/>
+        <Canvas id="scaleflex-image-edit-box"/>
+      </Fragment>
+    );
+  }
 }

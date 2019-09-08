@@ -24,6 +24,13 @@ const NextBtn = styled.div`
   ${props => getActionIconStyle(props)}
 `;
 
+const ResetBtn = styled.div`
+  ${props => getIconStyles(props)}
+  ${getIconByName('reset')}
+  
+  ${props => getActionIconStyle(props)}
+`;
+
 const SwitcherWrapper = styled.div`
   position: relative; 
   display: inline-block;
@@ -145,4 +152,4 @@ function getActionIconStyle(props) {
   `;
 }
 
-export { Footer, PreviousBtn, NextBtn, Switcher };
+export { Footer, PreviousBtn, NextBtn, ResetBtn, Switcher };

@@ -77,9 +77,10 @@ const EffectWrapper = styled.div`
   cursor: pointer;
   color: ${props => props.theme.textColor};
   font-size: 12px;
+  background: ${p => p.active ? p.theme.colors.primary.lighter : 'transparent'};
   
   :hover {
-    background: ${props => props.theme.colors.primary.lighter};
+    background: ${p => p.theme.colors.primary.lighter};
   }
 `;
 

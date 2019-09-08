@@ -81,6 +81,13 @@ const Wrapper = styled.div`
   min-height: 520px;
   overflow-y: auto;
   font-size: 12px;
+  
+  #scaleflex-image-edit-box-original {
+    visibility: hidden;
+    position: absolute;
+    left: -99999px;
+    display: none;
+  }
     
   .cropper-container {
     direction: ltr;

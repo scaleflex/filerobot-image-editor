@@ -24,11 +24,16 @@ Caman.Plugin.register("rotate", function (degrees) {
     x = width / 2;
     y = height / 2;
   } else {
-    width = Math.sqrt(Math.pow(this.originalWidth, 2) + Math.pow(this.originalHeight, 2));
-    height = width;
-    x = this.canvas.height / 2;
-    y = this.canvas.width / 2;
+    let sinAngle = Math.sin(toDegrees(Math.abs(angle)));
+    let cosAngle = Math.cos(toDegrees(Math.abs(angle)));
+
+    width = Math.abs(Math.abs(this.canvas.height * sinAngle) - Math.abs(this.canvas.width * cosAngle));
+    height = Math.abs(Math.abs(this.canvas.height * cosAngle) - Math.abs(this.canvas.width * sinAngle));
+
+    x = width / 2;
+    y = height / 2;
   }
+
   canvas.width = width;
   canvas.height = height;
   ctx = canvas.getContext('2d');
@@ -37,9 +42,17 @@ Caman.Plugin.register("rotate", function (degrees) {
   ctx.rotate(angle * to_radians);
   ctx.drawImage(this.canvas, -this.canvas.width / 2, -this.canvas.height / 2, this.canvas.width, this.canvas.height);
   ctx.restore();
+
+  this.angle += degrees;
+  this.rotated = true;
+
   return this.replaceCanvas(canvas);
 });
 
 Caman.Filter.register("rotate", function () {
   return this.processPlugin("rotate", Array.prototype.slice.call(arguments, 0));
 });
+
+function toDegrees (angle) {
+  return angle * (Math.PI / 180);
+}
