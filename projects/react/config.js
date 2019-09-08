@@ -21,7 +21,16 @@ const UPLOADER = {
   hideCloudimageSwitcher: true,
   processWithCloudimage: false,
   uploadWithCloudimageLink: false,
-  elementId: null
+  elementId: null,
+  isLowQualityPreview: true,
+
+  reduceBeforeEdit: {
+    mode: 'manual',
+    widthLimit: 2000,
+    heightLimit: 2000
+  },
+
+  cropBeforeEdit: null
 }
 
 export { TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS };

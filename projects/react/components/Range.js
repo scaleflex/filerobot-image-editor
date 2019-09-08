@@ -12,7 +12,7 @@ class Range extends Component {
     };
   }
 
-  updateWithDebounce = debounce(10, value => {
+  updateWithDebounce = debounce(100, value => {
     this.props.updateRange(value);
   });
 

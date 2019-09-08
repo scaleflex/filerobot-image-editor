@@ -15,7 +15,16 @@ let ImageEditorDownload, ImageEditorUpload, ImageEditorModify;
 
 ImageEditorDownload = new FilerobotImageEditor({
   elementId: 'image-editor-download',
-  isLowQualityPreview: true
+  isLowQualityPreview: true,
+  reduceBeforeEdit: {
+    mode: 'manual',
+    widthLimit: 1000,
+    heightLimit: 1000
+  },
+  cropBeforeEdit: {
+    width: 400,
+    height: 200
+  }
 });
 
 // Image Editor to upload images and get url in response
@@ -29,7 +38,16 @@ const configUpload = {
       dir: '/Github-Image-Editor'
     }
   },
-  isLowQualityPreview: true
+  isLowQualityPreview: true,
+  reduceBeforeEdit: {
+    mode: 'manual',
+    widthLimit: 1000,
+    heightLimit: 1000
+  },
+  cropBeforeEdit: {
+    width: 400,
+    height: 200
+  }
 };
 const onCompleteUpload = function(newUrl) {
   const copyText = document.getElementById("copy-text");
@@ -52,6 +70,16 @@ const configModify = {
   elementId: 'image-editor-modify',
   cloudimage: {
     token: 'scaleflex'
+  },
+  isLowQualityPreview: true,
+  reduceBeforeEdit: {
+    mode: 'manual',
+    widthLimit: 1000,
+    heightLimit: 1000
+  },
+  cropBeforeEdit: {
+    width: 400,
+    height: 200
   }
 };
 

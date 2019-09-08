@@ -9,17 +9,6 @@ export default class extends Component {
     isBlockRatio: false
   };
 
-  componentDidMount() {
-    const { operations, processWithCloudimage, updateState, forceApplyOperations } = this.props;
-    const operationIndex = operations.findIndex(({ stack }) => stack[0].name === 'resize');
-
-    if (operationIndex > -1 && processWithCloudimage) {
-      operations.splice(operationIndex, 1);
-      updateState({ operations });
-      forceApplyOperations(operations, 'resize');
-    }
-  }
-
   changeWidth = (event) => {
     const { isBlockRatio } = this.state;
     const { canvasDimensions } = this.props;

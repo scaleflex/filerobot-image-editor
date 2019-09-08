@@ -9,3 +9,13 @@ export const NoClickOverlay = styled.div`
   bottom: 0;
   cursor: wait;
 `;
+
+export const NoClickToolbar = styled('div')`
+  position: absolute;
+  z-index: 999;
+  top: 36px;
+  left: 0;
+  right: 0;
+  height: 104px;
+  cursor: not-allowed;
+`;

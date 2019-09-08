@@ -20,16 +20,7 @@ export default class extends Component {
     activeRatio: 'custom'
   }
 
-  componentDidMount() {
-    const { operations, processWithCloudimage, updateState, forceApplyOperations } = this.props;
-    const operationIndex = operations.findIndex(({ stack }) => stack[0].name === 'crop');
-
-    if (operationIndex > -1 && processWithCloudimage) {
-      operations.splice(operationIndex, 1);
-      updateState({ operations });
-      forceApplyOperations(operations, 'crop');
-    }
-  }
+  componentDidMount() { }
 
   changeWidth = (event) => {
     const { initialZoom } = this.props;

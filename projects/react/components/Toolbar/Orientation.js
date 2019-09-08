@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
 import {
-  OrientationWrapper, RotateWrapper, RotateButton, RotateLabel, RotateIcon, DarkBtn
+  OrientationWrapper, RotateWrapper, RotateButton, RotateIcon, DarkBtn
 } from '../../styledComponents';
 import Range from '../Range'
 
 
 export default class extends Component {
-  componentDidMount() {
-    const { operations, processWithCloudimage, updateState, forceApplyOperations } = this.props;
-    const operationIndex = operations.findIndex(({ stack }) => stack[0].name === 'rotate');
-
-    if (operationIndex > -1 && processWithCloudimage) {
-      operations.splice(operationIndex, 1);
-      updateState({ operations });
-      forceApplyOperations(operations, 'rotate');
-    }
-  }
-
   leftRotate = () => {
     const { onRotate, correctionDegree, flipX, flipY } = this.props;
 

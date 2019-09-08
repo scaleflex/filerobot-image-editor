@@ -16,6 +16,13 @@ const PreviewWrapper = styled.div`
   }
 `;
 
+const PreResizeBox = styled('div')`
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+`;
+
 const PreviewImgBox = styled.div`
   display: inline-block;
   max-height: 100%;
@@ -59,4 +66,4 @@ const Canvas = styled.canvas.attrs(() => ({
   vertical-align: middle;
 `;
 
-export { PreviewWrapper, Canvas, PreviewImgBox }
+export { PreviewWrapper, Canvas, PreviewImgBox, PreResizeBox }

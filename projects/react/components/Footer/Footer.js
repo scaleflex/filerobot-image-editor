@@ -17,7 +17,7 @@ export default class extends Component {
   render() {
     const {
       initialZoom, operations, operationsZoomed, currentOperation = null, redoOperation,
-      processWithCloudimage, config, resetOperations
+      processWithCloudimage, config, resetOperations, activeBody
     } = this.props;
     const { hideCloudimageSwitcher } = config;
     const operationList = initialZoom === 1 ? operations : operationsZoomed;
@@ -29,7 +29,11 @@ export default class extends Component {
 
     return (
       <Footer>
-        <ResetBtn onClick={resetOperations} title="reset"/>
+        <ResetBtn
+          muted={activeBody !== 'preview'}
+          onClick={() => { activeBody === 'preview' && resetOperations(); }}
+          title="reset"
+        />
 
         <PreviousBtn
           onClick={() => { !isPrevForbidden && redoOperation(currentOperationIndex - 1); }}

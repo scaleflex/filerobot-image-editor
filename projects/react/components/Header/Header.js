@@ -10,7 +10,7 @@ export default class extends Component {
   render() {
     const {
       activeTab, onRevert, apply, onClose, showGoBackBtn, processWithFilerobot, processWithCloudimage,
-      handleSave
+      handleSave, activeBody
     } = this.props;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
     const onFinishButtonLabel = (!processWithFilerobot && !processWithCloudimage) ? 'DOWNLOAD' : 'SAVE';
@@ -31,6 +31,7 @@ export default class extends Component {
 
           <Toolbar {...this.props}/>
 
+          {activeBody === 'preview' &&
           <RightActions>
             <Button
               themeColor
@@ -43,7 +44,7 @@ export default class extends Component {
             >
               {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : 'APPLY'}
             </Button>
-          </RightActions>
+          </RightActions>}
         </ToolbarWrapper>
       </HeaderWrapper>
     )

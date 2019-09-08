@@ -53,15 +53,12 @@ export default class ImageManipulator extends Component {
 
   componentDidMount() {
     const that = this;
-    const { config: { isLowQualityPreview } = {}, updateState, src } = this.props;
-    const splittedSrc = src.split('/');
-    const imageName = splittedSrc[splittedSrc.length - 1];
-    const img = new Image();
-
+    const {
+      config: { isLowQualityPreview } = {}, updateState, imageName, img, isPreResize, preCanvasDimensions
+    } = this.props;
     let initialZoom = 1;
-    let original = null;
 
-    this.props.updateState({
+    updateState({
       isShowSpinner: true,
       applyChanges: this.applyChanges,
       applyOperations: this.applyOperations,
@@ -75,14 +72,7 @@ export default class ImageManipulator extends Component {
       applyCorrections: this.applyCorrections,
       restoreAll: this.restoreAll,
       cancelLastOperation: this.cancelLastOperation
-    });
-
-
-    img.crossOrigin = ''; // Enable Cross Origin Image Editing
-    img.src = src;
-    this.img = img;
-
-    img.onload = () => {
+    }, () => {
       const canvas = this.getCanvasNode('scaleflex-image-edit-box');
       const ctx = canvas.getContext('2d');
 
@@ -91,55 +81,76 @@ export default class ImageManipulator extends Component {
 
       ctx.drawImage(img, 0, 0, img.width, img.height);
 
-      original = { height: img.height, width: img.width, ratio: img.width / img.height }
+      const original = { height: img.height, width: img.width, ratio: img.width / img.height }
 
       updateState({ original, canvasDimensions: original });
 
-      this.setState({
-        originalWidth: img.width,
-        originalHeight: img.height,
-        originalImage: img,
-        imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName
-      });
-
-      if (isLowQualityPreview && img.height > 1050) {
-        const canvasOriginal = this.getCanvasNode('scaleflex-image-edit-box-original');
-        const ctxOriginal = canvasOriginal.getContext('2d');
-
-        canvasOriginal.width = img.width;
-        canvasOriginal.height = img.height;
-
-        ctxOriginal.drawImage(img, 0, 0, img.width, img.height);
-
-        initialZoom = img.height / 800;
-
-        const zoomedWidth = img.width / initialZoom;
-        const zoomedHeight = img.height / initialZoom;
-
-        updateState({ initialZoom, canvasOriginal });
-        that.setState({ zoomedWidth, zoomedHeight });
-
-
+      if (isPreResize && preCanvasDimensions) {
         new window.Caman(canvas, function () {
-          this.resize({ width: zoomedWidth, height: zoomedHeight });
+
+          this.resize({ width: preCanvasDimensions.width, height: preCanvasDimensions.height });
 
           this.render(() => {
-            const canvasZoomed = that.replaceWithNewCanvas('scaleflex-image-edit-box');
+            const resizedCanvas = that.getCanvasNode('scaleflex-image-edit-box');
+            const original = {
+              height: resizedCanvas.height,
+              width: resizedCanvas.width,
+              ratio: resizedCanvas.width / resizedCanvas.height
+            };
 
-            that.CamanInstanceZoomed = new window.Caman(
-              canvasZoomed,
-              function () {
-                that.CamanInstanceOriginal = new window.Caman(canvasOriginal, function () {});
-                updateState({ isShowSpinner: false, canvasZoomed: that.cloneCanvas(canvasZoomed) });
-              }
-            );
+            updateState({ original, canvasDimensions: original, canvasOriginal: resizedCanvas }, () => {
+              that.initializeCanvases(resizedCanvas);
+            });
           });
         });
       } else {
-        that.CamanInstance = new window.Caman(canvas, function () {
-          updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(canvas) });
-        });
+        this.initializeCanvases(img);
       }
+    });
+  }
+
+  initializeCanvases = (elem) => {
+    const that = this;
+    const { config: { isLowQualityPreview } = {}, updateState } = this.props;
+    let initialZoom = 1;
+
+    if (isLowQualityPreview && elem.height > 1050) {
+      const canvasOriginal = this.getCanvasNode('scaleflex-image-edit-box-original');
+      const ctxOriginal = canvasOriginal.getContext('2d');
+
+      canvasOriginal.width = elem.width;
+      canvasOriginal.height = elem.height;
+
+      ctxOriginal.drawImage(elem, 0, 0, elem.width, elem.height);
+
+      initialZoom = elem.height / 800;
+
+      const zoomedWidth = elem.width / initialZoom;
+      const zoomedHeight = elem.height / initialZoom;
+
+      updateState({ initialZoom, canvasOriginal: that.cloneCanvas(canvasOriginal) });
+
+      new window.Caman(this.getCanvasNode('scaleflex-image-edit-box'), function () {
+        this.resize({ width: zoomedWidth, height: zoomedHeight });
+
+        this.render(() => {
+          const canvasZoomed = that.replaceWithNewCanvas('scaleflex-image-edit-box');
+
+          that.CamanInstanceZoomed = new window.Caman(
+            canvasZoomed,
+            function () {
+              that.CamanInstanceOriginal = new window.Caman(canvasOriginal, function () {});
+              updateState({ isShowSpinner: false, canvasZoomed: that.cloneCanvas(canvasZoomed) });
+            }
+          );
+        });
+      });
+    } else {
+      const canvas = this.getCanvasNode('scaleflex-image-edit-box');
+
+      that.CamanInstance = new window.Caman(canvas, function () {
+        updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(canvas) });
+      });
     }
   }
 
@@ -384,12 +395,12 @@ export default class ImageManipulator extends Component {
         if (exposure.toString() !== '0') this.CamanInstanceOriginal.exposure(parseInt(exposure || '0'));
 
         this.CamanInstanceOriginal.render(() => {
-          updateState({ ...resetProps }, () => {
+          updateState({ adjust: {...resetProps } }, () => {
             this.makeCanvasSnapshot({ operation: 'adjust' });
           });
         });
       } else {
-        updateState({ ...resetProps }, () => {
+        updateState({ adjust: {...resetProps } }, () => {
           this.makeCanvasSnapshot({ operation: 'adjust' });
         });
       }
@@ -568,14 +579,16 @@ export default class ImageManipulator extends Component {
       const lastOperationIndex = operations.indexOf(currentOperation) + 1;
 
       this.CamanInstance.render(() => {
-        this.replaceWithNewCanvas('scaleflex-image-edit-box');
+        const canvas = this.replaceWithNewCanvas('scaleflex-image-edit-box');
         const nextOperation = { ...operation, canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box')) };
 
-        updateState({
-          isHideCanvas: false,
-          isShowSpinner: false,
-          operations: [...operations.slice(0, lastOperationIndex), nextOperation],
-          currentOperation: nextOperation
+        this.CamanInstance = new window.Caman(canvas, () => {
+          updateState({
+            isHideCanvas: false,
+            isShowSpinner: false,
+            operations: [...operations.slice(0, lastOperationIndex), nextOperation],
+            currentOperation: nextOperation
+          });
         });
       });
     }
@@ -670,7 +683,8 @@ export default class ImageManipulator extends Component {
     const { initialZoom, operations, operationsZoomed, canvasZoomed, canvasOriginal, updateState } = this.props;
 
     if (initialZoom !== 1) {
-      const nextOperation = operationIndex !== -1 ? operationsZoomed[operationIndex] : { canvas: canvasZoomed };
+      const nextOperation = operationIndex !== -1 ?
+        operationsZoomed[operationIndex] : { canvas: this.cloneCanvas(canvasZoomed) };
       const canvasZoomedNext = this.replaceCanvas(nextOperation.canvas, 'scaleflex-image-edit-box');
 
       this.CamanInstanceZoomed = new window.Caman(canvasZoomedNext, () => {
@@ -679,11 +693,12 @@ export default class ImageManipulator extends Component {
 
       });
     } else {
-      const nextOperation = operationIndex !== -1 ? operations[operationIndex] : { canvas: canvasOriginal };
-      const canvas = this.replaceCanvas(nextOperation.canvas, 'scaleflex-image-edit-box');
+      const nextOperationSimple = operationIndex !== -1 ?
+        operations[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
+      const canvas = this.replaceCanvas(nextOperationSimple.canvas, 'scaleflex-image-edit-box');
 
       this.CamanInstance = new window.Caman(canvas, () => {
-        updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation });
+        updateState({ ...INITIAL_PARAMS, currentOperation: nextOperationSimple });
         if (callback) callback();
       });
     }
@@ -701,7 +716,15 @@ export default class ImageManipulator extends Component {
   destroyAll = () => {}
 
   resetAll = (callback) => {
-    this.applyOperations(-1, callback);
+    const { activeTab } = this.props;
+
+    if (activeTab) {
+      this.cancelLastOperation(activeTab, () => {
+        this.applyOperations(-1, callback);
+      });
+    } else {
+        this.applyOperations(-1, callback);
+    }
   }
 
   applyCorrections = (callback = () => {}) => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Toolbar, NoClickOverlay } from '../../styledComponents';
+import { Toolbar, NoClickOverlay, NoClickToolbar } from '../../styledComponents';
 import { TOOLS, CLOUDIMAGE_OPERATIONS } from '../../config';
 import Tool from './Tool';
 import Effects from './Effects';
@@ -12,15 +12,11 @@ import Adjust from './Adjust';
 
 export default class extends Component {
   render() {
-    const { activeTab, processWithCloudimage, isShowSpinner, operations } = this.props;
-    const resizeOperationIndex = operations.findIndex(({ stack }) => stack[0].name === 'resize');
+    const { activeTab, processWithCloudimage, isShowSpinner, activeBody } = this.props;
     let allowedTools = TOOLS;
 
     if (processWithCloudimage)
       allowedTools = TOOLS.filter(tool => CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1);
-
-    if (processWithCloudimage && resizeOperationIndex > -1)
-      allowedTools = allowedTools.filter(tool => tool !== 'crop');
 
     return (
       <Toolbar>
@@ -31,7 +27,8 @@ export default class extends Component {
         {activeTab === 'rotate' && <Orientation {...this.props}/>}
         {activeTab === 'crop' && <Crop {...this.props}/>}
         {activeTab === 'resize' && <Resize {...this.props}/>}
-        {isShowSpinner && <NoClickOverlay/>}
+        {(isShowSpinner) && <NoClickOverlay/>}
+        {activeBody !== 'preview' && <NoClickToolbar/>}
       </Toolbar>
     )
   }

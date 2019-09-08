@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Wrapper } from './styledComponents/index';
-import { Header, Preview, Footer } from './components/index';
+import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
+import { Header, Preview, PreResize, Footer } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
 
@@ -27,12 +27,15 @@ export default class extends Component {
   constructor(props) {
     super();
 
-    const { processWithCloudimage, processWithFilerobot, uploadWithCloudimageLink } = props.config;
+    const {
+      processWithCloudimage, processWithFilerobot, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit
+    } = props.config;
 
     this.state = {
       isShowSpinner: true,
       isHideCanvas: false,
       activeTab: null,
+      activeBody: null,
       currentOperation: null,
       original: { width: 300, height: 200 },
       cropDetails: { width: 300, height: 200 },
@@ -40,6 +43,8 @@ export default class extends Component {
       processWithFilerobot: processWithFilerobot,
       processWithCloudimage: processWithCloudimage,
       uploadCloudimageImage: uploadWithCloudimageLink,
+      reduceBeforeEdit,
+      cropBeforeEdit,
 
       operationsOriginal: [],
       operationsZoomed: [],
@@ -47,6 +52,7 @@ export default class extends Component {
 
       canvasZoomed: null,
       canvasOriginal: null,
+      isPreResize: false,
 
       initialZoom: 1,
 
@@ -55,7 +61,46 @@ export default class extends Component {
   }
 
   componentDidMount() {
+    this.loadImage();
     this.determineImageType();
+  }
+
+  loadImage = () => {
+    const { src } = this.props;
+    const { reduceBeforeEdit: { mode, widthLimit, heightLimit } = {} } = this.state;
+    const splittedSrc = src.split('/');
+    const imageName = splittedSrc[splittedSrc.length - 1];
+    const img = new Image();
+
+    img.crossOrigin = ''; // Enable Cross Origin Image Editing
+    img.src = src;
+    this.img = img;
+
+    img.onload = () => {
+      const canvasDimensions = { width: img.width, height: img.height, ratio: img.width / img.height };
+
+      if (mode === 'manual' && (widthLimit < img.width || heightLimit < img.height)) {
+        this.setState({
+          activeBody: 'preResize',
+          img,
+          imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName,
+          isShowSpinner: false,
+          canvasDimensions
+        });
+      }
+
+      else if (mode === 'auto' && (widthLimit < img.width || heightLimit < img.height)) {
+        if (width >= height) {
+
+        } else {
+
+        }
+      }
+
+      else {
+        this.setState({ activeBody: 'preview', img, imageName });
+      }
+    }
   }
 
   determineImageType = () => {
@@ -193,11 +238,24 @@ export default class extends Component {
     });
   }
 
+  onPreResize = (value) => {
+    switch (value) {
+      case 'keep':
+        this.setState({ canvasDimensions: {}, isPreResize: false, activeBody: 'preview' });
+        break;
+      case 'resize':
+        const { canvasDimensions } = this.state;
+        this.setState({ preCanvasDimensions: canvasDimensions, isPreResize: true, activeBody: 'preview' });
+        break;
+    }
+  }
+
   render() {
     const {
       isShowSpinner, activeTab, operations, operationsOriginal, operationsZoomed, currentOperation, isHideCanvas,
       cropDetails, original, canvasDimensions, processWithCloudimage, processWithFilerobot, uploadCloudimageImage,
-      imageMime, lastOperation, operationList, initialZoom, canvasZoomed, canvasOriginal,
+      imageMime, lastOperation, operationList, initialZoom, canvasZoomed, canvasOriginal, reduceBeforeEdit,
+      cropBeforeEdit, img, imageName, activeBody, isPreResize, preCanvasDimensions,
 
       effect,
       filter,
@@ -226,6 +284,10 @@ export default class extends Component {
       initialZoom,
       isShowSpinner,
       showGoBackBtn,
+      img,
+      imageName,
+      activeBody,
+      preCanvasDimensions,
       updateState: this.updateState,
       onRevert: this.onRevert,
       apply: this.apply,
@@ -264,12 +326,20 @@ export default class extends Component {
       operationList,
       canvasZoomed,
       canvasOriginal,
+      reduceBeforeEdit,
+      cropBeforeEdit,
+      img,
+      imageName,
+      isPreResize,
+      preCanvasDimensions,
       updateState: this.updateState,
       handleSave: this.handleSave,
+      onPreResize: this.onPreResize,
 
       ...imageParams
     };
     const footerProps = {
+      activeBody,
       operations,
       operationsOriginal,
       operationsZoomed,
@@ -287,8 +357,12 @@ export default class extends Component {
 
         <Header {...headerProps}/>
 
-        <Preview {...previewProps}/>
+        <PreviewWrapper>
+          {activeBody === 'preview' && <Preview {...previewProps}/>}
+          {activeBody === 'preResize' && <PreResize {...previewProps}/>}
 
+          <Spinner overlay show={isShowSpinner}/>
+        </PreviewWrapper>
         <Footer {...footerProps}/>
 
       </Wrapper>
