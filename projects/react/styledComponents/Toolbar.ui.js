@@ -5,8 +5,8 @@ import { getIconStyles, getIconByName } from './styleUtils';
 const Toolbar = styled.div`
   height: 100px;
   width: calc(100% - 200px);
-  border-left: 1px solid ${props => props.theme.colors.dark.base};
-  border-right: 1px solid ${props => props.theme.colors.dark.base};
+  border-left: 1px solid ${props => props.theme.colors.primaryBg};
+  border-right: 1px solid ${props => props.theme.colors.primaryBg};
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
@@ -29,13 +29,13 @@ const ToolWrapper = styled.div`
   min-height: 100px;
   text-align: center;
   font-size: 12px;
-  color: ${props => props.theme.colors.text.base};
+  color: ${props => props.theme.colors.text};
   text-transform: ${props => props.tt || 'capitalize'};
-  background: ${props => props.active ? props.theme.colors.primary.lighter : 'inherit'};
+  background: ${props => props.active ? props.theme.colors.secondaryBg : 'inherit'};
   
   :hover {
-    color: ${props => props.theme.colors.text.light};
-    background: ${props => props.theme.colors.primary.lighter};
+    color: ${props => props.theme.colors.textHover};
+    background: ${props => props.theme.colors.secondaryBg};
   }
 `;
 
@@ -75,12 +75,12 @@ const EffectWrapper = styled.div`
   min-width: 90px;
   height: 90px;
   cursor: pointer;
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.colors.text};
   font-size: 12px;
-  background: ${p => p.active ? p.theme.colors.primary.lighter : 'transparent'};
+  background: ${p => p.active ? p.theme.colors.secondaryBg : 'transparent'};
   
   :hover {
-    background: ${p => p.theme.colors.primary.lighter};
+    background: ${p => p.theme.colors.secondaryBg};
   }
 `;
 

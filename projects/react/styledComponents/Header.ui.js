@@ -3,19 +3,19 @@ import { Button } from './Button';
 import { getHoverColor } from './styleUtils';
 
 const HeaderWrapper = styled.div`
-  background: ${props => props.theme.colors.primary.light};
+  background: ${props => props.theme.colors.secondaryBg};
 `;
 
 const HeaderTop = styled.div`
   line-height: 35px;
-  border-bottom: 1px solid ${props => props.theme.colors.dark.base};
-  background: ${props => props.theme.colors.dark.base};
+  border-bottom: 1px solid ${props => props.theme.colors.primaryBg};
+  background: ${props => props.theme.colors.primaryBg};
 `;
 
 const Title = styled.div`
   text-align: center;
   text-transform: capitalize;
-  color: ${props => props.theme.colors.text.base}
+  color: ${props => props.theme.colors.text}
 `;
 
 const LeftActions = styled.div`
@@ -34,19 +34,19 @@ const ToolbarWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 100px;
-  background: ${props => props.theme.colors.primary.light}
+  background: ${props => props.theme.colors.secondaryBg}
 `;
 
 const CancelBtn = styled(Button)`
-  background: ${props => props.theme.colors.dark.base};
-  border-color: ${props => props.theme.colors.dark.base};
-  color: ${props => props.theme.colors.text.base};
+  background: ${props => props.theme.colors.primaryBg};
+  border-color: ${props => props.theme.colors.primaryBg};
+  color: ${props => props.theme.colors.text};
   text-transform: capitalize;
   
   :hover {
-    background: ${props => getHoverColor(props.theme.colors.dark.base)};
-    border-color: ${props => props.theme.colors.dark.base};
-    color: ${props => props.theme.colors.text.base};  
+    background: ${props => getHoverColor(props.theme.colors.primaryBg)};
+    border-color: ${props => props.theme.colors.primaryBg};
+    color: ${props => props.theme.colors.text};  
   }
 `;
 

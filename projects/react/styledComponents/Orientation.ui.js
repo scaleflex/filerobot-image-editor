@@ -3,7 +3,7 @@ import { getIconStyles, getIconByName } from './styleUtils';
 
 
 const OrientationWrapper = styled.div`
-  color: ${props => props.theme.colors.text.base};
+  color: ${props => props.theme.colors.text};
   text-align: center;
   
   svg {
@@ -29,7 +29,7 @@ const OrientationWrapper = styled.div`
         width: 9px;
         height: 18px;
         border-radius: 50%;
-        background: white;
+        background: ${p => p.theme.colors.text};
       }
       
       &::-moz-range-thumb {
@@ -37,7 +37,7 @@ const OrientationWrapper = styled.div`
         width: 9px;
         height: 18px;
         border-radius: 50%;
-        background: white;
+        background: ${p => p.theme.colors.text};
         cursor: pointer;
       }
     }
@@ -85,7 +85,7 @@ const RotateIcon = styled.span`
   margin-top: -4px;
   display: inline-block;
   vertical-align: middle;
-  color: ${props => props.theme.colors.text.base};
+  color: ${props => props.theme.colors.text};
   margin-right: 5px;
 `;
 

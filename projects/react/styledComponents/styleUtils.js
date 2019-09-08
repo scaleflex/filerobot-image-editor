@@ -259,7 +259,7 @@ function getFieldColorStyles(props) {
 function getIconStyles(props) {
   return `
     font-family: 'filerobot-image-editor-font' !important;
-    color: ${props.muted ? variables.colors.text.mute : variables.colors.text.base};
+    color: ${props.muted ? props.theme.colors.textMute : props.theme.colors.text};
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -272,7 +272,7 @@ function getIconStyles(props) {
     -moz-osx-font-smoothing: grayscale;
     
     :hover {
-      color: ${props.muted ? variables.colors.text.mute : variables.colors.text.base};
+      color: ${props.muted ? props.theme.colors.textMute : props.theme.colors.text};
     }
   `;
 }

@@ -37,7 +37,7 @@ const ModalContent = styled.div`
   outline: 0;
   height: ${props => props.h || props.height || 'auto'};
   background: ${props => variables.colors.background.base || '#fff'};
-  color: ${props => variables.colors.text.base || '#3d3d3d'};
+  color: ${props => variables.colors.text || '#3d3d3d'};
 `;
 
 const ModalFullScreen = styled.div`
@@ -85,7 +85,7 @@ const ModalFullScreen = styled.div`
   left: 15%;
   right: 15%;
   bottom: 5%;
-  color: ${props => variables.colors.text.base || '#3d3d3d'};
+  color: ${props => variables.colors.text || '#3d3d3d'};
   overflow: hidden;
   z-index: ${props => props.zIndex || '999999995'};
   display: block;

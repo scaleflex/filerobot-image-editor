@@ -74,7 +74,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   position: relative;
-  background: ${props => props.theme.colors.dark.base};
+  background: ${props => props.theme.colors.primaryBg};
   z-index: 1050;
   width: 100%;
   height: 100%;
@@ -331,15 +331,17 @@ const Wrapper = styled.div`
   }
   
   .cropper-point.point-se:before {
-    background-color: #fff;
-    bottom: -50%;
-    content: ' ';
-    display: block;
-    height: 200%;
-    opacity: 0;
+    content: '';
+    display: table;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: black;
+    opacity: 0.8;
+    z-index: 11;
     position: absolute;
-    right: -50%;
-    width: 200%;
+    top: calc(50% - 4px);
+    left: calc(50% - 4px);
   }
   
   .cropper-invisible {

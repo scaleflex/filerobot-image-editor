@@ -4,9 +4,9 @@ import { Container } from './styledComponents';
 import { ThemeProvider } from 'styled-components';
 import { Modal } from './components/Modal';
 import { UPLOADER } from './config';
-import theme, { colorSchemes } from './assets/styles/colorScheme';
 import './assets/fonts/filerobot-font.css';
 import en from './assets/i18n/en';
+import dark from './assets/theme/dark';
 
 
 class ImageEditorWrapper extends Component {
@@ -15,6 +15,9 @@ class ImageEditorWrapper extends Component {
 
     config.translations = config.translations || {};
     config.language = config.language || 'en';
+    config.theme = config.theme || {};
+    config.theme.colors = config.theme.colors || {};
+    config.theme.fonts = config.theme.fonts || {};
 
     this.state = {
       isVisible: show,
@@ -23,6 +26,16 @@ class ImageEditorWrapper extends Component {
       t: {
         ...en,
         ...config.translations[config.language]
+      },
+      theme: {
+        colors: {
+          ...dark.colors,
+          ...config.theme.colors
+        },
+        fonts: {
+          ...dark.fonts,
+          ...config.theme.fonts
+        }
       }
     }
   }
@@ -58,9 +71,8 @@ class ImageEditorWrapper extends Component {
   }
 
   render() {
-    const { isVisible, src, config, t } = this.state;
+    const { isVisible, src, config, t, theme } = this.state;
     const { onComplete = () => {}, showGoBackBtn, closeOnLoad, showInModal = true } = this.props;
-    const colors = colorSchemes['default'];
 
     if (!src || !isVisible) return null;
 
@@ -79,7 +91,7 @@ class ImageEditorWrapper extends Component {
     );
 
     return (
-      <ThemeProvider theme={{ ...theme, ...colors }}>
+      <ThemeProvider theme={{ ...theme }}>
         {showInModal ?
           <Modal
             noBorder

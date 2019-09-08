@@ -64,7 +64,7 @@ const Wrapper = styled('div')`
     content: '';
     display: inline-block;
     position: absolute;
-    background: white;
+    background: ${p => p.theme.colors.text};
     height: 5px;
     width: 2px;
     top: 45px;
@@ -76,7 +76,7 @@ const Wrapper = styled('div')`
     -webkit-appearance: none;
     display: block;
     outline: none;
-    background: #1e262c;
+    background: ${p => p.theme.colors.primaryBg};
     height: 6px;
     width: 180px;
     border-radius: 5px;
@@ -87,7 +87,7 @@ const Wrapper = styled('div')`
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: white;
+      background: ${p => p.theme.colors.text};
     }
   }
   
@@ -97,7 +97,7 @@ const Wrapper = styled('div')`
     height: 14px;
     width: 14px;
     border-radius: 50%;
-    background: white;
+    background: ${p => p.theme.colors.text};
     cursor: pointer;
   }
   
@@ -105,7 +105,7 @@ const Wrapper = styled('div')`
     width: 100%;
     height: 3px;
     cursor: pointer;
-    background: white;
+    background: ${p => p.theme.colors.text};
     border-radius: 5px;
   }
 `;

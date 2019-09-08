@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 
 const ResizeWrapper = styled.div`
-  color: ${props => props.theme.colors.text.base};
+  color: ${props => props.theme.colors.text};
   text-align: center;
 `;
 
@@ -20,12 +20,12 @@ const PreResizeActions = styled('div')`
 `;
 
 const PreResizeWarning = styled('p')`
-  color: #f7931e;
+  color: ${p => p.theme.colors.textWarn};
   font-size: 14px;
   max-width: 600px;
   line-height: 1.4;
   margin: 0 auto;
-  background: #263138;
+  background: ${p => p.theme.colors.secondaryBg};
   border-radius: 4px;
   padding: 15px 15px 15px 55px;
   position: relative;
@@ -47,13 +47,14 @@ const PreResizeWarning = styled('p')`
 const PreResizeInner = styled('div')`
   max-width: 600px;
   margin: 15px auto;
-  background: #263138;
+  background: ${p => p.theme.colors.secondaryBg};
   border-radius: 4px;
   padding: 15px;
   
   h4 {
     line-height: 1.4;
     font-size: 16px;
+    color: ${p => p.theme.colors.text};
   }
 `;
 

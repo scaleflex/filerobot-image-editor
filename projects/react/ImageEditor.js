@@ -3,6 +3,7 @@ import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
 import { Header, Preview, PreResize, Footer } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
+import theme from './assets/styles/colorScheme'
 
 
 const INITIAL_PARAMS = {
@@ -288,10 +289,11 @@ export default class extends Component {
       flipY,
       adjust
     } = this.state;
-    const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false, t = {} } = this.props;
+    const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false, t = {}, theme } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
     const headerProps = {
       t,
+      theme,
       cropDetails,
       original,
       activeTab,
@@ -326,6 +328,7 @@ export default class extends Component {
     };
     const previewProps = {
       t,
+      theme,
       cropDetails,
       original,
       activeTab,
@@ -363,6 +366,7 @@ export default class extends Component {
     };
     const footerProps = {
       t,
+      theme,
       activeBody,
       operations,
       operationsOriginal,

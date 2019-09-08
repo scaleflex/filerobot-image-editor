@@ -70,7 +70,7 @@ export default class extends Component {
         <PreResizeWarning>{t['warning.too_big_resolution']}</PreResizeWarning>
 
         <PreResizeInner>
-          <h4 style={{ color: '#fff' }}>{t['pre_resize.title']}</h4>
+          <h4>{t['pre_resize.title']}</h4>
 
           <ResizeWrapper>
             <ResizeBox>

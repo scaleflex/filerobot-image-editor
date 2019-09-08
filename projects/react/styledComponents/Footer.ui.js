@@ -4,7 +4,7 @@ import { getIconStyles, getIconByName } from './styleUtils';
 
 
 const Footer = styled.div`
-  background: ${props => props.theme.colors.primary.light};
+  background: ${props => props.theme.colors.secondaryBg};
   height: 34px;
   position: relative;
   z-index: 1;
@@ -144,10 +144,10 @@ function getActionIconStyle(props) {
     cursor: ${props.muted ? 'not-allowed' : 'pointer'};
     text-align: center;
     line-height: 34px;
-    border-right: 1px solid ${props.theme.borderDarkColor};
+    border-right: 1px solid ${props.theme.colors.border};
     
     :hover {
-      background: ${props.muted ? 'inherit' : props.theme.colors.primary.lighter};
+      background: ${props.muted ? 'inherit' : props.theme.colors.secondaryBgHover};
     }
   `;
 }

@@ -22,7 +22,7 @@ export default class extends Component {
     const { flipX, flipY } = this.props;
     this.setState({ correctionDegree: value });
 
-    this.props.onRotate(0, parseInt(value), flipX, flipY);
+    this.props.onRotate(0, parseFloat(value), flipX, flipY);
 
   }
 
