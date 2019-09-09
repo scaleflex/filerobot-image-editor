@@ -158,6 +158,35 @@ export default class ImageManipulator extends Component {
     }
   }
 
+  watermarkImageToDataURL = (canvas, image, watermark = {}) => {
+    const { position = 'center', opacity } = watermark;
+    const tempCtx = canvas.getContext('2d');
+    let cw, ch, lw, lh;
+    let wx, wy, ww, wh;
+    let imageRatio = image.width / image.height;
+
+    cw = canvas.width;
+    ch = canvas.height;
+    lw = cw / 3;
+    lh = ch / 3;
+
+    if (position === 'center') {
+      wx = ww = lw;
+      wh = ww / imageRatio;
+      wy = ch / 2 - wh / 2;
+
+      if (wh > lh) {
+        wy = wh = lh;
+        ww = wh * imageRatio;
+        wx = cw / 2 - ww / 2;
+      }
+    }
+
+    tempCtx.globalAlpha = opacity;
+    tempCtx.drawImage(image, wx, wy, ww, wh);
+    //return canvas.toDataURL();
+  }
+
   cloneCanvas = (oldCanvas) => {
     //create a new canvas
     const newCanvas = document.createElement('canvas');
@@ -214,12 +243,17 @@ export default class ImageManipulator extends Component {
   saveImage = () => {
     const {
       onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime,
-      operations, initialZoom
+      operations, initialZoom, logoImage
     } = this.props;
-    const { filerobot = {} } = config;
+    const { filerobot = {}, watermark } = config;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = this.getCanvasNode(canvasID);
+
+    if (watermark && logoImage) {
+      this.watermarkImageToDataURL(canvas, logoImage, watermark);
+    }
+
     const baseUrl = `//${filerobot.container}.api.airstore.io/v1/`;
     const uploadParams = filerobot.uploadParams || {};
     const dir = uploadParams.dir || 'image-editor';
@@ -279,9 +313,15 @@ export default class ImageManipulator extends Component {
   }
 
   downloadImage = (callback) => {
-    const { initialZoom } = this.props;
+    const { initialZoom, logoImage, config } = this.props;
+    const { watermark } = config;
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = this.getCanvasNode(canvasID);
+
+    if (watermark && logoImage) {
+      this.watermarkImageToDataURL(canvas, logoImage, watermark);
+    }
+
     const { imageMime } = this.props;
     const { imageName } = this.state;
     const lnk = document.createElement('a');

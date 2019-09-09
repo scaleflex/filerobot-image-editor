@@ -3,7 +3,6 @@ import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
 import { Header, Preview, PreResize, Footer } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
-import theme from './assets/styles/colorScheme'
 
 
 const INITIAL_PARAMS = {
@@ -67,15 +66,22 @@ export default class extends Component {
   }
 
   loadImage = () => {
-    const { src } = this.props;
+    const { src, config } = this.props;
+    const { watermark } = config;
     const { reduceBeforeEdit: { mode, widthLimit, heightLimit } = {} } = this.state;
     const splittedSrc = src.split('/');
     const imageName = splittedSrc[splittedSrc.length - 1];
     const img = new Image();
+    let logoImage = null;
 
-    img.crossOrigin = ''; // Enable Cross Origin Image Editing
-    img.src = src;
-    this.img = img;
+    if (watermark && watermark.url) {
+      logoImage = new Image();
+      logoImage.setAttribute('crossOrigin', 'Anonymous');
+      logoImage.src = watermark.url + '?' + new Date().getTime();
+    }
+
+    img.src = src + '?' + new Date().getTime();
+    img.setAttribute('crossOrigin', 'Anonymous');
 
     img.onload = () => {
       const canvasDimensions = { width: img.width, height: img.height, ratio: img.width / img.height };
@@ -83,6 +89,7 @@ export default class extends Component {
         activeBody: 'preResize',
         isShowSpinner: false,
         img,
+        logoImage,
         imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName,
       };
 
@@ -120,7 +127,7 @@ export default class extends Component {
       }
 
       else {
-        this.setState({ ...propsOnApply });
+        this.setState({ ...propsOnApply, activeBody: 'preview', isPreResize: false });
       }
     }
   }
@@ -277,7 +284,7 @@ export default class extends Component {
       isShowSpinner, activeTab, operations, operationsOriginal, operationsZoomed, currentOperation, isHideCanvas,
       cropDetails, original, canvasDimensions, processWithCloudimage, processWithFilerobot, uploadCloudimageImage,
       imageMime, lastOperation, operationList, initialZoom, canvasZoomed, canvasOriginal, reduceBeforeEdit,
-      cropBeforeEdit, img, imageName, activeBody, isPreResize, preCanvasDimensions,
+      cropBeforeEdit, img, imageName, activeBody, isPreResize, preCanvasDimensions, logoImage,
 
       effect,
       filter,
@@ -309,6 +316,7 @@ export default class extends Component {
       isShowSpinner,
       showGoBackBtn,
       img,
+      logoImage,
       imageName,
       activeBody,
       preCanvasDimensions,
@@ -355,6 +363,7 @@ export default class extends Component {
       reduceBeforeEdit,
       cropBeforeEdit,
       img,
+      logoImage,
       imageName,
       isPreResize,
       preCanvasDimensions,
@@ -365,6 +374,7 @@ export default class extends Component {
       ...imageParams
     };
     const footerProps = {
+      logoImage,
       t,
       theme,
       activeBody,

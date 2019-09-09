@@ -5,7 +5,7 @@ import './core/calculate';
 import './core/convert';
 import './core/event';
 import './core/filter';
-//import './core/io';
+import './core/io';
 import './core/layer';
 import './core/pixel';
 import './core/plugin';
