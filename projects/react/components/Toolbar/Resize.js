@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import {
-  ResizeWrapper, ResizeBox, FieldSet, FieldLabel, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon
+  BlockRatioBtn,
+  BlockRatioIcon,
+  BlockRatioWrapper,
+  FieldInput,
+  FieldLabel,
+  FieldSet,
+  ResizeBox,
+  ResizeWrapper,
+  SuggestionOption,
+  SuggestionsBox
 } from '../../styledComponents';
 
 
@@ -33,13 +42,18 @@ export default class extends Component {
     this.props.updateState({ canvasDimensions: { ...canvasDimensions, width, height } });
   }
 
+  applyPreset = ({ width, height }) => {
+    this.props.updateState({ canvasDimensions: { ratio: width / height, width, height } });
+  }
+
   toggleRatio = () => {
     this.setState({ isBlockRatio: !this.state.isBlockRatio });
   }
 
   render() {
     const { isBlockRatio } = this.state;
-    const { canvasDimensions, processWithCloudimage, t } = this.props;
+    const { canvasDimensions, processWithCloudimage, t, config } = this.props;
+    const { resizePresets = [] } = config;
 
     return (
       <ResizeWrapper>
@@ -71,6 +85,18 @@ export default class extends Component {
             />
           </FieldSet>
         </ResizeBox>
+        <SuggestionsBox>
+          {resizePresets
+            .filter(preset =>
+              Math.abs(canvasDimensions.width / canvasDimensions.height - preset.ratio) < 0.05
+            )
+            .map(preset => (
+              <SuggestionOption key={preset.name} onClick={() => { this.applyPreset(preset); }}>
+                <div>{preset.width} x {preset.height}</div>
+                <div>{preset.name}</div>
+              </SuggestionOption>
+            ))}
+        </SuggestionsBox>
       </ResizeWrapper>
     )
   }

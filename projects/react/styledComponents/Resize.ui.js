@@ -58,4 +58,23 @@ const PreResizeInner = styled('div')`
   }
 `;
 
-export { ResizeWrapper, ResizeBox, PreResizeActions, PreResizeWarning, PreResizeInner };
+const SuggestionsBox = styled('div')`
+  display: inline-block;
+`;
+
+const SuggestionOption = styled('div')`
+  display: inline-block;
+  background: ${p => p.theme.colors.primaryBg};
+  padding: 15px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  :hover {
+    background: ${p => p.theme.colors.primaryBgHover};
+  }
+`;
+
+export {
+  ResizeWrapper, ResizeBox, PreResizeActions, PreResizeWarning, PreResizeInner, SuggestionsBox, SuggestionOption
+};

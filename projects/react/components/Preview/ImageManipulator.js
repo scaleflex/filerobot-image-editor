@@ -724,7 +724,9 @@ export default class ImageManipulator extends Component {
   }
 
   applyOperations = (operationIndex, callback) => {
-    const { initialZoom, operations, operationsZoomed, canvasZoomed, canvasOriginal, updateState } = this.props;
+    const {
+      initialZoom, operations, operationsZoomed, operationsOriginal, canvasZoomed, canvasOriginal, updateState
+    } = this.props;
 
     if (initialZoom !== 1) {
       const nextOperation = operationIndex !== -1 ?
@@ -736,6 +738,12 @@ export default class ImageManipulator extends Component {
         if (callback) callback();
 
       });
+
+      const nextOperationOriginal = operationIndex !== -1 ?
+        operationsOriginal[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
+      const canvasNext = this.replaceCanvas(nextOperationOriginal.canvas, 'scaleflex-image-edit-box-original');
+
+      this.CamanInstanceOriginal = new window.Caman(canvasNext, () => {});
     } else {
       const nextOperationSimple = operationIndex !== -1 ?
         operations[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
