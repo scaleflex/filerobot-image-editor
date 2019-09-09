@@ -109,9 +109,23 @@ const CropBoxInner = styled.div`
 `;
 
 const CropShape = styled.div`
-  height: 50px;
+  height: ${props => getHeightOfShape(props.ratio)}px;
   border: 1px solid ${props => props.theme.textColor};
-  width: ${props => 50 * props.ratio}px;
+  width: ${props => getWidthOfShape(props.ratio)}px;
+  margin: 0 auto;
+  display: inline-block;
+  vertical-align: middle;
+`;
+
+const CropShapeWrapper = styled('div')`
+  height: 50px;
+  line-height: 50px;
+`;
+
+const ShapeAligner = styled('div')`
+  display: inline-block;
+  vertical-align: middle;
+  height: 50px;
 `;
 
 const CropLabel = styled.div`
@@ -119,7 +133,29 @@ const CropLabel = styled.div`
   line-height: 20px;
 `;
 
+
+const getWidthOfShape = (ratio) => {
+  let width = 50 * ratio;
+
+  if (width > 200) {
+    width = 200;
+  }
+
+  return width;
+};
+
+const getHeightOfShape = (ratio) => {
+  let height = 50;
+  let width = 50 * ratio;
+
+  if (width > 200) {
+    height = 200 / ratio;
+  }
+
+  return height;
+};
+
 export {
   CropWrapper, CustomLabel, FieldSet, FieldLabel, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon,
-  CropBox, CropBoxInner, CropShape, CropLabel
+  CropBox, CropBoxInner, CropShape, CropLabel, CropShapeWrapper, ShapeAligner
 };

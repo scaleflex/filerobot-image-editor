@@ -33,7 +33,20 @@ ImageEditorDownload = new FilerobotImageEditor({
     url: 'https://jolipage002-global.api.airstore.io/v1/get/_/04e725a5-8605-57d5-bf9b-b161745e7720/6d3f41ddc2c1271cb4fede2b7cc8323bec97a3c69f89fd1dd881c5bb9460d9c6.png',
     position: 'center',
     opacity: 0.7
-  }
+  },
+  //cropPresets: [
+  //  { name: 'square', value: 1 },
+  //  { name: 'half-page ad', value: 300 / 600 },
+  //  { name: 'banner', value: 468 / 60 },
+  //  { name: 'leaderboard', value: 728 / 90 }
+  //],
+  //resizePresets: [
+  //  { name: 'square', width: 400, height: 400, ratio: 1 },
+  //  { name: 'small square', width: 200, height: 200, ratio: 1 },
+  //  { name: 'half-page ad', width: 300, height: 600, ratio: 300 / 600 },
+  //  { name: 'banner', width: 468, height: 60, ratio: 468 / 60 },
+  //  { name: 'leaderboard', width: 728, height: 90, ratio: 728 / 90 }
+  //]
 });
 
 // Image Editor to upload images and get url in response

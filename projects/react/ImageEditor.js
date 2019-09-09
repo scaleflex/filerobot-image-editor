@@ -306,6 +306,7 @@ export default class extends Component {
       activeTab,
       src,
       onClose,
+      config,
       canvasDimensions,
       processWithCloudimage,
       processWithFilerobot,

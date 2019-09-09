@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import {
   CropWrapper, CustomLabel, FieldSet, FieldLabel, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon,
-  CropBox, CropBoxInner, CropShape, CropLabel
+  CropBox, CropBoxInner, CropShape, CropLabel, CropShapeWrapper, ShapeAligner
 } from '../../styledComponents';
 
-
-const BOXES = [
-  { name: 'original', value: 0 },
-  { name: 'square', value: 1 },
-  { name: '5 : 4', value: 1.25 },
-  { name: '4 : 3', value: 1.33333 },
-  { name: '6 : 4', value: 1.5 },
-]
 
 
 export default class extends Component {
@@ -70,7 +62,8 @@ export default class extends Component {
 
   render() {
     const { aspectRatio, activeRatio } = this.state;
-    const { cropDetails, original, initialZoom, t } = this.props;
+    const { cropDetails, original, initialZoom, t, config } = this.props;
+    const { cropPresets = [] } = config;
 
     return (
       <CropWrapper>
@@ -101,10 +94,13 @@ export default class extends Component {
           <CustomLabel>{t['common.custom']}</CustomLabel>
         </CropBox>
 
-        {BOXES.map(box => (
+        {cropPresets.map(box => (
           <CropBox active={activeRatio === box.name} onClick={this.changeRatio.bind(this, box)} key={box.name}>
             <CropBoxInner>
-              <CropShape ratio={box.value || original.width / original.height}/>
+              <CropShapeWrapper>
+                <ShapeAligner/>
+                <CropShape ratio={box.value || original.width / original.height}/>
+              </CropShapeWrapper>
               <CropLabel>
                 {box.name === 'original' || box.name === 'square' ? t[`common.${box.name}`] : box.name}
               </CropLabel>
