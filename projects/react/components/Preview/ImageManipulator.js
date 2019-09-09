@@ -405,6 +405,8 @@ export default class ImageManipulator extends Component {
   applyFilterOrEffect = (type) => {
     const { updateState, initialZoom } = this.props;
 
+    if (!this.props[type]) return;
+
     updateState({ isHideCanvas: true, isShowSpinner: true }, () => {
       if (initialZoom !== 1) {
         this.CamanInstanceOriginal.revert(false);
