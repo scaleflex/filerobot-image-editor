@@ -25,7 +25,7 @@ export default {
   'footer.reset': 'Reset',
   'footer.undo': 'Undo',
   'footer.redo': 'Redo',
-  'spinner.label': 'Precessing...',
+  'spinner.label': 'Processing...',
   'warning.too_big_resolution': 'The resolution of the image is too big for the web. It can cause problems with Image Editor performance.',
   'common.width': 'width',
   'common.height': 'height',

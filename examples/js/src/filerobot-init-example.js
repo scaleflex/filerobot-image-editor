@@ -18,8 +18,8 @@ ImageEditorDownload = new FilerobotImageEditor({
   isLowQualityPreview: true,
   reduceBeforeEdit: {
     mode: 'manual',
-    widthLimit: 1000,
-    heightLimit: 1000
+    widthLimit: 2000,
+    heightLimit: 2000
   },
   cropBeforeEdit: {
     width: 400,
@@ -45,8 +45,8 @@ const configUpload = {
   isLowQualityPreview: true,
   reduceBeforeEdit: {
     mode: 'manual',
-    widthLimit: 1000,
-    heightLimit: 1000
+    widthLimit: 2000,
+    heightLimit: 2000
   },
   cropBeforeEdit: {
     width: 400,
@@ -78,8 +78,8 @@ const configModify = {
   isLowQualityPreview: true,
   reduceBeforeEdit: {
     mode: 'manual',
-    widthLimit: 1000,
-    heightLimit: 1000
+    widthLimit: 2000,
+    heightLimit: 2000
   },
   cropBeforeEdit: {
     width: 400,
