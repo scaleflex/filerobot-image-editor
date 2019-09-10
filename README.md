@@ -302,7 +302,7 @@ config.watermark = {
 
 **default**: 'dark'
 
-Color schemes, currently available two themes: 'dark', 'light'. There is possibility to make your custom theme [here]()
+Color schemes, currently available two themes: 'dark', 'light'. There is possibility to make your custom theme [here](https://github.com/scaleflex/filerobot-image-editor#theme-object)
 
 ### `theme`: object
 
