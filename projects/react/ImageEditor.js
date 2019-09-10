@@ -80,7 +80,7 @@ export default class extends Component {
       logoImage.src = watermark.url + '?' + new Date().getTime();
     }
 
-    img.src = src + '?' + new Date().getTime();
+    img.src = src; // + '?' + new Date().getTime();
     img.setAttribute('crossOrigin', 'Anonymous');
 
     img.onload = () => {
