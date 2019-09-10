@@ -199,7 +199,7 @@ config.isLowQualityPreview = true;
 
 Language of interface
 
-available languages: en (fr, de, ru are in progress), you can add translations [by yourself](#translations)
+available languages: en (fr, de, ru are in progress), you can add translations [by yourself](#translations-object)
 
 ```
 config.language = 'en';
