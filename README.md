@@ -203,16 +203,19 @@ The example of Image Editor configuration using cloudimage service can be found
 ## <a name="roadmap"></a>What's on the Roadmap for the near future
 
 Features
-* Control image brightness, contrast, exposure, and saturation _(in progress)_
-* Bright theme, plus possibility to make your custom theme _(in progress)_
+* Control image brightness, contrast, exposure, and saturation _(done in v3.0.0)_
+* Bright theme, plus possibility to make your custom theme _(done in v3.0.0)_
 * Rounds the corners of images
-* Mirror images effect
+* Mirror images effect _(done in v3.0.0)_
 * New filters and effects
 * Load file objects and dataURLs
 * Transform input images to other image formats
 * Easily integrate with third party libraries
 * Compress JPEG images via Optipress
 * Set to preview mode to render on top of an existing image
+* Watermarking _(done in v3.0.0)_
+* Configurable resize/crop templates _(done in v3.0.0)_
+* Correct degree of an image _(done in v3.0.0)_
 
 
 Adapters
