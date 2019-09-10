@@ -21,10 +21,10 @@ ImageEditorDownload = new FilerobotImageEditor({
     widthLimit: 2000,
     heightLimit: 2000
   },
-  cropBeforeEdit: {
-    width: 400,
-    height: 200
-  },
+  //cropBeforeEdit: {
+  //  width: 400,
+  //  height: 200
+  //},
   translations: {
     en: {}
   },
@@ -152,4 +152,4 @@ function initImageEditorAction(action) {
 
 buttonEditDownload.onclick = initImageEditorDownload;
 buttonEditUpload.onclick = initImageEditorUpload;
-buttonEditModify.onclick = initImageEditorModify;
+//buttonEditModify.onclick = initImageEditorModify;
