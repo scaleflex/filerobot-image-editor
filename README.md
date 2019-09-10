@@ -72,7 +72,33 @@
 
 ## <a name="features"></a>Features
 
-in progress...
+### Adjust: brightness, contrast, exposure, and saturation
+
+![Adjust](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/adjust.png?compressed)
+
+### Effects: 'edge enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'radial blur', 'sin city', 'tilt shift'
+
+![Effects](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/effects.png?compressed)
+
+### Filters: 'cross process', 'glow sun', 'jarques', 'love', 'old boot', 'orange peel', 'pin hole', 'sepia', 'sun rise', 'vintage'
+
+![Filters](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/filters.png?compressed)
+
+### Orientation: rotate and flip (mirrow effect)
+
+![Orientation](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/orientation.png?compressed)
+
+### Crop
+
+![Crop](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/crop.png?compressed)
+
+### Resize
+
+![Resize](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/resize.png?compressed)
+
+### Watermark
+
+![Watermark](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/watermark.jpg?compressed)
 
 ## <a name="standalone_usage"></a>Standalone usage
 
