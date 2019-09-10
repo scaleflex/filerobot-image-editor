@@ -100,6 +100,10 @@
 
 ![Watermark](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/watermark.jpg?compressed)
 
+### Light theme or use your custom color scheme
+
+![Light theme](https://scaleflex.api.airstore.io/v1/get/_/3742b0b5-b43f-58d7-a01c-b706eb150000/light.png?v=e8e219)
+
 ## <a name="standalone_usage"></a>Standalone usage
 
 ### <a name="installation"></a>Installation
