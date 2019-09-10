@@ -146,7 +146,7 @@ function initImageEditorAction(action) {
     const url = image.style.backgroundImage.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
     action.open(url);
   } else if (image.tagName === 'IMG') {
-    action.open(image.src.slice(image.src.lastIndexOf('http')));
+    action.open('https://scaleflex.ultrafast.io/' + image.src.slice(image.src.lastIndexOf('http')));
   }
 }
 
