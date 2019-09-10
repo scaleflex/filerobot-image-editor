@@ -235,10 +235,7 @@ config.reduceBeforeEdit = {
   };
 ```
 
-##### `reduceBeforeEdit.mode`: string | 'manual', 'auto'
-
-Manual mode will show a modal before editing where you can reduce size of the image.
-Auto mode will reduce the image in the background saving proportion.
+##### `reduceBeforeEdit.mode`: string | 'manual', 'auto' - Manual mode will show a modal before editing where you can reduce size of the image. Auto mode will reduce the image in the background (saving image proportion).
 
 ##### `reduceBeforeEdit.widthLimit`: number - Limit of the image width
 
