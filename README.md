@@ -53,6 +53,7 @@
 
 ## <a name="table_of_contents"></a>Table of contents
 
+* [Features](#features)
 * [Standalone usage](#standalone_usage)
     * [Installation](#installation)
     * [Quick start](#quick_start)
@@ -61,12 +62,43 @@
     * [Installation](#installation_react)
     * [Quick start](#quick_start_react)
     * [Methods/Properties](#methods_react)
+* [Configuration](#configuration)
 * [Filerobot Integration](#filerobot_integration)
 * [Cloudimage Integration](#cloudimage_integration)
 * [Roadmap for the near future](#roadmap)
 * [Filerobot UI Family](#ui_family)
 * [Contributing](#contributing)
 * [License](#license)
+
+## <a name="features"></a>Features
+
+### Adjust: brightness, contrast, exposure, and saturation
+
+![Adjust](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/adjust.png?compressed)
+
+### Effects: 'edge enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'radial blur', 'sin city', 'tilt shift'
+
+![Effects](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/effects.png?compressed)
+
+### Filters: 'cross process', 'glow sun', 'jarques', 'love', 'old boot', 'orange peel', 'pin hole', 'sepia', 'sun rise', 'vintage'
+
+![Filters](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/filters.png?compressed)
+
+### Orientation: rotate and flip (mirrow effect)
+
+![Orientation](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/orientation.png?compressed)
+
+### Crop
+
+![Crop](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/crop.png?compressed)
+
+### Resize
+
+![Resize](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/resize.png?compressed)
+
+### Watermark
+
+![Watermark](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/watermark.jpg?compressed)
 
 ## <a name="standalone_usage"></a>Standalone usage
 
@@ -168,7 +200,7 @@ render(<App/>, document.getElementById('app'));
 
 Trigger, to display the image editor widget.
 
-#### `config`: object (required)
+#### `config`: object
 
 Image editor config.
 
@@ -179,6 +211,94 @@ Callback, triggers on close image editor widget.
 #### `onComplete()`: function (required)
 
 Callback, triggers on complete processing image.
+
+## <a name="configuration"></a>Configuration
+
+### `isLowQualityPreview`: bool 
+
+**default**: true
+
+Helps to improve performance of the Image Editor by applying transformations to low quality preview.
+
+```
+config.isLowQualityPreview = true;
+```
+
+### `language`: string
+
+**default**: 'en'
+
+Language of interface
+
+available languages: en (fr, de, ru are in progress), you can add translations [by yourself](#translations-object)
+
+```
+config.language = 'en';
+```
+
+### `translations`: object
+
+key/translation pairs for i18n
+
+```
+config.translations = {
+  en: {
+    'toolbar.save': 'Save',
+    'toolbar.apply': 'Apply',
+    ...
+  }
+};
+```
+
+[See all translation keys here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/i18n/en.js)
+
+### `reduceBeforeEdit`: object
+
+In order to improve performance of editing your images, you can reduce the image size before editing.
+
+**default**: mode: 'manual', widthLimit: 2000px, heightLimit: 2000px
+
+```
+config.reduceBeforeEdit = {
+    mode: 'manual',
+    widthLimit: 2000,
+    heightLimit: 2000
+  };
+```
+
+##### `reduceBeforeEdit.mode`: string | 'manual', 'auto' - Manual mode will show a modal before editing where you can reduce size of the image. Auto mode will reduce the image in the background (saving image proportion).
+
+##### `reduceBeforeEdit.widthLimit`: number - Limit of the image width
+
+##### `reduceBeforeEdit.heightLimit`: number - Limit of the image height
+
+### `watermark`: object
+
+Add watermark on the image after applying image transformations.
+
+**default**: null
+
+##### `watermark.url`: string - url of the logo/image
+
+##### `watermark.position`: string | 'center' - position of the watermark
+
+##### `watermark.opacity`: number | [0-1] - opacity of the watermark
+
+```
+config.watermark = {
+    url: 'https://jolipage002-global.api.airstore.io/v1/get/_/04e725a5-8605-57d5-bf9b-b161745e7720/6d3f41ddc2c1271cb4fede2b7cc8323bec97a3c69f89fd1dd881c5bb9460d9c6.png',
+    position: 'center',
+    opacity: 0.7
+  };
+```
+
+### `cropPresets`: object
+
+Add custom templates for crop. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/cropPresets.js)
+
+### `resizePresets`: object
+
+Add custom templates for resize. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/resizePresets.js)
 
 ## <a name="filerobot_integration"></a>Filerobot Integration
 
