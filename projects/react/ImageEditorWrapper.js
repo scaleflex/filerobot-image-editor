@@ -7,6 +7,7 @@ import { UPLOADER } from './config';
 import './assets/fonts/filerobot-font.css';
 import en from './assets/i18n/en';
 import dark from './assets/theme/dark';
+import light from './assets/theme/light';
 
 
 class ImageEditorWrapper extends Component {
@@ -18,6 +19,7 @@ class ImageEditorWrapper extends Component {
     config.theme = config.theme || {};
     config.theme.colors = config.theme.colors || {};
     config.theme.fonts = config.theme.fonts || {};
+    config.colorScheme = config.colorScheme || 'dark';
 
     this.state = {
       isVisible: show,
@@ -27,13 +29,14 @@ class ImageEditorWrapper extends Component {
         ...en,
         ...config.translations[config.language]
       },
+      colorScheme: config.colorScheme || 'dark',
       theme: {
         colors: {
-          ...dark.colors,
+          ...(config.colorScheme === 'light' ? light : dark).colors,
           ...config.theme.colors
         },
         fonts: {
-          ...dark.fonts,
+          ...(config.colorScheme === 'light' ? light : dark).fonts,
           ...config.theme.fonts
         }
       }

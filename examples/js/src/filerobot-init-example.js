@@ -16,6 +16,7 @@ let ImageEditorDownload, ImageEditorUpload, ImageEditorModify;
 ImageEditorDownload = new FilerobotImageEditor({
   elementId: 'image-editor-download',
   isLowQualityPreview: true,
+  colorScheme: 'dark',
   reduceBeforeEdit: {
     mode: 'manual',
     widthLimit: 2000,
