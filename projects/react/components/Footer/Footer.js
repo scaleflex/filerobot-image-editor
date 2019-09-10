@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Footer, PreviousBtn, NextBtn, ResetBtn } from '../../styledComponents/index';
+import { Footer, PreviousBtn, NextBtn, ResetBtn, Switcher } from '../../styledComponents';
 
 
 export default class extends Component {
   render() {
     const {
       initialZoom, operations, operationsZoomed, currentOperation = null, redoOperation,
-      resetOperations, activeBody, t
+      resetOperations, activeBody, t, isApplyWatermark, logoImage, onApplyWatermarkChange
     } = this.props;
     const operationList = initialZoom === 1 ? operations : operationsZoomed;
     const currentOperationIndex = operationList.findIndex(operation => operation === currentOperation);
@@ -33,6 +33,14 @@ export default class extends Component {
           muted={isNextForbidden}
           title={t['footer.redo']}
         />
+
+        {logoImage &&
+        <Switcher
+          id="cloudimage-url-generator-switch"
+          checked={isApplyWatermark}
+          handleChange={onApplyWatermarkChange}
+          text={'Apply watermark'}
+        />}
       </Footer>
     )
   }

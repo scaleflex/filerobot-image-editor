@@ -33,7 +33,8 @@ ImageEditorDownload = new FilerobotImageEditor({
   watermark: {
     url: 'https://jolipage002-global.api.airstore.io/v1/get/_/04e725a5-8605-57d5-bf9b-b161745e7720/6d3f41ddc2c1271cb4fede2b7cc8323bec97a3c69f89fd1dd881c5bb9460d9c6.png',
     position: 'center',
-    opacity: 0.7
+    opacity: 0.7,
+    applyByDefault: false
   },
   //cropPresets: [
   //  { name: 'square', value: 1 },

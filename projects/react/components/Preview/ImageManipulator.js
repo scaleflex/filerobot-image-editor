@@ -243,14 +243,14 @@ export default class ImageManipulator extends Component {
   saveImage = () => {
     const {
       onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime,
-      operations, initialZoom, logoImage
+      operations, initialZoom, logoImage, isApplyWatermark
     } = this.props;
     const { filerobot = {}, watermark } = config;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = this.getCanvasNode(canvasID);
 
-    if (watermark && logoImage) {
+    if (watermark && logoImage && isApplyWatermark) {
       this.watermarkImageToDataURL(canvas, logoImage, watermark);
     }
 
@@ -313,12 +313,12 @@ export default class ImageManipulator extends Component {
   }
 
   downloadImage = (callback) => {
-    const { initialZoom, logoImage, config } = this.props;
+    const { initialZoom, logoImage, config, isApplyWatermark } = this.props;
     const { watermark } = config;
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = this.getCanvasNode(canvasID);
 
-    if (watermark && logoImage) {
+    if (watermark && logoImage && isApplyWatermark) {
       this.watermarkImageToDataURL(canvas, logoImage, watermark);
     }
 
