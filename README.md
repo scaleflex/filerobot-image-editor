@@ -53,6 +53,7 @@
 
 ## <a name="table_of_contents"></a>Table of contents
 
+* [Features](#features)
 * [Standalone usage](#standalone_usage)
     * [Installation](#installation)
     * [Quick start](#quick_start)
@@ -68,6 +69,10 @@
 * [Filerobot UI Family](#ui_family)
 * [Contributing](#contributing)
 * [License](#license)
+
+## <a name="features"></a>Features
+
+in progress...
 
 ## <a name="standalone_usage"></a>Standalone usage
 
@@ -183,7 +188,7 @@ Callback, triggers on complete processing image.
 
 ## <a name="configuration"></a>Configuration
 
-#### `isLowQualityPreview`: bool 
+### `isLowQualityPreview`: bool 
 
 **default**: true
 
@@ -193,7 +198,7 @@ Helps to improve performance of the Image Editor by applying transformations to 
 config.isLowQualityPreview = true;
 ```
 
-#### `language`: string
+### `language`: string
 
 **default**: 'en'
 
@@ -205,7 +210,7 @@ available languages: en (fr, de, ru are in progress), you can add translations [
 config.language = 'en';
 ```
 
-#### `translations`: object
+### `translations`: object
 
 key/translation pairs for i18n
 
@@ -221,7 +226,7 @@ config.translations = {
 
 [See all translation keys here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/i18n/en.js)
 
-#### `reduceBeforeEdit`: object
+### `reduceBeforeEdit`: object
 
 In order to improve performance of editing your images, you can reduce the image size before editing.
 
@@ -241,7 +246,7 @@ config.reduceBeforeEdit = {
 
 ##### `reduceBeforeEdit.heightLimit`: number - Limit of the image height
 
-#### `watermark`: object
+### `watermark`: object
 
 Add watermark on the image after applying image transformations.
 
@@ -261,11 +266,11 @@ config.watermark = {
   };
 ```
 
-#### `cropPresets`: object
+### `cropPresets`: object
 
 Add custom templates for crop. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/cropPresets.js)
 
-#### `resizePresets`: object
+### `resizePresets`: object
 
 Add custom templates for resize. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/resizePresets.js)
 
