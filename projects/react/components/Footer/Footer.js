@@ -3,10 +3,16 @@ import { Footer, PreviousBtn, NextBtn, ResetBtn, Switcher } from '../../styledCo
 
 
 export default class extends Component {
+  onApplyWatermarkChange = () => {
+    this.props.updateState({
+      watermark: { ...this.props.watermark, applyByDefault: !this.props.watermark.applyByDefault }
+    });
+  }
+
   render() {
     const {
       initialZoom, operations, operationsZoomed, currentOperation = null, redoOperation,
-      resetOperations, activeBody, t, isApplyWatermark, logoImage, onApplyWatermarkChange
+      resetOperations, activeBody, t, logoImage, watermark
     } = this.props;
     const operationList = initialZoom === 1 ? operations : operationsZoomed;
     const currentOperationIndex = operationList.findIndex(operation => operation === currentOperation);
@@ -34,11 +40,11 @@ export default class extends Component {
           title={t['footer.redo']}
         />
 
-        {logoImage &&
+        {logoImage && watermark &&
         <Switcher
-          id="cloudimage-url-generator-switch"
-          checked={isApplyWatermark}
-          handleChange={onApplyWatermarkChange}
+          id="switch-watermark-footer"
+          checked={watermark && watermark.applyByDefault}
+          handleChange={this.onApplyWatermarkChange}
           text={'Apply watermark'}
         />}
       </Footer>

@@ -48,7 +48,9 @@ class Range extends Component {
 export default Range;
 
 
-const Wrapper = styled('div')`
+const Wrapper = styled('div').attrs(() => ({
+  className: 'image-editor-range'
+}))`
   position: relative;
   width: 190px;
   padding: 25px 5px 20px 5px;

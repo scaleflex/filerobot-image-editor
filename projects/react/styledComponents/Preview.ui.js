@@ -54,8 +54,41 @@ const PreviewImgBox = styled.div`
     max-width: 100%;
     vertical-align: middle;
   }
+  
+   ${p => p.isShowWatermark && `
+canvas:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: red;
+    opacity: 0.5;
+  }`}
 `;
 
+const Watermark = styled('div')`
+  width: ${p => p.width || 0}px;
+  height: ${p => p.height || 0}px;
+  display: inline-block;
+  max-height: 100%;
+  max-width: 100%;
+  vertical-align: middle;
+  position: absolute;
+  background-image: url('${p => p.url ? p.url : 'none'}');
+  background-position: ${p => `${p.wx}px ${p.wy}px`};
+  background-repeat: no-repeat;
+  background-size: ${p => `${p.ww}px ${p.wh}px`};
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  opacity:${p => p.opacity || 0};
+`;
+//watermarkURL
+//isShowWatermark
 const Canvas = styled.canvas.attrs(() => ({
   id: 'scaleflex-image-edit-box'
 }))`
@@ -65,4 +98,4 @@ const Canvas = styled.canvas.attrs(() => ({
   vertical-align: middle;
 `;
 
-export { PreviewWrapper, Canvas, PreviewImgBox, PreResizeBox }
+export { PreviewWrapper, Canvas, PreviewImgBox, PreResizeBox, Watermark }

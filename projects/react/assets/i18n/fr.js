@@ -11,6 +11,7 @@ export default {
   'toolbar.orientation': 'Orientation',
   'toolbar.crop': 'Crop',
   'toolbar.resize': 'Resize',
+  'toolbar.watermark': 'Watermark',
   'adjust.brightness': 'Brightness',
   'adjust.contrast': 'Contrast',
   'adjust.exposure': 'Exposure',
@@ -32,4 +33,5 @@ export default {
   'common.custom': 'custom',
   'common.original': 'original',
   'common.square': 'square',
+  'common.opacity': 'opacity'
 };

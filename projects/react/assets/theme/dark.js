@@ -9,6 +9,7 @@ export default {
     textMute: '#aaa',
     textWarn: '#f7931e',
     secondaryBgOpacity: 'rgba(0, 0, 0, 0.75)',
+    accent: '#00707c',
 
     border: '#161e23',
     borderLight: '#70777f'

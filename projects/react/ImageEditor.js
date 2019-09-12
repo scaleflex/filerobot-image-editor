@@ -28,7 +28,8 @@ export default class extends Component {
     super();
 
     const {
-      processWithCloudimage, processWithFilerobot, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit
+      processWithCloudimage, processWithFilerobot, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit,
+      watermark
     } = props.config;
 
     this.state = {
@@ -37,7 +38,6 @@ export default class extends Component {
       activeTab: null,
       activeBody: null,
       currentOperation: null,
-      isApplyWatermark: false,
       original: { width: 300, height: 200 },
       cropDetails: { width: 300, height: 200 },
       canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
@@ -57,7 +57,13 @@ export default class extends Component {
 
       initialZoom: 1,
 
-      ...INITIAL_PARAMS
+      ...INITIAL_PARAMS,
+      watermark: watermark || {
+        opacity: 0.7,
+        position: 'center',
+        url: '',
+        applyByDefault: false
+      }
     }
   }
 
@@ -67,9 +73,8 @@ export default class extends Component {
   }
 
   loadImage = () => {
-    const { src, config } = this.props;
-    const { watermark } = config;
-    const { reduceBeforeEdit: { mode, widthLimit, heightLimit } = {} } = this.state;
+    const { src } = this.props;
+    const { reduceBeforeEdit: { mode, widthLimit, heightLimit } = {}, watermark } = this.state;
     const splittedSrc = src.split('/');
     const imageName = splittedSrc[splittedSrc.length - 1];
     const img = new Image();
@@ -91,7 +96,6 @@ export default class extends Component {
         isShowSpinner: false,
         img,
         logoImage,
-        isApplyWatermark: logoImage && watermark.applyByDefault,
         imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName,
       };
 
@@ -281,16 +285,12 @@ export default class extends Component {
     }
   }
 
-  onApplyWatermarkChange = () => {
-    this.setState({ isApplyWatermark: !this.state.isApplyWatermark })
-  }
-
   render() {
     const {
       isShowSpinner, activeTab, operations, operationsOriginal, operationsZoomed, currentOperation, isHideCanvas,
       cropDetails, original, canvasDimensions, processWithCloudimage, processWithFilerobot, uploadCloudimageImage,
       imageMime, lastOperation, operationList, initialZoom, canvasZoomed, canvasOriginal, reduceBeforeEdit,
-      cropBeforeEdit, img, imageName, activeBody, isPreResize, preCanvasDimensions, logoImage, isApplyWatermark,
+      cropBeforeEdit, img, imageName, activeBody, isPreResize, preCanvasDimensions, logoImage,
 
       effect,
       filter,
@@ -300,7 +300,8 @@ export default class extends Component {
       correctionDegree,
       flipX,
       flipY,
-      adjust
+      adjust,
+      watermark
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false, t = {}, theme } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
@@ -324,7 +325,6 @@ export default class extends Component {
       showGoBackBtn,
       img,
       logoImage,
-      isApplyWatermark,
       imageName,
       activeBody,
       preCanvasDimensions,
@@ -340,7 +340,8 @@ export default class extends Component {
       onDownloadImage: this.onDownloadImage,
       handleSave: this.handleSave,
 
-      ...imageParams
+      ...imageParams,
+      watermark
     };
     const previewProps = {
       t,
@@ -372,7 +373,6 @@ export default class extends Component {
       cropBeforeEdit,
       img,
       logoImage,
-      isApplyWatermark,
       imageName,
       isPreResize,
       preCanvasDimensions,
@@ -380,11 +380,11 @@ export default class extends Component {
       handleSave: this.handleSave,
       onPreResize: this.onPreResize,
 
-      ...imageParams
+      ...imageParams,
+      watermark
     };
     const footerProps = {
       logoImage,
-      isApplyWatermark,
       t,
       theme,
       activeBody,
@@ -397,8 +397,8 @@ export default class extends Component {
       updateState: this.updateState,
       redoOperation: this.redoOperation,
       resetOperations: this.resetOperations,
-      onApplyWatermarkChange: this.onApplyWatermarkChange,
-      config
+      config,
+      watermark
     };
 
     return (

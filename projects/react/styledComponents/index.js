@@ -11,3 +11,4 @@ export * from './Common.ui';
 export * from './Button';
 export * from './CloseBtn';
 export * from './Spinner';
+export * from './Watermark.ui';

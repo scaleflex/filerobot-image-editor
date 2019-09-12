@@ -8,6 +8,7 @@ import Crop from './Crop';
 import Resize from './Resize';
 import Orientation from './Orientation';
 import Adjust from './Adjust';
+import Watermark from './Watermark';
 
 
 export default class extends Component {
@@ -27,6 +28,7 @@ export default class extends Component {
         {activeTab === 'rotate' && <Orientation {...this.props}/>}
         {activeTab === 'crop' && <Crop {...this.props}/>}
         {activeTab === 'resize' && <Resize {...this.props}/>}
+        {activeTab === 'watermark' && <Watermark {...this.props}/>}
         {(isShowSpinner) && <NoClickOverlay/>}
         {activeBody !== 'preview' && <NoClickToolbar/>}
       </Toolbar>

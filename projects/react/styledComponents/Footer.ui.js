@@ -54,8 +54,8 @@ const SwitcherLabel = styled.label`
   display: block; 
   overflow: hidden; 
   cursor: pointer;
-  border: 2px solid #36464d; 
-  border-radius: 12px;
+  border: 1px solid ${p => p.theme.colors.border}; 
+  border-radius: 4px;
   margin: 0;
 `;
 
@@ -75,14 +75,14 @@ const SwitcherInner = styled.span`
     content: "ON";
     padding-left: 10px !important;
     background-color: #01717d; 
-    color: #FFFFFF;
+    color: #fff;
   }
   
   &:after {
     content: "OFF";
     padding-right: 10px !important;
-    background-color: #1e262c; 
-    color: #aaaaaa;
+    background-color: ${p => p.theme.colors.primaryBg}; 
+    color: #aaa;
     text-align: right;
   }
 `;
@@ -92,27 +92,28 @@ const SwitcherSwitch = styled.span`
     width: 10px;
     height: 10px;
     margin: 5.5px;
-    background: ${props => props.checked ? '#36464d' : '#36464d'};
+    background: ${p =>  p.theme.colors.secondaryBg};
     position: absolute; top: 0; bottom: 0;
     right:  ${props => props.checked ? '0' : '37px'};
-    border: 2px solid #36464d; 
+    border: 1px solid ${p => p.theme.colors.secondaryBg}; 
     border-radius: 12px;
     transition: all 0.3s ease-in 0s;
 `;
 
-const SwitcherBlock = styled.div`
+const SwitcherBlock = styled('div').attrs(() => ({
+  className: 'cloudimage-url-generator-switch'
+}))`
   display: inline-block;
   vertical-align: middle;
   margin-left: calc(100% - 280px);
 `;
 
-const SwitcherText = styled.div`
+const SwitcherText = styled('div')`
   margin-left: 8px;
   display: inline-block;
   vertical-align: middle;
-  color: #aaaaaa;
+  color: ${p => p.theme.colors.text};
   margin-bottom: 3px;
-  cursor: pointer;
   cursor: pointer;
 `;
 

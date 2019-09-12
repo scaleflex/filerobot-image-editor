@@ -5,6 +5,7 @@ import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
 import { getEffectHandlerName } from '../../utils/effects.utils';
+import { getWatermarkPosition } from '../../utils/watermark.utils';
 
 
 const INITIAL_PARAMS = {
@@ -53,10 +54,7 @@ export default class ImageManipulator extends Component {
 
   componentDidMount() {
     const that = this;
-    const {
-      config: { isLowQualityPreview } = {}, updateState, imageName, img, isPreResize, preCanvasDimensions
-    } = this.props;
-    let initialZoom = 1;
+    const { updateState, img, isPreResize, preCanvasDimensions } = this.props;
 
     updateState({
       isShowSpinner: true,
@@ -159,28 +157,9 @@ export default class ImageManipulator extends Component {
   }
 
   watermarkImageToDataURL = (canvas, image, watermark = {}) => {
-    const { position = 'center', opacity } = watermark;
+    const { opacity } = watermark;
     const tempCtx = canvas.getContext('2d');
-    let cw, ch, lw, lh;
-    let wx, wy, ww, wh;
-    let imageRatio = image.width / image.height;
-
-    cw = canvas.width;
-    ch = canvas.height;
-    lw = cw / 3;
-    lh = ch / 3;
-
-    if (position === 'center') {
-      wx = ww = lw;
-      wh = ww / imageRatio;
-      wy = ch / 2 - wh / 2;
-
-      if (wh > lh) {
-        wy = wh = lh;
-        ww = wh * imageRatio;
-        wx = cw / 2 - ww / 2;
-      }
-    }
+    let [wx, wy, ww, wh] = getWatermarkPosition(watermark, canvas, image);
 
     tempCtx.globalAlpha = opacity;
     tempCtx.drawImage(image, wx, wy, ww, wh);
@@ -243,14 +222,14 @@ export default class ImageManipulator extends Component {
   saveImage = () => {
     const {
       onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime,
-      operations, initialZoom, logoImage, isApplyWatermark
+      operations, initialZoom, logoImage, watermark
     } = this.props;
-    const { filerobot = {}, watermark } = config;
+    const { filerobot = {} } = config;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = this.getCanvasNode(canvasID);
 
-    if (watermark && logoImage && isApplyWatermark) {
+    if (watermark && logoImage && watermark.applyByDefault) {
       this.watermarkImageToDataURL(canvas, logoImage, watermark);
     }
 
@@ -313,12 +292,11 @@ export default class ImageManipulator extends Component {
   }
 
   downloadImage = (callback) => {
-    const { initialZoom, logoImage, config, isApplyWatermark } = this.props;
-    const { watermark } = config;
+    const { initialZoom, logoImage, watermark } = this.props;
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = this.getCanvasNode(canvasID);
 
-    if (watermark && logoImage && isApplyWatermark) {
+    if (watermark && logoImage && watermark.applyByDefault) {
       this.watermarkImageToDataURL(canvas, logoImage, watermark);
     }
 
@@ -441,12 +419,12 @@ export default class ImageManipulator extends Component {
         if (exposure.toString() !== '0') this.CamanInstanceOriginal.exposure(parseInt(exposure || '0'));
 
         this.CamanInstanceOriginal.render(() => {
-          updateState({ adjust: {...resetProps } }, () => {
+          updateState({ adjust: { ...resetProps } }, () => {
             this.makeCanvasSnapshot({ operation: 'adjust' });
           });
         });
       } else {
-        updateState({ adjust: {...resetProps } }, () => {
+        updateState({ adjust: { ...resetProps } }, () => {
           this.makeCanvasSnapshot({ operation: 'adjust' });
         });
       }
@@ -610,7 +588,10 @@ export default class ImageManipulator extends Component {
 
       this.CamanInstanceZoomed.render(() => {
         const canvasZoomed = this.replaceWithNewCanvas('scaleflex-image-edit-box');
-        const nextOperation = { ...operation, canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box')) };
+        const nextOperation = {
+          ...operation,
+          canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box'))
+        };
 
         this.CamanInstanceZoomed = new window.Caman(canvasZoomed, () => {
           updateState({
@@ -626,7 +607,10 @@ export default class ImageManipulator extends Component {
 
       this.CamanInstance.render(() => {
         const canvas = this.replaceWithNewCanvas('scaleflex-image-edit-box');
-        const nextOperation = { ...operation, canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box')) };
+        const nextOperation = {
+          ...operation,
+          canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box'))
+        };
 
         this.CamanInstance = new window.Caman(canvas, () => {
           updateState({
@@ -656,7 +640,7 @@ export default class ImageManipulator extends Component {
   /* Resize */
 
   initResize = () => {
-    const { initialZoom, updateState} = this.props;
+    const { initialZoom, updateState } = this.props;
     let canvas = this.getCanvasNode(
       initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box'
     );
@@ -777,7 +761,7 @@ export default class ImageManipulator extends Component {
         this.applyOperations(-1, callback);
       });
     } else {
-        this.applyOperations(-1, callback);
+      this.applyOperations(-1, callback);
     }
   }
 
@@ -817,6 +801,10 @@ export default class ImageManipulator extends Component {
       this.destroyCrop();
     }
 
+    if (activeTab === 'watermark') {
+      this.cancelWatermark();
+    }
+
     if (initialZoom !== 1) {
       this.CamanInstanceZoomed.reset();
       this.CamanInstanceOriginal.reset();
@@ -832,6 +820,30 @@ export default class ImageManipulator extends Component {
         if (callback) callback();
       });
     }
+  }
+
+  initWatermark = () => {
+    this.setState({ tempWatermark: { ...this.props.watermark } });
+
+    if (!this.props.watermark.applyByDefault) {
+      this.props.updateState({ watermark: { ...this.props.watermark, applyByDefault: true }});
+    }
+  }
+
+  applyWatermark = () => {
+    this.setState({ tempWatermark: null });
+  }
+
+  cancelWatermark = () => {
+    let logoImage = null;
+
+    if (this.props.tempWatermark && this.props.tempWatermark.url) {
+      logoImage = new Image();
+      logoImage.setAttribute('crossOrigin', 'Anonymous');
+      logoImage.src = this.props.tempWatermark.url + '?' + new Date().getTime();
+    }
+
+    this.props.updateState({ watermark: this.state.tempWatermark, logoImage });
   }
 
   applyChanges = (activeTab) => {
@@ -853,6 +865,9 @@ export default class ImageManipulator extends Component {
         break;
       case 'rotate':
         this.applyOrientation();
+        break;
+      case 'watermark':
+        this.applyWatermark();
         break;
       default:
         break;
@@ -876,6 +891,9 @@ export default class ImageManipulator extends Component {
         break;
       case 'rotate':
         this.initOrientation();
+        break;
+      case 'watermark':
+        this.initWatermark();
         break;
       default:
         this.destroyAll();

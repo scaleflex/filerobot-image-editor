@@ -9,6 +9,7 @@ export default {
     textHover: '#1a2329',
     textMute: '#aaa',
     textWarn: '#f7931e',
+    accent: '#00707c',
 
     border: '#aeaeae',
     borderLight: '#e1e1e1'

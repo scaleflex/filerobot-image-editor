@@ -354,6 +354,9 @@ function getIconByName(name) {
   let char = '';
 
   switch (name) {
+    case 'watermark':
+      char = '\\e918';
+      break;
     case 'reset':
       char = '\\e912';
       break;
