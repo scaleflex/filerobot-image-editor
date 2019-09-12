@@ -72,28 +72,32 @@
 
 ## <a name="features"></a>Features
 
-### Adjust: brightness, contrast, exposure, and saturation
+### Adjust
+#### brightness, contrast, exposure, and saturation
 
 <img
     width="600"
     alt="Adjust"
     src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/adjust.png?sanitize=true">
 
-### Effects: 'edge enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'radial blur', 'sin city', 'tilt shift'
+### Effects
+#### 'edge enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'radial blur', 'sin city', 'tilt shift'
 
 <img
     width="600"
     alt="Effects"
     src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/effects.png?sanitize=true">
 
-### Filters: 'cross process', 'glow sun', 'jarques', 'love', 'old boot', 'orange peel', 'pin hole', 'sepia', 'sun rise', 'vintage'
+### Filters
+#### 'cross process', 'glow sun', 'jarques', 'love', 'old boot', 'orange peel', 'pin hole', 'sepia', 'sun rise', 'vintage'
 
 <img
     width="600"
     alt="Filters"
     src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/filters.png?sanitize=true">
 
-### Orientation: rotate and flip (mirrow effect)
+### Orientation
+#### rotate and flip (mirrow effect)
 
 <img
     width="600"
@@ -121,7 +125,8 @@
     alt="Watermark"
     src="https://cdn.scaleflex.it/demo/watermark.png?sanitize=true">
 
-### Light theme or use your custom color scheme
+### Light theme
+#### or use your custom color scheme
 
 <img
     width="600"
