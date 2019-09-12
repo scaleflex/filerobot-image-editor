@@ -74,35 +74,59 @@
 
 ### Adjust: brightness, contrast, exposure, and saturation
 
-![Adjust](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/adjust.png?compressed)
+<img
+    width="600"
+    alt="Adjust"
+    src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/adjust.png?sanitize=true">
 
 ### Effects: 'edge enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'radial blur', 'sin city', 'tilt shift'
 
-![Effects](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/effects.png?compressed)
+<img
+    width="600"
+    alt="Effects"
+    src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/effects.png?sanitize=true">
 
 ### Filters: 'cross process', 'glow sun', 'jarques', 'love', 'old boot', 'orange peel', 'pin hole', 'sepia', 'sun rise', 'vintage'
 
-![Filters](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/filters.png?compressed)
+<img
+    width="600"
+    alt="Filters"
+    src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/filters.png?sanitize=true">
 
 ### Orientation: rotate and flip (mirrow effect)
 
-![Orientation](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/orientation.png?compressed)
+<img
+    width="600"
+    alt="Orientation"
+    src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/orientation.png?sanitize=true">
 
 ### Crop
 
-![Crop](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/crop.png?compressed)
+<img
+    width="600"
+    alt="Crop"
+    src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/crop.png?sanitize=true">
 
 ### Resize
 
-![Resize](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/resize.png?compressed)
+<img
+    width="600"
+    alt="Resize"
+    src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/resize.png?sanitize=true">
 
 ### Watermark
 
-![Watermark](https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/watermark.jpg?compressed)
+<img
+    width="600"
+    alt="Watermark"
+    src="https://cdn.scaleflex.it/demo/watermark.png?sanitize=true">
 
 ### Light theme or use your custom color scheme
 
-![Light theme](https://scaleflex.api.airstore.io/v1/get/_/3742b0b5-b43f-58d7-a01c-b706eb150000/light.png?v=e8e219)
+<img
+    width="600"
+    alt="Light theme"
+    src="https://scaleflex.api.airstore.io/v1/get/_/3742b0b5-b43f-58d7-a01c-b706eb150000/light.png?sanitize=true">
 
 ## <a name="standalone_usage"></a>Standalone usage
 
