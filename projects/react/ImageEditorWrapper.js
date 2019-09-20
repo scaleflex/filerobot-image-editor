@@ -75,7 +75,7 @@ class ImageEditorWrapper extends Component {
 
   render() {
     const { isVisible, src, config, t, theme } = this.state;
-    const { onComplete = () => {}, showGoBackBtn, closeOnLoad, showInModal = true } = this.props;
+    const { onComplete = () => {}, onBeforeComplete, showGoBackBtn, closeOnLoad, showInModal = true } = this.props;
 
     if (!src || !isVisible) return null;
 
@@ -85,6 +85,7 @@ class ImageEditorWrapper extends Component {
           src={src}
           config={config}
           onComplete={onComplete}
+          onBeforeComplete={onBeforeComplete}
           onClose={this.close}
           showGoBackBtn={showGoBackBtn}
           closeOnLoad={closeOnLoad}

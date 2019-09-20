@@ -1,6 +1,5 @@
 Caman.Filter.register("threshold", function (adjust) {
   return this.process("threshold", function (rgba) {
-    console.log('threshold ', ' *')
     let luminance;
     luminance = (0.2126 * rgba.r) + (0.7152 * rgba.g) + (0.0722 * rgba.b);
     if (luminance < adjust) {

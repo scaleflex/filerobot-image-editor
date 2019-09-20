@@ -3,6 +3,7 @@ import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
 import { Header, Preview, PreResize, Footer } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
+import { getCanvasNode } from './utils/global.utils';
 
 
 const INITIAL_PARAMS = {
@@ -191,12 +192,21 @@ export default class extends Component {
   }
 
   onDownloadImage = () => {
-    const { downloadImage } = this.state;
+    const { onBeforeComplete } = this.props;
+    const { downloadImage, initialZoom } = this.state;
+    const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
+    const canvas = getCanvasNode(canvasID);
+    const isDownload = onBeforeComplete ? onBeforeComplete({ status: 'before-complete', canvas }) : true;
 
-    downloadImage(() => {
-      this.props.onComplete({ status: 'success' });
+    if (isDownload) {
+      downloadImage(() => {
+        this.props.onComplete({ status: 'success', canvas });
+        this.props.onClose();
+      });
+    } else {
+      this.props.onComplete({ status: 'success', canvas });
       this.props.onClose();
-    });
+    }
   }
 
   onApplyEffects = name => {

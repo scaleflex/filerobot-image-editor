@@ -18,6 +18,8 @@ const App = () => {
         show={show}
         src={src}
         onClose={() => { toggle(false) }}
+        onComplete={(props) => { console.log(props) }}
+        onBeforeComplete={(props) => { console.log(props); return true; }}
       />
     </div>
   )

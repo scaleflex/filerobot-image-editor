@@ -6,6 +6,7 @@ import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
 import { getEffectHandlerName } from '../../utils/effects.utils';
 import { getWatermarkPosition } from '../../utils/watermark.utils';
+import { getCanvasNode } from '../../utils/global.utils';
 
 
 const INITIAL_PARAMS = {
@@ -71,7 +72,7 @@ export default class ImageManipulator extends Component {
       restoreAll: this.restoreAll,
       cancelLastOperation: this.cancelLastOperation
     }, () => {
-      const canvas = this.getCanvasNode('scaleflex-image-edit-box');
+      const canvas = getCanvasNode('scaleflex-image-edit-box');
       const ctx = canvas.getContext('2d');
 
       canvas.width = img.width;
@@ -117,7 +118,7 @@ export default class ImageManipulator extends Component {
     let initialZoom = 1;
 
     if (isLowQualityPreview && elem.height > 1050) {
-      const canvasOriginal = this.getCanvasNode('scaleflex-image-edit-box-original');
+      const canvasOriginal = getCanvasNode('scaleflex-image-edit-box-original');
       const ctxOriginal = canvasOriginal.getContext('2d');
 
       canvasOriginal.width = elem.width;
@@ -132,7 +133,7 @@ export default class ImageManipulator extends Component {
 
       updateState({ initialZoom, canvasOriginal: that.cloneCanvas(canvasOriginal) });
 
-      new window.Caman(this.getCanvasNode('scaleflex-image-edit-box'), function () {
+      new window.Caman(getCanvasNode('scaleflex-image-edit-box'), function () {
         this.resize({ width: zoomedWidth, height: zoomedHeight });
 
         this.render(() => {
@@ -148,7 +149,7 @@ export default class ImageManipulator extends Component {
         });
       });
     } else {
-      const canvas = this.getCanvasNode('scaleflex-image-edit-box');
+      const canvas = getCanvasNode('scaleflex-image-edit-box');
 
       that.CamanInstance = new window.Caman(canvas, function () {
         updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(canvas) });
@@ -187,7 +188,7 @@ export default class ImageManipulator extends Component {
 
   replaceWithNewCanvas = (id) => {
     //create a new canvas
-    const oldCanvas = this.getCanvasNode(id);
+    const oldCanvas = getCanvasNode(id);
     let newCanvas = document.createElement('canvas');
     let context = newCanvas.getContext('2d');
     const container = oldCanvas.parentElement;
@@ -209,7 +210,7 @@ export default class ImageManipulator extends Component {
 
   replaceCanvas = (newCanvas, id) => {
     //create a new canvas
-    const oldCanvas = this.getCanvasNode(id);
+    const oldCanvas = getCanvasNode(id);
     const container = oldCanvas.parentElement;
     container.removeChild(oldCanvas)
 
@@ -227,7 +228,7 @@ export default class ImageManipulator extends Component {
     const { filerobot = {} } = config;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
-    const canvas = this.getCanvasNode(canvasID);
+    const canvas = getCanvasNode(canvasID);
 
     if (watermark && logoImage && watermark.applyByDefault) {
       this.watermarkImageToDataURL(canvas, logoImage, watermark);
@@ -294,7 +295,7 @@ export default class ImageManipulator extends Component {
   downloadImage = (callback) => {
     const { initialZoom, logoImage, watermark } = this.props;
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
-    const canvas = this.getCanvasNode(canvasID);
+    const canvas = getCanvasNode(canvasID);
 
     if (watermark && logoImage && watermark.applyByDefault) {
       this.watermarkImageToDataURL(canvas, logoImage, watermark);
@@ -439,8 +440,6 @@ export default class ImageManipulator extends Component {
     const { initialZoom, rotate, updateState } = this.props;
     const nextRotateValue = rotate + value;
 
-    console.log(nextRotateValue, value, correctionDegree);
-
     updateState({
       isHideCanvas: true,
       isShowSpinner: true,
@@ -520,7 +519,7 @@ export default class ImageManipulator extends Component {
     updateState(
       { isHideCanvas: true, isShowSpinner: true },
       () => {
-        const canvas = this.getCanvasNode();
+        const canvas = getCanvasNode();
         const rect = canvas.getBoundingClientRect();
         const zoom = canvas.width / rect.width;
 
@@ -574,7 +573,7 @@ export default class ImageManipulator extends Component {
         const canvasOriginal = this.replaceWithNewCanvas('scaleflex-image-edit-box-original');
         const nextOperation = {
           ...operation,
-          canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box-original'))
+          canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box-original'))
         };
 
         this.CamanInstanceOriginal = new window.Caman(canvasOriginal, () => {
@@ -590,7 +589,7 @@ export default class ImageManipulator extends Component {
         const canvasZoomed = this.replaceWithNewCanvas('scaleflex-image-edit-box');
         const nextOperation = {
           ...operation,
-          canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box'))
+          canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box'))
         };
 
         this.CamanInstanceZoomed = new window.Caman(canvasZoomed, () => {
@@ -609,7 +608,7 @@ export default class ImageManipulator extends Component {
         const canvas = this.replaceWithNewCanvas('scaleflex-image-edit-box');
         const nextOperation = {
           ...operation,
-          canvas: this.cloneCanvas(this.getCanvasNode('scaleflex-image-edit-box'))
+          canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box'))
         };
 
         this.CamanInstance = new window.Caman(canvas, () => {
@@ -641,7 +640,7 @@ export default class ImageManipulator extends Component {
 
   initResize = () => {
     const { initialZoom, updateState } = this.props;
-    let canvas = this.getCanvasNode(
+    let canvas = getCanvasNode(
       initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box'
     );
     const nextCanvasDimensions = { width: canvas.width, height: canvas.height, ratio: canvas.width / canvas.height };
@@ -919,8 +918,6 @@ export default class ImageManipulator extends Component {
         break;
     }
   }
-
-  getCanvasNode = (id = 'scaleflex-image-edit-box') => window.document.getElementById(id);
 
   render() {
     return (
