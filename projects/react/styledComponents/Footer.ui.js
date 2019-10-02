@@ -105,7 +105,9 @@ const SwitcherBlock = styled('div').attrs(() => ({
 }))`
   display: inline-block;
   vertical-align: middle;
-  margin-left: calc(100% - 280px);
+  line-height: 34px;
+  margin-right: 10px;
+  float: right;
 `;
 
 const SwitcherText = styled('div')`

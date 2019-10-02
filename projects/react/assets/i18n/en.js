@@ -33,5 +33,6 @@ export default {
   'common.custom': 'custom',
   'common.original': 'original',
   'common.square': 'square',
-  'common.opacity': 'opacity'
+  'common.opacity': 'opacity',
+  'common.apply_watermark': 'Apply watermark'
 };

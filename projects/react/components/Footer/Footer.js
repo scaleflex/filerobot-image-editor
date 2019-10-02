@@ -45,7 +45,7 @@ export default class extends Component {
           id="switch-watermark-footer"
           checked={watermark && watermark.applyByDefault}
           handleChange={this.onApplyWatermarkChange}
-          text={'Apply watermark'}
+          text={t['common.apply_watermark']}
         />}
       </Footer>
     )

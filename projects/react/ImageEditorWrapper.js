@@ -6,6 +6,7 @@ import { Modal } from './components/Modal';
 import { UPLOADER } from './config';
 import './assets/fonts/filerobot-font.css';
 import en from './assets/i18n/en';
+import fr from './assets/i18n/fr';
 import dark from './assets/theme/dark';
 import light from './assets/theme/light';
 
@@ -26,7 +27,7 @@ class ImageEditorWrapper extends Component {
       src,
       config: this.processConfig(config),
       t: {
-        ...en,
+        ...(config.language === 'en' ? en : fr),
         ...config.translations[config.language]
       },
       colorScheme: config.colorScheme || 'dark',

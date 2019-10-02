@@ -136,7 +136,7 @@ export default class extends Component {
               id="switch-watermark"
               checked={applyByDefault}
               handleChange={this.onApplyWatermarkChange}
-              text={'Apply watermark'}
+              text={t['common.apply_watermark']}
             />
           </WrapperForOpacity>
         </WatermarkInputs>
