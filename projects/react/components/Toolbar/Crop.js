@@ -73,7 +73,7 @@ export default class extends Component {
             <FieldInput
               dark={activeRatio === 'custom'}
               fullSize
-              value={Math.floor(cropDetails.width * initialZoom)}
+              value={Math.round(cropDetails.width * initialZoom)}
               onChange={this.changeWidth}
             />
           </FieldSet>
@@ -87,7 +87,7 @@ export default class extends Component {
             <FieldInput
               dark={activeRatio === 'custom'}
               fullSize
-              value={Math.floor(cropDetails.height * initialZoom)}
+              value={Math.round(cropDetails.height * initialZoom)}
               onChange={this.changeHeight}
             />
           </FieldSet>
