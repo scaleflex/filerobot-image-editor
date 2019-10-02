@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  OrientationWrapper, RotateWrapper, RotateButton, RotateIcon, DarkBtn
-} from '../../styledComponents';
+import { DarkBtn, OrientationWrapper, RotateButton, RotateIcon, RotateWrapper } from '../../styledComponents';
 import Range from '../Range'
 
 
@@ -35,18 +33,27 @@ export default class extends Component {
   }
 
   render() {
-    const { correctionDegree, t } = this.props;
+    const { correctionDegree, t, config = {} } = this.props;
+    const { processWithCloudimage } = config;
 
     return (
       <OrientationWrapper>
         <RotateWrapper>
           <RotateButton>
             <DarkBtn onClick={this.leftRotate}><RotateIcon name="left-rotate"/> <span>{t['orientation.rotate_l']}</span></DarkBtn>
-            <DarkBtn onClick={this.rightRotate}><RotateIcon name="right-rotate"/> <span>{t['orientation.rotate_r']}</span></DarkBtn>
+            <DarkBtn onClick={this.rightRotate}><RotateIcon name="right-rotate"/>
+              <span>{t['orientation.rotate_r']}</span></DarkBtn>
 
-            <DarkBtn onClick={() => { this.onFlip('x'); }}><RotateIcon name="flip-h"/> <span>{t['orientation.flip_h']}</span></DarkBtn>
-            <DarkBtn onClick={() => { this.onFlip('y'); }}><RotateIcon name="flip-v"/> <span>{t['orientation.flip_v']}</span></DarkBtn>
+            {!processWithCloudimage && (
+              <>
+                <DarkBtn onClick={() => { this.onFlip('x'); }}><RotateIcon name="flip-h"/>
+                  <span>{t['orientation.flip_h']}</span></DarkBtn>
+                <DarkBtn onClick={() => { this.onFlip('y'); }}><RotateIcon name="flip-v"/>
+                  <span>{t['orientation.flip_v']}</span></DarkBtn>
+              </>
+            )}
 
+            {!processWithCloudimage && (
             <div>
               <Range min={-30} max={30} step={0.5} range={correctionDegree} updateRange={this.updateCorrectionDegree}/>
               <svg viewBox="-90 -5 180 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -99,6 +106,7 @@ export default class extends Component {
                 <circle fill="currentColor" cx="37.15555555555555" cy="0" r="0.2" opacity="0.2"></circle>
               </svg>
             </div>
+            )}
           </RotateButton>
         </RotateWrapper>
       </OrientationWrapper>

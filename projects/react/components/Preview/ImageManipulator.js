@@ -223,7 +223,7 @@ export default class ImageManipulator extends Component {
   saveImage = () => {
     const {
       onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime,
-      operations, initialZoom, logoImage, watermark
+      operations, initialZoom, logoImage, watermark, operationsOriginal
     } = this.props;
     const { filerobot = {} } = config;
     const src = this.props.src.split('?')[0];
@@ -270,23 +270,21 @@ export default class ImageManipulator extends Component {
       request.setRequestHeader('X-Airstore-Secret-Key', filerobot.uploadKey);
       request.send(formData);
     } else {
-      const allowedOperations = operations.filter(({ stack }) => CLOUDIMAGE_OPERATIONS.indexOf(stack[0].name) > -1);
-      const url = this.generateCloudimageURL(allowedOperations);
-      const original = src.replace(/https?:\/\/scaleflex.ultrafast.io\//, '');
-      const resultUrl = url + original;
+      const resultOperations = initialZoom !== 1 ? operationsOriginal : operations;
+      const allowedOperations = resultOperations.filter(({ operation }) => CLOUDIMAGE_OPERATIONS.includes(operation));
+      const url = this.generateCloudimageURL(allowedOperations, src.replace(/https?:\/\/scaleflex.ultrafast.io\//, ''));
 
       if (uploadCloudimageImage) {
         const request = new XMLHttpRequest();
 
         request.addEventListener("load", this.onFileLoad);
-
         request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
         request.setRequestHeader('X-Airstore-Secret-Key', filerobot.uploadKey);
         request.setRequestHeader('Content-Type', 'application/json');
-        request.send(JSON.stringify({ files_urls: [resultUrl] }));
+        request.send(JSON.stringify({ files_urls: [url] }));
       } else {
         updateState({ isShowSpinner: false, isHideCanvas: false });
-        onComplete(resultUrl, { url_permalink: resultUrl, url_public: resultUrl });
+        onComplete(url, { url_permalink: url, url_public: url });
         closeOnLoad && onClose();
       }
     }
@@ -341,40 +339,34 @@ export default class ImageManipulator extends Component {
     }
   }
 
-  generateCloudimageURL = (operations) => {
+  generateCloudimageURL = (operations, original) => {
     const { config } = this.props;
     const { cloudimage = {} } = config;
-    const cloudUrl = cloudimage.token + '.cloudimg.io' + '/';
+    const cloudUrl = cloudimage.token + '.cloudimg.io' + '/v7/';
     const cropOperation = this.isOperationExist(operations, 'crop');
     const resizeOperation = this.isOperationExist(operations, 'resize');
-    const orientationOperation = this.isOperationExist(operations, 'rotate')
-    let operationQ = this.getOperationQuery(cropOperation, resizeOperation);
-    let cropParams = null;
-    let resizeParams = null;
-    let orientationParams = null;
+    const orientationOperation = this.isOperationExist(operations, 'rotate');
+    const isProcessImage = cropOperation || resizeOperation || orientationOperation;
 
-    if (cropOperation)
-      cropParams = this.getCropArguments(cropOperation);
+    let cropQuery = '';
+    let resizeQuery = '';
+    let orientationQuery = '';
 
-    let [cropWidth, cropHeight, x, y] = cropParams || [];
+    if (cropOperation) {
+      cropQuery = this.getCropArguments(cropOperation.props);
+    }
 
-    if (resizeOperation)
-      resizeParams = this.getResizeArguments(resizeOperation);
+    if (resizeOperation) {
+      resizeQuery = (cropQuery ? '&' : '') + this.getResizeArguments(resizeOperation.props);
+    }
 
-    if (orientationOperation)
-      orientationParams = this.getOrientationArguments(orientationOperation);
+    if (orientationOperation) {
+      orientationQuery = ((cropQuery || resizeQuery) ? '&' : '') +
+        this.getOrientationArguments(orientationOperation.props);
+    }
 
-    let [resizeWidth, resizeHeight] = resizeParams || [];
 
-    const cropQ = cropOperation ? (x + ',' + y + ',' + (x + cropWidth) + ',' + (y + cropHeight) + '-') : '';
-    const resizeQ = (resizeWidth || cropWidth) ? (resizeWidth || cropWidth) + 'x' + (resizeHeight || cropHeight) : '';
-    const sizesQ = cropQ || resizeQ ? cropQ + resizeQ : 'n';
-    const rotateQ = orientationParams ? orientationParams : '';
-    const filtersQ = rotateQ ? `r${rotateQ}` : 'n';
-
-    if ((operationQ === 'cdn') && (filtersQ !== 'n')) operationQ = 'cdno';
-
-    return 'https://' + cloudUrl + operationQ + '/' + sizesQ + '/' + filtersQ + '/';
+    return 'https://' + cloudUrl + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery;
   }
 
   /* Filters and Effects */
@@ -434,7 +426,19 @@ export default class ImageManipulator extends Component {
 
   /* Rotate */
 
-  initOrientation = () => {}
+  initOrientation = () => {
+    const { config, redoOperation, operations, operationsZoomed, initialZoom } = this.props;
+    const { processWithCloudimage } = config;
+    const currentOperations = initialZoom !== 1 ? operationsZoomed : operations;
+
+    if (processWithCloudimage && currentOperations.length >= 1) {
+      const prevCropIndex = currentOperations.findIndex(({operation}) => operation === 'rotate');
+
+      if (prevCropIndex > -1) {
+        redoOperation(prevCropIndex - 1, () => {}, false);
+      }
+    }
+  }
 
   onRotate = (value = 0, correctionDegree = 0, flipX = false, flipY = false) => {
     const { initialZoom, rotate, updateState } = this.props;
@@ -476,44 +480,58 @@ export default class ImageManipulator extends Component {
     const { updateState, initialZoom, rotate, correctionDegree, flipX, flipY } = this.props;
 
     updateState({ isHideCanvas: true, isShowSpinner: true }, () => {
+      let nextRotate = (rotate || 0) + (correctionDegree || 0);
+
       if (initialZoom !== 1) {
         this.CamanInstanceOriginal.reset();
 
         if (flipX) this.CamanInstanceOriginal.flip('x');
         if (flipY) this.CamanInstanceOriginal.flip('y');
-        if (rotate || correctionDegree) this.CamanInstanceOriginal.rotate((rotate || 0) + (correctionDegree || 0));
+        if (rotate || correctionDegree) this.CamanInstanceOriginal.rotate(nextRotate);
 
         this.CamanInstanceOriginal.render(() => {
           updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
-            this.makeCanvasSnapshot({ operation: 'rotate' });
+            this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate }});
           });
         });
       } else {
         updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
-          this.makeCanvasSnapshot({ operation: 'rotate' });
+          this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate } });
         });
       }
     });
   }
 
-  getOrientationArguments = (operation = {}) => {
-    const { stack = [] } = operation;
-    const rotate = stack[0] && stack[0].arguments && stack[0].arguments[0] || 0;
-
-    // todo: need to find better way or ask julian to redo it on server
+  getOrientationArguments = ({ rotate } = {}) => {
     switch (rotate) {
       case 90:
-        return 270;
+        return `r=270`;
       case -90:
-        return 90;
+        return `r=90`;
       default:
-        return rotate;
+        return `r=${rotate}`;
     }
   }
 
   /* Crop */
 
   initCrop = () => {
+    const { config, redoOperation, operations, operationsZoomed, initialZoom } = this.props;
+    const { processWithCloudimage } = config;
+    const currentOperations = initialZoom !== 1 ? operationsZoomed : operations;
+
+    if (processWithCloudimage && currentOperations.length >= 1) {
+      const prevCropIndex = currentOperations.findIndex(({operation}) => operation === 'crop');
+
+      if (prevCropIndex > -1) {
+        redoOperation(prevCropIndex - 1, this.onInitCrop, false);
+      }
+    } else {
+      this.onInitCrop();
+    }
+  }
+
+  onInitCrop = () => {
     const { updateState } = this.props;
 
     updateState(
@@ -550,16 +568,27 @@ export default class ImageManipulator extends Component {
     const { width, height, x, y } = cropDetails;
 
     updateState({ isShowSpinner: true }, () => {
+      let resultSize = null;
       this.destroyCrop();
 
       if (initialZoom !== 1) {
+        resultSize = [width, height, x, y].map(prop => prop * initialZoom);
         this.CamanInstanceZoomed.crop(width, height, x, y);
-        this.CamanInstanceOriginal.crop(...[width, height, x, y].map(prop => prop * initialZoom));
+        this.CamanInstanceOriginal.crop(...resultSize);
       } else {
-        this.CamanInstance.crop(width, height, x, y);
+        resultSize = [width, height, x, y];
+        this.CamanInstance.crop(...resultSize);
       }
 
-      this.makeCanvasSnapshot({ operation: 'crop' });
+      this.makeCanvasSnapshot({
+        operation: 'crop',
+        props: {
+          width: resultSize[0],
+          height: resultSize[1],
+          x: resultSize[2],
+          y: resultSize[3]
+        }
+      });
     });
   }
 
@@ -627,14 +656,7 @@ export default class ImageManipulator extends Component {
     this.cropper.destroy();
   }
 
-  getCropArguments = (operation = {}) => {
-    const { stack = [] } = operation;
-    let params = stack[0] && stack[0].arguments;
-
-    params = params.map(value => parseInt(value));
-
-    return params;
-  }
+  getCropArguments = ({ width, height, x, y  } = {}) => `tl_px=${x},${y}&br_px=${x + width},${y + height}`;
 
   /* Resize */
 
@@ -649,9 +671,14 @@ export default class ImageManipulator extends Component {
   }
 
   applyResize = () => {
-    const { initialZoom, canvasDimensions, updateState, handleSave } = this.props;
+    const { initialZoom, canvasDimensions, updateState, handleSave, operations, operationsOriginal } = this.props;
 
-    updateState({ isHideCanvas: true, isShowSpinner: true }, () => {
+    updateState({
+      isHideCanvas: true,
+      isShowSpinner: true,
+      operationsOriginal: [...operationsOriginal, { operation: 'resize', props: canvasDimensions }],
+      operations: [...operations, { operation: 'resize', props: canvasDimensions }]
+    }, () => {
       if (initialZoom !== 1) {
         this.CamanInstanceOriginal.resize(canvasDimensions);
 
@@ -668,12 +695,7 @@ export default class ImageManipulator extends Component {
     });
   }
 
-  getResizeArguments = (operation = {}) => {
-    const { stack = [] } = operation;
-    let props = stack[0] && stack[0].arguments && stack[0].arguments[0];
-
-    return [parseInt(props.width), parseInt(props.height)];
-  }
+  getResizeArguments = ({ width, height } = {}) => `w=${width}&h=${height}`
 
   /* Adjust */
 
@@ -719,9 +741,9 @@ export default class ImageManipulator extends Component {
       const canvasZoomedNext = this.replaceCanvas(nextOperation.canvas, 'scaleflex-image-edit-box');
 
       this.CamanInstanceZoomed = new window.Caman(canvasZoomedNext, () => {
-        updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation });
-        if (callback) callback();
-
+        updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation }, () => {
+          if (callback) callback();
+        });
       });
 
       const nextOperationOriginal = operationIndex !== -1 ?
@@ -735,13 +757,14 @@ export default class ImageManipulator extends Component {
       const canvas = this.replaceCanvas(nextOperationSimple.canvas, 'scaleflex-image-edit-box');
 
       this.CamanInstance = new window.Caman(canvas, () => {
-        updateState({ ...INITIAL_PARAMS, currentOperation: nextOperationSimple });
-        if (callback) callback();
+        updateState({ ...INITIAL_PARAMS, currentOperation: nextOperationSimple }, () => {
+          if (callback) callback();
+        });
       });
     }
   }
 
-  isOperationExist = (operations, type) => operations.find(({ stack }) => stack[0].name === type);
+  isOperationExist = (operations, type) => operations.find(({ operation }) => operation === type);
 
   getOperationQuery = (isCrop, isResize) => {
     if (isCrop) return 'crop_px';

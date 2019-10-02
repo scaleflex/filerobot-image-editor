@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
-import { Header, Preview, PreResize, Footer } from './components/index';
+import { Footer, Header, PreResize, Preview } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
 import { getCanvasNode } from './utils/global.utils';
@@ -105,9 +105,7 @@ export default class extends Component {
           canvasDimensions,
           ...propsOnApply
         });
-      }
-
-      else if (mode === 'auto' && (widthLimit < img.width || heightLimit < img.height)) {
+      } else if (mode === 'auto' && (widthLimit < img.width || heightLimit < img.height)) {
         if (img.width >= img.height) {
           const ratio = img.width / img.height;
           const dimensions = { ratio, width: widthLimit, height: widthLimit / ratio };
@@ -131,9 +129,7 @@ export default class extends Component {
             isPreResize: true
           });
         }
-      }
-
-      else {
+      } else {
         this.setState({ ...propsOnApply, activeBody: 'preview', isPreResize: false });
       }
     }
@@ -242,7 +238,7 @@ export default class extends Component {
   }
 
   handleSave = () => {
-    const {  processWithFilerobot, processWithCloudimage } = this.state;
+    const { processWithFilerobot, processWithCloudimage } = this.state;
 
     if (!processWithFilerobot && !processWithCloudimage) {
       this.onDownloadImage();
@@ -258,14 +254,20 @@ export default class extends Component {
     this.setState({ activeTab: null });
   }
 
-  redoOperation = (operationIndex) => {
+  redoOperation = (operationIndex, callback = () => {}, resetActiveTab = true) => {
     const { applyOperations } = this.state;
 
-    this.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
+    if (resetActiveTab) {
+      this.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
+    } else {
+      this.setState({ isHideCanvas: true, isShowSpinner: true });
+    }
 
     applyOperations(
       operationIndex,
-      () => { this.setState({ isHideCanvas: false, isShowSpinner: false }); },
+      () => {
+        this.setState({ isHideCanvas: false, isShowSpinner: false }, callback);
+      },
     );
   }
 
@@ -389,6 +391,7 @@ export default class extends Component {
       updateState: this.updateState,
       handleSave: this.handleSave,
       onPreResize: this.onPreResize,
+      redoOperation: this.redoOperation,
 
       ...imageParams,
       watermark

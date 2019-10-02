@@ -155,4 +155,4 @@ function initImageEditorAction(action) {
 
 buttonEditDownload.onclick = initImageEditorDownload;
 buttonEditUpload.onclick = initImageEditorUpload;
-//buttonEditModify.onclick = initImageEditorModify;
+buttonEditModify.onclick = initImageEditorModify;
