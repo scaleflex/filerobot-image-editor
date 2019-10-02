@@ -120,8 +120,8 @@ const SwitcherText = styled('div')`
 `;
 
 
-const Switcher = ({ id, handleChange, text, checked, ...otherProps }) => (
-  <SwitcherBlock>
+const Switcher = ({ id, handleChange, text, checked, style, ...otherProps }) => (
+  <SwitcherBlock style={style}>
     <SwitcherWrapper>
       <SwitcherInput
         type="checkbox"

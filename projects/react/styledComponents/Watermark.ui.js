@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 
 const WatermarkWrapper = styled.div`
+  position: relative;
   color: ${props => props.theme.colors.text};
   text-align: left;
   white-space: normal;
@@ -97,7 +98,40 @@ const PositionSquare = styled('div')`
   }
 `;
 
+const SelectWatermarkLabel = styled('div')`
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 20px;
+  cursor: pointer;
+`;
+
+const Watermarks = styled('div')`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 100px;
+  background: ${p => p.theme.colors.secondaryBg};
+`;
+
+const WatermarkIcon = styled('div')`
+  width: 200px;
+  height: 70px;
+  display: inline-block;
+  vertical-align: middle;
+  background: ${p => p.theme.colors.primaryBgHover} url(${p => p.src}) 50% 50% / contain no-repeat; 
+  margin: 10px;
+  padding: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  :hover {
+    background-color: ${p => p.theme.colors.secondaryBgHover};
+  }
+`;
+
 
 export { WatermarkWrapper, WrapperForURL, WrapperForOpacity, WatermarkInputs, WatermarkPositionWrapper,
-  PositionSquare
+  PositionSquare, SelectWatermarkLabel, Watermarks, WatermarkIcon
 };

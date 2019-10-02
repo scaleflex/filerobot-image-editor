@@ -7,7 +7,10 @@ import {
   WatermarkPositionWrapper,
   WatermarkWrapper,
   WrapperForOpacity,
-  WrapperForURL
+  WrapperForURL,
+  SelectWatermarkLabel,
+  Watermarks,
+  WatermarkIcon
 } from '../../styledComponents';
 import { debounce } from 'throttle-debounce';
 import Range from '../Range';
@@ -28,7 +31,10 @@ export default class extends Component {
       opacity: props.watermark.opacity || 0.7,
       position: props.watermark.position || 'center',
       url: props.watermark.url || '',
-      applyByDefault: props.watermark.applyByDefault || false
+      urls: props.watermark.urls || [],
+      isWatermarkList: props.watermark.urls && props.watermark.urls.length > 1,
+      applyByDefault: props.watermark.applyByDefault || false,
+      showWaterMarkList: false
     }
   }
 
@@ -105,8 +111,21 @@ export default class extends Component {
     });
   }
 
+  showWatermarkList = () => {
+    this.setState({ showWaterMarkList: true });
+  }
+
+  hideWatermarkList = () => {
+    this.setState({ showWaterMarkList: false });
+  }
+
+  onChangeWatermark = (url) => {
+    this.changeURL({ target: { value: url } });
+    this.hideWatermarkList();
+  }
+
   render() {
-    const { url, opacity, position, applyByDefault } = this.state;
+    const { isWatermarkList, url, urls, opacity, position, applyByDefault, showWaterMarkList } = this.state;
     const { t } = this.props;
 
     return (
@@ -118,9 +137,12 @@ export default class extends Component {
             <FieldInput
               name="url"
               fullSize
+              style={{ width: 'calc(100% - 200px)' }}
               value={url}
               onChange={this.changeURL}
             />
+            {isWatermarkList &&
+            <SelectWatermarkLabel onClick={this.showWatermarkList}>Select</SelectWatermarkLabel>}
           </WrapperForURL>
           <WrapperForOpacity>
             <label htmlFor="opacity">Opacity</label>
@@ -137,6 +159,7 @@ export default class extends Component {
               checked={applyByDefault}
               handleChange={this.onApplyWatermarkChange}
               text={t['common.apply_watermark']}
+              style={{ lineHeight: 'inherit', float: 'none' }}
             />
           </WrapperForOpacity>
         </WatermarkInputs>
@@ -151,6 +174,12 @@ export default class extends Component {
             />
           ))}
         </WatermarkPositionWrapper>
+
+        {isWatermarkList && showWaterMarkList &&  (
+          <Watermarks >
+            {urls.map(url => <WatermarkIcon key={url} src={url} onClick={() => { this.onChangeWatermark(url) }}/>)}
+          </Watermarks>
+        )}
 
       </WatermarkWrapper>
     )

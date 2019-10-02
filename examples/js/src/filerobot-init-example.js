@@ -32,6 +32,10 @@ ImageEditorDownload = new FilerobotImageEditor({
   language: 'en',
   watermark: {
     url: 'https://cdn.scaleflex.it/demo/filerobot.png',
+    urls: [
+      'https://cdn.scaleflex.it/demo/filerobot.png',
+      'https://cdn.scaleflex.it/demo/superman.png'
+    ],
     position: 'center',
     opacity: 0.7,
     applyByDefault: false
@@ -74,6 +78,10 @@ const configUpload = {
   },
   watermark: {
     url: 'https://cdn.scaleflex.it/demo/filerobot.png',
+    urls: [
+      'https://cdn.scaleflex.it/demo/filerobot.png',
+      'https://cdn.scaleflex.it/demo/superman.png'
+    ],
     position: 'center',
     opacity: 0.7,
     applyByDefault: false
