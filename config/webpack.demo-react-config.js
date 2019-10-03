@@ -33,7 +33,7 @@ module.exports = (env, options) => {
     },
     devtool: options.mode === 'production' ? 'none' : "sourcemap",
     devServer: {
-      port: 3001
+      port: 3003
     }
   }
 };

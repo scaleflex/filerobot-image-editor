@@ -38,7 +38,7 @@ module.exports = (env, options) => {
     },
     devtool: options.mode === 'development' ? "sourcemap" : "none",
     devServer: {
-      port: 3001
+      port: 3003
     }
   };
 }
