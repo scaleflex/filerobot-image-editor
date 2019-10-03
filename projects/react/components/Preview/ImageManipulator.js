@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
 import { b64toBlob } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
@@ -944,10 +944,10 @@ export default class ImageManipulator extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <Canvas id="scaleflex-image-edit-box-original"/>
         <Canvas id="scaleflex-image-edit-box"/>
-      </Fragment>
+      </>
     );
   }
 }

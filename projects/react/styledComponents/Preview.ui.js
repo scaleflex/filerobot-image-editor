@@ -89,9 +89,7 @@ const Watermark = styled('div')`
 `;
 //watermarkURL
 //isShowWatermark
-const Canvas = styled.canvas.attrs(() => ({
-  id: 'scaleflex-image-edit-box'
-}))`
+const Canvas = styled.canvas.attrs(() => ({}))`
   display: ${props => props.hide ? 'none' : 'inline-block'};
   max-height: 100%;
   max-width: 100%;
