@@ -19,7 +19,7 @@ const App = () => {
         src={src}
         onClose={() => { toggle(false) }}
         onComplete={(props) => { console.log(props) }}
-        onBeforeComplete={(props) => { console.log(props); return true; }}
+        onBeforeComplete={(props) => { console.log(props); return false; }}
       />
     </div>
   )
