@@ -247,6 +247,16 @@ Callback, triggers on complete processing image.
 
 ## <a name="configuration"></a>Configuration
 
+### `tools`: [string] 
+
+**default**: ['adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark']
+
+Filerobot Image Editor tools.
+
+```
+config.tools = ['adjust', 'effects', 'filters', 'rotate'];
+```
+
 ### `isLowQualityPreview`: bool 
 
 **default**: true
