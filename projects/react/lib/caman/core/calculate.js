@@ -187,34 +187,30 @@ class Calculate {
   static missingValues(values, endX) {
     // Do a search for missing values in the bezier array and use linear
     // interpolation to approximate their values
-    if (Object.keys(values).length < (endX + 1)) {
-      const ret = {};
-
-      for (let i = 0, end = endX, asc = 0 <= end; asc ? i <= end : i >= end; asc ? i++ : i--) {
+    var i, j, leftCoord, ret, rightCoord, _i, _j;
+    if (Object.keys(values).length < endX + 1) {
+      ret = {};
+      for (i = _i = 0; 0 <= endX ? _i <= endX : _i >= endX; i = 0 <= endX ? ++_i : --_i) {
         if (values[i] != null) {
           ret[i] = values[i];
         } else {
-          var rightCoord;
-          const leftCoord = [i - 1, ret[i - 1]];
-
-          // Find the first value to the right. Ideally this loop will break
-          // very quickly.
-          for (let j = i, end1 = endX, asc1 = i <= end1; asc1 ? j <= end1 : j >= end1; asc1 ? j++ : j--) {
+          leftCoord = [i - 1, ret[i - 1]];
+          for (j = _j = i; i <= endX ? _j <= endX : _j >= endX; j = i <= endX ? ++_j : --_j) {
             if (values[j] != null) {
               rightCoord = [j, values[j]];
               break;
             }
           }
 
-          ret[i] = leftCoord[1] +
-            (((rightCoord[1] - leftCoord[1]) / (rightCoord[0] - leftCoord[0])) *
-              (i - leftCoord[0]));
+          if (!rightCoord) {
+            rightCoord = [0,0];
+          }
+
+          ret[i] = leftCoord[1] + ((rightCoord[1] - leftCoord[1]) / (rightCoord[0] - leftCoord[0])) * (i - leftCoord[0]);
         }
       }
-
       return ret;
     }
-
     return values;
   }
 }
