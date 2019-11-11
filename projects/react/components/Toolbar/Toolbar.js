@@ -13,8 +13,8 @@ import Watermark from './Watermark';
 
 export default class extends Component {
   render() {
-    const { activeTab, processWithCloudimage, isShowSpinner, activeBody } = this.props;
-    let allowedTools = TOOLS;
+    const { activeTab, processWithCloudimage, isShowSpinner, activeBody, tools } = this.props;
+    let allowedTools = tools || TOOLS;
 
     if (processWithCloudimage)
       allowedTools = TOOLS.filter(tool => CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1);

@@ -340,6 +340,7 @@ export default class extends Component {
       imageName,
       activeBody,
       preCanvasDimensions,
+      tools: config.tools,
       updateState: this.updateState,
       onRevert: this.onRevert,
       apply: this.apply,
