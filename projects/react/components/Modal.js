@@ -162,7 +162,7 @@ export class Modal extends Component {
     return createPortal(
       <Fragment>
         <ModalOverlay onClick={onClose}/>
-        <ModalFullScreen {...this.props}>
+        <ModalFullScreen id={'filerobot-image-editor'} {...this.props}>
           {!isHideCloseBtn && <CloseBtn onClick={onClose}/>}
           <ModalContent h="100%" {...otherProps}>
             {this.props.children}
