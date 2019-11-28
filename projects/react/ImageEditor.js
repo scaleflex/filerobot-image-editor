@@ -189,9 +189,8 @@ export default class extends Component {
 
   onDownloadImage = () => {
     const { onBeforeComplete } = this.props;
-    const { downloadImage, initialZoom } = this.state;
-    const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
-    const canvas = getCanvasNode(canvasID);
+    const { downloadImage, getResultCanvas } = this.state;
+    const canvas = getResultCanvas();
     const isDownload = onBeforeComplete ? onBeforeComplete({ status: 'before-complete', canvas }) : true;
 
     if (isDownload) {

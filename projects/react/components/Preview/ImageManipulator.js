@@ -66,6 +66,7 @@ export default class ImageManipulator extends Component {
       onAdjust: this.onAdjust,
 
       downloadImage: this.downloadImage,
+      getResultCanvas: this.getResultCanvas,
       saveImage: this.saveImage,
 
       applyCorrections: this.applyCorrections,
@@ -290,7 +291,7 @@ export default class ImageManipulator extends Component {
     }
   }
 
-  downloadImage = (callback) => {
+  getResultCanvas = () => {
     const { initialZoom, logoImage, watermark } = this.props;
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = getCanvasNode(canvasID);
@@ -299,6 +300,11 @@ export default class ImageManipulator extends Component {
       this.watermarkImageToDataURL(canvas, logoImage, watermark);
     }
 
+    return canvas;
+  }
+
+  downloadImage = (callback) => {
+    const canvas = this.getResultCanvas();
     const { imageMime } = this.props;
     const { imageName } = this.state;
     const lnk = document.createElement('a');
