@@ -331,6 +331,15 @@ Add watermark on the image after applying image transformations.
 
 ##### `watermark.applyByDefault`: bool - apply by default
 
+##### `watermark.activePositions`: string - 'corners', 'star', 'center', 'top-row', 'center-row', 'bottom-row' - select a preset or apply an array with 9 positons [1,1,1,1,1,1,1,1,1]
+
+##### `watermark.handleOpacity`: boolean - default is true, hide or show the opacity range
+
+##### `watermark.fileUpload`: boolean - default is false, use file upload instead of a image URL
+
+##### `watermark.imageFilter`: function - default is null, pass a function that gets the image resource before draw and return a manipulated image (pass some fancy filter on the watermark)
+
+
 ```
 config.watermark = {
     url: 'https://jolipage002-global.api.airstore.io/v1/get/_/04e725a5-8605-57d5-bf9b-b161745e7720/6d3f41ddc2c1271cb4fede2b7cc8323bec97a3c69f89fd1dd881c5bb9460d9c6.png',
