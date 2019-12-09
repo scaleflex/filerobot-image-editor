@@ -68,6 +68,35 @@ const FieldInput = styled.input.attrs(props => ({
   }
 `;
 
+const FileInput = styled.input.attrs(props => ({
+  type: props.type ? props.type : 'file'
+}))`
+  display: inline-block;
+  width: ${props => props.fullSize ? '100%' : props.theme.fieldWidth};
+  height: 30px;
+  padding: 6px 12px;
+  font-size: 12px;
+  line-height: 1;
+  color: ${p => p.theme.colors.text};
+  background: ${props => props.dark ? props.theme.colors.primaryBg : props.theme.colors.secondaryBgHover};
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px inset, rgba(82, 104, 109, 0.4) 0px 1px 0px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  vertical-align: middle;
+  border: 0px solid transparent;
+  font-family: Roboto, sans-serif;
+  
+  :hover {
+    outline: none;
+  }
+  
+  :focus {
+    border: 1px solid ${props => props.theme.colors.secondaryBg};
+    outline: none;
+    box-shadow: rgba(0, 112, 124, 0.5) 0px 1px 1px inset, rgba(0, 112, 124, 0.4) 0px 1px 0px;
+  }
+`;
+
 const BlockRatioWrapper = styled.div`
   display: inline-block;
   padding: 0 5px;
@@ -156,6 +185,6 @@ const getHeightOfShape = (ratio) => {
 };
 
 export {
-  CropWrapper, CustomLabel, FieldSet, FieldLabel, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon,
+  CropWrapper, CustomLabel, FieldSet, FieldLabel, FileInput, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon,
   CropBox, CropBoxInner, CropShape, CropLabel, CropShapeWrapper, ShapeAligner
 };
