@@ -553,7 +553,7 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
       img.classList.remove('active');
     });
     const uploaderResultImg = document.createElement('div');
-    uploaderResultImg.style.backgroundImage = 'url("' + files[0].url_permalink + '")';
+    uploaderResultImg.style.backgroundImage = 'url("' + (files[0].url_permalink || files[0].url.permalink) + '")';
     uploaderResultImg.classList.add('custom-image', 'demo-img', 'active');
     const lastDemoItem = demoImages.children[demoImages.children.length-1];
     const customDemoImg = lastDemoItem.querySelector('.custom-image');
@@ -564,5 +564,5 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
     uploaderContainer.style.display = 'none';
   }
 </script>
-<script type="text/javascript" src="filerobot-image-editor.main.0a06bf3cce939dcf8adf.js"></script></body>
+<script type="text/javascript" src="filerobot-image-editor.main.c520dc3926f6baba9422.js"></script></body>
 </html>
