@@ -6,7 +6,8 @@ import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
 import { getEffectHandlerName } from '../../utils/effects.utils';
 import { getWatermarkPosition } from '../../utils/watermark.utils';
-import { getCanvasNode } from '../../utils/global.utils';
+import { getCanvasNode, getBaseUrl, getSecretHeaderName } from '../../utils/global.utils';
+import { getPubliclink } from '../../utils/adjustAPI.utils';
 
 
 const INITIAL_PARAMS = {
@@ -226,7 +227,7 @@ export default class ImageManipulator extends Component {
       onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime,
       operations, initialZoom, logoImage, watermark, operationsOriginal
     } = this.props;
-    const { filerobot = {} } = config;
+    const { filerobot = {}, platform = 'filerobot' } = config;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = getCanvasNode(canvasID);
@@ -235,7 +236,7 @@ export default class ImageManipulator extends Component {
       this.watermarkImageToDataURL(canvas, logoImage, watermark);
     }
 
-    const baseUrl = `//${filerobot.container}.api.airstore.io/v1/`;
+    const baseUrl = getBaseUrl(filerobot.container, platform);
     const uploadParams = filerobot.uploadParams || {};
     const dir = uploadParams.dir || 'image-editor';
     const self = this;
@@ -268,7 +269,7 @@ export default class ImageManipulator extends Component {
       request.addEventListener("load", self.onFileLoad);
       formData.append('files[]', blob, name);
       request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
-      request.setRequestHeader('X-Airstore-Secret-Key', filerobot.uploadKey);
+      request.setRequestHeader(getSecretHeaderName(platform), filerobot.uploadKey);
       request.send(formData);
     } else {
       const resultOperations = initialZoom !== 1 ? operationsOriginal : operations;
@@ -280,12 +281,12 @@ export default class ImageManipulator extends Component {
 
         request.addEventListener("load", this.onFileLoad);
         request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
-        request.setRequestHeader('X-Airstore-Secret-Key', filerobot.uploadKey);
+        request.setRequestHeader(getSecretHeaderName(platform), filerobot.uploadKey);
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify({ files_urls: [url] }));
       } else {
         updateState({ isShowSpinner: false, isHideCanvas: false });
-        onComplete(url, { url_permalink: url, url_public: url });
+        onComplete(url, { url_permalink: url, url_public: url, url: { public: url, permalink: url } });
         closeOnLoad && onClose();
       }
     }
@@ -332,11 +333,12 @@ export default class ImageManipulator extends Component {
 
     if (responseData.status === 'success') {
       const { file = {} } = responseData;
+      const publicURL = getPubliclink(file);
 
-      if (!file.url_public) return;
+      if (!publicURL) return;
 
       updateState({ isShowSpinner: false, isHideCanvas: false });
-      onComplete(file.url_public, file);
+      onComplete(publicURL, file);
       closeOnLoad && onClose();
     } else {
       updateState({ isShowSpinner: false, isHideCanvas: false });

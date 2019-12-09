@@ -21,6 +21,7 @@ class ImageEditorWrapper extends Component {
     config.theme.colors = config.theme.colors || {};
     config.theme.fonts = config.theme.fonts || {};
     config.colorScheme = config.colorScheme || 'dark';
+    config.platform = config.platform || 'filerobot';
 
     this.state = {
       isVisible: show,

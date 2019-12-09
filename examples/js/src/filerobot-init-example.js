@@ -14,46 +14,54 @@ let ImageEditorDownload, ImageEditorUpload, ImageEditorModify;
 // Image Editor to download images
 
 ImageEditorDownload = new FilerobotImageEditor({
-  elementId: 'image-editor-download',
-  isLowQualityPreview: true,
-  colorScheme: 'dark',
-  reduceBeforeEdit: {
-    mode: 'manual',
-    widthLimit: 2000,
-    heightLimit: 2000
-  },
-  //cropBeforeEdit: {
-  //  width: 400,
-  //  height: 200
-  //},
-  translations: {
-    en: {}
-  },
-  language: 'en',
-  watermark: {
-    url: 'https://cdn.scaleflex.it/demo/filerobot.png',
-    urls: [
-      'https://cdn.scaleflex.it/demo/filerobot.png',
-      'https://cdn.scaleflex.it/demo/superman.png'
-    ],
-    position: 'center',
-    opacity: 0.7,
-    applyByDefault: false
-  },
-  //cropPresets: [
-  //  { name: 'square', value: 1 },
-  //  { name: 'half-page ad', value: 300 / 600 },
-  //  { name: 'banner', value: 468 / 60 },
-  //  { name: 'leaderboard', value: 728 / 90 }
-  //],
-  //resizePresets: [
-  //  { name: 'square', width: 400, height: 400, ratio: 1 },
-  //  { name: 'small square', width: 200, height: 200, ratio: 1 },
-  //  { name: 'half-page ad', width: 300, height: 600, ratio: 300 / 600 },
-  //  { name: 'banner', width: 468, height: 60, ratio: 468 / 60 },
-  //  { name: 'leaderboard', width: 728, height: 90, ratio: 728 / 90 }
-  //]
-});
+    elementId: 'image-editor-download',
+    isLowQualityPreview: true,
+    colorScheme: 'dark',
+    reduceBeforeEdit: {
+      mode: 'manual',
+      widthLimit: 2000,
+      heightLimit: 2000
+    },
+    //cropBeforeEdit: {
+    //  width: 400,
+    //  height: 200
+    //},
+    translations: {
+      en: {}
+    },
+    language: 'en',
+    watermark: {
+      url: 'https://cdn.scaleflex.it/demo/filerobot.png',
+      urls: [
+        'https://cdn.scaleflex.it/demo/filerobot.png',
+        'https://cdn.scaleflex.it/demo/superman.png'
+      ],
+      position: 'center',
+      opacity: 0.7,
+      applyByDefault: false
+    },
+    //cropPresets: [
+    //  { name: 'square', value: 1 },
+    //  { name: 'half-page ad', value: 300 / 600 },
+    //  { name: 'banner', value: 468 / 60 },
+    //  { name: 'leaderboard', value: 728 / 90 }
+    //],
+    //resizePresets: [
+    //  { name: 'square', width: 400, height: 400, ratio: 1 },
+    //  { name: 'small square', width: 200, height: 200, ratio: 1 },
+    //  { name: 'half-page ad', width: 300, height: 600, ratio: 300 / 600 },
+    //  { name: 'banner', width: 468, height: 60, ratio: 468 / 60 },
+    //  { name: 'leaderboard', width: 728, height: 90, ratio: 728 / 90 }
+    //]
+  }
+  //{
+  //  onComplete: (props) => { console.log(props); },
+  //  onBeforeComplete: (props) => {
+  //    console.log(props);
+  //    return false;
+  //  }
+  //}
+  );
 
 // Image Editor to upload images and get url in response
 
@@ -87,7 +95,7 @@ const configUpload = {
     applyByDefault: false
   }
 };
-const onCompleteUpload = function(newUrl) {
+const onCompleteUpload = function (newUrl) {
   const copyText = document.getElementById("copy-text");
   const resultImage = document.getElementById('result-image');
   const url = newUrl.replace('https://fpdlhfjm.airstore.io/', 'https://store.filerobot.com/fpdlhfjm/');
@@ -101,6 +109,14 @@ const onCompleteUpload = function(newUrl) {
 };
 
 ImageEditorUpload = new FilerobotImageEditor(configUpload, onCompleteUpload);
+
+//ImageEditorUpload = new FilerobotImageEditor(configUpload, {
+//  onComplete: onCompleteUpload,
+//  onBeforeComplete: (props) => {
+//    console.log(props);
+//    return false;
+//  }
+//});
 
 // Image Editor to apply transformation by modifying url
 
@@ -121,7 +137,7 @@ const configModify = {
   }
 };
 
-const onCompleteModify = function(newUrl) {
+const onCompleteModify = function (newUrl) {
   const copyText = document.getElementById("copy-text");
   const resultImage = document.getElementById('result-image');
 
@@ -154,7 +170,7 @@ function initImageEditorAction(action) {
   resultImage.src = '';
 
   if (image.tagName === 'DIV') {
-    const url = image.style.backgroundImage.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+    const url = image.style.backgroundImage.match(/\((.*?)\)/)[1].replace(/('|")/g, '');
     action.open(url);
   } else if (image.tagName === 'IMG') {
     action.open('https://scaleflex.ultrafast.io/' + image.src.slice(image.src.lastIndexOf('http')));

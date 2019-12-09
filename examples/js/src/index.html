@@ -553,7 +553,7 @@ render(&lt;App/>, document.getElementById('app'));</code></pre>
       img.classList.remove('active');
     });
     const uploaderResultImg = document.createElement('div');
-    uploaderResultImg.style.backgroundImage = 'url("' + files[0].url_permalink + '")';
+    uploaderResultImg.style.backgroundImage = 'url("' + (files[0].url_permalink || files[0].url.permalink) + '")';
     uploaderResultImg.classList.add('custom-image', 'demo-img', 'active');
     const lastDemoItem = demoImages.children[demoImages.children.length-1];
     const customDemoImg = lastDemoItem.querySelector('.custom-image');
