@@ -37,22 +37,32 @@ const WrapperForURL = styled('div')`
   }
 `;
 
+const WrapperForControls = styled('div')`
+  ${p => {
+    if (p.switcherPosition === 'right') {
+      return `.cloudimage-url-generator-switch {
+        margin-left: 100px;
+        margin-top: -6px;
+        
+        label {
+          min-width: auto;
+        }
+      }`;
+    } else {
+      return 'padding: 10px;';
+    }
+  }}
+`;
+
 const WrapperForOpacity = styled('div')`
+  display: inline-block;
+  vertical-align: middle;
   padding: 10px;
 
   label {
     min-width: 100px;
     display: inline-block;
     vertical-align: middle;
-  }
-  
-  .cloudimage-url-generator-switch {
-    margin-left: 100px;
-    margin-top: -6px;
-    
-    label {
-      min-width: auto;
-    }
   }
 `;
 
@@ -132,6 +142,6 @@ const WatermarkIcon = styled('div')`
 `;
 
 
-export { WatermarkWrapper, WrapperForURL, WrapperForOpacity, WatermarkInputs, WatermarkPositionWrapper,
+export { WatermarkWrapper, WrapperForURL, WrapperForControls, WrapperForOpacity, WatermarkInputs, WatermarkPositionWrapper,
   PositionSquare, SelectWatermarkLabel, Watermarks, WatermarkIcon
 };
