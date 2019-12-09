@@ -7,6 +7,7 @@ import {
   WatermarkInputs,
   WatermarkPositionWrapper,
   WatermarkWrapper,
+  WrapperForControls,
   WrapperForOpacity,
   WrapperForURL,
   SelectWatermarkLabel,
@@ -16,26 +17,86 @@ import {
 import { debounce } from 'throttle-debounce';
 import Range from '../Range';
 
-
 const watermarkPositions = [
-  "left-top", "center-top", "right-top", "left-center", "center", "right-center", "left-bottom", "center-bottom",
+  "left-top",
+  "center-top",
+  "right-top",
+  "left-center",
+  "center",
+  "right-center",
+  "left-bottom",
+  "center-bottom",
   "right-bottom"
 ];
 
+// possible positions ["corners", "star", "center", "top-row", "center-row", "bottom-row"]
+const watermarkPositionsPreset = {
+  "corners": [
+    1,0,1,
+    0,0,0,
+    1,0,1,
+  ],
+  "star": [
+    0,1,0,
+    1,1,1,
+    0,1,0,
+  ],
+  "center": [
+    0,0,0,
+    0,1,0,
+    0,0,0,
+  ],
+  "top-row": [
+    1,1,1,
+    0,0,0,
+    0,0,0,
+  ],
+  "center-row": [
+    0,0,0,
+    1,1,1,
+    0,0,0,
+  ],
+  "bottom-row": [
+    0,0,0,
+    0,0,0,
+    1,1,1,
+  ],
+};
 
 export default class extends Component {
   constructor(props) {
     super(props);
+    const { opacity, position, url, urls, applyByDefault, activePositions, handleOpacity, fileUpload } = props.watermark;
+
+    const getActivePositions = () => {
+      // check a preset was selected
+      if (
+        typeof activePositions === 'string' && 
+        watermarkPositionsPreset.hasOwnProperty(activePositions)
+      ) {
+        return watermarkPositionsPreset[activePositions];
+      }
+      // check if activePositons is an array
+      else if (Array.isArray(activePositions)) {
+        const fullPos = Array(9).fill(0);
+        activePositions.map((val, i) => fullPos[i] = val);
+        return fullPos;
+      }
+      // return the default that all positions are active
+      return Array(9).fill(1);
+    }
 
     this.state = {
       isBlockRatio: false,
-      opacity: props.watermark.opacity || 0.7,
-      position: props.watermark.position || 'center',
-      url: props.watermark.url || '',
-      urls: props.watermark.urls || [],
-      isWatermarkList: props.watermark.urls && props.watermark.urls.length > 1,
-      applyByDefault: props.watermark.applyByDefault || false,
-      showWaterMarkList: false
+      opacity: opacity || 0.7,
+      handleOpacity: typeof handleOpacity === 'boolean' ? handleOpacity : true,
+      position: position || 'center',
+      url: url || '',
+      urls: urls || [],
+      activePositions: getActivePositions(),
+      isWatermarkList: urls && urls.length > 1,
+      applyByDefault: applyByDefault || false,
+      showWaterMarkList: false,
       fileUpload: fileUpload || false,
     }
   }
@@ -101,12 +162,23 @@ export default class extends Component {
   initWatermarkImage = debounce(500, (url) => {
     let logoImage = null;
 
+    const updateImageState = (newImage) => {
+      this.props.updateState({ logoImage: newImage, isShowSpinner: false, watermark: { ...this.props.watermark, url: newImage.src } });
+    }
+
     if (url) {
       logoImage = new Image();
       logoImage.setAttribute('crossOrigin', 'Anonymous');
 
       logoImage.onload = () => {
-        this.props.updateState({ logoImage, isShowSpinner: false, watermark: { ...this.props.watermark, url } });
+        const { imageFilter } = this.props.watermark;
+
+        if (imageFilter && typeof imageFilter === 'function') {
+          logoImage.onload = null;
+          updateImageState(imageFilter(logoImage));
+        } else {
+          updateImageState(logoImage);
+        }
       }
 
       logoImage.onerror = () => {
@@ -143,7 +215,7 @@ export default class extends Component {
   }
 
   render() {
-    const { isWatermarkList, url, urls, opacity, position, applyByDefault, showWaterMarkList } = this.state;
+    const { isWatermarkList, url, urls, opacity, handleOpacity, position, activePositions, applyByDefault, showWaterMarkList, fileUpload } = this.state;
     const { t } = this.props;
 
     return (
@@ -171,33 +243,42 @@ export default class extends Component {
             {isWatermarkList &&
             <SelectWatermarkLabel onClick={this.showWatermarkList}>Select</SelectWatermarkLabel>}
           </WrapperForURL>
-          <WrapperForOpacity>
-            <label htmlFor="opacity">Opacity</label>
-            <Range
-              label={t['common.opacity']}
-              min={0}
-              max={1}
-              step={0.05}
-              range={opacity}
-              updateRange={this.updateOpacity}
-            />
-            <Switcher
-              id="switch-watermark"
-              checked={applyByDefault}
-              handleChange={this.onApplyWatermarkChange}
-              text={t['common.apply_watermark']}
-              style={{ lineHeight: 'inherit', float: 'none' }}
-            />
-          </WrapperForOpacity>
+            <WrapperForControls switcherPosition={handleOpacity ? 'right' : 'left'}>
+              {handleOpacity &&
+                <WrapperForOpacity>
+                  <label htmlFor="opacity">Opacity</label>
+                  <Range
+                    label={t['common.opacity']}
+                    min={0}
+                    max={1}
+                    step={0.05}
+                    range={opacity}
+                    updateRange={this.updateOpacity}
+                  />
+                </WrapperForOpacity>
+              }
+              <Switcher
+                id="switch-watermark"
+                checked={applyByDefault}
+                handleChange={this.onApplyWatermarkChange}
+                text={t['common.apply_watermark']}
+                style={{ lineHeight: 'inherit', float: 'none' }}
+              />
+            </WrapperForControls>
         </WatermarkInputs>
 
         <WatermarkPositionWrapper>
-          {watermarkPositions.map(value => (
+          {watermarkPositions.map((value, index) => (
             <PositionSquare
               key={value}
               value={value}
               active={value === position}
-              onClick={() => { this.onPositionChange(value); }}
+              clickable={activePositions[index]}
+              onClick={() => {
+                if (activePositions[index]) {
+                  this.onPositionChange(value);
+                }
+              }}
             />
           ))}
         </WatermarkPositionWrapper>
