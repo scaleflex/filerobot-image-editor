@@ -68,32 +68,39 @@ export default class extends Component {
     super(props);
     const { opacity, position, url, urls, applyByDefault, activePositions, handleOpacity, fileUpload } = props.watermark;
 
-    const getActivePositions = () => {
-      // check a preset was selected
-      if (
-        typeof activePositions === 'string' && 
-        watermarkPositionsPreset.hasOwnProperty(activePositions)
-      ) {
-        return watermarkPositionsPreset[activePositions];
-      }
-      // check if activePositons is an array
-      else if (Array.isArray(activePositions)) {
-        const fullPos = Array(9).fill(0);
-        activePositions.map((val, i) => fullPos[i] = val);
-        return fullPos;
-      }
-      // return the default that all positions are active
-      return Array(9).fill(1);
+    let setActivePositions = [];
+    let activePosition = position || 'center';
+
+    // check if a preset was selected
+    if (typeof activePositions === 'string' && watermarkPositionsPreset.hasOwnProperty(activePositions)) {
+      setActivePositions = watermarkPositionsPreset[activePositions];
+    }
+
+    // check if activePositons is an array
+    else if (Array.isArray(activePositions)) {
+      const fullPos = Array(9).fill(0);
+      // merge with an default of 9 to prevent errors when the length is lower 9
+      activePositions.map((val, i) => fullPos[i] = val);
+      setActivePositions = fullPos;
+    
+    // return the default that all positions are active
+    } else {
+      setActivePositions = Array(9).fill(1);
+    }
+
+    // check if position is active else set the first upcomming active as the new active position
+    if (setActivePositions[watermarkPositions.indexOf(activePosition)] !== 1) {
+      activePosition = watermarkPositions[setActivePositions.indexOf(1)];
     }
 
     this.state = {
       isBlockRatio: false,
       opacity: opacity || 0.7,
       handleOpacity: typeof handleOpacity === 'boolean' ? handleOpacity : true,
-      position: position || 'center',
+      position: activePosition,
       url: url || '',
       urls: urls || [],
-      activePositions: getActivePositions(),
+      activePositions: setActivePositions,
       isWatermarkList: urls && urls.length > 1,
       applyByDefault: applyByDefault || false,
       showWaterMarkList: false,
@@ -102,13 +109,17 @@ export default class extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-   if (nextProps.watermark.applyByDefault !== this.props.watermark.applyByDefault) {
-     this.setState({ applyByDefault: nextProps.watermark.applyByDefault });
+    // check if position has ben modified and update
+    if (nextProps.watermark.position !== this.state.position) {
+      this.onPositionChange(this.state.position);
+    }
+    if (nextProps.watermark.applyByDefault !== this.props.watermark.applyByDefault) {
+      this.setState({ applyByDefault: nextProps.watermark.applyByDefault });
 
-     if (nextProps.watermark.applyByDefault) {
-       this.initWatermarkImage(nextProps.watermark.url);
-     }
-   }
+      if (nextProps.watermark.applyByDefault) {
+        this.initWatermarkImage(nextProps.watermark.url);
+      }
+    }
   }
 
   updateOpacity = (value) => {
