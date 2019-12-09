@@ -3,19 +3,20 @@ import {
   FieldInput,
   FileInput,
   PositionSquare,
+  SelectWatermarkLabel,
   Switcher,
+  WatermarkIcon,
   WatermarkInputs,
   WatermarkPositionWrapper,
+  Watermarks,
   WatermarkWrapper,
   WrapperForControls,
   WrapperForOpacity,
-  WrapperForURL,
-  SelectWatermarkLabel,
-  Watermarks,
-  WatermarkIcon
+  WrapperForURL
 } from '../../styledComponents';
 import { debounce } from 'throttle-debounce';
 import Range from '../Range';
+
 
 const watermarkPositions = [
   "left-top",
@@ -32,34 +33,34 @@ const watermarkPositions = [
 // possible positions ["corners", "star", "center", "top-row", "center-row", "bottom-row"]
 const watermarkPositionsPreset = {
   "corners": [
-    1,0,1,
-    0,0,0,
-    1,0,1,
+    1, 0, 1,
+    0, 0, 0,
+    1, 0, 1,
   ],
   "star": [
-    0,1,0,
-    1,1,1,
-    0,1,0,
+    0, 1, 0,
+    1, 1, 1,
+    0, 1, 0,
   ],
   "center": [
-    0,0,0,
-    0,1,0,
-    0,0,0,
+    0, 0, 0,
+    0, 1, 0,
+    0, 0, 0,
   ],
   "top-row": [
-    1,1,1,
-    0,0,0,
-    0,0,0,
+    1, 1, 1,
+    0, 0, 0,
+    0, 0, 0,
   ],
   "center-row": [
-    0,0,0,
-    1,1,1,
-    0,0,0,
+    0, 0, 0,
+    1, 1, 1,
+    0, 0, 0,
   ],
   "bottom-row": [
-    0,0,0,
-    0,0,0,
-    1,1,1,
+    0, 0, 0,
+    0, 0, 0,
+    1, 1, 1,
   ],
 };
 
@@ -69,7 +70,7 @@ export default class extends Component {
     const { opacity, position, url, urls, applyByDefault, activePositions, handleOpacity, fileUpload } = props.watermark;
 
     let setActivePositions = [];
-    let activePosition = position || 'center';
+    let activePosition = position || 'center';
 
     // check if a preset was selected
     if (typeof activePositions === 'string' && watermarkPositionsPreset.hasOwnProperty(activePositions)) {
@@ -82,8 +83,8 @@ export default class extends Component {
       // merge with an default of 9 to prevent errors when the length is lower 9
       activePositions.map((val, i) => fullPos[i] = val);
       setActivePositions = fullPos;
-    
-    // return the default that all positions are active
+
+      // return the default that all positions are active
     } else {
       setActivePositions = Array(9).fill(1);
     }
@@ -153,7 +154,7 @@ export default class extends Component {
     if (input.files && input.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.changeURL({ target: { value: e.target.result}});
+        this.changeURL({ target: { value: e.target.result } });
       }
       reader.readAsDataURL(input.files[0]);
     }
@@ -174,7 +175,11 @@ export default class extends Component {
     let logoImage = null;
 
     const updateImageState = (newImage) => {
-      this.props.updateState({ logoImage: newImage, isShowSpinner: false, watermark: { ...this.props.watermark, url: newImage.src } });
+      this.props.updateState({
+        logoImage: newImage,
+        isShowSpinner: false,
+        watermark: { ...this.props.watermark, url: newImage.src }
+      });
     }
 
     if (url) {
@@ -234,7 +239,7 @@ export default class extends Component {
 
         <WatermarkInputs>
           <WrapperForURL>
-            { !fileUpload && (<>
+            {!fileUpload && (<>
               <label htmlFor="url">Watermark URL</label>
               <FieldInput
                 name="url"
@@ -244,7 +249,7 @@ export default class extends Component {
                 onChange={this.changeURL}
               />
             </>)}
-            { fileUpload && (<>
+            {fileUpload && (<>
               <label htmlFor="url">Watermark Image</label>
               <FileInput
                 style={{ width: 'calc(100% - 200px)' }}
@@ -254,28 +259,28 @@ export default class extends Component {
             {isWatermarkList &&
             <SelectWatermarkLabel onClick={this.showWatermarkList}>Select</SelectWatermarkLabel>}
           </WrapperForURL>
-            <WrapperForControls switcherPosition={handleOpacity ? 'right' : 'left'}>
-              {handleOpacity &&
-                <WrapperForOpacity>
-                  <label htmlFor="opacity">Opacity</label>
-                  <Range
-                    label={t['common.opacity']}
-                    min={0}
-                    max={1}
-                    step={0.05}
-                    range={opacity}
-                    updateRange={this.updateOpacity}
-                  />
-                </WrapperForOpacity>
-              }
-              <Switcher
-                id="switch-watermark"
-                checked={applyByDefault}
-                handleChange={this.onApplyWatermarkChange}
-                text={t['common.apply_watermark']}
-                style={{ lineHeight: 'inherit', float: 'none' }}
+          <WrapperForControls switcherPosition={handleOpacity ? 'right' : 'left'}>
+            {handleOpacity &&
+            <WrapperForOpacity>
+              <label htmlFor="opacity">Opacity</label>
+              <Range
+                label={t['common.opacity']}
+                min={0}
+                max={1}
+                step={0.05}
+                range={opacity}
+                updateRange={this.updateOpacity}
               />
-            </WrapperForControls>
+            </WrapperForOpacity>
+            }
+            <Switcher
+              id="switch-watermark"
+              checked={applyByDefault}
+              handleChange={this.onApplyWatermarkChange}
+              text={t['common.apply_watermark']}
+              style={{ lineHeight: 'inherit', float: 'none' }}
+            />
+          </WrapperForControls>
         </WatermarkInputs>
 
         <WatermarkPositionWrapper>
@@ -294,8 +299,8 @@ export default class extends Component {
           ))}
         </WatermarkPositionWrapper>
 
-        {isWatermarkList && showWaterMarkList &&  (
-          <Watermarks >
+        {isWatermarkList && showWaterMarkList && (
+          <Watermarks>
             {urls.map(url => <WatermarkIcon key={url} src={url} onClick={() => { this.onChangeWatermark(url) }}/>)}
           </Watermarks>
         )}
