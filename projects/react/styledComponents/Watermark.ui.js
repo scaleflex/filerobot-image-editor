@@ -100,12 +100,18 @@ const PositionSquare = styled('div')`
   height: 30px;
   display: inline-block;
   border: 1px solid ${p => p.theme.colors.secondaryBgHover};
-  background: ${p => p.active ? p.theme.colors.accent : p.theme.colors.secondaryBg};
+  background: ${p => p.clickable ? p.active ? p.theme.colors.accent : p.theme.colors.secondaryBg : p.theme.colors.disabledBg};
   cursor: pointer;
   
-  :hover {
-    background: ${p => p.theme.colors.primaryBg};
-  }
+  ${(p) => {
+    if (p.clickable !== 0 && !p.active) {
+      return (`
+        :hover {
+          background: ${p.theme.colors.primaryBg};
+        }
+      `);
+    }
+  }}
 `;
 
 const SelectWatermarkLabel = styled('div')`
