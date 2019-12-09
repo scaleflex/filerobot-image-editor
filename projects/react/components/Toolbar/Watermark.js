@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   FieldInput,
+  FileInput,
   PositionSquare,
   Switcher,
   WatermarkInputs,
@@ -35,6 +36,7 @@ export default class extends Component {
       isWatermarkList: props.watermark.urls && props.watermark.urls.length > 1,
       applyByDefault: props.watermark.applyByDefault || false,
       showWaterMarkList: false
+      fileUpload: fileUpload || false,
     }
   }
 
@@ -74,6 +76,17 @@ export default class extends Component {
     });
   }
 
+  readFile = (event) => {
+    const input = event.target;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.changeURL({ target: { value: e.target.result}});
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
   onPositionChange = value => {
     this.setState({ position: value }, () => {
       this.props.updateState({
@@ -100,7 +113,12 @@ export default class extends Component {
         this.props.updateState({ isShowSpinner: false });
       }
 
-      logoImage.src = url + '?' + new Date().getTime();
+      if (url.match(/^https?:\/\/./)) {
+        // if the url is a HTTP URL add a cache breaker
+        logoImage.src = url + '?' + new Date().getTime();
+      } else {
+        logoImage.src = url;
+      }
     }
   });
 
@@ -133,14 +151,23 @@ export default class extends Component {
 
         <WatermarkInputs>
           <WrapperForURL>
-            <label htmlFor="url">Watermark URL</label>
-            <FieldInput
-              name="url"
-              fullSize
-              style={{ width: 'calc(100% - 200px)' }}
-              value={url}
-              onChange={this.changeURL}
-            />
+            { !fileUpload && (<>
+              <label htmlFor="url">Watermark URL</label>
+              <FieldInput
+                name="url"
+                fullSize
+                style={{ width: 'calc(100% - 200px)' }}
+                value={url}
+                onChange={this.changeURL}
+              />
+            </>)}
+            { fileUpload && (<>
+              <label htmlFor="url">Watermark Image</label>
+              <FileInput
+                style={{ width: 'calc(100% - 200px)' }}
+                onChange={this.readFile}
+              />
+            </>)}
             {isWatermarkList &&
             <SelectWatermarkLabel onClick={this.showWatermarkList}>Select</SelectWatermarkLabel>}
           </WrapperForURL>
