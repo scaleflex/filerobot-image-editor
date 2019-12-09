@@ -87,7 +87,11 @@ export default class extends Component {
       logoImage.src = watermark.url + '?' + new Date().getTime();
     }
 
-    img.src = src + '?' + new Date().getTime();
+    img.src = src;
+    if (!src.startsWith('data:image/')) {
+      // Image is not a blob, insert query param to avoid caching
+      img.src = img.src + '?' + new Date().getTime();
+    }
     img.setAttribute('crossOrigin', 'Anonymous');
 
     img.onload = () => {
