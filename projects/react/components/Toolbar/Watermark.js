@@ -16,53 +16,8 @@ import {
 } from '../../styledComponents';
 import { debounce } from 'throttle-debounce';
 import Range from '../Range';
+import { WATERMARK_POSITIONS_PRESET, WATERMARK_POSITIONS } from '../../config';
 
-
-const watermarkPositions = [
-  "left-top",
-  "center-top",
-  "right-top",
-  "left-center",
-  "center",
-  "right-center",
-  "left-bottom",
-  "center-bottom",
-  "right-bottom"
-];
-
-// possible positions ["corners", "star", "center", "top-row", "center-row", "bottom-row"]
-const watermarkPositionsPreset = {
-  "corners": [
-    1, 0, 1,
-    0, 0, 0,
-    1, 0, 1,
-  ],
-  "star": [
-    0, 1, 0,
-    1, 1, 1,
-    0, 1, 0,
-  ],
-  "center": [
-    0, 0, 0,
-    0, 1, 0,
-    0, 0, 0,
-  ],
-  "top-row": [
-    1, 1, 1,
-    0, 0, 0,
-    0, 0, 0,
-  ],
-  "center-row": [
-    0, 0, 0,
-    1, 1, 1,
-    0, 0, 0,
-  ],
-  "bottom-row": [
-    0, 0, 0,
-    0, 0, 0,
-    1, 1, 1,
-  ],
-};
 
 export default class extends Component {
   constructor(props) {
@@ -73,8 +28,8 @@ export default class extends Component {
     let activePosition = position || 'center';
 
     // check if a preset was selected
-    if (typeof activePositions === 'string' && watermarkPositionsPreset.hasOwnProperty(activePositions)) {
-      setActivePositions = watermarkPositionsPreset[activePositions];
+    if (typeof activePositions === 'string' && WATERMARK_POSITIONS_PRESET.hasOwnProperty(activePositions)) {
+      setActivePositions = WATERMARK_POSITIONS_PRESET[activePositions];
     }
 
     // check if activePositons is an array
@@ -90,8 +45,8 @@ export default class extends Component {
     }
 
     // check if position is active else set the first upcomming active as the new active position
-    if (setActivePositions[watermarkPositions.indexOf(activePosition)] !== 1) {
-      activePosition = watermarkPositions[setActivePositions.indexOf(1)];
+    if (setActivePositions[WATERMARK_POSITIONS.indexOf(activePosition)] !== 1) {
+      activePosition = WATERMARK_POSITIONS[setActivePositions.indexOf(1)];
     }
 
     this.state = {
@@ -284,7 +239,7 @@ export default class extends Component {
         </WatermarkInputs>
 
         <WatermarkPositionWrapper>
-          {watermarkPositions.map((value, index) => (
+          {WATERMARK_POSITIONS.map((value, index) => (
             <PositionSquare
               key={value}
               value={value}

@@ -17,6 +17,52 @@ const FILTERS = [
 
 const CLOUDIMAGE_OPERATIONS = ['crop', 'resize', 'rotate'];
 
+const WATERMARK_POSITIONS = [
+  "left-top",
+  "center-top",
+  "right-top",
+  "left-center",
+  "center",
+  "right-center",
+  "left-bottom",
+  "center-bottom",
+  "right-bottom"
+];
+
+// possible positions ["corners", "star", "center", "top-row", "center-row", "bottom-row"]
+const WATERMARK_POSITIONS_PRESET = {
+  "corners": [
+    1, 0, 1,
+    0, 0, 0,
+    1, 0, 1,
+  ],
+  "star": [
+    0, 1, 0,
+    1, 1, 1,
+    0, 1, 0,
+  ],
+  "center": [
+    0, 0, 0,
+    0, 1, 0,
+    0, 0, 0,
+  ],
+  "top-row": [
+    1, 1, 1,
+    0, 0, 0,
+    0, 0, 0,
+  ],
+  "center-row": [
+    0, 0, 0,
+    1, 1, 1,
+    0, 0, 0,
+  ],
+  "bottom-row": [
+    0, 0, 0,
+    0, 0, 0,
+    1, 1, 1,
+  ],
+};
+
 const cropPresets = [
   { name: 'original', value: 0 },
   { name: 'square', value: 1 },
@@ -63,4 +109,4 @@ const UPLOADER = {
   resizePresets
 }
 
-export { TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS };
+export { TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS, WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET };
