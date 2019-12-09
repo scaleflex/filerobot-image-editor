@@ -38,7 +38,9 @@ ImageEditorDownload = new FilerobotImageEditor({
       ],
       position: 'center',
       opacity: 0.7,
-      applyByDefault: false
+      applyByDefault: false,
+      handleOpacity: true,
+      fileUpload: true,
     },
     //cropPresets: [
     //  { name: 'square', value: 1 },
@@ -92,7 +94,9 @@ const configUpload = {
     ],
     position: 'center',
     opacity: 0.7,
-    applyByDefault: false
+    applyByDefault: false,
+    handleOpacity: true,
+    fileUpload: true,
   }
 };
 const onCompleteUpload = function (newUrl) {
