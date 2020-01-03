@@ -5,8 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { Modal } from './components/Modal';
 import { UPLOADER } from './config';
 import './assets/fonts/filerobot-font.css';
-import en from './assets/i18n/en';
-import fr from './assets/i18n/fr';
+import translations from './assets/i18n';
 import dark from './assets/theme/dark';
 import light from './assets/theme/light';
 
@@ -16,7 +15,7 @@ class ImageEditorWrapper extends Component {
     super();
 
     config.translations = config.translations || {};
-    config.language = config.language || 'en';
+    config.language = translations[config.language] ? config.language : 'en';
     config.theme = config.theme || {};
     config.theme.colors = config.theme.colors || {};
     config.theme.fonts = config.theme.fonts || {};
@@ -28,7 +27,7 @@ class ImageEditorWrapper extends Component {
       src,
       config: this.processConfig(config),
       t: {
-        ...(config.language === 'en' ? en : fr),
+        ...translations[config.language],
         ...config.translations[config.language]
       },
       colorScheme: config.colorScheme || 'dark',

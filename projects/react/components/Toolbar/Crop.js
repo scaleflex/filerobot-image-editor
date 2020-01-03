@@ -102,7 +102,7 @@ export default class extends Component {
                 <CropShape ratio={box.value || original.width / original.height}/>
               </CropShapeWrapper>
               <CropLabel>
-                {box.name === 'original' || box.name === 'square' ? t[`common.${box.name}`] : box.name}
+                {t[`common.${box.name}`] || box.name}
               </CropLabel>
             </CropBoxInner>
           </CropBox>
