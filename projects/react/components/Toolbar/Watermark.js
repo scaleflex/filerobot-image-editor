@@ -64,7 +64,7 @@ export default class extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // check if position has ben modified and update
     if (nextProps.watermark.position !== this.state.position) {
       this.onPositionChange(this.state.position);

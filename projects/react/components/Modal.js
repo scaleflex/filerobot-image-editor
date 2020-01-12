@@ -128,7 +128,7 @@ function getSmallModalStyle() {
 }
 
 export class Modal extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { closeOnOutsideClick = true } =  this.props;
     this.root = document.createElement('div');
     document.body.appendChild(this.root);

@@ -44,7 +44,7 @@ export default class ImageManipulator extends Component {
 
   shouldComponentUpdate() { return false; }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.activeTab !== this.props.activeTab) {
       if (this.props.activeTab) this.destroyMode(this.props.activeTab);
 
@@ -233,7 +233,11 @@ export default class ImageManipulator extends Component {
     const canvas = getCanvasNode(canvasID);
 
     if (watermark && logoImage && watermark.applyByDefault) {
-      this.watermarkImageToDataURL(canvas, logoImage, watermark);
+      try {
+        this.watermarkImageToDataURL(canvas, logoImage, watermark);
+      } catch(event) {
+        console.warn('Not valid link for watermark', event);
+      }
     }
 
     const baseUrl = getBaseUrl(filerobot.container, platform);
@@ -298,7 +302,11 @@ export default class ImageManipulator extends Component {
     const canvas = getCanvasNode(canvasID);
 
     if (watermark && logoImage && watermark.applyByDefault) {
-      this.watermarkImageToDataURL(canvas, logoImage, watermark);
+      try {
+        this.watermarkImageToDataURL(canvas, logoImage, watermark);
+      } catch (event) {
+        console.warn('Not valid link for watermark', event);
+      }
     }
 
     return canvas;
