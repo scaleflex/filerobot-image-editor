@@ -6,7 +6,7 @@ import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
 import { getEffectHandlerName } from '../../utils/effects.utils';
 import { getWatermarkPosition } from '../../utils/watermark.utils';
-import { getCanvasNode, getBaseUrl, getSecretHeaderName } from '../../utils/global.utils';
+import { getCanvasNode, getBaseAPI, getSecretHeaderName } from '../../utils/global.utils';
 import { getPubliclink } from '../../utils/adjustAPI.utils';
 
 
@@ -240,7 +240,7 @@ export default class ImageManipulator extends Component {
       }
     }
 
-    const baseUrl = getBaseUrl(filerobot.container, platform);
+    const baseAPI = getBaseAPI(filerobot.baseAPI, filerobot.container, platform);
     const uploadParams = filerobot.uploadParams || {};
     const dir = uploadParams.dir || 'image-editor';
     const self = this;
@@ -272,7 +272,7 @@ export default class ImageManipulator extends Component {
 
       request.addEventListener("load", self.onFileLoad);
       formData.append('files[]', blob, name);
-      request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
+      request.open("POST", [baseAPI, `upload?dir=${dir}`].join(''));
       request.setRequestHeader(getSecretHeaderName(platform), filerobot.uploadKey);
       request.send(formData);
     } else {
@@ -284,7 +284,7 @@ export default class ImageManipulator extends Component {
         const request = new XMLHttpRequest();
 
         request.addEventListener("load", this.onFileLoad);
-        request.open("POST", [baseUrl, `upload?dir=${dir}`].join(''));
+        request.open("POST", [baseAPI, `upload?dir=${dir}`].join(''));
         request.setRequestHeader(getSecretHeaderName(platform), filerobot.uploadKey);
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify({ files_urls: [url] }));
