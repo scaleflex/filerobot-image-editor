@@ -3,7 +3,6 @@ import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
 import { Footer, Header, PreResize, Preview } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
-import { getCanvasNode } from './utils/global.utils';
 
 
 const INITIAL_PARAMS = {
@@ -91,7 +90,7 @@ export default class extends Component {
     img.src = src;
     if (!src.startsWith('data:image/')) {
       // Image is not a blob, insert query param to avoid caching
-      img.src = img.src + '?' + new Date().getTime();
+      img.src = img.src + (img.src.indexOf('?') > -1 ? '&version='  : '?version=') + new Date().getTime();
     }
 
     img.onload = () => {
