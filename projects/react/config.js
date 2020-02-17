@@ -63,6 +63,13 @@ const WATERMARK_POSITIONS_PRESET = {
   ],
 };
 
+export const DEFAULT_WATERMARK = {
+  opacity: 0.7,
+  position: 'center',
+  url: '',
+  applyByDefault: false
+};
+
 const cropPresets = [
   { name: 'original', value: 0 },
   { name: 'square', value: 1 },

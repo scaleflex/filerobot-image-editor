@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { Canvas } from '../../styledComponents';
-import { b64toBlob } from '../../utils';
+import {
+  b64toBlob,
+  deepCopy,
+  getBaseAPI,
+  getCanvasNode,
+  getEffectHandlerName,
+  getPubliclink,
+  getSecretHeaderName,
+  getWatermarkPosition
+} from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
-import { getEffectHandlerName } from '../../utils/effects.utils';
-import { getWatermarkPosition } from '../../utils/watermark.utils';
-import { getCanvasNode, getBaseAPI, getSecretHeaderName } from '../../utils/global.utils';
-import { getPubliclink } from '../../utils/adjustAPI.utils';
 
 
 const INITIAL_PARAMS = {
@@ -241,7 +246,7 @@ export default class ImageManipulator extends Component {
       if (watermark && logoImage && watermark.applyByDefault) {
         try {
           this.drawWatermark(canvas, logoImage, watermark);
-        } catch(event) {
+        } catch (event) {
           console.warn('Not valid link for watermark', event);
         }
       }
@@ -453,7 +458,7 @@ export default class ImageManipulator extends Component {
     const currentOperations = initialZoom !== 1 ? operationsZoomed : operations;
 
     if (processWithCloudimage && currentOperations.length >= 1) {
-      const prevCropIndex = currentOperations.findIndex(({operation}) => operation === 'rotate');
+      const prevCropIndex = currentOperations.findIndex(({ operation }) => operation === 'rotate');
 
       if (prevCropIndex > -1) {
         redoOperation(prevCropIndex - 1, () => {}, false);
@@ -512,7 +517,7 @@ export default class ImageManipulator extends Component {
 
         this.CamanInstanceOriginal.render(() => {
           updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
-            this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate }});
+            this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate } });
           });
         });
       } else {
@@ -542,7 +547,7 @@ export default class ImageManipulator extends Component {
     const currentOperations = initialZoom !== 1 ? operationsZoomed : operations;
 
     if (processWithCloudimage && currentOperations.length >= 1) {
-      const prevCropIndex = currentOperations.findIndex(({operation}) => operation === 'crop');
+      const prevCropIndex = currentOperations.findIndex(({ operation }) => operation === 'crop');
 
       if (prevCropIndex > -1) {
         redoOperation(prevCropIndex - 1, this.onInitCrop, false);
@@ -677,7 +682,7 @@ export default class ImageManipulator extends Component {
     this.cropper.destroy();
   }
 
-  getCropArguments = ({ width, height, x, y  } = {}) => `tl_px=${x},${y}&br_px=${x + width},${y + height}`;
+  getCropArguments = ({ width, height, x, y } = {}) => `tl_px=${x},${y}&br_px=${x + width},${y + height}`;
 
   /* Resize */
 
@@ -866,10 +871,15 @@ export default class ImageManipulator extends Component {
   }
 
   initWatermark = () => {
-    this.setState({ tempWatermark: { ...this.props.watermark } });
+    const { watermark, updateState } = this.props;
 
-    if (!this.props.watermark.applyByDefault) {
-      this.props.updateState({ watermark: { ...this.props.watermark, applyByDefault: true }});
+
+    this.setState({
+      tempWatermark: watermark && deepCopy(watermark)
+    });
+
+    if (!watermark.applyByDefault) {
+      updateState({ watermark: { ...watermark, applyByDefault: true } });
     }
   }
 
@@ -878,15 +888,23 @@ export default class ImageManipulator extends Component {
   }
 
   cancelWatermark = () => {
+    const { tempWatermark } = this.state;
+    const { updateState } = this.props;
     let logoImage = null;
 
-    if (this.props.tempWatermark && this.props.tempWatermark.url) {
+    if (tempWatermark && tempWatermark.url && tempWatermark.applyByDefault) {
+      updateState({ isShowSpinner: true });
+
       logoImage = new Image();
       logoImage.setAttribute('crossOrigin', 'Anonymous');
-      logoImage.src = this.props.tempWatermark.url + '?' + new Date().getTime();
-    }
+      logoImage.src = tempWatermark.url + '?' + new Date().getTime();
 
-    this.props.updateState({ watermark: this.state.tempWatermark, logoImage });
+      logoImage.onload = () => {
+        updateState({ watermark: tempWatermark, logoImage, isShowSpinner: false });
+      };
+    } else {
+      updateState({ watermark: tempWatermark, logoImage });
+    }
   }
 
   getWatermarkArguments = (watermark) => {

@@ -23,8 +23,6 @@ export const getWatermarkPosition = (watermark, canvas, image) => {
     }
   }
 
-
-
   else if (position === 'left-bottom') {
     ww = lw - pw * 2;
     wx = pw;
@@ -38,7 +36,6 @@ export const getWatermarkPosition = (watermark, canvas, image) => {
       wy = ch * 2 / 3 + ph;
     }
   }
-
 
   else if (position === 'left-top') {
     ww = lw - pw * 2;
@@ -64,7 +61,6 @@ export const getWatermarkPosition = (watermark, canvas, image) => {
       ww = wh * imageRatio;
     }
   }
-
 
   else if (position === 'right-top') {
     ww = lw - pw * 2;

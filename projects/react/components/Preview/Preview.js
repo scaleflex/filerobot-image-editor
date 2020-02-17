@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PreviewImgBox, Watermark } from '../../styledComponents';
 import ImageManipulator from './ImageManipulator';
-import { getWatermarkPosition } from '../../utils/watermark.utils';
+import { getWatermarkPosition } from '../../utils';
 
 
 export default class extends Component {

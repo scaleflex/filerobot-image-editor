@@ -3,6 +3,7 @@ import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
 import { Footer, Header, PreResize, Preview } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
+import { DEFAULT_WATERMARK } from './config';
 
 
 const INITIAL_PARAMS = {
@@ -58,12 +59,7 @@ export default class extends Component {
       initialZoom: 1,
 
       ...INITIAL_PARAMS,
-      watermark: watermark || {
-        opacity: 0.7,
-        position: 'center',
-        url: '',
-        applyByDefault: false
-      }
+      watermark: watermark || DEFAULT_WATERMARK
     }
   }
 

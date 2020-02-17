@@ -8,7 +8,7 @@ export const getPermalink = file => {
     return file.url_permalink;
   else
     return '';
-}
+};
 
 export const getPubliclink = file => {
   if (file.url && file.url.public)
@@ -17,4 +17,4 @@ export const getPubliclink = file => {
     return file.url_public;
   else
     return '';
-}
+};
