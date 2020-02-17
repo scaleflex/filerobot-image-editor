@@ -159,7 +159,7 @@ export default class ImageManipulator extends Component {
     }
   }
 
-  watermarkImageToDataURL = (canvas, image, watermark = {}) => {
+  drawWatermark = (canvas, image, watermark = {}) => {
     const { opacity } = watermark;
     const tempCtx = canvas.getContext('2d');
     let [wx, wy, ww, wh] = getWatermarkPosition(watermark, canvas, image);
@@ -231,15 +231,6 @@ export default class ImageManipulator extends Component {
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = getCanvasNode(canvasID);
-
-    if (watermark && logoImage && watermark.applyByDefault) {
-      try {
-        this.watermarkImageToDataURL(canvas, logoImage, watermark);
-      } catch(event) {
-        console.warn('Not valid link for watermark', event);
-      }
-    }
-
     const baseAPI = getBaseAPI(filerobot.baseAPI, filerobot.container, platform);
     const uploadParams = filerobot.uploadParams || {};
     const dir = uploadParams.dir || 'image-editor';
@@ -247,6 +238,14 @@ export default class ImageManipulator extends Component {
     let { imageName } = this.state;
 
     if (!processWithCloudimage) {
+      if (watermark && logoImage && watermark.applyByDefault) {
+        try {
+          this.drawWatermark(canvas, logoImage, watermark);
+        } catch(event) {
+          console.warn('Not valid link for watermark', event);
+        }
+      }
+
       const base64 = canvas.toDataURL(imageMime);
       const block = base64.split(";");
       const realData = block[1].split(",")[1];
@@ -303,7 +302,7 @@ export default class ImageManipulator extends Component {
 
     if (watermark && logoImage && watermark.applyByDefault) {
       try {
-        this.watermarkImageToDataURL(canvas, logoImage, watermark);
+        this.drawWatermark(canvas, logoImage, watermark);
       } catch (event) {
         console.warn('Not valid link for watermark', event);
       }
@@ -356,17 +355,19 @@ export default class ImageManipulator extends Component {
   }
 
   generateCloudimageURL = (operations, original) => {
-    const { config } = this.props;
+    const { config, watermark, logoImage } = this.props;
     const { cloudimage = {} } = config;
     const cloudUrl = cloudimage.token + '.cloudimg.io' + '/v7/';
     const cropOperation = this.isOperationExist(operations, 'crop');
     const resizeOperation = this.isOperationExist(operations, 'resize');
     const orientationOperation = this.isOperationExist(operations, 'rotate');
-    const isProcessImage = cropOperation || resizeOperation || orientationOperation;
+    const watermarkOperation = watermark && logoImage && watermark.applyByDefault;
+    const isProcessImage = cropOperation || resizeOperation || orientationOperation || watermarkOperation;
 
     let cropQuery = '';
     let resizeQuery = '';
     let orientationQuery = '';
+    let watermarkQuery = '';
 
     if (cropOperation) {
       cropQuery = this.getCropArguments(cropOperation.props);
@@ -381,8 +382,12 @@ export default class ImageManipulator extends Component {
         this.getOrientationArguments(orientationOperation.props);
     }
 
+    if (watermarkOperation) {
+      watermarkQuery = ((cropQuery || resizeQuery || orientationOperation) ? '&' : '') +
+        this.getWatermarkArguments(watermark);
+    }
 
-    return 'https://' + cloudUrl + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery;
+    return 'https://' + cloudUrl + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery + watermarkQuery;
   }
 
   /* Filters and Effects */
@@ -883,6 +888,38 @@ export default class ImageManipulator extends Component {
 
     this.props.updateState({ watermark: this.state.tempWatermark, logoImage });
   }
+
+  getWatermarkArguments = (watermark) => {
+    const { url, position, opacity } = watermark;
+    const gravity = this.getCloudimagePositionQuery(position);
+    const gravityQuery = gravity ? `&wat_gravity=${gravity}` : '';
+
+    return `wat=1&wat_url=${url}&wat_opacity=${opacity}&wat_scale=31&wat_pad=2${gravityQuery}`;
+  };
+
+
+  getCloudimagePositionQuery = (position) => {
+    switch (position) {
+      case "left-top":
+        return 'northwest';
+      case "center-top":
+        return 'north';
+      case "right-top":
+        return 'northeast';
+      case "left-center":
+        return 'west';
+      case "center":
+        return '';
+      case "right-center":
+        return 'east';
+      case "left-bottom":
+        return 'southwest';
+      case "center-bottom":
+        return 'south';
+      case "right-bottom":
+        return 'southeast';
+    }
+  };
 
   applyChanges = (activeTab) => {
     switch (activeTab) {

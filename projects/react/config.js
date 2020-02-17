@@ -15,7 +15,7 @@ const FILTERS = [
   'cross_process', 'glow_sun', 'jarques', 'love', 'old_boot', 'orange_peel', 'pin_hole', 'sepia', 'sun_rise', 'vintage'
 ];
 
-const CLOUDIMAGE_OPERATIONS = ['crop', 'resize', 'rotate'];
+const CLOUDIMAGE_OPERATIONS = ['crop', 'resize', 'rotate', 'watermark'];
 
 const WATERMARK_POSITIONS = [
   "left-top",
