@@ -17,7 +17,7 @@ export default class extends Component {
     let allowedTools = tools || TOOLS;
 
     if (processWithCloudimage)
-      allowedTools = TOOLS.filter(tool => CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1);
+      allowedTools = allowedTools.filter(tool => CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1);
 
     return (
       <Toolbar>
