@@ -3,7 +3,7 @@ import ImageEditor from './ImageEditor';
 import { Container } from './styledComponents';
 import { ThemeProvider } from 'styled-components';
 import { Modal } from './components/Modal';
-import { UPLOADER } from './config';
+import { CLOUDIMAGE_OPERATIONS, TOOLS, UPLOADER } from './config';
 import './assets/fonts/filerobot-font.css';
 import translations from './assets/i18n';
 import dark from './assets/theme/dark';
@@ -11,6 +11,8 @@ import light from './assets/theme/light';
 
 
 class ImageEditorWrapper extends Component {
+  _isMounted = false;
+
   constructor({ show = false, src = '', config = {} }) {
     super();
 
@@ -44,6 +46,14 @@ class ImageEditorWrapper extends Component {
     }
   }
 
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.show !== prevProps.show) {
       if (this.props.show) {
@@ -54,24 +64,32 @@ class ImageEditorWrapper extends Component {
   }
 
   processConfig = (config) => {
+    const tools = config.tools || TOOLS;
+
     return {
       ...UPLOADER,
       processWithFilerobot: !!config.filerobot,
       processWithCloudimage: !!config.cloudimage,
       ...config,
+      tools: !!config.cloudimage ? tools.filter(tool => CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1) : tools
+
     };
   }
 
   open = (src) => {
-    this.setState({ isVisible: true, src });
+    if (this._isMounted) {
+      this.setState({ isVisible: true, src });
+    }
   }
 
   close = () => {
     const { onClose } = this.props;
 
-    this.setState({ isVisible: false }, () => {
-      if (onClose) onClose();
-    });
+    if (this._isMounted) {
+      this.setState({ isVisible: false }, () => {
+        if (onClose) onClose();
+      });
+    }
   }
 
   render() {

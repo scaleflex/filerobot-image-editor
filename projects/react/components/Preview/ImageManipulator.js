@@ -399,7 +399,7 @@ export default class ImageManipulator extends Component {
 
   initFiltersOrEffects = () => { }
 
-  applyFilterOrEffect = (type) => {
+  applyFilterOrEffect = (type, callback = () => {}) => {
     const { updateState, initialZoom } = this.props;
 
     if (!this.props[type]) return;
@@ -412,18 +412,18 @@ export default class ImageManipulator extends Component {
 
         this.CamanInstanceOriginal.render(() => {
           updateState({ [type]: null }, () => {
-            this.makeCanvasSnapshot({ operation: type });
+            this.makeCanvasSnapshot({ operation: type }, callback);
           });
         });
       } else {
         updateState({ [type]: null }, () => {
-          this.makeCanvasSnapshot({ operation: type });
+          this.makeCanvasSnapshot({ operation: type }, callback);
         });
       }
     });
   }
 
-  applyAdjust = () => {
+  applyAdjust = (callback = () => {}) => {
     const { updateState, initialZoom, adjust } = this.props;
     const { brightness, contrast, saturation, exposure } = adjust;
     const resetProps = { brightness: 0, contrast: 0, saturation: 0, exposure: 0 };
@@ -439,12 +439,12 @@ export default class ImageManipulator extends Component {
 
         this.CamanInstanceOriginal.render(() => {
           updateState({ adjust: { ...resetProps } }, () => {
-            this.makeCanvasSnapshot({ operation: 'adjust' });
+            this.makeCanvasSnapshot({ operation: 'adjust' }, callback);
           });
         });
       } else {
         updateState({ adjust: { ...resetProps } }, () => {
-          this.makeCanvasSnapshot({ operation: 'adjust' });
+          this.makeCanvasSnapshot({ operation: 'adjust' }, callback);
         });
       }
     });
@@ -502,7 +502,7 @@ export default class ImageManipulator extends Component {
     });
   }
 
-  applyOrientation = () => {
+  applyOrientation = (callback = () => {}) => {
     const { updateState, initialZoom, rotate, correctionDegree, flipX, flipY } = this.props;
 
     updateState({ isHideCanvas: true, isShowSpinner: true }, () => {
@@ -517,12 +517,12 @@ export default class ImageManipulator extends Component {
 
         this.CamanInstanceOriginal.render(() => {
           updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
-            this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate } });
+            this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate } }, callback);
           });
         });
       } else {
         updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
-          this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate } });
+          this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate } }, callback);
         });
       }
     });
@@ -589,7 +589,7 @@ export default class ImageManipulator extends Component {
     );
   }
 
-  applyCrop = () => {
+  applyCrop = (callback = () => {}) => {
     const { initialZoom, updateState, cropDetails } = this.props;
     const { width, height, x, y } = cropDetails;
 
@@ -614,11 +614,11 @@ export default class ImageManipulator extends Component {
           x: resultSize[2],
           y: resultSize[3]
         }
-      });
+      }, callback);
     });
   }
 
-  makeCanvasSnapshot = (operation) => {
+  makeCanvasSnapshot = (operation, callback = () => {}) => {
     const { updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal, operations } = this.props;
 
     if (initialZoom !== 1) {
@@ -636,7 +636,7 @@ export default class ImageManipulator extends Component {
             isHideCanvasOriginal: false,
             isShowSpinnerOriginal: false,
             operationsOriginal: [...operationsOriginal.slice(0, lastOperationIndex), nextOperation]
-          });
+          }, callback);
         });
       });
 
@@ -672,7 +672,7 @@ export default class ImageManipulator extends Component {
             isShowSpinner: false,
             operations: [...operations.slice(0, lastOperationIndex), nextOperation],
             currentOperation: nextOperation
-          });
+          }, callback);
         });
       });
     }
@@ -693,7 +693,7 @@ export default class ImageManipulator extends Component {
     );
     const nextCanvasDimensions = { width: canvas.width, height: canvas.height, ratio: canvas.width / canvas.height };
 
-    updateState({ canvasDimensions: nextCanvasDimensions }, () => { });
+    updateState({ canvasDimensions: nextCanvasDimensions });
   }
 
   applyResize = () => {
@@ -883,8 +883,9 @@ export default class ImageManipulator extends Component {
     }
   }
 
-  applyWatermark = () => {
+  applyWatermark = (callback) => {
     this.setState({ tempWatermark: null });
+    callback();
   }
 
   cancelWatermark = () => {
@@ -939,28 +940,28 @@ export default class ImageManipulator extends Component {
     }
   };
 
-  applyChanges = (activeTab) => {
+  applyChanges = (activeTab, callback) => {
     switch (activeTab) {
       case 'adjust':
-        this.applyAdjust();
+        this.applyAdjust(callback);
         break;
       case 'effects':
-        this.applyFilterOrEffect('effect');
+        this.applyFilterOrEffect('effect', callback);
         break;
       case 'filters':
-        this.applyFilterOrEffect('filter');
+        this.applyFilterOrEffect('filter', callback);
         break;
       case 'crop':
-        this.applyCrop();
+        this.applyCrop(callback);
         break;
       case 'resize':
         this.applyResize();
         break;
       case 'rotate':
-        this.applyOrientation();
+        this.applyOrientation(callback);
         break;
       case 'watermark':
-        this.applyWatermark();
+        this.applyWatermark(callback);
         break;
       default:
         break;

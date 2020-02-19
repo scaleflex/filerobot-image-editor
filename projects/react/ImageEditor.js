@@ -25,6 +25,8 @@ const INITIAL_PARAMS = {
 };
 
 export default class extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super();
 
@@ -64,8 +66,13 @@ export default class extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.loadImage();
     this.determineImageType();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   loadImage = () => {
@@ -129,7 +136,18 @@ export default class extends Component {
           });
         }
       } else {
-        this.setState({ ...propsOnApply, activeBody: 'preview', isPreResize: false });
+        const { config } = this.props;
+        const { tools } = config;
+        const isOneTool = tools.length === 1;
+        let activeTab;
+
+        if (isOneTool) {
+          activeTab = tools[0];
+        }
+
+        this.setState({ ...propsOnApply, activeBody: 'preview', isPreResize: false }, () => {
+          this.setState({ activeTab });
+        });
       }
     }
   }
@@ -148,7 +166,9 @@ export default class extends Component {
   }
 
   updateState = (props, callback = () => {}) => {
-    this.setState(props, callback);
+    if (this._isMounted) {
+      this.setState(props, callback);
+    }
   }
 
   onRevert = () => {
@@ -245,10 +265,10 @@ export default class extends Component {
     }
   }
 
-  apply = () => {
+  apply = (callback) => {
     const { activeTab, applyChanges } = this.state;
 
-    applyChanges(activeTab);
+    applyChanges(activeTab, callback);
     this.setState({ activeTab: null });
   }
 
@@ -284,13 +304,26 @@ export default class extends Component {
   }
 
   onPreResize = (value) => {
+    const { config } = this.props;
+    const { tools } = config;
+    const isOneTool = tools.length === 1;
+    let activeTab;
+
+    if (isOneTool) {
+      activeTab = tools[0];
+    }
+
     switch (value) {
       case 'keep':
-        this.setState({ canvasDimensions: {}, isPreResize: false, activeBody: 'preview' });
+        this.setState({ canvasDimensions: {}, isPreResize: false, activeBody: 'preview' }, () => {
+          this.setState({ activeTab });
+        });
         break;
       case 'resize':
         const { canvasDimensions } = this.state;
-        this.setState({ preCanvasDimensions: canvasDimensions, isPreResize: true, activeBody: 'preview' });
+        this.setState({ preCanvasDimensions: canvasDimensions, isPreResize: true, activeBody: 'preview' }, () => {
+          this.setState({ activeTab });
+        });
         break;
     }
   }
@@ -338,7 +371,6 @@ export default class extends Component {
       imageName,
       activeBody,
       preCanvasDimensions,
-      tools: config.tools,
       updateState: this.updateState,
       onRevert: this.onRevert,
       apply: this.apply,

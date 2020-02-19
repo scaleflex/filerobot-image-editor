@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Toolbar, NoClickOverlay, NoClickToolbar } from '../../styledComponents';
-import { TOOLS, CLOUDIMAGE_OPERATIONS } from '../../config';
 import Tool from './Tool';
 import Effects from './Effects';
 import Filters from './Filters';
@@ -13,15 +12,12 @@ import Watermark from './Watermark';
 
 export default class extends Component {
   render() {
-    const { activeTab, processWithCloudimage, isShowSpinner, activeBody, tools } = this.props;
-    let allowedTools = tools || TOOLS;
-
-    if (processWithCloudimage)
-      allowedTools = allowedTools.filter(tool => CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1);
+    const { activeTab, isShowSpinner, activeBody, config } = this.props;
+    const { tools } = config;
 
     return (
       <Toolbar>
-        {!activeTab && allowedTools.map(name => <Tool name={name} key={name} {...this.props}/>)}
+        {!activeTab && tools.map(name => <Tool name={name} key={name} {...this.props}/>)}
         {activeTab === 'adjust' && <Adjust {...this.props}/>}
         {activeTab === 'effects' && <Effects {...this.props}/>}
         {activeTab === 'filters' && <Filters {...this.props}/>}

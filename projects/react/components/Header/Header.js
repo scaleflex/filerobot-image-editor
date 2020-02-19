@@ -10,11 +10,14 @@ export default class extends Component {
   render() {
     const {
       activeTab, onRevert, apply, onClose, showGoBackBtn, processWithFilerobot, processWithCloudimage,
-      handleSave, activeBody, t
+      handleSave, activeBody, t, config
     } = this.props;
+    const { tools } = config;
+    const isOneTool = tools.length === 1;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
     const onFinishButtonLabel = (!processWithFilerobot && !processWithCloudimage) ?
       t['toolbar.download'] : t['toolbar.save'];
+    const applyAndSave = () => { apply(handleSave); };
 
     return (
       <HeaderWrapper>
@@ -25,7 +28,7 @@ export default class extends Component {
 
         <ToolbarWrapper>
           <LeftActions>
-            <CancelBtn hide={!activeTab} onClick={() => { onRevert(); }} sm default fullSize>
+            <CancelBtn hide={!activeTab} onClick={isOneTool ? onClose : onRevert} sm default fullSize>
               {t[`toolbar.cancel`]}
             </CancelBtn>
             {showGoBackBtn &&
@@ -39,11 +42,10 @@ export default class extends Component {
             <Button
               themeColor
               sm
-              //disabled={!activeTab}
               success={!activeTab || activeTab === 'resize'}
               themeBtn={activeTab}
               fullSize
-              onClick={() => { !activeTab ? handleSave() : apply() }}
+              onClick={isOneTool ? applyAndSave : !activeTab ? () => { handleSave(); } : () => { apply(); }}
             >
               {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : t['toolbar.apply']}
             </Button>

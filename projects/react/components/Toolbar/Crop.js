@@ -95,7 +95,11 @@ export default class extends Component {
         </CropBox>
 
         {cropPresets.map(box => (
-          <CropBox active={activeRatio === box.name} onClick={this.changeRatio.bind(this, box)} key={box.name}>
+          <CropBox
+            active={activeRatio === box.name}
+            onClick={() => { this.changeRatio(box); }}
+            key={box.name}
+          >
             <CropBoxInner>
               <CropShapeWrapper>
                 <ShapeAligner/>
