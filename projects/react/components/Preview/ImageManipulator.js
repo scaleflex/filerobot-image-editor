@@ -883,7 +883,7 @@ export default class ImageManipulator extends Component {
     }
   }
 
-  applyWatermark = (callback) => {
+  applyWatermark = (callback = () => {}) => {
     this.setState({ tempWatermark: null });
     callback();
   }
@@ -911,9 +911,9 @@ export default class ImageManipulator extends Component {
   getWatermarkArguments = (watermark) => {
     const { url, position, opacity } = watermark;
     const gravity = this.getCloudimagePositionQuery(position);
-    const gravityQuery = gravity ? `&wat_gravity=${gravity}` : '';
+    const gravityQuery = gravity ? `&wat_pad=2p&wat_gravity=${gravity}` : '';
 
-    return `wat=1&wat_url=${url}&wat_opacity=${opacity}&wat_scale=31&wat_pad=2${gravityQuery}`;
+    return `wat=1&wat_url=${url.split('?')[0]}&wat_opacity=${opacity}&wat_scale=31p${gravityQuery}`;
   };
 
 
