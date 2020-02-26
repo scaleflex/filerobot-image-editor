@@ -1,6 +1,6 @@
 > Repository includes React version and Vanilla JS adapter for standalone usage
 
-[![Release](https://img.shields.io/badge/release-v3.6.6-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
+[![Release](https://img.shields.io/badge/release-v3.7.0-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Scaleflex team](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg)](https://www.scaleflex.it/en/home)
@@ -323,7 +323,7 @@ Add watermark on the image after applying image transformations.
 
 ##### `watermark.url`: string - url of the logo/image
 
-##### `watermark.urls`: [string] - list of url of the logo/image preset to select from in editor
+##### `watermark.urls`: [url|{ url, label }] - list of url of the logo/image preset to select from in editor
 
 ##### `watermark.position`: string | 'center' - position of the watermark
 
@@ -334,8 +334,6 @@ Add watermark on the image after applying image transformations.
 ##### `watermark.activePositions`: string - 'corners', 'star', 'center', 'top-row', 'center-row', 'bottom-row' - select a preset or apply an array with 9 positons [1,1,1,1,1,1,1,1,1]
 
 ##### `watermark.handleOpacity`: boolean - default is true, hide or show the opacity range
-
-##### `watermark.fileUpload`: boolean - default is false, use file upload instead of a image URL
 
 ##### `watermark.imageFilter`: function - default is null, pass a function that gets the image resource before draw and return a manipulated image (pass some fancy filter on the watermark)
 
