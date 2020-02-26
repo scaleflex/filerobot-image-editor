@@ -26,7 +26,7 @@ export default class extends Component {
           <CloseBtn onClick={onClose}/>
         </HeaderTop>
 
-        <ToolbarWrapper>
+        <ToolbarWrapper overlayYHidden={activeTab !== 'watermark'}>
           <LeftActions>
             <CancelBtn hide={!activeTab} onClick={isOneTool ? onClose : onRevert} sm default fullSize>
               {t[`toolbar.cancel`]}

@@ -7,8 +7,8 @@ const Toolbar = styled.div`
   width: calc(100% - 200px);
   border-left: 1px solid ${props => props.theme.colors.primaryBg};
   border-right: 1px solid ${props => props.theme.colors.primaryBg};
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-x: ${p => p.overlayYHidden ? 'auto' : 'none'};
+  overflow-y: ${p => p.overlayYHidden ? 'hidden' : 'visible'};
   white-space: nowrap;
   
   ::-webkit-scrollbar {

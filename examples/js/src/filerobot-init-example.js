@@ -33,7 +33,7 @@ ImageEditorDownload = new FilerobotImageEditor({
     watermark: {
       url: 'https://cdn.scaleflex.it/demo/filerobot.png',
       urls: [
-        'https://cdn.scaleflex.it/demo/filerobot.png',
+        { url: 'https://cdn.scaleflex.it/demo/filerobot.png', label: 'filerobot logo' },
         'https://cdn.scaleflex.it/demo/superman.png'
       ],
       position: 'center',

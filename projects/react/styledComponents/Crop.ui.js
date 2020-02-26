@@ -68,7 +68,7 @@ const FieldInput = styled.input.attrs(props => ({
   }
 `;
 
-const FileInput = styled.input.attrs(props => ({
+const FileInput = styled('input').attrs(props => ({
   type: props.type ? props.type : 'file'
 }))`
   display: inline-block;

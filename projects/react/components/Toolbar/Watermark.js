@@ -3,10 +3,10 @@ import {
   FieldInput,
   FileInput,
   PositionSquare,
-  SelectWatermarkLabel,
   Switcher,
   WatermarkIcon,
   WatermarkInputs,
+  WatermarkInputTypes,
   WatermarkPositionWrapper,
   Watermarks,
   WatermarkWrapper,
@@ -16,13 +16,15 @@ import {
 } from '../../styledComponents';
 import { debounce } from 'throttle-debounce';
 import Range from '../Range';
-import { WATERMARK_POSITIONS_PRESET, WATERMARK_POSITIONS } from '../../config';
+import Select from '../Shared/Select';
+import { WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET } from '../../config';
 
 
 export default class extends Component {
   constructor(props) {
     super(props);
-    const { opacity, position, url, urls, applyByDefault, activePositions, handleOpacity, fileUpload } = props.watermark;
+    const { opacity, position, url, applyByDefault, activePositions, handleOpacity } = props.watermark;
+    let { urls } = props.watermark;
 
     let setActivePositions = [];
     let activePosition = position || 'center';
@@ -49,18 +51,30 @@ export default class extends Component {
       activePosition = WATERMARK_POSITIONS[setActivePositions.indexOf(1)];
     }
 
+    if (urls) {
+      urls = urls.map((url = '') => {
+        if (typeof url === 'string') {
+          const splittedURL = url.split('/');
+
+          return { url, label: splittedURL[splittedURL.length - 1] }
+        } else {
+          return url;
+        }
+      })
+    }
+
     this.state = {
       isBlockRatio: false,
       opacity: opacity || 0.7,
       handleOpacity: typeof handleOpacity === 'boolean' ? handleOpacity : true,
       position: activePosition,
-      url: url || '',
+      url: url || urls && urls.length > 1 ? urls[0] && urls[0].url : '',
       urls: urls || [],
       activePositions: setActivePositions,
       isWatermarkList: urls && urls.length > 1,
       applyByDefault: applyByDefault || false,
       showWaterMarkList: false,
-      fileUpload: fileUpload || false,
+      selectedInputType: urls && urls.length > 1 ? 'gallery' : 'upload'
     }
   }
 
@@ -185,34 +199,95 @@ export default class extends Component {
     this.hideWatermarkList();
   }
 
+  handleInputTypeChange = ({ target }) => {
+    this.setState({ selectedInputType: target.value });
+  }
+
   render() {
-    const { isWatermarkList, url, urls, opacity, handleOpacity, position, activePositions, applyByDefault, showWaterMarkList, fileUpload } = this.state;
+    const {
+      isWatermarkList,
+      url,
+      urls,
+      opacity,
+      handleOpacity,
+      position,
+      activePositions,
+      applyByDefault,
+      showWaterMarkList,
+      selectedInputType
+    } = this.state;
+    const fileUploadInput = selectedInputType === 'upload';
+    const galleryInput = selectedInputType === 'gallery';
+    const urlInput = selectedInputType === 'url';
     const { t } = this.props;
+
+    console.log(urls, url)
 
     return (
       <WatermarkWrapper>
 
+        <WatermarkInputTypes>
+          <label>
+            {t['common.gallery']}
+            <input
+              type="radio"
+              value="gallery"
+              checked={selectedInputType === 'gallery'}
+              onChange={this.handleInputTypeChange}
+            />
+            <span/>
+          </label>
+          <label>
+            {t['common.upload']}
+            <input
+              type="radio"
+              value="upload"
+              checked={selectedInputType === 'upload'}
+              onChange={this.handleInputTypeChange}/>
+            <span/>
+          </label>
+          <label>
+            {t['common.url']}
+            <input
+              type="radio"
+              value="url"
+              checked={selectedInputType === 'url'}
+              onChange={this.handleInputTypeChange}/>
+            <span/>
+          </label>
+        </WatermarkInputTypes>
+
         <WatermarkInputs>
           <WrapperForURL>
-            {!fileUpload && (<>
+            {galleryInput && (<>
+              <label htmlFor="url">Watermark Gallery</label>
+              <Select
+                width="100%"
+                list={urls}
+                valueProp="url"
+                id="gallery"
+                value={url}
+                style={{ width: 'calc(100% - 120px)' }}
+                onChange={(url) => { this.changeURL({ target: { value: url } }) }}
+              />
+            </>)}
+            {urlInput && (<>
               <label htmlFor="url">Watermark URL</label>
               <FieldInput
-                name="url"
-                fullSize
-                style={{ width: 'calc(100% - 200px)' }}
+                id="url"
                 value={url}
+                style={{ width: 'calc(100% - 120px)' }}
                 onChange={this.changeURL}
               />
             </>)}
-            {fileUpload && (<>
-              <label htmlFor="url">Watermark Image</label>
+            {fileUploadInput && (<>
+              <label htmlFor="image-upload">Watermark Image</label>
               <FileInput
-                style={{ width: 'calc(100% - 200px)' }}
+                id="image-upload"
+                style={{ width: 'calc(100% - 120px)' }}
                 onChange={this.readFile}
               />
             </>)}
-            {isWatermarkList &&
-            <SelectWatermarkLabel onClick={this.showWatermarkList}>Select</SelectWatermarkLabel>}
           </WrapperForURL>
           <WrapperForControls switcherPosition={handleOpacity ? 'right' : 'left'}>
             {handleOpacity &&

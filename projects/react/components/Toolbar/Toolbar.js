@@ -16,7 +16,7 @@ export default class extends Component {
     const { tools } = config;
 
     return (
-      <Toolbar>
+      <Toolbar overlayYHidden={activeTab !== 'watermark'}>
         {!activeTab && tools.map(name => <Tool name={name} key={name} {...this.props}/>)}
         {activeTab === 'adjust' && <Adjust {...this.props}/>}
         {activeTab === 'effects' && <Effects {...this.props}/>}
