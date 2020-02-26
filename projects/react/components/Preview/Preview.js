@@ -20,7 +20,7 @@ export default class extends Component {
         isShowWatermark={applyByDefault}
       >
         <ImageManipulator {...this.props}/>
-        {applyByDefault &&
+        {applyByDefault && url &&
         <Watermark
           opacity={opacity}
           url={url}
