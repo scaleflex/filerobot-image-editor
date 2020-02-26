@@ -35,5 +35,8 @@ export default {
   'common.square': '方形',
   'common.banner': '通栏',
   'common.opacity': '透明度',
-  'common.apply_watermark': '应用水印'
+  'common.apply_watermark': '应用水印',
+  'common.url': 'URL',
+  'common.upload': 'Upload',
+  'common.gallery': 'Gallery',
 };

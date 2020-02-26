@@ -34,5 +34,8 @@ export default {
   'common.original': 'original',
   'common.square': 'square',
   'common.opacity': 'opacity',
-  'common.apply_watermark': 'Apply watermark'
+  'common.apply_watermark': 'Apply watermark',
+  'common.url': 'URL',
+  'common.upload': 'Upload',
+  'common.gallery': 'Gallery',
 };
