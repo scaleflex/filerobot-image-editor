@@ -362,8 +362,8 @@ export default class ImageManipulator extends Component {
   generateCloudimageURL = (operations, original) => {
     const { config, watermark, logoImage } = this.props;
     const { cloudimage = {}, filerobot = {} } = config;
-    const cloudUrl = cloudimage.token + '.cloudimg.io' + '/v7/';
-    const filerobotURL = filerobot.token + '.filerobot.com/';
+    const cloudUrl = cloudimage.token + '.cloudimg.io/' + (cloudimage.version ? `${cloudimage.version}/` : 'v7/');
+    const filerobotURL = filerobot.token + '.filerobot.com/' + (filerobot.version ? `${filerobot.version}/` : '');
     const baseURL = filerobotURL ? filerobotURL : cloudUrl;
     const cropOperation = this.isOperationExist(operations, 'crop');
     const resizeOperation = this.isOperationExist(operations, 'resize');
