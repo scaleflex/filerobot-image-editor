@@ -34,7 +34,7 @@ export default class extends Component {
 
   render() {
     const { correctionDegree, t, config = {} } = this.props;
-    const { processWithCloudimage } = config;
+    const { processWithCloudService } = config;
 
     return (
       <OrientationWrapper>
@@ -44,7 +44,7 @@ export default class extends Component {
             <DarkBtn onClick={this.rightRotate}><RotateIcon name="right-rotate"/>
               <span>{t['orientation.rotate_r']}</span></DarkBtn>
 
-            {!processWithCloudimage && (
+            {!processWithCloudService && (
               <>
                 <DarkBtn onClick={() => { this.onFlip('x'); }}><RotateIcon name="flip-h"/>
                   <span>{t['orientation.flip_h']}</span></DarkBtn>
@@ -53,7 +53,7 @@ export default class extends Component {
               </>
             )}
 
-            {!processWithCloudimage && (
+            {!processWithCloudService && (
             <div>
               <Range min={-30} max={30} step={0.5} range={correctionDegree} updateRange={this.updateCorrectionDegree}/>
               <svg viewBox="-90 -5 180 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">

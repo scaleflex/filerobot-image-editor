@@ -31,7 +31,7 @@ export default class extends Component {
     super();
 
     const {
-      processWithCloudimage, processWithFilerobot, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit,
+      processWithCloudimage, processWithFilerobot, processWithCloudService, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit,
       watermark
     } = props.config;
 
@@ -46,6 +46,7 @@ export default class extends Component {
       canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
       processWithFilerobot: processWithFilerobot,
       processWithCloudimage: processWithCloudimage,
+      processWithCloudService,
       uploadCloudimageImage: uploadWithCloudimageLink,
       reduceBeforeEdit,
       cropBeforeEdit,
@@ -331,9 +332,9 @@ export default class extends Component {
   render() {
     const {
       isShowSpinner, activeTab, operations, operationsOriginal, operationsZoomed, currentOperation, isHideCanvas,
-      cropDetails, original, canvasDimensions, processWithCloudimage, processWithFilerobot, uploadCloudimageImage,
-      imageMime, lastOperation, operationList, initialZoom, canvasZoomed, canvasOriginal, reduceBeforeEdit,
-      cropBeforeEdit, img, imageName, activeBody, isPreResize, preCanvasDimensions, logoImage,
+      cropDetails, original, canvasDimensions, processWithCloudimage, processWithFilerobot, processWithCloudService,
+      uploadCloudimageImage, imageMime, lastOperation, operationList, initialZoom, canvasZoomed, canvasOriginal,
+      reduceBeforeEdit, cropBeforeEdit, img, imageName, activeBody, isPreResize, preCanvasDimensions, logoImage,
 
       effect,
       filter,
@@ -360,6 +361,7 @@ export default class extends Component {
       canvasDimensions,
       processWithCloudimage,
       processWithFilerobot,
+      processWithCloudService,
       operations,
       operationsOriginal,
       operationsZoomed,
@@ -408,6 +410,7 @@ export default class extends Component {
       config,
       processWithCloudimage,
       uploadCloudimageImage,
+      processWithCloudService,
       lastOperation,
       operationList,
       canvasZoomed,
@@ -438,6 +441,7 @@ export default class extends Component {
       initialZoom,
       currentOperation,
       processWithCloudimage,
+      processWithCloudService,
       updateState: this.updateState,
       redoOperation: this.redoOperation,
       resetOperations: this.resetOperations,

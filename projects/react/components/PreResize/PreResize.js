@@ -22,10 +22,10 @@ export default class extends Component {
   };
 
   componentDidMount() {
-    const { operations, processWithCloudimage, updateState, forceApplyOperations } = this.props;
+    const { operations, processWithCloudService, updateState, forceApplyOperations } = this.props;
     const operationIndex = operations.findIndex(({ stack }) => stack[0].name === 'resize');
 
-    if (operationIndex > -1 && processWithCloudimage) {
+    if (operationIndex > -1 && processWithCloudService) {
       operations.splice(operationIndex, 1);
       updateState({ operations });
       forceApplyOperations(operations, 'resize');
@@ -62,7 +62,7 @@ export default class extends Component {
 
   render() {
     const { isBlockRatio } = this.state;
-    const { canvasDimensions, processWithCloudimage, onPreResize, t } = this.props;
+    const { canvasDimensions, processWithCloudService, onPreResize, t } = this.props;
 
     return (
       <PreResizeBox id="preview-img-box">
@@ -85,11 +85,11 @@ export default class extends Component {
               <BlockRatioWrapper>
                 <BlockRatioBtn
                   active={!isBlockRatio}
-                  style={processWithCloudimage ? { cursor: 'not-allowed' } : {}}
+                  style={processWithCloudService ? { cursor: 'not-allowed' } : {}}
                   link
-                  onClick={() => { !processWithCloudimage && this.toggleRatio(); }}
+                  onClick={() => { !processWithCloudService && this.toggleRatio(); }}
                 >
-                  <BlockRatioIcon active={!isBlockRatio} style={processWithCloudimage ? { cursor: 'not-allowed' } : {}}/>
+                  <BlockRatioIcon active={!isBlockRatio} style={processWithCloudService ? { cursor: 'not-allowed' } : {}}/>
                 </BlockRatioBtn>
               </BlockRatioWrapper>
               <FieldSet>

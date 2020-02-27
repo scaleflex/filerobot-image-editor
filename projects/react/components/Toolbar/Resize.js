@@ -52,7 +52,7 @@ export default class extends Component {
 
   render() {
     const { isBlockRatio } = this.state;
-    const { canvasDimensions, processWithCloudimage, t, config } = this.props;
+    const { canvasDimensions, processWithCloudService, t, config } = this.props;
     const { resizePresets = [] } = config;
 
     return (
@@ -69,11 +69,11 @@ export default class extends Component {
           <BlockRatioWrapper>
             <BlockRatioBtn
               active={!isBlockRatio}
-              style={processWithCloudimage ? { cursor: 'not-allowed' } : {}}
+              style={processWithCloudService ? { cursor: 'not-allowed' } : {}}
               link
-              onClick={() => { !processWithCloudimage && this.toggleRatio(); }}
+              onClick={() => { !processWithCloudService && this.toggleRatio(); }}
             >
-              <BlockRatioIcon active={!isBlockRatio} style={processWithCloudimage ? { cursor: 'not-allowed' } : {}}/>
+              <BlockRatioIcon active={!isBlockRatio} style={processWithCloudService ? { cursor: 'not-allowed' } : {}}/>
             </BlockRatioBtn>
           </BlockRatioWrapper>
           <FieldSet>

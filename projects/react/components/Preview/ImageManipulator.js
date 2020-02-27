@@ -229,7 +229,7 @@ export default class ImageManipulator extends Component {
 
   saveImage = () => {
     const {
-      onComplete, onClose, updateState, closeOnLoad, config, processWithCloudimage, uploadCloudimageImage, imageMime,
+      onComplete, onClose, updateState, closeOnLoad, config, processWithCloudService, uploadCloudimageImage, imageMime,
       operations, initialZoom, logoImage, watermark, operationsOriginal
     } = this.props;
     const { filerobot = {}, platform = 'filerobot' } = config;
@@ -242,7 +242,7 @@ export default class ImageManipulator extends Component {
     const self = this;
     let { imageName } = this.state;
 
-    if (!processWithCloudimage) {
+    if (!processWithCloudService) {
       if (watermark && logoImage && watermark.applyByDefault) {
         try {
           this.drawWatermark(canvas, logoImage, watermark);
@@ -361,8 +361,10 @@ export default class ImageManipulator extends Component {
 
   generateCloudimageURL = (operations, original) => {
     const { config, watermark, logoImage } = this.props;
-    const { cloudimage = {} } = config;
+    const { cloudimage = {}, filerobot = {} } = config;
     const cloudUrl = cloudimage.token + '.cloudimg.io' + '/v7/';
+    const filerobotURL = filerobot.token + '.filerobot.com/';
+    const baseURL = filerobotURL ? filerobotURL : cloudUrl;
     const cropOperation = this.isOperationExist(operations, 'crop');
     const resizeOperation = this.isOperationExist(operations, 'resize');
     const orientationOperation = this.isOperationExist(operations, 'rotate');
@@ -392,7 +394,7 @@ export default class ImageManipulator extends Component {
         this.getWatermarkArguments(watermark);
     }
 
-    return 'https://' + cloudUrl + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery + watermarkQuery;
+    return 'https://' + baseURL + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery + watermarkQuery;
   }
 
   /* Filters and Effects */
@@ -454,10 +456,10 @@ export default class ImageManipulator extends Component {
 
   initOrientation = () => {
     const { config, redoOperation, operations, operationsZoomed, initialZoom } = this.props;
-    const { processWithCloudimage } = config;
+    const { processWithCloudService } = config;
     const currentOperations = initialZoom !== 1 ? operationsZoomed : operations;
 
-    if (processWithCloudimage && currentOperations.length >= 1) {
+    if (processWithCloudService && currentOperations.length >= 1) {
       const prevCropIndex = currentOperations.findIndex(({ operation }) => operation === 'rotate');
 
       if (prevCropIndex > -1) {
@@ -543,10 +545,10 @@ export default class ImageManipulator extends Component {
 
   initCrop = () => {
     const { config, redoOperation, operations, operationsZoomed, initialZoom } = this.props;
-    const { processWithCloudimage } = config;
+    const { processWithCloudService } = config;
     const currentOperations = initialZoom !== 1 ? operationsZoomed : operations;
 
-    if (processWithCloudimage && currentOperations.length >= 1) {
+    if (processWithCloudService && currentOperations.length >= 1) {
       const prevCropIndex = currentOperations.findIndex(({ operation }) => operation === 'crop');
 
       if (prevCropIndex > -1) {
