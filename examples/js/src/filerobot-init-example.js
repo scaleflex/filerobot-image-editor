@@ -126,8 +126,11 @@ ImageEditorUpload = new FilerobotImageEditor(configUpload, onCompleteUpload);
 
 const configModify = {
   elementId: 'image-editor-modify',
-  cloudimage: {
-    token: 'scaleflex'
+  //cloudimage: {
+  //  token: 'scaleflex'
+  //},
+  filerobot: {
+    token: 'fusqadtm'
   },
   isLowQualityPreview: true,
   reduceBeforeEdit: {
@@ -142,14 +145,13 @@ const configModify = {
   watermark: {
     url: 'https://cdn.scaleflex.it/demo/filerobot.png',
     urls: [
-      'https://cdn.scaleflex.it/demo/filerobot.png',
+      { url: 'https://cdn.scaleflex.it/demo/filerobot.png', label: 'filerobot logo' },
       'https://cdn.scaleflex.it/demo/superman.png'
     ],
     position: 'center',
     opacity: 0.7,
     applyByDefault: true,
-    handleOpacity: true,
-    fileUpload: false,
+    handleOpacity: true
   },
 };
 
