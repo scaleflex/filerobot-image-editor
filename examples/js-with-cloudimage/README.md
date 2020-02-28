@@ -1,6 +1,6 @@
 # Filerobot Image Editor using cloudimage service
 
-<a href="https://www.cloudimage.io/en/home"><img src="https://scaleflex.airstore.io/filerobot/assets/cloudimage-icon.png" width="200"></a>
+<a href="https://www.cloudimage.io/en/home"><img src="https://cdn.scaleflex.it/filerobot/assets/cloudimage-icon.png" width="200"></a>
 
 Point the Image Editor to your origin image URL, edit it and deliver the result lightning fast over the Cloudimage image CDN.
 Limited to the Cloudimage inline transformation features.
@@ -31,7 +31,7 @@ CDN traffic per month for free.
 
   const ImageEditor = new FilerobotImageEditor(config, onComplete);
 
-  ImageEditor.open('https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg');
+  ImageEditor.open('https://cdn.scaleflex.it/demo/stephen-walker-unsplash.jpg');
 </script>
 ```
 

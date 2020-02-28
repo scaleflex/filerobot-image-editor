@@ -4,7 +4,7 @@ import FilerobotImageEditor from '../../../projects/react';
 
 
 const App = () => {
-  const src = 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg';
+  const src = 'https://cdn.scaleflex.it/demo/stephen-walker-unsplash.jpg';
   const [show, toggle] = useState(false);
 
 

@@ -92,11 +92,11 @@ subscribeBtn.addEventListener('click', (event) => {
 })
 
 function onMouseEnter() {
-  robotIcon.src = 'https://scaleflex.cloudimg.io/width/500/q60.foil1/https://scaleflex.airstore.io/filerobot/assets/robot-with-smile-left.png';
+  robotIcon.src = 'https://scaleflex.cloudimg.io/width/500/q60.foil1/https://cdn.scaleflex.it/filerobot/assets/robot-with-smile-left.png';
 }
 
 function onMouseLeave() {
-  robotIcon.src = 'https://scaleflex.cloudimg.io/width/500/q60.foil1/https://scaleflex.airstore.io/filerobot/assets/robot-icon-left.png';
+  robotIcon.src = 'https://scaleflex.cloudimg.io/width/500/q60.foil1/https://cdn.scaleflex.it/filerobot/assets/robot-icon-left.png';
 }
 
 function clearActiveImages() {
