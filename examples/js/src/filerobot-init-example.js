@@ -130,7 +130,8 @@ const configModify = {
   //  token: 'scaleflex'
   //},
   filerobot: {
-    token: 'fusqadtm'
+    token: 'fusqadtm',
+    //doNotPrefixURL: true
   },
   isLowQualityPreview: true,
   reduceBeforeEdit: {

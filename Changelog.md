@@ -2,6 +2,21 @@
 
 All breaking changes will be listed here
 
+### 3.7.2
+
+#### new features
+
+* Add possibility to not prefix url when already using Filerobot URL
+
+```js
+...
+filerobot: {
+    token: 'xxxx',
+    doNotPrefixURL: true
+},
+...
+```
+
 ### 3.7.0
 
 #### deprecated
