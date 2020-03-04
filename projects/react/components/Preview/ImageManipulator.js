@@ -364,7 +364,9 @@ export default class ImageManipulator extends Component {
     const { cloudimage = {}, filerobot = {} } = config;
     const cloudUrl = cloudimage.token + '.cloudimg.io/' + (cloudimage.version ? `${cloudimage.version}/` : 'v7/');
     const filerobotURL = filerobot.token + '.filerobot.com/' + (filerobot.version ? `${filerobot.version}/` : '');
-    const baseURL = filerobotURL ? filerobotURL : cloudUrl;
+    const baseURL = filerobotURL ?
+      (filerobot.doNotPrefixURL ? '' : filerobotURL) :
+      (cloudimage.doNotPrefixURL ? '' : cloudUrl);
     const cropOperation = this.isOperationExist(operations, 'crop');
     const resizeOperation = this.isOperationExist(operations, 'resize');
     const orientationOperation = this.isOperationExist(operations, 'rotate');
@@ -394,7 +396,7 @@ export default class ImageManipulator extends Component {
         this.getWatermarkArguments(watermark);
     }
 
-    return 'https://' + baseURL + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery + watermarkQuery;
+    return (baseURL ? 'https://' : '') + baseURL + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery + watermarkQuery;
   }
 
   /* Filters and Effects */
