@@ -44,8 +44,8 @@ export default class extends Component {
       original: { width: 300, height: 200 },
       cropDetails: { width: 300, height: 200 },
       canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
-      processWithFilerobot: processWithFilerobot,
-      processWithCloudimage: processWithCloudimage,
+      processWithFilerobot,
+      processWithCloudimage,
       processWithCloudService,
       uploadCloudimageImage: uploadWithCloudimageLink,
       reduceBeforeEdit,
@@ -257,9 +257,9 @@ export default class extends Component {
   }
 
   handleSave = () => {
-    const { processWithFilerobot, processWithCloudimage } = this.state;
+    const { processWithFilerobot, processWithCloudService } = this.state;
 
-    if (!processWithFilerobot && !processWithCloudimage) {
+    if (!processWithFilerobot && !processWithCloudService) {
       this.onDownloadImage();
     } else {
       this.onSave();
@@ -409,8 +409,9 @@ export default class extends Component {
       closeOnLoad,
       config,
       processWithCloudimage,
-      uploadCloudimageImage,
+      processWithFilerobot,
       processWithCloudService,
+      uploadCloudimageImage,
       lastOperation,
       operationList,
       canvasZoomed,

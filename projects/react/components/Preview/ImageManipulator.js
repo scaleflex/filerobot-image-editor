@@ -360,10 +360,10 @@ export default class ImageManipulator extends Component {
   }
 
   generateCloudimageURL = (operations, original) => {
-    const { config, watermark, logoImage } = this.props;
+    const { config, watermark, logoImage, processWithCloudimage, processWithFilerobot } = this.props;
     const { cloudimage = {}, filerobot = {} } = config;
-    const cloudUrl = cloudimage.token + '.cloudimg.io/' + (cloudimage.version ? `${cloudimage.version}/` : 'v7/');
-    const filerobotURL = filerobot.token + '.filerobot.com/' + (filerobot.version ? `${filerobot.version}/` : '');
+    const cloudUrl = processWithCloudimage && (cloudimage.token + '.cloudimg.io/' + (cloudimage.version ? `${cloudimage.version}/` : 'v7/'));
+    const filerobotURL = processWithFilerobot && (filerobot.token + '.filerobot.com/' + (filerobot.version ? `${filerobot.version}/` : ''));
     const baseURL = filerobotURL ?
       (filerobot.doNotPrefixURL ? '' : filerobotURL) :
       (cloudimage.doNotPrefixURL ? '' : cloudUrl);

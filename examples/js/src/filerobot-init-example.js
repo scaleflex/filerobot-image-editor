@@ -133,6 +133,7 @@ const configModify = {
     token: 'fusqadtm',
     //doNotPrefixURL: true
   },
+  processWithCloudimage: true,
   isLowQualityPreview: true,
   reduceBeforeEdit: {
     mode: 'manual',

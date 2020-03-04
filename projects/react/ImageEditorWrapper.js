@@ -65,15 +65,15 @@ class ImageEditorWrapper extends Component {
 
   processConfig = (config) => {
     const tools = config.tools || TOOLS;
-    const isCloudService = !!config.cloudimage || !!config.filerobot;
+    const processWithCloudService = config.processWithCloudimage;
 
     return {
       ...UPLOADER,
-      processWithCloudService: isCloudService,
+      processWithCloudService,
       processWithFilerobot: !!config.filerobot,
       processWithCloudimage: !!config.cloudimage,
       ...config,
-      tools: isCloudService ? tools.filter(tool => CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1) : tools
+      tools: processWithCloudService ? tools.filter(tool => CLOUDIMAGE_OPERATIONS.indexOf(tool) > -1) : tools
 
     };
   }
