@@ -9,13 +9,13 @@ import { Toolbar } from '../';
 export default class extends Component {
   render() {
     const {
-      activeTab, onRevert, apply, onClose, showGoBackBtn, processWithCloudService,
+      activeTab, onRevert, apply, onClose, showGoBackBtn, processWithCloudService, processWithFilerobot,
       handleSave, activeBody, t, config
     } = this.props;
     const { tools } = config;
     const isOneTool = tools.length === 1;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
-    const onFinishButtonLabel = !processWithCloudService ? t['toolbar.download'] : t['toolbar.save'];
+    const onFinishButtonLabel = (!processWithCloudService && !processWithFilerobot) ? t['toolbar.download'] : t['toolbar.save'];
     const applyAndSave = () => { apply(handleSave); };
 
     return (
