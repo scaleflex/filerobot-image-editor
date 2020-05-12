@@ -6,6 +6,18 @@ const AdjustWrapper = styled.div`
   text-align: center;
   display: flex;
   justify-content: center;
+  
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    
+    .image-editor-range-wrapper {
+      width: 50%;
+      
+      input {
+        width: 100% !important;
+      }
+    }
+  }
 `;
 
 export { AdjustWrapper };

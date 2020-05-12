@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { getIconStyles, getIconByName } from './styleUtils';
+import { CancelBtn } from './Header.ui';
 
 
 const OrientationWrapper = styled.div`
@@ -50,10 +51,17 @@ const OrientationWrapper = styled.div`
       display: none;
     }
   }
+  
+  @media (max-width: 768px) {
+    svg {
+      width: 100%;
+    }
+  }
 `;
 
 const RotateWrapper = styled.div`
   display: inline-block;
+  width: 100%;
   //padding: 20px;
 `;
 
@@ -63,6 +71,7 @@ const RotateLabel = styled.div`
 
 const RotateButton = styled.div`
   margin-top: 10px;
+  width: 100%;
   
   button {
     text-transform: none;
@@ -77,6 +86,13 @@ const RotateButton = styled.div`
   }
 `;
 
+const ButtonGroup = styled('div')`
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
 const RotateIcon = styled.span`
   ${props => getIconStyles(props)}
   ${props => getIconByName(props.name)}
@@ -89,4 +105,11 @@ const RotateIcon = styled.span`
   margin-right: 5px;
 `;
 
-export { OrientationWrapper, RotateWrapper, RotateButton, RotateLabel, RotateIcon }
+const DarkBtn = styled(CancelBtn)`
+  @media (max-width: 768px) {
+    width: 50%;
+    margin-right: 0 !important;
+  }
+`;
+
+export { OrientationWrapper, RotateWrapper, RotateButton, RotateLabel, RotateIcon, ButtonGroup, DarkBtn }

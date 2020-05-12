@@ -76,6 +76,4 @@ const CancelBtn = styled(Button)`
   }
 `;
 
-const DarkBtn = styled(CancelBtn)``;
-
-export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn, DarkBtn, ActionsWrapper };
+export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn, ActionsWrapper };

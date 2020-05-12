@@ -4,13 +4,22 @@ import styled from 'styled-components';
 const ResizeWrapper = styled.div`
   color: ${props => props.theme.colors.text};
   text-align: center;
+  
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const ResizeBox = styled.div`
   display: inline-block;
-  width: 300px;
-  padding: 20px;
-  height: 100px;
+  
+  @media (min-width: 768px) {
+    width: 300px;
+    padding: 20px;
+    height: 100px;
+  }
 `;
 
 const PreResizeActions = styled('div')`

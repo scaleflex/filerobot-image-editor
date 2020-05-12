@@ -22,6 +22,7 @@ const Toolbar = styled.div`
   
   @media (max-width: 768px) {
     width: 100%;
+    height: initial;
     padding: 0 10px;
   }
 `;

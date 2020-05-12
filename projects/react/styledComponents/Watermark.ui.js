@@ -20,6 +20,20 @@ const WatermarkWrapper = styled.div`
       display: none;
     }
   }
+  
+  @media (max-width: 768px) { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .image-editor-range {
+      width: 100%;
+      
+      input {
+        width: 100% !important;
+      }
+    }
+  }
 `;
 
 const WrapperForURL = styled('div')`
@@ -47,6 +61,10 @@ const WrapperForControls = styled('div')`
         label {
           min-width: auto;
         }
+        
+        @media (max-width: 768px) {
+          margin-left: 4px;
+        }
       }`;
   } else {
     return 'padding: 10px;';
@@ -70,6 +88,10 @@ const WatermarkInputs = styled('div')`
   width: calc(100% - 200px);
   display: inline-block;
   vertical-align: top;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const WatermarkPositionWrapper = styled('div')`
@@ -164,6 +186,15 @@ const WatermarkInputTypes = styled('div')`
     height: 5px;
     border-radius: 50%;
     background: ${p => p.theme.colors.text};
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%
+    
+    label {
+      display: inline-block;
+      margin-right: 10px;
+    }
   }
 `;
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DarkBtn, OrientationWrapper, RotateButton, RotateIcon, RotateWrapper } from '../../styledComponents';
+import { DarkBtn, OrientationWrapper, RotateButton, RotateIcon, RotateWrapper, ButtonGroup } from '../../styledComponents';
 import Range from '../Range'
 
 
@@ -40,18 +40,20 @@ export default class extends Component {
       <OrientationWrapper>
         <RotateWrapper>
           <RotateButton>
-            <DarkBtn onClick={this.leftRotate}><RotateIcon name="left-rotate"/> <span>{t['orientation.rotate_l']}</span></DarkBtn>
-            <DarkBtn onClick={this.rightRotate}><RotateIcon name="right-rotate"/>
-              <span>{t['orientation.rotate_r']}</span></DarkBtn>
+            <ButtonGroup>
+              <DarkBtn onClick={this.leftRotate}><RotateIcon name="left-rotate"/> <span>{t['orientation.rotate_l']}</span></DarkBtn>
+              <DarkBtn onClick={this.rightRotate}><RotateIcon name="right-rotate"/>
+                <span>{t['orientation.rotate_r']}</span></DarkBtn>
 
-            {!processWithCloudService && (
-              <>
-                <DarkBtn onClick={() => { this.onFlip('x'); }}><RotateIcon name="flip-h"/>
-                  <span>{t['orientation.flip_h']}</span></DarkBtn>
-                <DarkBtn onClick={() => { this.onFlip('y'); }}><RotateIcon name="flip-v"/>
-                  <span>{t['orientation.flip_v']}</span></DarkBtn>
-              </>
-            )}
+              {!processWithCloudService && (
+                <>
+                  <DarkBtn onClick={() => { this.onFlip('x'); }}><RotateIcon name="flip-h"/>
+                    <span>{t['orientation.flip_h']}</span></DarkBtn>
+                  <DarkBtn onClick={() => { this.onFlip('y'); }}><RotateIcon name="flip-v"/>
+                    <span>{t['orientation.flip_v']}</span></DarkBtn>
+                </>
+              )}
+            </ButtonGroup>
 
             {!processWithCloudService && (
             <div>

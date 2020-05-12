@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   CropWrapper, CustomLabel, FieldSet, FieldLabel, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon,
-  CropBox, CropBoxInner, CropShape, CropLabel, CropShapeWrapper, ShapeAligner
+  CropBox, CropBoxInner, CropShape, CropLabel, CropShapeWrapper, ShapeAligner, PresetsWrapper
 } from '../../styledComponents';
 
 
@@ -94,23 +94,25 @@ export default class extends Component {
           <CustomLabel>{t['common.custom']}</CustomLabel>
         </CropBox>
 
-        {cropPresets.map(box => (
-          <CropBox
-            active={activeRatio === box.name}
-            onClick={() => { this.changeRatio(box); }}
-            key={box.name}
-          >
-            <CropBoxInner>
-              <CropShapeWrapper>
-                <ShapeAligner/>
-                <CropShape ratio={box.value || original.width / original.height}/>
-              </CropShapeWrapper>
-              <CropLabel>
-                {t[`common.${box.name}`] || box.name}
-              </CropLabel>
-            </CropBoxInner>
-          </CropBox>
-        ))}
+        <PresetsWrapper>
+          {cropPresets.map(box => (
+            <CropBox
+              active={activeRatio === box.name}
+              onClick={() => { this.changeRatio(box); }}
+              key={box.name}
+            >
+              <CropBoxInner>
+                <CropShapeWrapper>
+                  <ShapeAligner/>
+                  <CropShape ratio={box.value || original.width / original.height}/>
+                </CropShapeWrapper>
+                <CropLabel>
+                  {t[`common.${box.name}`] || box.name}
+                </CropLabel>
+              </CropBoxInner>
+            </CropBox>
+          ))}
+        </PresetsWrapper>
       </CropWrapper>
     )
   }

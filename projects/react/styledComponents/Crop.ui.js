@@ -5,9 +5,7 @@ import { getIconStyles, getIconByName } from './styleUtils';
 
 const CropWrapper = styled.div`
   color: ${props => props.theme.colors.text};
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
+  display: flex;
   
   ::-webkit-scrollbar {
     height: 10px !important;
@@ -16,6 +14,23 @@ const CropWrapper = styled.div`
   ::-webkit-scrollbar-thumb {
     background: #3b4d54;
     border-radius: 5px;
+  }
+  
+  @media (min-widthL 768px) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const PresetsWrapper = styled('div')`
+  @media (max-width: 768px) {
+    width: 100%;
+    overflow-x: scroll;
   }
 `;
 
@@ -186,5 +201,5 @@ const getHeightOfShape = (ratio) => {
 
 export {
   CropWrapper, CustomLabel, FieldSet, FieldLabel, FileInput, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon,
-  CropBox, CropBoxInner, CropShape, CropLabel, CropShapeWrapper, ShapeAligner
+  CropBox, CropBoxInner, CropShape, CropLabel, CropShapeWrapper, ShapeAligner, PresetsWrapper
 };
