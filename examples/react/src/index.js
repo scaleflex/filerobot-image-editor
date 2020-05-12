@@ -12,7 +12,7 @@ const App = () => {
     <div>
       <h1>Filerobot Image Editor</h1>
 
-      <img src={src} onClick={() => { toggle(true) }} alt="example image"/>
+      <img src={src} onClick={() => { toggle(true) }} alt="example image" style={{ maxWidth: '100%' }}/>
 
       <FilerobotImageEditor
         show={show}

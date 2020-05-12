@@ -19,6 +19,11 @@ const Toolbar = styled.div`
     background: #3b4d54;
     border-radius: 5px;
   }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 10px;
+  }
 `;
 
 const ToolWrapper = styled.div`

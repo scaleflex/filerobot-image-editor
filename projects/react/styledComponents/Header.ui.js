@@ -18,23 +18,49 @@ const Title = styled.div`
   color: ${props => props.theme.colors.text}
 `;
 
-const LeftActions = styled.div`
-  text-align: center;
-  width: 100px;
-  padding: 5px 10px;
+const ActionsWrapper = styled('div')`
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
 `;
 
-const RightActions = styled.div`
+const Actions = styled('div')`
+  display: inline-block;
+  position: absolute;
+  top: calc(50% - 20px);
   text-align: center;
-  width: 115px;
-  padding: 5px 10px;
+  width: 100px;
+  padding: 10px 10px 5px;
+  
+  @media (max-width: 768px) {
+    position: initial;
+    width: 50%;
+  }
+`;
+
+const LeftActions = styled(Actions)`
+  display: ${p => p.hide ? 'none' : 'inline-block'};
+  left: 0;
+`;
+
+const RightActions = styled(Actions)`
+  right: 0;
 `;
 
 const ToolbarWrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 100px;
-  background: ${props => props.theme.colors.secondaryBg}
+  background: ${props => props.theme.colors.secondaryBg};
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: initial;
+  }
 `;
 
 const CancelBtn = styled(Button)`
@@ -52,4 +78,4 @@ const CancelBtn = styled(Button)`
 
 const DarkBtn = styled(CancelBtn)``;
 
-export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn, DarkBtn };
+export { HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn, DarkBtn, ActionsWrapper };

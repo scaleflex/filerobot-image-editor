@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn
+  HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn, ActionsWrapper
 } from '../../styledComponents';
 import { Button, CloseBtn } from '../../styledComponents';
 import { Toolbar } from '../';
@@ -26,29 +26,31 @@ export default class extends Component {
         </HeaderTop>
 
         <ToolbarWrapper overlayYHidden={activeTab !== 'watermark'}>
-          <LeftActions>
-            <CancelBtn hide={!activeTab} onClick={isOneTool ? onClose : onRevert} sm default fullSize>
-              {t[`toolbar.cancel`]}
-            </CancelBtn>
-            {showGoBackBtn &&
-            <CancelBtn hide={activeTab} onClick={onClose} sm default fullSize>{t[`toolbar.go_back`]}</CancelBtn>}
-          </LeftActions>
+          <ActionsWrapper>
+            <LeftActions hide={!activeTab}>
+              <CancelBtn onClick={isOneTool ? onClose : onRevert} sm default fullSize>
+                {t[`toolbar.cancel`]}
+              </CancelBtn>
+              {showGoBackBtn &&
+              <CancelBtn hide={activeTab} onClick={onClose} sm default fullSize>{t[`toolbar.go_back`]}</CancelBtn>}
+            </LeftActions>
+
+            {activeBody === 'preview' &&
+            <RightActions>
+              <Button
+                themeColor
+                sm
+                success={!activeTab || activeTab === 'resize'}
+                themeBtn={activeTab}
+                fullSize
+                onClick={isOneTool ? applyAndSave : !activeTab ? () => { handleSave(); } : () => { apply(); }}
+              >
+                {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : t['toolbar.apply']}
+              </Button>
+            </RightActions>}
+          </ActionsWrapper>
 
           <Toolbar {...this.props}/>
-
-          {activeBody === 'preview' &&
-          <RightActions>
-            <Button
-              themeColor
-              sm
-              success={!activeTab || activeTab === 'resize'}
-              themeBtn={activeTab}
-              fullSize
-              onClick={isOneTool ? applyAndSave : !activeTab ? () => { handleSave(); } : () => { apply(); }}
-            >
-              {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : t['toolbar.apply']}
-            </Button>
-          </RightActions>}
         </ToolbarWrapper>
       </HeaderWrapper>
     )

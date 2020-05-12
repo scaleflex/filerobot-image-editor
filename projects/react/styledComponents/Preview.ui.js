@@ -14,6 +14,10 @@ const PreviewWrapper = styled.div`
     height: 100%;
     vertical-align: middle;
   }
+  
+  @media (max-width: 768px) {
+    height: calc(100% - 212px);
+  }
 `;
 
 const PreResizeBox = styled('div')`
