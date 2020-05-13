@@ -377,6 +377,12 @@ const Wrapper = styled.div`
   .cropper-disabled .cropper-point {
     cursor: not-allowed;
   }
+  
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 `;
 
 export { Wrapper, Container };
