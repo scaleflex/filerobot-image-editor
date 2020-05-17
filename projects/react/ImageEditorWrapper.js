@@ -17,7 +17,7 @@ class ImageEditorWrapper extends Component {
     super();
 
     config.translations = config.translations || {};
-    config.language = translations[config.language] ? config.language : 'en';
+    config.language = (config.translations[config.language] || translations[config.language]) ? config.language : 'en';
     config.theme = config.theme || {};
     config.theme.colors = config.theme.colors || {};
     config.theme.fonts = config.theme.fonts || {};
