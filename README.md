@@ -143,13 +143,6 @@ Use latest CDNized plugin version
 <script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.7.7/filerobot-image-editor.min.js"></script>
 ```
 
-
-You may also use major version number instead of fixed version to have the latest version available.
-
-```html
-<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3/filerobot-image-editor.min.js"></script>
-```
-
 ### <a name="quick_start"></a>Quick start
 
 We provide easy way to integrate image editor in your applications
