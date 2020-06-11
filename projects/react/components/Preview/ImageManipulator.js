@@ -156,13 +156,13 @@ export default class ImageManipulator extends Component {
             );
           });
         });
-      }, 1500);
+      });
     } else {
       setTimeout(() => {
         that.CamanInstance = new window.Caman(getCanvasNode('scaleflex-image-edit-box'), function () {
           updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(getCanvasNode('scaleflex-image-edit-box')) });
         });
-      }, 1500);
+      });
     }
   }
 
