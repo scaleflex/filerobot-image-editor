@@ -11,6 +11,7 @@ import {
   getWatermarkPosition
 } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
+import roundRect from '../../utils/canvas-round-rect';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
 
@@ -197,7 +198,7 @@ export default class ImageManipulator extends Component {
     return newCanvas;
   }
 
-  replaceWithNewCanvas = (id) => {
+  replaceWithNewCanvas = (id, rounded = false) => {
     //create a new canvas
     const oldCanvas = getCanvasNode(id);
     let newCanvas = document.createElement('canvas');
@@ -205,14 +206,27 @@ export default class ImageManipulator extends Component {
     const container = oldCanvas.parentElement;
     container.removeChild(oldCanvas)
 
+    const { width, height } = oldCanvas;
+
     //set dimensions
-    newCanvas.width = oldCanvas.width;
-    newCanvas.height = oldCanvas.height;
+    newCanvas.width = width;
+    newCanvas.height = height;
     newCanvas.id = id;
 
     //apply the old canvas to the new one
     context.drawImage(oldCanvas, 0, 0);
 
+    // Make the new canvas rounded if the crop is rounded style.
+    if (rounded) {
+      context.imageSmoothingEnabled = true;
+      context.globalCompositeOperation = 'destination-in';
+      context.beginPath();
+      // roundRect is a manually written protoype method from canvas-round-rect file in utils.
+      context.roundRect(0 , 0, width, height, Math.max(width, height));
+      context.fill();
+    }
+
+    // Append the new canvas to the container of old canvas.
     container.appendChild(newCanvas);
 
     //return the new canvas
@@ -627,13 +641,14 @@ export default class ImageManipulator extends Component {
   }
 
   makeCanvasSnapshot = (operation, callback = () => {}) => {
-    const { updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal, operations } = this.props;
+    const { updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal,
+      operations, roundCrop } = this.props;
 
     if (initialZoom !== 1) {
       const lastOperationIndex = operationsZoomed.indexOf(currentOperation) + 1;
 
       this.CamanInstanceOriginal.render(() => {
-        const canvasOriginal = this.replaceWithNewCanvas('scaleflex-image-edit-box-original');
+        const canvasOriginal = this.replaceWithNewCanvas('scaleflex-image-edit-box-original', roundCrop);
         const nextOperation = {
           ...operation,
           canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box-original'))
@@ -649,7 +664,7 @@ export default class ImageManipulator extends Component {
       });
 
       this.CamanInstanceZoomed.render(() => {
-        const canvasZoomed = this.replaceWithNewCanvas('scaleflex-image-edit-box');
+        const canvasZoomed = this.replaceWithNewCanvas('scaleflex-image-edit-box', roundCrop);
         const nextOperation = {
           ...operation,
           canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box'))
@@ -668,7 +683,7 @@ export default class ImageManipulator extends Component {
       const lastOperationIndex = operations.indexOf(currentOperation) + 1;
 
       this.CamanInstance.render(() => {
-        const canvas = this.replaceWithNewCanvas('scaleflex-image-edit-box');
+        const canvas = this.replaceWithNewCanvas('scaleflex-image-edit-box', roundCrop);
         const nextOperation = {
           ...operation,
           canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box'))

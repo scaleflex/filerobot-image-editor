@@ -50,6 +50,7 @@ export default class extends Component {
       uploadCloudimageImage: uploadWithCloudimageLink,
       reduceBeforeEdit,
       cropBeforeEdit,
+      roundCrop: false,
 
       operationsOriginal: [],
       operationsZoomed: [],
@@ -339,6 +340,7 @@ export default class extends Component {
       effect,
       filter,
       crop,
+      roundCrop,
       resize,
       rotate,
       correctionDegree,
@@ -427,6 +429,7 @@ export default class extends Component {
       handleSave: this.handleSave,
       onPreResize: this.onPreResize,
       redoOperation: this.redoOperation,
+      roundCrop,
 
       ...imageParams,
       watermark
@@ -451,7 +454,7 @@ export default class extends Component {
     };
 
     return (
-      <Wrapper>
+      <Wrapper roundCrop={roundCrop}>
 
         <Header {...headerProps}/>
 

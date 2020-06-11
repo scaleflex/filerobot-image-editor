@@ -159,6 +159,7 @@ const CropShape = styled.div`
   margin: 0 auto;
   display: inline-block;
   vertical-align: middle;
+  ${({ radius }) => radius && `border-radius: ${radius}%`};
 `;
 
 const CropShapeWrapper = styled('div')`

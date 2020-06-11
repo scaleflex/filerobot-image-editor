@@ -47,12 +47,18 @@ export default class extends Component {
 
   changeRatio = (box) => {
     const { aspectRatio } = this.state;
-    const { original: { width = 1, height = 1 } } = this.props;
+    const { original: { width = 1, height = 1 }, updateState } = this.props;
     let value;
 
     if (box.name === 'custom' && !aspectRatio) {
       this.setState({ activeRatio: box.name });
       return;
+    }
+
+    if (box.name === 'round' || box.radius === 50) {
+      updateState({ roundCrop: true });
+    } else {
+      updateState({ roundCrop: false });
     }
 
     value = box.name === 'original' ? width / height : box.value;
@@ -104,7 +110,7 @@ export default class extends Component {
               <CropBoxInner>
                 <CropShapeWrapper>
                   <ShapeAligner/>
-                  <CropShape ratio={box.value || original.width / original.height}/>
+                  <CropShape ratio={box.value || original.width / original.height} radius={box.radius} />
                 </CropShapeWrapper>
                 <CropLabel>
                   {t[`common.${box.name}`] || box.name}

@@ -147,6 +147,7 @@ const Wrapper = styled.div`
     outline: 1px solid #fff;
     overflow: hidden;
     width: 100%;
+    ${({ roundCrop}) => roundCrop && 'border-radius: 50%;'}
   }
   
   .cropper-dashed {
@@ -220,6 +221,10 @@ const Wrapper = styled.div`
     background-color: #fff;
     left: 0;
     top: 0;
+    ${({ roundCrop }) => roundCrop && `
+      border-radius: 50%;
+      box-shadow: 0 0 80px 15px #000;
+      border: 2px solid #000;`}
   }
   
   .cropper-line {
