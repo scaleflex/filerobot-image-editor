@@ -362,7 +362,7 @@ export default class ImageManipulator extends Component {
   }
 
   generateCloudimageURL = (operations, original) => {
-    const { config, watermark, logoImage, processWithCloudimage, processWithFilerobot } = this.props;
+    const { config, watermark, logoImage, processWithCloudimage, processWithFilerobot, focusPoint } = this.props;
     const { cloudimage = {}, filerobot = {} } = config;
     const cloudUrl = processWithCloudimage && (cloudimage.token + '.cloudimg.io/' + (cloudimage.version ? `${cloudimage.version}/` : 'v7/'));
     const filerobotURL = processWithFilerobot && (filerobot.token + '.filerobot.com/' + (filerobot.version ? `${filerobot.version}/` : ''));
@@ -372,6 +372,7 @@ export default class ImageManipulator extends Component {
     const cropOperation = this.isOperationExist(operations, 'crop');
     const resizeOperation = this.isOperationExist(operations, 'resize');
     const orientationOperation = this.isOperationExist(operations, 'rotate');
+    const focusPointOperation = this.isOperationExist(operations, 'focus_point');
     const watermarkOperation = watermark && logoImage && watermark.applyByDefault;
     const isProcessImage = cropOperation || resizeOperation || orientationOperation || watermarkOperation;
 
@@ -379,6 +380,7 @@ export default class ImageManipulator extends Component {
     let resizeQuery = '';
     let orientationQuery = '';
     let watermarkQuery = '';
+    let focusPointQuery = '';
 
     if (cropOperation) {
       cropQuery = this.getCropArguments(cropOperation.props);
@@ -394,11 +396,16 @@ export default class ImageManipulator extends Component {
     }
 
     if (watermarkOperation) {
-      watermarkQuery = ((cropQuery || resizeQuery || orientationOperation) ? '&' : '') +
+      watermarkQuery = ((cropQuery || resizeQuery || orientationQuery) ? '&' : '') +
         this.getWatermarkArguments(watermark);
     }
 
-    return (baseURL ? 'https://' : '') + baseURL + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery + watermarkQuery;
+    if (focusPointOperation) {
+      focusPointQuery = ((cropQuery || resizeQuery || orientationQuery || watermarkQuery) ? '&' : '') +
+        this.getFocusPointArguments(focusPointOperation.props);
+    }
+
+    return (baseURL ? 'https://' : '') + baseURL + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery + watermarkQuery + focusPointQuery;
   }
 
   /* Filters and Effects */
@@ -750,6 +757,40 @@ export default class ImageManipulator extends Component {
     });
   }
 
+  /* Focus point */
+
+  initFocusPoint = () => {
+    const { updateState, original, focusPoint } = this.props;
+    const nextFocusPoint = {...focusPoint};
+
+    if (nextFocusPoint.x === null) {
+      nextFocusPoint.x = original.width / 2;
+    }
+    if (nextFocusPoint.y === null) {
+      nextFocusPoint.y = original.height / 2;
+    }
+
+    this.tempFocusPoint = {...focusPoint};
+    updateState({ focusPoint: nextFocusPoint });
+  }
+
+  applyFocusPoint = (callback = () => {}) => {
+    const { updateState, operations, operationsOriginal, focusPoint } = this.props;
+
+    this.tempFocusPoint = focusPoint;
+    updateState({
+      operationsOriginal: [...operationsOriginal, { operation: 'focus_point', props: focusPoint }],
+      operations: [...operations, { operation: 'focus_point', props: focusPoint }],
+    });
+    callback();
+  }
+
+  getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`;
+
+  destroyFocusPoint = () => {
+    this.props.updateState({ focusPoint: this.tempFocusPoint });
+  }
+
   /* Operation utils */
 
   pushOperation = (operations, operation, currentOperation) => {
@@ -969,6 +1010,9 @@ export default class ImageManipulator extends Component {
       case 'watermark':
         this.applyWatermark(callback);
         break;
+      case 'focus_point':
+        this.applyFocusPoint(callback);
+        break;
       default:
         break;
     }
@@ -995,6 +1039,9 @@ export default class ImageManipulator extends Component {
       case 'watermark':
         this.initWatermark();
         break;
+      case 'focus_point':
+        this.initFocusPoint();
+        break;
       default:
         this.destroyAll();
     }
@@ -1014,6 +1061,9 @@ export default class ImageManipulator extends Component {
       case 'resize':
         break;
       case 'rotate':
+        break;
+      case 'focus_point':
+        this.destroyFocusPoint();
         break;
       default:
         break;
