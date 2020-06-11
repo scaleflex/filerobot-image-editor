@@ -114,12 +114,12 @@ export default class ImageManipulator extends Component {
           });
         });
       } else {
-        this.initializeCanvases(img, canvas);
+        this.initializeCanvases(img);
       }
     });
   }
 
-  initializeCanvases = (elem, canvas) => {
+  initializeCanvases = (elem) => {
     const that = this;
     const { config: { isLowQualityPreview } = {}, updateState } = this.props;
     let initialZoom = 1;
@@ -150,19 +150,19 @@ export default class ImageManipulator extends Component {
             that.CamanInstanceZoomed = new window.Caman(
               canvasZoomed,
               function () {
-                that.CamanInstanceOriginal = new window.Caman(canvasOriginal, function () {});
+                that.CamanInstanceOriginal = new window.Caman(getCanvasNode('scaleflex-image-edit-box-original'), function () {});
                 updateState({ isShowSpinner: false, canvasZoomed: that.cloneCanvas(canvasZoomed) });
               }
             );
           });
         });
-      });
+      }, 1500);
     } else {
       setTimeout(() => {
-        that.CamanInstance = new window.Caman(canvas, function () {
-          updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(canvas) });
+        that.CamanInstance = new window.Caman(getCanvasNode('scaleflex-image-edit-box'), function () {
+          updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(getCanvasNode('scaleflex-image-edit-box')) });
         });
-      });
+      }, 1500);
     }
   }
 
