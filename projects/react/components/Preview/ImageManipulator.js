@@ -362,7 +362,7 @@ export default class ImageManipulator extends Component {
   }
 
   generateCloudimageURL = (operations, original) => {
-    const { config, watermark, logoImage, processWithCloudimage, processWithFilerobot, focusPoint } = this.props;
+    const { config, watermark, logoImage, processWithCloudimage, processWithFilerobot } = this.props;
     const { cloudimage = {}, filerobot = {} } = config;
     const cloudUrl = processWithCloudimage && (cloudimage.token + '.cloudimg.io/' + (cloudimage.version ? `${cloudimage.version}/` : 'v7/'));
     const filerobotURL = processWithFilerobot && (filerobot.token + '.filerobot.com/' + (filerobot.version ? `${filerobot.version}/` : ''));
@@ -607,13 +607,13 @@ export default class ImageManipulator extends Component {
     const { width, height, x, y } = cropDetails;
 
     updateState({ isShowSpinner: true }, () => {
-      let resultSize = null;
+      let resultSize;
       this.destroyCrop();
 
       if (initialZoom !== 1) {
         resultSize = [width, height, x, y].map(prop => prop * initialZoom);
-        this.CamanInstanceZoomed.crop(width, height, x, y);
-        this.CamanInstanceOriginal.crop(...resultSize);
+        this.CamanInstanceZoomed.crop(width, height, x, y); //TODO: check
+        this.CamanInstanceOriginal.crop(width, height, x, y);
       } else {
         resultSize = [width, height, x, y];
         this.CamanInstance.crop(...resultSize);
