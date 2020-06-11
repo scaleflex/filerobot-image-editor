@@ -695,7 +695,7 @@ export default class ImageManipulator extends Component {
     this.cropper.destroy();
   }
 
-  getCropArguments = ({ width, height, x, y } = {}) => `tl_px=${x},${y}&br_px=${x + width},${y + height}`;
+  getCropArguments = ({ width, height, x, y } = {}) => `tl_px=${Math.round(x)},${Math.round(y)}&br_px=${Math.round(x + width)},${Math.round(y + height)}`;
 
   /* Resize */
 
