@@ -114,12 +114,12 @@ export default class ImageManipulator extends Component {
           });
         });
       } else {
-        this.initializeCanvases(img);
+        this.initializeCanvases(img, canvas);
       }
     });
   }
 
-  initializeCanvases = (elem) => {
+  initializeCanvases = (elem, canvas) => {
     const that = this;
     const { config: { isLowQualityPreview } = {}, updateState } = this.props;
     let initialZoom = 1;
@@ -158,8 +158,6 @@ export default class ImageManipulator extends Component {
         });
       });
     } else {
-      const canvas = getCanvasNode('scaleflex-image-edit-box');
-
       setTimeout(() => {
         that.CamanInstance = new window.Caman(canvas, function () {
           updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(canvas) });
