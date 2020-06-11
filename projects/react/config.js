@@ -1,6 +1,6 @@
 // 'effects', 'filters', 'adjust', 'crop', 'resize', 'rotate'
 const TOOLS = [
-  'adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark'
+  'adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark', 'focus_point'
 ];
 
 // 'clarity', 'edge_enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'noise', 'old_paper', 'posterize', 'radial_blur',
@@ -15,7 +15,7 @@ const FILTERS = [
   'cross_process', 'glow_sun', 'jarques', 'love', 'old_boot', 'orange_peel', 'pin_hole', 'sepia', 'sun_rise', 'vintage'
 ];
 
-const CLOUDIMAGE_OPERATIONS = ['crop', 'resize', 'rotate', 'watermark'];
+const CLOUDIMAGE_OPERATIONS = ['crop', 'resize', 'rotate', 'watermark', 'focus_point'];
 
 const WATERMARK_POSITIONS = [
   "left-top",
