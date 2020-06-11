@@ -762,22 +762,36 @@ export default class ImageManipulator extends Component {
   /* Focus point */
 
   initFocusPoint = () => {
-    const { updateState, canvasDimensions } = this.props;
-    const nextFocusPoint = { x: canvasDimensions.width / 2, y: canvasDimensions.height / 2 };
+    const { updateState, original, focusPoint } = this.props;
+    const nextFocusPoint = {...focusPoint};
 
+    if (nextFocusPoint.x === null) {
+      nextFocusPoint.x = original.width / 2;
+    }
+    if (nextFocusPoint.y === null) {
+      nextFocusPoint.y = original.height / 2;
+    }
+
+    this.tempFocusPoint = {...focusPoint};
     updateState({ focusPoint: nextFocusPoint });
   }
 
-  applyFocusPoint = () => {
+  applyFocusPoint = (callback = () => {}) => {
     const { updateState, operations, operationsOriginal, focusPoint } = this.props;
 
+    this.tempFocusPoint = focusPoint;
     updateState({
       operationsOriginal: [...operationsOriginal, { operation: 'focus_point', props: focusPoint }],
-      operations: [...operations, { operation: 'focus_point', props: focusPoint }]
+      operations: [...operations, { operation: 'focus_point', props: focusPoint }],
     });
+    callback();
   }
 
-  getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`
+  getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`;
+
+  destroyFocusPoint = () => {
+    this.props.updateState({ focusPoint: this.tempFocusPoint });
+  }
 
   /* Operation utils */
 
@@ -1051,6 +1065,7 @@ export default class ImageManipulator extends Component {
       case 'rotate':
         break;
       case 'focus_point':
+        this.destroyFocusPoint();
         break;
       default:
         break;

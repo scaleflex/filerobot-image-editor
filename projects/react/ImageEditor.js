@@ -63,7 +63,7 @@ export default class extends Component {
 
       ...INITIAL_PARAMS,
       watermark: watermark || DEFAULT_WATERMARK,
-      focusPoint: {x: 0, y: 0},
+      focusPoint: {x: null, y: null},
     }
   }
 
