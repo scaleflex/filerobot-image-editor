@@ -8,7 +8,7 @@ import { getWatermarkPosition } from '../../utils';
 export default class extends Component {
   render() {
     const {
-      activeTab, isHideCanvas, watermark = {}, logoImage, focusPoint, initialZoom, canvasDimensions, updateState
+      activeTab, isHideCanvas, watermark = {}, logoImage, focusPoint, original, updateState
     } = this.props;
     const { opacity, url, applyByDefault } = watermark;
     const canvas = window.document.getElementById('scaleflex-image-edit-box');
@@ -40,7 +40,7 @@ export default class extends Component {
             updateState={updateState}
             focusPoint={focusPoint}
             canvasRect={canvasRect}
-            canvasDimensions={canvasDimensions}
+            original={original}
           />
         )}
       </PreviewImgBox>
