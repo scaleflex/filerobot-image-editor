@@ -627,8 +627,8 @@ export default class ImageManipulator extends Component {
 
       if (initialZoom !== 1) {
         resultSize = [width, height, x, y].map(prop => prop * initialZoom);
-        this.CamanInstanceZoomed.crop(width, height, x, y); //TODO: check
-        this.CamanInstanceOriginal.crop(width, height, x, y);
+        this.CamanInstanceZoomed.crop(width, height, x, y);
+        this.CamanInstanceOriginal.crop(...resultSize);
       } else {
         resultSize = [width, height, x, y];
         this.CamanInstance.crop(...resultSize);
