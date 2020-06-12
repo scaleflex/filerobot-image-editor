@@ -102,6 +102,8 @@ class ImageEditorWrapper extends Component {
 
     if (!src || !isVisible || isServerSide) return null;
 
+    if(src instanceof Blob && config.processWithCloudimage) return null;
+
     const Inner = (
       <Container>
         <ImageEditor
