@@ -15,7 +15,7 @@ class ImageEditorWrapper extends Component {
 
   constructor({ show = false, src = '', config = {} }) {
     super();
-
+    
     config.translations = config.translations || {};
     config.language = (config.translations[config.language] || translations[config.language]) ? config.language : 'en';
     config.theme = config.theme || {};
@@ -56,11 +56,8 @@ class ImageEditorWrapper extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.show !== prevProps.show) {
-      if (this.props.show) {
-        this.open(this.props.src);
-      } else
-        this.close();
-    }
+      if (this.props.show) { this.open(this.props.src); } else { this.close(); }
+    }    
   }
 
   processConfig = (config) => {
@@ -79,8 +76,12 @@ class ImageEditorWrapper extends Component {
   }
 
   open = (src) => {
+    const { onOpen } = this.props;
+
     if (this._isMounted) {
-      this.setState({ isVisible: true, src });
+      this.setState({ isVisible: true, src }, () => {
+        if (onOpen) onOpen();
+      });
     }
   }
 
