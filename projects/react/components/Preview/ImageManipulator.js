@@ -245,9 +245,11 @@ export default class ImageManipulator extends Component {
 
   saveImage = () => {
     const {
-      onComplete, onClose, updateState, closeOnLoad, config, processWithCloudService, uploadCloudimageImage, imageMime,
+      onComplete, onClose, updateState, closeOnLoad, config, processWithCloudService, uploadCloudimageImage,
       operations, initialZoom, logoImage, watermark, operationsOriginal
     } = this.props;
+    const imageMime = this.getFinalImageMime();
+    const imageName = this.getFinalImageName();
     const { filerobot = {}, platform = 'filerobot' } = config;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
@@ -256,7 +258,6 @@ export default class ImageManipulator extends Component {
     const uploadParams = filerobot.uploadParams || {};
     const dir = uploadParams.dir || 'image-editor';
     const self = this;
-    let { imageName } = this.state;
 
     if (!processWithCloudService) {
       if (watermark && logoImage && watermark.applyByDefault) {
@@ -332,10 +333,27 @@ export default class ImageManipulator extends Component {
     return canvas;
   }
 
+  getFinalImageMime = () => {
+    const { roundCrop, imageMime } = this.props;
+
+    return roundCrop ? 'image/png' : imageMime;
+  }
+
+  getFinalImageName = () => {
+    const { roundCrop } = this.props;
+    let { imageName } = this.state;
+
+    if (roundCrop) {
+      imageName = imageName.replace(imageName.substr(imageName.lastIndexOf('.') + 1), 'png');
+    }
+
+    return imageName;
+  }
+
   downloadImage = (callback) => {
     const canvas = this.getResultCanvas();
-    const { imageMime } = this.props;
-    const { imageName } = this.state;
+    const imageName = this.getFinalImageName();
+    const imageMime = this.getFinalImageMime();
     const lnk = document.createElement('a');
     let e;
 
@@ -631,7 +649,7 @@ export default class ImageManipulator extends Component {
   }
 
   applyCrop = (callback = () => {}) => {
-    const { initialZoom, updateState, cropDetails } = this.props;
+    const { initialZoom, updateState, cropDetails, roundCrop } = this.props;
     const { width, height, x, y } = cropDetails;
 
     updateState({ isShowSpinner: true }, () => {
@@ -653,7 +671,8 @@ export default class ImageManipulator extends Component {
           width: resultSize[0],
           height: resultSize[1],
           x: resultSize[2],
-          y: resultSize[3]
+          y: resultSize[3],
+          roundCrop,
         }
       }, callback);
     });
@@ -724,7 +743,7 @@ export default class ImageManipulator extends Component {
     this.cropper.destroy();
   }
 
-  getCropArguments = ({ width, height, x, y } = {}) => `tl_px=${Math.round(x)},${Math.round(y)}&br_px=${Math.round(x + width)},${Math.round(y + height)}`;
+  getCropArguments = ({ width, height, x, y, roundCrop } = {}) => `tl_px=${Math.round(x)},${Math.round(y)}&br_px=${Math.round(x + width)},${Math.round(y + height)}${roundCrop ? `&radius=${Math.max(width, height)}&force_format=png` : ''}`;
 
   /* Resize */
 
