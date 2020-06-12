@@ -8,7 +8,7 @@ import { getWatermarkPosition } from '../../utils';
 export default class extends Component {
   render() {
     const {
-      activeTab, isHideCanvas, watermark = {}, logoImage, focusPoint, original, updateState
+      activeTab, isHideCanvas, watermark = {}, logoImage, focusPoint, original, updateState, src
     } = this.props;
     const { opacity, url, applyByDefault } = watermark;
     const canvas = window.document.getElementById('scaleflex-image-edit-box');
@@ -23,7 +23,7 @@ export default class extends Component {
         isShowWatermark={applyByDefault}
       >
         <ImageManipulator {...this.props}/>
-        {applyByDefault && url &&
+        {applyByDefault && url && activeTab !== 'focus_point' &&
         <Watermark
           opacity={opacity}
           url={url}
@@ -37,9 +37,9 @@ export default class extends Component {
 
         {activeTab === 'focus_point' && (
           <FocusPointPreview
+            src={src}
             updateState={updateState}
             focusPoint={focusPoint}
-            canvasRect={canvasRect}
             original={original}
           />
         )}
