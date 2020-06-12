@@ -158,9 +158,17 @@ We provide easy way to integrate image editor in your applications
 
 ### <a name="methods"></a>Methods
 
-#### `FilerobotImageEditor(config: {}, uploadHandler: callback)`: function
+#### `FilerobotImageEditor(config: {}, callbacks: {})`: function
 
 Initialization of Filerobot Image Editor plugin.
+
+**callbacks.onOpen(src: string/blob)**: function - is triggered when modal is opened
+
+**callbacks.onBeforeComplete({ status: string, canvas: canvas element })**: function - is triggered before onComplete, if it returnes fase it cancels default behavior and you can use canvas element to upload to 3ed part service
+
+**callbacks.onComplete(url: string, file: object)**: function - is triggered on Complete returnes edited image url
+
+**callbacks.onClose()**: function - is triggered when modal is closed
 
 #### `ImageEditor.open(url)`: function
 
