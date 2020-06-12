@@ -32,7 +32,7 @@ export default class extends Component {
 
     const {
       processWithCloudimage, processWithFilerobot, processWithCloudService, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit,
-      watermark
+      watermark, imageSealing,
     } = props.config;
 
     this.state = {
@@ -50,6 +50,7 @@ export default class extends Component {
       uploadCloudimageImage: uploadWithCloudimageLink,
       reduceBeforeEdit,
       cropBeforeEdit,
+      imageSealing: { enabled: false, salt: '', char_count: 10, include_params: null/* include all by default */, ...imageSealing },
 
       operationsOriginal: [],
       operationsZoomed: [],
@@ -335,6 +336,7 @@ export default class extends Component {
       cropDetails, original, canvasDimensions, processWithCloudimage, processWithFilerobot, processWithCloudService,
       uploadCloudimageImage, imageMime, lastOperation, operationList, initialZoom, canvasZoomed, canvasOriginal,
       reduceBeforeEdit, cropBeforeEdit, img, imageName, activeBody, isPreResize, preCanvasDimensions, logoImage,
+      imageSealing,
 
       effect,
       filter,
@@ -411,6 +413,7 @@ export default class extends Component {
       processWithCloudimage,
       processWithFilerobot,
       processWithCloudService,
+      imageSealing,
       uploadCloudimageImage,
       lastOperation,
       operationList,

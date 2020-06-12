@@ -8,7 +8,8 @@ import {
   getEffectHandlerName,
   getPubliclink,
   getSecretHeaderName,
-  getWatermarkPosition
+  getWatermarkPosition,
+  getImageSealingParams,
 } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
@@ -362,13 +363,14 @@ export default class ImageManipulator extends Component {
   }
 
   generateCloudimageURL = (operations, original) => {
-    const { config, watermark, logoImage, processWithCloudimage, processWithFilerobot } = this.props;
+    const { config, watermark, logoImage, processWithCloudimage, processWithFilerobot, imageSealing } = this.props;
     const { cloudimage = {}, filerobot = {} } = config;
     const cloudUrl = processWithCloudimage && (cloudimage.token + '.cloudimg.io/' + (cloudimage.version ? `${cloudimage.version}/` : 'v7/'));
     const filerobotURL = processWithFilerobot && (filerobot.token + '.filerobot.com/' + (filerobot.version ? `${filerobot.version}/` : ''));
-    const baseURL = filerobotURL ?
-      (filerobot.doNotPrefixURL ? '' : filerobotURL) :
-      (cloudimage.doNotPrefixURL ? '' : cloudUrl);
+    const doNotPrefixURL = filerobotURL ? filerobot.doNotPrefixURL : cloudimage.doNotPrefixURL;
+    let url = filerobotURL || cloudUrl || '';
+    url = (url ? 'https://' : '') + url;
+    const baseURL = doNotPrefixURL ? '' : url;
     const cropOperation = this.isOperationExist(operations, 'crop');
     const resizeOperation = this.isOperationExist(operations, 'resize');
     const orientationOperation = this.isOperationExist(operations, 'rotate');
@@ -398,7 +400,20 @@ export default class ImageManipulator extends Component {
         this.getWatermarkArguments(watermark);
     }
 
-    return (baseURL ? 'https://' : '') + baseURL + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery + watermarkQuery;
+    original = original.split('?')[0]; // remove quesry string from original url
+    original = original.replace(baseURL, ''); // remove duplication in case when original url already include cdn prefix
+
+    let paramsStr = cropQuery + resizeQuery + orientationQuery + watermarkQuery;
+
+    if (imageSealing.enabled) {
+      paramsStr = getImageSealingParams(
+        paramsStr,
+        imageSealing,
+        original.replace(url, '') // always remove cdn url, to support already cdnized links and doNotPrefixURL param
+      );
+    }
+
+    return baseURL + original + (isProcessImage ? '?' : '') + paramsStr;
   }
 
   /* Filters and Effects */
