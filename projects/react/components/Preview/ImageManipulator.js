@@ -786,7 +786,11 @@ export default class ImageManipulator extends Component {
     }
 
     this.tempFocusPoint = {...focusPoint};
-    updateState({ focusPoint: nextFocusPoint });
+    updateState({
+      focusPoint: nextFocusPoint,
+      isHideCanvas: true,
+      isShowSpinner: true,
+    });
   }
 
   applyFocusPoint = (callback = () => {}) => {
@@ -803,7 +807,11 @@ export default class ImageManipulator extends Component {
   getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`;
 
   destroyFocusPoint = () => {
-    this.props.updateState({ focusPoint: this.tempFocusPoint });
+    this.props.updateState({
+      focusPoint: this.tempFocusPoint,
+      isHideCanvas: false,
+      isShowSpinner: false,
+    });
   }
 
   /* Operation utils */
