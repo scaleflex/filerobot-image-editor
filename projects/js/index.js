@@ -13,6 +13,7 @@ class FilerobotImageEditor {
       onComplete = methods;
     } else {
       methods = methods || {};
+      onComplete = methods.onComplete || onComplete;
     }
 
     if (!container) {
