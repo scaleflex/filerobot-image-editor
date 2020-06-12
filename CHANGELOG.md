@@ -26,6 +26,21 @@ Types of changes:
 
 -------------
 
+## 3.9.0 - 2020-06-12
+
+### Fixed
+- calculating final size when zooming was applied on download
+- problem with query sting on generate cloudimage url
+- configuration of tools
+- fix canvas initilization error
+
+### Added
+- image sealing
+- support for onOpen & onClose methods
+- fullscreen mode
+- focus point
+
+
 ## 3.7.7 - 2020-05-17
 ## 3.7.6 - 2020-05-17
 
