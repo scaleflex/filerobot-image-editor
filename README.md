@@ -234,6 +234,10 @@ Image editor config.
 
 Callback, triggers on close image editor widget.
 
+#### `onOpen()`: function (optional)
+
+Callback, triggers on open image editor widget.
+
 #### `onComplete()`: function (required)
 
 Callback, triggers on complete processing image.
