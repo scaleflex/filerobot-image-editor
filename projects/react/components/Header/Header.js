@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import {
   HeaderWrapper, HeaderTop, Title, LeftActions, RightActions, ToolbarWrapper, CancelBtn, ActionsWrapper
 } from '../../styledComponents';
-import { Button, CloseBtn } from '../../styledComponents';
+import { Button, CloseBtn, FullscreenBtn } from '../../styledComponents';
 import { Toolbar } from '../';
+import { toggleModalFullscreen } from '../../utils/full-screen-handle';
 
 
 export default class extends Component {
@@ -22,7 +23,8 @@ export default class extends Component {
       <HeaderWrapper>
         <HeaderTop>
           <Title>{t[`toolbar.${filteredName}`] || t[`header.image_editor_title`]}</Title>
-          <CloseBtn onClick={onClose}/>
+          <FullscreenBtn onClick={toggleModalFullscreen} title={t[`header.toggle_fullscreen`]} />
+          <CloseBtn onClick={onClose} title={t[`header.close_modal`]} />
         </HeaderTop>
 
         <ToolbarWrapper overlayYHidden={activeTab !== 'watermark'}>

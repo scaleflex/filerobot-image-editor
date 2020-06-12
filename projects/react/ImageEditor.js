@@ -32,7 +32,7 @@ export default class extends Component {
 
     const {
       processWithCloudimage, processWithFilerobot, processWithCloudService, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit,
-      watermark
+      watermark, imageSealing,
     } = props.config;
 
     this.state = {
@@ -50,6 +50,7 @@ export default class extends Component {
       uploadCloudimageImage: uploadWithCloudimageLink,
       reduceBeforeEdit,
       cropBeforeEdit,
+      imageSealing: { enabled: false, salt: '', char_count: 10, include_params: null/* include all by default */, ...imageSealing },
 
       operationsOriginal: [],
       operationsZoomed: [],
@@ -62,7 +63,8 @@ export default class extends Component {
       initialZoom: 1,
 
       ...INITIAL_PARAMS,
-      watermark: watermark || DEFAULT_WATERMARK
+      watermark: watermark || DEFAULT_WATERMARK,
+      focusPoint: {x: null, y: null},
     }
   }
 
@@ -341,6 +343,7 @@ export default class extends Component {
       cropDetails, original, canvasDimensions, processWithCloudimage, processWithFilerobot, processWithCloudService,
       uploadCloudimageImage, imageMime, lastOperation, operationList, initialZoom, canvasZoomed, canvasOriginal,
       reduceBeforeEdit, cropBeforeEdit, img, imageName, activeBody, isPreResize, preCanvasDimensions, logoImage,
+      imageSealing,
 
       effect,
       filter,
@@ -351,7 +354,8 @@ export default class extends Component {
       flipX,
       flipY,
       adjust,
-      watermark
+      watermark,
+      focusPoint
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false, t = {}, theme } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
@@ -392,7 +396,8 @@ export default class extends Component {
       handleSave: this.handleSave,
 
       ...imageParams,
-      watermark
+      watermark,
+      focusPoint,
     };
     const previewProps = {
       t,
@@ -417,6 +422,7 @@ export default class extends Component {
       processWithCloudimage,
       processWithFilerobot,
       processWithCloudService,
+      imageSealing,
       uploadCloudimageImage,
       lastOperation,
       operationList,
@@ -435,7 +441,8 @@ export default class extends Component {
       redoOperation: this.redoOperation,
 
       ...imageParams,
-      watermark
+      watermark,
+      focusPoint,
     };
     const footerProps = {
       logoImage,

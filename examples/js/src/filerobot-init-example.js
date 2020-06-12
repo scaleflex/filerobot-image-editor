@@ -130,8 +130,9 @@ const configModify = {
   //  token: 'scaleflex'
   //},
   filerobot: {
-    token: 'fusqadtm',
-    //doNotPrefixURL: true
+    token: 'fumwdnfm',
+    // doNotPrefixURL: true,
+    version: 'v7',
   },
   processWithCloudimage: true,
   isLowQualityPreview: true,
@@ -155,6 +156,12 @@ const configModify = {
     applyByDefault: true,
     handleOpacity: true
   },
+  imageSealing: {
+    enabled: true,
+    salt: 'test',
+    char_count: 10,
+    include_params: ['wat', 'wat_url', 'wat_opacity', 'wat_scale', 'wat_pad', 'wat_gravity'], // optional, by default include all
+  },
 };
 
 const onCompleteModify = function (newUrl) {
@@ -169,7 +176,11 @@ const onCompleteModify = function (newUrl) {
   resultModal.style.display = 'block';
 };
 
-ImageEditorModify = new FilerobotImageEditor(configModify, onCompleteModify);
+ImageEditorModify = new FilerobotImageEditor(configModify, {
+  onComplete: onCompleteModify,
+  onOpen: () => { console.log('open'); },
+  onClose: () => { console.log('close') }
+});
 
 function initImageEditorDownload() {
   initImageEditorAction(ImageEditorDownload);

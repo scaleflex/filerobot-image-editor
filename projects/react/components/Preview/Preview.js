@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { PreviewImgBox, Watermark } from '../../styledComponents';
 import ImageManipulator from './ImageManipulator';
+import FocusPointPreview from './FocusPointPreview';
 import { getWatermarkPosition } from '../../utils';
 
 
 export default class extends Component {
   render() {
-    const { activeTab, isHideCanvas, watermark = {}, logoImage } = this.props;
+    const {
+      activeTab, isHideCanvas, watermark = {}, logoImage, focusPoint, original, updateState
+    } = this.props;
     const { opacity, url, applyByDefault } = watermark;
     const canvas = window.document.getElementById('scaleflex-image-edit-box');
     const canvasRect = canvas && canvas.getBoundingClientRect() || {};
@@ -31,6 +34,15 @@ export default class extends Component {
           ww={ww}
           wh={wh}
         />}
+
+        {activeTab === 'focus_point' && (
+          <FocusPointPreview
+            updateState={updateState}
+            focusPoint={focusPoint}
+            canvasRect={canvasRect}
+            original={original}
+          />
+        )}
       </PreviewImgBox>
     )
   }

@@ -144,30 +144,30 @@ export const variables = {
     color: #fff;
     background-color: #00707c;
     border-color: #00707c;
-    
+
     :hover {
       color: #fff;
       background-color: #00616D;
       border-color: #00616D;
     }
-    
+
     :focus {
       -webkit-box-shadow: 0 0 0 2px rgba(0, 112, 124, 0.5);
               box-shadow: 0 0 0 2px rgba(0, 112, 124, 0.5);
     }
-    
+
     :active {
       color: #fff;
       background-color: #00616D;
       background-image: none;
       border-color: #00616D;
     }
-    
+
     ${props.disabled ? `
       background-color: rgba(0, 112, 124, 0.5);
       border-color: rgba(0, 112, 124, 0.5);
     ` : ''}
-    
+
     ${props.active ? `
        color: #fff;
       background-color: #00616D;
@@ -224,7 +224,7 @@ function getFieldColorStyles(props) {
     color: ${getColor(props, 'text')};
     background-color: ${getColor(props, 'background')};
     border: 1px solid ${getColor(props, 'border')};
-    
+
     &::-webkit-input-placeholder {
       color:  ${getColor(props, 'text', 'muted')};
     }
@@ -240,7 +240,7 @@ function getFieldColorStyles(props) {
     &::placeholder {
       color:  ${getColor(props, 'text', 'muted')};
     }
-    
+
     &:focus {
       color: ${getColor(props, 'text')};
       background-color: ${getColor(props, 'background')};
@@ -266,11 +266,11 @@ function getIconStyles(props) {
     font-variant: normal;
     text-transform: none;
     line-height: 1;
-  
+
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    
+
     :hover {
       color: ${props.muted ? props.theme.colors.textMute : props.theme.colors.text};
     }
@@ -404,6 +404,9 @@ function getIconByName(name) {
       break;
     case 'right-rotate':
       char = '\\e908';
+      break;
+    case 'focus_point':
+      char = '\\e919';
       break;
     default:
       return;

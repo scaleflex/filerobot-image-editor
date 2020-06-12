@@ -12,6 +12,7 @@ export default {
   'toolbar.crop': 'Rogner',
   'toolbar.resize': 'Redimensionner',
   'toolbar.watermark': 'Watermark',
+  'toolbar.focus_point': 'Focus point', // TODO translate
   'adjust.brightness': 'Luminosité',
   'adjust.contrast': 'Contraste',
   'adjust.exposure': 'Exposition',
@@ -28,6 +29,8 @@ export default {
   'footer.redo': 'Refaire',
   'spinner.label': 'Transformation...',
   'warning.too_big_resolution': 'La résolution de l\'image est trop grande pour le web et peut endommager les performances de l\'Éditeur d\'Image Filerobot.',
+  'common.x': 'x', // TODO translate
+  'common.y': 'y', // TODO translate
   'common.width': 'largeur',
   'common.height': 'hauteur',
   'common.custom': 'custom',

@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { CloseBtn } from './CloseBtn';
 import { variables } from '../styledComponents/styleUtils';
+import { MODAL_ID } from '../config';
 
 
 const ModalOverlay = styled.div`
@@ -162,7 +163,7 @@ export class Modal extends Component {
     return createPortal(
       <Fragment>
         <ModalOverlay onClick={onClose}/>
-        <ModalFullScreen id={'filerobot-image-editor'} {...this.props}>
+        <ModalFullScreen id={MODAL_ID} {...this.props}>
           {!isHideCloseBtn && <CloseBtn onClick={onClose}/>}
           <ModalContent h="100%" {...otherProps}>
             {this.props.children}
