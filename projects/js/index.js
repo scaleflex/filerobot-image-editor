@@ -28,6 +28,8 @@ class FilerobotImageEditor {
         config={config}
         onComplete={onComplete}
         onBeforeComplete={methods.onBeforeComplete}
+        onOpen={methods.onOpen}
+        onClose={methods.onClose}
       />, container);
 
     this.component = renderApp(ImageEditor);
