@@ -176,7 +176,11 @@ const onCompleteModify = function (newUrl) {
   resultModal.style.display = 'block';
 };
 
-ImageEditorModify = new FilerobotImageEditor(configModify, onCompleteModify);
+ImageEditorModify = new FilerobotImageEditor(configModify, {
+  onComplete: onCompleteModify,
+  onOpen: () => { console.log('open'); },
+  onClose: () => { console.log('close') }
+});
 
 function initImageEditorDownload() {
   initImageEditorAction(ImageEditorDownload);
