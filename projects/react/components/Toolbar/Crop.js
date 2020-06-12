@@ -55,12 +55,7 @@ export default class extends Component {
       return;
     }
 
-    if (box.name === 'round' || box.radius === 50) {
-      updateState({ roundCrop: true });
-    } else {
-      updateState({ roundCrop: false });
-    }
-
+    updateState({ roundCrop: box.name === 'round' || box.radius === 50 });
     value = box.name === 'original' ? width / height : box.value;
     window.scaleflexPlugins.cropperjs.setAspectRatio(value);
     this.setState({ activeRatio: box.name, aspectRatio: value });

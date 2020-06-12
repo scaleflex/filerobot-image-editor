@@ -11,9 +11,9 @@ import {
   getWatermarkPosition
 } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
-import roundRect from '../../utils/canvas-round-rect';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
+import '../../utils/canvas-round-rect';
 
 
 const INITIAL_PARAMS = {
@@ -201,12 +201,11 @@ export default class ImageManipulator extends Component {
   replaceWithNewCanvas = (id, rounded = false) => {
     //create a new canvas
     const oldCanvas = getCanvasNode(id);
+    const { width, height } = oldCanvas;
     let newCanvas = document.createElement('canvas');
     let context = newCanvas.getContext('2d');
     const container = oldCanvas.parentElement;
     container.removeChild(oldCanvas)
-
-    const { width, height } = oldCanvas;
 
     //set dimensions
     newCanvas.width = width;

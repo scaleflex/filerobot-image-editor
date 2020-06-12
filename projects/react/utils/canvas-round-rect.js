@@ -8,5 +8,6 @@ export default CanvasRenderingContext2D.prototype.roundRect = function (x, y, wi
   this.arcTo(x, y + height, x, y, radius);
   this.arcTo(x, y, x + width, y, radius);
   this.closePath();
+
   return this;
 }
