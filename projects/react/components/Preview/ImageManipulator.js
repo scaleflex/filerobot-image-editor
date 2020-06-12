@@ -8,7 +8,8 @@ import {
   getEffectHandlerName,
   getPubliclink,
   getSecretHeaderName,
-  getWatermarkPosition
+  getWatermarkPosition,
+  getImageSealingParams,
 } from '../../utils';
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
@@ -151,7 +152,7 @@ export default class ImageManipulator extends Component {
             that.CamanInstanceZoomed = new window.Caman(
               canvasZoomed,
               function () {
-                that.CamanInstanceOriginal = new window.Caman(canvasOriginal, function () {});
+                that.CamanInstanceOriginal = new window.Caman(getCanvasNode('scaleflex-image-edit-box-original'), function () {});
                 updateState({ isShowSpinner: false, canvasZoomed: that.cloneCanvas(canvasZoomed) });
               }
             );
@@ -159,11 +160,9 @@ export default class ImageManipulator extends Component {
         });
       });
     } else {
-      const canvas = getCanvasNode('scaleflex-image-edit-box');
-
       setTimeout(() => {
-        that.CamanInstance = new window.Caman(canvas, function () {
-          updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(canvas) });
+        that.CamanInstance = new window.Caman(getCanvasNode('scaleflex-image-edit-box'), function () {
+          updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(getCanvasNode('scaleflex-image-edit-box')) });
         });
       });
     }
@@ -377,23 +376,26 @@ export default class ImageManipulator extends Component {
   }
 
   generateCloudimageURL = (operations, original) => {
-    const { config, watermark, logoImage, processWithCloudimage, processWithFilerobot } = this.props;
+    const { config, watermark, logoImage, processWithCloudimage, processWithFilerobot, imageSealing } = this.props;
     const { cloudimage = {}, filerobot = {} } = config;
     const cloudUrl = processWithCloudimage && (cloudimage.token + '.cloudimg.io/' + (cloudimage.version ? `${cloudimage.version}/` : 'v7/'));
     const filerobotURL = processWithFilerobot && (filerobot.token + '.filerobot.com/' + (filerobot.version ? `${filerobot.version}/` : ''));
-    const baseURL = filerobotURL ?
-      (filerobot.doNotPrefixURL ? '' : filerobotURL) :
-      (cloudimage.doNotPrefixURL ? '' : cloudUrl);
+    const doNotPrefixURL = filerobotURL ? filerobot.doNotPrefixURL : cloudimage.doNotPrefixURL;
+    let url = filerobotURL || cloudUrl || '';
+    url = (url ? 'https://' : '') + url;
+    const baseURL = doNotPrefixURL ? '' : url;
     const cropOperation = this.isOperationExist(operations, 'crop');
     const resizeOperation = this.isOperationExist(operations, 'resize');
     const orientationOperation = this.isOperationExist(operations, 'rotate');
+    const focusPointOperation = this.isOperationExist(operations, 'focus_point');
     const watermarkOperation = watermark && logoImage && watermark.applyByDefault;
-    const isProcessImage = cropOperation || resizeOperation || orientationOperation || watermarkOperation;
+    const isProcessImage = cropOperation || resizeOperation || orientationOperation || watermarkOperation || focusPointOperation;
 
     let cropQuery = '';
     let resizeQuery = '';
     let orientationQuery = '';
     let watermarkQuery = '';
+    let focusPointQuery = '';
 
     if (cropOperation) {
       cropQuery = this.getCropArguments(cropOperation.props);
@@ -409,11 +411,29 @@ export default class ImageManipulator extends Component {
     }
 
     if (watermarkOperation) {
-      watermarkQuery = ((cropQuery || resizeQuery || orientationOperation) ? '&' : '') +
+      watermarkQuery = ((cropQuery || resizeQuery || orientationQuery) ? '&' : '') +
         this.getWatermarkArguments(watermark);
     }
 
-    return (baseURL ? 'https://' : '') + baseURL + original + (isProcessImage ? '?' : '') + cropQuery + resizeQuery + orientationQuery + watermarkQuery;
+    if (focusPointOperation) {
+      focusPointQuery = ((cropQuery || resizeQuery || orientationQuery || watermarkQuery) ? '&' : '') +
+        this.getFocusPointArguments(focusPointOperation.props);
+    }
+
+    original = original.split('?')[0]; // remove quesry string from original url
+    original = original.replace(baseURL, ''); // remove duplication in case when original url already include cdn prefix
+
+    let paramsStr = cropQuery + resizeQuery + orientationQuery + watermarkQuery + focusPointQuery;
+
+    if (imageSealing.enabled) {
+      paramsStr = getImageSealingParams(
+          paramsStr,
+          imageSealing,
+          original.replace(url, '') // always remove cdn url, to support already cdnized links and doNotPrefixURL param
+      );
+    }
+
+    return baseURL + original + (isProcessImage ? '?' : '') + paramsStr;
   }
 
   /* Filters and Effects */
@@ -615,7 +635,7 @@ export default class ImageManipulator extends Component {
     const { width, height, x, y } = cropDetails;
 
     updateState({ isShowSpinner: true }, () => {
-      let resultSize = null;
+      let resultSize;
       this.destroyCrop();
 
       if (initialZoom !== 1) {
@@ -704,7 +724,7 @@ export default class ImageManipulator extends Component {
     this.cropper.destroy();
   }
 
-  getCropArguments = ({ width, height, x, y } = {}) => `tl_px=${x},${y}&br_px=${x + width},${y + height}`;
+  getCropArguments = ({ width, height, x, y } = {}) => `tl_px=${Math.round(x)},${Math.round(y)}&br_px=${Math.round(x + width)},${Math.round(y + height)}`;
 
   /* Resize */
 
@@ -764,6 +784,40 @@ export default class ImageManipulator extends Component {
         updateState({ isHideCanvas: false, isShowSpinner: false });
       });
     });
+  }
+
+  /* Focus point */
+
+  initFocusPoint = () => {
+    const { updateState, original, focusPoint } = this.props;
+    const nextFocusPoint = {...focusPoint};
+
+    if (nextFocusPoint.x === null) {
+      nextFocusPoint.x = original.width / 2;
+    }
+    if (nextFocusPoint.y === null) {
+      nextFocusPoint.y = original.height / 2;
+    }
+
+    this.tempFocusPoint = {...focusPoint};
+    updateState({ focusPoint: nextFocusPoint });
+  }
+
+  applyFocusPoint = (callback = () => {}) => {
+    const { updateState, operations, operationsOriginal, focusPoint } = this.props;
+
+    this.tempFocusPoint = focusPoint;
+    updateState({
+      operationsOriginal: [...operationsOriginal, { operation: 'focus_point', props: focusPoint }],
+      operations: [...operations, { operation: 'focus_point', props: focusPoint }],
+    });
+    callback();
+  }
+
+  getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`;
+
+  destroyFocusPoint = () => {
+    this.props.updateState({ focusPoint: this.tempFocusPoint });
   }
 
   /* Operation utils */
@@ -985,6 +1039,9 @@ export default class ImageManipulator extends Component {
       case 'watermark':
         this.applyWatermark(callback);
         break;
+      case 'focus_point':
+        this.applyFocusPoint(callback);
+        break;
       default:
         break;
     }
@@ -1011,6 +1068,9 @@ export default class ImageManipulator extends Component {
       case 'watermark':
         this.initWatermark();
         break;
+      case 'focus_point':
+        this.initFocusPoint();
+        break;
       default:
         this.destroyAll();
     }
@@ -1030,6 +1090,9 @@ export default class ImageManipulator extends Component {
       case 'resize':
         break;
       case 'rotate':
+        break;
+      case 'focus_point':
+        this.destroyFocusPoint();
         break;
       default:
         break;

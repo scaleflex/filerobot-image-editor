@@ -4,15 +4,16 @@ import ImageEditor from '../react';
 
 
 class FilerobotImageEditor {
-  constructor(config = {}, methods, show = false) {
+  constructor(config = {}, callbacks, show = false) {
     const containerId = config.elementId || 'filerobot-image-editor';
     let container = document.getElementById(containerId);
     let onComplete = (src) => { console.log(src) };
 
-    if (methods && typeof methods === 'function') { // to support old syntax
-      onComplete = methods;
+    if (callbacks && typeof callbacks === 'function') { // to support old syntax
+      onComplete = callbacks;
     } else {
-      methods = methods || {};
+      callbacks = callbacks || {};
+      onComplete = callbacks.onComplete || onComplete;
     }
 
     if (!container) {
@@ -27,7 +28,9 @@ class FilerobotImageEditor {
         show={show}
         config={config}
         onComplete={onComplete}
-        onBeforeComplete={methods.onBeforeComplete}
+        onBeforeComplete={callbacks.onBeforeComplete}
+        onOpen={callbacks.onOpen}
+        onClose={callbacks.onClose}
       />, container);
 
     this.component = renderApp(ImageEditor);

@@ -8,6 +8,7 @@ import Resize from './Resize';
 import Orientation from './Orientation';
 import Adjust from './Adjust';
 import Watermark from './Watermark';
+import FocusPoint from './FocusPoint';
 
 
 export default class extends Component {
@@ -25,6 +26,7 @@ export default class extends Component {
         {activeTab === 'crop' && <Crop {...this.props}/>}
         {activeTab === 'resize' && <Resize {...this.props}/>}
         {activeTab === 'watermark' && <Watermark {...this.props}/>}
+        {activeTab === 'focus_point' && <FocusPoint {...this.props}/>}
         {(isShowSpinner) && <NoClickOverlay/>}
         {activeBody !== 'preview' && <NoClickToolbar/>}
       </Toolbar>

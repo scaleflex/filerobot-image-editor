@@ -12,6 +12,7 @@ export default {
   'toolbar.crop': '裁切',
   'toolbar.resize': '缩放',
   'toolbar.watermark': '水印',
+  'toolbar.focus_point': 'Focus point', // TODO translate
   'adjust.brightness': '亮度',
   'adjust.contrast': '对比对',
   'adjust.exposure': '曝光度',
@@ -28,6 +29,8 @@ export default {
   'footer.redo': '重做',
   'spinner.label': '处理中...',
   'warning.too_big_resolution': '图片的分辨率过大，这会严重影响图片编辑器的性能。',
+  'common.x': 'x', // TODO translate
+  'common.y': 'y', // TODO translate
   'common.width': '宽度',
   'common.height': '高度',
   'common.custom': '自定义',
