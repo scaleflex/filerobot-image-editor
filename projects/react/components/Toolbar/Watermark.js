@@ -74,7 +74,9 @@ export default class extends Component {
       isWatermarkList: urls && urls.length > 1,
       applyByDefault: applyByDefault || false,
       showWaterMarkList: false,
-      selectedInputType: urls && urls.length > 1 ? 'gallery' : 'upload'
+      selectedInputType: urls && urls.length > 1 ? 'gallery' : 'upload',
+      text: '',
+      color: '#000'
     }
   }
 
@@ -115,6 +117,34 @@ export default class extends Component {
       });
 
       this.initWatermarkImage(nextValue);
+    });
+  }
+
+  changeText = (event) => {
+    const text = event.target.value;
+    const { color } = this.state;
+
+    this.setState({ text }, () => {
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('2d');
+      canvas.height = 50;
+      canvas.width = 350;
+
+      context.fillStyle = color;
+      context.textAlign = "start";
+      context.textBaseline = "middle";
+      context.font = 'bold 22px verdana';
+      let { width } = context.measureText(text);
+      context.fillText(text, canvas.width / 2  - (width / 2), canvas.height / 2, canvas.width);
+      
+      this.changeURL({ target: { value: canvas.toDataURL('image/png', 1) }});
+    });
+  }
+
+  changeColor = (event) => {
+    const { text } = this.state;
+    this.setState( { color: event.target.value }, () => {
+      this.changeText({ target: { value: text } });
     });
   }
 
@@ -214,11 +244,14 @@ export default class extends Component {
       activePositions,
       applyByDefault,
       showWaterMarkList,
-      selectedInputType
+      selectedInputType,
+      text,
+      color
     } = this.state;
     const fileUploadInput = selectedInputType === 'upload';
     const galleryInput = selectedInputType === 'gallery';
     const urlInput = selectedInputType === 'url';
+    const textInput = selectedInputType === 'text';
     const { t } = this.props;
 
     console.log(urls, url)
@@ -255,6 +288,15 @@ export default class extends Component {
               onChange={this.handleInputTypeChange}/>
             <span/>
           </label>
+          <label>
+            {t['common.text']}
+            <input
+              type="radio"
+              value="text"
+              checked={selectedInputType === 'text'}
+              onChange={this.handleInputTypeChange}/>
+            <span/>
+          </label>
         </WatermarkInputTypes>
 
         <WatermarkInputs>
@@ -286,6 +328,22 @@ export default class extends Component {
                 id="image-upload"
                 style={{ width: 'calc(100% - 120px)' }}
                 onChange={this.readFile}
+              />
+            </>)}
+            {textInput && (<>
+              <label htmlFor="text">Watermark Text</label>
+              <FieldInput
+                id="text"
+                value={text}
+                style={{ width: 'calc(70% - 120px)' }}
+                onChange={this.changeText}
+                maxLength={24}
+              />
+              <FieldInput
+                value={color}
+                type="color"
+                style={{ width: 'calc(35% - 120px)', marginLeft: '10px' }}
+                onChange={this.changeColor}
               />
             </>)}
           </WrapperForURL>

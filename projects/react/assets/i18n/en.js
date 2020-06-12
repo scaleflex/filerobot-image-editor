@@ -43,4 +43,5 @@ export default {
   'common.url': 'URL',
   'common.upload': 'Upload',
   'common.gallery': 'Gallery',
+  'common.text': 'Text',
 };

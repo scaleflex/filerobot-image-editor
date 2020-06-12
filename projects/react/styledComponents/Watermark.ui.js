@@ -119,7 +119,7 @@ const WatermarkPositionWrapper = styled('div')`
 
 const WatermarkInputTypes = styled('div')`
   width: 100px;
-  padding: 20px 10px 10px 10px;
+  padding: 10px;
   display: inline-block;
   vertical-align: top;
   
