@@ -1,3 +1,6 @@
+// The library modal ID.
+const MODAL_ID = 'filerobot-image-editor';
+
 // 'effects', 'filters', 'adjust', 'crop', 'resize', 'rotate'
 const TOOLS = [
   'adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark'
@@ -116,4 +119,4 @@ const UPLOADER = {
   resizePresets
 }
 
-export { TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS, WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET };
+export { MODAL_ID, TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS, WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET };

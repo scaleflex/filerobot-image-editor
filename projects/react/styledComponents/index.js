@@ -10,5 +10,6 @@ export * from './Adjust.ui';
 export * from './Common.ui';
 export * from './Button';
 export * from './CloseBtn';
+export * from './FullscreenBtn';
 export * from './Spinner';
 export * from './Watermark.ui';
