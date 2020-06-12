@@ -8,6 +8,7 @@ import './assets/fonts/filerobot-font.css';
 import translations from './assets/i18n';
 import dark from './assets/theme/dark';
 import light from './assets/theme/light';
+import { isServerSide } from './utils/is-server-side';
 
 
 class ImageEditorWrapper extends Component {
@@ -99,7 +100,7 @@ class ImageEditorWrapper extends Component {
     const { isVisible, src, config, t, theme } = this.state;
     const { onComplete = () => {}, onBeforeComplete, showGoBackBtn, closeOnLoad, showInModal = true } = this.props;
 
-    if (!src || !isVisible) return null;
+    if (!src || !isVisible || isServerSide) return null;
 
     const Inner = (
       <Container>
