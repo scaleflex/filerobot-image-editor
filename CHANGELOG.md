@@ -25,6 +25,10 @@ Types of changes:
 - ...
 
 -------------
+## 3.9.1 - 2020-06-12
+### Fixed
+- onComplete method doesn't call with new callback syntax
+
 
 ## 3.9.0 - 2020-06-12
 
