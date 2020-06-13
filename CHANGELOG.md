@@ -25,6 +25,17 @@ Types of changes:
 - ...
 
 -------------
+
+## 3.9.2 - 2020-06-13
+### Fixed
+- round the radius for cloudimage integration
+- using blob as source
+
+### Added
+- round crop
+- SSR support
+
+
 ## 3.9.1 - 2020-06-12
 ### Fixed
 - onComplete method doesn't call with new callback syntax
