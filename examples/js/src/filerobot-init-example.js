@@ -22,6 +22,7 @@ ImageEditorDownload = new FilerobotImageEditor({
       widthLimit: 2000,
       heightLimit: 2000
     },
+    beginCropArea: 1,
     //cropBeforeEdit: {
     //  width: 400,
     //  height: 200
@@ -82,6 +83,7 @@ const configUpload = {
     widthLimit: 2000,
     heightLimit: 2000
   },
+  beginCropArea: 0.8,
   cropBeforeEdit: {
     width: 400,
     height: 200
@@ -136,6 +138,7 @@ const configModify = {
   },
   processWithCloudimage: true,
   isLowQualityPreview: true,
+  beginCropArea: 0.5,
   reduceBeforeEdit: {
     mode: 'manual',
     widthLimit: 2000,
