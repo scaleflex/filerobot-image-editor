@@ -18,6 +18,7 @@ import { debounce } from 'throttle-debounce';
 import Range from '../Range';
 import Select from '../Shared/Select';
 import { WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET } from '../../config';
+import { getCanvasNode } from '../../utils';
 
 
 export default class extends Component {
@@ -105,14 +106,15 @@ export default class extends Component {
     });
   }
 
-  changeURL = (event) => {
+  changeURL = (event, text = false) => {
     const nextValue = event.target.value;
 
     this.setState({ url: nextValue }, () => {
       this.props.updateState({
         watermark: {
           ...this.props.watermark,
-          url: ''
+          url: '',
+          text,
         }
       });
 
@@ -128,16 +130,16 @@ export default class extends Component {
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d');
       canvas.height = 50;
-      canvas.width = 350;
+      canvas.width = getCanvasNode().width;
 
       context.fillStyle = color;
       context.textAlign = "start";
       context.textBaseline = "middle";
-      context.font = 'bold 22px verdana';
+      context.font = 'bold 62px arial';
       let { width } = context.measureText(text);
-      context.fillText(text, canvas.width / 2  - (width / 2), canvas.height / 2, canvas.width);
+      context.fillText(text, (canvas.width - width) / 2, canvas.height / 2, canvas.width);
       
-      this.changeURL({ target: { value: canvas.toDataURL('image/png', 1) }});
+      this.changeURL({ target: { value: canvas.toDataURL('image/png', 1) }}, { content: text, color });
     });
   }
 
@@ -149,6 +151,10 @@ export default class extends Component {
   }
 
   readFile = (event) => {
+    const { config } = this.props;
+    // Disable uploading file processing if it's through cloudimage
+    if (config.processWithCloudimage) return null;
+    
     const input = event.target;
     if (input.files && input.files[0]) {
       const reader = new FileReader();
@@ -248,6 +254,7 @@ export default class extends Component {
       text,
       color
     } = this.state;
+    const { config } = this.props;
     const fileUploadInput = selectedInputType === 'upload';
     const galleryInput = selectedInputType === 'gallery';
     const urlInput = selectedInputType === 'url';
@@ -270,12 +277,13 @@ export default class extends Component {
             />
             <span/>
           </label>
-          <label>
+          <label style={{ cursor: config.processWithCloudimage ? 'not-allowed' : 'auto' }}>
             {t['common.upload']}
             <input
               type="radio"
               value="upload"
               checked={selectedInputType === 'upload'}
+              disabled={config.processWithCloudimage}
               onChange={this.handleInputTypeChange}/>
             <span/>
           </label>

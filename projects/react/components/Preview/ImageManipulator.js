@@ -1012,11 +1012,17 @@ export default class ImageManipulator extends Component {
   }
 
   getWatermarkArguments = (watermark) => {
-    const { url, position, opacity } = watermark;
+    const { config: { processWithCloudimage } } = this.props;
+    const { url, position, opacity, text } = watermark;
     const gravity = this.getCloudimagePositionQuery(position);
     const gravityQuery = gravity ? `&wat_pad=2p&wat_gravity=${gravity}` : '';
+    let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=31p${gravityQuery}`;
 
-    return `wat=1&wat_url=${url.split('?')[0]}&wat_opacity=${opacity}&wat_scale=31p${gravityQuery}`;
+    queryUrl += processWithCloudimage && text
+    ? `&wat_text=${text.content}&wat_font=Arial-Bold&wat_fontsize=24&wat_colour=${text.color.replace('#', '')}`
+    : `&wat_url=${url.split('?')[0]}`;
+
+    return queryUrl;
   };
 
 

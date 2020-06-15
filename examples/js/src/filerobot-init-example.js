@@ -156,12 +156,12 @@ const configModify = {
     applyByDefault: true,
     handleOpacity: true
   },
-  //imageSealing: {
-  //  enabled: true,
-  //  salt: 'test',
-  //  char_count: 10,
-  //  include_params: ['wat', 'wat_url', 'wat_opacity', 'wat_scale', 'wat_pad', 'wat_gravity'], // optional, by default include all
-  //},
+  imageSealing: {
+   enabled: true,
+   salt: 'test',
+   char_count: 10,
+   include_params: ['wat', 'wat_url', 'wat_opacity', 'wat_scale', 'wat_pad', 'wat_gravity'], // optional, by default include all
+  },
 };
 
 const onCompleteModify = function (newUrl) {
