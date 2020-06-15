@@ -90,7 +90,7 @@ const Watermark = styled('div')`
 `;
 
 const FocusPointWrap = styled(
-  ({ width, height, ...rest }) => <div className="focus-point" {...rest} />
+  React.forwardRef(({ width, height, ...rest }, ref) => <div className="focus-point" {...rest} ref={ref} />)
 )(({ width, height }) => ({
   width,
   height,
@@ -106,19 +106,22 @@ const FocusPointWrap = styled(
   verticalAlign: 'middle',
 }));
 
-const FocusPointContainer = styled.div({
+const FocusPointContainer = styled(({ image, ...rest }) => <div {...rest} />)(({ image }) => ({
   position: 'relative',
   height: '100%',
   width: '100%',
   cursor: 'crosshair',
-});
+  backgroundImage: `url(${image})`,
+  backgroundSize: 'contain',
+}));
 
 const FocusPoint = styled(
-  ({ x, y, ...rest }) => <span {...rest} />
-)(({ x = 0, y = 0 }) => ({
+  ({ x, y, visible, ...rest }) => <span {...rest} />
+)(({ x = 0, y = 0, visible = true }) => ({
   position: 'absolute',
   top: y,
   left: x,
+  visibility: visible ? 'visible' : 'hidden',
   display: 'inline-block',
   width: 30,
   height: 30,
@@ -136,6 +139,11 @@ const FocusPoint = styled(
   },
 }));
 
+const FocusPointImg = styled(({visible, ...rest}) => <img {...rest} />)(({visible}) => ({
+  visibility: visible ? 'visible' : 'hidden',
+  maxWidth: '100%',
+  maxHeight: '100%'
+}))
 
 //watermarkURL
 //isShowWatermark
@@ -147,5 +155,6 @@ const Canvas = styled.canvas.attrs(() => ({}))`
 `;
 
 export {
-  PreviewWrapper, Canvas, PreviewImgBox, PreResizeBox, Watermark, FocusPoint, FocusPointContainer, FocusPointWrap
+  PreviewWrapper, Canvas, PreviewImgBox, PreResizeBox, Watermark, FocusPoint, FocusPointContainer,
+  FocusPointWrap, FocusPointImg
 }

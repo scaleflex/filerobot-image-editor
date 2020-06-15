@@ -50,6 +50,7 @@ export default class extends Component {
       uploadCloudimageImage: uploadWithCloudimageLink,
       reduceBeforeEdit,
       cropBeforeEdit,
+      roundCrop: false,
       imageSealing: { enabled: false, salt: '', char_count: 10, include_params: null/* include all by default */, ...imageSealing },
 
       operationsOriginal: [],
@@ -79,8 +80,11 @@ export default class extends Component {
   }
 
   loadImage = () => {
-    const { src } = this.props;
+    let { src } = this.props;
     const { reduceBeforeEdit: { mode, widthLimit, heightLimit } = {}, watermark } = this.state;
+    
+    if (src instanceof Blob) { src = URL.createObjectURL(src); }
+
     const splittedSrc = src.split('/');
     const imageName = splittedSrc[splittedSrc.length - 1];
     const img = new Image();
@@ -94,7 +98,7 @@ export default class extends Component {
 
     img.setAttribute('crossOrigin', 'Anonymous');
     img.src = src;
-    if (!src.startsWith('data:image/')) {
+    if (!src.startsWith('data:image/') && !src.startsWith('blob:')) {
       // Image is not a blob, insert query param to avoid caching
       img.src = img.src + (img.src.indexOf('?') > -1 ? '&version='  : '?version=') + new Date().getTime();
     }
@@ -156,9 +160,12 @@ export default class extends Component {
   }
 
   determineImageType = () => {
+    const { src } = this.props;
+    if (src instanceof Blob) { this.setState({ imageMime: src.type }); return; }
+
     const xhr = new XMLHttpRequest();
 
-    xhr.open('GET', this.props.src);
+    xhr.open('GET', src);
     xhr.responseType = 'arraybuffer';
 
     xhr.onload = ({ target }) => {
@@ -342,6 +349,7 @@ export default class extends Component {
       effect,
       filter,
       crop,
+      roundCrop,
       resize,
       rotate,
       correctionDegree,
@@ -433,6 +441,7 @@ export default class extends Component {
       handleSave: this.handleSave,
       onPreResize: this.onPreResize,
       redoOperation: this.redoOperation,
+      roundCrop,
 
       ...imageParams,
       watermark,
@@ -458,7 +467,7 @@ export default class extends Component {
     };
 
     return (
-      <Wrapper>
+      <Wrapper roundCrop={roundCrop}>
 
         <Header {...headerProps}/>
 

@@ -14,6 +14,7 @@ import {
 import { CLOUDIMAGE_OPERATIONS } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
+import '../../utils/canvas-round-rect';
 
 
 const INITIAL_PARAMS = {
@@ -196,22 +197,34 @@ export default class ImageManipulator extends Component {
     return newCanvas;
   }
 
-  replaceWithNewCanvas = (id) => {
+  replaceWithNewCanvas = (id, rounded = false) => {
     //create a new canvas
     const oldCanvas = getCanvasNode(id);
+    const { width, height } = oldCanvas;
     let newCanvas = document.createElement('canvas');
     let context = newCanvas.getContext('2d');
     const container = oldCanvas.parentElement;
     container.removeChild(oldCanvas)
 
     //set dimensions
-    newCanvas.width = oldCanvas.width;
-    newCanvas.height = oldCanvas.height;
+    newCanvas.width = width;
+    newCanvas.height = height;
     newCanvas.id = id;
 
     //apply the old canvas to the new one
     context.drawImage(oldCanvas, 0, 0);
 
+    // Make the new canvas rounded if the crop is rounded style.
+    if (rounded) {
+      context.imageSmoothingEnabled = true;
+      context.globalCompositeOperation = 'destination-in';
+      context.beginPath();
+      // roundRect is a manually written protoype method from canvas-round-rect file in utils.
+      context.roundRect(0 , 0, width, height, Math.max(width, height));
+      context.fill();
+    }
+
+    // Append the new canvas to the container of old canvas.
     container.appendChild(newCanvas);
 
     //return the new canvas
@@ -232,9 +245,11 @@ export default class ImageManipulator extends Component {
 
   saveImage = () => {
     const {
-      onComplete, onClose, updateState, closeOnLoad, config, processWithCloudService, uploadCloudimageImage, imageMime,
+      onComplete, onClose, updateState, closeOnLoad, config, processWithCloudService, uploadCloudimageImage,
       operations, initialZoom, logoImage, watermark, operationsOriginal
     } = this.props;
+    const imageMime = this.getFinalImageMime();
+    const imageName = this.getFinalImageName();
     const { filerobot = {}, platform = 'filerobot' } = config;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
@@ -243,7 +258,6 @@ export default class ImageManipulator extends Component {
     const uploadParams = filerobot.uploadParams || {};
     const dir = uploadParams.dir || 'image-editor';
     const self = this;
-    let { imageName } = this.state;
 
     if (!processWithCloudService) {
       if (watermark && logoImage && watermark.applyByDefault) {
@@ -319,10 +333,27 @@ export default class ImageManipulator extends Component {
     return canvas;
   }
 
+  getFinalImageMime = () => {
+    const { roundCrop, imageMime } = this.props;
+
+    return roundCrop ? 'image/png' : imageMime;
+  }
+
+  getFinalImageName = () => {
+    const { roundCrop } = this.props;
+    let { imageName } = this.state;
+
+    if (roundCrop) {
+      imageName = imageName.replace(imageName.substr(imageName.lastIndexOf('.') + 1), 'png');
+    }
+
+    return imageName;
+  }
+
   downloadImage = (callback) => {
     const canvas = this.getResultCanvas();
-    const { imageMime } = this.props;
-    const { imageName } = this.state;
+    const imageName = this.getFinalImageName();
+    const imageMime = this.getFinalImageMime();
     const lnk = document.createElement('a');
     let e;
 
@@ -618,7 +649,7 @@ export default class ImageManipulator extends Component {
   }
 
   applyCrop = (callback = () => {}) => {
-    const { initialZoom, updateState, cropDetails } = this.props;
+    const { initialZoom, updateState, cropDetails, roundCrop } = this.props;
     const { width, height, x, y } = cropDetails;
 
     updateState({ isShowSpinner: true }, () => {
@@ -640,20 +671,22 @@ export default class ImageManipulator extends Component {
           width: resultSize[0],
           height: resultSize[1],
           x: resultSize[2],
-          y: resultSize[3]
+          y: resultSize[3],
+          roundCrop,
         }
       }, callback);
     });
   }
 
   makeCanvasSnapshot = (operation, callback = () => {}) => {
-    const { updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal, operations } = this.props;
+    const { updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal,
+      operations, roundCrop } = this.props;
 
     if (initialZoom !== 1) {
       const lastOperationIndex = operationsZoomed.indexOf(currentOperation) + 1;
 
       this.CamanInstanceOriginal.render(() => {
-        const canvasOriginal = this.replaceWithNewCanvas('scaleflex-image-edit-box-original');
+        const canvasOriginal = this.replaceWithNewCanvas('scaleflex-image-edit-box-original', roundCrop);
         const nextOperation = {
           ...operation,
           canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box-original'))
@@ -669,7 +702,7 @@ export default class ImageManipulator extends Component {
       });
 
       this.CamanInstanceZoomed.render(() => {
-        const canvasZoomed = this.replaceWithNewCanvas('scaleflex-image-edit-box');
+        const canvasZoomed = this.replaceWithNewCanvas('scaleflex-image-edit-box', roundCrop);
         const nextOperation = {
           ...operation,
           canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box'))
@@ -688,7 +721,7 @@ export default class ImageManipulator extends Component {
       const lastOperationIndex = operations.indexOf(currentOperation) + 1;
 
       this.CamanInstance.render(() => {
-        const canvas = this.replaceWithNewCanvas('scaleflex-image-edit-box');
+        const canvas = this.replaceWithNewCanvas('scaleflex-image-edit-box', roundCrop);
         const nextOperation = {
           ...operation,
           canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box'))
@@ -710,7 +743,7 @@ export default class ImageManipulator extends Component {
     this.cropper.destroy();
   }
 
-  getCropArguments = ({ width, height, x, y } = {}) => `tl_px=${Math.round(x)},${Math.round(y)}&br_px=${Math.round(x + width)},${Math.round(y + height)}`;
+  getCropArguments = ({ width, height, x, y, roundCrop } = {}) => `tl_px=${Math.round(x)},${Math.round(y)}&br_px=${Math.round(x + width)},${Math.round(y + height)}${roundCrop ? `&radius=${Math.round(Math.max(width, height))}&force_format=png` : ''}`;
 
   /* Resize */
 
@@ -786,7 +819,11 @@ export default class ImageManipulator extends Component {
     }
 
     this.tempFocusPoint = {...focusPoint};
-    updateState({ focusPoint: nextFocusPoint });
+    updateState({
+      focusPoint: nextFocusPoint,
+      isHideCanvas: true,
+      isShowSpinner: true,
+    });
   }
 
   applyFocusPoint = (callback = () => {}) => {
@@ -803,7 +840,11 @@ export default class ImageManipulator extends Component {
   getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`;
 
   destroyFocusPoint = () => {
-    this.props.updateState({ focusPoint: this.tempFocusPoint });
+    this.props.updateState({
+      focusPoint: this.tempFocusPoint,
+      isHideCanvas: false,
+      isShowSpinner: false,
+    });
   }
 
   /* Operation utils */

@@ -10,3 +10,4 @@ export * from './get-label';
 export * from './get-secret-header-name';
 export * from './get-watermark-position';
 export * from './get-image-sealing-params';
+export * from './get-inner-box-size';
