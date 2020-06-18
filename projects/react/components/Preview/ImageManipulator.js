@@ -617,7 +617,7 @@ export default class ImageManipulator extends Component {
   }
 
   onInitCrop = () => {
-    const { updateState } = this.props;
+    const { updateState, config: { beginCropArea = 1 } } = this.props;
 
     updateState(
       { isHideCanvas: true, isShowSpinner: true },
@@ -634,6 +634,7 @@ export default class ImageManipulator extends Component {
           scalable: false,
           zoomable: false,
           movable: false,
+          autoCropArea: beginCropArea,
           crop: event => {
             this.props.updateState({ cropDetails: event.detail });
           }
