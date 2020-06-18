@@ -132,9 +132,9 @@ const configModify = {
   //  token: 'scaleflex'
   //},
   filerobot: {
-    token: 'fumwdnfm',
+    token: 'fusqadtm', // 'fumwdnfm' - sealing token
     // doNotPrefixURL: true,
-    version: 'v7',
+    // version: 'v7',
   },
   processWithCloudimage: true,
   isLowQualityPreview: true,
