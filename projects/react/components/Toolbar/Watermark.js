@@ -350,7 +350,7 @@ export default class extends Component {
               <FieldInput
                 value={color}
                 type="color"
-                style={{ width: 'calc(35% - 120px)', marginLeft: '10px' }}
+                style={{ width: '30px', marginLeft: '15px', padding: 0, background: 'transparent', boxShadow: 'none' }}
                 onChange={this.changeColor}
               />
             </>)}
