@@ -132,9 +132,9 @@ const configModify = {
   //  token: 'scaleflex'
   //},
   filerobot: {
-    token: 'fusqadtm', // 'fumwdnfm' - sealing token
+    token: 'fumwdnfm', // 'fumwdnfm' - sealing token, 'fusqadtm' - not sealing token
     // doNotPrefixURL: true,
-    // version: 'v7',
+    version: 'v7', // Need to add for sealing. In other cases skip version
   },
   processWithCloudimage: true,
   isLowQualityPreview: true,
@@ -159,12 +159,12 @@ const configModify = {
     applyByDefault: true,
     handleOpacity: true
   },
-  //imageSealing: {
-  //  enabled: true,
-  //  salt: 'test',
-  //  char_count: 10,
-  //  include_params: ['wat', 'wat_url', 'wat_opacity', 'wat_scale', 'wat_pad', 'wat_gravity'], // optional, by default include all
-  //},
+  imageSealing: {
+   enabled: true,
+   salt: 'test',
+   char_count: 10,
+   include_params: ['wat', 'wat_url', 'wat_opacity', 'wat_scale', 'wat_pad', 'wat_gravity'], // optional, by default include all
+  },
 };
 
 const onCompleteModify = function (newUrl) {

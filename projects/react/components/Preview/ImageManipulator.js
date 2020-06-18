@@ -451,7 +451,7 @@ export default class ImageManipulator extends Component {
       );
     }
 
-    return baseURL + original + (isProcessImage ? '?' : '') + paramsStr;
+    return baseURL + original + (paramsStr ? '?' : '') + paramsStr;
   }
 
   /* Filters and Effects */
