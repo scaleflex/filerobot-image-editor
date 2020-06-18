@@ -221,8 +221,6 @@ export default class extends Component {
     const urlInput = selectedInputType === 'url';
     const { t } = this.props;
 
-    console.log(urls, url)
-
     return (
       <WatermarkWrapper>
 
