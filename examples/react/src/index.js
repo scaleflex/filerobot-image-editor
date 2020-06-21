@@ -6,12 +6,12 @@ import FilerobotImageEditor from '../../../projects/react';
 const App = () => {
   const src = 'https://cdn.scaleflex.it/demo/stephen-walker-unsplash.jpg';
   const [show, toggle] = useState(false);
-
+  const uploadHandler = () => { console.log('Wait a secont we are uploading to the platform')}
 
   return (
     <div>
       <h1>Filerobot Image Editor</h1>
-
+    <button onClick={uploadHandler}>uploaad</button>
       <img src={src} onClick={() => { toggle(true) }} alt="example image" style={{ maxWidth: '100%' }}/>
 
       <FilerobotImageEditor
@@ -19,6 +19,7 @@ const App = () => {
         src={src}
         onClose={() => { toggle(false) }}
         onOpen={() => console.log('Editor is opened.')}
+        onUpload={uploadHandler}
         onComplete={(props) => { console.log(props) }}
         onBeforeComplete={(props) => { console.log(props); return false; }}
       />

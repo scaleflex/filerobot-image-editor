@@ -217,6 +217,7 @@ export default class extends Component {
   }
 
   onDownloadImage = () => {
+    console.log('donlowding')
     const { onBeforeComplete } = this.props;
     const { downloadImage, getResultCanvas } = this.state;
     const canvas = getResultCanvas();
@@ -359,7 +360,7 @@ export default class extends Component {
       watermark,
       focusPoint
     } = this.state;
-    const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false, t = {}, theme } = this.props;
+    const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false, t = {}, theme, onUpload } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
     const headerProps = {
       t,
@@ -400,6 +401,7 @@ export default class extends Component {
       ...imageParams,
       watermark,
       focusPoint,
+      onUpload
     };
     const previewProps = {
       t,

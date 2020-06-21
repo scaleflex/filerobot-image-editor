@@ -2,7 +2,7 @@ export default {
   'header.image_editor_title': 'Filerobot Image Editor',
   'header.toggle_fullscreen': 'Toggle fullscreen',
   'header.close_modal': 'Close window',
-  'toolbar.download': 'Download',
+  'toolbar.download': 'Upload',
   'toolbar.save': 'Save',
   'toolbar.apply': 'Apply',
   'toolbar.cancel': 'Cancel',

@@ -11,7 +11,7 @@ export default class extends Component {
   render() {
     const {
       activeTab, onRevert, apply, onClose, showGoBackBtn, processWithCloudService, processWithFilerobot,
-      handleSave, activeBody, t, config
+      handleSave, activeBody, t, config, onUpload
     } = this.props;
     const { tools } = config;
     const isOneTool = tools.length === 1;
@@ -45,7 +45,7 @@ export default class extends Component {
                 success={!activeTab || activeTab === 'resize'}
                 themeBtn={activeTab}
                 fullSize
-                onClick={isOneTool ? applyAndSave : !activeTab ? () => { handleSave(); } : () => { apply(); }}
+                onClick={isOneTool ? applyAndSave : !activeTab ? () => { onUpload(); } : () => { apply(); }}///add here handleSave
               >
                 {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : t['toolbar.apply']}
               </Button>
