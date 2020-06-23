@@ -390,6 +390,9 @@ Add custom templates for crop. [See the example here](https://github.com/scalefl
 
 Add custom templates for resize. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/resizePresets.js)
 
+### `beginCropArea`: number | [0-1] - default: 1 (image size)
+The crop area size shown/used automatically on starting crop.
+
 ## <a name="filerobot_integration"></a>Filerobot Integration
 
 Upload the image in your Filerobot storage container, edit it in the Image Editor and upload the result.
