@@ -132,7 +132,7 @@ export default class extends Component {
     this.setState({ text }, () => {
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d');
-      canvas.height = 50;
+      canvas.height = 100;
       canvas.width = getCanvasNode().width;
 
       context.fillStyle = color;
