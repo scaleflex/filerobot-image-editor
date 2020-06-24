@@ -37,6 +37,9 @@ ImageEditorDownload = new FilerobotImageEditor({
         { url: 'https://cdn.scaleflex.it/demo/filerobot.png', label: 'filerobot logo' },
         'https://cdn.scaleflex.it/demo/superman.png'
       ],
+      // fonts: [
+      //   { label: 'Arial', value: 'Arial' }
+      // ],
       position: 'center',
       opacity: 0.7,
       applyByDefault: false,

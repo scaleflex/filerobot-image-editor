@@ -1019,8 +1019,9 @@ export default class ImageManipulator extends Component {
     const gravityQuery = gravity ? `&wat_pad=2p&wat_gravity=${gravity}` : '';
     let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=31p${gravityQuery}`;
 
+    // Font size - 38 as this is the difference between font size on preview & on cloudimage.
     queryUrl += processWithCloudimage && text
-    ? `&wat_text=${text.content}&wat_font=Arial-Bold&wat_fontsize=24&wat_colour=${text.color.replace('#', '')}`
+    ? `&wat_text=${text.content}&wat_font=${text.font}&wat_fontsize=${text.size - 38}&wat_colour=${text.color.replace('#', '')}`
     : `&wat_url=${url.split('?')[0]}`;
 
     return queryUrl;

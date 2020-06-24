@@ -100,6 +100,48 @@ const resizePresets = [
   { name: 'big banner', width: 936, height: 120, ratio: 7.8 }
 ];
 
+const WATERMARK_STANDARD_FONTS = [
+  { label: 'Arial', value: 'Arial' },
+  { label: 'Tahoma', value: 'Tahoma' },
+  { label: 'Times New Roman', value: 'Times New Roman' },
+  { label: 'Courier', value: 'Courier' },
+  { label: 'Courier New', value: 'Courier New' },
+  { label: 'Verdana', value: 'Verdana' },
+  { label: 'Georgia', value: 'Georgia' },
+  { label: 'Palatino', value: 'Palatino' },
+  { label: 'Garamond', value: 'Garamond' },
+  { label: 'Bookman', value: 'Bookman' },
+  { label: 'Comic Sans MS', value: 'Comic Sans MS' },
+  { label: 'Candara', value: 'Candara' },
+  { label: 'Impact', value: 'Impact' },
+];
+
+const WATERMARK_CLOUDIMAGE_FONTS = [
+  { label: 'Arial', value: 'Arial' },
+  { label: 'Arial Bold', value: 'Arial-Bold' },
+  { label: 'Arial Black', value: 'Arial-Black' },
+  { label: 'AvantGarde Book', value: 'AvantGarde-Book' },
+  { label: 'Bitstream Charter', value: 'Bitstream-Charter' },
+  { label: 'Bitstream Charter Bold', value: 'Bitstream-Charter-Bold' },
+  { label: 'Bookman Demi', value: 'Bookman-Demi' },
+  { label: 'Comic Sans MS', value: 'Comic-Sans-MS' },
+  { label: 'Courier', value: 'Courier' },
+  { label: 'Courier Bold', value: 'Courier-Bold' },
+  { label: 'Courier New', value: 'Courier-New	' },
+  { label: 'Courier New Bold', value: 'Courier-New-bold' },
+  { label: 'DejaVu Sans', value: 'DejaVu-Sans' },
+  { label: 'DejaVu Sans Bold', value: 'DejaVu-Sans-bold' },
+  { label: 'Dingbats', value: 'Dingbats' },
+  { label: 'fixed', value: 'fixed' },
+  { label: 'FreeMono', value: 'FreeMono' },
+  { label: 'FreeMono Bold', value: 'FreeMono-Bold' },
+  { label: 'FreeSans', value: 'FreeSans-Bold' },
+  { label: 'Halvetica', value: 'Halvetica' },
+  { label: 'Georgia', value: 'Georgia' },
+  { label: 'Impact', value: 'Impact' },
+  { label: 'Noto mono', value: 'Noto-Mono' },
+];
+
 const UPLOADER = {
   hideCloudimageSwitcher: true,
   processWithCloudimage: false,
@@ -120,4 +162,4 @@ const UPLOADER = {
   resizePresets
 }
 
-export { MODAL_ID, TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS, WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET };
+export { MODAL_ID, TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS, WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET, WATERMARK_STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS };

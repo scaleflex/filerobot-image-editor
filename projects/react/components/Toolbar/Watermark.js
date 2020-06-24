@@ -17,7 +17,7 @@ import {
 import { debounce } from 'throttle-debounce';
 import Range from '../Range';
 import Select from '../Shared/Select';
-import { WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET } from '../../config';
+import { WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET, WATERMARK_STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS } from '../../config';
 import { getCanvasNode } from '../../utils';
 
 
@@ -25,7 +25,7 @@ export default class extends Component {
   constructor(props) {
     super(props);
     const { opacity, position, url, applyByDefault, activePositions, handleOpacity } = props.watermark;
-    let { urls } = props.watermark;
+    let { urls, fonts } = props.watermark;
 
     let setActivePositions = [];
     let activePosition = position || 'center';
@@ -77,7 +77,10 @@ export default class extends Component {
       showWaterMarkList: false,
       selectedInputType: urls && urls.length > 1 ? 'gallery' : 'upload',
       text: '',
-      color: '#000'
+      color: '#000000',
+      textSize: 62,
+      textFont: 'Arial',
+      fonts: fonts || WATERMARK_STANDARD_FONTS,
     }
   }
 
@@ -124,7 +127,7 @@ export default class extends Component {
 
   changeText = (event) => {
     const text = event.target.value;
-    const { color } = this.state;
+    const { color , textFont, textSize} = this.state;
 
     this.setState({ text }, () => {
       const canvas = document.createElement('canvas')
@@ -135,17 +138,20 @@ export default class extends Component {
       context.fillStyle = color;
       context.textAlign = "start";
       context.textBaseline = "middle";
-      context.font = 'bold 62px arial';
+      context.font = `${textSize}px ${textFont}`
       let { width } = context.measureText(text);
       context.fillText(text, (canvas.width - width) / 2, canvas.height / 2, canvas.width);
       
-      this.changeURL({ target: { value: canvas.toDataURL('image/png', 1) }}, { content: text, color });
+      this.changeURL(
+        { target: { value: canvas.toDataURL('image/png', 1) }},
+        { content: text, color, size: textSize, font: textFont }
+      );
     });
   }
 
-  changeColor = (event) => {
+  changeTextWatermarkParameter = (event) => {
     const { text } = this.state;
-    this.setState( { color: event.target.value }, () => {
+    this.setState( { [event.target.name]: event.target.value }, () => {
       this.changeText({ target: { value: text } });
     });
   }
@@ -252,7 +258,10 @@ export default class extends Component {
       showWaterMarkList,
       selectedInputType,
       text,
-      color
+      color,
+      textFont,
+      textSize,
+      fonts,
     } = this.state;
     const { config } = this.props;
     const fileUploadInput = selectedInputType === 'upload';
@@ -260,8 +269,6 @@ export default class extends Component {
     const urlInput = selectedInputType === 'url';
     const textInput = selectedInputType === 'text';
     const { t } = this.props;
-
-    console.log(urls, url)
 
     return (
       <WatermarkWrapper>
@@ -318,7 +325,7 @@ export default class extends Component {
                 id="gallery"
                 value={url}
                 style={{ width: 'calc(100% - 120px)' }}
-                onChange={(url) => { this.changeURL({ target: { value: url } }) }}
+                onChange={(url) => { console.log('chosen', url); this.changeURL({ target: { value: url } }) }}
               />
             </>)}
             {urlInput && (<>
@@ -343,15 +350,31 @@ export default class extends Component {
               <FieldInput
                 id="text"
                 value={text}
-                style={{ width: 'calc(70% - 120px)' }}
+                style={{ width: 'calc(65% - 135px)' }}
                 onChange={this.changeText}
                 maxLength={24}
+              />
+              <Select
+                list={config.processWithCloudimage ? WATERMARK_CLOUDIMAGE_FONTS : fonts}
+                valueProp="value"
+                id="textFont"
+                value={textFont}
+                style={{ width: 111, display: 'inline-block', marginLeft: 8 }}
+                onChange={(value) => this.changeTextWatermarkParameter({ target: { name: 'textFont', value } })}
+              />
+              <FieldInput
+                value={textSize}
+                type="number"
+                name="textSize"
+                style={{ width: 60, marginLeft: 8 }}
+                onChange={this.changeTextWatermarkParameter}
               />
               <FieldInput
                 value={color}
                 type="color"
-                style={{ width: '30px', marginLeft: '15px', padding: 0, background: 'transparent', boxShadow: 'none' }}
-                onChange={this.changeColor}
+                style={{ width: 30, marginLeft: 8, padding: 0, background: 'transparent', boxShadow: 'none' }}
+                name="color"
+                onChange={this.changeTextWatermarkParameter}
               />
             </>)}
           </WrapperForURL>
