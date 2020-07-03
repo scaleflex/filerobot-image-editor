@@ -11,7 +11,7 @@ import {
   getWatermarkPosition,
   getImageSealingParams,
 } from '../../utils';
-import { CLOUDIMAGE_OPERATIONS } from '../../config';
+import { CLOUDIMAGE_OPERATIONS, ON_CLOSE_STATUSES } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
 import '../../utils/canvas-round-rect';
@@ -312,7 +312,7 @@ export default class ImageManipulator extends Component {
       } else {
         updateState({ isShowSpinner: false, isHideCanvas: false });
         onComplete(url, { url_permalink: url, url_public: url, url: { public: url, permalink: url } });
-        closeOnLoad && onClose();
+        closeOnLoad && onClose(ON_CLOSE_STATUSES.IMAGE_UPLOADED_CLOUDIMAGE);
       }
     }
   }
@@ -385,11 +385,11 @@ export default class ImageManipulator extends Component {
 
       updateState({ isShowSpinner: false, isHideCanvas: false });
       onComplete(publicURL, file);
-      closeOnLoad && onClose();
+      closeOnLoad && onClose(ON_CLOSE_STATUSES.IMAGE_UPLOADED_FILEROBOT);
     } else {
       updateState({ isShowSpinner: false, isHideCanvas: false });
       alert(responseData);
-      closeOnLoad && onClose();
+      closeOnLoad && onClose(ON_CLOSE_STATUSES.IMAGE_UPLOADING_FAIL_FILEROBOT);
     }
   }
 
