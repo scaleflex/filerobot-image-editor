@@ -54,10 +54,6 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   },
-  "peerDependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
-  },
   "scripts": {
     "start-demo-js": "webpack-dev-server --mode development --config config/webpack.demo-js-config.js",
     "start-demo-react": "webpack-dev-server --mode development --config config/webpack.demo-react-config.js",

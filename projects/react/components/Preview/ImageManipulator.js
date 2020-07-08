@@ -350,7 +350,7 @@ export default class ImageManipulator extends Component {
     return imageName;
   }
 
-  downloadImage = (callback) => {
+  downloadImage = (callback, onUpload) => {
     const canvas = this.getResultCanvas();
     const imageName = this.getFinalImageName();
     const imageMime = this.getFinalImageMime();
@@ -359,7 +359,7 @@ export default class ImageManipulator extends Component {
 
     lnk.download = imageName;
     lnk.href = canvas.toDataURL(imageMime, 0.8);
-
+    onUpload(lnk.href)
     if (document.createEvent) {
 
       e = document.createEvent("MouseEvents");

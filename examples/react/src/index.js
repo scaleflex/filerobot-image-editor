@@ -6,7 +6,12 @@ import FilerobotImageEditor from '../../../projects/react';
 const App = () => {
   const src = 'https://cdn.scaleflex.it/demo/stephen-walker-unsplash.jpg';
   const [show, toggle] = useState(false);
-  const uploadHandler = () => { console.log('Wait a secont we are uploading to the platform')}
+
+  
+  const uploadHandler = (imageData) => { 
+    console.log('Wait a secont we are uploading to the platform')
+    console.log(imageData)
+}
 
   return (
     <div>
@@ -21,7 +26,7 @@ const App = () => {
         onOpen={() => console.log('Editor is opened.')}
         onUpload={uploadHandler}
         onComplete={(props) => { console.log(props) }}
-        onBeforeComplete={(props) => { console.log(props); return false; }}
+        onBeforeComplete={(props) => { console.log(props); return true; }}
       />
     </div>
   )

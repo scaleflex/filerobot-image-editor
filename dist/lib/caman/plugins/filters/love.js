@@ -1,0 +1,19 @@
+"use strict";
+
+Caman.Filter.register("love", function () {
+  this.brightness(5);
+  this.exposure(8);
+  this.contrast(4);
+  this.colorize('#c42007', 30);
+  this.vibrance(50);
+  return this.gamma(1.3);
+});
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+}();
+
+;

@@ -45,7 +45,7 @@ export default class extends Component {
                 success={!activeTab || activeTab === 'resize'}
                 themeBtn={activeTab}
                 fullSize
-                onClick={isOneTool ? applyAndSave : !activeTab ? () => { onUpload(); } : () => { apply(); }}///add here handleSave
+                onClick={isOneTool ? applyAndSave : !activeTab ? () => { handleSave(onUpload); } : () => { apply(); }}///add here handleSave onUpload
               >
                 {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : t['toolbar.apply']}
               </Button>

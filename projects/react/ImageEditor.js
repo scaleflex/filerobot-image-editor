@@ -217,7 +217,6 @@ export default class extends Component {
   }
 
   onDownloadImage = () => {
-    console.log('donlowding')
     const { onBeforeComplete } = this.props;
     const { downloadImage, getResultCanvas } = this.state;
     const canvas = getResultCanvas();
@@ -227,7 +226,7 @@ export default class extends Component {
       downloadImage(() => {
         this.props.onComplete({ status: 'success', canvas });
         this.props.onClose();
-      });
+      }, this.props.onUpload);
     } else {
       this.props.onComplete({ status: 'success', canvas });
       this.props.onClose();
@@ -268,7 +267,6 @@ export default class extends Component {
 
   handleSave = () => {
     const { processWithFilerobot, processWithCloudService } = this.state;
-
     if (!processWithFilerobot && !processWithCloudService) {
       this.onDownloadImage();
     } else {
