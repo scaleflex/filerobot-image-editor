@@ -66,6 +66,7 @@ export default class extends Component {
       ...INITIAL_PARAMS,
       watermark: watermark || DEFAULT_WATERMARK,
       focusPoint: {x: null, y: null},
+      shapes: [],
     }
   }
 
@@ -357,7 +358,9 @@ export default class extends Component {
       flipY,
       adjust,
       watermark,
-      focusPoint
+      focusPoint,
+      shapes,
+      shapeOperations
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false, t = {}, theme } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
@@ -400,6 +403,8 @@ export default class extends Component {
       ...imageParams,
       watermark,
       focusPoint,
+      shapes,
+      shapeOperations
     };
     const previewProps = {
       t,
@@ -446,6 +451,8 @@ export default class extends Component {
       ...imageParams,
       watermark,
       focusPoint,
+      shapes,
+      shapeOperations
     };
     const footerProps = {
       logoImage,

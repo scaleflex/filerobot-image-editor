@@ -11,7 +11,7 @@ import {
   getWatermarkPosition,
   getImageSealingParams,
 } from '../../utils';
-import { CLOUDIMAGE_OPERATIONS } from '../../config';
+import { CLOUDIMAGE_OPERATIONS, PREVIEW_CANVAS_ID } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
 import '../../utils/canvas-round-rect';
@@ -173,9 +173,11 @@ export default class ImageManipulator extends Component {
     const tempCtx = canvas.getContext('2d');
     let [wx, wy, ww, wh] = getWatermarkPosition(watermark, canvas, image);
 
-    tempCtx.globalAlpha = opacity;
-    tempCtx.drawImage(image, wx, wy, ww, wh);
-    //return canvas.toDataURL();
+    // tempCtx.globalAlpha = opacity;
+    // tempCtx.drawImage(image, wx, wy, ww, wh);
+    const canvasx = document.getElementById(PREVIEW_CANVAS_ID);
+    tempCtx.drawImage(canvasx, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL();
   }
 
   cloneCanvas = (oldCanvas) => {

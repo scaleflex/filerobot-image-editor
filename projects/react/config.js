@@ -1,6 +1,9 @@
 // The library modal ID.
 const MODAL_ID = 'filerobot-image-editor';
 
+// ID for preview canvas (canvas contains watermark, shapes...etc).
+const PREVIEW_CANVAS_ID = 'scaleflex-filerobot-edit-box';
+
 // 'effects', 'filters', 'adjust', 'crop', 'resize', 'rotate'
 const TOOLS = [
   'adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark'
@@ -162,4 +165,4 @@ const UPLOADER = {
   resizePresets
 }
 
-export { MODAL_ID, TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS, WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET, WATERMARK_STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS };
+export { MODAL_ID, PREVIEW_CANVAS_ID, TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS, WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET, WATERMARK_STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS };

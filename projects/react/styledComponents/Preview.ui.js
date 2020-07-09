@@ -69,7 +69,7 @@ canvas:after {
   }`}
 `;
 
-const Watermark = styled('div')`
+const PreviewCanvas = styled('canvas')`
   width: ${p => p.width || 0}px;
   height: ${p => p.height || 0}px;
   display: inline-block;
@@ -77,16 +77,12 @@ const Watermark = styled('div')`
   max-width: 100%;
   vertical-align: middle;
   position: absolute;
-  background-image: url('${p => p.url ? p.url : 'none'}');
-  background-position: ${p => `${p.wx}px ${p.wy}px`};
-  background-repeat: no-repeat;
-  background-size: ${p => `${p.ww}px ${p.wh}px`};
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
-  opacity:${p => p.opacity || 0};
+  // opacity:${p => p.opacity || 0};
 `;
 
 const FocusPointWrap = styled(
@@ -155,6 +151,6 @@ const Canvas = styled.canvas.attrs(() => ({}))`
 `;
 
 export {
-  PreviewWrapper, Canvas, PreviewImgBox, PreResizeBox, Watermark, FocusPoint, FocusPointContainer,
+  PreviewWrapper, Canvas, PreviewImgBox, PreResizeBox, PreviewCanvas, FocusPoint, FocusPointContainer,
   FocusPointWrap, FocusPointImg
 }
