@@ -45,7 +45,19 @@ export default class CustomizedCanvas extends Component {
     updateState(data, callback);
   }
 
-  pushShapeToShapes = (newShape) => this.updateState({ shapes: [...this.props.shapes, newShape] });
+  pushShapeToShapes = (newShape) => {
+    const { shapes } = this.props;
+
+    this.updateState({
+      shapes: [
+        ...shapes,
+        {
+          ...newShape,
+          index: shapes.length
+        }
+      ]
+    });
+  }
 
   targettedShape = (index = undefined) => index || index === 0 ? this.props.shapes[index] : this.state.selectedShape;
 
@@ -54,7 +66,7 @@ export default class CustomizedCanvas extends Component {
     const { shapes } = this.props;
 
     shapes.forEach(
-      (shape, index) => {
+      (shape) => {
         if (
             offsetX >= shape.x
             && offsetX <= shape.x + shape.width
@@ -64,7 +76,6 @@ export default class CustomizedCanvas extends Component {
             this.setState({
               selectedShape: {
                 ...shape,
-                index,
                 startEdgeOffset: {
                   x: offsetX - shape.x,
                   y: offsetY - shape.y,
@@ -118,8 +129,7 @@ export default class CustomizedCanvas extends Component {
 
   redrawShape = (index = undefined) => {
     const shape = this.targettedShape(index);
-
-    this._context.clearRect(shape.oldX, shape.oldY, shape.width, shape.height);
+    this._context.clearRect(shape.oldX || shape.x, shape.oldY || shape.y, shape.width, shape.height);
 
     switch(shape.variant) {
       case 'image':
@@ -209,7 +219,7 @@ export default class CustomizedCanvas extends Component {
       const args = { img, x: x || centerX, y: y || centerY, width: img.width, height: img.height, opacity };
 
       if (others.key && this.replaceShapeIfExisted(others.key, { ...args, ...others })) { return; }
-console.log("AFTER");
+
       this.drawImage(args);
 
       this.pushShapeToShapes({
@@ -250,10 +260,9 @@ console.log("AFTER");
 
   replaceShapeIfExisted = (key, args) => {
     const shape = this.getShapeByKey(key);
-
     if (shape) {
+      console.log('replaced', shape, args);
       args = { ...args, x: shape.x, y: shape.y };
-      console.log(args);
       this.updateShape(shape.index, args)
 
       return true;

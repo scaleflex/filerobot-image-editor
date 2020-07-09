@@ -11,7 +11,6 @@ export default class extends Component {
 
     if (applyByDefault && url && shapeOperations && logoImage) {
       if (prevLogoImage !== logoImage || prevWatermark.opacity !== opacity) {
-        console.log('drawing');
         shapeOperations.addImage({ img: logoImage, opacity, type: 'watermark', key: 'watermark' });
       }
     } else if(prevWatermark.applyByDefault && !applyByDefault) {
