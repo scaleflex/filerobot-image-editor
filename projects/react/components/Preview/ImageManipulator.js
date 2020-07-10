@@ -168,15 +168,11 @@ export default class ImageManipulator extends Component {
     }
   }
 
-  drawWatermark = (canvas, image, watermark = {}) => {
-    const { opacity } = watermark;
+  mergeCanvases = (canvas) => {
     const tempCtx = canvas.getContext('2d');
-    let [wx, wy, ww, wh] = getWatermarkPosition(watermark, canvas, image);
 
-    // tempCtx.globalAlpha = opacity;
-    // tempCtx.drawImage(image, wx, wy, ww, wh);
-    const canvasx = document.getElementById(PREVIEW_CANVAS_ID);
-    tempCtx.drawImage(canvasx, 0, 0, canvas.width, canvas.height);
+    const previewCanvas = document.getElementById(PREVIEW_CANVAS_ID);
+    tempCtx.drawImage(previewCanvas, 0, 0, canvas.width, canvas.height);
     return canvas.toDataURL();
   }
 
@@ -248,7 +244,7 @@ export default class ImageManipulator extends Component {
   saveImage = () => {
     const {
       onComplete, onClose, updateState, closeOnLoad, config, processWithCloudService, uploadCloudimageImage,
-      operations, initialZoom, logoImage, watermark, operationsOriginal
+      operations, initialZoom, operationsOriginal
     } = this.props;
     const imageMime = this.getFinalImageMime();
     const imageName = this.getFinalImageName();
@@ -262,13 +258,7 @@ export default class ImageManipulator extends Component {
     const self = this;
 
     if (!processWithCloudService) {
-      if (watermark && logoImage && watermark.applyByDefault) {
-        try {
-          this.drawWatermark(canvas, logoImage, watermark);
-        } catch (event) {
-          console.warn('Not valid link for watermark', event);
-        }
-      }
+      this.mergeCanvases(canvas);
 
       const base64 = canvas.toDataURL(imageMime);
       const block = base64.split(";");
@@ -320,17 +310,11 @@ export default class ImageManipulator extends Component {
   }
 
   getResultCanvas = () => {
-    const { initialZoom, logoImage, watermark } = this.props;
+    const { initialZoom } = this.props;
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = getCanvasNode(canvasID);
 
-    if (watermark && logoImage && watermark.applyByDefault) {
-      try {
-        this.drawWatermark(canvas, logoImage, watermark);
-      } catch (event) {
-        console.warn('Not valid link for watermark', event);
-      }
-    }
+    this.mergeCanvases(canvas);
 
     return canvas;
   }

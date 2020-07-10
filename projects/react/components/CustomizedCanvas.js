@@ -29,8 +29,9 @@ export default class CustomizedCanvas extends Component {
           addCircle: this.addCircle,
           addText: this.addText,
           updateShape: this.updateShape,
-          deleteShape: this.deleteShape,
-          deleteShapesByType: this.deleteShapesByType
+          deleteShape: this.deleteShapeByKeyOrIndex,
+          deleteShapes: this.deleteShapesByType,
+          toggleShapeVisibility: this.toggleShapeVisibilityByKeyOrIndex
         }
       });
     }
@@ -122,7 +123,9 @@ export default class CustomizedCanvas extends Component {
   }
 
   // All the repeated operations are passed here around the draw function.
-  draw = (drawFn, opacity = 1.0) => {
+  draw = (drawFn, { opacity = 1.0, hidden }) => {
+    if (hidden) { return; }
+
     this._context.globalAlpha = +opacity;
     drawFn();
   }
@@ -148,34 +151,34 @@ export default class CustomizedCanvas extends Component {
     }
   }
 
-  drawRect = ({ x, y, width, height, opacity }) => {
+  drawRect = ({ x, y, width, height, opacity, hidden }) => {
     this.draw(() => {
       this._context.fillRect(x, y, width, height);
-    }, opacity);
+    }, { opacity, hidden });
   }
 
-  drawCircle = ({ x, y, radius, opacity }) => {
+  drawCircle = ({ x, y, radius, opacity, hidden }) => {
     this.draw(() => {
       this._context.beginPath();
       this._context.arc(x, y, radius, 0, 2 * Math.PI);
       this._context.stroke();
-    }, opacity);
+    }, { opacity, hidden });
   }
 
-  drawImage = ({ img, x, y, opacity }) => {
+  drawImage = ({ img, x, y, opacity, hidden }) => {
     this.draw(() => {
       this._context.drawImage(img, x, y);
-    }, opacity);
+    }, { opacity, hidden });
   }
 
-  drawText = ({ color, textSize, textFont, text, x, y })  => {
+  drawText = ({ color, textSize, textFont, text, x, y, opacity, hidden })  => {
     this.draw(() => {
       this._context.fillStyle = color;
       this._context.textAlign = "start";
       this._context.textBaseline = "middle";
       this._context.font = `${textSize}px ${textFont}`;
       this._context.fillText(text, x, y, this._canvas.width);
-    }, opacity)
+    }, { opacity, hidden })
   }
 
   // TODO: add other shapes variants...
@@ -253,15 +256,16 @@ export default class CustomizedCanvas extends Component {
     }
   }
 
-  getShapeByKey = (shapeKey) => {
+  getShapeByKeyOrIndex = ({ key: shapeKey, index: shapeIndex }) => {
+    if (!shapeKey && !shapeIndex) { return false; }
     const { shapes } = this.props;
-    return shapes.filter(({ key }) => key === shapeKey)[0];
+
+    return shapeIndex ? shapes[shapeIndex] : shapes.filter(({ key }) => key === shapeKey)[0];
   }
 
   replaceShapeIfExisted = (key, args) => {
-    const shape = this.getShapeByKey(key);
+    const shape = this.getShapeByKeyOrIndex({ key });
     if (shape) {
-      console.log('replaced', shape, args);
       args = { ...args, x: shape.x, y: shape.y };
       this.updateShape(shape.index, args)
 
@@ -269,6 +273,35 @@ export default class CustomizedCanvas extends Component {
     }
 
     return false;
+  }
+
+  toggleShapeVisibilityByKeyOrIndex = ({ key, index }) => {
+    const shape = this.getShapeByKeyOrIndex({ key, index });
+console.log(shape);
+    if (shape) {
+      const { shapes } = this.props;
+      this.updateShape(shape.index, { hidden: !shape.hidden });
+    }
+  }
+
+  getShapesIndexByAnyProp = (propertyName, propertyValue) => {
+    const { shapes } = this.props;
+    
+    if (shapes && shapes.length === 0) { return []; }
+
+    const shapesIndicies = [];
+
+    shapes
+      .filter(({ [propertyName]: filterProp }, index) => {
+        if (filterProp === propertyValue) {
+          shapesIndicies.push(index);
+          return true;
+        }
+
+        return false;
+      });
+
+    return shapesIndicies;
   }
 
   updateShape = (index, updatedData) => {
@@ -297,10 +330,14 @@ export default class CustomizedCanvas extends Component {
     return shapes;
   }
 
-  deleteShape = (index) => {
+  deleteShapeByKeyOrIndex = ({ index, key }) => {
+    if (!index && !key) { return; }
+
     const { shapes } = this.props;
+    const shapeIndex = index || this.getShapeByKeyOrIndex({ key }).index;
+    
     this.updateState({
-      shapes: this.eraseAndremoveShapeFromArray(index, shapes)
+      shapes: this.eraseAndremoveShapeFromArray(shapeIndex, shapes)
     });
   }
 
@@ -315,22 +352,10 @@ export default class CustomizedCanvas extends Component {
     });
   }
 
-  deleteShapesByType = (shapesType) => {
-    const { shapes } = this.props;
-    if (shapes && shapes.length === 0) { return; }
+  deleteShapesByType = ({ type }) => {
+    if (!type) { return; }
 
-    const shapesIndicies = [];
-    
-    shapes
-      .filter(({ type }, index) => {
-        if (type === shapesType) {
-          shapesIndicies.push(index);
-          return true;
-        }
-
-        return false;
-      });
-
+    const shapesIndicies = this.getShapesIndexByAnyProp('type', type);
     if (shapesIndicies.length > 0) { this.deleteShapes(shapesIndicies); }
   }
 

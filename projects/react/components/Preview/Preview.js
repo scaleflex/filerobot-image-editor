@@ -5,16 +5,26 @@ import FocusPointPreview from './FocusPointPreview';
 import CustomizedCanvas from '../CustomizedCanvas';
 
 export default class extends Component {
+  _watermarkUniqueKey = 'watermark-layer';
+
   componentDidUpdate({ watermark: prevWatermark = {}, logoImage: prevLogoImage}) {
-    const { logoImage, watermark = {}, shapeOperations, shapes } = this.props;
+    const { logoImage, watermark = {}, shapeOperations } = this.props;
     const { opacity, url, applyByDefault } = watermark;
 
-    if (applyByDefault && url && shapeOperations && logoImage) {
-      if (prevLogoImage !== logoImage || prevWatermark.opacity !== opacity) {
-        shapeOperations.addImage({ img: logoImage, opacity, type: 'watermark', key: 'watermark' });
+    console.log('logo image:', logoImage, 'URL: ', url, 'Apply by def:', applyByDefault, 'Apply watermark: ', prevWatermark.applyByDefault, 'test');
+    if (applyByDefault && url && logoImage) {
+      if (
+          prevLogoImage !== logoImage
+          || prevWatermark.opacity !== opacity
+        ) {
+          console.log('DRAWING FIRST TIME');
+          shapeOperations.addImage({ img: logoImage, opacity, type: 'watermark', key: this._watermarkUniqueKey });
       }
     } else if(prevWatermark.applyByDefault && !applyByDefault) {
-      shapeOperations.deleteShapesByType('watermark');
+      console.log(logoImage, url, 'test');
+      shapeOperations.deleteShape({ key: this._watermarkUniqueKey });
+    } else if(!prevWatermark.applyByDefault && applyByDefault && logoImage && url) {
+      shapeOperations.toggleShapeVisibility({ key: this._watermarkUniqueKey });
     }
   }
 
