@@ -5,6 +5,9 @@ import { PREVIEW_CANVAS_ID } from '../config';
 export default class CustomizedCanvas extends Component {
   _canvas;
   _context;
+  _initArgs = {
+    hidden: false,
+  };
 
   constructor(props) {
     super(props);
@@ -31,7 +34,8 @@ export default class CustomizedCanvas extends Component {
           updateShape: this.updateShape,
           deleteShape: this.deleteShapeByKeyOrIndex,
           deleteShapes: this.deleteShapesByType,
-          toggleShapeVisibility: this.toggleShapeVisibilityByKeyOrIndex
+          setShapeVisibility: this.setShapeVisibilityByKeyOrIndex,
+          getShape: this.getShapeByKeyOrIndex,
         }
       });
     }
@@ -188,13 +192,14 @@ export default class CustomizedCanvas extends Component {
 
     const args = { x: x || centerX, y: y || centerY, width, height };
 
-    if (others.key && this.replaceShapeIfExisted(others.key, { ...args, ...others })) { return; }
+    if (others.key && this.replaceShapeIfExisted(others.key, { ...args, ...others, ...this._initArgs })) { return; }
 
     this.drawRect(args);
     
     this.pushShapeToShapes({
       ...others,
       ...args,
+      ...this._initArgs,
       variant: 'rect',
     });
   }
@@ -204,13 +209,14 @@ export default class CustomizedCanvas extends Component {
 
     const args = { x: x || centerX, y: y || centerY, radius };
 
-    if (others.key && this.replaceShapeIfExisted(others.key, { ...args, ...others })) { return; }
+    if (others.key && this.replaceShapeIfExisted(others.key, { ...args, ...others, ...this._initArgs })) { return; }
 
     this.drawCircle(args);
 
     this.pushShapeToShapes({
       ...others,
       ...args,
+      ...this._initArgs,
       variant: 'circle'
     });
   }
@@ -221,13 +227,14 @@ export default class CustomizedCanvas extends Component {
       const [centerX, centerY] = this.getCanvasCenter(img.width / 2, img.height / 2);
       const args = { img, x: x || centerX, y: y || centerY, width: img.width, height: img.height, opacity };
 
-      if (others.key && this.replaceShapeIfExisted(others.key, { ...args, ...others })) { return; }
+      if (others.key && this.replaceShapeIfExisted(others.key, { ...args, ...others, ...this._initArgs })) { return; }
 
       this.drawImage(args);
 
       this.pushShapeToShapes({
         ...others,
         ...args,
+        ...this._initArgs,
         variant: 'image'
       });
     }
@@ -244,13 +251,14 @@ export default class CustomizedCanvas extends Component {
     if (text) {
       const args = { x: x || centerX, y: y || centerY, opacity };
 
-      if (others.key && this.replaceShapeIfExisted(others.key, { ...args, ...others })) { return; }
+      if (others.key && this.replaceShapeIfExisted(others.key, { ...args, ...others, ...this._initArgs })) { return; }
 
       this.drawText(args);
 
       this.pushShapeToShapes({
         ...others,
         ...args,
+        ...this._initArgs,
         variant: 'text'
       })
     }
@@ -265,6 +273,7 @@ export default class CustomizedCanvas extends Component {
 
   replaceShapeIfExisted = (key, args) => {
     const shape = this.getShapeByKeyOrIndex({ key });
+    
     if (shape) {
       args = { ...args, x: shape.x, y: shape.y };
       this.updateShape(shape.index, args)
@@ -275,12 +284,11 @@ export default class CustomizedCanvas extends Component {
     return false;
   }
 
-  toggleShapeVisibilityByKeyOrIndex = ({ key, index }) => {
+  setShapeVisibilityByKeyOrIndex = ({ key, index }, isHidden = undefined) => {
     const shape = this.getShapeByKeyOrIndex({ key, index });
-console.log(shape);
-    if (shape) {
-      const { shapes } = this.props;
-      this.updateShape(shape.index, { hidden: !shape.hidden });
+    
+    if (shape && isHidden !== undefined && shape.hidden !== isHidden) {
+      this.updateShape(shape.index, { hidden: isHidden });
     }
   }
 
@@ -319,11 +327,10 @@ console.log(shape);
 
   eraseShape = (index = undefined) => {
     const { x, y, width, height } = this.targettedShape(index);
-    
     this._context.clearRect(x, y, width, height);
   }
   
-  eraseAndremoveShapeFromArray = (index, shapes) => {
+  eraseAndRemoveShapeFromArray = (index, shapes) => {
     this.eraseShape(index);
     shapes.splice(index, 1);
 
@@ -331,20 +338,22 @@ console.log(shape);
   }
 
   deleteShapeByKeyOrIndex = ({ index, key }) => {
-    if (!index && !key) { return; }
+    if (!index && index !== 0 && !key) { return; }
 
     const { shapes } = this.props;
-    const shapeIndex = index || this.getShapeByKeyOrIndex({ key }).index;
-    
-    this.updateState({
-      shapes: this.eraseAndremoveShapeFromArray(shapeIndex, shapes)
-    });
+    const shapeIndex = index || (this.getShapeByKeyOrIndex({ key }) || {}).index;
+
+    if (shapeIndex || shapeIndex === 0) {
+      this.updateState({
+        shapes: this.eraseAndRemoveShapeFromArray(shapeIndex, shapes)
+      });
+    }
   }
 
   deleteShapes = (indicies = []) => {
     let { shapes } = this.props;
     indicies.forEach(i => {
-      shapes = this.eraseAndremoveShapeFromArray(i, shapes)
+      shapes = this.eraseAndRemoveShapeFromArray(i, shapes)
     });
 
     this.updateState({

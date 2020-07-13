@@ -130,6 +130,8 @@ export default class extends Component {
     const { color , textFont, textSize} = this.state;
 
     this.setState({ text }, () => {
+      // TODO: TO be refactored and use addText of customized Canvas.
+
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d');
       canvas.height = 100;
