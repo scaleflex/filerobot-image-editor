@@ -150,6 +150,6 @@ const Canvas = styled.canvas.attrs(() => ({}))`
 `;
 
 export {
-  PreviewWrapper, Canvas, PreviewImgBox, PreResizeBox, PreviewCanvas, FocusPoint, FocusPointContainer,
-  FocusPointWrap, FocusPointImg
+  PreviewWrapper, Canvas, PreviewImgBox, PreResizeBox, PreviewCanvas, FocusPoint,
+  FocusPointContainer, FocusPointWrap, FocusPointImg
 }

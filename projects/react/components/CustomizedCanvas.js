@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react';
 import { PreviewCanvas } from '../styledComponents';
 import { PREVIEW_CANVAS_ID } from '../config';
 
+
 export default class CustomizedCanvas extends Component {
   _canvas;
   _context;
@@ -13,9 +14,11 @@ export default class CustomizedCanvas extends Component {
     super(props);
 
     this.canvasRef = createRef();
+    this.shapeResizingBoxRef = createRef();
 
     this.state = {
       selectedShape: {},
+      resizeControlTarget: null,
     }
   }
 
@@ -81,6 +84,7 @@ export default class CustomizedCanvas extends Component {
             this.setState({
               selectedShape: {
                 ...shape,
+                resizingBox: true,
                 startEdgeOffset: {
                   x: offsetX - shape.x,
                   y: offsetY - shape.y,
@@ -88,12 +92,121 @@ export default class CustomizedCanvas extends Component {
               }
             });
 
+            this.activateResizingActions();
             this._canvas.addEventListener('mousemove', this.startDragging);
             this._canvas.addEventListener('mouseup', this.endDragging);
             this._canvas.addEventListener('mouseleave', this.endDragging);
           }
       }
     );
+  }
+
+  activateResizingActions = () => {
+    Array.from(document.getElementsByClassName('shape-resizing-control'))
+      .forEach((control) => {
+        control.addEventListener('mousedown', this.trackShapeResize)
+      });
+  }
+
+  trackShapeResize = ({ target }) => {
+    this.setState({ resizeControlTarget: target });
+    document.addEventListener('mousemove', this.handleShapeResizing);
+    document.addEventListener('mouseup', this.disableResizingActions);
+  }
+
+  handleShapeResizing = ({ movementX, movementY }) => {
+    const { selectedShape, resizeControlTarget } = this.state;
+    if (!resizeControlTarget) { return; }
+    
+    let { index, width, height, x, y, oldX, oldY } = selectedShape;
+
+    const oldWidth = width;
+    const oldHeight = height;
+
+    const { direction } = resizeControlTarget.dataset;
+    
+    const eastHandle = () => { width = width + movementX; }
+    const southHandle = () => { height = height + movementY; }
+    const westHandle = () => {
+      width = width - movementX;
+      x = x + movementX;
+      if (movementX < 0 ) { oldX = oldX + movementX; }
+    }
+    const northHandle = () => {
+      height = height - movementY;
+      y = y + movementY;
+      if (movementY < 0) { oldY = oldY + movementY; }
+    }
+
+    switch(direction) {
+      case 'e':
+        eastHandle();
+      break;
+      case 'w':
+        westHandle();
+      break;
+      case 'n':
+        northHandle();
+      break;
+      case 's':
+        southHandle();
+      break;
+      case 'ne':
+        northHandle();
+        eastHandle();
+      break;
+      case 'nw':
+        northHandle();
+        westHandle();
+      break;
+      case 'se':
+        southHandle();
+        eastHandle();
+      break;
+      case 'sw':
+        southHandle();
+        westHandle();
+      break;
+      default:
+      return;
+    }
+
+    const minWidthAndHeight = 5;
+    if (height <= minWidthAndHeight || width <= minWidthAndHeight) { return; }
+
+    const updatedShape = { width, height, x, y, oldWidth, oldHeight };
+
+    this.setState({
+      selectedShape: {
+        ...selectedShape,
+        ...updatedShape,
+      }
+    }, () => {
+      this.updateShape(index, updatedShape)
+    });
+  }
+
+  disableResizingActions = () => {
+    document.removeEventListener('mousemove', this.handleShapeResizing);
+    document.removeEventListener('mouseup', this.disableResizingActions);
+
+    this.setState({ resizeControlTarget: null });
+  }
+
+  removeResizingBox = ({ offsetX, offsetY }) => {
+    const { selectedShape } = this.state;
+    if (
+        offsetX < selectedShape.x
+        || offsetX > selectedShape.x + selectedShape.width
+        || offsetY < selectedShape.y
+        || offsetY > selectedShape.y + selectedShape.height
+    ) {
+      this.setState({
+        selectedShape: { ...selectedShape, resizingBox: false, oldWidth: undefined, oldHeight: undefined }
+      });
+
+      this._canvas.removeEventListener('click', this.removeResizingBox);
+    }
   }
 
   startDragging = (event) => {
@@ -103,6 +216,8 @@ export default class CustomizedCanvas extends Component {
     this.setState({
       selectedShape: {
         ...selectedShape,
+        oldWidth: undefined,
+        oldHeight: undefined,
         oldX: selectedShape.x,
         oldY: selectedShape.y,
         x: event.offsetX - selectedShape.startEdgeOffset.x,
@@ -117,6 +232,7 @@ export default class CustomizedCanvas extends Component {
     this._canvas.removeEventListener('mousemove', this.startDragging);
     this._canvas.removeEventListener('mouseup', this.endDragging);
     this._canvas.removeEventListener('mouseleave', this.endDragging);
+    this._canvas.addEventListener('click', this.removeResizingBox);
   }
 
   getCanvasCenter = (reduceWidthBy = 0, reduceHeightBy = 0) => {
@@ -136,7 +252,13 @@ export default class CustomizedCanvas extends Component {
 
   redrawShape = (index = undefined) => {
     const shape = this.targettedShape(index);
-    this._context.clearRect(shape.oldX || shape.x, shape.oldY || shape.y, shape.width, shape.height);
+    console.log(shape);
+    this._context.clearRect(
+      shape.oldX || shape.x,
+      shape.oldY || shape.y,
+      shape.oldWidth || shape.width,
+      shape.oldHeight || shape.height
+    );
 
     switch(shape.variant) {
       case 'image':
@@ -169,9 +291,9 @@ export default class CustomizedCanvas extends Component {
     }, { opacity, hidden });
   }
 
-  drawImage = ({ img, x, y, opacity, hidden }) => {
+  drawImage = ({ img, x, y, opacity, width, height, hidden }) => {
     this.draw(() => {
-      this._context.drawImage(img, x, y);
+      this._context.drawImage(img, x, y, width, height);
     }, { opacity, hidden });
   }
 
@@ -371,14 +493,47 @@ export default class CustomizedCanvas extends Component {
 
   render() {
     const { height: parentCanvasHeight, width: parentCanvasWidth } = this.props
+    const { selectedShape: { width = 0, height = 0, x = 0, y = 0, resizingBox = false } } = this.state;
+    const resizingBoxLines = ['e', 'n', 'w', 's'];
+    const resizingBoxPoints = ['e', 'n', 'w', 's', 'ne', 'nw', 'sw', 'se'];
+    const left = (this._canvas ? this._canvas.offsetLeft : 0) + x;
+    const top = (this._canvas ? this._canvas.offsetTop : 0 ) + y;
+    const mutualStyles = { pointerEvents: 'all' };
 
     return (
-      <PreviewCanvas
-        ref={this.canvasRef}
-        id={PREVIEW_CANVAS_ID}
-        width={parentCanvasWidth}
-        height={parentCanvasHeight}
-      />
+      <>
+        <PreviewCanvas
+          ref={this.canvasRef}
+          id={PREVIEW_CANVAS_ID}
+          width={parentCanvasWidth}
+          height={parentCanvasHeight}
+        />
+
+        <div
+          ref={this.shapeResizingBoxRef}
+          className="cropper-crop-box"
+          style={{ display: resizingBox ? 'block' : 'none', width, height, left, top, pointerEvents: 'none' }}
+        >
+          {resizingBoxLines.map((l) => (
+            <span
+              key={l}
+              className={`cropper-line line-${l} shape-resizing-control`}
+              data-direction={l}
+              style={mutualStyles}
+            ></span>
+            )
+          )}
+          {resizingBoxPoints.map((p) => (
+            <span
+              key={p}
+              className={`cropper-point point-${p} shape-resizing-control`}
+              data-direction={p}
+              style={mutualStyles}
+            ></span>
+            )
+          )}
+        </div>
+      </>
     );
   }
 
