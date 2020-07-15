@@ -8,13 +8,13 @@ import {
   getEffectHandlerName,
   getPubliclink,
   getSecretHeaderName,
-  getWatermarkPosition,
   getImageSealingParams,
 } from '../../utils';
-import { CLOUDIMAGE_OPERATIONS, PREVIEW_CANVAS_ID } from '../../config';
+import { CLOUDIMAGE_OPERATIONS, PREVIEW_CANVAS_ID, WATER_MARK_UNIQUE_KEY } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
 import '../../utils/canvas-round-rect';
+import '../../utils/map-number-range';
 
 
 const INITIAL_PARAMS = {
@@ -999,43 +999,54 @@ export default class ImageManipulator extends Component {
   }
 
   getWatermarkArguments = (watermark) => {
-    const { config: { processWithCloudimage } } = this.props;
-    const { url, position, opacity, text } = watermark;
-    const gravity = this.getCloudimagePositionQuery(position);
-    const gravityQuery = gravity ? `&wat_pad=2p&wat_gravity=${gravity}` : '';
-    let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=31p${gravityQuery}`;
+    // TODO: Should be used throug hthe getShape only and remove watermark object.
+    const { config: { processWithCloudimage }, shapeOperations } = this.props;
+    const { x, y } = shapeOperations.getShape({ key: WATER_MARK_UNIQUE_KEY });
+    const {
+      original: { width: imgWidth, height: imgHeight } = {}
+    } = this.state;
+    const { width: canvasWidth, height: canvasHeight } = getCanvasNode(PREVIEW_CANVAS_ID);
+    const { url, opacity, text } = watermark;
 
-    // Font size - 38 as this is the difference between font size on preview & on cloudimage.
+    const xWatPad = Math.round(x.map(0, canvasWidth, 0, imgWidth));
+    const yWatPad = Math.round(y.map(0, canvasHeight, 0, imgHeight));
+    
+
+    const gravityQuery = `&wat_gravity=northwest&wat_pad=${xWatPad},${yWatPad}`;
+    let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=31p${gravityQuery}`;
+    console.log(gravityQuery);
+
     queryUrl += processWithCloudimage && text
-    ? `&wat_text=${text.content}&wat_font=${text.font}&wat_fontsize=${text.size - 38}&wat_colour=${text.color.replace('#', '')}`
+    ? `&wat_text=${text.content}&wat_font=${text.font}&wat_fontsize=${text.size}&wat_colour=${text.color.replace('#', '')}`
     : `&wat_url=${url.split('?')[0]}`;
 
     return queryUrl;
   };
 
 
-  getCloudimagePositionQuery = (position) => {
-    switch (position) {
-      case "left-top":
-        return 'northwest';
-      case "center-top":
-        return 'north';
-      case "right-top":
-        return 'northeast';
-      case "left-center":
-        return 'west';
-      case "center":
-        return '';
-      case "right-center":
-        return 'east';
-      case "left-bottom":
-        return 'southwest';
-      case "center-bottom":
-        return 'south';
-      case "right-bottom":
-        return 'southeast';
-    }
-  };
+  // TODO: Should be removed from here & other position functions everywhere else.
+  // getCloudimagePositionQuery = (position) => {
+  //   switch (position) {
+  //     case "left-top":
+  //       return 'northwest';
+  //     case "center-top":
+  //       return 'north';
+  //     case "right-top":
+  //       return 'northeast';
+  //     case "left-center":
+  //       return 'west';
+  //     case "center":
+  //       return '';
+  //     case "right-center":
+  //       return 'east';
+  //     case "left-bottom":
+  //       return 'southwest';
+  //     case "center-bottom":
+  //       return 'south';
+  //     case "right-bottom":
+  //       return 'southeast';
+  //   }
+  // };
 
   applyChanges = (activeTab, callback) => {
     switch (activeTab) {

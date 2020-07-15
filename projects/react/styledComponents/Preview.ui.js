@@ -82,6 +82,7 @@ const PreviewCanvas = styled('canvas')`
   left: 0;
   right: 0;
   margin: auto;
+  outline: 0;
 `;
 
 const FocusPointWrap = styled(

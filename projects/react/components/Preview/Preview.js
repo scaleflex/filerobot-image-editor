@@ -3,10 +3,9 @@ import { PreviewImgBox } from '../../styledComponents';
 import ImageManipulator from './ImageManipulator';
 import FocusPointPreview from './FocusPointPreview';
 import CustomizedCanvas from '../CustomizedCanvas';
+import { WATER_MARK_UNIQUE_KEY } from '../../config';
 
 export default class extends Component {
-  _watermarkUniqueKey = 'watermark-layer';
-
   componentDidUpdate(prevProps) {
     const { logoImage, watermark = {}, shapeOperations, isShowSpinner } = this.props;
     const { opacity, url, applyByDefault, text = {}, key } = watermark;
@@ -30,16 +29,13 @@ export default class extends Component {
             || (text && text.content)
             )
         ) {
-        console.log('Drawing +++');
-        shapeOperations.addImage({ img: logoImage, opacity, type: 'watermark', key: this._watermarkUniqueKey });
+        shapeOperations.addImage({ img: logoImage, opacity, type: 'watermark', key: WATER_MARK_UNIQUE_KEY });
     } else {
       if (logoImage && url) {
-        console.log('hidding...');
-        shapeOperations.setShapeVisibility({ key: this._watermarkUniqueKey }, true);
+        shapeOperations.setShapeVisibility({ key: WATER_MARK_UNIQUE_KEY }, true);
       } else {
         if (!text.content) {
-          console.log('Removing ----');
-          shapeOperations.deleteShape({ key: this._watermarkUniqueKey });
+          shapeOperations.deleteShape({ key: WATER_MARK_UNIQUE_KEY });
         }
       }
     }
