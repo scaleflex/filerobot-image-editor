@@ -163,12 +163,9 @@ export default class CustomizedCanvas extends Component {
       if (Math.abs(movementX) >= Math.abs(movementY)) {
         const tempHeight = Math.abs(height - (width + movementX) / ratio);
         movementY = (!sameAxesIncSign ? -1 : 1) * Math.sign(movementX) * tempHeight;
-        console.log('RATIO: ', ratio, 'Temp HEIGHT:', tempHeight, 'movement X: ', movementX, 'movement Y: ', movementY);
       } else {
         const tempWidth = Math.abs(width - ((height + movementY) * ratio));
         movementX = (!sameAxesIncSign ? -1 : 1) * Math.sign(movementY) * tempWidth;
-        console.log('RATIO: ', ratio, 'Temp WIDTH!:', tempWidth, 'movement X: ', movementX, 'movement Y: ', movementY);
-
       }
     }
     const eastHandle = () => { width += movementX; }
