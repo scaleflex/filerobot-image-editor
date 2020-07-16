@@ -360,14 +360,14 @@ export default class ImageManipulator extends Component {
     lnk.download = imageName;
     lnk.href = canvas.toDataURL(imageMime, 0.8);
     onUpload(lnk.href)
-    if (document.createEvent) {
+    // if (document.createEvent) {
 
-      e = document.createEvent("MouseEvents");
-      e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-      lnk.dispatchEvent(e);  
-    } else if (lnk.fireEvent) {
-      lnk.fireEvent("onclick");
-    }
+    //   e = document.createEvent("MouseEvents");
+    //   e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    //   lnk.dispatchEvent(e);  
+    // } else if (lnk.fireEvent) {
+    //   lnk.fireEvent("onclick");
+    // }
 
     if (callback) callback();
   }
