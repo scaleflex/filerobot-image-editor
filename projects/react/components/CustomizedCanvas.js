@@ -159,10 +159,16 @@ export default class CustomizedCanvas extends Component {
 
     const { direction } = resizeControlTarget.dataset;
     const keepShapeRatio = (sameAxesIncSign) => {
+      const ratio = width / height;
       if (Math.abs(movementX) >= Math.abs(movementY)) {
-        movementY = (!sameAxesIncSign ? -1 : 1) * Math.sign(movementX) * Math.abs(movementX);
+        const tempHeight = Math.abs(height - (width + movementX) / ratio);
+        movementY = (!sameAxesIncSign ? -1 : 1) * Math.sign(movementX) * tempHeight;
+        console.log('RATIO: ', ratio, 'Temp HEIGHT:', tempHeight, 'movement X: ', movementX, 'movement Y: ', movementY);
       } else {
-        movementX = (!sameAxesIncSign ? -1 : 1) * Math.sign(movementY) * Math.abs(movementY);
+        const tempWidth = Math.abs(width - ((height + movementY) * ratio));
+        movementX = (!sameAxesIncSign ? -1 : 1) * Math.sign(movementY) * tempWidth;
+        console.log('RATIO: ', ratio, 'Temp WIDTH!:', tempWidth, 'movement X: ', movementX, 'movement Y: ', movementY);
+
       }
     }
     const eastHandle = () => { width += movementX; }
@@ -229,7 +235,7 @@ export default class CustomizedCanvas extends Component {
       return;
     }
 
-    const minWidthAndHeight = 5;
+    const minWidthAndHeight = 15;
     if (height <= minWidthAndHeight || width <= minWidthAndHeight) { return; }
 
     const updatedShape = { width, height, x, y, oldX, oldY, oldWidth, oldHeight };
