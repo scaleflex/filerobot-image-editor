@@ -103,7 +103,7 @@ var _default = /*#__PURE__*/function (_Component) {
         themeBtn: activeTab,
         fullSize: true,
         onClick: isOneTool ? applyAndSave : !activeTab ? function () {
-          handleSave();
+          handleSave(onUpload);
         } : function () {
           apply();
         } ///add here handleSave onUpload

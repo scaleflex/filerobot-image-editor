@@ -273,25 +273,23 @@ var _default = (_temp = /*#__PURE__*/function (_Component) {
       saveImage();
     });
 
-    _defineProperty(_assertThisInitialized(_this), "onDownloadImage", function (onUpload) {
+    _defineProperty(_assertThisInitialized(_this), "onDownloadImage", function () {
       var onBeforeComplete = _this.props.onBeforeComplete;
       var _this$state3 = _this.state,
           downloadImage = _this$state3.downloadImage,
           getResultCanvas = _this$state3.getResultCanvas;
-      var canvas = getResultCanvas(); // console.log(canvas)
-
+      var canvas = getResultCanvas();
       var isDownload = onBeforeComplete ? onBeforeComplete({
         status: 'before-complete',
         canvas: canvas
-      }) : true; // onUpload('stuff')
+      }) : true;
 
       if (isDownload) {
         downloadImage(function () {
           _this.props.onComplete({
             status: 'success',
             canvas: canvas
-          }); //onUpload
-
+          });
 
           _this.props.onClose();
         }, _this.props.onUpload);
