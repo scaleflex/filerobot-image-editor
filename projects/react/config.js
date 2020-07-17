@@ -6,7 +6,7 @@ const PREVIEW_CANVAS_ID = 'scaleflex-filerobot-shapes-edit-box';
 
 // 'effects', 'filters', 'adjust', 'crop', 'resize', 'rotate'
 const TOOLS = [
-  'adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark'
+  'adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark', 'add'
 ];
 
 // 'clarity', 'edge_enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'noise', 'old_paper', 'posterize', 'radial_blur',
@@ -147,6 +147,16 @@ const WATERMARK_CLOUDIMAGE_FONTS = [
   { label: 'Noto mono', value: 'Noto-Mono' },
 ];
 
+const SHAPES_VARIANTS = {
+  RECT: 'rect',
+  SQUARE: 'square',
+  CIRCLE: 'circle',
+  IMAGE: 'image',
+  TEXT: 'text'
+}
+
+const DEFAULT_IMG_URL = 'https://image.flaticon.com/icons/svg/916/916762.svg';
+
 const UPLOADER = {
   hideCloudimageSwitcher: true,
   processWithCloudimage: false,
@@ -167,4 +177,4 @@ const UPLOADER = {
   resizePresets
 }
 
-export { MODAL_ID, PREVIEW_CANVAS_ID, TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS, WATERMARK_POSITIONS, WATER_MARK_UNIQUE_KEY, WATERMARK_POSITIONS_PRESET, WATERMARK_STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS };
+export { MODAL_ID, PREVIEW_CANVAS_ID, TOOLS, EFFECTS, FILTERS, UPLOADER, CLOUDIMAGE_OPERATIONS, WATERMARK_POSITIONS, WATER_MARK_UNIQUE_KEY, WATERMARK_POSITIONS_PRESET, WATERMARK_STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS, SHAPES_VARIANTS, DEFAULT_IMG_URL };

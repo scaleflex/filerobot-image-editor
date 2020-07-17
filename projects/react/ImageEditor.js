@@ -32,7 +32,7 @@ export default class extends Component {
 
     const {
       processWithCloudimage, processWithFilerobot, processWithCloudService, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit,
-      watermark, imageSealing,
+      watermark, imageSealing
     } = props.config;
 
     this.state = {
@@ -67,6 +67,8 @@ export default class extends Component {
       watermark: watermark || DEFAULT_WATERMARK,
       focusPoint: {x: null, y: null},
       shapes: [],
+      selectedShape: {},
+      availableShapes: []
     }
   }
 
@@ -360,7 +362,9 @@ export default class extends Component {
       watermark,
       focusPoint,
       shapes,
-      shapeOperations
+      shapeOperations,
+      selectedShape,
+      availableShapes
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false, t = {}, theme } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
@@ -404,7 +408,9 @@ export default class extends Component {
       watermark,
       focusPoint,
       shapes,
-      shapeOperations
+      shapeOperations,
+      selectedShape,
+      availableShapes
     };
     const previewProps = {
       t,
@@ -452,7 +458,8 @@ export default class extends Component {
       watermark,
       focusPoint,
       shapes,
-      shapeOperations
+      shapeOperations,
+      selectedShape
     };
     const footerProps = {
       logoImage,

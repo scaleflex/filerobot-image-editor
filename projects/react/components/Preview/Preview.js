@@ -44,7 +44,9 @@ export default class extends Component {
   render() {
     const {
       activeTab, isHideCanvas, watermark = {}, focusPoint, original, updateState, src, shapes,
+      selectedShape, config: { expandShapes = [] }
     } = this.props;
+
     const { applyByDefault } = watermark;
     const canvas = window.document.getElementById('scaleflex-image-edit-box');
     const canvasRect = canvas && canvas.getBoundingClientRect() || {};
@@ -62,6 +64,8 @@ export default class extends Component {
           height={canvasRect.height}
           shapes={shapes}
           updateState={updateState}
+          selectedShape={selectedShape}
+          expandShapes={expandShapes}
         />}
 
         {activeTab === 'focus_point' && (

@@ -26,10 +26,11 @@ class Range extends Component {
 
   render() {
     const { range } = this.state;
-    const { label, min = -100, max = 100, step = 1 } = this.props;
+    const { label, min = -100, max = 100, step = 1, labelBefore, labelStyles } = this.props;
 
     return (
-      <Wrapper className="image-editor-range-wrapper">
+      <Wrapper className="image-editor-range-wrapper" labelBefore={labelBefore} label={label}>
+        {label && labelBefore && <label style={labelStyles}>{label}</label>}
         <input
           id="range"
           type="range"
@@ -39,7 +40,7 @@ class Range extends Component {
           step={step}
           onChange={this.updateRange}
         />
-        <label>{label}</label>
+        {label && !labelBefore && <label style={labelStyles}>{label}</label>}
       </Wrapper>
     )
   }
@@ -59,11 +60,11 @@ const Wrapper = styled('div').attrs(() => ({
     display: inline-block;
     width: 100%;
     text-align: center;
-    padding-top: 20px;
+    padding-top: ${p => p.labelBefore ? 0 : '20px'};
   }
   
   :after {
-    content: '';
+    content: ${p => p.label ? '' : 'unset'};
     display: inline-block;
     position: absolute;
     background: ${p => p.theme.colors.text};

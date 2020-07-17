@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { PreviewCanvas } from '../styledComponents';
-import { PREVIEW_CANVAS_ID } from '../config';
+import { PREVIEW_CANVAS_ID, SHAPES_VARIANTS, DEFAULT_IMG_URL } from '../config';
 
 
 export default class CustomizedCanvas extends Component {
@@ -17,7 +17,6 @@ export default class CustomizedCanvas extends Component {
     this.shapeResizingBoxRef = createRef();
 
     this.state = {
-      selectedShape: {},
       resizeControlTarget: null,
     }
   }
@@ -27,6 +26,44 @@ export default class CustomizedCanvas extends Component {
       this._canvas = this.canvasRef.current;
       this._canvas.addEventListener('mousedown', this.onSelect);
       this._context = this._canvas.getContext('2d');
+
+      const availableShapes = [
+        {
+          label: 'Rectangle',
+          variant: SHAPES_VARIANTS.RECT,
+          iconStyles: { height: 50, width: 75, border: '1px solid #fff' },
+          drawFn: this.addRect,
+        },
+        {
+          label: 'Square',
+          variant: SHAPES_VARIANTS.SQUARE,
+          iconStyles: { border: '1px solid #fff' },
+          drawFn: (props) => this.addRect({ width: 75, height: 75, ...props }),
+          // iconUrl: undefined,
+        },
+        {
+          label: 'Circle',
+          variant: SHAPES_VARIANTS.CIRCLE,
+          iconStyles: { border: '1px solid #fff', borderRadius: '50%' },
+          drawFn: this.addCircle
+          // iconUrl: undefined,
+        },
+        {
+          label: 'Image',
+          variant: SHAPES_VARIANTS.IMAGE,
+          drawFn: () => this.addImage({ img: DEFAULT_IMG_URL })
+        },
+        {
+          label: 'Text',
+          variant: SHAPES_VARIANTS.TEXT,
+          iconStyles: { fontSize: '2.7rem', fontWeight: 'bold' },
+          drawFn: this.addText,
+          content: 'T'
+        },
+        // TODO: Giving the consumer the chance to add more shapes with its draw fns. from props.
+        // TODO: Supporting the shapes for expanding & Add expandShapes to readme.
+        ...this.props.expandShapes
+      ]
 
       this.props.updateState({
         shapeOperations: {
@@ -38,8 +75,9 @@ export default class CustomizedCanvas extends Component {
           deleteShape: this.deleteShapeByKeyOrIndex,
           deleteShapes: this.deleteShapesByType,
           setShapeVisibility: this.setShapeVisibilityByKeyOrIndex,
-          getShape: this.getShapeByKeyOrIndex,
-        }
+          getShape: this.getShapeByKeyOrIndex
+        },
+        availableShapes
       });
     }
   }
@@ -70,7 +108,7 @@ export default class CustomizedCanvas extends Component {
     return shapeIndex;
   }
 
-  targettedShape = (index = undefined) => index || index === 0 ? this.props.shapes[index] : this.state.selectedShape;
+  targettedShape = (index = undefined) => index || index === 0 ? this.props.shapes[index] : this.props.selectedShape;
 
   onSelect = (event) => {
     const { offsetX, offsetY } = event;
@@ -88,7 +126,7 @@ export default class CustomizedCanvas extends Component {
           ) {
             foundShape = true;
 
-            this.setState({
+            this.updateState({
               selectedShape: {
                 ...shape,
                 resizingBox: true,
@@ -110,7 +148,7 @@ export default class CustomizedCanvas extends Component {
 
     // Remove the old event listeners incase clicked on no shapes after clicking on one before.
     if (!foundShape) {
-      this.setState({ selectedShape: {} });
+      this.updateState({ selectedShape: {} });
       this.disableResizingActions();
       this._canvas.removeEventListener('keyup', this.activateShapeDeleting);
       this._canvas.removeEventListener('mousemove', this.startDragging);
@@ -120,21 +158,21 @@ export default class CustomizedCanvas extends Component {
   }
 
   activateShapeDeleting = ({ key }) => {
-    const { selectedShape } = this.state;
+    const { selectedShape } = this.props;
 
     if (
         (key === 'Delete' || key === 'Backspace')
         && selectedShape
     ) {
       this.deleteShapeByKeyOrIndex({ index: selectedShape.index });
-      this.setState({ selectedShape: {} });
+      this.updateState({ selectedShape: {} });
       this.disableResizingActions();
       this._canvas.removeEventListener('keyup', this.activateShapeDeleting);
     }
   }
 
   activateResizingActions = () => {
-    document.addEventListener('click', this.disableResizingActions);
+    // document.addEventListener('click', this.disableResizingActions);
 
     Array.from(document.getElementsByClassName('shape-resizing-control'))
       .forEach((control) => {
@@ -149,7 +187,9 @@ export default class CustomizedCanvas extends Component {
   }
 
   handleShapeResizing = ({ movementX, movementY, shiftKey }) => {
-    const { selectedShape, resizeControlTarget } = this.state;
+    const { resizeControlTarget } = this.state;
+    const { selectedShape } = this.props;
+
     if (!resizeControlTarget) { return; }
     
     let { index, width, height, x, y, oldX, oldY } = selectedShape;
@@ -237,35 +277,33 @@ export default class CustomizedCanvas extends Component {
 
     const updatedShape = { width, height, x, y, oldX, oldY, oldWidth, oldHeight };
 
-    this.setState({
+    this.updateShape(updatedShape, index, {
       selectedShape: {
         ...selectedShape,
-        ...updatedShape,
+        ...updatedShape
       }
-    }, () => {
-      this.updateShape(index, updatedShape)
     });
   }
 
   disableResizingActions = (e) => {
     if (e && this._canvas.contains(e.target)) { return; }
-    document.removeEventListener('click', this.disableResizingActions);
+    // document.removeEventListener('click', this.disableResizingActions);
     document.removeEventListener('mousemove', this.handleShapeResizing);
     document.removeEventListener('mouseup', this.disableResizingActions);
 
-    this.setState({ selectedShape: {} })
+    this.updateState({ selectedShape: {} })
     this.setState({ resizeControlTarget: null });
   }
 
   removeResizingBox = ({ offsetX, offsetY }) => {
-    const { selectedShape } = this.state;
+    const { selectedShape } = this.props;
     if (
         offsetX < selectedShape.x
         || offsetX > selectedShape.x + selectedShape.width
         || offsetY < selectedShape.y
         || offsetY > selectedShape.y + selectedShape.height
     ) {
-      this.setState({
+      this.updateState({
         selectedShape: { ...selectedShape, resizingBox: false, oldWidth: undefined, oldHeight: undefined }
       });
 
@@ -274,22 +312,20 @@ export default class CustomizedCanvas extends Component {
   }
 
   startDragging = (event) => {
-    const { selectedShape } = this.state;
+    const { selectedShape } = this.props;
     
     // event.offsetX - startEdgeOffset.x for the shape's X from its starting point not the exact mouse position.
-    this.setState({
-      selectedShape: {
-        ...selectedShape,
-        oldWidth: undefined,
-        oldHeight: undefined,
-        oldX: selectedShape.x,
-        oldY: selectedShape.y,
-        x: event.offsetX - selectedShape.startEdgeOffset.x,
-        y: event.offsetY - selectedShape.startEdgeOffset.y
-      }
-    }, () => {
-      this.updateShape(selectedShape.index, this.state.selectedShape);
-    });
+    const newSelectedShape = {
+      ...selectedShape,
+      oldWidth: undefined,
+      oldHeight: undefined,
+      oldX: selectedShape.x,
+      oldY: selectedShape.y,
+      x: event.offsetX - selectedShape.startEdgeOffset.x,
+      y: event.offsetY - selectedShape.startEdgeOffset.y
+    }
+    
+    this.updateShape(newSelectedShape, selectedShape.index, { selectedShape: newSelectedShape });
   }
 
   endDragging = () => {
@@ -307,165 +343,182 @@ export default class CustomizedCanvas extends Component {
   }
 
   // All the repeated operations are passed here around the draw function.
-  draw = (drawFn, { opacity = 1.0, hidden }) => {
+  draw = (drawFn, { opacity = 1.0, hidden, color, stroke = {} }) => {
     if (hidden) { return; }
 
     this._context.globalAlpha = +opacity;
+    this._context.fillStyle = color;
+    this._context.strokeStyle = stroke.color || 'rgba(0, 0, 0, 0)';
+    this._context.lineWidth = stroke.width || 0;
     drawFn();
   }
 
   redrawShape = (index = undefined) => {
     const shape = this.targettedShape(index);
     
-    this._context.clearRect(
+    this.clearShape(
       shape.oldX || shape.x,
       shape.oldY || shape.y,
       shape.oldWidth || shape.width,
-      shape.oldHeight || shape.height
+      shape.oldHeight || shape.height,
+      shape.stroke
     );
-
+    
     switch(shape.variant) {
-      case 'image':
+      case SHAPES_VARIANTS.IMAGE:
         this.drawImage(shape);
         break;
-      case 'rect':
+      case SHAPES_VARIANTS.RECT:
+      case SHAPES_VARIANTS.SQUARE:
         this.drawRect(shape);
         break;
-      case 'circle':
+      case SHAPES_VARIANTS.CIRCLE:
         this.drawCircle(shape);
         break;
-      case 'text':
+      case SHAPES_VARIANTS.TEXT:
         this.drawText(shape);
       default:
         return;
     }
   }
 
-  drawRect = ({ x, y, width, height, opacity, hidden }) => {
+  drawRect = ({ x, y, width, height, stroke, ...others }) => {
     this.draw(() => {
       this._context.fillRect(x, y, width, height);
-    }, { opacity, hidden });
+      if (stroke) {
+        this._context.strokeRect(x, y, width, height);
+      }
+    }, { stroke, ...others });
   }
 
-  drawCircle = ({ x, y, radius, opacity, hidden }) => {
+  drawCircle = ({ x, y, radius, stroke, ...others }) => {
     this.draw(() => {
       this._context.beginPath();
       this._context.arc(x, y, radius, 0, 2 * Math.PI);
-      this._context.stroke();
-    }, { opacity, hidden });
+      this._context.fill();
+      if (stroke) {
+        this._context.stroke();
+      }
+    }, { stroke, ...others });
   }
 
-  drawImage = ({ img, x, y, opacity, width, height, hidden }) => {
+  drawImage = ({ img, x, y, width, height, stroke, ...others }) => {
     this.draw(() => {
       this._context.drawImage(img, x, y, width, height);
-    }, { opacity, hidden });
+      if (stroke) {
+        this._context.strokeRect(x, y, width, height);
+      }
+    }, { stroke, ...others });
   }
 
-  drawText = ({ color, textSize, textFont, text, x, y, opacity, hidden })  => {
+  drawText = ({ text, textSize, textFont, x, y, stroke, ...others })  => {
     this.draw(() => {
-      this._context.fillStyle = color;
       this._context.textAlign = "start";
       this._context.textBaseline = "middle";
       this._context.font = `${textSize}px ${textFont}`;
       this._context.fillText(text, x, y, this._canvas.width);
-    }, { opacity, hidden })
+      if (stroke) {
+        this._context.strokeText(text, x, y);
+      }
+    }, { stroke, ...others })
   }
 
   // TODO: add other shapes variants...
 
-  addRect = ({ x, y, width = 100, height = 75, ...others }) => {
+  addRect = ({ x, y, width = 100, height = 75, stroke = {}, color = '#000000', opacity = 1.0, ...others } = {}) => {
     const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
-    const drawingArgs = { x: x || centerX, y: y || centerY, width, height };
-    const allArgs = { ...this._initArgs, ...others, ...drawingArgs };
+    const drawingArgs = { x: x || centerX, y: y || centerY, width, height, stroke, opacity, color };
+    const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant: SHAPES_VARIANTS.RECT };
 
     if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
 
     this.drawRect(drawingArgs);
     
-    const index = this.pushShapeToShapes({
-      ...allArgs,
-      variant: 'rect',
-    });
+    const index = this.pushShapeToShapes(allArgs);
 
-    this.setState({
+    this.updateState({
       selectedShape: { ...allArgs, index, resizingBox: true }
     }, this.activateResizingActions);
   }
 
-  addCircle = ({ x, y, radius = 25, ...others }) => {
+  addCircle = ({ x, y, radius = 25, stroke = {}, color = '#000000', opacity = 1.0, ...others } = {}) => {
     const [centerX, centerY] = this.getCanvasCenter(radius, radius);
 
-    const drawingArgs = { x: x || centerX, y: y || centerY, radius };
-    const allArgs = { ...this._initArgs, ...others, ...drawingArgs };
+    const drawingArgs = { x: x || centerX, y: y || centerY, radius, color, opacity, stroke };
+    const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant: SHAPES_VARIANTS.CIRCLE };
 
     if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
 
     this.drawCircle(drawingArgs);
 
-    const index = this.pushShapeToShapes({
-      ...allArgs,
-      variant: 'circle'
-    });
+    const index = this.pushShapeToShapes(allArgs);
 
-    this.setState({
+    this.updateState({
       selectedShape: { ...allArgs, index, resizingBox: true }
     }, this.activateResizingActions);
   }
 
-  addImage = ({ img, x = undefined, y = undefined, opacity = 1.0, ...others }) => {
+  addImage = ({ img, x = undefined, y = undefined, opacity = 1.0, stroke = {}, ...others } = {}) => {
     if(img) {
-      const width = img.width;
-      const height = img.height;
-      const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
+      const addIt = () => {
+        const width = img.width;
+        const height = img.height;
+        const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
-      const drawingArgs = {
-        img, opacity, width, height,
-        originalWidth: width,
-        originalHeight: height,
-        x: x || centerX,
-        y: y || centerY
-      };
+        const drawingArgs = {
+          img, opacity, width, height,
+          originalWidth: width,
+          originalHeight: height,
+          x: x || centerX,
+          y: y || centerY,
+          stroke
+        };
 
-      const allArgs = { ...this._initArgs, ...others, ...drawingArgs };
+        const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant: SHAPES_VARIANTS.IMAGE };
 
-      if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
+        if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
 
-      this.drawImage(drawingArgs);
+        this.drawImage(drawingArgs);
 
-      const index = this.pushShapeToShapes({
-        ...allArgs,
-        variant: 'image'
-      });
+        const index = this.pushShapeToShapes(allArgs);
 
-      this.setState({
-        selectedShape: { ...allArgs, index, resizingBox: true }
-      }, this.activateResizingActions);
+        this.updateState({
+          selectedShape: { ...allArgs, index, resizingBox: true }
+        }, this.activateResizingActions);
+      }
+
+      if (typeof img === 'string') {
+        const imgSrc = img;
+        img = new Image();
+        img.src = imgSrc;
+        img.onload = addIt;
+        img.onerror = () => '';
+      } else { addIt(); }
+      
     }
   }
 
   addText = ({
-    text, textSize = 62, color = "#000000", textFont = 'Arial', x = undefined, y = undefined, ...others
-  }) => {
+    text = 'Text', textSize = 62, color = "#000000", textFont = 'Arial', x = undefined, y = undefined,
+    stroke = {}, opacity = 1.0, ...others
+  } = {}) => {
     const metrics = this._context.measureText(text);
     const { width } = metrics;
     const height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
     const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
     if (text) {
-      const drawingArgs = { x: x || centerX, y: y || centerY, opacity };
-      const allArgs = { ...this._initArgs, ...others, ...drawingArgs };
+      const drawingArgs = { text, textSize, textFont, x: x || centerX, y: y || centerY, opacity, stroke, color };
+      const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant: SHAPES_VARIANTS.TEXT };
 
       if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
 
       this.drawText(drawingArgs);
 
-      const index = this.pushShapeToShapes({
-        ...allArgs,
-        variant: 'text'
-      });
+      const index = this.pushShapeToShapes(allArgs);
 
-      this.setState({
+      this.updateState({
         selectedShape: { ...allArgs, index, resizingBox: true }
       }, this.activateResizingActions);
     }
@@ -483,7 +536,7 @@ export default class CustomizedCanvas extends Component {
 
     if (shape) {
       args = { ...args, x: shape.x, y: shape.y, width: shape.width, height: shape.height };
-      this.updateShape(shape.index, args)
+      this.updateShape(args, shape.index)
 
       return true;
     }
@@ -495,7 +548,7 @@ export default class CustomizedCanvas extends Component {
     const shape = this.getShapeByKeyOrIndex({ key, index });
     
     if (shape && isHidden !== undefined && shape.hidden !== isHidden) {
-      this.updateShape(shape.index, { hidden: isHidden });
+      this.updateShape({ hidden: isHidden }, shape.index);
     }
   }
 
@@ -519,22 +572,51 @@ export default class CustomizedCanvas extends Component {
     return shapesIndicies;
   }
 
-  updateShape = (index, updatedData) => {
-    const { shapes } = this.props;
+  updateShape = (updatedData, index, otherStatesToBeUpdated = undefined) => {
+    const { shapes, selectedShape } = this.props;
+
+    if (!updatedData
+        || (
+          (!index && index !== 0)
+          && (!selectedShape || (!selectedShape.index && selectedShape.index !== 0))
+          )
+      ) { return; }
+
+    const updates = {};
+
+    // if no index provided and selected shape would be updated then add the obj and update the stats' selectes shape.
+    if (!index && index !== 0) { updates.selectedShape = { ...selectedShape, ...updatedData } }
+
+    index = index || index === 0 ? index : selectedShape.index;
 
     if (shapes[index]) {
       const latestShapes = shapes;
       latestShapes[index] = { ...latestShapes[index], ...updatedData };
 
-      this.updateState({ shapes: latestShapes }, () => {
+      this.updateState({ shapes: latestShapes, ...updates, ...otherStatesToBeUpdated }, () => {
         this.redrawShape(index);
       });
     }
   }
 
+  clearShape = (x, y, width, height, stroke) => {
+    const { width: strokeWidth } = stroke;
+    const strokeWidthConst = strokeWidth || 0;
+    // Constant numbers for expanding clearing for avoiding impurities after clearing.
+    const axisClearExpandConst = 4;
+    const dimensionClearExpandConst = axisClearExpandConst + 2;
+
+    this._context.clearRect(
+      x - strokeWidthConst - axisClearExpandConst,
+      y - strokeWidthConst - axisClearExpandConst,
+      width + strokeWidthConst + dimensionClearExpandConst,
+      height + strokeWidthConst + dimensionClearExpandConst
+    );
+  }
+
   eraseShape = (index = undefined) => {
-    const { x, y, width, height } = this.targettedShape(index);
-    this._context.clearRect(x, y, width, height);
+    const { x, y, width, height, stroke = {} } = this.targettedShape(index);
+    this.clearShape(x, y, width, height, stroke);
   }
   
   eraseAndRemoveShapeFromArray = (index, shapes) => {
@@ -577,8 +659,17 @@ export default class CustomizedCanvas extends Component {
 
 
   render() {
-    const { height: parentCanvasHeight, width: parentCanvasWidth } = this.props
-    const { selectedShape: { width = 0, height = 0, x = 0, y = 0, resizingBox = false } } = this.state;
+    const {
+      height: parentCanvasHeight,
+      width: parentCanvasWidth,
+      selectedShape: {
+        width = 0,
+        height = 0,
+        x = 0,
+        y = 0,
+        resizingBox = false
+      }
+    } = this.props
     const resizingBoxLines = ['e', 'n', 'w', 's'];
     const resizingBoxPoints = ['e', 'n', 'w', 's', 'ne', 'nw', 'sw', 'se'];
     const left = (this._canvas ? this._canvas.offsetLeft : 0) + x;

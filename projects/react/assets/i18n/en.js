@@ -15,6 +15,7 @@ export default {
   'toolbar.resize': 'Resize',
   'toolbar.watermark': 'Watermark',
   'toolbar.focus_point': 'Focus point',
+  'toolbar.add': 'Add',
   'adjust.brightness': 'Brightness',
   'adjust.contrast': 'Contrast',
   'adjust.exposure': 'Exposure',
