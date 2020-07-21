@@ -11,7 +11,7 @@ export default class Add extends Component {
     const { shapeOperations, t } = this.props;
     const { variant, opacity, color, stroke = {} } = selectedShape;
 
-    const updateOpacity = (newVal) => shapeOperations.updateShape({ opacity: newVal  });
+    const updateOpacity = (newVal) => shapeOperations.updateShape({ opacity: newVal });
     const updateStroke = (property, value) => shapeOperations.updateShape({ stroke: { ...stroke, [property]: value }});
     const updatePropertyFromEvent = (e) => shapeOperations.updateShape({ [e.target.name]: e.target.value });
 
@@ -95,6 +95,17 @@ export default class Add extends Component {
                 style={{ width: 111 }}
                 onChange={(value) => updatePropertyFromEvent({ target: { name: 'textFont', value }})}
                 color="text-font"
+              />
+            </FieldGroup>
+            <FieldGroup>
+              <FieldCustomLabel>Font size</FieldCustomLabel>
+              <FieldInput
+                value={selectedShape.textSize}
+                type="number"
+                style={{ width: 60 }}
+                name="textSize"
+                onChange={updatePropertyFromEvent}
+                min={0}
               />
             </FieldGroup>
           </React.Fragment>

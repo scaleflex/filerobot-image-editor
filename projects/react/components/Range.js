@@ -24,6 +24,14 @@ class Range extends Component {
     });
   }
 
+  componentDidUpdate({ range: prevRange }) {
+    const { range } = this.props;
+
+    if (prevRange !== range && range !== this.state.range) {
+      this.setState({ range });
+    }
+  }
+
   render() {
     const { range } = this.state;
     const { label, min = -100, max = 100, step = 1, labelBefore, labelStyles } = this.props;
