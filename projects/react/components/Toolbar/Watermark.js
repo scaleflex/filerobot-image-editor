@@ -17,8 +17,7 @@ import {
 import { debounce } from 'throttle-debounce';
 import Range from '../Range';
 import Select from '../Shared/Select';
-import { WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET, WATERMARK_STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS } from '../../config';
-import { getCanvasNode } from '../../utils';
+import { WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET, WATERMARK_STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS, WATERMARK_UNIQUE_KEY } from '../../config';
 
 
 export default class extends Component {
@@ -90,72 +89,92 @@ export default class extends Component {
       this.onPositionChange(this.state.position);
     }
     if (nextProps.watermark.applyByDefault !== this.props.watermark.applyByDefault) {
-      this.setState({ applyByDefault: nextProps.watermark.applyByDefault });
+      if (this.props.watermark.logoImage) {
+        this.updateWatermarkProperty({ applyByDefault: false }, { hidden: true }, { applyByDefault: false });
+      } else {
+        this.setState({ applyByDefault: nextProps.watermark.applyByDefault });
+      }
 
       if (nextProps.watermark.applyByDefault) {
-        this.initWatermarkImage(nextProps.watermark.url);
+        if (!this.props.watermark.logoImage) {
+          this.initWatermarkImage(nextProps.watermark.url);
+        } else {
+          this.updateWatermarkProperty({ applyByDefault: true }, { hidden: false }, { applyByDefault: true });
+        }
       }
     }
   }
 
-  updateOpacity = (value) => {
-    this.setState({ opacity: value }, () => {
-      this.props.updateState({
+  changeOpacity = (opacity) => {
+    this.updateWatermarkProperty({ opacity });
+  }
+
+  updateWatermarkProperty = (data, shapeData, watermarkObjectData) => {
+    const { shapeOperations } = this.props;
+    if (!shapeData) { shapeData = data }
+    if (!watermarkObjectData) { watermarkObjectData = data }
+
+    const watermark = this.getWatermarkLayer(shapeOperations);
+    this.setState(data, () => {
+      shapeOperations.updateShape(shapeData, watermark.index,
+      {
         watermark: {
           ...this.props.watermark,
-          opacity: value
+          ...watermarkObjectData
         }
       });
     });
   }
 
-  changeURL = (event, text = false) => {
+  getWatermarkLayer = (operations) => {
+    return operations.getShape({ key: WATERMARK_UNIQUE_KEY });
+  }
+
+  changeURL = (event) => {
     const nextValue = event.target.value;
 
-    this.setState({ url: nextValue }, () => {
-      this.props.updateState({
-        watermark: {
-          ...this.props.watermark,
-          url: '',
-          text,
+    if (this.props.watermark.text) {
+      this.initWatermarkImage(nextValue);
+      return;
+    }
+
+    this.updateWatermarkProperty({ url: nextValue }, { img: nextValue }, { url: '', text: false })
+  }
+
+  changeTextProperty = (event) => {
+    const updatedProperty = { [event.target.name]: event.target.value };
+    const { shapeOperations } = this.props;
+
+    if (this.props.watermark.text) {
+      this.updateWatermarkProperty(updatedProperty);
+      return;
+    }
+
+    const { text, color, textSize, textFont, opacity } = this.state;
+
+    const newWatermarkData = {
+      text,
+      color,
+      textSize,
+      textFont,
+      opacity,
+      ...updatedProperty
+    };
+
+    this.setState({ ...updatedProperty }, () => {
+      shapeOperations.addText({
+        ...newWatermarkData,
+        key: WATERMARK_UNIQUE_KEY,
+        otherStates: {
+          watermark: {
+            ...this.props.watermark, 
+            text: {
+              ...newWatermarkData
+            },
+          }
         }
       });
-
-      this.initWatermarkImage(nextValue);
-    });
-  }
-
-  changeText = (event) => {
-    const text = event.target.value;
-    const { color , textFont, textSize} = this.state;
-
-    this.setState({ text }, () => {
-      // TODO: TO be refactored and use addText of customized Canvas.
-
-      const canvas = document.createElement('canvas')
-      const context = canvas.getContext('2d');
-      canvas.height = 100;
-      canvas.width = getCanvasNode().width;
-
-      context.fillStyle = color;
-      context.textAlign = "start";
-      context.textBaseline = "middle";
-      context.font = `${textSize}px ${textFont}`
-      let { width } = context.measureText(text);
-      context.fillText(text, (canvas.width - width) / 2, canvas.height / 2, canvas.width);
-      
-      this.changeURL(
-        { target: { value: canvas.toDataURL('image/png', 1) }},
-        { content: text, color, size: textSize, font: textFont }
-      );
-    });
-  }
-
-  changeTextWatermarkParameter = (event) => {
-    const { text } = this.state;
-    this.setState( { [event.target.name]: event.target.value }, () => {
-      this.changeText({ target: { value: text } });
-    });
+    })
   }
 
   readFile = (event) => {
@@ -196,6 +215,8 @@ export default class extends Component {
     }
 
     if (url) {
+      const { shapeOperations } = this.props;
+
       logoImage = new Image();
       logoImage.setAttribute('crossOrigin', 'Anonymous');
 
@@ -208,6 +229,8 @@ export default class extends Component {
         } else {
           updateImageState(logoImage);
         }
+
+        shapeOperations.addImage({ img: logoImage, key: WATERMARK_UNIQUE_KEY });
       }
 
       logoImage.onerror = () => {
@@ -225,9 +248,12 @@ export default class extends Component {
 
   onApplyWatermarkChange = () => {
     const nextValue = !this.state.applyByDefault;
-    this.setState({ applyByDefault: nextValue }, () => {
-      this.props.updateState({ watermark: { ...this.props.watermark, applyByDefault: nextValue } });
-    });
+    
+    this.updateWatermarkProperty(
+      { applyByDefault: nextValue },
+      { hidden: !nextValue },
+      { applyByDefault: nextValue }
+    );
   }
 
   showWatermarkList = () => {
@@ -353,8 +379,8 @@ export default class extends Component {
                 id="text"
                 value={text}
                 style={{ width: 'calc(65% - 135px)' }}
-                onChange={this.changeText}
-                maxLength={24}
+                name="text"
+                onChange={this.changeTextProperty}
               />
               <Select
                 list={config.processWithCloudimage ? WATERMARK_CLOUDIMAGE_FONTS : fonts}
@@ -362,21 +388,21 @@ export default class extends Component {
                 id="textFont"
                 value={textFont}
                 style={{ width: 111, display: 'inline-block', marginLeft: 8 }}
-                onChange={(value) => this.changeTextWatermarkParameter({ target: { name: 'textFont', value } })}
+                onChange={(value) => this.changeTextProperty({ target: { name: 'textFont', value } })}
               />
               <FieldInput
                 value={textSize}
                 type="number"
                 name="textSize"
                 style={{ width: 60, marginLeft: 8 }}
-                onChange={this.changeTextWatermarkParameter}
+                onChange={this.changeTextProperty}
               />
               <FieldInput
                 value={color}
                 type="color"
                 style={{ width: 30, marginLeft: 8, padding: 0, background: 'transparent', boxShadow: 'none' }}
                 name="color"
-                onChange={this.changeTextWatermarkParameter}
+                onChange={this.changeTextProperty}
               />
             </>)}
           </WrapperForURL>
@@ -390,7 +416,7 @@ export default class extends Component {
                 max={1}
                 step={0.05}
                 range={opacity}
-                updateRange={this.updateOpacity}
+                updateRange={this.changeOpacity}
               />
             </WrapperForOpacity>
             }

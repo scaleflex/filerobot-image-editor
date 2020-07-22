@@ -1,7 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { PreviewCanvas } from '../styledComponents';
 import { PREVIEW_CANVAS_ID, SHAPES_VARIANTS, DEFAULT_IMG_URL, WATERMARK_UNIQUE_KEY } from '../config';
-import { fn } from 'moment';
 
 
 export default class CustomizedCanvas extends Component {
@@ -73,7 +72,7 @@ export default class CustomizedCanvas extends Component {
           addCircle: this.addCircle,
           addText: this.addText,
           updateShape: this.updateShape,
-          updateShapes: this.updateShape,
+          updateShapes: this.updateShapes,
           deleteShape: this.deleteShapeByKeyOrIndex,
           deleteShapes: this.deleteAllShapesOrByType,
           setShapeVisibility: this.setShapeVisibilityByKeyOrIndex,
@@ -512,7 +511,7 @@ export default class CustomizedCanvas extends Component {
 
   addText = ({
     text = 'Text', textSize = 62, color = "#000000", textFont = 'Arial', x = undefined, y = undefined,
-    stroke = {}, opacity = 1.0, ...others
+    stroke = {}, opacity = 1.0, otherStates, ...others
   } = {}) => {
     // Set text style here for measuring the text's widht & hegiht before drawing.
     this.setTextStyle({ textSize, textFont });
@@ -526,14 +525,15 @@ export default class CustomizedCanvas extends Component {
         stroke, color };
       const allArgs = { ...this._initArgs, ...others, ...drawingArgs, width, height, variant: SHAPES_VARIANTS.TEXT };
 
-      if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
+      if (others.key && this.replaceShapeIfExisted(others.key, allArgs, otherStates)) { return; }
 
       this.drawText(drawingArgs);
 
       const index = this.pushShapeToShapes(allArgs);
 
       this.updateState({
-        selectedShape: { ...allArgs, index, resizingBox: true }
+        selectedShape: { ...allArgs, index, resizingBox: true },
+        ...otherStates
       }, this.activateResizingActions);
     }
   }
@@ -545,12 +545,12 @@ export default class CustomizedCanvas extends Component {
     return shapeIndex ? shapes[shapeIndex] : shapes.filter(({ key }) => key === shapeKey)[0];
   }
 
-  replaceShapeIfExisted = (key, args) => {
+  replaceShapeIfExisted = (key, args, otherStates = undefined) => {
     const shape = this.getShapeByKeyOrIndex({ key });
 
     if (shape) {
       args = { ...args, x: shape.x, y: shape.y, width: shape.width, height: shape.height };
-      this.updateShape(args, shape.index)
+      this.updateShape(args, shape.index, otherStates)
 
       return true;
     }

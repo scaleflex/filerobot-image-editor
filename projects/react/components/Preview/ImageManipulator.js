@@ -1032,7 +1032,7 @@ export default class ImageManipulator extends Component {
     console.log(gravityQuery);
 
     queryUrl += processWithCloudimage && text
-    ? `&wat_text=${text.content}&wat_font=${text.font}&wat_fontsize=${text.size}&wat_colour=${text.color.replace('#', '')}`
+    ? `&wat_text=${text.text}&wat_font=${text.textFont}&wat_fontsize=${text.textSize}&wat_colour=${text.color.replace('#', '')}`
     : `&wat_url=${url.split('?')[0]}`;
 
     return queryUrl;
