@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { PreviewCanvas } from '../styledComponents';
-import { PREVIEW_CANVAS_ID, SHAPES_VARIANTS, DEFAULT_IMG_URL } from '../config';
+import { PREVIEW_CANVAS_ID, SHAPES_VARIANTS, DEFAULT_IMG_URL, WATERMARK_UNIQUE_KEY } from '../config';
 import { fn } from 'moment';
 
 
@@ -73,8 +73,9 @@ export default class CustomizedCanvas extends Component {
           addCircle: this.addCircle,
           addText: this.addText,
           updateShape: this.updateShape,
+          updateShapes: this.updateShape,
           deleteShape: this.deleteShapeByKeyOrIndex,
-          deleteShapes: this.deleteShapesByType,
+          deleteShapes: this.deleteAllShapesOrByType,
           setShapeVisibility: this.setShapeVisibilityByKeyOrIndex,
           getShape: this.getShapeByKeyOrIndex
         },
@@ -585,6 +586,12 @@ export default class CustomizedCanvas extends Component {
     return shapesIndicies;
   }
 
+  updateShapes = (updatedData) => {
+    let { shapes } = this.props;
+    shapes = shapes.map(s => ({ ...s, ...updatedData }));
+    this.updateState(shapes);
+  }
+
   updateShape = (updatedData, index, otherStatesToBeUpdated = undefined) => {
     const { shapes, selectedShape } = this.props;
 
@@ -659,7 +666,13 @@ export default class CustomizedCanvas extends Component {
   }
 
   deleteShapeByKeyOrIndex = ({ index, key }) => {
-    if (!index && index !== 0 && !key) { return; }
+    if (!index && index !== 0 && !key) {
+      const { selectedShape } = this.props;
+
+      if (!selectedShape) { return; }
+      
+      index = selectedShape.index;
+    }
 
     const { shapes } = this.props;
     const shapeIndex = index || index === 0 ? index : (this.getShapeByKeyOrIndex({ key }) || {}).index;
@@ -682,8 +695,32 @@ export default class CustomizedCanvas extends Component {
     });
   }
 
-  deleteShapesByType = ({ type }) => {
-    if (!type) { return; }
+  deleteAllShapesOrByType = ({ type, all = false, applied = false, secured = [] }) => {
+    if (!type && !all) { return; }
+
+    if (all) {
+      const watermarkIndex = (this.getShapeByKeyOrIndex({ key: WATERMARK_UNIQUE_KEY }) || {}).index;
+      const securedIndicies = [...secured];
+      if (watermarkIndex && !securedIndicies.includes(watermarkIndex)) {
+        securedIndicies.push(watermarkIndex);
+      }
+      console.log('watermark index', watermarkIndex, 'secured indicies', securedIndicies);
+
+      let shapes = [];
+      this.clearShape(0, 0, this._canvas.width, this._canvas.height);
+      if (!applied) {
+        shapes = this.props.shapes.filter(s => {
+          if (s.applied || securedIndicies.includes(s.index)) {
+            this.drawShapeThroughVariant(s);
+            return s;
+          }
+
+          return false;
+        });
+      }
+      this.updateState({ shapes, selectedShape: {} });
+      return;
+    }
 
     const shapesIndicies = this.getShapesIndexByAnyProp('type', type);
     if (shapesIndicies.length > 0) { this.deleteShapes(shapesIndicies); }

@@ -10,7 +10,7 @@ import {
   getSecretHeaderName,
   getImageSealingParams,
 } from '../../utils';
-import { CLOUDIMAGE_OPERATIONS, PREVIEW_CANVAS_ID, WATER_MARK_UNIQUE_KEY } from '../../config';
+import { CLOUDIMAGE_OPERATIONS, PREVIEW_CANVAS_ID, WATERMARK_UNIQUE_KEY } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
 import '../../utils/canvas-round-rect';
@@ -824,6 +824,12 @@ export default class ImageManipulator extends Component {
     callback();
   }
 
+  applyShapes = () => {
+    const { shapeOperations } = this.props;
+
+    shapeOperations.updateShapes({ applied: true });
+  }
+
   getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`;
 
   destroyFocusPoint = () => {
@@ -932,6 +938,11 @@ export default class ImageManipulator extends Component {
     }
   }
 
+  cancelAddedShapes = () => {
+    const { shapeOperations } = this.props;
+    shapeOperations.deleteShapes({ all: true });
+  }
+
   cancelLastOperation = (activeTab, callback = () => {}) => {
     const { initialZoom } = this.props;
 
@@ -941,6 +952,10 @@ export default class ImageManipulator extends Component {
 
     if (activeTab === 'watermark') {
       this.cancelWatermark();
+    }
+
+    if (activeTab === 'add') {
+      this.cancelAddedShapes();
     }
 
     if (initialZoom !== 1) {
@@ -1001,7 +1016,7 @@ export default class ImageManipulator extends Component {
   getWatermarkArguments = (watermark) => {
     // TODO: Should be used throug hthe getShape only and remove watermark object.
     const { config: { processWithCloudimage }, shapeOperations } = this.props;
-    const { x, y } = shapeOperations.getShape({ key: WATER_MARK_UNIQUE_KEY });
+    const { x, y } = shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY });
     const {
       original: { width: imgWidth, height: imgHeight } = {}
     } = this.state;
@@ -1073,6 +1088,9 @@ export default class ImageManipulator extends Component {
         break;
       case 'focus_point':
         this.applyFocusPoint(callback);
+        break;
+      case 'add':
+        this.applyShapes();
         break;
       default:
         break;

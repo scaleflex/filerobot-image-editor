@@ -18,22 +18,9 @@ const ItemsWrapper = styled.div`
   height: 100%;
   margin-left: auto;
   margin-right: auto;
-  ${p => p.shapeAdded && `
-    flex-direction: column;
-    overflow-y: auto !important;
-    display: inline-block;
-    margin: 0;
-    @media (max-width: 768px) {
-      height: 125px;
-    }
-  `}
   
   ::-webkit-scrollbar {
     height: 10px !important;
-    ${p => p.shapeAdded && `
-      background-color: rgba(0, 0, 0, 0.15);
-      border-radius: 5px;
-    `}
   }
    
   ::-webkit-scrollbar-thumb {
@@ -49,7 +36,6 @@ const ItemsWrapper = styled.div`
 `;
 
 const SettingsWrapper = styled.div`
-  flex-grow: 1;
   height: 100%;
   padding: 0 15px;
   display: flex;
@@ -58,7 +44,6 @@ const SettingsWrapper = styled.div`
 
 const ItemGroup = styled.div`
   padding: 8px 25px;
-  ${p => p.selected && `background-color: rgba(0, 0, 0, 0.2);`}
 
   * {
     cursor: pointer;

@@ -140,11 +140,12 @@ export default class Add extends Component {
 
     return (
       <AddWrapper>
-        <ItemsWrapper shapeAdded={isShapeSelected}>
+        {isShapeSelected === 0 ? (
+        <ItemsWrapper>
           {availableShapes.map((
             { label, content, iconStyles, drawFn, iconUrl, variant }
             ) => (
-              <ItemGroup key={label} onClick={() => drawFn()} selected={variant === selectedShape.variant}>
+              <ItemGroup key={label} onClick={() => drawFn()}>
                 <ItemIcon style={iconStyles} isIconNotProvided={!Boolean(content || iconUrl || iconStyles)}>
                   {content
                     || (iconUrl
@@ -159,7 +160,7 @@ export default class Add extends Component {
             )
           }
         </ItemsWrapper>
-        {isShapeSelected > 0 && (
+        ) : (
           <SettingsWrapper>
             {this.renderSettings(selectedShape)}
           </SettingsWrapper>
