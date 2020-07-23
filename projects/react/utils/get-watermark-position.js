@@ -6,7 +6,7 @@ export const getWatermarkPosition = (position = 'center', canvas, width, height)
   if (position === 'center') {
     return [centerPositionX, centerPositionY];
   }
-console.log(canvas);
+
   position = position.split('-');
 
   const rightPosition = canvasRect.width - width;
