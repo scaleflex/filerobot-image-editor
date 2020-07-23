@@ -71,6 +71,7 @@ export default class CustomizedCanvas extends Component {
           addRect: this.addRect,
           addCircle: this.addCircle,
           addText: this.addText,
+          checkAndAddAny: this.addAnyShape,
           updateShape: this.updateShape,
           updateShapes: this.updateShapes,
           deleteShape: this.deleteShapeByKeyOrIndex,
@@ -260,6 +261,14 @@ export default class CustomizedCanvas extends Component {
         width <= minWidthAndHeight
       ) { return; }
 
+    // Limiting the dragging to be inside the canvas only.
+    if (x < 0) { x = 0 }
+    if (y < 0) { y = 0 }
+    if (x + width > this._canvas.width) { x = this._canvas.width - width }
+    if (y + height > this._canvas.height) { y = this._canvas.height - height }
+    if (width > this._canvas.width) { width = this._canvas.width }
+    if (height > this._canvas.height) { height = this._canvas.height }
+
     const updatedShape = { width, height, x, y };
 
     if (variant === SHAPES_VARIANTS.TEXT) { updatedShape.maxWidth = width; }
@@ -364,7 +373,7 @@ export default class CustomizedCanvas extends Component {
         return shape;
       });
 
-      this.updateState({ shapes }, () => this.updateState({ selectedShape: { ...currentShape } }));
+      this.updateState({ shapes, selectedShape: currentShape });
     } else {
       shapes.forEach((shape) => this.drawShapeThroughVariant(shape));
     }
@@ -473,7 +482,7 @@ export default class CustomizedCanvas extends Component {
     }, this.activateResizingActions);
   }
 
-  addImage = ({ img, x = undefined, y = undefined, opacity = 1.0, stroke = {}, ...others } = {}) => {
+  addImage = ({ img, x = undefined, y = undefined, opacity = 1.0, stroke = {}, otherStates, ...others } = {}) => {
     if(img) {
       const addIt = () => {
         const width = img.width;
@@ -491,14 +500,15 @@ export default class CustomizedCanvas extends Component {
 
         const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant: SHAPES_VARIANTS.IMAGE };
 
-        if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
+        if (others.key && this.replaceShapeIfExisted(others.key, allArgs, otherStates)) { return; }
 
         this.drawImage(drawingArgs);
 
         const index = this.pushShapeToShapes(allArgs);
 
         this.updateState({
-          selectedShape: { ...allArgs, index, resizingBox: true }
+          selectedShape: { ...allArgs, index, resizingBox: true },
+          ...otherStates
         }, this.activateResizingActions);
       }
 
@@ -535,6 +545,15 @@ export default class CustomizedCanvas extends Component {
         selectedShape: { ...allArgs, index, resizingBox: true },
         ...otherStates
       }, this.activateResizingActions);
+    }
+  }
+
+  addAnyShape = (shapeArgs) => {
+    if (shapeArgs.index || shapeArgs.index === 0) {
+      this.updateShape(shapeArgs.index);
+    } else {
+      shapeArgs.index = this.pushShapeToShapes(shapeArgs);
+      this.drawShapeThroughVariant(shapeArgs);
     }
   }
 
@@ -589,7 +608,7 @@ export default class CustomizedCanvas extends Component {
   updateShapes = (updatedData) => {
     let { shapes } = this.props;
     shapes = shapes.map(s => ({ ...s, ...updatedData }));
-    this.updateState(shapes);
+    this.updateState({ shapes });
   }
 
   updateShape = (updatedData, index, otherStatesToBeUpdated = undefined) => {
@@ -627,8 +646,8 @@ export default class CustomizedCanvas extends Component {
         const metrics = this._context.measureText(updatedData.text || 'Text');
         updatedData.width = updates.selectedShape.width = metrics.width;
         updatedData.height
-        = updates.selectedShape.height 
-        = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+          = updates.selectedShape.height 
+          = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
       }
       
       latestShapes[index] = { ...latestShapes[index], ...updatedData };
@@ -665,9 +684,10 @@ export default class CustomizedCanvas extends Component {
     return newShapes;
   }
 
-  deleteShapeByKeyOrIndex = ({ index, key }) => {
+  deleteShapeByKeyOrIndex = ({ index, key }, otherStates = {}) => {
+    const { selectedShape } = this.props;
+
     if (!index && index !== 0 && !key) {
-      const { selectedShape } = this.props;
 
       if (!selectedShape) { return; }
       
@@ -678,8 +698,10 @@ export default class CustomizedCanvas extends Component {
     const shapeIndex = index || index === 0 ? index : (this.getShapeByKeyOrIndex({ key }) || {}).index;
 
     if (shapeIndex || shapeIndex === 0) {
+      if (shapeIndex === selectedShape.index) { otherStates.selectedShape = {} }
       this.updateState({
-        shapes: this.eraseAndRemoveShapeFromArray(shapeIndex, shapes)
+        shapes: this.eraseAndRemoveShapeFromArray(shapeIndex, shapes),
+        ...otherStates
       });
     }
   }
@@ -701,10 +723,9 @@ export default class CustomizedCanvas extends Component {
     if (all) {
       const watermarkIndex = (this.getShapeByKeyOrIndex({ key: WATERMARK_UNIQUE_KEY }) || {}).index;
       const securedIndicies = [...secured];
-      if (watermarkIndex && !securedIndicies.includes(watermarkIndex)) {
+      if ((watermarkIndex || watermarkIndex === 0) && !securedIndicies.includes(watermarkIndex)) {
         securedIndicies.push(watermarkIndex);
       }
-      console.log('watermark index', watermarkIndex, 'secured indicies', securedIndicies);
 
       let shapes = [];
       this.clearShape(0, 0, this._canvas.width, this._canvas.height);

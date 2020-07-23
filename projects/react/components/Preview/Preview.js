@@ -3,7 +3,7 @@ import { PreviewImgBox } from '../../styledComponents';
 import ImageManipulator from './ImageManipulator';
 import FocusPointPreview from './FocusPointPreview';
 import CustomizedCanvas from '../CustomizedCanvas';
-import { WATERMARK_UNIQUE_KEY } from '../../config';
+import { getCanvasNode } from '../../utils';
 
 export default class extends Component {
   render() {
@@ -13,7 +13,7 @@ export default class extends Component {
     } = this.props;
 
     const { applyByDefault } = watermark;
-    const canvas = window.document.getElementById('scaleflex-image-edit-box');
+    const canvas = getCanvasNode();
     const canvasRect = canvas && canvas.getBoundingClientRect() || {};
     
     return (

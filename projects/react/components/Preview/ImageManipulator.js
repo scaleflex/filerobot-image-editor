@@ -416,7 +416,7 @@ export default class ImageManipulator extends Component {
 
     if (watermarkOperation) {
       watermarkQuery = ((cropQuery || resizeQuery || orientationQuery) ? '&' : '') +
-        this.getWatermarkArguments(watermark);
+        this.getWatermarkArguments();
     }
 
     if (focusPointOperation) {
@@ -995,7 +995,8 @@ export default class ImageManipulator extends Component {
 
   cancelWatermark = () => {
     const { tempWatermark } = this.state;
-    const { updateState } = this.props;
+    const { updateState, shapeOperations } = this.props;
+    const watermarkLayer = shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY });
     let logoImage = null;
 
     if (tempWatermark && tempWatermark.url && tempWatermark.applyByDefault) {
@@ -1006,22 +1007,24 @@ export default class ImageManipulator extends Component {
       logoImage.src = tempWatermark.url + '?' + new Date().getTime();
 
       logoImage.onload = () => {
-        updateState({ watermark: tempWatermark, logoImage, isShowSpinner: false });
+        shapeOperations.updateShape(
+          { img: logoImage, },
+          watermarkLayer.index,
+          { watermark: tempWatermark, logoImage, isShowSpinner: false }
+        );
       };
     } else {
-      updateState({ watermark: tempWatermark, logoImage });
+      shapeOperations.deleteShape({ index: watermarkLayer.index }, { watermark: tempWatermark, logoImage });
     }
   }
 
-  getWatermarkArguments = (watermark) => {
-    // TODO: Should be used throug hthe getShape only and remove watermark object.
+  getWatermarkArguments = () => {
     const { config: { processWithCloudimage }, shapeOperations } = this.props;
-    const { x, y } = shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY });
+    const { x, y, ...watermark } = shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY });
     const {
       original: { width: imgWidth, height: imgHeight } = {}
     } = this.state;
     const { width: canvasWidth, height: canvasHeight } = getCanvasNode(PREVIEW_CANVAS_ID);
-    const { url, opacity, text } = watermark;
 
     const xWatPad = Math.round(x.map(0, canvasWidth, 0, imgWidth));
     const yWatPad = Math.round(y.map(0, canvasHeight, 0, imgHeight));
@@ -1031,37 +1034,12 @@ export default class ImageManipulator extends Component {
     let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=31p${gravityQuery}`;
     console.log(gravityQuery);
 
-    queryUrl += processWithCloudimage && text
-    ? `&wat_text=${text.text}&wat_font=${text.textFont}&wat_fontsize=${text.textSize}&wat_colour=${text.color.replace('#', '')}`
-    : `&wat_url=${url.split('?')[0]}`;
+    queryUrl += processWithCloudimage && watermark.text
+    ? `&wat_text=${watermark.text}&wat_font=${watermark.textFont}&wat_fontsize=${watermark.textSize}&wat_colour=${watermark.color.replace('#', '')}`
+    : `&wat_url=${watermark.src.split('?')[0]}`;
 
     return queryUrl;
   };
-
-
-  // TODO: Should be removed from here & other position functions everywhere else.
-  // getCloudimagePositionQuery = (position) => {
-  //   switch (position) {
-  //     case "left-top":
-  //       return 'northwest';
-  //     case "center-top":
-  //       return 'north';
-  //     case "right-top":
-  //       return 'northeast';
-  //     case "left-center":
-  //       return 'west';
-  //     case "center":
-  //       return '';
-  //     case "right-center":
-  //       return 'east';
-  //     case "left-bottom":
-  //       return 'southwest';
-  //     case "center-bottom":
-  //       return 'south';
-  //     case "right-bottom":
-  //       return 'southeast';
-  //   }
-  // };
 
   applyChanges = (activeTab, callback) => {
     switch (activeTab) {

@@ -18,6 +18,7 @@ import { debounce } from 'throttle-debounce';
 import Range from '../Range';
 import Select from '../Shared/Select';
 import { WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET, WATERMARK_STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS, WATERMARK_UNIQUE_KEY } from '../../config';
+import { getWatermarkPosition, getCanvasNode } from '../../utils';
 
 
 export default class extends Component {
@@ -63,6 +64,8 @@ export default class extends Component {
       })
     }
 
+    this.initWatermarkImage(url);
+
     this.state = {
       isBlockRatio: false,
       opacity: opacity || 0.7,
@@ -89,17 +92,25 @@ export default class extends Component {
       this.onPositionChange(this.state.position);
     }
     if (nextProps.watermark.applyByDefault !== this.props.watermark.applyByDefault) {
-      if (this.props.watermark.logoImage) {
-        this.updateWatermarkProperty({ applyByDefault: false }, { hidden: true }, { applyByDefault: false });
+      if (this.getWatermarkLayer()) {
+        this.updateWatermarkProperty(
+          { applyByDefault: false },
+          { hidden: true, resizingBox: false },
+          { applyByDefault: false }
+        );
       } else {
         this.setState({ applyByDefault: nextProps.watermark.applyByDefault });
       }
 
       if (nextProps.watermark.applyByDefault) {
-        if (!this.props.watermark.logoImage) {
+        if (!this.getWatermarkLayer()) {
           this.initWatermarkImage(nextProps.watermark.url);
         } else {
-          this.updateWatermarkProperty({ applyByDefault: true }, { hidden: false }, { applyByDefault: true });
+          this.updateWatermarkProperty(
+            { applyByDefault: true },
+            { hidden: false, resizingBox: true },
+            { applyByDefault: true }
+          );
         }
       }
     }
@@ -114,20 +125,26 @@ export default class extends Component {
     if (!shapeData) { shapeData = data }
     if (!watermarkObjectData) { watermarkObjectData = data }
 
-    const watermark = this.getWatermarkLayer(shapeOperations);
+    const watermark = this.getWatermarkLayer();
     this.setState(data, () => {
       shapeOperations.updateShape(shapeData, watermark.index,
       {
         watermark: {
           ...this.props.watermark,
           ...watermarkObjectData
+        },
+        selectedShape: {
+          ...this.props.selectedShape,
+          ...shapeData,
+          // resizingBox: true
         }
       });
     });
   }
 
-  getWatermarkLayer = (operations) => {
-    return operations.getShape({ key: WATERMARK_UNIQUE_KEY });
+  getWatermarkLayer = () => {
+    const { shapeOperations } = this.props;
+    return shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY });
   }
 
   changeURL = (event) => {
@@ -171,6 +188,11 @@ export default class extends Component {
             text: {
               ...newWatermarkData
             },
+          },
+          selectedShape: {
+            ...this.props.selectedShape,
+            ...newWatermarkData,
+            resizingBox: true
           }
         }
       });
@@ -193,14 +215,9 @@ export default class extends Component {
   }
 
   onPositionChange = value => {
-    this.setState({ position: value }, () => {
-      this.props.updateState({
-        watermark: {
-          ...this.props.watermark,
-          position: value
-        }
-      });
-    });
+    const { width, height } = this.getWatermarkLayer();
+    const [x, y] = getWatermarkPosition(value, getCanvasNode(), width, height);
+    this.updateWatermarkProperty({ position: value }, { x, y }, { position: value, x, y });
   }
 
   initWatermarkImage = debounce(500, (url) => {
@@ -216,6 +233,7 @@ export default class extends Component {
 
     if (url) {
       const { shapeOperations } = this.props;
+      const { opacity } = this.state;
 
       logoImage = new Image();
       logoImage.setAttribute('crossOrigin', 'Anonymous');
@@ -230,7 +248,7 @@ export default class extends Component {
           updateImageState(logoImage);
         }
 
-        shapeOperations.addImage({ img: logoImage, key: WATERMARK_UNIQUE_KEY });
+        shapeOperations.addImage({ img: logoImage, opacity, key: WATERMARK_UNIQUE_KEY });
       }
 
       logoImage.onerror = () => {
