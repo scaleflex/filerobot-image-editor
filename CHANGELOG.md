@@ -26,6 +26,10 @@ Types of changes:
 
 -------------
 
+## 3.9.4 - 2020-07-24
+### Fixed
+- go back button visibility
+
 ## 3.9.3 - 2020-06-18
 ### Fixed
 - image sealing
