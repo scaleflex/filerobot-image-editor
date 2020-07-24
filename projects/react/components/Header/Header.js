@@ -29,12 +29,12 @@ export default class extends Component {
 
         <ToolbarWrapper overlayYHidden={activeTab !== 'watermark'}>
           <ActionsWrapper>
-            <LeftActions hide={!activeTab}>
-              <CancelBtn onClick={isOneTool ? onClose : onRevert} sm default fullSize>
+            <LeftActions>
+              <CancelBtn hide={!activeTab} onClick={isOneTool ? onClose : onRevert} sm default fullSize>
                 {t[`toolbar.cancel`]}
               </CancelBtn>
               {showGoBackBtn &&
-              <CancelBtn hide={activeTab} onClick={onClose} sm default fullSize>{t[`toolbar.go_back`]}</CancelBtn>}
+              <CancelBtn onClick={onClose} sm default fullSize>{t[`toolbar.go_back`]}</CancelBtn>}
             </LeftActions>
 
             {activeBody === 'preview' &&
