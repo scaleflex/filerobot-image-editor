@@ -71,7 +71,7 @@ export default class CustomizedCanvas extends Component {
           addRect: this.addRect,
           addCircle: this.addCircle,
           addText: this.addText,
-          checkAndAddAny: this.addAnyShape,
+          addOrUpdate: this.addAnyShape,
           updateShape: this.updateShape,
           updateShapes: this.updateShapes,
           deleteShape: this.deleteShapeByKeyOrIndex,
@@ -93,7 +93,7 @@ export default class CustomizedCanvas extends Component {
     updateState(data, callback);
   }
 
-  pushShapeToShapes = (newShape) => {
+  pushShapeToShapes = (newShape, otherStates) => {
     const { shapes } = this.props;
     const shapeIndex = shapes.length;
 
@@ -104,7 +104,8 @@ export default class CustomizedCanvas extends Component {
           ...newShape,
           index: shapeIndex
         }
-      ]
+      ],
+      ...otherStates
     });
 
     return shapeIndex;
@@ -548,11 +549,11 @@ export default class CustomizedCanvas extends Component {
     }
   }
 
-  addAnyShape = (shapeArgs) => {
+  addAnyShape = (shapeArgs, otherStates) => {
     if (shapeArgs.index || shapeArgs.index === 0) {
-      this.updateShape(shapeArgs.index);
+      this.updateShape(shapeArgs, shapeArgs.index ,otherStates);
     } else {
-      shapeArgs.index = this.pushShapeToShapes(shapeArgs);
+      shapeArgs.index = this.pushShapeToShapes(shapeArgs, otherStates);
       this.drawShapeThroughVariant(shapeArgs);
     }
   }
@@ -670,8 +671,9 @@ export default class CustomizedCanvas extends Component {
   }
   
   eraseAndRemoveShapeFromArray = (index, shapes) => {
-    const { x, y, width, height, stroke = {} } = this.targettedShape(index);
-    this.clearShape(x, y, width, height, stroke);
+    if (Object.keys(this.targettedShape(index)).length === 0) { return; }
+
+    this.clearShape(0, 0, this._canvas.width, this._canvas.height);
     
     const newShapes = shapes.filter(shape => {
       if (shape.index === index) { return false; }

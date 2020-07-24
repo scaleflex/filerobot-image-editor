@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AddWrapper, ItemsWrapper, SettingsWrapper, ItemGroup, ItemIcon, FieldGroup, FieldCustomLabel } from '../../styledComponents/Add.ui';
-import { SHAPES_VARIANTS, WATERMARK_STANDARD_FONTS } from '../../config';
+import { SHAPES_VARIANTS, STANDARD_FONTS } from '../../config';
 import { FieldInput } from '../../styledComponents';
 import Range from '../Range';
 import Select from '../Shared/Select';
@@ -86,15 +86,15 @@ export default class Add extends Component {
             </FieldGroup>
             <FieldGroup>
               <FieldCustomLabel>Font family</FieldCustomLabel>
-              <Select
-                //  TODO: Separate the fonts from watermark's.
-                list={WATERMARK_STANDARD_FONTS}
+            <Select
+                list={STANDARD_FONTS}
                 valueProp="value"
                 id="textFont"
                 value={selectedShape.textFont || 'Arial'}
                 style={{ width: 111 }}
                 onChange={(value) => updatePropertyFromEvent({ target: { name: 'textFont', value }})}
                 color="text-font"
+                notRelativePosition
               />
             </FieldGroup>
             <FieldGroup>
@@ -118,7 +118,7 @@ export default class Add extends Component {
             <FieldCustomLabel>URL</FieldCustomLabel>
             <FieldInput
               id="img"
-              value={(selectedShape.img || {}).src || ''}
+              value={(typeof selectedShape.img === 'object') ? selectedShape.img.src : selectedShape.img || ''}
               name="img"
               style={{ minWidth: 111 }}
               onChange={updatePropertyFromEvent}
@@ -143,7 +143,7 @@ export default class Add extends Component {
         {isShapeSelected === 0 ? (
         <ItemsWrapper>
           {availableShapes.map((
-            { label, content, iconStyles, drawFn, iconUrl, variant }
+            { label, content, iconStyles, drawFn, iconUrl }
             ) => (
               <ItemGroup key={label} onClick={() => drawFn()}>
                 <ItemIcon style={iconStyles} isIconNotProvided={!Boolean(content || iconUrl || iconStyles)}>

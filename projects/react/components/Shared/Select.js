@@ -85,7 +85,7 @@ class Select extends Component {
     const { isOpened } = this.state;
     const {
       value, list, valueProp = 'id', labelProp = 'label', renderLabel, width = '', styles = {}, display,
-      style, labelDescription = '', size, small = false
+      style, labelDescription = '', size, small = false, notRelativePosition = false
     } = this.props;
     const getLabel = (item) =>
       item[labelProp] && renderLabel ?
@@ -93,7 +93,7 @@ class Select extends Component {
         item[labelProp];
 
     return (
-      <SelectWrapper width={width} display={display} styles={styles} style={style}>
+      <SelectWrapper width={width} display={display} styles={styles} style={style} notRelativePosition={notRelativePosition}>
 
         <SelectedItem
           as="div"
@@ -104,12 +104,14 @@ class Select extends Component {
           notSelected={!value}
           onClick={this.toggleMenu}
           ref={(node) => { this.selectedItem = node; }}
+          relativePosition={notRelativePosition}
         >{this.getValue(value)} {labelDescription ? `(${labelDescription})` : ''}</SelectedItem>
 
         <SelectDropdown
           size={size}
           show={isOpened && this.filterList(list).length}
           ref={(node) => { this.dropdown = node; }}
+          limitedWidth={notRelativePosition}
         >
           {this.filterList(list).map(item => (
             <SelectDropdownItem
@@ -128,7 +130,7 @@ class Select extends Component {
 }
 
 const SelectWrapper = styled.div`
-  position: relative;
+  ${p => !p.notRelativePosition && `position: relative;`};
   display: ${p => p.display ? p.display : p.width ? 'inline-block' : 'block'};
   width: ${p => p.width || 'auto'};
   text-align: ${p => p.styles.textAlign ? p.styles.textAlign : 'left'};
@@ -138,6 +140,7 @@ const SelectedItem = styled(FileInput).attrs()`
   width: 100%;
   padding: 9px 12px;
   cursor: pointer;
+  ${p => p.relativePosition && `position: relative;`}
   
   :hover {
     opacity: ${p => p.styles.opacity && 1};
@@ -165,7 +168,7 @@ const SelectDropdown = styled.ul`
   padding: 0;
   position: absolute;
   background: #fff;
-  width: 100%;
+  width: ${p => p.limitedWidth ? '111px' : '100%'};
   border: none;
   color: ${p => p.theme.colors.text};
   background: ${p => p.theme.colors.primaryBg};

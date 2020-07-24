@@ -17,7 +17,7 @@ import {
 import { debounce } from 'throttle-debounce';
 import Range from '../Range';
 import Select from '../Shared/Select';
-import { WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET, WATERMARK_STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS, WATERMARK_UNIQUE_KEY } from '../../config';
+import { WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET, STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS, WATERMARK_UNIQUE_KEY, SHAPES_VARIANTS } from '../../config';
 import { getWatermarkPosition, getCanvasNode } from '../../utils';
 
 
@@ -82,7 +82,7 @@ export default class extends Component {
       color: '#000000',
       textSize: 62,
       textFont: 'Arial',
-      fonts: fonts || WATERMARK_STANDARD_FONTS,
+      fonts: fonts || STANDARD_FONTS,
     }
   }
 
@@ -127,7 +127,7 @@ export default class extends Component {
 
     const watermark = this.getWatermarkLayer();
     this.setState(data, () => {
-      shapeOperations.updateShape(shapeData, watermark.index,
+      shapeOperations.addOrUpdate({ ...shapeData, index: watermark.index },
       {
         watermark: {
           ...this.props.watermark,
@@ -160,7 +160,6 @@ export default class extends Component {
 
   changeTextProperty = (event) => {
     const updatedProperty = { [event.target.name]: event.target.value };
-    const { shapeOperations } = this.props;
 
     if (this.props.watermark.text) {
       this.updateWatermarkProperty(updatedProperty);
@@ -175,28 +174,15 @@ export default class extends Component {
       textSize,
       textFont,
       opacity,
+      variant: SHAPES_VARIANTS.TEXT,
       ...updatedProperty
     };
 
-    this.setState({ ...updatedProperty }, () => {
-      shapeOperations.addText({
-        ...newWatermarkData,
-        key: WATERMARK_UNIQUE_KEY,
-        otherStates: {
-          watermark: {
-            ...this.props.watermark, 
-            text: {
-              ...newWatermarkData
-            },
-          },
-          selectedShape: {
-            ...this.props.selectedShape,
-            ...newWatermarkData,
-            resizingBox: true
-          }
-        }
-      });
-    })
+    this.updateWatermarkProperty(
+      { ...updatedProperty },
+      { ...newWatermarkData, resizingBox: true },
+      { text: { ...this.props.watermark.text, ...newWatermarkData } },
+    );
   }
 
   readFile = (event) => {
