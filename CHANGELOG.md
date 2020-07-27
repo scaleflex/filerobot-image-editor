@@ -26,6 +26,13 @@ Types of changes:
 
 -------------
 
+## 3.9.5 - 2020-07-27
+### Fixed
+- FocusPoint console error
+
+### Changed
+/ FocusPointPreview improvements (sizes)
+
 ## 3.9.4 - 2020-07-24
 ### Fixed
 - go back button visibility
