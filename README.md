@@ -393,6 +393,12 @@ Add custom templates for resize. [See the example here](https://github.com/scale
 ### `beginCropArea`: number | [0-1] - default: 1 (image size)
 The crop area size shown/used automatically on starting crop.
 
+### `showGoBackBtn`: bool 
+
+**default**: false
+
+Display back button all the time, duplication of cross button
+
 ## <a name="filerobot_integration"></a>Filerobot Integration
 
 Upload the image in your Filerobot storage container, edit it in the Image Editor and upload the result.
