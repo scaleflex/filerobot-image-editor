@@ -26,6 +26,10 @@ Types of changes:
 
 -------------
 
+## 3.9.6 - 2020-07-28
+### Changed
+- move back button into config
+
 ## 3.9.5 - 2020-07-27
 ### Fixed
 - FocusPoint console error
