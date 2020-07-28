@@ -43,6 +43,7 @@ ImageEditorDownload = new FilerobotImageEditor({
       handleOpacity: true,
       fileUpload: true,
     },
+    showGoBackBtn: false
     //cropPresets: [
     //  { name: 'square', value: 1 },
     //  { name: 'half-page ad', value: 300 / 600 },

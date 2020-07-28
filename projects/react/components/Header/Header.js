@@ -10,10 +10,10 @@ import { toggleModalFullscreen } from '../../utils/full-screen-handle';
 export default class extends Component {
   render() {
     const {
-      activeTab, onRevert, apply, onClose, showGoBackBtn, processWithCloudService, processWithFilerobot,
+      activeTab, onRevert, apply, onClose, processWithCloudService, processWithFilerobot,
       handleSave, activeBody, t, config
     } = this.props;
-    const { tools } = config;
+    const { tools, showGoBackBtn } = config;
     const isOneTool = tools.length === 1;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
     const onFinishButtonLabel = (!processWithCloudService && !processWithFilerobot) ? t['toolbar.download'] : t['toolbar.save'];

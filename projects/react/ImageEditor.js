@@ -359,7 +359,7 @@ export default class extends Component {
       watermark,
       focusPoint
     } = this.state;
-    const { src, config, onClose, onComplete, closeOnLoad = true, showGoBackBtn = false, t = {}, theme } = this.props;
+    const { src, config, onClose, onComplete, closeOnLoad = true, t = {}, theme } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
     const headerProps = {
       t,
@@ -379,7 +379,6 @@ export default class extends Component {
       operationsZoomed,
       initialZoom,
       isShowSpinner,
-      showGoBackBtn,
       img,
       logoImage,
       imageName,
