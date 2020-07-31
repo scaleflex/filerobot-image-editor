@@ -408,8 +408,14 @@ function getIconByName(name) {
     case 'focus_point':
       char = '\\e919';
       break;
-    case 'add':
+    case 'shapes':
       char = '\\002B';
+      break;
+    case 'image':
+      char = '\\e918';
+      break;
+    case 'text':
+      char = 'T';
       break;
     default:
       return;

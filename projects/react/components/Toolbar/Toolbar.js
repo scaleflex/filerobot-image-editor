@@ -9,7 +9,9 @@ import Orientation from './Orientation';
 import Adjust from './Adjust';
 import Watermark from './Watermark';
 import FocusPoint from './FocusPoint';
-import Add from './Add';
+import Shapes from './Shapes';
+import Image from './Image';
+import Text from './Text';
 
 
 export default class extends Component {
@@ -28,7 +30,9 @@ export default class extends Component {
         {activeTab === 'resize' && <Resize {...this.props}/>}
         {activeTab === 'watermark' && <Watermark {...this.props}/>}
         {activeTab === 'focus_point' && <FocusPoint {...this.props}/>}
-        {activeTab === 'add' && <Add {...this.props}/>}
+        {activeTab === 'shapes' && <Shapes {...this.props}/>}
+        {activeTab === 'image' && <Image {...this.props}/>}
+        {activeTab === 'text' && <Text {...this.props}/>}
         {(isShowSpinner) && <NoClickOverlay/>}
         {activeBody !== 'preview' && <NoClickToolbar/>}
       </Toolbar>

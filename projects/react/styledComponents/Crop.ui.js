@@ -72,6 +72,10 @@ const FieldInput = styled.input.attrs(props => ({
   border: 0px solid transparent;
   font-family: Roboto, sans-serif;
   
+  ${p => p.type === 'number' && `::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }`}
+  
   :hover {
     outline: none;
   }

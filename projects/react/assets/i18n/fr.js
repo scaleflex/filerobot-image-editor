@@ -13,7 +13,9 @@ export default {
   'toolbar.resize': 'Redimensionner',
   'toolbar.watermark': 'Watermark',
   'toolbar.focus_point': 'Focus point', // TODO translate
-  'toolbar.add': 'Add',// TODO translate
+  'toolbar.shapes': 'Shapes',// TODO translate
+  'toolbar.image': 'Image',// TODO translate
+  'toolbar.text': 'Text',// TODO translate
   'adjust.brightness': 'Luminosité',
   'adjust.contrast': 'Contraste',
   'adjust.exposure': 'Exposition',

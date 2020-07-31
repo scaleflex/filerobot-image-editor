@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { PreviewCanvas } from '../styledComponents';
-import { PREVIEW_CANVAS_ID, SHAPES_VARIANTS, DEFAULT_IMG_URL, WATERMARK_UNIQUE_KEY } from '../config';
+import { PREVIEW_CANVAS_ID, SHAPES_VARIANTS, WATERMARK_UNIQUE_KEY } from '../config';
 
 
 export default class CustomizedCanvas extends Component {
@@ -31,14 +31,14 @@ export default class CustomizedCanvas extends Component {
         {
           label: 'Rectangle',
           variant: SHAPES_VARIANTS.RECT,
-          iconStyles: { height: 50, width: 75, border: '1px solid #fff' },
+          iconStyles: { height: 50, width: 100, border: '1px solid #fff' },
           drawFn: this.addRect,
         },
         {
           label: 'Square',
           variant: SHAPES_VARIANTS.SQUARE,
           iconStyles: { border: '1px solid #fff' },
-          drawFn: (props) => this.addRect({ width: 75, height: 75, ...props }),
+          drawFn: (props) => this.addSquare({ width: 75, height: 75, ...props }),
           // iconUrl: undefined,
         },
         {
@@ -47,18 +47,6 @@ export default class CustomizedCanvas extends Component {
           iconStyles: { border: '1px solid #fff', borderRadius: '50%' },
           drawFn: this.addCircle
           // iconUrl: undefined,
-        },
-        {
-          label: 'Image',
-          variant: SHAPES_VARIANTS.IMAGE,
-          drawFn: () => this.addImage({ img: DEFAULT_IMG_URL })
-        },
-        {
-          label: 'Text',
-          variant: SHAPES_VARIANTS.TEXT,
-          iconStyles: { fontSize: '2.7rem', fontWeight: 'bold' },
-          drawFn: this.addText,
-          content: 'T'
         },
         // TODO: Giving the consumer the chance to add more shapes with its draw fns. from props.
         // TODO: Supporting the shapes for expanding & Add expandShapes to readme.
@@ -75,9 +63,10 @@ export default class CustomizedCanvas extends Component {
           updateShape: this.updateShape,
           updateShapes: this.updateShapes,
           deleteShape: this.deleteShapeByKeyOrIndex,
-          deleteShapes: this.deleteAllShapesOrByType,
+          deleteShapes: this.deleteAllShapesOrByTypeOrIndicies,
           setShapeVisibility: this.setShapeVisibilityByKeyOrIndex,
-          getShape: this.getShapeByKeyOrIndex
+          getShape: this.getShapeByKeyOrIndex,
+          getShapesIndicies: this.getShapesIndexByAnyProp
         },
         availableShapes
       });
@@ -122,7 +111,8 @@ export default class CustomizedCanvas extends Component {
     shapes.forEach(
       (shape) => {
         if (
-            offsetX >= shape.x
+            !shape.hidden
+            && offsetX >= shape.x
             && offsetX <= shape.x + shape.width
             && offsetY >= shape.y
             && offsetY <= shape.y + shape.height
@@ -194,8 +184,10 @@ export default class CustomizedCanvas extends Component {
 
     if (
       !resizeControlTarget ||
-      (variant === SHAPES_VARIANTS.TEXT && movementY)
+      (variant === SHAPES_VARIANTS.TEXT)
     ) { return; }
+
+    const oldHeight = height;
     
     const { direction } = resizeControlTarget.dataset;
     const keepShapeRatio = (sameAxesIncSign) => {
@@ -254,6 +246,10 @@ export default class CustomizedCanvas extends Component {
       break;
       default:
       return;
+    }
+
+    if (variant === SHAPES_VARIANTS.SQUARE || variant === SHAPES_VARIANTS.CIRCLE) {
+      if (height !== oldHeight) { width = height;} else { height = width; }
     }
 
     const minWidthAndHeight = 15;
@@ -434,6 +430,15 @@ export default class CustomizedCanvas extends Component {
     this._context.font = `${textSize}px ${textFont}`;
   }
 
+  getTextWidthAndHeight = ({ text, textSize, textFont }) => {
+    this.setTextStyle({ textSize, textFont });
+    const metrics = this._context.measureText(text);
+    const { width } = metrics;
+    const height = width === 0 ? 0 : metrics.actualBoundingBoxDescent - metrics.actualBoundingBoxAscent;
+
+    return [width, height];
+  }
+
   // TODO: Make text shrinkable & expandable for height & width by scale, currently it's for width through max width.
   drawText = ({ text, textSize, textFont, maxWidth, x, y, stroke, ...others })  => {
     this.draw(() => {
@@ -447,11 +452,12 @@ export default class CustomizedCanvas extends Component {
 
   // TODO: add other shapes variants...
 
-  addRect = ({ x, y, width = 100, height = 75, stroke = {}, color = '#000000', opacity = 1.0, ...others } = {}) => {
+  addRect = ({ x, y, width = 100, height = 75, stroke = {}, color = '#000000',
+    opacity = 1.0, variant = SHAPES_VARIANTS.RECT, ...others } = {}) => {
     const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
     const drawingArgs = { x: x || centerX, y: y || centerY, width, height, stroke, opacity, color };
-    const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant: SHAPES_VARIANTS.RECT };
+    const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant };
 
     if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
 
@@ -462,6 +468,13 @@ export default class CustomizedCanvas extends Component {
     this.updateState({
       selectedShape: { ...allArgs, index, resizingBox: true }
     }, this.activateResizingActions);
+  }
+
+  addSquare = (rectArgs) => {
+    if (!rectArgs.width)
+      rectArgs.width = rectArgs.height = 75;
+    rectArgs.variant = SHAPES_VARIANTS.SQUARE;
+    this.addRect(rectArgs);
   }
 
   addCircle = ({ x, y, radius = 50, stroke = {}, color = '#000000', opacity = 1.0, ...others } = {}) => {
@@ -525,10 +538,7 @@ export default class CustomizedCanvas extends Component {
     stroke = {}, opacity = 1.0, otherStates, ...others
   } = {}) => {
     // Set text style here for measuring the text's widht & hegiht before drawing.
-    this.setTextStyle({ textSize, textFont });
-    const metrics = this._context.measureText(text);
-    const { width } = metrics;
-    const height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+    const [width, height] = this.getTextWidthAndHeight({ text, textSize, textFont });
     const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
     if (text) {
@@ -559,7 +569,7 @@ export default class CustomizedCanvas extends Component {
   }
 
   getShapeByKeyOrIndex = ({ key: shapeKey, index: shapeIndex }) => {
-    if (!shapeKey && !shapeIndex) { return false; }
+    if (!shapeKey && !shapeIndex && shapeKey !== 0 && shapeIndex !== 0) { return false; }
     const { shapes } = this.props;
 
     return shapeIndex ? shapes[shapeIndex] : shapes.filter(({ key }) => key === shapeKey)[0];
@@ -581,8 +591,9 @@ export default class CustomizedCanvas extends Component {
   setShapeVisibilityByKeyOrIndex = ({ key, index }, isHidden = undefined) => {
     const shape = this.getShapeByKeyOrIndex({ key, index });
     
-    if (shape && isHidden !== undefined && shape.hidden !== isHidden) {
-      this.updateShape({ hidden: isHidden }, shape.index);
+    if (shape && shape.hidden !== isHidden) {
+      this.updateShape({ hidden: isHidden || !shape.hidden}, shape.index);
+      console.log('THE SHAPE', shape);
     }
   }
 
@@ -595,7 +606,9 @@ export default class CustomizedCanvas extends Component {
 
     shapes
       .filter(({ [propertyName]: filterProp }, index) => {
-        if (filterProp === propertyValue) {
+        if (filterProp === propertyValue ||
+            (typeof filterProp === 'undefined' && Boolean(filterProp) === propertyValue)
+         ) {
           shapesIndicies.push(index);
           return true;
         }
@@ -606,10 +619,10 @@ export default class CustomizedCanvas extends Component {
     return shapesIndicies;
   }
 
-  updateShapes = (updatedData) => {
+  updateShapes = (updatedData, otherStates) => {
     let { shapes } = this.props;
     shapes = shapes.map(s => ({ ...s, ...updatedData }));
-    this.updateState({ shapes });
+    this.updateState({ shapes, ...otherStates });
   }
 
   updateShape = (updatedData, index, otherStatesToBeUpdated = undefined) => {
@@ -644,11 +657,9 @@ export default class CustomizedCanvas extends Component {
             (updatedData.text !== shapes[index].text)
           )
       ) {
-        const metrics = this._context.measureText(updatedData.text || 'Text');
-        updatedData.width = updates.selectedShape.width = metrics.width;
-        updatedData.height
-          = updates.selectedShape.height 
-          = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+        const [width, height] = this.getTextWidthAndHeight({ ...updates.selectedShape, ...updatedData });
+        updatedData.width = updates.selectedShape.width = width;
+        updatedData.height = updates.selectedShape.height = height;
       }
       
       latestShapes[index] = { ...latestShapes[index], ...updatedData };
@@ -719,7 +730,7 @@ export default class CustomizedCanvas extends Component {
     });
   }
 
-  deleteAllShapesOrByType = ({ type, all = false, applied = false, secured = [] }) => {
+  deleteAllShapesOrByTypeOrIndicies = ({ type, all = false, applied = false, secured = [] }) => {
     if (!type && !all) { return; }
 
     if (all) {

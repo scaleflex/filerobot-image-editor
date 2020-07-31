@@ -13,7 +13,9 @@ export default {
   'toolbar.resize': '缩放',
   'toolbar.watermark': '水印',
   'toolbar.focus_point': 'Focus point', // TODO translate
-  'toolbar.add': 'Add',// TODO translate
+  'toolbar.shapes': 'Shapes',// TODO translate
+  'toolbar.image': 'Image',// TODO translate
+  'toolbar.text': 'Text',// TODO translate
   'adjust.brightness': '亮度',
   'adjust.contrast': '对比对',
   'adjust.exposure': '曝光度',

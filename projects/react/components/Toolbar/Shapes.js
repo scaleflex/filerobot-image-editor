@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AddWrapper, ItemsWrapper, SettingsWrapper, ItemGroup, ItemIcon, FieldGroup, FieldCustomLabel } from '../../styledComponents/Add.ui';
+import { AddWrapper, ItemsWrapper, SettingsWrapper, ItemGroup, ItemIcon, FieldGroup, FieldCustomLabel } from '../../styledComponents/Shapes.ui';
 import { SHAPES_VARIANTS, STANDARD_FONTS } from '../../config';
 import { FieldInput } from '../../styledComponents';
 import Range from '../Range';
@@ -51,7 +51,7 @@ export default class Add extends Component {
 
     const commonSettings = (
       <FieldGroup key="common-settings-fields">
-        <FieldCustomLabel>Color</FieldCustomLabel>
+        <FieldCustomLabel>Fill Color</FieldCustomLabel>
         <FieldInput
           value={color || '#000'}
           type="color"

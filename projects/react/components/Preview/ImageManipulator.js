@@ -665,9 +665,39 @@ export default class ImageManipulator extends Component {
     });
   }
 
-  makeCanvasSnapshot = (operation, callback = () => {}) => {
+  makeCanvasSnapshot = (operation, callback = () => {}, canvasId = undefined) => {
     const { updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal,
       operations, roundCrop } = this.props;
+
+    if (canvasId) {
+      const lastOperationIndex = operations.indexOf(currentOperation) + 1;
+
+      const zoomedCanvas = this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box'));
+      const nextOperation = {
+        ...operation,
+        previewCanvas: true,
+        canvas: zoomedCanvas
+      };
+
+      const stateObj = {
+        isHideCanvas: false,
+        isShowSpinner: false,
+        currentOperation: nextOperation
+      }
+
+      if (initialZoom !== 1) {
+        stateObj.operationsZoomed = [...operationsZoomed.slice(0, lastOperationIndex), nextOperation];
+        stateObj.operationsOriginal = [...operationsOriginal.slice(0, lastOperationIndex), {
+          ...nextOperation,
+          canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box-original'))
+        }];
+      } else {
+        stateObj.operations = [...operations.slice(0, lastOperationIndex), nextOperation]
+      }
+
+      updateState(stateObj, callback);
+      return;
+    }
 
     if (initialZoom !== 1) {
       const lastOperationIndex = operationsZoomed.indexOf(currentOperation) + 1;
@@ -824,10 +854,16 @@ export default class ImageManipulator extends Component {
     callback();
   }
 
-  applyShapes = () => {
+  applyShapes = (callback = () => {}) => {
     const { shapeOperations } = this.props;
-
-    shapeOperations.updateShapes({ applied: true });
+    const notAppliedShapes = shapeOperations.getShapesIndicies('applied', undefined);
+    shapeOperations.updateShapes({ applied: true }, { selectedShape: {} });
+    this.makeCanvasSnapshot({
+      operation: 'shape',
+      props: {
+        shapes: notAppliedShapes
+      }
+    }, callback, PREVIEW_CANVAS_ID);
   }
 
   getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`;
@@ -854,8 +890,38 @@ export default class ImageManipulator extends Component {
 
   applyOperations = (operationIndex, callback) => {
     const {
-      initialZoom, operations, operationsZoomed, operationsOriginal, canvasZoomed, canvasOriginal, updateState
+      initialZoom, operations, operationsZoomed, operationsOriginal, canvasZoomed, canvasOriginal, updateState,
+      currentOperation
     } = this.props;
+
+    // If the operation is previewCanvas one and have the shapes then hide them
+    if (currentOperation && currentOperation.previewCanvas && currentOperation.props.shapes) {
+      const { shapeOperations } = this.props;
+      currentOperation.props.shapes.map(shapeIndex => {
+        shapeOperations.setShapeVisibility({ index: shapeIndex });
+      });
+
+      let nextOperation;
+
+      if (initialZoom !== 1) {
+        nextOperation = operationIndex === -1 ?
+          {
+            canvas: this.cloneCanvas(canvasZoomed),
+            previewCanvas: true,
+            props: {
+              shapes: currentOperation.props.shapes
+            }
+          }
+          : operationsZoomed[operationIndex];
+      } else {
+        nextOperation = operation === -1 ? this.cloneCanvas(canvasOriginal) : operations[operationIndex];
+      }
+      
+      updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation }, () => {
+        if (callback) callback();
+      });
+      return;
+    }
 
     if (initialZoom !== 1) {
       const nextOperation = operationIndex !== -1 ?
@@ -939,7 +1005,8 @@ export default class ImageManipulator extends Component {
   }
 
   cancelAddedShapes = () => {
-    const { shapeOperations } = this.props;
+    const { shapeOperations, shapes } = this.props;
+    
     shapeOperations.deleteShapes({ all: true });
   }
 
@@ -954,7 +1021,7 @@ export default class ImageManipulator extends Component {
       this.cancelWatermark();
     }
 
-    if (activeTab === 'add') {
+    if (['shapes', 'image', 'text'].includes(activeTab)) {
       this.cancelAddedShapes();
     }
 
@@ -1067,8 +1134,10 @@ export default class ImageManipulator extends Component {
       case 'focus_point':
         this.applyFocusPoint(callback);
         break;
-      case 'add':
-        this.applyShapes();
+      case 'shapes':
+      case 'image':
+      case 'text':
+        this.applyShapes(callback);
         break;
       default:
         break;

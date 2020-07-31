@@ -6,7 +6,7 @@ const PREVIEW_CANVAS_ID = 'scaleflex-filerobot-shapes-edit-box';
 
 // 'effects', 'filters', 'adjust', 'crop', 'resize', 'rotate'
 const TOOLS = [
-  'adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark', 'add'
+  'adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark', 'shapes', 'image', 'text'
 ];
 
 // 'clarity', 'edge_enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'noise', 'old_paper', 'posterize', 'radial_blur',
