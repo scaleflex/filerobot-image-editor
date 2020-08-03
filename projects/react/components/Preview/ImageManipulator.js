@@ -899,7 +899,7 @@ export default class ImageManipulator extends Component {
 
     const isZoomed = initialZoom !== 1;
     const thisOperation = isZoomed ? operationsZoomed[operationIndex] : operations[operationIndex];
-    // If the operation is previewCanvas one and have the shapes then hide them
+    // If the operation is previewCanvas one and have the shapes then apply undo or redo
     if (
       (operationObject && operationObject.previewCanvas && operationObject.props.shapes
         && operationObject.index - 1 === operationIndex)
