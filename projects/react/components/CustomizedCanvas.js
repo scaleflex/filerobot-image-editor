@@ -133,8 +133,7 @@ export default class CustomizedCanvas extends Component {
             this.activateResizingActions();
             this._canvas.addEventListener('keyup', this.activateShapeDeleting);
             this._canvas.addEventListener('mousemove', this.startDragging);
-            this._canvas.addEventListener('mouseup', this.endDragging);
-            this._canvas.addEventListener('mouseleave', this.endDragging);
+            document.addEventListener('mouseup', this.endDragging);
           }
       }
     );
@@ -145,8 +144,7 @@ export default class CustomizedCanvas extends Component {
       this.disableResizingActions();
       this._canvas.removeEventListener('keyup', this.activateShapeDeleting);
       this._canvas.removeEventListener('mousemove', this.startDragging);
-      this._canvas.removeEventListener('mouseup', this.endDragging);
-      this._canvas.removeEventListener('mouseleave', this.endDragging);
+      document.removeEventListener('mouseup', this.endDragging);
     }
   }
 
@@ -593,7 +591,6 @@ export default class CustomizedCanvas extends Component {
     
     if (shape && shape.hidden !== isHidden) {
       this.updateShape({ hidden: isHidden || !shape.hidden}, shape.index);
-      console.log('THE SHAPE', shape);
     }
   }
 
