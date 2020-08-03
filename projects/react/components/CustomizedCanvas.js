@@ -621,7 +621,6 @@ export default class CustomizedCanvas extends Component {
 
   setShapeVisibilityByKeyOrIndex = ({ key, index }, isHidden = undefined) => {
     const shape = this.getShapeByKeyOrIndex({ key, index });
-    
     if (shape && shape.hidden !== isHidden) {
       this.updateShape({ hidden: isHidden || !shape.hidden}, shape.index);
     }

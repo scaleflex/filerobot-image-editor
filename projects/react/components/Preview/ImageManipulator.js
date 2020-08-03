@@ -506,7 +506,7 @@ export default class ImageManipulator extends Component {
       const prevCropIndex = currentOperations.findIndex(({ operation }) => operation === 'rotate');
 
       if (prevCropIndex > -1) {
-        redoOperation(prevCropIndex - 1, () => {}, false);
+        redoOperation({ operationIndex: prevCropIndex - 1, callback: () => {}, resetActiveTab: false });
       }
     }
   }
@@ -595,7 +595,7 @@ export default class ImageManipulator extends Component {
       const prevCropIndex = currentOperations.findIndex(({ operation }) => operation === 'crop');
 
       if (prevCropIndex > -1) {
-        redoOperation(prevCropIndex - 1, this.onInitCrop, false);
+        redoOperation({ operationIndex: prevCropIndex - 1, callback: this.onInitCrop, resetActiveTab: false });
       }
     } else {
       this.onInitCrop();
@@ -669,8 +669,10 @@ export default class ImageManipulator extends Component {
     const { updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal,
       operations, roundCrop } = this.props;
 
+    const isZoomed = initialZoom !== 1;
+
     if (previewCanvas) {
-      const lastOperationIndex = operations.indexOf(currentOperation) + 1;
+      const lastOperationIndex = (isZoomed ? operationsZoomed : operations).indexOf(currentOperation) + 1;
 
       const zoomedCanvas = this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box'));
       const nextOperation = {
@@ -685,7 +687,7 @@ export default class ImageManipulator extends Component {
         currentOperation: nextOperation
       }
 
-      if (initialZoom !== 1) {
+      if (isZoomed) {
         stateObj.operationsZoomed = [...operationsZoomed.slice(0, lastOperationIndex), nextOperation];
         stateObj.operationsOriginal = [...operationsOriginal.slice(0, lastOperationIndex), {
           ...nextOperation,
@@ -701,7 +703,7 @@ export default class ImageManipulator extends Component {
       return;
     }
 
-    if (initialZoom !== 1) {
+    if (isZoomed) {
       const lastOperationIndex = operationsZoomed.indexOf(currentOperation) + 1;
 
       this.CamanInstanceOriginal.render(() => {
@@ -890,33 +892,34 @@ export default class ImageManipulator extends Component {
     operations.push(operation);
   }
 
-  applyOperations = (operationIndex, callback) => {
+  applyOperations = (operationIndex, callback, operationObject = {}) => {
     const {
-      initialZoom, operations, operationsZoomed, operationsOriginal, canvasZoomed, canvasOriginal, updateState,
-      currentOperation
+      initialZoom, operations, operationsZoomed, operationsOriginal, canvasZoomed, canvasOriginal, updateState
     } = this.props;
 
+    const isZoomed = initialZoom !== 1;
+    const thisOperation = isZoomed ? operationsZoomed[operationIndex] : operations[operationIndex];
     // If the operation is previewCanvas one and have the shapes then hide them
-    if (currentOperation && currentOperation.previewCanvas && currentOperation.props.shapes) {
+    if (
+      (operationObject && operationObject.previewCanvas && operationObject.props.shapes
+        && operationObject.index - 1 === operationIndex)
+      || (thisOperation && thisOperation.previewCanvas && thisOperation.props.shapes
+        && operationObject.index + 1 === operationIndex)
+     ) {
       const { shapeOperations } = this.props;
-      currentOperation.props.shapes.map(shapeIndex => {
+      const isMoreOperations = operationIndex !== -1;
+      const operation = operationObject.props && operationObject.props.shapes ? operationObject : thisOperation;
+
+      operation.props.shapes.map(shapeIndex => {
         shapeOperations.setShapeVisibility({ index: shapeIndex });
       });
 
       let nextOperation;
 
       if (initialZoom !== 1) {
-        nextOperation = operationIndex === -1 ?
-          {
-            canvas: this.cloneCanvas(canvasZoomed),
-            previewCanvas: true,
-            props: {
-              shapes: currentOperation.props.shapes
-            }
-          }
-          : operationsZoomed[operationIndex];
+        nextOperation = isMoreOperations ? operationsZoomed[operationIndex] : { canvas: this.cloneCanvas(canvasZoomed) };
       } else {
-        nextOperation = operation === -1 ? this.cloneCanvas(canvasOriginal) : operations[operationIndex];
+        nextOperation = isMoreOperations ? operations[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
       }
       
       updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation }, () => {
@@ -925,7 +928,7 @@ export default class ImageManipulator extends Component {
       return;
     }
 
-    if (initialZoom !== 1) {
+    if (isZoomed) {
       const nextOperation = operationIndex !== -1 ?
         operationsZoomed[operationIndex] : { canvas: this.cloneCanvas(canvasZoomed) };
       const canvasZoomedNext = this.replaceCanvas(nextOperation.canvas, 'scaleflex-image-edit-box');
@@ -1075,7 +1078,7 @@ export default class ImageManipulator extends Component {
   cancelWatermark = () => {
     const { tempWatermark } = this.state;
     const { updateState, shapeOperations } = this.props;
-    const watermarkLayer = shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY });
+    const watermarkLayer = shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY }) || {};
     let logoImage = null;
 
     if (tempWatermark && tempWatermark.url && tempWatermark.applyByDefault) {

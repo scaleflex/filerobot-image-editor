@@ -285,7 +285,7 @@ export default class extends Component {
     this.setState({ activeTab: null });
   }
 
-  redoOperation = (operationIndex, callback = () => {}, resetActiveTab = true) => {
+  redoOperation = ({ operationIndex, callback = () => {}, resetActiveTab = true, operationObject = {} }) => {
     const { applyOperations } = this.state;
 
     if (resetActiveTab) {
@@ -299,6 +299,7 @@ export default class extends Component {
       () => {
         this.setState({ isHideCanvas: false, isShowSpinner: false }, callback);
       },
+      operationObject
     );
   }
 

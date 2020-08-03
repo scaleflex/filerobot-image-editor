@@ -30,12 +30,18 @@ export default class extends Component {
         />
 
         <PreviousBtn
-          onClick={() => { !isPrevForbidden && redoOperation(currentOperationIndex - 1); }}
+          onClick={() => { !isPrevForbidden && redoOperation({
+            operationIndex: currentOperationIndex - 1,
+            operationObject: { ...operationList[currentOperationIndex], index: currentOperationIndex }});
+          }}
           muted={isPrevForbidden}
           title={t['footer.undo']}
         />
         <NextBtn
-          onClick={() => { !isNextForbidden && redoOperation(currentOperationIndex + 1); }}
+          onClick={() => { !isNextForbidden && redoOperation({
+            operationIndex: currentOperationIndex + 1,
+            operationObject: { ...operationList[currentOperationIndex], index: currentOperationIndex } });
+          }}
           muted={isNextForbidden}
           title={t['footer.redo']}
         />
