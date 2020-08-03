@@ -665,11 +665,11 @@ export default class ImageManipulator extends Component {
     });
   }
 
-  makeCanvasSnapshot = (operation, callback = () => {}, canvasId = undefined) => {
+  makeCanvasSnapshot = (operation, callback = () => {}, previewCanvas = false) => {
     const { updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal,
       operations, roundCrop } = this.props;
 
-    if (canvasId) {
+    if (previewCanvas) {
       const lastOperationIndex = operations.indexOf(currentOperation) + 1;
 
       const zoomedCanvas = this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box'));
@@ -691,6 +691,8 @@ export default class ImageManipulator extends Component {
           ...nextOperation,
           canvas: this.cloneCanvas(getCanvasNode('scaleflex-image-edit-box-original'))
         }];
+        stateObj.isHideCanvasOriginal = false;
+        stateObj.isShowSpinnerOriginal = false;
       } else {
         stateObj.operations = [...operations.slice(0, lastOperationIndex), nextOperation]
       }
@@ -863,7 +865,7 @@ export default class ImageManipulator extends Component {
       props: {
         shapes: notAppliedShapes
       }
-    }, callback, PREVIEW_CANVAS_ID);
+    }, callback, true);
   }
 
   getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`;
@@ -1005,9 +1007,9 @@ export default class ImageManipulator extends Component {
   }
 
   cancelAddedShapes = () => {
-    const { shapeOperations, shapes } = this.props;
+    const { shapeOperations } = this.props;
     
-    shapeOperations.deleteShapes({ all: true });
+    shapeOperations.deleteShapes({ all: true }, { selectedShape: {} });
   }
 
   cancelLastOperation = (activeTab, callback = () => {}) => {
@@ -1056,9 +1058,17 @@ export default class ImageManipulator extends Component {
   }
 
   applyWatermark = (callback = () => {}) => {
-    const { updateState } = this.props;
+    const { updateState, shapeOperations } = this.props;
+    const watermarkLayer = (shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY }) || {}).index;
+
     this.setState({ tempWatermark: null });
     updateState({ selectedShape: {} });
+    this.makeCanvasSnapshot({
+      operation: 'shape',
+      props: {
+        shapes: [watermarkLayer]
+      }
+    }, callback, true);
     callback();
   }
 
@@ -1079,11 +1089,11 @@ export default class ImageManipulator extends Component {
         shapeOperations.updateShape(
           { img: logoImage, },
           watermarkLayer.index,
-          { watermark: tempWatermark, logoImage, isShowSpinner: false }
+          { watermark: tempWatermark, logoImage, isShowSpinner: false, selectedShape: {} }
         );
       };
     } else {
-      shapeOperations.deleteShape({ index: watermarkLayer.index }, { watermark: tempWatermark, logoImage });
+      shapeOperations.deleteShape({ index: watermarkLayer.index }, { watermark: tempWatermark, logoImage, selectedShape: {} });
     }
   }
 

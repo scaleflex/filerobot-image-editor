@@ -756,14 +756,15 @@ export default class CustomizedCanvas extends Component {
     }
   }
 
-  deleteShapes = (indicies = []) => {
+  deleteShapes = (indicies = [], otherStates) => {
     let { shapes } = this.props;
     indicies.forEach(i => {
       shapes = this.eraseAndRemoveShapeFromArray(i, shapes)
     });
 
     this.updateState({
-      shapes
+      shapes,
+      ...otherStates
     });
   }
 
