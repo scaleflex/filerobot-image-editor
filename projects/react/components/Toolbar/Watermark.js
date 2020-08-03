@@ -234,7 +234,7 @@ export default class extends Component {
           updateImageState(logoImage);
         }
 
-        shapeOperations.addImage({ img: logoImage, opacity, key: WATERMARK_UNIQUE_KEY });
+        shapeOperations.addImage({ img: logoImage, opacity, key: WATERMARK_UNIQUE_KEY, tab: 'watermark' });
       }
 
       logoImage.onerror = () => {

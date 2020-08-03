@@ -9,6 +9,12 @@ export default class CustomizedCanvas extends Component {
   _initArgs = {
     hidden: false,
   };
+  _allowedTabs = [
+    'shapes',
+    'image',
+    'text',
+    'watermark'
+  ]
 
   constructor(props) {
     super(props);
@@ -103,8 +109,13 @@ export default class CustomizedCanvas extends Component {
   targettedShape = (index = undefined) => index || index === 0 ? this.props.shapes[index] : this.props.selectedShape;
 
   onSelect = (event) => {
+    const { shapes, activeTab } = this.props;
+    if (!this._allowedTabs.includes(activeTab)) {
+      return;
+    }
+
     const { offsetX, offsetY } = event;
-    const { shapes } = this.props;
+
     
     let foundShape = false;
 
@@ -116,6 +127,7 @@ export default class CustomizedCanvas extends Component {
             && offsetX <= shape.x + shape.width
             && offsetY >= shape.y
             && offsetY <= shape.y + shape.height
+            && shape.tab === activeTab
           ) {
             foundShape = true;
 
@@ -451,11 +463,11 @@ export default class CustomizedCanvas extends Component {
   // TODO: add other shapes variants...
 
   addRect = ({ x, y, width = 100, height = 75, stroke = {}, color = '#000000',
-    opacity = 1.0, variant = SHAPES_VARIANTS.RECT, ...others } = {}) => {
+    opacity = 1.0, variant = SHAPES_VARIANTS.RECT, tab = 'shapes', ...others } = {}) => {
     const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
     const drawingArgs = { x: x || centerX, y: y || centerY, width, height, stroke, opacity, color };
-    const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant };
+    const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant, tab };
 
     if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
 
@@ -475,13 +487,13 @@ export default class CustomizedCanvas extends Component {
     this.addRect(rectArgs);
   }
 
-  addCircle = ({ x, y, radius = 50, stroke = {}, color = '#000000', opacity = 1.0, ...others } = {}) => {
+  addCircle = ({ x, y, radius = 50, stroke = {}, color = '#000000', opacity = 1.0, tab, ...others } = {}) => {
     const [centerX, centerY] = this.getCanvasCenter(radius, radius);
     const widthAndHeight = radius * 2;
     
     const drawingArgs = { x: x || centerX, y: y || centerY, radius, color, opacity, stroke,
       width: widthAndHeight, height: widthAndHeight };
-    const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant: SHAPES_VARIANTS.CIRCLE };
+    const allArgs = { ...this._initArgs, ...others, ...drawingArgs, tab, variant: SHAPES_VARIANTS.CIRCLE };
 
     if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
 
@@ -494,7 +506,9 @@ export default class CustomizedCanvas extends Component {
     }, this.activateResizingActions);
   }
 
-  addImage = ({ img, x = undefined, y = undefined, opacity = 1.0, stroke = {}, otherStates, ...others } = {}) => {
+  addImage = (
+    { img, x = undefined, y = undefined, opacity = 1.0, tab='image', stroke = {}, otherStates, ...others } = {}
+  ) => {
     if(img) {
       const addIt = () => {
         const width = img.width;
@@ -510,7 +524,7 @@ export default class CustomizedCanvas extends Component {
           stroke
         };
 
-        const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant: SHAPES_VARIANTS.IMAGE };
+        const allArgs = { ...this._initArgs, ...others, ...drawingArgs, variant: SHAPES_VARIANTS.IMAGE, tab };
 
         if (others.key && this.replaceShapeIfExisted(others.key, allArgs, otherStates)) { return; }
 
@@ -533,7 +547,7 @@ export default class CustomizedCanvas extends Component {
 
   addText = ({
     text = 'Text', textSize = 62, color = "#000000", textFont = 'Arial', x = undefined, y = undefined,
-    stroke = {}, opacity = 1.0, otherStates, ...others
+    stroke = {}, opacity = 1.0, tab = 'text', otherStates, ...others
   } = {}) => {
     // Set text style here for measuring the text's widht & hegiht before drawing.
     const [width, height] = this.getTextWidthAndHeight({ text, textSize, textFont });
@@ -542,7 +556,7 @@ export default class CustomizedCanvas extends Component {
     if (text) {
       const drawingArgs = { text, textSize, textFont, x: x || centerX, y: y || centerY, opacity,
         stroke, color };
-      const allArgs = { ...this._initArgs, ...others, ...drawingArgs, width, height, variant: SHAPES_VARIANTS.TEXT };
+      const allArgs = { ...this._initArgs, ...others, ...drawingArgs, width, height, variant: SHAPES_VARIANTS.TEXT, tab };
 
       if (others.key && this.replaceShapeIfExisted(others.key, allArgs, otherStates)) { return; }
 
@@ -668,7 +682,7 @@ export default class CustomizedCanvas extends Component {
 
   clearShape = (x, y, width, height, stroke = {}) => {
     const { width: strokeWidth } = stroke;
-    const strokeWidthConst = strokeWidth || 0;
+    const strokeWidthConst = strokeWidth || 1;
 
     const clearFromX  = x - strokeWidthConst;
     const clearFromY  =  y - strokeWidthConst;

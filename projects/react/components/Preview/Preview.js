@@ -31,6 +31,7 @@ export default class extends Component {
           updateState={updateState}
           selectedShape={selectedShape}
           expandShapes={expandShapes}
+          activeTab={activeTab}
         />}
 
         {activeTab === 'focus_point' && (
