@@ -127,7 +127,7 @@ export default class extends Component {
 
     const watermark = this.getWatermarkLayer();
     this.setState(data, () => {
-      shapeOperations.addOrUpdate({ ...shapeData, index: watermark.index },
+      shapeOperations.addOrUpdate({ ...shapeData, key: WATERMARK_UNIQUE_KEY, index: watermark.index },
       {
         watermark: {
           ...this.props.watermark,
@@ -175,6 +175,7 @@ export default class extends Component {
       textFont,
       opacity,
       variant: SHAPES_VARIANTS.TEXT,
+      tab: 'watermark',
       ...updatedProperty
     };
 
@@ -234,7 +235,16 @@ export default class extends Component {
           updateImageState(logoImage);
         }
 
-        shapeOperations.addImage({ img: logoImage, opacity, key: WATERMARK_UNIQUE_KEY, tab: 'watermark' });
+        const index = (this.getWatermarkLayer() || {}).index;
+
+        shapeOperations.addOrUpdate({
+          img: logoImage,
+          opacity,
+          index,
+          variant: SHAPES_VARIANTS.IMAGE,
+          key: WATERMARK_UNIQUE_KEY,
+          tab: 'watermark'
+        });
       }
 
       logoImage.onerror = () => {
@@ -275,6 +285,16 @@ export default class extends Component {
 
   handleInputTypeChange = ({ target }) => {
     this.setState({ selectedInputType: target.value });
+    if (target.value === 'text') {
+      this.changeTextProperty({
+        target: {
+          name: 'text',
+          value: 'Filerobot'
+        }
+      })
+    } else {
+      this.initWatermarkImage(this.props.watermark.url || '')
+    }
   }
 
   render() {

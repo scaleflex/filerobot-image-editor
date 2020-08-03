@@ -278,8 +278,6 @@ export default class CustomizedCanvas extends Component {
 
     const updatedShape = { width, height, x, y };
 
-    if (variant === SHAPES_VARIANTS.TEXT) { updatedShape.maxWidth = width; }
-
     this.updateShape(updatedShape, index, {
       selectedShape: {
         ...selectedShape,
@@ -449,11 +447,10 @@ export default class CustomizedCanvas extends Component {
     return [width, height];
   }
 
-  // TODO: Make text shrinkable & expandable for height & width by scale, currently it's for width through max width.
-  drawText = ({ text, textSize, textFont, maxWidth, x, y, stroke, ...others })  => {
+  drawText = ({ text, textSize, textFont, x, y, stroke, ...others })  => {
     this.draw(() => {
       this.setTextStyle({ textSize, textFont });
-      this._context.fillText(text, x, y, maxWidth || this._canvas.width);
+      this._context.fillText(text, x, y, this._canvas.width);
       if (stroke) {
         this._context.strokeText(text, x, y);
       }
@@ -573,10 +570,32 @@ export default class CustomizedCanvas extends Component {
 
   addAnyShape = (shapeArgs, otherStates) => {
     if (shapeArgs.index || shapeArgs.index === 0) {
-      this.updateShape(shapeArgs, shapeArgs.index ,otherStates);
-    } else {
-      shapeArgs.index = this.pushShapeToShapes(shapeArgs, otherStates);
-      this.drawShapeThroughVariant(shapeArgs);
+      const { shapes } = this.props;
+      const shape = shapes[shapeArgs.index];
+      if (!shapeArgs.variant || shape.variant === shapeArgs.variant) {
+        this.updateShape(shapeArgs, shapeArgs.index, otherStates);
+        return;
+      }
+    }
+
+    const args = { ...shapeArgs, otherStates };
+    switch(shapeArgs.variant) {
+      case SHAPES_VARIANTS.IMAGE:
+        this.addImage(args);
+        break;
+      case SHAPES_VARIANTS.RECT:
+        this.addRect(args);
+        break;
+      case SHAPES_VARIANTS.SQUARE:
+        this.addSquare(args);
+        break;
+      case SHAPES_VARIANTS.CIRCLE:
+        this.addCircle(args);
+        break;
+      case SHAPES_VARIANTS.TEXT:
+        this.addText(args);
+      default:
+        return;
     }
   }
 
@@ -662,15 +681,22 @@ export default class CustomizedCanvas extends Component {
     if (shapes[index]) {
       const latestShapes = shapes;
 
-      if (updates.selectedShape &&
-          (
-            (updatedData.textSize && updatedData.textSize !== shapes[index].textSize)||
-            (updatedData.text !== shapes[index].text)
-          )
+      if (
+        (updatedData.textSize && updatedData.textSize !== shapes[index].textSize)||
+        (updatedData.text && updatedData.text !== shapes[index].text)
       ) {
-        const [width, height] = this.getTextWidthAndHeight({ ...updates.selectedShape, ...updatedData });
-        updatedData.width = updates.selectedShape.width = width;
-        updatedData.height = updates.selectedShape.height = height;
+        const targetShape = shapes[index];
+        const [width, height] = this.getTextWidthAndHeight({ ...targetShape, ...updatedData });
+
+        if (!updates.selectedShape) {
+          updatedData.width = width;
+          updatedData.height = height;
+          updatedData.text = updatedData.text || targetShape.text;
+        } else {
+          updatedData.width = updates.selectedShape.width = width;
+          updatedData.height = updates.selectedShape.height = height;
+          updatedData.text = updates.selectedShape.text = updatedData.text || targetShape.text;
+        }
       }
       
       latestShapes[index] = { ...latestShapes[index], ...updatedData };

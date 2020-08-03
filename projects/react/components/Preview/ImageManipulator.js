@@ -1056,7 +1056,9 @@ export default class ImageManipulator extends Component {
   }
 
   applyWatermark = (callback = () => {}) => {
-    this.setState({ tempWatermark: null, selectedShape: {} });
+    const { updateState } = this.props;
+    this.setState({ tempWatermark: null });
+    updateState({ selectedShape: {} });
     callback();
   }
 
