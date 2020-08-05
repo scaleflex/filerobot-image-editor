@@ -179,13 +179,6 @@ export default class extends Component {
     }
   });
 
-  onApplyWatermarkChange = () => {
-    const nextValue = !this.state.applyByDefault;
-    this.setState({ applyByDefault: nextValue }, () => {
-      this.props.updateState({ watermark: { ...this.props.watermark, applyByDefault: nextValue } });
-    });
-  }
-
   showWatermarkList = () => {
     this.setState({ showWaterMarkList: true });
   }
@@ -301,13 +294,6 @@ export default class extends Component {
               />
             </WrapperForOpacity>
             }
-            <Switcher
-              id="switch-watermark"
-              checked={applyByDefault}
-              handleChange={this.onApplyWatermarkChange}
-              text={t['common.apply_watermark']}
-              style={{ lineHeight: 'inherit', float: 'none' }}
-            />
           </WrapperForControls>
         </WatermarkInputs>
 
