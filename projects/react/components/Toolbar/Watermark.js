@@ -3,7 +3,6 @@ import {
   FieldInput,
   FileInput,
   PositionSquare,
-  Switcher,
   WatermarkIcon,
   WatermarkInputs,
   WatermarkInputTypes,
@@ -260,16 +259,6 @@ export default class extends Component {
     }
   });
 
-  onApplyWatermarkChange = () => {
-    const nextValue = !this.state.applyByDefault;
-    
-    this.updateWatermarkProperty(
-      { applyByDefault: nextValue },
-      { hidden: !nextValue },
-      { applyByDefault: nextValue }
-    );
-  }
-
   showWatermarkList = () => {
     this.setState({ showWaterMarkList: true });
   }
@@ -444,13 +433,6 @@ export default class extends Component {
               />
             </WrapperForOpacity>
             }
-            <Switcher
-              id="switch-watermark"
-              checked={applyByDefault}
-              handleChange={this.onApplyWatermarkChange}
-              text={t['common.apply_watermark']}
-              style={{ lineHeight: 'inherit', float: 'none' }}
-            />
           </WrapperForControls>
         </WatermarkInputs>
 

@@ -40,9 +40,30 @@ const Actions = styled('div')`
   }
 `;
 
+const CancelBtn = styled(Button)`
+  background: ${props => props.theme.colors.primaryBg};
+  border-color: ${props => props.theme.colors.primaryBg};
+  color: ${props => props.theme.colors.text};
+  text-transform: capitalize;
+  
+  :hover {
+    background: ${props => getHoverColor(props.theme.colors.primaryBg)};
+    border-color: ${props => props.theme.colors.primaryBg};
+    color: ${props => props.theme.colors.text};  
+  }
+`;
+
 const LeftActions = styled(Actions)`
-  display: ${p => p.hide ? 'none' : 'inline-block'};
+  display: ${p => p.hide ? 'none' : 'flex'};
+  flex-direction: column;
+  justify-content: center;
   left: 0;
+  top: 0;
+  bottom: 0;
+  
+  ${CancelBtn}:nth-child(2) {
+    margin-top: 5px;
+  }
 `;
 
 const RightActions = styled(Actions)`
@@ -60,19 +81,6 @@ const ToolbarWrapper = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     height: initial;
-  }
-`;
-
-const CancelBtn = styled(Button)`
-  background: ${props => props.theme.colors.primaryBg};
-  border-color: ${props => props.theme.colors.primaryBg};
-  color: ${props => props.theme.colors.text};
-  text-transform: capitalize;
-  
-  :hover {
-    background: ${props => getHoverColor(props.theme.colors.primaryBg)};
-    border-color: ${props => props.theme.colors.primaryBg};
-    color: ${props => props.theme.colors.text};  
   }
 `;
 

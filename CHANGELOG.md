@@ -26,6 +26,30 @@ Types of changes:
 
 -------------
 
+## 3.9.6 - 2020-07-28
+### Changed
+- move back button into config
+
+## 3.9.5 - 2020-07-27
+### Fixed
+- FocusPoint console error
+
+### Changed
+/ FocusPointPreview improvements (sizes)
+
+## 3.9.4 - 2020-07-24
+### Fixed
+- go back button visibility
+
+## 3.9.3 - 2020-06-18
+### Fixed
+- image sealing
+- fixed problem of canvas rendering on SSR
+
+### Added
+- support for initial crop area (beginCropArea)
+
+
 ## 3.9.2 - 2020-06-13
 ### Fixed
 - round the radius for cloudimage integration

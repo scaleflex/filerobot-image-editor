@@ -16,7 +16,7 @@ class ImageEditorWrapper extends Component {
 
   constructor({ show = false, src = '', config = {} }) {
     super();
-    
+
     config.translations = config.translations || {};
     config.language = (config.translations[config.language] || translations[config.language]) ? config.language : 'en';
     config.theme = config.theme || {};
@@ -98,7 +98,7 @@ class ImageEditorWrapper extends Component {
 
   render() {
     const { isVisible, src, config, t, theme } = this.state;
-    const { onComplete = () => {}, onBeforeComplete, showGoBackBtn, closeOnLoad, showInModal = true } = this.props;
+    const { onComplete = () => {}, onBeforeComplete, closeOnLoad, showInModal = true } = this.props;
 
     if (!src || !isVisible || isServerSide) return null;
 
@@ -112,7 +112,6 @@ class ImageEditorWrapper extends Component {
           onComplete={onComplete}
           onBeforeComplete={onBeforeComplete}
           onClose={this.close}
-          showGoBackBtn={showGoBackBtn}
           closeOnLoad={closeOnLoad}
           t={t}
         />

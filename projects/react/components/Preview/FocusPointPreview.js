@@ -1,18 +1,26 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect, useMemo, useCallback } from 'react';
+import { debounce } from 'throttle-debounce';
 import { FocusPointContainer, FocusPointWrap, FocusPoint, FocusPointImg } from '../../styledComponents/Preview.ui';
 import { getInnerBoxSize } from '../../utils';
 
 function FocusPointPreview({original, focusPoint, updateState, src}) {
-  const { width, height } = getInnerBoxSize(document.getElementById('preview-img-box').parentElement, original);
   const [isLoaded, setIsLoaded] = useState(false);
   const ref = useRef(null);
   const refRect = ref.current ? ref.current.getBoundingClientRect() : {};
+  const getInnerBoxSizeCallback = useCallback(() => {
+    const { width = 0, height = 0 } = getInnerBoxSize((document.getElementById('preview-img-box') || {}).parentElement, original);
+    return { width, height }
+  }, [original]);
+  const [innerBoxSize, setInnerBoxSize] = useState(getInnerBoxSizeCallback());
+  const debounceUpdateInnerBoxSize = useMemo(() => debounce(100, () => {
+    setInnerBoxSize(getInnerBoxSizeCallback());
+  }), [getInnerBoxSizeCallback]);
 
   function handleMouseDown(e) {
     const dragX = e.clientX - refRect.x;
     const dragY = e.clientY - refRect.y;
-    const xVal = Math.round(dragX * original.width / width);
-    const yVal = Math.round(dragY * original.height / height);
+    const xVal = Math.round(dragX * original.width / innerBoxSize.width);
+    const yVal = Math.round(dragY * original.height / innerBoxSize.height);
     const x = Math.min(Math.max(xVal, 0), original.width);
     const y = Math.min(Math.max(yVal, 0), original.height);
 
@@ -27,11 +35,27 @@ function FocusPointPreview({original, focusPoint, updateState, src}) {
     updateState({isShowSpinner: false});
   }
 
+  useEffect(() => {
+    let active = true;
+    const handleResize = () => {
+      if (active) {
+        debounceUpdateInnerBoxSize();
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      active = false;
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [debounceUpdateInnerBoxSize]);
+
   return (
     <FocusPointWrap
       ref={ref}
-      width={width}
-      height={height}
+      width={innerBoxSize.width}
+      height={innerBoxSize.height}
     >
       <FocusPointContainer
         onMouseDown={handleMouseDown}
@@ -45,8 +69,8 @@ function FocusPointPreview({original, focusPoint, updateState, src}) {
 
         <FocusPoint
           visible={isLoaded}
-          x={focusPoint.x * width / original.width}
-          y={focusPoint.y * height / original.height}
+          x={focusPoint.x * innerBoxSize.width / original.width}
+          y={focusPoint.y * innerBoxSize.height / original.height}
         />
       </FocusPointContainer>
     </FocusPointWrap>

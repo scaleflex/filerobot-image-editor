@@ -46,6 +46,7 @@ ImageEditorDownload = new FilerobotImageEditor({
       handleOpacity: true,
       fileUpload: true,
     },
+    showGoBackBtn: false
     //cropPresets: [
     //  { name: 'square', value: 1 },
     //  { name: 'half-page ad', value: 300 / 600 },
@@ -135,9 +136,9 @@ const configModify = {
   //  token: 'scaleflex'
   //},
   filerobot: {
-    token: 'fusqadtm', // 'fumwdnfm' - sealing token
+    token: 'fumwdnfm', // 'fumwdnfm' - sealing token, 'fusqadtm' - not sealing token
     // doNotPrefixURL: true,
-    // version: 'v7',
+    version: 'v7', // Need to add for sealing. In other cases skip version
   },
   processWithCloudimage: true,
   isLowQualityPreview: true,

@@ -29,11 +29,11 @@ export const getImageSealingParams = (paramsStr, imageSealingConfig, originalUrl
       restParamsStr = restParams.join('&');
     }
 
-    if (sealingParams.length > 0) {
-      sealingParamsStr = getSealingParams(sealingParams.join('&'), originalUrl, salt, charCount);
-    }
+    // We need to add sealing always, even if sealingParams is empty.
+    // In case with empty params sealing will be like: ci_seal=10613a92e5
+    sealingParamsStr = getSealingParams(sealingParams.join('&'), originalUrl, salt, charCount);
   } else { // all params
-    restParamsStr = paramsStr;
+    sealingParamsStr = getSealingParams(paramsStr, originalUrl, salt, charCount);
   }
 
   return [sealingParamsStr, restParamsStr].filter(p => p).join('&');
@@ -51,5 +51,8 @@ function getSealingParams(paramsStr, originalUrl, salt, charCount) {
   const base64String = encodeBase64(paramsStr);
   const calcHash = getSha1(originalUrl + base64String + salt, charCount);
 
-  return `ci_seal=${calcHash}&ci_eqs=${base64String}`;
+  return [
+    calcHash ? `ci_seal=${calcHash}` : '',
+    base64String ? `ci_eqs=${base64String}` : '',
+  ].filter(i => i).join('&');
 }

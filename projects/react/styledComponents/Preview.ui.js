@@ -107,8 +107,10 @@ const FocusPointContainer = styled(({ image, ...rest }) => <div {...rest} />)(({
   height: '100%',
   width: '100%',
   cursor: 'crosshair',
-  backgroundImage: `url(${image})`,
-  backgroundSize: 'contain',
+  ...(image ? {
+    backgroundImage: `url(${image})`,
+    backgroundSize: 'contain',
+  } : {}),
 }));
 
 const FocusPoint = styled(
