@@ -68,6 +68,7 @@ export default class CustomizedCanvas extends Component {
           addOrUpdate: this.addAnyShape,
           updateShape: this.updateShape,
           updateShapes: this.updateShapes,
+          replaceAllShapes: this.replaceAllShapes,
           deleteShape: this.deleteShapeByKeyOrIndex,
           deleteShapes: this.deleteAllShapesOrByTypeOrIndicies,
           setShapeVisibility: this.setShapeVisibilityByKeyOrIndex,
@@ -81,6 +82,12 @@ export default class CustomizedCanvas extends Component {
 
   componentWillUnmount() {
     this._canvas.removeEventListener('mousedown', this.onSelect);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.width !== this.props.width || prevProps.height !== this.props.height) {
+      this.redrawShape()
+    }
   }
 
   updateState = (data, callback = () => {}) => {
@@ -367,7 +374,7 @@ export default class CustomizedCanvas extends Component {
 
     // If the shape isn't the top shape (last in array) then re-order all the shapes and make the current as last one.
     // Then re-draw with the new order otherwise re-draw with the old order which has the current shape as last/top one.
-    if (index !== shapesCount - 1) {
+    if (index && index !== shapesCount - 1) {
       const currentShape = { ...shapes.splice(index, 1)[0], index: shapesCount };
       shapes.splice(shapesCount, 0, currentShape);
 
@@ -484,7 +491,8 @@ export default class CustomizedCanvas extends Component {
     this.addRect(rectArgs);
   }
 
-  addCircle = ({ x, y, radius = 50, stroke = {}, color = '#000000', opacity = 1.0, tab, ...others } = {}) => {
+  addCircle = ({ x, y, radius = 50, stroke = {}, color = '#000000',
+    opacity = 1.0, tab = 'shapes', ...others } = {}) => {
     const [centerX, centerY] = this.getCanvasCenter(radius, radius);
     const widthAndHeight = radius * 2;
     
@@ -648,10 +656,17 @@ export default class CustomizedCanvas extends Component {
     return shapesIndicies;
   }
 
-  updateShapes = (updatedData, otherStates) => {
+  updateShapes = (updatedData, otherStates, callback = () => {}) => {
     let { shapes } = this.props;
     shapes = shapes.map(s => ({ ...s, ...updatedData }));
-    this.updateState({ shapes, ...otherStates });
+    this.updateState({ shapes, ...otherStates }, callback);
+  }
+
+  replaceAllShapes = (newShapes, callback = () => {}) => {
+    this.updateState({ shapes: newShapes }, () => {
+      this.redrawShape();
+      callback();
+    });
   }
 
   updateShape = (updatedData, index, otherStatesToBeUpdated = undefined) => {

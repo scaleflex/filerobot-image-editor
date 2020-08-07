@@ -170,8 +170,9 @@ export default class ImageManipulator extends Component {
 
   mergeCanvases = (canvas) => {
     const tempCtx = canvas.getContext('2d');
-
     const previewCanvas = document.getElementById(PREVIEW_CANVAS_ID);
+
+    tempCtx.globalCompositeOperation = 'source-over';
     tempCtx.drawImage(previewCanvas, 0, 0, canvas.width, canvas.height);
     return canvas.toDataURL();
   }
@@ -860,14 +861,16 @@ export default class ImageManipulator extends Component {
 
   applyShapes = (callback = () => {}) => {
     const { shapeOperations } = this.props;
-    const notAppliedShapes = shapeOperations.getShapesIndicies('applied', undefined);
-    shapeOperations.updateShapes({ applied: true }, { selectedShape: {} });
-    this.makeCanvasSnapshot({
-      operation: 'shape',
-      props: {
-        shapes: notAppliedShapes
-      }
-    }, callback, true);
+
+    shapeOperations.updateShapes({ applied: true }, { selectedShape: {} },
+      () => {
+        this.makeCanvasSnapshot({
+        operation: 'shape',
+        props: {
+          shapes: this.props.shapes
+        }
+      }, callback, true);
+    });
   }
 
   getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`;
@@ -898,28 +901,42 @@ export default class ImageManipulator extends Component {
     } = this.props;
 
     const isZoomed = initialZoom !== 1;
-    const thisOperation = isZoomed ? operationsZoomed[operationIndex] : operations[operationIndex];
+    const operation = isZoomed ? operationsZoomed[operationIndex] : operations[operationIndex];
+    const hasMoreOperations = operationIndex !== -1;
+
     // If the operation is previewCanvas one and have the shapes then apply undo or redo
     if (
-      (operationObject && operationObject.previewCanvas && operationObject.props.shapes
+      (operationObject && operationObject.previewCanvas
         && operationObject.index - 1 === operationIndex)
-      || (thisOperation && thisOperation.previewCanvas && thisOperation.props.shapes
+      || (operation && operation.previewCanvas
         && operationObject.index + 1 === operationIndex)
      ) {
       const { shapeOperations } = this.props;
-      const isMoreOperations = operationIndex !== -1;
-      const operation = operationObject.props && operationObject.props.shapes ? operationObject : thisOperation;
 
-      operation.props.shapes.map(shapeIndex => {
-        shapeOperations.setShapeVisibility({ index: shapeIndex });
-      });
+      // If the current operation is shape operation replace with its shapes
+      // if not and still there other shape operation in the array replace with last one's shapes
+      // else replace with empty array for shapes.
+      let shapesReplacedWith = operation?.props?.shapes;
+      if (!shapesReplacedWith) {
+        const allShapeOperations = (isZoomed
+          ? operationsZoomed
+          : operations)
+            .filter(
+              (op, index) => op.operation === 'shape' && index < operationObject.index
+            );
+
+        shapesReplacedWith = allShapeOperations.length > 0
+          ? allShapeOperations[allShapeOperations.length - 1].props.shapes
+          : [];
+      }
+      shapeOperations.replaceAllShapes(shapesReplacedWith);
 
       let nextOperation;
 
-      if (initialZoom !== 1) {
-        nextOperation = isMoreOperations ? operationsZoomed[operationIndex] : { canvas: this.cloneCanvas(canvasZoomed) };
+      if (isZoomed) {
+        nextOperation = hasMoreOperations ? operationsZoomed[operationIndex] : { canvas: this.cloneCanvas(canvasZoomed) };
       } else {
-        nextOperation = isMoreOperations ? operations[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
+        nextOperation = hasMoreOperations ? operations[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
       }
       
       updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation }, () => {
@@ -928,8 +945,11 @@ export default class ImageManipulator extends Component {
       return;
     }
 
+    // If no more operations found, then make the shapes array with empty array to reset all shapes.
+    if (!hasMoreOperations) { this.props.shapeOperations.replaceAllShapes([]) }
+
     if (isZoomed) {
-      const nextOperation = operationIndex !== -1 ?
+      const nextOperation = hasMoreOperations ?
         operationsZoomed[operationIndex] : { canvas: this.cloneCanvas(canvasZoomed) };
       const canvasZoomedNext = this.replaceCanvas(nextOperation.canvas, 'scaleflex-image-edit-box');
 
@@ -939,13 +959,13 @@ export default class ImageManipulator extends Component {
         });
       });
 
-      const nextOperationOriginal = operationIndex !== -1 ?
+      const nextOperationOriginal = hasMoreOperations ?
         operationsOriginal[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
       const canvasNext = this.replaceCanvas(nextOperationOriginal.canvas, 'scaleflex-image-edit-box-original');
 
       this.CamanInstanceOriginal = new window.Caman(canvasNext, () => {});
     } else {
-      const nextOperationSimple = operationIndex !== -1 ?
+      const nextOperationSimple = hasMoreOperations ?
         operations[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
       const canvas = this.replaceCanvas(nextOperationSimple.canvas, 'scaleflex-image-edit-box');
 

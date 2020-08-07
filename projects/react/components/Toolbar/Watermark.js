@@ -207,15 +207,16 @@ export default class extends Component {
   }
 
   initWatermarkImage = debounce(500, (url) => {
+    const { updateState } = this.props;
     let logoImage = null;
 
-    const updateImageState = (newImage) => {
-      this.props.updateState({
+    updateState({ isShowSpinner: true });
+
+    const watermarkImageState = (newImage) => ({
         logoImage: newImage,
         isShowSpinner: false,
         watermark: { ...this.props.watermark, url: newImage.src }
-      });
-    }
+    });
 
     if (url) {
       const { shapeOperations } = this.props;
@@ -226,12 +227,12 @@ export default class extends Component {
 
       logoImage.onload = () => {
         const { imageFilter } = this.props.watermark;
-
+        let watermarkImageStateObj;
         if (imageFilter && typeof imageFilter === 'function') {
           logoImage.onload = null;
-          updateImageState(imageFilter(logoImage));
+          watermarkImageStateObj = watermarkImageState(imageFilter(logoImage));
         } else {
-          updateImageState(logoImage);
+          watermarkImageStateObj = watermarkImageState(logoImage);
         }
 
         const index = (this.getWatermarkLayer() || {}).index;
@@ -243,11 +244,11 @@ export default class extends Component {
           variant: SHAPES_VARIANTS.IMAGE,
           key: WATERMARK_UNIQUE_KEY,
           tab: 'watermark'
-        });
+        }, watermarkImageStateObj);
       }
 
       logoImage.onerror = () => {
-        this.props.updateState({ isShowSpinner: false });
+        updateState({ isShowSpinner: false });
       }
 
       if (url.match(/^https?:\/\/./)) {
@@ -273,6 +274,9 @@ export default class extends Component {
   }
 
   handleInputTypeChange = ({ target }) => {
+    const { updateState } = this.props;
+    updateState({ isShowSpinner: true });
+
     this.setState({ selectedInputType: target.value });
     if (target.value === 'text') {
       this.changeTextProperty({
@@ -281,7 +285,9 @@ export default class extends Component {
           value: 'Filerobot'
         }
       })
+      updateState({ isShowSpinner: false })
     } else {
+      updateState({ watermark: {...this.props.watermark, text: null } });
       this.initWatermarkImage(this.props.watermark.url || '')
     }
   }
