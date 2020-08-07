@@ -363,6 +363,17 @@ export default class CustomizedCanvas extends Component {
     this._context.strokeStyle = stroke.color || 'transparent';
     this._context.lineWidth = stroke.width || 1;
     drawFn();
+    
+    if (this.props.round) {
+      const { width, height } = this._canvas;
+      this._context.imageSmoothingEnabled = true;
+      this._context.globalCompositeOperation = 'destination-in';
+      this._context.beginPath();
+      // roundRect is a manually written protoype method from canvas-round-rect file in utils.
+      this._context.roundRect(0 , 0, width, height, Math.max(width, height));
+      this._context.fill();
+      this._context.globalCompositeOperation = 'source-over';
+    }
   }
 
   redrawShape = (index = undefined) => {
