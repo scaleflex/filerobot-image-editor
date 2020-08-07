@@ -13,7 +13,7 @@ import {
 import { CLOUDIMAGE_OPERATIONS, PREVIEW_CANVAS_ID, WATERMARK_UNIQUE_KEY } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
-import '../../utils/canvas-round-rect';
+import '../../utils/canvas-round';
 import '../../utils/map-number-range';
 
 
@@ -172,7 +172,6 @@ export default class ImageManipulator extends Component {
     const tempCtx = canvas.getContext('2d');
     const previewCanvas = document.getElementById(PREVIEW_CANVAS_ID);
 
-    tempCtx.globalCompositeOperation = 'source-over';
     tempCtx.drawImage(previewCanvas, 0, 0, canvas.width, canvas.height);
     return canvas.toDataURL();
   }
@@ -214,14 +213,8 @@ export default class ImageManipulator extends Component {
     context.drawImage(oldCanvas, 0, 0);
 
     // Make the new canvas rounded if the crop is rounded style.
-    if (rounded) {
-      context.imageSmoothingEnabled = true;
-      context.globalCompositeOperation = 'destination-in';
-      context.beginPath();
-      // roundRect is a manually written protoype method from canvas-round-rect file in utils.
-      context.roundRect(0 , 0, width, height, Math.max(width, height));
-      context.fill();
-    }
+    // round is a manually written protoype method from canvas-round file in utils.
+    if (rounded) { context.round() }
 
     // Append the new canvas to the container of old canvas.
     container.appendChild(newCanvas);

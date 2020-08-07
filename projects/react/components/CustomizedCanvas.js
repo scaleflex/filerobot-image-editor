@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { PreviewCanvas } from '../styledComponents';
 import { PREVIEW_CANVAS_ID, SHAPES_VARIANTS, WATERMARK_UNIQUE_KEY } from '../config';
+import '../utils/canvas-round';
 
 
 export default class CustomizedCanvas extends Component {
@@ -364,16 +365,9 @@ export default class CustomizedCanvas extends Component {
     this._context.lineWidth = stroke.width || 1;
     drawFn();
     
-    if (this.props.round) {
-      const { width, height } = this._canvas;
-      this._context.imageSmoothingEnabled = true;
-      this._context.globalCompositeOperation = 'destination-in';
-      this._context.beginPath();
-      // roundRect is a manually written protoype method from canvas-round-rect file in utils.
-      this._context.roundRect(0 , 0, width, height, Math.max(width, height));
-      this._context.fill();
-      this._context.globalCompositeOperation = 'source-over';
-    }
+    // Make the new canvas rounded if the crop is rounded style.
+    // round is a manually written protoype method from canvas-round file in utils.
+    if (this.props.round) { this._context.round() }
   }
 
   redrawShape = (index = undefined) => {
