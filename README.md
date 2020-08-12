@@ -421,7 +421,7 @@ The example of Image Editor configuration using cloudimage service can be found
 
 ## <a name="sealing"></a>Cloudimage URL params sealing
 
-When you use the Cloudimage Service along with the Filerobot Image Editor (config.processWithCloudimage: true), this will offer you additional capabilities. One such example is the URL parameter sealing.
+When using Cloudimage along with the Filerobot Image Editor (config.processWithCloudimage: true), additional capabilities are available. One such example is the URL parameter sealing.
 URL parameter sealing offers you a mechanism of encoding some or all of the URL parameters (watermarks, resizing, filters, etc.). This way, you are protecting your origin images so they cannot be delivered without the respective transformations.
 When sealing is configured, you will see two extra URL parameters: ci_seal (calculated hash of the protected query string) and ci_eqs (encrypted data).
 
