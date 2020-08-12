@@ -254,7 +254,7 @@ Callback, triggers on completing processing an image.
 
 ### `tools`: [string] 
 
-**default**: ['adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark']
+**default**: ['adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'watermark', 'shapes', 'image', 'text']
 
 Filerobot Image Editor tools.
 
