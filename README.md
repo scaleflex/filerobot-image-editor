@@ -421,9 +421,9 @@ The example of Image Editor configuration using cloudimage service can be found
 
 ## <a name="sealing"></a>Cloudimage URL params sealing
 
-When you use Cloudimage Service for Filerobot Image Editor (config.processWithCloudimage: true) it will gives you some more abilities. One of this abilities is URL params sealing.
-With URL params sealing you can hide/encrypt some URL params (like watermark url, ...).
-When sealing configured, you will see two extra URL params: ci_seal (calculated hash) and ci_eqs (encrypted data).
+When using Cloudimage along with the Filerobot Image Editor (config.processWithCloudimage: true), additional capabilities are available. One such example is the URL parameter sealing.
+URL parameter sealing offers you a mechanism of encoding some or all of the URL parameters (watermarks, resizing, filters, etc.). This way, you are protecting your origin images so they cannot be delivered without the respective transformations.
+When sealing is configured, you will see two extra URL parameters: ci_seal (calculated hash of the protected query string) and ci_eqs (encrypted data).
 
 ### <a name="sealing"></a>Configuration for sealing:
 
@@ -431,13 +431,13 @@ When sealing configured, you will see two extra URL params: ci_seal (calculated 
 
 **default**: ''
 
-Sealing token (not all tokens support sealing).
+The token for which URL sealing is configured and activated.
 
 ### `filerobot.version`: string
 
 **default**: ''
 
-For sealing it's required to use v7 version.
+URL sealing is available from v7.
 
 ### `imageSealing.enabled`: bool
 
@@ -447,19 +447,19 @@ For sealing it's required to use v7 version.
 
 **default**: ''
 
-Salt string which is used on encrypting stage.
+The salt string is set upon configuration and is used for the encryption.
 
 ### `imageSealing.char_count`: number
 
 **default**: 10
 
-Calculated hash (URL ci_seal param) length.
+Calculated hash (URL ci_seal parameter) length.
 
 ### `imageSealing.include_params`: string[] | null
 
 **default**: null
 
-URL params for sealling. In default case, when it's NULL, all the params will be sealed. Also you can set a list of params, for example: ['wat_url'].
+URL parameters to be sealed. By default (when it's null), all parameters will be sealed. Alternatively, you can set a list of parameters, for example: ['wat_url']. This way, you can freely append additional transformations to the URL (the sealed parameters cannot be overwritten).
 
 ### <a name="sealing-configuration-example"></a>Example:
 ```
