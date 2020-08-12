@@ -26,6 +26,10 @@ Types of changes:
 
 -------------
 
+## 3.10.1 - 2020-08-12
+### Changed
+- update fonts
+
 ## 3.10.0 - 2020-08-12
 ### Added
 - draw shapes, images, text with possibility to drag&drop and scale
