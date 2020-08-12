@@ -409,10 +409,10 @@ function getIconByName(name) {
       char = '\\e919';
       break;
     case 'shapes':
-      char = '\\002B';
+      char = '\\e91b';
       break;
     case 'image':
-      char = '\\e918';
+      char = '\\e91a';
       break;
     case 'text':
       char = 'T';
