@@ -97,7 +97,7 @@
     src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/filters.png?sanitize=true">
 
 ### Orientation
-`rotate and flip (mirrow effect)`
+`rotate and flip (mirror effect)`
 
 <img
     width="600"
@@ -137,7 +137,7 @@
 
 ### <a name="installation"></a>Installation
 
-Use latest CDNized plugin version
+Use the latest CDNized plugin version:
 
 ```html
 <script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.9.6/filerobot-image-editor.min.js"></script>
@@ -145,7 +145,7 @@ Use latest CDNized plugin version
 
 ### <a name="quick_start"></a>Quick start
 
-We provide easy way to integrate image editor in your applications
+We provide an easy way to integrate the image editor in your applications:
 
 ```html
 <script>
@@ -194,7 +194,7 @@ $ npm install --save filerobot-image-editor
 
 ### <a name="quick_start_react"></a>Quick start
 
-We provide easy way to integrate image editor in your applications
+We provide an easy way to integrate the image editor in your applications:
 
 ```javascript
 import React, { useState } from 'react';
@@ -240,15 +240,15 @@ Image editor config.
 
 #### `onClose()`: function (required)
 
-Callback, triggers on close image editor widget.
+Callback, triggers on closing the image editor widget.
 
 #### `onOpen()`: function (optional)
 
-Callback, triggers on open image editor widget.
+Callback, triggers on opening the image editor widget.
 
 #### `onComplete()`: function (required)
 
-Callback, triggers on complete processing image.
+Callback, triggers on completing processing an image.
 
 ## <a name="configuration"></a>Configuration
 
@@ -266,7 +266,7 @@ config.tools = ['adjust', 'effects', 'filters', 'rotate'];
 
 **default**: true
 
-Helps to improve performance of the Image Editor by applying transformations to low quality preview.
+Helps to improve performance of the Image Editor by applying transformations to a low-quality preview.
 
 ```
 config.isLowQualityPreview = true;
@@ -302,7 +302,7 @@ config.translations = {
 
 ### `reduceBeforeEdit`: object
 
-In order to improve performance of editing your images, you can reduce the image size before editing.
+In order to improve performance when editing your images, you can reduce the image size before editing.
 
 **default**: mode: 'manual', widthLimit: 2000px, heightLimit: 2000px
 
@@ -418,6 +418,64 @@ The example of Image Editor configuration using cloudimage service can be found
 [here](https://github.com/scaleflex/filerobot-image-editor/tree/master/examples/js-with-cloudimage).
 
 [Learn more about Cloudimage](https://www.cloudimage.io/en/home)
+
+## <a name="sealing"></a>Cloudimage URL params sealing
+
+When you use Cloudimage Service for Filerobot Image Editor (config.processWithCloudimage: true) it will gives you some more abilities. One of this abilities is URL params sealing.
+With URL params sealing you can hide/encrypt some URL params (like watermark url, ...).
+When sealing configured, you will see two extra URL params: ci_seal (calculated hash) and ci_eqs (encrypted data).
+
+### <a name="sealing"></a>Configuration for sealing:
+
+### `filerobot.token`: string
+
+**default**: ''
+
+Sealing token (not all tokens support sealing).
+
+### `filerobot.version`: string
+
+**default**: ''
+
+For sealing it's required to use v7 version.
+
+### `imageSealing.enabled`: bool
+
+**default**: false
+
+### `imageSealing.salt`: string
+
+**default**: ''
+
+Salt string which is used on encrypting stage.
+
+### `imageSealing.char_count`: number
+
+**default**: 10
+
+Calculated hash (URL ci_seal param) length.
+
+### `imageSealing.include_params`: string[] | null
+
+**default**: null
+
+URL params for sealling. In default case, when it's NULL, all the params will be sealed. Also you can set a list of params, for example: ['wat_url'].
+
+### <a name="sealing-configuration-example"></a>Example:
+```
+config = {
+  filerobot: {
+    token: 'your-sealing-token',
+    version: 'v7',
+  },
+  imageSealing: {
+    enabled: true,
+    salt: 'some-salt-str',
+    char_count: 10,
+    include_params: ['wat', 'wat_url', 'wat_opacity', 'wat_scale', 'wat_pad', 'wat_gravity'],
+  },
+}
+```
 
 ## <a name="roadmap"></a>What's on the Roadmap for the near future
 
