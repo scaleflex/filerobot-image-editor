@@ -419,6 +419,64 @@ The example of Image Editor configuration using cloudimage service can be found
 
 [Learn more about Cloudimage](https://www.cloudimage.io/en/home)
 
+## <a name="sealing"></a>Cloudimage URL params sealing
+
+When you use Cloudimage Service for Filerobot Image Editor (config.processWithCloudimage: true) it will gives you some more abilities. One of this abilities is URL params sealing.
+With URL params sealing you can hide/encrypt some URL params (like watermark url, ...).
+When sealing configured, you will see two extra URL params: ci_seal (calculated hash) and ci_eqs (encrypted data).
+
+### <a name="sealing"></a>Configuration for sealing:
+
+### `filerobot.token`: string
+
+**default**: ''
+
+Sealing token (not all tokens support sealing).
+
+### `filerobot.version`: string
+
+**default**: ''
+
+For sealing it's required to use v7 version.
+
+### `imageSealing.enabled`: bool
+
+**default**: false
+
+### `imageSealing.salt`: string
+
+**default**: ''
+
+Salt string which is used on encrypting stage.
+
+### `imageSealing.char_count`: number
+
+**default**: 10
+
+Calculated hash (URL ci_seal param) length.
+
+### `imageSealing.include_params`: string[] | null
+
+**default**: null
+
+URL params for sealling. In default case, when it's NULL, all the params will be sealed. Also you can set a list of params, for example: ['wat_url'].
+
+### <a name="sealing-configuration-example"></a>Example:
+```
+config = {
+  filerobot: {
+    token: 'your-sealing-token',
+    version: 'v7',
+  },
+  imageSealing: {
+    enabled: true,
+    salt: 'some-salt-str',
+    char_count: 10,
+    include_params: ['wat', 'wat_url', 'wat_opacity', 'wat_scale', 'wat_pad', 'wat_gravity'],
+  },
+}
+```
+
 ## <a name="roadmap"></a>What's on the Roadmap for the near future
 
 Features
