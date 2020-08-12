@@ -26,6 +26,10 @@ Types of changes:
 
 -------------
 
+## 3.10.0 - 2020-08-12
+### Added
+- draw shapes, images, text with possibility to drag&drop and scale
+
 ## 3.9.6 - 2020-07-28
 ### Changed
 - move back button into config
