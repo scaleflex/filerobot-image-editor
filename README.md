@@ -73,7 +73,7 @@
 ## <a name="features"></a>Features
 
 ### Adjust
-`brightness, contrast, exposure, and saturation`
+`brightness`, `contrast`, `exposure`, and `saturation`
 
 <img
     width="600"
@@ -81,7 +81,7 @@
     src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/adjust.png?sanitize=true">
 
 ### Effects
-`'edge enhance', 'emboss', 'grungy', 'hazy', 'lomo', 'radial blur', 'sin city', 'tilt shift'`
+`edge enhance`, `emboss`, `grungy`, `hazy`, `lomo`, `radial blur`, `sin city`, `tilt shift`
 
 <img
     width="600"
@@ -89,7 +89,7 @@
     src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/effects.png?sanitize=true">
 
 ### Filters
-`'cross process', 'glow sun', 'jarques', 'love', 'old boot', 'orange peel', 'pin hole', 'sepia', 'sun rise', 'vintage'`
+`cross process`, `glow sun`, `jarques`, `love`, `old boot`, `orange peel`, `pin hole`, `sepia`, `sun rise`, `vintage`
 
 <img
     width="600"
@@ -97,7 +97,7 @@
     src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/demo/filters.png?sanitize=true">
 
 ### Orientation
-`rotate and flip (mirror effect)`
+`rotate` and `flip` (mirror effect)
 
 <img
     width="600"
@@ -126,7 +126,7 @@
     src="https://cdn.scaleflex.it/demo/watermark.png?sanitize=true">
 
 ### Light theme
-`or use your custom color scheme`
+or use your custom color scheme
 
 <img
     width="600"
@@ -162,19 +162,19 @@ We provide an easy way to integrate the image editor in your applications:
 
 Initialization of Filerobot Image Editor plugin.
 
-**callbacks.onOpen(src: string/blob)**: function - is triggered when modal is opened
+**`callbacks.onOpen(src: string/blob)`**: function - triggered when modal is opened
 
-**callbacks.onBeforeComplete({ status: string, canvas: canvas element })**: function - is triggered before onComplete, if it returnes fase it cancels default behavior and you can use canvas element to upload to 3ed part service
+**`callbacks.onBeforeComplete({ status: string, canvas: canvas element })`**: function - triggered before onComplete; if it returns `false`, it cancels the default behaviour and you can use canvas element to upload to a 3rd-party service
 
-**callbacks.onComplete(url: string, file: object)**: function - is triggered on Complete returnes edited image url
+**`callbacks.onComplete(url: string, file: object)`**: function - triggered on completion and returnes the URL of the edited image
 
-**callbacks.onClose()**: function - is triggered when modal is closed
+**`callbacks.onClose()`**: function - triggered when modal is closed
 
 #### `ImageEditor.open(url)`: function
 
 Open editor modal.
 
-* **url**: string (required) - image url to edit
+* **`url`**: string (required) - the URL of the image to be edited
 
 #### `ImageEditor.close()`: function
 
@@ -182,7 +182,7 @@ Close editor modal.
 
 #### `ImageEditor.unmount()`: function
 
-Destroy editor
+Destroy the editor
 
 ## <a name="react_component"></a>React component usage
 
@@ -286,7 +286,7 @@ config.language = 'en';
 
 ### `translations`: object
 
-key/translation pairs for i18n
+Key/translation pairs for i18n
 
 ```
 config.translations = {
@@ -355,11 +355,11 @@ config.watermark = {
 
 **default**: 'dark'
 
-Color schemes, currently available two themes: 'dark', 'light'. There is possibility to make your custom theme [here](https://github.com/scaleflex/filerobot-image-editor#theme-object)
+Color schemes; currently two themes are available: 'dark', 'light'. There is a possibility to create your custom theme [here](https://github.com/scaleflex/filerobot-image-editor#theme-object).
 
 ### `theme`: object
 
-Possibility to make your custom theme [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/theme/dark.js)
+Possibility to make your custom theme [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/theme/dark.js).
 
 example:
 
@@ -384,11 +384,11 @@ config.theme = {
 
 ### `cropPresets`: object
 
-Add custom templates for crop. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/cropPresets.js)
+Add custom crop templates. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/cropPresets.js)
 
 ### `resizePresets`: object
 
-Add custom templates for resize. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/resizePresets.js)
+Add custom resize templates. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/resizePresets.js)
 
 ### `beginCropArea`: number | [0-1] - default: 1 (image size)
 The crop area size shown/used automatically on starting crop.
@@ -414,7 +414,7 @@ The example of Image Editor configuration using Filerobot service can be found
 Point the Image Editor to your origin image URL, edit it and deliver the result lightning fast over the Cloudimage image CDN.
 Limited to the Cloudimage inline transformation features.
 
-The example of Image Editor configuration using cloudimage service can be found
+The example of Image Editor configuration using the Cloudimage service can be found
 [here](https://github.com/scaleflex/filerobot-image-editor/tree/master/examples/js-with-cloudimage).
 
 [Learn more about Cloudimage](https://www.cloudimage.io/en/home)
