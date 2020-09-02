@@ -274,7 +274,7 @@ export default class extends Component {
   }
 
   handleInputTypeChange = ({ target }) => {
-    const { updateState } = this.props;
+    const { updateState, config } = this.props;
     updateState({ isShowSpinner: true });
 
     this.setState({ selectedInputType: target.value });
@@ -282,7 +282,7 @@ export default class extends Component {
       this.changeTextProperty({
         target: {
           name: 'text',
-          value: 'Filerobot'
+          value: (config.watermark || {}).defaultText || 'Your text'
         }
       })
       updateState({ isShowSpinner: false })

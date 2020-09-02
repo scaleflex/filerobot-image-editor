@@ -1115,7 +1115,10 @@ export default class ImageManipulator extends Component {
 
   getWatermarkArguments = () => {
     const { config: { processWithCloudimage }, shapeOperations } = this.props;
-    const { x, y, opacity, ...watermark } = shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY });
+    const watermarkObj = shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY });
+    if (!watermarkObj) { return ''; }
+
+    const { x, y, opacity, ...watermark } = watermarkObj;
     const {
       original: { width: imgWidth, height: imgHeight } = {}
     } = this.state;
@@ -1127,7 +1130,6 @@ export default class ImageManipulator extends Component {
 
     const gravityQuery = `&wat_gravity=northwest&wat_pad=${xWatPad},${yWatPad}`;
     let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=31p${gravityQuery}`;
-    console.log(gravityQuery);
 
     queryUrl += processWithCloudimage && watermark.text
     ? `&wat_text=${watermark.text}&wat_font=${watermark.textFont}&wat_fontsize=${watermark.textSize}&wat_colour=${watermark.color.replace('#', '')}`

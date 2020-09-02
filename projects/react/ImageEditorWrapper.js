@@ -98,7 +98,8 @@ class ImageEditorWrapper extends Component {
 
   render() {
     const { isVisible, src, config, t, theme } = this.state;
-    const { onComplete = () => {}, onBeforeComplete, closeOnLoad, showInModal = true } = this.props;
+    const { onComplete = () => {}, onBeforeComplete, closeOnLoad } = this.props;
+    const { showInModal = true } = config;
 
     if (!src || !isVisible || isServerSide) return null;
 

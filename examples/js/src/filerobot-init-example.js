@@ -45,8 +45,10 @@ ImageEditorDownload = new FilerobotImageEditor({
       applyByDefault: false,
       handleOpacity: true,
       fileUpload: true,
+      defaultText: 'Filerobot.....'
     },
-    showGoBackBtn: false
+    showGoBackBtn: false,
+    showInModal: true
     //cropPresets: [
     //  { name: 'square', value: 1 },
     //  { name: 'half-page ad', value: 300 / 600 },
@@ -103,7 +105,9 @@ const configUpload = {
     applyByDefault: false,
     handleOpacity: true,
     fileUpload: true,
-  }
+    defaultText: 'Filerobot.....'
+  },
+  showInModal: true
 };
 const onCompleteUpload = function (newUrl) {
   const copyText = document.getElementById("copy-text");
@@ -161,7 +165,8 @@ const configModify = {
     position: 'center',
     opacity: 0.7,
     applyByDefault: true,
-    handleOpacity: true
+    handleOpacity: true,
+    defaultText: 'Filerobot.....'
   },
   imageSealing: {
    enabled: true,
@@ -169,6 +174,7 @@ const configModify = {
    char_count: 10,
    include_params: ['wat', 'wat_url', 'wat_opacity', 'wat_scale', 'wat_pad', 'wat_gravity'], // optional, by default include all
   },
+  showInModal: true
 };
 
 const onCompleteModify = function (newUrl) {
