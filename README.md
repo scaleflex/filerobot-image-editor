@@ -342,12 +342,15 @@ Add watermark on the image after applying image transformations.
 
 ##### `watermark.imageFilter`: function - default is null, pass a function that gets the image resource before draw and return a manipulated image (pass some fancy filter on the watermark)
 
+##### `watermark.defaultText`: string - the default text that would be added as a text watermark
+
 
 ```
 config.watermark = {
     url: 'https://jolipage002-global.api.airstore.io/v1/get/_/04e725a5-8605-57d5-bf9b-b161745e7720/6d3f41ddc2c1271cb4fede2b7cc8323bec97a3c69f89fd1dd881c5bb9460d9c6.png',
     position: 'center',
-    opacity: 0.7
+    opacity: 0.7,
+    defaultText: 'Filerobot.....'
   };
 ```
 
@@ -397,7 +400,19 @@ The crop area size shown/used automatically on starting crop.
 
 **default**: false
 
-Display back button all the time, duplication of cross button
+Display back button all the time, duplication of cross button.
+
+### `showInModal`: bool
+
+**default**: true
+
+Show the editor in modal `true`, or in an element of the page if the value is `false` then the value of (elementId) prop would be used to show the editor inside that element if the element isn't found it would be created and appended at the end of the page's body.
+
+### `elementId`: string
+
+**default**: filerobot-image-editor
+
+The id used for the editor's wrapper whether it's inside a modal or an element.
 
 ## <a name="filerobot_integration"></a>Filerobot Integration
 
