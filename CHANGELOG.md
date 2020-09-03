@@ -25,6 +25,13 @@ Types of changes:
 - ...
 
 -------------
+## 3.11.0 - 2020-09-03
+### Fixed
+- Text watermark design
+- Problem of image saving without adding watermark in upload & modify modes
+
+### Added
+- showInModal & watermark.defaultText props
 
 ## 3.10.1 - 2020-08-12
 ### Changed
