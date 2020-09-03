@@ -5,6 +5,7 @@ import {
 import { Button, CloseBtn, FullscreenBtn } from '../../styledComponents';
 import { Toolbar } from '../';
 import { toggleModalFullscreen } from '../../utils/full-screen-handle';
+import { ON_CLOSE_STATUSES } from '../../config';
 
 
 export default class extends Component {
@@ -18,6 +19,7 @@ export default class extends Component {
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
     const onFinishButtonLabel = (!processWithCloudService && !processWithFilerobot) ? t['toolbar.download'] : t['toolbar.save'];
     const applyAndSave = () => { apply(handleSave); };
+    const cancelBtnClosingFn = () => onClose(ON_CLOSE_STATUSES.TOOLBAR_CANCEL_BTN_CLICKED);
 
     return (
       <HeaderWrapper>
@@ -30,11 +32,11 @@ export default class extends Component {
         <ToolbarWrapper overlayYHidden={activeTab !== 'watermark'}>
           <ActionsWrapper>
             <LeftActions>
-              <CancelBtn hide={!activeTab} onClick={isOneTool ? onClose : onRevert} sm default fullSize>
+              <CancelBtn hide={!activeTab} onClick={isOneTool ? cancelBtnClosingFn : onRevert} sm default fullSize>
                 {t[`toolbar.cancel`]}
               </CancelBtn>
               {showGoBackBtn &&
-              <CancelBtn onClick={onClose} sm default fullSize>{t[`toolbar.go_back`]}</CancelBtn>}
+              <CancelBtn onClick={cancelBtnClosingFn} sm default fullSize>{t[`toolbar.go_back`]}</CancelBtn>}
             </LeftActions>
 
             {activeBody === 'preview' &&

@@ -3,7 +3,7 @@ import ImageEditor from './ImageEditor';
 import { Container } from './styledComponents';
 import { ThemeProvider } from 'styled-components';
 import { Modal } from './components/Modal';
-import { CLOUDIMAGE_OPERATIONS, TOOLS, UPLOADER } from './config';
+import { CLOUDIMAGE_OPERATIONS, TOOLS, UPLOADER, ON_CLOSE_STATUSES } from './config';
 import './assets/fonts/filerobot-font.css';
 import translations from './assets/i18n';
 import dark from './assets/theme/dark';
@@ -86,12 +86,13 @@ class ImageEditorWrapper extends Component {
     }
   }
 
-  close = () => {
+  close = (closingStatus = ON_CLOSE_STATUSES.CLOSE_BTN_CLICKED) => {
     const { onClose } = this.props;
+    const status = typeof closingStatus === 'object' ? ON_CLOSE_STATUSES.CLOSE_BTN_CLICKED : closingStatus;
 
     if (this._isMounted) {
       this.setState({ isVisible: false }, () => {
-        if (onClose) onClose();
+        if (onClose) onClose({ status });
       });
     }
   }

@@ -3,7 +3,7 @@ import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
 import { Footer, Header, PreResize, Preview } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
-import { DEFAULT_WATERMARK } from './config';
+import { DEFAULT_WATERMARK, ON_CLOSE_STATUSES } from './config';
 
 
 const INITIAL_PARAMS = {
@@ -228,11 +228,11 @@ export default class extends Component {
     if (isDownload) {
       downloadImage(() => {
         this.props.onComplete({ status: 'success', canvas });
-        this.props.onClose();
+        this.props.onClose(ON_CLOSE_STATUSES.IMAGE_DOWNLOADED);
       });
     } else {
       this.props.onComplete({ status: 'success', canvas });
-      this.props.onClose();
+      this.props.onClose(ON_CLOSE_STATUSES.IMAGE_EDITS_COMPLETED);
     }
   }
 
