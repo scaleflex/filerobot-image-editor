@@ -406,13 +406,14 @@ Display back button all the time, duplication of cross button.
 
 **default**: true
 
-Show the editor in modal `true`, or in an element of the page if the value is `false` then the value of (elementId) prop would be used to show the editor inside that element if the element isn't found it would be created and appended at the end of the page's body.
+Show the editor in modal `true`,
+or in an element of the page if the value is `false` in that case for `JS version` the value of `elementId` prop would be used to show the editor inside that element if the element isn't found it would be created and appended at the end of the page's body, For `React version` the editor would be shown in the place where the component is called.
 
-### `elementId`: string
+### `elementId`: string (JS version)
 
 **default**: filerobot-image-editor
 
-The id used for the editor's wrapper whether it's inside a modal or an element.
+The id used for the editor's wrapper element whether it's inside a modal or an element if it's not found on the page it's created and appended to body.
 
 ## <a name="filerobot_integration"></a>Filerobot Integration
 
