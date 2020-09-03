@@ -73,7 +73,7 @@ const WrapperForControls = styled('div')`
 `;
 
 const WrapperForOpacity = styled('div')`
-  display: inline-block;
+  display: inline;
   vertical-align: middle;
   padding: 10px;
 

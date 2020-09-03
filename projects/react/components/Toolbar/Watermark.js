@@ -397,7 +397,7 @@ export default class extends Component {
               <FieldInput
                 id="text"
                 value={text}
-                style={{ width: 'calc(65% - 135px)' }}
+                style={{ width: 'calc(65% - 135px)', minWidth: 120 }}
                 name="text"
                 onChange={this.changeTextProperty}
               />
@@ -428,7 +428,7 @@ export default class extends Component {
           <WrapperForControls switcherPosition={handleOpacity ? 'right' : 'left'}>
             {handleOpacity &&
             <WrapperForOpacity>
-              <label htmlFor="opacity">Opacity</label>
+              <label htmlFor="opacity" style={{ minWidth: 80 }}>Opacity</label>
               <Range
                 label={t['common.opacity']}
                 min={0}

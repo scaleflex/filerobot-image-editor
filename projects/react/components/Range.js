@@ -61,7 +61,7 @@ const Wrapper = styled('div').attrs(() => ({
   className: 'image-editor-range'
 }))`
   position: relative;
-  width: 190px;
+  width: 175px;
   padding: 25px 5px 20px 5px;
   
   label {
