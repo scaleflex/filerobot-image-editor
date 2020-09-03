@@ -32,6 +32,7 @@ Types of changes:
 
 ### Added
 - showInModal & watermark.defaultText props
+- onClose method's status
 
 ## 3.10.1 - 2020-08-12
 ### Changed
