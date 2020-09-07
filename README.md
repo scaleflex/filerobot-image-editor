@@ -171,15 +171,15 @@ Initialization of Filerobot Image Editor plugin.
 **callbacks.onClose({ status })**: function - is triggered when modal is closed
 ##### status: the behavior/way the modal closed through
 one of the following values would be returned depending on the case,
-'close-button-clicked' => When modal is closed through clicking over the close button.
-'toolbar-cancel-button-clicked' => When modal is closed through clicking over cancel button of toolbar (if shown).
-'esc-key-pressed' => When modal is closed through pressing escape key.
-'modal-overlay-clicked' => When modal is closed through clicking over the modal's overlay.
-'image-edits-completed' => When modal is closed after finishing the edits of the image and not downloaded or uploaded.
-'image-downloaded' => When modal is closed after the image is downloaded.
-'image-uploaded-filerobot' => When modal is closed after uploading the image to Filerobot.
-'image-uploaded-cloudimage'=> When modal is closed after uploading the image to Cloudimage.
-'image-uploading-fail-filerobot' => When modal is closed after failing the uploading to Filerobot.
+'close-button-clicked' => When modal is closed through clicking over the close button.  
+'toolbar-cancel-button-clicked' => When modal is closed through clicking over cancel button of toolbar (if shown).  
+'esc-key-pressed' => When modal is closed through pressing escape key.  
+'modal-overlay-clicked' => When modal is closed through clicking over the modal's overlay.  
+'image-edits-completed' => When modal is closed after finishing the edits of the image and not downloaded or uploaded.  
+'image-downloaded' => When modal is closed after the image is downloaded.  
+'image-uploaded-filerobot' => When modal is closed after uploading the image to Filerobot.  
+'image-uploaded-cloudimage'=> When modal is closed after uploading the image to Cloudimage.  
+'image-uploading-fail-filerobot' => When modal is closed after failing the uploading to Filerobot.  
 
 #### `ImageEditor.open(url)`: function
 
