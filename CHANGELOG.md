@@ -25,6 +25,11 @@ Types of changes:
 - ...
 
 -------------
+## 3.11.1 - 2020-09-16
+### Fixed
+- Watermark spinner is always shown if no watermark urls provided
+- Watermark image upload issue
+
 ## 3.11.0 - 2020-09-03
 ### Fixed
 - Text watermark design
