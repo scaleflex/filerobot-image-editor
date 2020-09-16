@@ -124,18 +124,13 @@ export default class extends Component {
     if (!shapeData) { shapeData = data }
     if (!watermarkObjectData) { watermarkObjectData = data }
 
-    const watermark = this.getWatermarkLayer();
+    const watermark = this.getWatermarkLayer() || {};
     this.setState(data, () => {
-      shapeOperations.addOrUpdate({ ...shapeData, key: WATERMARK_UNIQUE_KEY, index: watermark.index },
+      shapeOperations.addOrUpdate({ ...shapeData, key: WATERMARK_UNIQUE_KEY, index: watermark.index, tab: 'watermark' },
       {
         watermark: {
           ...this.props.watermark,
           ...watermarkObjectData
-        },
-        selectedShape: {
-          ...this.props.selectedShape,
-          ...shapeData,
-          // resizingBox: true
         }
       });
     });
@@ -146,7 +141,7 @@ export default class extends Component {
     return shapeOperations.getShape({ key: WATERMARK_UNIQUE_KEY });
   }
 
-  changeURL = (event) => {
+  changeURL = (event, shapeData = {}) => {
     const nextValue = event.target.value;
 
     if (this.props.watermark.text) {
@@ -154,7 +149,7 @@ export default class extends Component {
       return;
     }
 
-    this.updateWatermarkProperty({ url: nextValue }, { img: nextValue }, { url: '', text: false })
+    this.updateWatermarkProperty({ url: nextValue }, { img: nextValue, ...shapeData }, { url: '', text: false })
   }
 
   changeTextProperty = (event) => {
@@ -194,7 +189,7 @@ export default class extends Component {
     if (input.files && input.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.changeURL({ target: { value: e.target.result } });
+        this.changeURL({ target: { value: e.target.result } }, { variant: SHAPES_VARIANTS.IMAGE });
       }
       reader.readAsDataURL(input.files[0]);
     }
@@ -257,6 +252,8 @@ export default class extends Component {
       } else {
         logoImage.src = url;
       }
+    } else {
+      updateState({ isShowSpinner: false });
     }
   });
 

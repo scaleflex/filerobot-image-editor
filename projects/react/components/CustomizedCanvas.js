@@ -521,8 +521,18 @@ export default class CustomizedCanvas extends Component {
   ) => {
     if(img) {
       const addIt = () => {
-        const width = img.width;
-        const height = img.height;
+        let width = img.width;
+        let height = img.height;
+
+        // Scaling down the image if it's bigger than the canvas
+        if (width > this._canvas.width) {
+          width = width / (width / this._canvas.width)
+        }
+
+        if (height > this._canvas.height) {
+          height = height / (height / this._canvas.height)
+        }
+
         const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
         const drawingArgs = {
