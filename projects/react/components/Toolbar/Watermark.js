@@ -70,7 +70,7 @@ export default class extends Component {
       opacity: opacity || 0.7,
       handleOpacity: typeof handleOpacity === 'boolean' ? handleOpacity : true,
       position: activePosition,
-      url: url || urls && urls.length > 1 ? urls[0] && urls[0].url : '',
+      url: url || (urls && urls.length > 1 ? urls[0] && urls[0].url : ''),
       urls: urls || [],
       activePositions: setActivePositions,
       isWatermarkList: urls && urls.length > 1,
