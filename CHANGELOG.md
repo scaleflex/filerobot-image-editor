@@ -25,6 +25,13 @@ Types of changes:
 - ...
 
 -------------
+## 3.11.2 - 2020-09-21
+### Fixed
+- Watermark issue when no urls provided in the configurations
+
+### Added
+- Touch support for moving objects' places
+
 ## 3.11.1 - 2020-09-16
 ### Fixed
 - Watermark spinner is always shown if no watermark urls provided
