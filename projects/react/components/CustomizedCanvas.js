@@ -153,7 +153,9 @@ export default class CustomizedCanvas extends Component {
             this.activateResizingActions();
             this._canvas.addEventListener('keyup', this.activateShapeDeleting);
             this._canvas.addEventListener('mousemove', this.startDragging);
+            this._canvas.addEventListener('touchmove', this.startDragging);
             document.addEventListener('mouseup', this.endDragging);
+            document.addEventListener('touchend', this.endDragging);
           }
       }
     );
@@ -164,7 +166,9 @@ export default class CustomizedCanvas extends Component {
       this.disableResizingActions();
       this._canvas.removeEventListener('keyup', this.activateShapeDeleting);
       this._canvas.removeEventListener('mousemove', this.startDragging);
+      this._canvas.removeEventListener('touchmove', this.startDragging);
       document.removeEventListener('mouseup', this.endDragging);
+      document.removeEventListener('touchend', this.endDragging);
     }
   }
 
@@ -192,7 +196,9 @@ export default class CustomizedCanvas extends Component {
   trackShapeResize = ({ target }) => {
     this.setState({ resizeControlTarget: target });
     document.addEventListener('mousemove', this.handleShapeResizing);
+    document.addEventListener('touchmove', this.handleShapeResizing);
     document.addEventListener('mouseup', this.disableResizingActions);
+    document.addEventListener('touchend', this.disableResizingActions);
   }
 
   handleShapeResizing = ({ movementX, movementY, shiftKey }) => {
@@ -319,6 +325,14 @@ export default class CustomizedCanvas extends Component {
   }
 
   startDragging = (event) => {
+    if (event.targetTouches[0]) {
+      event.preventDefault();
+      const { clientX, clientY } = event.targetTouches[0];
+      const { x, y } = this._canvas.getBoundingClientRect();
+      event.offsetX = clientX - x;
+      event.offsetY = clientY - y;
+    }
+    
     const { selectedShape } = this.props;
     const { startEdgeOffset = {}, width, height, index } = selectedShape;
     
