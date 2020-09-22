@@ -25,6 +25,10 @@ Types of changes:
 - ...
 
 -------------
+## 3.11.3 - 2020-09-22
+### Fixed
+- Objects drag & drop error 
+
 ## 3.11.2 - 2020-09-21
 ### Fixed
 - Watermark issue when no urls provided in the configurations
