@@ -85,12 +85,13 @@ export default class extends Component {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
+    const nextProps = this.props;
     // check if position has ben modified and update
     if (nextProps.watermark.position !== this.state.position) {
       this.onPositionChange(this.state.position);
     }
-    if (nextProps.watermark.applyByDefault !== this.props.watermark.applyByDefault) {
+    if (nextProps.watermark.applyByDefault !== prevProps.watermark.applyByDefault) {
       if (this.getWatermarkLayer()) {
         this.updateWatermarkProperty(
           { applyByDefault: false },

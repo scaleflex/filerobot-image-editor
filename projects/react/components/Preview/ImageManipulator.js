@@ -41,7 +41,8 @@ export default class ImageManipulator extends Component {
     super();
 
     this.state = {
-      canvas: null
+      canvas: null,
+      self: this
     };
 
     this.CamanInstance = null;
@@ -51,14 +52,18 @@ export default class ImageManipulator extends Component {
 
   shouldComponentUpdate() { return false; }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.activeTab !== this.props.activeTab) {
-      if (this.props.activeTab) this.destroyMode(this.props.activeTab);
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const additionalState = {};
+    if (nextProps.activeTab !== prevState.activeTab) {
+      if (prevState.activeTab) prevState.self.destroyMode(prevState.activeTab);
 
-      this.changeTab(nextProps.activeTab);
+      if (nextProps.activeTab === 'watermark') {
+        additionalState.tempWatermark = nextProps.watermark && deepCopy(nextProps.watermark);
+      }
+      prevState.self.changeTab(nextProps.activeTab);
     }
 
-    this.setState({ ...nextProps });
+    return { ...additionalState, ...nextProps };
   }
 
   componentDidMount() {
@@ -1063,10 +1068,6 @@ export default class ImageManipulator extends Component {
   initWatermark = () => {
     const { watermark, updateState } = this.props;
 
-
-    this.setState({
-      tempWatermark: watermark && deepCopy(watermark)
-    });
 
     if (!watermark.applyByDefault) {
       updateState({ watermark: { ...watermark, applyByDefault: true } });

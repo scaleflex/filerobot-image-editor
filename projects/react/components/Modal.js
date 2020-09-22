@@ -129,11 +129,13 @@ function getSmallModalStyle() {
 }
 
 export class Modal extends Component {
-  UNSAFE_componentWillMount() {
-    const { closeOnOutsideClick = true } =  this.props;
+  constructor(props) {
+    super(props);
+    
     this.root = document.createElement('div');
     document.body.appendChild(this.root);
-
+    
+    const { closeOnOutsideClick = true } =  this.props;
     if (closeOnOutsideClick) {
       document.addEventListener('keydown', this.handleOutsideMouseClick);
     }
