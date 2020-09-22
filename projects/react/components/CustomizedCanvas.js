@@ -325,7 +325,7 @@ export default class CustomizedCanvas extends Component {
   }
 
   startDragging = (event) => {
-    if (event.targetTouches[0]) {
+    if (event.targetTouches && event.targetTouches[0]) {
       event.preventDefault();
       const { clientX, clientY } = event.targetTouches[0];
       const { x, y } = this._canvas.getBoundingClientRect();
