@@ -133,6 +133,8 @@ export class Modal extends Component {
     super(props);
     
     this.root = document.createElement('div');
+    this.root.classList.add('filerobot-image-editor-root');
+
     document.body.appendChild(this.root);
     
     const { closeOnOutsideClick = true } =  this.props;
@@ -164,7 +166,7 @@ export class Modal extends Component {
 
     return createPortal(
       <Fragment>
-        <ModalOverlay onClick={() => onClose(ON_CLOSE_STATUSES.MODAL_OVERLAY_CLICKED)}/>
+        <ModalOverlay className="modal-overlay" onClick={() => onClose(ON_CLOSE_STATUSES.MODAL_OVERLAY_CLICKED)}/>
         <ModalFullScreen id={MODAL_ID} {...this.props}>
           {!isHideCloseBtn && <CloseBtn onClick={onClose}/>}
           <ModalContent h="100%" {...otherProps}>
