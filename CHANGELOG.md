@@ -25,6 +25,10 @@ Types of changes:
 - ...
 
 -------------
+## 3.11.4 - 2020-10-02
+### Fixed
+- Add classes for modal overlay and modal root container on purpose to manage plugin in external projects
+
 ## 3.11.3 - 2020-09-22
 ### Fixed
 - Objects drag & drop error 
