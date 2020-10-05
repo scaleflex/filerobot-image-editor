@@ -25,6 +25,11 @@ Types of changes:
 - ...
 
 -------------
+
+## 3.11.5 - 2020-10-05
+### Fixed
+- bug with modal id. Added using modal id from config
+
 ## 3.11.4 - 2020-10-02
 ### Fixed
 - Add classes for modal overlay and modal root container on purpose to manage plugin in external projects

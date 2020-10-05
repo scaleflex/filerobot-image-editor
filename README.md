@@ -140,7 +140,7 @@ or use your custom color scheme
 Use the latest CDNized plugin version:
 
 ```html
-<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.11.4/filerobot-image-editor.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.11.5/filerobot-image-editor.min.js"></script>
 ```
 
 ### <a name="quick_start"></a>Quick start
