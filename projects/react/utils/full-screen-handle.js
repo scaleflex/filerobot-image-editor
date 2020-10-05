@@ -1,13 +1,13 @@
 import { MODAL_ID } from '../config';
 
-export const toggleModalFullscreen = () => {
+export const toggleModalFullscreen = (configElementId) => {
   document.fullscreenElement = document.fullscreenElement || document.mozFullscreenElement
     || document.msFullscreenElement || document.webkitFullscreenDocument;
   
   document.exitFullscreen = document.exitFullscreen || document.mozExitFullscreen
     || document.msExitFullscreen || document.webkitExitFullscreen;
 
-  const modal = document.getElementById(MODAL_ID);
+  const modal = document.getElementById(configElementId || MODAL_ID);
 
   modal.requestFullscreen = modal.requestFullscreen || modal.mozRequestFullscreen
     || modal.msRequestFullscreen || modal.webkitRequestFullscreen;

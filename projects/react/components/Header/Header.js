@@ -14,7 +14,7 @@ export default class extends Component {
       activeTab, onRevert, apply, onClose, processWithCloudService, processWithFilerobot,
       handleSave, activeBody, t, config
     } = this.props;
-    const { tools, showGoBackBtn } = config;
+    const { tools, showGoBackBtn, elementId } = config;
     const isOneTool = tools.length === 1;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
     const onFinishButtonLabel = (!processWithCloudService && !processWithFilerobot) ? t['toolbar.download'] : t['toolbar.save'];
@@ -25,7 +25,7 @@ export default class extends Component {
       <HeaderWrapper>
         <HeaderTop>
           <Title>{t[`toolbar.${filteredName}`] || t[`header.image_editor_title`]}</Title>
-          <FullscreenBtn onClick={toggleModalFullscreen} title={t[`header.toggle_fullscreen`]} />
+          <FullscreenBtn onClick={() => toggleModalFullscreen(elementId)} title={t[`header.toggle_fullscreen`]} />
           <CloseBtn onClick={onClose} title={t[`header.close_modal`]} />
         </HeaderTop>
 
