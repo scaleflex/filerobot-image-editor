@@ -162,12 +162,12 @@ export class Modal extends Component {
   }
 
   render() {
-    let { onClose = () => {}, isHideCloseBtn, ...otherProps } = this.props;
+    let { onClose = () => {}, isHideCloseBtn, configModalId, ...otherProps } = this.props;
 
     return createPortal(
       <Fragment>
         <ModalOverlay className="modal-overlay" onClick={() => onClose(ON_CLOSE_STATUSES.MODAL_OVERLAY_CLICKED)}/>
-        <ModalFullScreen id={MODAL_ID} {...this.props}>
+        <ModalFullScreen id={configModalId || MODAL_ID} {...this.props}>
           {!isHideCloseBtn && <CloseBtn onClick={onClose}/>}
           <ModalContent h="100%" {...otherProps}>
             {this.props.children}

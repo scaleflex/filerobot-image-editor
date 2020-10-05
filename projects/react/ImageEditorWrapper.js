@@ -129,6 +129,7 @@ class ImageEditorWrapper extends Component {
             isHideCloseBtn={true}
             style={{ borderRadius: 5 }}
             onClose={this.close}
+            configModalId={config.elementId}
           >
             {Inner}
           </Modal> : Inner}
