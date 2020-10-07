@@ -5,7 +5,17 @@ import ImageEditor from '../react';
 
 class FilerobotImageEditor {
   constructor(config = {}, callbacks, show = false) {
-    const containerId = config.elementId || 'filerobot-image-editor';
+    let containerId;
+    if (config.elementId) {
+      containerId = config.elementId
+    } else if (config.processWithCloudimage || !!config.cloudimage) {
+      containerId = 'filerobot-image-editor-cloudimage';
+    } else if (config.processWithFilerobot || !!config.filerobot) {
+      containerId = 'filerobot-image-editor-uploader';
+    } else {
+      containerId = 'filerobot-image-editor';
+    }
+    
     let container = document.getElementById(containerId);
     let onComplete = (src) => { console.log(src) };
 

@@ -3,6 +3,8 @@ const MODAL_ID = 'filerobot-image-editor';
 
 // ID for preview canvas (canvas contains watermark, shapes...etc).
 const PREVIEW_CANVAS_ID = 'scaleflex-filerobot-shapes-edit-box';
+const CANVAS_ID = 'scaleflex-image-edit-box';
+const ORIGINAL_CANVAS_ID = 'scaleflex-image-edit-box-original';
 
 // 'effects', 'filters', 'adjust', 'crop', 'resize', 'rotate'
 const TOOLS = [
@@ -204,5 +206,7 @@ export {
   WATERMARK_CLOUDIMAGE_FONTS,
   SHAPES_VARIANTS,
   DEFAULT_IMG_URL,
-  ON_CLOSE_STATUSES
+  ON_CLOSE_STATUSES,
+  CANVAS_ID,
+  ORIGINAL_CANVAS_ID
 };

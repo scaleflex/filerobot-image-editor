@@ -36,7 +36,7 @@ const ToolWrapper = styled.div`
   text-align: center;
   font-size: 12px;
   color: ${props => props.theme.colors.text};
-  text-transform: ${props => props.tt || 'capitalize'};
+  text-transform: ${props => props.noCapitalStrs ? 'none' : props.tt || 'capitalize'};
   background: ${props => props.active ? props.theme.colors.secondaryBg : 'inherit'};
   
   :hover {
@@ -100,7 +100,7 @@ const EffectIcon = styled.div`
 `;
 
 const EffectLabel = styled.div`
-  text-transform: capitalize;
+  text-transform: ${p => p.noCapitalStrs ? 'none' : 'capitalize'};
   height: 20px;
   line-height: 20px;
 `;

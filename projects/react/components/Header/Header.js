@@ -14,7 +14,7 @@ export default class extends Component {
       activeTab, onRevert, apply, onClose, processWithCloudService, processWithFilerobot,
       handleSave, activeBody, t, config
     } = this.props;
-    const { tools, showGoBackBtn, elementId } = config;
+    const { tools, showGoBackBtn, elementId, noCapitalStrs } = config;
     const isOneTool = tools.length === 1;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
     const onFinishButtonLabel = (!processWithCloudService && !processWithFilerobot) ? t['toolbar.download'] : t['toolbar.save'];
@@ -24,7 +24,7 @@ export default class extends Component {
     return (
       <HeaderWrapper>
         <HeaderTop>
-          <Title>{t[`toolbar.${filteredName}`] || t[`header.image_editor_title`]}</Title>
+          <Title noCapitalStrs={noCapitalStrs}>{t[`toolbar.${filteredName}`] || t[`header.image_editor_title`]}</Title>
           <FullscreenBtn onClick={() => toggleModalFullscreen(elementId)} title={t[`header.toggle_fullscreen`]} />
           <CloseBtn onClick={onClose} title={t[`header.close_modal`]} />
         </HeaderTop>
@@ -32,11 +32,18 @@ export default class extends Component {
         <ToolbarWrapper overlayYHidden={activeTab !== 'watermark'}>
           <ActionsWrapper>
             <LeftActions>
-              <CancelBtn hide={!activeTab} onClick={isOneTool ? cancelBtnClosingFn : onRevert} sm default fullSize>
+              <CancelBtn
+                hide={!activeTab}
+                onClick={isOneTool ? cancelBtnClosingFn : onRevert}
+                noCapitalStrs={noCapitalStrs}
+                sm default fullSize
+              >
                 {t[`toolbar.cancel`]}
               </CancelBtn>
               {showGoBackBtn &&
-              <CancelBtn onClick={cancelBtnClosingFn} sm default fullSize>{t[`toolbar.go_back`]}</CancelBtn>}
+              <CancelBtn onClick={cancelBtnClosingFn} noCapitalStrs={noCapitalStrs} sm default fullSize>
+                {t[`toolbar.go_back`]}
+              </CancelBtn>}
             </LeftActions>
 
             {activeBody === 'preview' &&

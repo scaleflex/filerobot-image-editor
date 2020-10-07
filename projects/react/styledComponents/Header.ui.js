@@ -14,7 +14,7 @@ const HeaderTop = styled.div`
 
 const Title = styled.div`
   text-align: center;
-  text-transform: capitalize;
+  text-transform: ${props => props.noCapitalStrs ? 'none' : 'capitalize'};
   color: ${props => props.theme.colors.text}
 `;
 
@@ -44,7 +44,7 @@ const CancelBtn = styled(Button)`
   background: ${props => props.theme.colors.primaryBg};
   border-color: ${props => props.theme.colors.primaryBg};
   color: ${props => props.theme.colors.text};
-  text-transform: capitalize;
+  text-transform: ${props => props.noCapitalStrs ? 'none' : 'capitalize'};
   
   :hover {
     background: ${props => getHoverColor(props.theme.colors.primaryBg)};

@@ -25,6 +25,7 @@ export default class CustomizedCanvas extends Component {
 
     this.state = {
       resizeControlTarget: null,
+      originalCanvasDimensions: null
     }
   }
 
@@ -74,11 +75,16 @@ export default class CustomizedCanvas extends Component {
           deleteShapes: this.deleteAllShapesOrByTypeOrIndicies,
           setShapeVisibility: this.setShapeVisibilityByKeyOrIndex,
           getShape: this.getShapeByKeyOrIndex,
-          getShapesIndicies: this.getShapesIndexByAnyProp
+          getShapesIndicies: this.getShapesIndexByAnyProp,
+          prepareFinalCanvas: this.prepareFinalCanvas
         },
         availableShapes
       });
     }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    return { ...state, originalCanvasDimensions: props.originalCanvasDimensions };
   }
 
   componentWillUnmount() {
@@ -89,6 +95,38 @@ export default class CustomizedCanvas extends Component {
     if (prevProps.width !== this.props.width || prevProps.height !== this.props.height) {
       this.redrawShape()
     }
+  }
+
+  prepareFinalCanvas = () => {
+    const { shapes } = this.props;
+    const newCanvas = document.createElement('canvas');
+    const { width, height } = this.state.originalCanvasDimensions;
+    newCanvas.width = width;
+    newCanvas.height = height;
+
+    this._canvas.parentNode.insertBefore(newCanvas, this._canvas);
+
+    const oldCanvas = this._canvas;
+
+    this._canvas = newCanvas;
+    this._context = newCanvas.getContext('2d');
+
+    shapes.map((shape) => {
+      // Mapping both (X & WIDTH), (Y & HEIGHT) of shape from old to new canvas with final dimnesions.
+      shape.x = shape.x.mapNumber(0, oldCanvas.width, 0, width);
+      shape.y = shape.y.mapNumber(0, oldCanvas.height, 0, height);
+      
+      if (shape.variant !== SHAPES_VARIANTS.TEXT) {
+        shape.width = shape.width.mapNumber(0, oldCanvas.width, 0, width);
+        shape.height = shape.height.mapNumber(0, oldCanvas.height, 0, height);
+      } else {
+        shape.textSize = parseInt(shape.textSize).mapNumber(0, oldCanvas.width, 0, width);
+      }
+
+      this.drawShapeThroughVariant(shape);
+    });
+
+    return this._canvas;
   }
 
   updateState = (data, callback = () => {}) => {
@@ -467,8 +505,8 @@ export default class CustomizedCanvas extends Component {
   getTextWidthAndHeight = ({ text, textSize, textFont }) => {
     this.setTextStyle({ textSize, textFont });
     const metrics = this._context.measureText(text);
-    const { width } = metrics;
-    const height = width === 0 ? 0 : metrics.actualBoundingBoxDescent - metrics.actualBoundingBoxAscent;
+    let { width } = metrics;
+    let height = width === 0 ? 0 : metrics.actualBoundingBoxDescent - metrics.actualBoundingBoxAscent;
 
     return [width, height];
   }
@@ -486,7 +524,8 @@ export default class CustomizedCanvas extends Component {
   // TODO: add other shapes variants...
 
   addRect = ({ x, y, width = 100, height = 75, stroke = {}, color = '#000000',
-    opacity = 1.0, variant = SHAPES_VARIANTS.RECT, tab = 'shapes', ...others } = {}) => {
+    opacity = 1.0, variant = SHAPES_VARIANTS.RECT, tab = 'shapes', ...others } = {}
+  ) => {
     const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
     const drawingArgs = { x: x || centerX, y: y || centerY, width, height, stroke, opacity, color };
@@ -511,7 +550,8 @@ export default class CustomizedCanvas extends Component {
   }
 
   addCircle = ({ x, y, radius = 50, stroke = {}, color = '#000000',
-    opacity = 1.0, tab = 'shapes', ...others } = {}) => {
+    opacity = 1.0, tab = 'shapes', ...others } = {}
+  ) => {
     const [centerX, centerY] = this.getCanvasCenter(radius, radius);
     const widthAndHeight = radius * 2;
     
@@ -535,17 +575,7 @@ export default class CustomizedCanvas extends Component {
   ) => {
     if(img) {
       const addIt = () => {
-        let width = img.width;
-        let height = img.height;
-
-        // Scaling down the image if it's bigger than the canvas
-        if (width > this._canvas.width) {
-          width = width / (width / this._canvas.width)
-        }
-
-        if (height > this._canvas.height) {
-          height = height / (height / this._canvas.height)
-        }
+        const [width, height] = this.getSuitableImgDiemensions(img);
 
         const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
@@ -583,8 +613,9 @@ export default class CustomizedCanvas extends Component {
     text = 'Text', textSize = 62, color = "#000000", textFont = 'Arial', x = undefined, y = undefined,
     stroke = {}, opacity = 1.0, tab = 'text', otherStates, ...others
   } = {}) => {
-    // Set text style here for measuring the text's widht & hegiht before drawing.
     const [width, height] = this.getTextWidthAndHeight({ text, textSize, textFont });
+    
+    // Set text style here for measuring the text's width & hegiht before drawing.
     const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
     if (text) {
@@ -634,6 +665,25 @@ export default class CustomizedCanvas extends Component {
       default:
         return;
     }
+  }
+
+  getSuitableImgDiemensions = (img) => {
+    let width = img.width;
+    let height = img.height;
+
+    // Scaling down the image if it's bigger than the canvas
+    if (width > this._canvas.width) {
+      width = width / (width / this._canvas.width)
+    }
+
+    if (height > this._canvas.height) {
+      height = height / (height / this._canvas.height)
+    }
+
+    width = this.fromoriginalCanvasDimensionsValue(width, 'width');
+    height = this.fromoriginalCanvasDimensionsValue(height, 'height');
+
+    return [width, height];
   }
 
   getShapeByKeyOrIndex = ({ key: shapeKey, index: shapeIndex }) => {
@@ -739,6 +789,10 @@ export default class CustomizedCanvas extends Component {
           updatedData.width = updates.selectedShape.width = width;
           updatedData.height = updates.selectedShape.height = height;
           updatedData.text = updates.selectedShape.text = updatedData.text || targetShape.text;
+        }
+      } else {
+        if (updatedData.width && updatedData.height) {
+          updates.selectedShape = { ...selectedShape, width: updatedData.width, height: updatedData.height }
         }
       }
       
@@ -846,12 +900,23 @@ export default class CustomizedCanvas extends Component {
     this.updateState({ isShowSpinner: true });
 
     const img = new Image();
-    img.setAttribute('crossOrigin', 'Anonymous');
-    img.src = src;
+
+    img.crossOrigin = 'Anonymous';
+    img.src = `${src}?v=${Math.random()}`;
+
     img.onload = () =>  {
-      dataObject ? fn(dataObject,...args) : fn(...args);
+      if (dataObject) {
+        const [width, height] = this.getSuitableImgDiemensions(img);
+        dataObject.width = dataObject.originalWidth = width;
+        dataObject.height = dataObject.originalHeight = height;
+        fn(dataObject,...args);
+      } else {
+        fn(...args);
+      }
+      
       this.updateState({ isShowSpinner: false });
     }
+
     img.onerror = () => {
       this.updateState({ isShowSpinner: false });
       console.error('Error loading the image...');
@@ -859,6 +924,15 @@ export default class CustomizedCanvas extends Component {
 
     if (dataObject){ dataObject.img = img }
     return img;
+  }
+
+  fromoriginalCanvasDimensionsValue = (number, property) => {
+    if (this._canvas && this.state.originalCanvasDimensions) {
+      // property = width/height
+      return number.mapNumber(0, this.state.originalCanvasDimensions[property], 0, this._canvas[property]);
+    }
+    
+    return number;
   }
 
 

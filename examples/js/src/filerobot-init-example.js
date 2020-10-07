@@ -48,7 +48,10 @@ ImageEditorDownload = new FilerobotImageEditor({
       defaultText: 'Filerobot.....'
     },
     showGoBackBtn: false,
-    showInModal: true
+    showInModal: true,
+    noCapitalStrs: false, // default: false
+    // minCropAreaWidth: 600, //default: undefined
+    // minCropAreaHeight: 500, // default: undefined
     //cropPresets: [
     //  { name: 'square', value: 1 },
     //  { name: 'half-page ad', value: 300 / 600 },

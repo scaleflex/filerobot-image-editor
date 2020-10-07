@@ -370,7 +370,7 @@ export default class extends Component {
                 id="gallery"
                 value={url}
                 style={{ width: 'calc(100% - 120px)' }}
-                onChange={(url) => { console.log('chosen', url); this.changeURL({ target: { value: url } }) }}
+                onChange={(url) => { this.changeURL({ target: { value: url } }) }}
               />
             </>)}
             {urlInput && (<>

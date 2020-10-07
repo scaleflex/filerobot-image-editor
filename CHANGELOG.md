@@ -26,6 +26,21 @@ Types of changes:
 
 -------------
 
+## 3.12.0 - 2020-10-07
+### Fixed
+- Watermark or added images quality is not destroyed and it would be relative to the edited image.
+- The UI of font family field's dropdown while adding text through phone.
+- Importing watermark/image through URL.
+
+### Added
+- noCapitalStrs prop for disabling the capitalization of strings.
+- minCropAreaWidth & minCropAreaHeight props for limiting/fixing the customized crop area with minimum values.
+
+### Improved
+- Objects (Watermark/shapes...etc) on the image while editing became more accurate to the same positions & looking in produced/saved image which means after saving you will get the same looking (from position & quality of objects) as you are editing.
+- Customizing the default element id regarding the used service by appending the used service to the id [|-cloudimage|-uploader].
+- Replacing all used unsafe deprecated methods (UNSAFE_*).
+
 ## 3.11.5 - 2020-10-05
 ### Fixed
 - bug with modal id. Added using modal id from config

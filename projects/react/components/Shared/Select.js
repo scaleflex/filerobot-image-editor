@@ -178,6 +178,11 @@ const SelectDropdown = styled.ul`
   overflow-y: auto;
   max-height: ${p => (p.size === 'sm') ? '250px' : '200px'};
   z-index: 101000000000000;
+
+  @media (max-width: 600px) {
+    position: relative;
+    max-height: ${p => p.show ? '120px' : '0'};
+  }
 `;
 
 const SelectDropdownItem = styled.li`

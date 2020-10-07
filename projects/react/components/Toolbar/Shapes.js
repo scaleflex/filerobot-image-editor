@@ -86,7 +86,7 @@ export default class Add extends Component {
             </FieldGroup>
             <FieldGroup>
               <FieldCustomLabel>Font family</FieldCustomLabel>
-            <Select
+              <Select
                 list={STANDARD_FONTS}
                 valueProp="value"
                 id="textFont"
