@@ -6,3 +6,4 @@ build
 .babelrc
 .gitignore
 .idea
+.travis.yml
