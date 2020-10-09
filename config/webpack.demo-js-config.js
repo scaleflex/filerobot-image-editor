@@ -1,14 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { ReactLoadablePlugin } = require("react-loadable/webpack");
 var _ = require('lodash');
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, "../examples/js/src/index.html"),
   filename: "./index.html"
-});
-const reactLoadablePlugin = new ReactLoadablePlugin({
-  filename: "../build/react-loadable.json"
 });
 
 module.exports = (env, options) => {
@@ -32,7 +28,7 @@ module.exports = (env, options) => {
         }
       ]
     },
-    plugins: [htmlWebpackPlugin, reactLoadablePlugin],
+    plugins: [htmlWebpackPlugin],
     resolve: {
       extensions: ["*", ".js", ".jsx"]
     },

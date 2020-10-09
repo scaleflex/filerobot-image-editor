@@ -23,9 +23,7 @@ module.exports = function (api) {
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-transform-arrow-functions",
     "@babel/plugin-syntax-jsx",
-    "@babel/plugin-transform-react-jsx",
-    "react-hot-loader/babel",
-    "react-loadable/babel"
+    "@babel/plugin-transform-react-jsx"
   ];
 
   return {

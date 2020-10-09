@@ -184,7 +184,6 @@ export default class ImageManipulator extends Component {
     const { shapeOperations } = this.props;
     const tempCtx = canvas.getContext('2d');
     const finalPreviewCanvas = shapeOperations.prepareFinalCanvas();
-    console.log(canvas, canvas.width, canvas.height);
 
     tempCtx.drawImage(finalPreviewCanvas, 0, 0);
     return canvas.toDataURL();

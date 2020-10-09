@@ -1,5 +1,4 @@
 const path = require('path');
-const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const webpack = require('webpack');
 const pkg = require('../package');
 
@@ -14,29 +13,16 @@ const banner = `
  Date: ${now.toISOString()}
 `;
 
-
-const reactLoadablePlugin = new ReactLoadablePlugin({
-  filename: '../build/react-loadable.json'
-});
-
 module.exports = (env = {}) => {
   return {
     entry: path.join(__dirname, "../projects/js/index.js"),
-    output: env.latest ?
-      {
-        path: path.join(__dirname, `../build/${pkg.version.split('.')[0]}`),
-        filename: `${pkg.name}.min.js`,
-        chunkFilename: `[name].min.js`,
-        jsonpFunction: 'webpackJsonp' + Date.now(),
-        publicPath: `https://cdn.scaleflex.it/plugins/${pkg.name}/${pkg.version.split('.')[0]}/`
-      } :
-      {
-        path: path.join(__dirname, `../build/${pkg.version}`),
-        filename: `${pkg.name}.min.js`,
-        chunkFilename: `[name].min.js`,
-        jsonpFunction: 'webpackJsonp' + Date.now(),
-        publicPath: `https://cdn.scaleflex.it/plugins/${pkg.name}/${pkg.version}/`
-      },
+    output: {
+      path: path.join(__dirname, `../build/${pkg.version}`),
+      filename: `${pkg.name}.min.js`,
+      chunkFilename: `[name].min.js`,
+      jsonpFunction: 'webpackJsonp' + Date.now(),
+      publicPath: `https://cdn.scaleflex.it/plugins/${pkg.name}/${pkg.version}/`
+    },
     module: {
       rules: [
         {
@@ -51,15 +37,10 @@ module.exports = (env = {}) => {
       ]
     },
     plugins: [
-      reactLoadablePlugin,
       new webpack.BannerPlugin(banner)
     ],
     resolve: {
       extensions: ["*", ".js", ".jsx"]
-    },
-    //devtool: "sourcemap",
-    devServer: {
-      port: 3001
     }
   }
 };
