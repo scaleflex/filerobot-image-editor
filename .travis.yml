@@ -12,7 +12,7 @@ deploy:
     skip_cleanup: true
     email: $NPM_EMAIL
     api_key: $NPM_TOKEN
-    run: 'echo "🆕 NPM DEPLOYMENT IS FINISHED✨✔🚀"'
+    run: 'echo "🆕 NPM DEPLOYMENT IS FINISHED.✨✔🚀"'
   
   - provider: pages
     skip_cleanup: true
@@ -21,5 +21,5 @@ deploy:
     local_dir: ./examples/js/dist
     on:
       tags: true
-    run: 'echo "🐱 GITHUB PAGES DEPLOYMENT IS FINISHED✨✔🚀"'
+    run: 'echo "🐱 GITHUB PAGES DEPLOYMENT IS FINISHED.✨✔🚀"'
 after_deploy: 'echo "All done 👍👍👍👍👍👍👍👍👍👍"'
