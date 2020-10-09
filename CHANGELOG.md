@@ -26,6 +26,13 @@ Types of changes:
 
 -------------
 
+## 3.12.1 - 2020-10-09
+### Fixed
+- Removing hot loader build paths from the complied library files.
+
+### Improved
+- Decreasing the library size a bit.
+
 ## 3.12.0 - 2020-10-07
 ### Fixed
 - Watermark or added images quality is not destroyed and it would be relative to the edited image.
