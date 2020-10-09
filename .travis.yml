@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - "8.16"
-before_deploy: 'echo "DEPLOYMENT STARTED... ⌚⌛⌚"'
+before_deploy: "echo 'DEPLOYMENT STARTED... ⌚⌛⌚'"
 script:
   - npm run dist
   - npm run build-demo-js
@@ -12,14 +12,14 @@ deploy:
     skip_cleanup: true
     email: $NPM_EMAIL
     api_key: $NPM_TOKEN
-    run: 'echo "🆕 NPM DEPLOYMENT IS FINISHED.✨✔🚀"'
+    run: "echo '🆕 NPM DEPLOYMENT IS FINISHED.✨✔🚀'"
   
   - provider: pages
+    on:
+      tags: true
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
     keep_history: true
     local_dir: ./examples/js/dist
-    on:
-      branch: master
-    run: 'echo "🐱 GITHUB PAGES DEPLOYMENT IS FINISHED.✨✔🚀"'
-after_deploy: 'echo "All done 👍👍👍👍👍👍👍👍👍👍"'
+    run: "echo '🐱 GITHUB PAGES DEPLOYMENT IS FINISHED.✨✔🚀'"
+after_deploy: "echo 'All done 👍👍👍👍👍👍👍👍👍👍'"
