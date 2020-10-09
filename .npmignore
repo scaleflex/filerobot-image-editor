@@ -3,6 +3,7 @@ projects
 examples
 config
 build
+sciprts
 .babelrc
 .gitignore
 .idea

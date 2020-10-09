@@ -20,6 +20,6 @@ deploy:
     keep_history: true
     local_dir: ./examples/js/dist
     on:
-      tags: true
+      branch: master
     run: 'echo "🐱 GITHUB PAGES DEPLOYMENT IS FINISHED.✨✔🚀"'
 after_deploy: 'echo "All done 👍👍👍👍👍👍👍👍👍👍"'
