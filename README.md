@@ -30,7 +30,7 @@
 		•
 		<a href="https://scaleflex.github.io/filerobot-image-editor/" target="_blank">Demo</a>
 		•
-		<a href="https://codesandbox.io/s/beautiful-sutherland-4tgdv" target="_blank">CodeSandbox</a>
+		<a href="https://codesandbox.io/s/holy-resonance-j0n5z" target="_blank">CodeSandbox</a>
 		•
 		<a href="https://www.youtube.com/watch?v=4VdPXvFr4V0" target="_blank">Video tutorial</a>
 	</strong>
@@ -154,7 +154,7 @@ We provide an easy way to integrate the image editor in your applications:
     ImageEditor.open('https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg');
 </script>
 ```
-<a href="https://codesandbox.io/s/88jpkv2m09"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="edeit on codesandbox"/></a>
+<a href="https://codesandbox.io/s/black-pond-n96yk"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="edeit on codesandbox"/></a>
 
 ### <a name="methods"></a>Methods
 
@@ -235,7 +235,7 @@ const App = () => {
 
 render(<App/>, document.getElementById('app'));
 ```
-<a href="https://codesandbox.io/s/k3q9vrk707"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="edeit on codesandbox"/></a>
+<a href="https://codesandbox.io/s/hopeful-knuth-zytic"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="edeit on codesandbox"/></a>
 
 ### <a name="methods_react"></a>Methods/Properties
 
