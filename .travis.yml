@@ -16,8 +16,8 @@ deploy:
     edge: true
   
   - provider: pages
-    # on:
-    #   tags: true
+    on:
+      tags: true
     cleanup: false
     token: $GITHUB_TOKEN
     keep_history: true
