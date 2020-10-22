@@ -20,7 +20,7 @@ deploy:
     cleanup: false
     token: $GITHUB_TOKEN
     keep_history: true
-    script: "git add ."
+    allow_empty_commit: true
     local_dir: "./examples/js/dist"
     run: "echo '🐱 GITHUB PAGES DEPLOYMENT IS FINISHED.✨✔🚀'"
 after_deploy: "echo 'All done 👍👍👍👍👍👍👍👍👍👍'"
