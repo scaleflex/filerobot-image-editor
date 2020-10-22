@@ -35,30 +35,28 @@ export default class CustomizedCanvas extends Component {
       this._canvas.addEventListener('mousedown', this.onSelect);
       this._context = this._canvas.getContext('2d');
 
+      const border = `1px solid ${this.props.colorScheme === 'light' ? '#000' : '#fff'}`;
       const availableShapes = [
         {
           label: 'Rectangle',
           variant: SHAPES_VARIANTS.RECT,
-          iconStyles: { height: 50, width: 100, border: '1px solid #fff' },
+          iconStyles: { height: 50, width: 100, border },
           drawFn: this.addRect,
         },
         {
           label: 'Square',
           variant: SHAPES_VARIANTS.SQUARE,
-          iconStyles: { border: '1px solid #fff' },
+          iconStyles: { border },
           drawFn: (props) => this.addSquare({ width: 75, height: 75, ...props }),
           // iconUrl: undefined,
         },
         {
           label: 'Circle',
           variant: SHAPES_VARIANTS.CIRCLE,
-          iconStyles: { border: '1px solid #fff', borderRadius: '50%' },
+          iconStyles: { border, borderRadius: '50%' },
           drawFn: this.addCircle
           // iconUrl: undefined,
         },
-        // TODO: Giving the consumer the chance to add more shapes with its draw fns. from props.
-        // TODO: Supporting the shapes for expanding & Add expandShapes to readme.
-        ...this.props.expandShapes
       ]
 
       this.props.updateState({

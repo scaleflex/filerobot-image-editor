@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { AddWrapper, SettingsWrapper, FieldGroup, FieldCustomLabel } from '../../styledComponents/Shapes.ui';
-import { STANDARD_FONTS } from '../../config';
 import { FieldInput } from '../../styledComponents';
 import Range from '../Range';
 import Select from '../Shared/Select';
@@ -22,7 +21,7 @@ export default class Text extends Component {
   updatePropertyFromEvent = (e) => this.props.shapeOperations.updateShape({ [e.target.name]: e.target.value });
 
   render() {
-    const { t, selectedShape = {} } = this.props;
+    const { t, selectedShape = {}, config: { theme } } = this.props;
     const {
       text = '',
       textFont = 'Arial',
@@ -48,7 +47,7 @@ export default class Text extends Component {
           <FieldGroup>
             <FieldCustomLabel>Font family</FieldCustomLabel>
             <Select
-                list={STANDARD_FONTS}
+                list={theme.fonts}
                 valueProp="value"
                 id="textFont"
                 value={textFont}

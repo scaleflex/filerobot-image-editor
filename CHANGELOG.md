@@ -26,6 +26,14 @@ Types of changes:
 
 -------------
 
+## 3.12.2 - 2020-10-22
+### Fixed
+- Showing shapes borders in light color scheme.
+
+### Added
+- Watermark fonts for using those fonts in text watermark fonts field.
+- Theme fonts for supporting those fonts in text & text watermark fonts field (if no fonts provided for watermark object).
+
 ## 3.12.1 - 2020-10-09
 ### Fixed
 - Removing hot loader build paths from the complied library files.

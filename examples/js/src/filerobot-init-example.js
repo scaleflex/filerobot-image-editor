@@ -47,6 +47,16 @@ ImageEditorDownload = new FilerobotImageEditor({
       fileUpload: true,
       defaultText: 'Filerobot.....'
     },
+    theme: {
+      fonts: [
+        { label: 'Arial', value: 'Arial' },
+        { label: 'Tahoma', value: 'Tahoma' },
+        { label: 'Times New Roman', value: 'Times New Roman'},
+        { label: 'Courier', value: 'Courier' },
+        { label: 'Courier New', value: 'Courier New' },
+        { label: 'Verdana', value: 'Verdana' }
+      ]
+    },
     showGoBackBtn: false,
     showInModal: true,
     noCapitalStrs: false, // default: false

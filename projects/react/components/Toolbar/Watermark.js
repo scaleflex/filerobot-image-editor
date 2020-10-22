@@ -16,7 +16,13 @@ import {
 import { debounce } from 'throttle-debounce';
 import Range from '../Range';
 import Select from '../Shared/Select';
-import { WATERMARK_POSITIONS, WATERMARK_POSITIONS_PRESET, STANDARD_FONTS, WATERMARK_CLOUDIMAGE_FONTS, WATERMARK_UNIQUE_KEY, SHAPES_VARIANTS } from '../../config';
+import {
+  WATERMARK_POSITIONS,
+  WATERMARK_POSITIONS_PRESET,
+  WATERMARK_CLOUDIMAGE_FONTS,
+  WATERMARK_UNIQUE_KEY,
+  SHAPES_VARIANTS
+} from '../../config';
 import { getWatermarkPosition, getCanvasNode } from '../../utils';
 
 
@@ -81,7 +87,7 @@ export default class extends Component {
       color: '#000000',
       textSize: 62,
       textFont: 'Arial',
-      fonts: fonts || STANDARD_FONTS,
+      fonts: fonts || this.props.config.theme.fonts,
     }
   }
 

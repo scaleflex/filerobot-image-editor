@@ -1,6 +1,6 @@
 > Repository includes React version and Vanilla JS adapter for standalone usage
 
-[![Release](https://img.shields.io/badge/release-v3.12.1-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
+[![Release](https://img.shields.io/badge/release-v3.12.2-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Scaleflex team](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg)](https://www.scaleflex.it/en/home)
@@ -140,7 +140,7 @@ or use your custom color scheme
 Use the latest CDNized plugin version:
 
 ```html
-<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.12.1/filerobot-image-editor.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.12.2/filerobot-image-editor.min.js"></script>
 ```
 
 ### <a name="quick_start"></a>Quick start
@@ -355,6 +355,9 @@ Add watermark on the image after applying image transformations.
 
 ##### `watermark.defaultText`: string - the default text that would be added as a text watermark
 
+##### `watermark.fonts`: array - the fonts that would be shown & used in text watermark
+example: [{ label: 'Arial', value: 'Arial' }]
+
 
 ```
 config.watermark = {
@@ -392,7 +395,15 @@ config.theme = {
 
     border: '#161e23',
     borderLight: '#70777f'
-  }
+  },
+  fonts: [
+    { label: 'Arial', value: 'Arial' },
+    { label: 'Tahoma', value: 'Tahoma' },
+    { label: 'Times New Roman', value: 'Times New Roman'},
+    { label: 'Courier', value: 'Courier' },
+    { label: 'Courier New', value: 'Courier New' },
+    { label: 'Verdana', value: 'Verdana' }
+  ]
 };
 ```
 

@@ -14,8 +14,5 @@ export default {
     border: '#161e23',
     borderLight: '#70777f',
     disabledBg: 'rgba(255, 0, 0, 0.1)',
-  },
-  fonts: {
-
   }
 };

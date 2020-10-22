@@ -9,7 +9,7 @@ export default class extends Component {
   render() {
     const {
       activeTab, isHideCanvas, watermark = {}, focusPoint, original, updateState, src, shapes,
-      selectedShape, config: { expandShapes = [] }, roundCrop, canvasDimensions
+      selectedShape, config: { colorScheme }, roundCrop, canvasDimensions
     } = this.props;
 
     const { applyByDefault } = watermark;
@@ -30,10 +30,10 @@ export default class extends Component {
           shapes={shapes}
           updateState={updateState}
           selectedShape={selectedShape}
-          expandShapes={expandShapes}
           activeTab={activeTab}
           round={roundCrop}
           originalCanvasDimensions={canvasDimensions}
+          colorScheme={colorScheme}
         />}
 
         {activeTab === 'focus_point' && (
