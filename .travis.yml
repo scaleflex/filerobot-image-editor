@@ -13,6 +13,7 @@ deploy:
     email: $NPM_EMAIL
     api_token: $NPM_TOKEN
     run: "echo '🆕 NPM DEPLOYMENT IS FINISHED.✨✔🚀'"
+    edge: true
   
   - provider: pages
     # on:
@@ -23,4 +24,5 @@ deploy:
     allow_empty_commit: true
     local_dir: "./examples/js/dist"
     run: "echo '🐱 GITHUB PAGES DEPLOYMENT IS FINISHED.✨✔🚀'"
+    edge: true
 after_deploy: "echo 'All done 👍👍👍👍👍👍👍👍👍👍'"
