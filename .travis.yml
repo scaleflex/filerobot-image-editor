@@ -6,22 +6,21 @@ script:
   - npm run dist
   - npm run build-demo-js
 deploy:
+  - provider: npm
+    on:
+      tags: true
+    cleanup: false
+    email: $NPM_EMAIL
+    api_token: $NPM_TOKEN
+    run: "echo '🆕 NPM DEPLOYMENT IS FINISHED.✨✔🚀'"
+  
   - provider: pages
     # on:
     #   tags: true
     cleanup: false
     token: $GITHUB_TOKEN
     keep_history: true
-    before_deploy: "git add ."
+    script: "git add ."
     local_dir: "./examples/js/dist"
     run: "echo '🐱 GITHUB PAGES DEPLOYMENT IS FINISHED.✨✔🚀'"
-
-  - provider: npm
-    on:
-      tags: true
-    skip_cleanup: true
-    email: $NPM_EMAIL
-    api_token: $NPM_TOKEN
-    run: "echo '🆕 NPM DEPLOYMENT IS FINISHED.✨✔🚀'"
-    
 after_deploy: "echo 'All done 👍👍👍👍👍👍👍👍👍👍'"
