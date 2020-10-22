@@ -11,15 +11,15 @@ deploy:
       tags: true
     skip_cleanup: true
     email: $NPM_EMAIL
-    api_key: $NPM_TOKEN
+    api_token: $NPM_TOKEN
     run: "echo '🆕 NPM DEPLOYMENT IS FINISHED.✨✔🚀'"
   
   - provider: pages
-    on:
-      tags: true
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN
+    # on:
+    #   tags: true
+    cleanup: false
+    token: $GITHUB_TOKEN
     keep_history: true
-    local_dir: ./examples/js/dist
+    local_dir: "./examples/js/dist"
     run: "echo '🐱 GITHUB PAGES DEPLOYMENT IS FINISHED.✨✔🚀'"
 after_deploy: "echo 'All done 👍👍👍👍👍👍👍👍👍👍'"
