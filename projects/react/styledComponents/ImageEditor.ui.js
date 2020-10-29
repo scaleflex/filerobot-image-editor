@@ -83,7 +83,7 @@ const Wrapper = styled.div`
   overflow-y: auto;
   font-size: 12px;
   
-  #scaleflex-image-edit-box-original {
+  .filerobot-edit-canvas {
     visibility: hidden;
     position: absolute;
     left: -99999px;

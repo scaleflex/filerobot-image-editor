@@ -49,7 +49,7 @@ const PreviewImgBox = styled.div`
     max-width: 100% !important; /* This rule is very important, please do not ignore this! */
   }
 
-  #scaleflex-image-edit-box {
+  .filerobot-edit-canvas {
     display: ${props => props.hide ? 'none' : 'inline-block'};
     max-height: 100%;
     max-width: 100%;

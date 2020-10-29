@@ -1,10 +1,10 @@
 // The library modal ID.
-const MODAL_ID = 'filerobot-image-editor';
+const MODAL_ID = 'filerobot-image-editor-modal';
 
 // ID for preview canvas (canvas contains watermark, shapes...etc).
-const PREVIEW_CANVAS_ID = 'scaleflex-filerobot-shapes-edit-box';
-const CANVAS_ID = 'scaleflex-image-edit-box';
-const ORIGINAL_CANVAS_ID = 'scaleflex-image-edit-box-original';
+const PREVIEW_CANVAS_ID = 'filerobot-shapes-edit-box';
+const CANVAS_ID = 'filerobot-image-edit-box';
+const ORIGINAL_CANVAS_ID = 'filerobot-image-edit-box-original';
 
 // 'effects', 'filters', 'adjust', 'crop', 'resize', 'rotate'
 const TOOLS = [

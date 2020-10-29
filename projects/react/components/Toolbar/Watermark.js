@@ -204,7 +204,7 @@ export default class extends Component {
 
   onPositionChange = value => {
     const { width, height } = this.getWatermarkLayer();
-    const [x, y] = getWatermarkPosition(value, getCanvasNode(), width, height);
+    const [x, y] = getWatermarkPosition(value, getCanvasNode(this.props.config.elementId), width, height);
     this.updateWatermarkProperty({ position: value }, { x, y }, { position: value, x, y });
   }
 

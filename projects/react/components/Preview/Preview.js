@@ -9,11 +9,11 @@ export default class extends Component {
   render() {
     const {
       activeTab, isHideCanvas, watermark = {}, focusPoint, original, updateState, src, shapes,
-      selectedShape, config: { colorScheme }, roundCrop, canvasDimensions
+      selectedShape, config: { colorScheme, elementId: editorWrapperId }, roundCrop, canvasDimensions
     } = this.props;
 
     const { applyByDefault } = watermark;
-    const canvas = getCanvasNode();
+    const canvas = getCanvasNode(editorWrapperId);
     const canvasRect = canvas && canvas.getBoundingClientRect() || {};
     
     return (
@@ -34,6 +34,7 @@ export default class extends Component {
           round={roundCrop}
           originalCanvasDimensions={canvasDimensions}
           colorScheme={colorScheme}
+          wrapperId={editorWrapperId}
         />}
 
         {activeTab === 'focus_point' && (

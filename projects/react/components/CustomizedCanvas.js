@@ -944,7 +944,8 @@ export default class CustomizedCanvas extends Component {
         x = 0,
         y = 0,
         resizingBox = false
-      }
+      },
+      wrapperId
     } = this.props
     const resizingBoxLines = ['e', 'n', 'w', 's'];
     const resizingBoxPoints = ['e', 'n', 'w', 's', 'ne', 'nw', 'sw', 'se'];
@@ -956,7 +957,7 @@ export default class CustomizedCanvas extends Component {
       <>
         <PreviewCanvas
           ref={this.canvasRef}
-          id={PREVIEW_CANVAS_ID}
+          id={`${wrapperId}_${PREVIEW_CANVAS_ID}`}
           width={parentCanvasWidth}
           height={parentCanvasHeight}
           tabIndex={1}

@@ -15,7 +15,7 @@ class FilerobotImageEditor {
     } else {
       containerId = 'filerobot-image-editor';
     }
-    
+
     let container = document.getElementById(containerId);
     let onComplete = (src) => { console.log(src) };
 
@@ -32,6 +32,8 @@ class FilerobotImageEditor {
 
       document.body.appendChild(container);
     }
+
+    config.elementId = containerId;
 
     const renderApp = Component => render(
       <Component
