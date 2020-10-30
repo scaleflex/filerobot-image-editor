@@ -83,7 +83,7 @@ const Wrapper = styled.div`
   overflow-y: auto;
   font-size: 12px;
   
-  .filerobot-edit-canvas {
+  .filerobot-original-canvas {
     visibility: hidden;
     position: absolute;
     left: -99999px;

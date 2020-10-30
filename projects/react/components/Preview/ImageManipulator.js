@@ -133,7 +133,7 @@ export default class ImageManipulator extends Component {
     });
   }
 
-  getCanvas = (id, originalCanvas = false) => {
+  getCanvas = (id = null, originalCanvas = false) => {
     const editorWrapperId = this.props.config.elementId;
     return getCanvasNode(editorWrapperId, id, originalCanvas);
   }
