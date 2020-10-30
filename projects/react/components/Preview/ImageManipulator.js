@@ -161,7 +161,7 @@ export default class ImageManipulator extends Component {
 
       setTimeout(() => {
         const getCanvas = this.getCanvas;
-        new window.Caman(this.getCanvas(), function () {
+        new window.Caman(getCanvas(), function () {
           this.resize({ width: zoomedWidth, height: zoomedHeight });
 
           this.render(() => {
@@ -179,8 +179,9 @@ export default class ImageManipulator extends Component {
       });
     } else {
       setTimeout(() => {
-        that.CamanInstance = new window.Caman(this.getCanvas(), function () {
-          updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(this.getCanvas()) });
+        const getCanvas = this.getCanvas();
+        that.CamanInstance = new window.Caman(getCanvas, function () {
+          updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(getCanvas) });
         });
       });
     }
@@ -745,11 +746,13 @@ export default class ImageManipulator extends Component {
         });
       });
 
+      const getCanvas = this.getCanvas;
+
       this.CamanInstanceZoomed.render(() => {
         const canvasZoomed = this.replaceWithNewCanvas(CANVAS_ID, roundCrop);
         const nextOperation = {
           ...operation,
-          canvas: this.cloneCanvas(this.getCanvas())
+          canvas: this.cloneCanvas(getCanvas())
         };
 
         this.CamanInstanceZoomed = new window.Caman(canvasZoomed, () => {
@@ -763,12 +766,13 @@ export default class ImageManipulator extends Component {
       });
     } else {
       const lastOperationIndex = operations.indexOf(currentOperation) + 1;
-
+      const getCanvas = this.getCanvas;
+      
       this.CamanInstance.render(() => {
         const canvas = this.replaceWithNewCanvas(CANVAS_ID, roundCrop);
         const nextOperation = {
           ...operation,
-          canvas: this.cloneCanvas(this.getCanvas())
+          canvas: this.cloneCanvas(getCanvas())
         };
 
         this.CamanInstance = new window.Caman(canvas, () => {
