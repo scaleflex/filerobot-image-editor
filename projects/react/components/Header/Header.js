@@ -34,7 +34,7 @@ export default class extends Component {
             <LeftActions>
               <CancelBtn
                 hide={!activeTab}
-                onClick={(event) => isOneTool ? cancelBtnClosingFn : onRevert(event)}
+                onClick={isOneTool ? cancelBtnClosingFn : onRevert}
                 noCapitalStrs={noCapitalStrs}
                 sm default fullSize
               >

@@ -85,7 +85,7 @@ export default class extends Component {
   loadImage = () => {
     let { src } = this.props;
     const { reduceBeforeEdit: { mode, widthLimit, heightLimit } = {}, watermark } = this.state;
-
+    
     if (src instanceof Blob) { src = URL.createObjectURL(src); }
 
     const splittedSrc = src.split('/');
@@ -184,11 +184,7 @@ export default class extends Component {
     }
   }
 
-  onRevert = (event) => {
-    debugger
-    event.stopPropagation();
-    event.preventDefault();
-    console.log('cancel btn clicked')
+  onRevert = () => {
     const { cancelLastOperation, activeTab } = this.state;
 
     this.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
