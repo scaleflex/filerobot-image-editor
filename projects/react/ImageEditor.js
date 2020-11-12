@@ -96,7 +96,7 @@ export default class extends Component {
     if (watermark && watermark.url) {
       logoImage = new Image();
       logoImage.setAttribute('crossOrigin', 'Anonymous');
-      logoImage.src = watermark.url + '?' + new Date().getTime();
+      logoImage.src = watermark.url + (watermark.url.indexOf('?') > -1 ? '&' : '?') + new Date().getTime();
     }
 
     img.setAttribute('crossOrigin', 'Anonymous');
@@ -172,7 +172,9 @@ export default class extends Component {
     xhr.responseType = 'arraybuffer';
 
     xhr.onload = ({ target }) => {
-      this.setState({ imageMime: imageType(new Uint8Array(target.response)).mime });
+      if (target && target.response) {
+        this.setState({ imageMime: imageType(new Uint8Array(target.response)).mime });
+      }
     };
 
     xhr.send();

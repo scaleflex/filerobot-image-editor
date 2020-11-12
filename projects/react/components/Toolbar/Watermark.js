@@ -69,7 +69,7 @@ export default class extends Component {
       })
     }
 
-    this.initWatermarkImage(url);
+    this.initWatermarkImage(url || urls?.[0]?.url);
 
     this.state = {
       isBlockRatio: false,
