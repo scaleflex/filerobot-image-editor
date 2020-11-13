@@ -25,7 +25,7 @@ export default class CustomizedCanvas extends Component {
 
     this.state = {
       resizeControlTarget: null,
-      originalCanvasDimensions: null
+      latestCanvasSize: null
     }
   }
 
@@ -82,7 +82,7 @@ export default class CustomizedCanvas extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    return { ...state, originalCanvasDimensions: props.originalCanvasDimensions };
+    return { ...state, latestCanvasSize: props.latestCanvasSize || { width: 0, height: 0 } };
   }
 
   componentWillUnmount() {
@@ -96,9 +96,9 @@ export default class CustomizedCanvas extends Component {
   }
 
   prepareFinalCanvas = () => {
+    const { width, height } = this.state.latestCanvasSize;
     const { shapes } = this.props;
     const newCanvas = document.createElement('canvas');
-    const { width, height } = this.state.originalCanvasDimensions;
     newCanvas.width = width;
     newCanvas.height = height;
 
@@ -670,16 +670,20 @@ export default class CustomizedCanvas extends Component {
     let height = img.height;
 
     // Scaling down the image if it's bigger than the canvas
-    if (width > this._canvas.width) {
-      width = width / (width / this._canvas.width)
-    }
-
     if (height > this._canvas.height) {
-      height = height / (height / this._canvas.height)
+      const ratio = height / this._canvas.height;
+      height /= ratio;
+      width /= ratio;
     }
 
-    width = this.fromoriginalCanvasDimensionsValue(width, 'width');
-    height = this.fromoriginalCanvasDimensionsValue(height, 'height');
+    if (width > this._canvas.width) {
+      const ratio = width / this._canvas.width;
+      height /= ratio;
+      width /= ratio;
+    }
+    
+    width = this.fromLatestCanvasSizeValue(width, 'width');
+    height = this.fromLatestCanvasSizeValue(height, 'height');
 
     return [width, height];
   }
@@ -924,10 +928,10 @@ export default class CustomizedCanvas extends Component {
     return img;
   }
 
-  fromoriginalCanvasDimensionsValue = (number, property) => {
-    if (this._canvas && this.state.originalCanvasDimensions) {
-      // property = width/height
-      return number.mapNumber(0, this.state.originalCanvasDimensions[property], 0, this._canvas[property]);
+  fromLatestCanvasSizeValue = (number, property) => {
+    if (this._canvas && this.state.latestCanvasSize) {
+      // property = width or height
+      return number.mapNumber(0, this.state.latestCanvasSize[property], 0, this._canvas[property]);
     }
     
     return number;

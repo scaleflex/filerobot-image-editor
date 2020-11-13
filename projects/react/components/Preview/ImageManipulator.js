@@ -207,6 +207,7 @@ export default class ImageManipulator extends Component {
 
     // set old id
     newCanvas.id = oldCanvas.id;
+    newCanvas.className = oldCanvas.className;
 
     //apply the old canvas to the new one
     context.drawImage(oldCanvas, 0, 0);
@@ -538,6 +539,8 @@ export default class ImageManipulator extends Component {
       flipX,
       flipY
     }, () => {
+      const oldCanvas = this.getCanvas();
+
       if (initialZoom !== 1) {
         this.CamanInstanceZoomed.reset();
 
@@ -546,6 +549,7 @@ export default class ImageManipulator extends Component {
         if (nextRotateValue || correctionDegree) this.CamanInstanceZoomed.rotate((nextRotateValue || 0) + (correctionDegree || 0));
 
         this.CamanInstanceZoomed.render(() => {
+          this.getCanvas().className = oldCanvas.className;
           updateState({ isHideCanvas: false, isShowSpinner: false });
         });
       } else {
@@ -556,6 +560,7 @@ export default class ImageManipulator extends Component {
         if (nextRotateValue || correctionDegree) this.CamanInstance.rotate((nextRotateValue || 0) + (correctionDegree || 0));
 
         this.CamanInstance.render(() => {
+          this.getCanvas().className = oldCanvas.className;
           updateState({ isHideCanvas: false, isShowSpinner: false });
         });
       }
@@ -566,6 +571,7 @@ export default class ImageManipulator extends Component {
     const { updateState, initialZoom, rotate, correctionDegree, flipX, flipY } = this.props;
 
     updateState({ isHideCanvas: true, isShowSpinner: true }, () => {
+      const oldCanvas = this.getCanvas(null, true);
       let nextRotate = (rotate || 0) + (correctionDegree || 0);
 
       if (initialZoom !== 1) {
@@ -576,12 +582,14 @@ export default class ImageManipulator extends Component {
         if (rotate || correctionDegree) this.CamanInstanceOriginal.rotate(nextRotate);
 
         this.CamanInstanceOriginal.render(() => {
+          this.getCanvas(null, true).className = oldCanvas.className;
           updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
             this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate } }, callback);
           });
         });
       } else {
-        updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
+          this.getCanvas(null, true).className = oldCanvas.className;
+          updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
           this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate } }, callback);
         });
       }

@@ -3,7 +3,8 @@ import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
 import { Footer, Header, PreResize, Preview } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
-import { DEFAULT_WATERMARK, ON_CLOSE_STATUSES } from './config';
+import { CANVAS_ID, DEFAULT_WATERMARK, ON_CLOSE_STATUSES, ORIGINAL_CANVAS_ID } from './config';
+import { getCanvasNode } from './utils';
 
 
 const INITIAL_PARAMS = {
@@ -182,6 +183,13 @@ export default class extends Component {
 
   updateState = (props, callback = () => {}) => {
     if (this._isMounted) {
+      const editorWrapperId = this.props.config.elementId;
+      const canvas = getCanvasNode(editorWrapperId, this.props.initialZoom !== 1 ? ORIGINAL_CANVAS_ID : CANVAS_ID);
+      props.latestCanvasSize = {
+        width: canvas.width,
+        height: canvas.height
+      }
+      
       this.setState(props, callback);
     }
   }
@@ -367,7 +375,8 @@ export default class extends Component {
       shapes,
       shapeOperations,
       selectedShape,
-      availableShapes
+      availableShapes,
+      latestCanvasSize
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, t = {}, theme } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
@@ -461,7 +470,8 @@ export default class extends Component {
       focusPoint,
       shapes,
       shapeOperations,
-      selectedShape
+      selectedShape,
+      latestCanvasSize
     };
     const footerProps = {
       logoImage,
