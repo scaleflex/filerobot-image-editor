@@ -3,7 +3,7 @@ import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
 import { Footer, Header, PreResize, Preview } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
-import { CANVAS_ID, DEFAULT_WATERMARK, ON_CLOSE_STATUSES, ORIGINAL_CANVAS_ID } from './config';
+import { DEFAULT_WATERMARK, ON_CLOSE_STATUSES } from './config';
 import { getCanvasNode } from './utils';
 
 
@@ -173,9 +173,8 @@ export default class extends Component {
     xhr.responseType = 'arraybuffer';
 
     xhr.onload = ({ target }) => {
-      if (target && target.response) {
-        this.setState({ imageMime: imageType(new Uint8Array(target.response)).mime });
-      }
+      // TODO: GOOD HACK FOR A TEMP SOLUTION IMAGES & SVG BUT NEED ANOTHER WAY TO MAKE SURE THAT WE COVER MOST OF POSSIBLE IMGS
+      this.setState({ imageMime: imageType(new Uint8Array(target.response))?.mime || 'image/svg+xml' });
     };
 
     xhr.send();
@@ -184,7 +183,7 @@ export default class extends Component {
   updateState = (props, callback = () => {}) => {
     if (this._isMounted) {
       const editorWrapperId = this.props.config.elementId;
-      const canvas = getCanvasNode(editorWrapperId, this.props.initialZoom !== 1 ? ORIGINAL_CANVAS_ID : CANVAS_ID);
+      const canvas = getCanvasNode(editorWrapperId);
       props.latestCanvasSize = {
         width: canvas.width,
         height: canvas.height
