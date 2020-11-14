@@ -25,6 +25,19 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.3 - 2020-11-14
+### Fixed
+- Objects scaling on different image sizes issue.
+- Canvas moving in while flipping issue.
+- Text watermark position changing when undo then redo issue.
+- Fixing issue of importing SVGs.
+
+### Added
+- added `lockScaleToPercentage` property to watermark object in config for scaling the watermark image and preventing users from re-scaling/re-sizing it.
+
+### Improved
+- Changing canvases selectors to be able to use multiple instances in same page.
+- Using first url of watermark's urls array as the default watermark url if no string url property is provided.
 
 ## 3.12.2 - 2020-10-22
 ### Fixed
