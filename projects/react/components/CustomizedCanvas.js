@@ -95,8 +95,8 @@ export default class CustomizedCanvas extends Component {
     }
   }
 
-  prepareFinalCanvas = () => {
-    const { width, height } = this.state.latestCanvasSize;
+  prepareFinalCanvas = (originalCanvasDimensions) => {
+    const { width, height } = originalCanvasDimensions;
     const { shapes } = this.props;
     const newCanvas = document.createElement('canvas');
     newCanvas.width = width;
@@ -223,6 +223,10 @@ export default class CustomizedCanvas extends Component {
   }
 
   activateResizingActions = () => {
+    const { selectedShape } = this.props;
+
+    if (selectedShape.lockScaleToPercentage) { return; }
+    
     Array.from(document.getElementsByClassName('shape-resizing-control'))
       .forEach((control) => {
         control.addEventListener('mousedown', this.trackShapeResize)
@@ -573,7 +577,7 @@ export default class CustomizedCanvas extends Component {
   ) => {
     if(img) {
       const addIt = () => {
-        const [width, height] = this.getSuitableImgDiemensions(img);
+        const [width, height] = this.getSuitableImgDiemensions(img, others.lockScaleToPercentage);
 
         const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
@@ -665,7 +669,7 @@ export default class CustomizedCanvas extends Component {
     }
   }
 
-  getSuitableImgDiemensions = (img) => {
+  getSuitableImgDiemensions = (img, lockScaleToPercentage = 0) => {
     let width = img.width;
     let height = img.height;
 
@@ -680,6 +684,12 @@ export default class CustomizedCanvas extends Component {
       const ratio = width / this._canvas.width;
       height /= ratio;
       width /= ratio;
+    }
+
+    if (lockScaleToPercentage) {
+      const scaleValue = (lockScaleToPercentage / 100);
+      width *= scaleValue;
+      height *= scaleValue;
     }
     
     width = this.fromLatestCanvasSizeValue(width, 'width');
@@ -761,7 +771,9 @@ export default class CustomizedCanvas extends Component {
       ) { return; }
     
     if (typeof updatedData.img === 'string') {
-      this.updateState({ selectedShape: { ...selectedShape, img: updatedData.img } });
+      this.updateState({
+        selectedShape: { ...selectedShape, lockScaleToPercentage: updatedData.lockScaleToPercentage, img: updatedData.img }
+      });
       this.makeImgElement(updatedData.img, this.updateShape, updatedData, index, otherStatesToBeUpdated);
       return;
     }
@@ -794,7 +806,12 @@ export default class CustomizedCanvas extends Component {
         }
       } else {
         if (updatedData.width && updatedData.height) {
-          updates.selectedShape = { ...selectedShape, width: updatedData.width, height: updatedData.height }
+          updates.selectedShape = {
+            ...selectedShape,
+            width: updatedData.width,
+            height: updatedData.height,
+            lockScaleToPercentage: updatedData.lockScaleToPercentage
+          }
         }
       }
       
@@ -908,7 +925,7 @@ export default class CustomizedCanvas extends Component {
 
     img.onload = () =>  {
       if (dataObject) {
-        const [width, height] = this.getSuitableImgDiemensions(img);
+        const [width, height] = this.getSuitableImgDiemensions(img, dataObject.lockScaleToPercentage);
         dataObject.width = dataObject.originalWidth = width;
         dataObject.height = dataObject.originalHeight = height;
         fn(dataObject,...args);
@@ -947,7 +964,8 @@ export default class CustomizedCanvas extends Component {
         height = 0,
         x = 0,
         y = 0,
-        resizingBox = false
+        resizingBox = false,
+        lockScaleToPercentage = 0
       },
       wrapperId
     } = this.props
@@ -970,7 +988,8 @@ export default class CustomizedCanvas extends Component {
         <div
           ref={this.shapeResizingBoxRef}
           className="cropper-crop-box"
-          style={{ display: resizingBox ? 'block' : 'none', width, height, left, top, pointerEvents: 'none' }}
+          style={{ display: resizingBox && !lockScaleToPercentage ? 'block' : 'none',
+            width, height, left, top, pointerEvents: 'none' }}
         >
           {resizingBoxLines.map((l) => (
             <span

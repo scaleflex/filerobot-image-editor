@@ -190,7 +190,7 @@ export default class ImageManipulator extends Component {
   mergeCanvases = (canvas) => {
     const { shapeOperations } = this.props;
     const tempCtx = canvas.getContext('2d');
-    const finalPreviewCanvas = shapeOperations.prepareFinalCanvas();
+    const finalPreviewCanvas = shapeOperations.prepareFinalCanvas(canvas);
 
     tempCtx.drawImage(finalPreviewCanvas, 0, 0);
     return canvas.toDataURL();

@@ -127,19 +127,24 @@ export default class extends Component {
   }
 
   updateWatermarkProperty = (data, shapeData, watermarkObjectData) => {
-    const { shapeOperations } = this.props;
+    const {
+      shapeOperations,
+      watermark: { lockScaleToPercentage = 0 }
+    } = this.props;
     if (!shapeData) { shapeData = data }
     if (!watermarkObjectData) { watermarkObjectData = data }
 
     const watermark = this.getWatermarkLayer() || {};
     this.setState(data, () => {
-      shapeOperations.addOrUpdate({ ...shapeData, key: WATERMARK_UNIQUE_KEY, index: watermark.index, tab: 'watermark' },
-      {
-        watermark: {
-          ...this.props.watermark,
-          ...watermarkObjectData
+      shapeOperations.addOrUpdate(
+        { ...shapeData, lockScaleToPercentage, key: WATERMARK_UNIQUE_KEY, index: watermark.index, tab: 'watermark' },
+        {
+          watermark: {
+            ...this.props.watermark,
+            ...watermarkObjectData
+          }
         }
-      });
+      );
     });
   }
 
@@ -221,7 +226,10 @@ export default class extends Component {
     });
 
     if (url) {
-      const { shapeOperations } = this.props;
+      const {
+        shapeOperations,
+        watermark: { lockScaleToPercentage = 0 }
+      } = this.props;
       const { opacity } = this.state;
 
       logoImage = new Image();
@@ -245,7 +253,8 @@ export default class extends Component {
           index,
           variant: SHAPES_VARIANTS.IMAGE,
           key: WATERMARK_UNIQUE_KEY,
-          tab: 'watermark'
+          tab: 'watermark',
+          lockScaleToPercentage
         }, watermarkImageStateObj);
       }
 

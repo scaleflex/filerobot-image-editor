@@ -356,6 +356,9 @@ Add watermark on the image after applying image transformations.
 ##### `watermark.defaultText`: string - the default text that would be added as a text watermark
 
 ##### `watermark.fonts`: array - the fonts that would be shown & used in text watermark
+
+##### `watermark.lockScaleToPercentage`: number | [0, 50, 100...etc] - default is 0 (don't scale the image & don't prevent user scaling), A percentage value to use in auto scaling the watermark's image width & height with preventing the ability to resize/scale the watermark's image for the user.
+
 example: [{ label: 'Arial', value: 'Arial' }]
 
 
