@@ -43,7 +43,7 @@ const SwitcherWrapper = styled.div`
 `;
 
 const SwitcherInput = styled.input`
-  display: none;
+  display: none !important;
   
   :checked + .onoffswitch-label .onoffswitch-inner {
     margin-left: 0;

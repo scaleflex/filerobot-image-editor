@@ -65,6 +65,7 @@
     "clean-build": "rm -rf build",
     "build-new": "webpack --mode production --config config/webpack.js-config.js",
     "build": "npm run clean-build && npm run build-new && ./scripts/copy_build.sh",
+    "build-w": "npm run clean-build && npm run build-new && .\\scripts\\copy_build.sh",
     "clean-dist": "rm -rf dist",
     "dist": "npm run clean-dist && npx babel projects/react --out-dir dist --copy-files",
     "deploy": "gh-pages -d examples/js/dist",
