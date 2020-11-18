@@ -243,8 +243,8 @@ export default class CustomizedCanvas extends Component {
 
   handleShapeResizing = ({ movementX, movementY, shiftKey }) => {
     const { resizeControlTarget } = this.state;
-    const { selectedShape } = this.props;
-    let { index, width, height, x, y, variant } = selectedShape;
+    const { selectedShape, processWithCloudimage } = this.props;
+    let { index, width, height, x, y, variant, originalWidth, originalHeight } = selectedShape;
 
     if (
       !resizeControlTarget ||
@@ -254,6 +254,13 @@ export default class CustomizedCanvas extends Component {
     const oldHeight = height;
     
     const { direction } = resizeControlTarget.dataset;
+    if (processWithCloudimage) {
+      const notAllowedWithCloudImage = ['e', 'w', 'n', 's'];
+      if (notAllowedWithCloudImage.includes(direction)) {
+        return;
+      }
+      shiftKey = true;
+    }
     const keepShapeRatio = (sameAxesIncSign) => {
       const ratio = width / height;
       if (Math.abs(movementX) >= Math.abs(movementY)) {
@@ -290,23 +297,27 @@ export default class CustomizedCanvas extends Component {
       break;
       case 'ne':
         if (shiftKey) { keepShapeRatio(false); }
-        northHandle();
         eastHandle();
+        if (width >= this._canvas.width && shiftKey) { break; }
+        northHandle();
       break;
       case 'nw':
         if (shiftKey) { keepShapeRatio(true); }
-        northHandle();
         westHandle();
+        if (width >= this._canvas.width && shiftKey) { break; }
+        northHandle();
       break;
       case 'se':
         if (shiftKey) { keepShapeRatio(true); }
-        southHandle();
         eastHandle();
+        if (width >= this._canvas.width && shiftKey) { break; }
+        southHandle();
       break;
       case 'sw':
         if (shiftKey) { keepShapeRatio(false); }
-        southHandle();
         westHandle();
+        if (width >= this._canvas.width && shiftKey) { break; }
+        southHandle();
       break;
       default:
       return;
@@ -314,6 +325,11 @@ export default class CustomizedCanvas extends Component {
 
     if (variant === SHAPES_VARIANTS.SQUARE || variant === SHAPES_VARIANTS.CIRCLE) {
       if (height !== oldHeight) { width = height;} else { height = width; }
+    }
+
+    // In cloudimage process f max width or height don't increase any of them.
+    if (processWithCloudimage && (width >= originalWidth || height >= originalHeight)) {
+      return;
     }
 
     const minWidthAndHeight = 15;
@@ -967,10 +983,14 @@ export default class CustomizedCanvas extends Component {
         resizingBox = false,
         lockScaleToPercentage = 0
       },
+      processWithCloudimage,
       wrapperId
     } = this.props
     const resizingBoxLines = ['e', 'n', 'w', 's'];
-    const resizingBoxPoints = ['e', 'n', 'w', 's', 'ne', 'nw', 'sw', 'se'];
+    const resizingBoxPoints = ['ne', 'nw', 'sw', 'se'];
+    if (!processWithCloudimage) {
+      resizingBoxPoints.splice(0, 0, 'e', 'n', 'w', 's',)
+    }
     const left = (this._canvas ? this._canvas.offsetLeft : 0) + x;
     const top = (this._canvas ? this._canvas.offsetTop : 0 ) + y;
     const mutualStyles = { pointerEvents: 'all' };

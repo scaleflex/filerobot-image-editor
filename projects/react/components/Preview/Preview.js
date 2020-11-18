@@ -9,7 +9,7 @@ export default class extends Component {
   render() {
     const {
       activeTab, isHideCanvas, watermark = {}, focusPoint, original, updateState, src, shapes,
-      selectedShape, config: { colorScheme, elementId: editorWrapperId }, roundCrop,
+      selectedShape, config: { colorScheme, elementId: editorWrapperId, processWithCloudimage }, roundCrop,
       latestCanvasSize
     } = this.props;
 
@@ -36,6 +36,7 @@ export default class extends Component {
           latestCanvasSize={latestCanvasSize}
           colorScheme={colorScheme}
           wrapperId={editorWrapperId}
+          processWithCloudimage={processWithCloudimage}
         />}
 
         {activeTab === 'focus_point' && (
