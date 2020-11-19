@@ -25,6 +25,11 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.4 - 2020-11-14
+### Improved
+- Improved the positioning of watermark in cloudimage mode.
+- Avoiding the overwriting of watermark's applying switcher styles.
+
 ## 3.12.3 - 2020-11-14
 ### Fixed
 - Objects scaling on different image sizes issue.
