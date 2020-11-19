@@ -25,7 +25,7 @@ Types of changes:
 - ...
 
 -------------
-## 3.12.4 - 2020-11-14
+## 3.12.4 - 2020-11-19
 ### Improved
 - Improved the positioning of watermark in cloudimage mode.
 - Avoiding the overwriting of watermark's applying switcher styles.
