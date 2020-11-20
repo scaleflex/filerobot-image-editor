@@ -9,6 +9,7 @@ import {
   getPubliclink,
   getSecretHeaderName,
   getImageSealingParams,
+  roundDecimalPoint
 } from '../../utils';
 import {
   CLOUDIMAGE_OPERATIONS,
@@ -1161,13 +1162,13 @@ export default class ImageManipulator extends Component {
     } = this.state;
     const { width: canvasWidth, height: canvasHeight } = this.getCanvas(PREVIEW_CANVAS_ID);
 
-    const xPos = (x / canvasWidth) * 100;
-    const yPos = (y / canvasHeight) * 100;
+    const xPos = roundDecimalPoint((x / canvasWidth) * 100);
+    const yPos = roundDecimalPoint((y / canvasHeight) * 100);
 
-    const watermarkScale = (watermark.width / watermark.originalWidth) * 100;
+    const watermarkScale = roundDecimalPoint((watermark.width / canvasWidth) * 100);
 
-    const gravityQuery = `&wat_gravity=absolute&wat_pos=${xPos},${yPos}`;
-    let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=${watermarkScale}${gravityQuery}`;
+    const gravityQuery = `wat_gravity=absolute&wat_pos=${xPos},${yPos}`;
+    let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=${watermarkScale}p&${gravityQuery}`;
 
     queryUrl += processWithCloudimage && watermark.text
     ? `&wat_text=${watermark.text}&wat_font=${watermark.textFont}&wat_fontsize=${watermark.textSize}&wat_colour=${watermark.color.replace('#', '')}`
