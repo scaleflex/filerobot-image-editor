@@ -1161,12 +1161,12 @@ export default class ImageManipulator extends Component {
     } = this.state;
     const { width: canvasWidth, height: canvasHeight } = this.getCanvas(PREVIEW_CANVAS_ID);
 
-    const xWatPad = Math.round(x.mapNumber(0, canvasWidth, 0, imgWidth));
-    const yWatPad = Math.round(y.mapNumber(0, canvasHeight, 0, imgHeight));
+    const xWatPad = Math.round((x / canvasWidth) * 100);
+    const yWatPad = Math.round((y / canvasHeight) * 100);
 
     const watermarkScale = Math.round((watermark.width / watermark.originalWidth) * 100);
 
-    const gravityQuery = `&wat_gravity=northwest&wat_pad=${xWatPad},${yWatPad}`;
+    const gravityQuery = `&wat_gravity=northwest&wat_pad=${xWatPad}p,${yWatPad}p`;
     let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=${watermarkScale}${gravityQuery}`;
 
     queryUrl += processWithCloudimage && watermark.text
