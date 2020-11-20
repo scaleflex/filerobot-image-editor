@@ -80,7 +80,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   min-height: 520px;
-  overflow-y: auto;
+  overflow: ${p => p.isLoading ? 'hidden' : 'auto'};
   font-size: 12px;
   
   .filerobot-original-canvas {
