@@ -86,7 +86,7 @@ export default class extends Component {
   loadImage = () => {
     let { src } = this.props;
     const { reduceBeforeEdit: { mode, widthLimit, heightLimit } = {}, watermark } = this.state;
-    
+
     if (src instanceof Blob) { src = URL.createObjectURL(src); }
 
     const splittedSrc = src.split('/');
@@ -188,7 +188,7 @@ export default class extends Component {
         width: canvas.width,
         height: canvas.height
       }
-      
+
       this.setState(props, callback);
     }
   }
@@ -492,7 +492,7 @@ export default class extends Component {
     };
 
     return (
-      <Wrapper roundCrop={roundCrop}>
+      <Wrapper roundCrop={roundCrop} isLoading={isShowSpinner}>
 
         <Header {...headerProps}/>
 
