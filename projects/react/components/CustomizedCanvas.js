@@ -828,6 +828,10 @@ export default class CustomizedCanvas extends Component {
           newData.y = updatedData.y; 
         }
 
+        if (updatedData.stroke) {
+          newData.stroke = updatedData.stroke;
+        }
+
         if (updatedData.width && updatedData.height) {
           newData.width = updatedData.width;
           newData.height = updatedData.height;
