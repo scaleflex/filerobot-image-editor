@@ -1,23 +1,46 @@
-export const getWatermarkPosition = (position = 'center', canvas, width, height) => {
+export const getWatermarkSquaredPosition = (position = 'center', canvas, width, height) => {
   const canvasRect = canvas.getBoundingClientRect();
+
+  const scaleRatio = 30 / 100; // 30%
+
+  const scaledWidth = canvasRect.width * scaleRatio;
+  if (scaledWidth < width) {
+    width = scaledWidth;
+  }
+
+  const scaledHeight = canvasRect.height * scaleRatio;
+  if (scaledHeight < height) {
+    height = scaledHeight;
+  }
+
   const centerPositionX = (canvasRect.width / 2) - (width / 2);
   const centerPositionY = (canvasRect.height / 2) - (height / 2);
 
   if (position === 'center') {
-    return [centerPositionX, centerPositionY];
+    return [centerPositionX, centerPositionY, width, height];
   }
 
   position = position.split('-');
 
-  const rightPosition = canvasRect.width - width - 5;
-  const bottomPosition = canvasRect.height - height - 5;
+  const paddingSpace = 1.5 / 100; // 1.5%
   
-  return position.map((p, i) => {
-    if (p === 'center') { return i === 0 ? centerPositionX : centerPositionY }
-    if (p === 'right') { return rightPosition; }
-    if (p === 'bottom') { return bottomPosition; }
+  const widthSpace = canvasRect.width * paddingSpace;
+  const heightSpace = canvasRect.height * paddingSpace;
 
-    // If top or left or unknown value would return 0 as 0 the right position for left & top.
-    return 5;
-  })
+  const rightPosition = (canvasRect.width - width) - widthSpace;
+  const bottomPosition = (canvasRect.height - height) - heightSpace;
+  
+  return [
+    ...position.map(
+        (p, i) => {
+        if (p === 'center') { return i === 0 ? centerPositionX : centerPositionY }
+        if (p === 'right') { return rightPosition; }
+        if (p === 'bottom') { return bottomPosition; }
+        if (p === 'left') { return widthSpace; }
+        if (p === 'top') { return heightSpace; }
+      }
+    ),
+    width,
+    height
+  ]
 }

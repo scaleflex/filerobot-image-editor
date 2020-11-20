@@ -23,7 +23,7 @@ import {
   WATERMARK_UNIQUE_KEY,
   SHAPES_VARIANTS
 } from '../../config';
-import { getWatermarkPosition, getCanvasNode } from '../../utils';
+import { getWatermarkSquaredPosition, getCanvasNode } from '../../utils';
 
 
 export default class extends Component {
@@ -209,8 +209,16 @@ export default class extends Component {
 
   onPositionChange = value => {
     const { width, height } = this.getWatermarkLayer();
-    const [x, y] = getWatermarkPosition(value, getCanvasNode(this.props.config.elementId), width, height);
-    this.updateWatermarkProperty({ position: value }, { x, y }, { position: value, x, y });
+    const [
+      x,
+      y,
+      scaledWidth,
+      scaledHeight
+  ] = getWatermarkSquaredPosition(value, getCanvasNode(this.props.config.elementId), width, height);
+    this.updateWatermarkProperty(
+      { position: value, width: scaledWidth, height: scaledHeight },
+      { x, y, width: scaledWidth, height: scaledHeight },
+      { position: value, x, y, width: scaledWidth, height: scaledHeight });
   }
 
   initWatermarkImage = debounce(500, (url) => {
