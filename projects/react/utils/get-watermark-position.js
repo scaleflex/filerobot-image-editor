@@ -9,8 +9,8 @@ export const getWatermarkPosition = (position = 'center', canvas, width, height)
 
   position = position.split('-');
 
-  const rightPosition = canvasRect.width - width;
-  const bottomPosition = canvasRect.height - height;
+  const rightPosition = canvasRect.width - width - 5;
+  const bottomPosition = canvasRect.height - height - 5;
   
   return position.map((p, i) => {
     if (p === 'center') { return i === 0 ? centerPositionX : centerPositionY }
@@ -18,6 +18,6 @@ export const getWatermarkPosition = (position = 'center', canvas, width, height)
     if (p === 'bottom') { return bottomPosition; }
 
     // If top or left or unknown value would return 0 as 0 the right position for left & top.
-    return 0;
+    return 5;
   })
 }
