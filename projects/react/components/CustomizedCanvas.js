@@ -821,16 +821,28 @@ export default class CustomizedCanvas extends Component {
           updatedData.text = updates.selectedShape.text = updatedData.text || targetShape.text;
         }
       } else {
+        const newData = {}
+
+        if (typeof updatedData.x !== 'undefined' && typeof updatedData.y !== 'undefined') {
+          newData.x = updatedData.x;
+          newData.y = updatedData.y; 
+        }
+
         if (updatedData.width && updatedData.height) {
-          updates.selectedShape = {
-            ...selectedShape,
-            width: updatedData.width,
-            height: updatedData.height,
-            lockScaleToPercentage: updatedData.lockScaleToPercentage
-          }
+          newData.width = updatedData.width;
+          newData.height = updatedData.height;
+        }
+
+        if (updatedData.lockScaleToPercentage) {
+          updatedData.lockScaleToPercentage = updatedData.lockScaleToPercentage;
+        }
+
+        updates.selectedShape = {
+          ...selectedShape,
+          ...newData
         }
       }
-      
+
       latestShapes[index] = { ...latestShapes[index], ...updatedData };
       this.updateState({ shapes: latestShapes, ...updates, ...otherStatesToBeUpdated }, () => {
         this.redrawShape(index);
