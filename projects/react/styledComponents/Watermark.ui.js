@@ -21,7 +21,7 @@ const WatermarkWrapper = styled.div`
     }
   }
   
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,7 +69,7 @@ const WrapperForControls = styled('div')`
   } else {
     return 'padding: 10px;';
   }
-}}
+}};
 `;
 
 const WrapperForOpacity = styled('div')`
@@ -154,7 +154,7 @@ const WatermarkInputTypes = styled('div')`
   
   /* On mouse-over, add a grey background color */
   label:hover input ~ span {
-    // background-color: #ccc;
+    /* background-color: #ccc; */
   }
   
   /* When the radio button is checked, add a blue background */
@@ -189,7 +189,7 @@ const WatermarkInputTypes = styled('div')`
   }
   
   @media (max-width: 768px) {
-    width: 100%
+    width: 100%;
     
     label {
       display: inline-block;
@@ -210,12 +210,12 @@ const PositionSquare = styled('div')`
   ${(p) => {
   if (p.clickable !== 0 && !p.active) {
     return (`
-        :hover {
+        &:hover {
           background: ${p.theme.colors.primaryBg};
         }
       `);
   }
-}}
+}};
 `;
 
 const SelectWatermarkLabel = styled('div')`
@@ -246,7 +246,7 @@ const WatermarkIcon = styled('div')`
   border-radius: 4px;
   cursor: pointer;
   
-  :hover {
+  &:hover {
     background-color: ${p => p.theme.colors.secondaryBgHover};
   }
 `;

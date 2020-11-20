@@ -25,11 +25,11 @@ const CloseBtn = styled.span.attrs(() => ({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  :hover {
+  &:hover {
     color: ${props => variables.modal.colorMutedHover};
   }
   
-  :before {
+  &:before {
       content: '\\e90c'
     }
 `;

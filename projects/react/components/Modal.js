@@ -131,12 +131,13 @@ function getSmallModalStyle() {
 export class Modal extends Component {
   constructor(props) {
     super(props);
-    
+
     this.root = document.createElement('div');
     this.root.classList.add('filerobot-image-editor-root');
+    this.root.id = 'filerobot-image-editor-root';
 
     document.body.appendChild(this.root);
-    
+
     const { closeOnOutsideClick = true } =  this.props;
     if (closeOnOutsideClick) {
       document.addEventListener('keydown', this.handleOutsideMouseClick);

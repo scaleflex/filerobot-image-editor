@@ -145,13 +145,13 @@ export const variables = {
     background-color: #00707c;
     border-color: #00707c;
 
-    :hover {
+    &:hover {
       color: #fff;
       background-color: #00616D;
       border-color: #00616D;
     }
 
-    :focus {
+    &:focus {
       -webkit-box-shadow: 0 0 0 2px rgba(0, 112, 124, 0.5);
               box-shadow: 0 0 0 2px rgba(0, 112, 124, 0.5);
     }
@@ -271,7 +271,7 @@ function getIconStyles(props) {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    :hover {
+    &:hover {
       color: ${props.muted ? props.theme.colors.textMute : props.theme.colors.text};
     }
   `;
@@ -422,7 +422,7 @@ function getIconByName(name) {
   }
 
   return `
-    :before {
+    &:before {
       content: '${char}'
     }
   `;

@@ -55,7 +55,7 @@ class ImageEditorWrapper extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.show !== prevProps.show) {
       if (this.props.show) { this.open(this.props.src); } else { this.close(); }
-    }    
+    }
   }
 
   processConfig = (config) => {

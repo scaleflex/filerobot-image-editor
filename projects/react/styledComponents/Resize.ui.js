@@ -41,7 +41,7 @@ const PreResizeWarning = styled('p')`
   font-weight: normal;
   text-align: left;
   
-  :before {
+  &:before {
     content: '\\e917';
     font-family: filerobot-image-editor-font;
     position: absolute;
@@ -79,8 +79,8 @@ const SuggestionOption = styled('div')`
   border-radius: 4px;
   cursor: pointer;
   
-  :hover {
-    background: ${p => p.theme.colors.primaryBgHover};
+  &:hover {
+    background-color: ${p => p.theme.colors.primaryBgHover};
   }
 `;
 

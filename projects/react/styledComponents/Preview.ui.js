@@ -9,7 +9,7 @@ const PreviewWrapper = styled.div`
   padding: 20px;
   position: relative;
 
-  :before {
+  &:before {
     content: '';
     display: inline-block;
     height: 100%;
@@ -27,12 +27,11 @@ const PreviewImgBox = styled.div`
   display: inline-block;
   max-height: 100%;
   max-width: 100%;
-  /*width: 100%;*/
   height: 100%;
   vertical-align: middle;
 
   ${props => !props.hideCanvas ? `
-  :before {
+  &:before {
     content: '';
     display: inline-block;
     height: 100%;
@@ -42,7 +41,7 @@ const PreviewImgBox = styled.div`
     position: relative;
     left: -9999px;
   }
-  `}
+  `};
 
   /* Limit image width to avoid overflow the container */
   img {
@@ -66,7 +65,7 @@ canvas:after {
     bottom: 0;
     background: red;
     opacity: 0.5;
-  }`}
+  }`};
 `;
 
 const PreviewCanvas = styled('canvas')`

@@ -7,15 +7,6 @@ const CropWrapper = styled.div`
   color: ${props => props.theme.colors.text};
   display: flex;
   
-  ::-webkit-scrollbar {
-    height: 10px !important;
-  }
-   
-  ::-webkit-scrollbar-thumb {
-    background: #3b4d54;
-    border-radius: 5px;
-  }
-  
   @media (min-widthL 768px) {
     overflow-x: auto;
     overflow-y: hidden;
@@ -74,13 +65,13 @@ const FieldInput = styled.input.attrs(props => ({
   
   ${p => p.type === 'number' && `::-webkit-inner-spin-button {
     -webkit-appearance: none;
-  }`}
+  }`};
   
-  :hover {
+  &:hover {
     outline: none;
   }
   
-  :focus {
+  &:focus {
     border: 1px solid ${props => props.theme.colors.secondaryBg};
     outline: none;
     box-shadow: rgba(0, 112, 124, 0.5) 0px 1px 1px inset, rgba(0, 112, 124, 0.4) 0px 1px 0px;
@@ -105,11 +96,11 @@ const FileInput = styled('input').attrs(props => ({
   border: 0px solid transparent;
   font-family: Roboto, sans-serif;
   
-  :hover {
+  &:hover {
     outline: none;
   }
   
-  :focus {
+  &:focus {
     border: 1px solid ${props => props.theme.colors.secondaryBg};
     outline: none;
     box-shadow: rgba(0, 112, 124, 0.5) 0px 1px 1px inset, rgba(0, 112, 124, 0.4) 0px 1px 0px;
@@ -135,11 +126,11 @@ const BlockRatioIcon = styled.span`
   font-weight: bold;
   font-size: ${props => props.fz || '28px'};
 
-  ${props => getIconStyles(props)}
-  ${props => getIconByName(props.active ? 'ratio' : 'no-ratio')}
+  ${props => getIconStyles(props)};
+  ${props => getIconByName(props.active ? 'ratio' : 'no-ratio')};
   
-  color: ${props => props.theme.textMuted}
-`
+  color: ${props => props.theme.textMuted};
+`;
 
 const CropBox = styled.div`
   display: inline-block;
@@ -147,7 +138,7 @@ const CropBox = styled.div`
   text-align: center;
   padding: 0 20px;
   cursor: pointer;
-  background: ${props => props.active ? props.theme.colors.secondaryBgHover : 'transparent'}
+  background: ${props => props.active ? props.theme.colors.secondaryBgHover : 'transparent'};
 `;
 
 const CropBoxInner = styled.div`
@@ -163,7 +154,7 @@ const CropShape = styled.div`
   margin: 0 auto;
   display: inline-block;
   vertical-align: middle;
-  ${({ radius }) => radius && `border-radius: ${radius}%;`}
+  ${({ radius }) => radius && `border-radius: ${radius}%;`};
 `;
 
 const CropShapeWrapper = styled('div')`

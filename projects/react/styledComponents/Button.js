@@ -26,19 +26,19 @@ const Button = styled.button`
   transition: all 0.2s ease-in-out;
   border-radius: ${props => getElementStylesBySize(props, 'button', 'br')};
   
-  :focus, :hover {
+  &:focus, &:hover {
     text-decoration: none;
   }
   
-  :focus {
+  &:focus {
     outline: 0;
     -webkit-box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.25);
             box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.25);
   }
   
-  ${props => isDisabled(props)}
+  ${props => isDisabled(props)};
   
-  ${props => getButtonStyles(props)}
+  ${props => getButtonStyles(props)};
 `;
 
 function getElementStylesBySize(props, type, field) {
@@ -63,13 +63,13 @@ function getButtonStyles(props) {
     background-color: #28a745;
     border-color: ##28a745;
     
-    :hover {
+    &:hover {
       color: #fff;
       background-color: #218838;
       border-color: #1e7e34;
     }
     
-    :focus {
+    &:focus {
       -webkit-box-shadow: 0 0 0 2px rgba(92, 184, 92, 0.5);
               box-shadow: 0 0 0 2px rgba(92, 184, 92, 0.5);
     }
@@ -85,7 +85,7 @@ function getButtonStyles(props) {
       background-color: #009345;
       border-color: #009345;
       
-      :hover {
+      &:hover {
         background-color: #009345;
         border-color: #009345;
       }
@@ -103,13 +103,13 @@ function getButtonStyles(props) {
     background-color: #0275d8;
     border-color: #0275d8;
     
-    :hover {
+    &:hover {
       color: #fff;
       background-color: #025aa5;
       border-color: #01549b;
     }
     
-    :focus {
+    &:focus {
       -webkit-box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.5);
               box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.5);
     }
@@ -125,7 +125,7 @@ function getButtonStyles(props) {
       background-color: #0275d8;
       border-color: #0275d8;
       
-      :hover {
+      &:hover {
         background-color: #0275d8;
         border-color: #0275d8;
       }
@@ -143,13 +143,13 @@ function getButtonStyles(props) {
     background-color: #5bc0de;
     border-color: #5bc0de;
     
-    :hover {
+    &:hover {
       color: #fff;
       background-color: #31b0d5;
       border-color: #2aabd2;
     }
     
-    :focus {
+    &:focus {
       -webkit-box-shadow: 0 0 0 2px rgba(91, 192, 222, 0.5);
               box-shadow: 0 0 0 2px rgba(91, 192, 222, 0.5);
     }
@@ -165,7 +165,7 @@ function getButtonStyles(props) {
       background-color: #5bc0de;
       border-color: #5bc0de;
       
-      :hover {
+      &:hover {
         background-color: #5bc0de;
         border-color: #5bc0de;
       }
@@ -183,13 +183,13 @@ function getButtonStyles(props) {
     background-color: #f0ad4e;
     border-color: #f0ad4e;
     
-    :hover {
+    &:hover {
       color: #fff;
       background-color: #ec971f;
       border-color: #eb9316;
     }
     
-    :focus {
+    &:focus {
       -webkit-box-shadow: 0 0 0 2px rgba(240, 173, 78, 0.5);
               box-shadow: 0 0 0 2px rgba(240, 173, 78, 0.5);
     }
@@ -205,7 +205,7 @@ function getButtonStyles(props) {
       background-color: #f0ad4e;
       border-color: #f0ad4e;
       
-      :hover {
+      &:hover {
         background-color: #f0ad4e;
         border-color: #f0ad4e;
       }
@@ -223,13 +223,13 @@ function getButtonStyles(props) {
     background-color: #d9534f;
     border-color: #d9534f;
     
-    :hover {
+    &:hover {
       color: #fff;
       background-color: #c9302c;
       border-color: #c12e2a;
     }
     
-    :focus {
+    &:focus {
       -webkit-box-shadow: 0 0 0 2px rgba(217, 83, 79, 0.5);
               box-shadow: 0 0 0 2px rgba(217, 83, 79, 0.5);
     }
@@ -245,7 +245,7 @@ function getButtonStyles(props) {
       background-color: #d9534f;
       border-color: #d9534f;
       
-      :hover {
+      &:hover {
         background-color: #d9534f;
         border-color: #d9534f;
       }
@@ -266,7 +266,7 @@ function getButtonStyles(props) {
     outline: none;
     box-shadow: none;
     
-    :hover {
+    &:hover {
       border-color: transparent;
       color: ${getLinkColor(props, 'over')};
       background-color: transparent;
@@ -274,7 +274,7 @@ function getButtonStyles(props) {
       box-shadow: none;
     }
     
-    :focus {
+    &:focus {
       border-color: transparent;
       outline: none;
       box-shadow: none;
@@ -290,7 +290,7 @@ function getButtonStyles(props) {
       color: ${getLinkColor(props, 'over')};
       background-color: transparent;
       
-      :hover {
+      &:hover {
         color: ${getLinkColor(props, 'over')};
         background-color: transparent;
       }
@@ -312,13 +312,13 @@ function getButtonStyles(props) {
     background-color: ${getColor(props, 'secondary')};
     border-color: ${getColor(props, 'secondary', null, true, true)};
     
-    :hover {
+    &:hover {
       color: ${getColor(props, 'secondary', 'text')};
       background-color: ${getColor(props, 'secondary', null, true)};
       border-color: ${getColor(props, 'secondary', null, true, true)};
     }
     
-    :focus {
+    &:focus {
       -webkit-box-shadow: 0 0 0 2px ${getWithOpacity(getColor(props, 'secondary'), 0.5)};
               box-shadow: 0 0 0 2px ${getWithOpacity(getColor(props, 'secondary'), 0.5)};
     }
@@ -334,7 +334,7 @@ function getButtonStyles(props) {
       background-color: ${getWithOpacity(getColor(props, 'secondary'), 0.5)};
       border-color: ${getWithOpacity(getColor(props, 'secondary'), 0.5)};
       
-      :hover {
+      &:hover {
         background-color: ${getWithOpacity(getColor(props, 'secondary'), 0.5)};
         border-color: ${getWithOpacity(getColor(props, 'secondary'), 0.5)};
       }
@@ -352,13 +352,13 @@ function getButtonStyles(props) {
     color: #1e262c;
     border-color: #B0B0B0;
     
-    :hover {
+    &:hover {
       color: #1e262c;
       background-color: #E1E2E3;
       border-color: #B0B0B0;
     }
     
-    :focus {
+    &:focus {
       -webkit-box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);
               box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);
     }
@@ -374,7 +374,7 @@ function getButtonStyles(props) {
       border-color: #1e262c;
       opacity: 0.6;
       
-      :hover {
+      &:hover {
         background-color: #fff;
         border-color: #1e262c;
         opacity: 0.6;

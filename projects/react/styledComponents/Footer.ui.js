@@ -11,24 +11,24 @@ const Footer = styled.div`
 `;
 
 const PreviousBtn = styled.div`
-  ${props => getIconStyles(props)}
-  ${getIconByName('previous')}
+  ${props => getIconStyles(props)};
+  ${getIconByName('previous')};
   
-  ${props => getActionIconStyle(props)}
+  ${props => getActionIconStyle(props)};
 `;
 
 const NextBtn = styled.div`
-  ${props => getIconStyles(props)}
-  ${getIconByName('next')}
+  ${props => getIconStyles(props)};
+  ${getIconByName('next')};
   
-  ${props => getActionIconStyle(props)}
+  ${props => getActionIconStyle(props)};
 `;
 
 const ResetBtn = styled.div`
-  ${props => getIconStyles(props)}
-  ${getIconByName('reset')}
+  ${props => getIconStyles(props)};
+  ${getIconByName('reset')};
   
-  ${props => getActionIconStyle(props)}
+  ${props => getActionIconStyle(props)};
 `;
 
 const SwitcherWrapper = styled.div`
@@ -149,7 +149,7 @@ function getActionIconStyle(props) {
     line-height: 34px;
     border-right: 1px solid ${props.theme.colors.border};
     
-    :hover {
+    &:hover {
       background: ${props.muted ? 'inherit' : props.theme.colors.secondaryBgHover};
     }
   `;

@@ -16,6 +16,7 @@
     "resize"
   ],
   "dependencies": {
+    "@quickbaseoss/babel-plugin-styled-components-css-namespace": "^1.0.1",
     "cropperjs": "^1.5.5",
     "image-type": "^4.1.0",
     "js-sha1": "^0.6.0",

@@ -39,7 +39,7 @@ const ToolWrapper = styled.div`
   text-transform: ${props => props.noCapitalStrs ? 'none' : props.tt || 'capitalize'};
   background: ${props => props.active ? props.theme.colors.secondaryBg : 'inherit'};
   
-  :hover {
+  &:hover {
     color: ${props => props.theme.colors.textHover};
     background: ${props => props.theme.colors.secondaryBg};
   }
@@ -49,8 +49,8 @@ const ToolIcon = styled.div`
   height: 40px;
   font-size: 40px;
   
-  ${props => getIconStyles(props)}
-  ${props => getIconByName(props.name)}
+  ${props => getIconStyles(props)};
+  ${props => getIconByName(props.name)};
 `;
 
 const ToolLabel = styled.div`
@@ -85,7 +85,7 @@ const EffectWrapper = styled.div`
   font-size: 12px;
   background: ${p => p.active ? p.theme.colors.secondaryBgHover : 'transparent'};
   
-  :hover {
+  &:hover {
     background: ${p => p.theme.colors.secondaryBgHover};
   }
 `;

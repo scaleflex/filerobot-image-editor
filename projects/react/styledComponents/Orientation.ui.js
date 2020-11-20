@@ -62,11 +62,6 @@ const OrientationWrapper = styled.div`
 const RotateWrapper = styled.div`
   display: inline-block;
   width: 100%;
-  //padding: 20px;
-`;
-
-const RotateLabel = styled.div`
-
 `;
 
 const RotateButton = styled.div`
@@ -94,8 +89,8 @@ const ButtonGroup = styled('div')`
 `;
 
 const RotateIcon = styled.span`
-  ${props => getIconStyles(props)}
-  ${props => getIconByName(props.name)}
+  ${props => getIconStyles(props)};
+  ${props => getIconByName(props.name)};
   height: 16px;
   font-size: 16px;
   margin-top: -4px;
@@ -112,4 +107,4 @@ const DarkBtn = styled(CancelBtn)`
   }
 `;
 
-export { OrientationWrapper, RotateWrapper, RotateButton, RotateLabel, RotateIcon, ButtonGroup, DarkBtn }
+export { OrientationWrapper, RotateWrapper, RotateButton, RotateIcon, ButtonGroup, DarkBtn }

@@ -142,7 +142,7 @@ const SelectedItem = styled(FileInput).attrs()`
   cursor: pointer;
   ${p => p.relativePosition && `position: relative;`}
   
-  :hover {
+  &:hover {
     opacity: ${p => p.styles.opacity && 1};
   }
   
@@ -187,9 +187,9 @@ const SelectDropdown = styled.ul`
 
 const SelectDropdownItem = styled.li`
   cursor: pointer;
-  ${p => getItemStyles(p.size)}
+  ${p => getItemStyles(p.size)};
   
-  :hover {
+  &:hover {
     background: ${p => p.theme.colors.primaryBg};
   }
 `;
@@ -197,9 +197,9 @@ const SelectDropdownItem = styled.li`
 const getItemStyles = size => {
   switch (size) {
     case 'sm':
-      return 'padding: .2rem .6rem; font-size: 12px;'
+      return 'padding: .2rem .6rem; font-size: 12px;';
     case 'md':
-      return 'padding: .3rem .7rem; font-size: 12px;'
+      return 'padding: .3rem .7rem; font-size: 12px;';
     default:
       return 'padding: .375rem .75rem; font-size: 14px;'
   }

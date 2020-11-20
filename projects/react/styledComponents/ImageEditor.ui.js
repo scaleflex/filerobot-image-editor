@@ -4,6 +4,16 @@ const Container = styled('div')`
   height: 100%;
   width: 100%;
   overflow-y: auto;
+  
+  ::-webkit-scrollbar {
+    height: 10px !important;
+    width: 10px !important;
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: #3b4d54;
+    border-radius: 5px;
+  }
 
   *, *:after, *:before, *::after, *::before {
     box-sizing: border-box;
@@ -148,7 +158,7 @@ const Wrapper = styled.div`
     outline: 1px solid #fff;
     overflow: hidden;
     width: 100%;
-    ${({ roundCrop}) => roundCrop && 'border-radius: 50%;'}
+    ${({ roundCrop}) => roundCrop && 'border-radius: 50%'};
   }
   
   .cropper-dashed {
@@ -225,7 +235,7 @@ const Wrapper = styled.div`
     ${({ roundCrop }) => roundCrop && `
       border-radius: 50%;
       box-shadow: 0 0 80px 15px #000;
-      border: 2px solid #000;`}
+      border: 2px solid #000;`};
   }
   
   .cropper-line {
