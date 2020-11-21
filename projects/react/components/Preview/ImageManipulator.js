@@ -1165,7 +1165,8 @@ export default class ImageManipulator extends Component {
     const xPos = roundDecimalPoint((x / canvasWidth) * 100);
     const yPos = roundDecimalPoint((y / canvasHeight) * 100);
 
-    const watermarkScale = roundDecimalPoint((watermark.width / canvasWidth) * 100);
+    const biggestScaleRatio = Math.max((watermark.width / canvasWidth), (watermark.height / canvasHeight));
+    const watermarkScale = roundDecimalPoint(biggestScaleRatio * 100);
 
     const gravityQuery = `wat_gravity=absolute&wat_pos=${xPos},${yPos}`;
     let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=${watermarkScale}p&${gravityQuery}`;

@@ -3,16 +3,18 @@ export const getWatermarkSquaredPosition = (position = 'center', canvas, width, 
 
   const scaleRatio = 30 / 100; // 30%
 
-  const scaledWidth = canvasRect.width * scaleRatio;
-  if (scaledWidth < width) {
-    height *= scaledWidth / width;
-    width = scaledWidth;
-  }
-
   const scaledHeight = canvasRect.height * scaleRatio;
-  if (scaledHeight < height) {
-    width *= scaledHeight / height;
-    height = scaledHeight;
+  const scaledWidth = canvasRect.width * scaleRatio;
+
+  if (scaledWidth < width || scaledHeight < height) {
+    const aspectRatio = width / height;
+    if (height > width) {
+      height = scaledHeight;
+      width = height * aspectRatio;
+    } else {
+      width = scaledWidth;
+      height = width / aspectRatio;
+    }
   }
 
   const centerPositionX = (canvasRect.width / 2) - (width / 2);
