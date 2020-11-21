@@ -41,7 +41,7 @@ ImageEditorDownload = new FilerobotImageEditor({
       // fonts: [
       //   { label: 'Arial', value: 'Arial' }
       // ],
-      position: 'center',
+      position: 'right-top', // default: right-top; left-top/center-top/right-top/left-center/center/right-center/left-bottom/center-bottom/right-bottom
       opacity: 0.7,
       applyByDefault: false,
       handleOpacity: true,
@@ -114,7 +114,7 @@ const configUpload = {
       'https://cdn.scaleflex.it/demo/filerobot.png',
       'https://cdn.scaleflex.it/demo/superman.png'
     ],
-    position: 'center',
+    position: 'right-top', // default: right-top; left-top/center-top/right-top/left-center/center/right-center/left-bottom/center-bottom/right-bottom
     opacity: 0.7,
     applyByDefault: false,
     handleOpacity: true,
@@ -176,7 +176,7 @@ const configModify = {
       { url: 'https://cdn.scaleflex.it/demo/filerobot.png', label: 'filerobot logo' },
       'https://cdn.scaleflex.it/demo/superman.png'
     ],
-    position: 'center',
+    position: 'right-top', // default: right-top; left-top/center-top/right-top/left-center/center/right-center/left-bottom/center-bottom/right-bottom
     opacity: 0.7,
     applyByDefault: true,
     handleOpacity: true,

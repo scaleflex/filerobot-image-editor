@@ -5,11 +5,13 @@ export const getWatermarkSquaredPosition = (position = 'center', canvas, width, 
 
   const scaledWidth = canvasRect.width * scaleRatio;
   if (scaledWidth < width) {
+    height *= scaledWidth / width;
     width = scaledWidth;
   }
 
   const scaledHeight = canvasRect.height * scaleRatio;
   if (scaledHeight < height) {
+    width *= scaledHeight / height;
     height = scaledHeight;
   }
 

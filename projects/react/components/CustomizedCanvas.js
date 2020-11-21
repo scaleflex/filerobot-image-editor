@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { PreviewCanvas } from '../styledComponents';
+import { getWatermarkSquaredPosition } from '../utils';
 import { PREVIEW_CANVAS_ID, SHAPES_VARIANTS, WATERMARK_UNIQUE_KEY } from '../config';
 import '../utils/canvas-round';
 
@@ -593,7 +594,14 @@ export default class CustomizedCanvas extends Component {
   ) => {
     if(img) {
       const addIt = () => {
-        const [width, height] = this.getSuitableImgDiemensions(img, others.lockScaleToPercentage);
+        let width, height;
+        
+        if (others.width && others.height) {
+          width = others.width;
+          height = others.height;
+        } else {
+          [width, height] = this.getSuitableImgDiemensions(img, others.lockScaleToPercentage);
+        }
 
         const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
@@ -957,9 +965,26 @@ export default class CustomizedCanvas extends Component {
 
     img.onload = () =>  {
       if (dataObject) {
-        const [width, height] = this.getSuitableImgDiemensions(img, dataObject.lockScaleToPercentage);
+        let width, height;
+        
+        if (dataObject.position) {
+          let x, y;
+          [
+            x,
+            y,
+            width,
+            height
+          ] = getWatermarkSquaredPosition(dataObject.position, this._canvas, img.width, img.height);
+
+          dataObject.x = x;
+          dataObject.y = y;
+        } else {
+          [width, height] = this.getSuitableImgDiemensions(img, dataObject.lockScaleToPercentage);
+        }
+
         dataObject.width = dataObject.originalWidth = width;
         dataObject.height = dataObject.originalHeight = height;
+
         fn(dataObject,...args);
       } else {
         fn(...args);

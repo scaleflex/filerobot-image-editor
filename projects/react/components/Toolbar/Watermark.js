@@ -33,7 +33,7 @@ export default class extends Component {
     let { urls, fonts } = props.watermark;
 
     let setActivePositions = [];
-    let activePosition = position || 'center';
+    let activePosition = position || 'right-top';
 
     // check if a preset was selected
     if (typeof activePositions === 'string' && WATERMARK_POSITIONS_PRESET.hasOwnProperty(activePositions)) {
@@ -161,7 +161,9 @@ export default class extends Component {
       return;
     }
 
-    this.updateWatermarkProperty({ url: nextValue }, { img: nextValue, ...shapeData }, { url: '', text: false })
+    const position = this.state.position;
+
+    this.updateWatermarkProperty({ url: nextValue, position }, { img: nextValue, position, ...shapeData }, { url: '', text: false })
   }
 
   changeTextProperty = (event) => {
@@ -207,6 +209,10 @@ export default class extends Component {
     }
   }
 
+  getWatermarkDimensionsByPosString = (positionString, width, height) => {
+    return getWatermarkSquaredPosition(positionString, getCanvasNode(this.props.config.elementId), width, height);
+  }
+
   onPositionChange = value => {
     const { width, height } = this.getWatermarkLayer();
     const [
@@ -214,7 +220,7 @@ export default class extends Component {
       y,
       scaledWidth,
       scaledHeight
-  ] = getWatermarkSquaredPosition(value, getCanvasNode(this.props.config.elementId), width, height);
+    ] = this.getWatermarkDimensionsByPosString(value, width, height);
     this.updateWatermarkProperty(
       { position: value, width: scaledWidth, height: scaledHeight },
       { x, y, width: scaledWidth, height: scaledHeight },
@@ -236,7 +242,7 @@ export default class extends Component {
     if (url) {
       const {
         shapeOperations,
-        watermark: { lockScaleToPercentage = 0 }
+        watermark: { lockScaleToPercentage = 0, position }
       } = this.props;
       const { opacity } = this.state;
 
@@ -255,10 +261,16 @@ export default class extends Component {
 
         const index = (this.getWatermarkLayer() || {}).index;
 
+        const [x, y, width,height] = this.getWatermarkDimensionsByPosString(position, logoImage.width, logoImage.height);
+
         shapeOperations.addOrUpdate({
           img: logoImage,
           opacity,
           index,
+          x,
+          y,
+          width,
+          height,
           variant: SHAPES_VARIANTS.IMAGE,
           key: WATERMARK_UNIQUE_KEY,
           tab: 'watermark',
