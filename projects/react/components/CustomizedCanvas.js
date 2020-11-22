@@ -593,22 +593,18 @@ export default class CustomizedCanvas extends Component {
     { img, x = undefined, y = undefined, opacity = 1.0, tab='image', stroke = {}, otherStates, ...others } = {}
   ) => {
     if(img) {
-      const addIt = () => {
-        let width, height;
-        
-        if (others.width && others.height) {
-          width = others.width;
-          height = others.height;
-        } else {
-          [width, height] = this.getSuitableImgDiemensions(img, others.lockScaleToPercentage);
-        }
+      const addIt = () => {        
+        const [originalWidth, originalHeight] = this.getSuitableImgDiemensions(img, others.lockScaleToPercentage);
 
-        const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
+        const [centerX, centerY] = this.getCanvasCenter(
+          (others.width || originalWidth) / 2,
+          (others.height || originalHeight) / 2
+        );
 
         const drawingArgs = {
-          img, opacity, width, height,
-          originalWidth: width,
-          originalHeight: height,
+          img, opacity, originalWidth, originalHeight,
+          width: others.width || originalWidth,
+          height: others.height || originalHeight,
           x: x || centerX,
           y: y || centerY,
           stroke
@@ -978,12 +974,14 @@ export default class CustomizedCanvas extends Component {
 
           dataObject.x = x;
           dataObject.y = y;
-        } else {
-          [width, height] = this.getSuitableImgDiemensions(img, dataObject.lockScaleToPercentage);
         }
 
-        dataObject.width = dataObject.originalWidth = width;
-        dataObject.height = dataObject.originalHeight = height;
+        const [originalWidth, originalHeight] = this.getSuitableImgDiemensions(img, dataObject.lockScaleToPercentage);
+
+        dataObject.width = width || originalWidth;
+        dataObject.originalWidth = originalWidth;
+        dataObject.height =  height || originalHeight;
+        dataObject.originalHeight = originalHeight;
 
         fn(dataObject,...args);
       } else {
