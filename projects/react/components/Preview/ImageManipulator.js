@@ -267,7 +267,7 @@ export default class ImageManipulator extends Component {
     const imageMime = this.getFinalImageMime();
     const imageName = this.getFinalImageName();
     const { filerobot = {}, platform = 'filerobot' } = config;
-    const { imageMeta, imageProperties, saveMode = SAVE_MODES.DUPLICATE } = filerobot;
+    const { imageMeta, imageProperties, replacedImageName, saveMode = SAVE_MODES.DUPLICATE } = filerobot;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? ORIGINAL_CANVAS_ID : CANVAS_ID;
     const canvas = this.getCanvas(canvasID);
@@ -301,7 +301,7 @@ export default class ImageManipulator extends Component {
             splittedName[nameLength - 1]
           ].join('');
         }
-      } else { name = imageName; }
+      } else { name = replacedImageName || imageName; }
 
 
       const formData = new FormData();

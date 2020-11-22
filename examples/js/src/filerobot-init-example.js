@@ -97,6 +97,7 @@ const configUpload = {
       dir: '/Github-Image-Editor'
     },
     saveMode: 'duplicate', // default: 'duplicate'; 'new', 'duplicate', 'replace'
+    replacedImageName: 'test-image.jpg', // used if saveMode = 'replace'
     imageProperties: {
       description: 'testing',
       tags: ['lorem ipsum', 'test', 'trying'],

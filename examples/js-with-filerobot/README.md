@@ -68,5 +68,8 @@ The object that contains the main image properties to be copied into the duplica
 #### `imageMeta`: object
 The object that contains the main image meta to be copied into the duplicated image or the replacement image used in any of the both saveMode values (duplicate, replace).
 
+#### `replacedImageName`: string
+The name (included image's extension) of opened image that would be replaced with the new edited image. 
+
 ***
 [Go back to Image Editor](https://github.com/scaleflex/filerobot-image-editor)
