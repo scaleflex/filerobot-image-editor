@@ -265,9 +265,9 @@ export default class ImageManipulator extends Component {
       operations, initialZoom, operationsOriginal
     } = this.props;
     const imageMime = this.getFinalImageMime();
-    const imageName = this.getFinalImageName();
+    const imageNameFromUrl = this.getFinalImageName();
     const { filerobot = {}, platform = 'filerobot' } = config;
-    const { imageMeta, imageProperties, replacedImageName, saveMode = SAVE_MODES.DUPLICATE } = filerobot;
+    const { imageMeta, imageProperties, imageName, saveMode = SAVE_MODES.DUPLICATE } = filerobot;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? ORIGINAL_CANVAS_ID : CANVAS_ID;
     const canvas = this.getCanvas(canvasID);
@@ -284,10 +284,10 @@ export default class ImageManipulator extends Component {
       const realData = block[1].split(",")[1];
       const blob = b64toBlob(realData, imageMime, null);
       const loweredSaveModeStr = saveMode.toLowerCase();
-      let name = '';
+      let name = imageName || imageNameFromUrl;
 
       if (loweredSaveModeStr !== SAVE_MODES.REPLACE) {
-        const splittedName = imageName.replace(/-version-.{6}/g, '').split('.');
+        const splittedName = name.replace(/-version-.{6}/g, '').split('.');
         const nameLength = splittedName.length;
 
         if (nameLength <= 1) {
@@ -301,7 +301,7 @@ export default class ImageManipulator extends Component {
             splittedName[nameLength - 1]
           ].join('');
         }
-      } else { name = replacedImageName || imageName; }
+      }
 
 
       const formData = new FormData();
