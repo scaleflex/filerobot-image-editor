@@ -17,7 +17,8 @@ import {
   PREVIEW_CANVAS_ID,
   WATERMARK_UNIQUE_KEY,
   CANVAS_ID,
-  ORIGINAL_CANVAS_ID
+  ORIGINAL_CANVAS_ID,
+  SAVE_MODES
 } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
@@ -265,7 +266,7 @@ export default class ImageManipulator extends Component {
     } = this.props;
     const imageMime = this.getFinalImageMime();
     const imageName = this.getFinalImageName();
-    const { filerobot = {}, platform = 'filerobot' } = config;
+    const { filerobot = {}, platform = 'filerobot', saveMode = SAVE_MODES.DUPLICATE } = config;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? ORIGINAL_CANVAS_ID : CANVAS_ID;
     const canvas = this.getCanvas(canvasID);
@@ -281,21 +282,25 @@ export default class ImageManipulator extends Component {
       const block = base64.split(";");
       const realData = block[1].split(",")[1];
       const blob = b64toBlob(realData, imageMime, null);
-      const splittedName = imageName.replace(/-version-.{6}/g, '').split('.');
-      const nameLength = splittedName.length;
       let name = '';
 
-      if (nameLength <= 1) {
-        name = `${splittedName.join('.')}-version-${(uuidv4() || '').slice(0, 6)}`;
-      } else {
-        name = [
-          splittedName.slice(0, nameLength - 1).join('.'),
-          '-version-',
-          (uuidv4() || '').slice(0, 6),
-          '.',
-          splittedName[nameLength - 1]
-        ].join('');
-      }
+      if (saveMode.toLowerCase() !== 'replace') {
+        const splittedName = imageName.replace(/-version-.{6}/g, '').split('.');
+        const nameLength = splittedName.length;
+
+        if (nameLength <= 1) {
+          name = `${splittedName.join('.')}-version-${(uuidv4() || '').slice(0, 6)}`;
+        } else {
+          name = [
+            splittedName.slice(0, nameLength - 1).join('.'),
+            '-version-',
+            (uuidv4() || '').slice(0, 6),
+            '.',
+            splittedName[nameLength - 1]
+          ].join('');
+        }
+      } else { name = imageName; }
+
 
       const formData = new FormData();
       const request = new XMLHttpRequest();
@@ -375,7 +380,12 @@ export default class ImageManipulator extends Component {
   }
 
   onFileLoad = (data) => {
-    const { onComplete, onClose, updateState, closeOnLoad } = this.props;
+    const {
+      onComplete, onClose, updateState, closeOnLoad,
+      config: {
+        filerobot = {}, platform = 'filerobot', imageProperties = {}, saveMode = SAVE_MODES.DUPLICATE
+      }
+    } = this.props;
     const { srcElement = {} } = data;
     const { response = '{}' } = srcElement;
     const responseData = JSON.parse(response) || {};
@@ -386,9 +396,30 @@ export default class ImageManipulator extends Component {
 
       if (!publicURL) return;
 
-      updateState({ isShowSpinner: false, isHideCanvas: false });
-      onComplete(publicURL, file);
-      closeOnLoad && onClose(ON_CLOSE_STATUSES.IMAGE_UPLOADED_FILEROBOT);
+      // TODO: ASKING ABOUT HAVING POSSIBILITY TO ADD FILE INFO WHILE UPLOADING TO HAVE THEM IN 1 REQUEST.
+      const loweredSaveModeStr = saveMode.toLowerCase()
+      if (loweredSaveModeStr !== SAVE_MODES.NEW) {
+        const baseAPI = getBaseAPI(filerobot.baseAPI, filerobot.container, platform);
+
+        const request = new XMLHttpRequest();
+        request.onload = ({ srcElement: { response } } = {}) => {
+          if (JSON.parse(response).status === 'success') {
+            updateState({ isShowSpinner: false, isHideCanvas: false });
+            onComplete(publicURL, file);
+            closeOnLoad && onClose(ON_CLOSE_STATUSES.IMAGE_UPLOADED_FILEROBOT);    
+          }
+        }
+        request.open("PUT", [baseAPI, `file/${file.uuid}/properties`].join(''));
+        request.setRequestHeader(getSecretHeaderName(platform), filerobot.uploadKey);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify({ properties: imageProperties })
+        );
+      } else {
+        updateState({ isShowSpinner: false, isHideCanvas: false });
+        onComplete(publicURL, file);
+        closeOnLoad && onClose(ON_CLOSE_STATUSES.IMAGE_UPLOADED_FILEROBOT);
+      }
+
     } else {
       updateState({ isShowSpinner: false, isHideCanvas: false });
       alert(responseData);

@@ -121,7 +121,13 @@ const configUpload = {
     fileUpload: true,
     defaultText: 'Filerobot.....'
   },
-  showInModal: true
+  showInModal: true,
+  saveMode: 'duplicate', // default: 'duplicate'; 'new', 'duplicate', 'replace'
+  imageProperties: {
+    description: 'testing',
+    tags: ['lorem ipsum', 'test', 'trying'],
+    // ...Any additonal properties
+  }
 };
 const onCompleteUpload = function (newUrl) {
   const copyText = document.getElementById("copy-text");
