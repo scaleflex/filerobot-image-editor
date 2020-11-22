@@ -341,7 +341,7 @@ Add watermark on the image after applying image transformations.
 
 ##### `watermark.urls`: [url|{ url, label }] - list of url of the logo/image preset to select from in editor
 
-##### `watermark.position`: string | 'center' - position of the watermark
+##### `watermark.position`: string | default: 'right-top'; 'right-top', 'left-top', 'center-top', 'right-top', 'left-center', 'center', 'right-center', 'left-bottom', 'center-bottom', 'right-bottom' - position of the watermark
 
 ##### `watermark.opacity`: number | [0-1] - opacity of the watermark
 
