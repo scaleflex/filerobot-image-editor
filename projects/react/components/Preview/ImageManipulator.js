@@ -383,7 +383,9 @@ export default class ImageManipulator extends Component {
     const {
       onComplete, onClose, updateState, closeOnLoad,
       config: {
-        filerobot = {}, platform = 'filerobot', imageProperties = {}, saveMode = SAVE_MODES.DUPLICATE
+        filerobot: {
+          imageProperties = {}, saveMode = SAVE_MODES.DUPLICATE, baseAPI, container, uploadKey
+        }, platform = 'filerobot'
       }
     } = this.props;
     const { srcElement = {} } = data;
@@ -399,7 +401,7 @@ export default class ImageManipulator extends Component {
       // TODO: ASKING ABOUT HAVING POSSIBILITY TO ADD FILE INFO WHILE UPLOADING TO HAVE THEM IN 1 REQUEST.
       const loweredSaveModeStr = saveMode.toLowerCase()
       if (loweredSaveModeStr !== SAVE_MODES.NEW) {
-        const baseAPI = getBaseAPI(filerobot.baseAPI, filerobot.container, platform);
+        const baseAPI = getBaseAPI(baseAPI, container, platform);
 
         const request = new XMLHttpRequest();
         request.onload = ({ srcElement: { response } } = {}) => {
@@ -410,7 +412,7 @@ export default class ImageManipulator extends Component {
           }
         }
         request.open("PUT", [baseAPI, `file/${file.uuid}/properties`].join(''));
-        request.setRequestHeader(getSecretHeaderName(platform), filerobot.uploadKey);
+        request.setRequestHeader(getSecretHeaderName(platform), uploadKey);
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify({ properties: imageProperties })
         );

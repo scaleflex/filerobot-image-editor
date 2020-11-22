@@ -95,6 +95,12 @@ const configUpload = {
     container: 'scaleflex-tests-v5a',
     uploadParams: {
       dir: '/Github-Image-Editor'
+    },
+    saveMode: 'duplicate', // default: 'duplicate'; 'new', 'duplicate', 'replace'
+    imageProperties: {
+      description: 'testing',
+      tags: ['lorem ipsum', 'test', 'trying'],
+      // ...Any additonal properties
     }
   },
   isLowQualityPreview: true,
@@ -121,13 +127,7 @@ const configUpload = {
     fileUpload: true,
     defaultText: 'Filerobot.....'
   },
-  showInModal: true,
-  saveMode: 'duplicate', // default: 'duplicate'; 'new', 'duplicate', 'replace'
-  imageProperties: {
-    description: 'testing',
-    tags: ['lorem ipsum', 'test', 'trying'],
-    // ...Any additonal properties
-  }
+  showInModal: true
 };
 const onCompleteUpload = function (newUrl) {
   const copyText = document.getElementById("copy-text");
