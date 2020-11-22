@@ -311,8 +311,12 @@ export default class ImageManipulator extends Component {
       formData.append('file', blob, name);
       
       if (loweredSaveModeStr !== SAVE_MODES.NEW) {
-        formData.append('properties[file]', JSON.stringify(imageProperties));
-        formData.append('meta[file]', JSON.stringify(imageMeta));
+        if (imageProperties && Object.keys(imageProperties).length > 0) {
+          formData.append('properties[file]', JSON.stringify(imageProperties));
+        }
+        if (imageMeta && Object.keys(imageMeta).length > 0) {
+          formData.append('meta[file]', JSON.stringify(imageMeta));
+        }
       }
       request.open("POST", [baseAPI, `upload?dir=${dir}`].join(''));
       request.setRequestHeader(getSecretHeaderName(platform), filerobot.uploadKey);
