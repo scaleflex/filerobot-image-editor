@@ -25,6 +25,20 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.5 - 2020-11-22
+### Fixed
+- Watermark scaling box stays in its place if watermark is positioned from watermark's positioning squares.
+- Image's stroke width input issue of not changing.
+- Issue of multiple canvases on saving image.
+- Cloudimage's mode generated url.
+
+### Improved
+- Improved the positioning of watermark in cloudimage mode.
+- Adding selectors to the styled components.
+- Applying watermark's default position when changing the watermark image.
+- Scaling the watermark to 30% + 1.5% spacing when using watermark positioning sqaures and watermark's current size is bigger than 30% of edited image.
+- Disabling scaling up the watermark image and allowing scaling down with scaling up to the max. size of the watermark image.
+
 ## 3.12.4 - 2020-11-19
 ### Improved
 - Improved the positioning of watermark in cloudimage mode.
