@@ -266,7 +266,8 @@ export default class ImageManipulator extends Component {
     } = this.props;
     const imageMime = this.getFinalImageMime();
     const imageName = this.getFinalImageName();
-    const { filerobot = {}, platform = 'filerobot', saveMode = SAVE_MODES.DUPLICATE } = config;
+    const { filerobot = {}, platform = 'filerobot' } = config;
+    const { imageMeta, imageProperties, saveMode = SAVE_MODES.DUPLICATE } = filerobot;
     const src = this.props.src.split('?')[0];
     const canvasID = initialZoom !== 1 ? ORIGINAL_CANVAS_ID : CANVAS_ID;
     const canvas = this.getCanvas(canvasID);
@@ -282,9 +283,10 @@ export default class ImageManipulator extends Component {
       const block = base64.split(";");
       const realData = block[1].split(",")[1];
       const blob = b64toBlob(realData, imageMime, null);
+      const loweredSaveModeStr = saveMode.toLowerCase();
       let name = '';
 
-      if (saveMode.toLowerCase() !== 'replace') {
+      if (loweredSaveModeStr !== SAVE_MODES.REPLACE) {
         const splittedName = imageName.replace(/-version-.{6}/g, '').split('.');
         const nameLength = splittedName.length;
 
@@ -306,7 +308,12 @@ export default class ImageManipulator extends Component {
       const request = new XMLHttpRequest();
 
       request.addEventListener("load", self.onFileLoad);
-      formData.append('files[]', blob, name);
+      formData.append('file', blob, name);
+      
+      if (loweredSaveModeStr !== SAVE_MODES.NEW) {
+        formData.append('properties[file]', JSON.stringify(imageProperties));
+        formData.append('meta[file]', JSON.stringify(imageMeta));
+      }
       request.open("POST", [baseAPI, `upload?dir=${dir}`].join(''));
       request.setRequestHeader(getSecretHeaderName(platform), filerobot.uploadKey);
       request.send(formData);
@@ -380,14 +387,7 @@ export default class ImageManipulator extends Component {
   }
 
   onFileLoad = (data) => {
-    const {
-      onComplete, onClose, updateState, closeOnLoad,
-      config: {
-        filerobot: {
-          imageProperties = {}, saveMode = SAVE_MODES.DUPLICATE, baseAPI, container, uploadKey
-        }, platform = 'filerobot'
-      }
-    } = this.props;
+    const { onComplete, onClose, updateState, closeOnLoad } = this.props;
     const { srcElement = {} } = data;
     const { response = '{}' } = srcElement;
     const responseData = JSON.parse(response) || {};
@@ -398,30 +398,9 @@ export default class ImageManipulator extends Component {
 
       if (!publicURL) return;
 
-      // TODO: ASKING ABOUT HAVING POSSIBILITY TO ADD FILE INFO WHILE UPLOADING TO HAVE THEM IN 1 REQUEST.
-      const loweredSaveModeStr = saveMode.toLowerCase()
-      if (loweredSaveModeStr !== SAVE_MODES.NEW) {
-        const baseAPI = getBaseAPI(baseAPI, container, platform);
-
-        const request = new XMLHttpRequest();
-        request.onload = ({ srcElement: { response } } = {}) => {
-          if (JSON.parse(response).status === 'success') {
-            updateState({ isShowSpinner: false, isHideCanvas: false });
-            onComplete(publicURL, file);
-            closeOnLoad && onClose(ON_CLOSE_STATUSES.IMAGE_UPLOADED_FILEROBOT);    
-          }
-        }
-        request.open("PUT", [baseAPI, `file/${file.uuid}/properties`].join(''));
-        request.setRequestHeader(getSecretHeaderName(platform), uploadKey);
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.send(JSON.stringify({ properties: imageProperties })
-        );
-      } else {
-        updateState({ isShowSpinner: false, isHideCanvas: false });
-        onComplete(publicURL, file);
-        closeOnLoad && onClose(ON_CLOSE_STATUSES.IMAGE_UPLOADED_FILEROBOT);
-      }
-
+      updateState({ isShowSpinner: false, isHideCanvas: false });
+      onComplete(publicURL, file);
+      closeOnLoad && onClose(ON_CLOSE_STATUSES.IMAGE_UPLOADED_FILEROBOT);
     } else {
       updateState({ isShowSpinner: false, isHideCanvas: false });
       alert(responseData);

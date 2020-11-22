@@ -100,7 +100,11 @@ const configUpload = {
     imageProperties: {
       description: 'testing',
       tags: ['lorem ipsum', 'test', 'trying'],
-      // ...Any additonal properties
+      // ...Any additonal properties to be added.
+    },
+    imageMeta: {
+      title: 'testing'
+      // ... Any additional image meta to be added.
     }
   },
   isLowQualityPreview: true,

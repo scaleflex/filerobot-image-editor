@@ -65,5 +65,8 @@ The mode used in saving the uploaded image whether to have a new image and dismi
 #### `imageProperties`: object
 The object that contains the main image properties to be copied into the duplicated image or the replacement image used in any of the both saveMode values (duplicate, replace).
 
+#### `imageMeta`: object
+The object that contains the main image meta to be copied into the duplicated image or the replacement image used in any of the both saveMode values (duplicate, replace).
+
 ***
 [Go back to Image Editor](https://github.com/scaleflex/filerobot-image-editor)
