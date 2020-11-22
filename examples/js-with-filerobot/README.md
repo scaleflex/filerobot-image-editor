@@ -59,5 +59,11 @@ Filerobot Container name.
 
 Callback, triggers on complete processing image.
 
+#### `saveMode`: string | default: 'duplicate'; 'new', 'duplicate', 'replace'
+The mode used in saving the uploaded image whether to have a new image and dismissing the main image's properties, copying the same properties of the main image into the new uploaded image or to replace/overwrite the main image.
+
+#### `imageProperties`: object
+The object that contains the main image properties to be copied into the duplicated image or the replacement image used in any of the both saveMode values (duplicate, replace).
+
 ***
 [Go back to Image Editor](https://github.com/scaleflex/filerobot-image-editor)
