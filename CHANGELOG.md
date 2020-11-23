@@ -25,9 +25,13 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.7 - 2020-11-23
+### Fixed
+- Styling of adjust controls by having spaces between each control.
+
 ## 3.12.6 - 2020-11-22
 ### Added
-`saveMode`, `imageProperties`, `imageMeta` & `imageName` properties into filerobot object of upload mode to be used in determining the save/upload mode of filerobot whether to have a newly created image without the old image's properties & meta, duplicate the image data with the edits (different name with same old image's properties & meta with considering the new edits/design) or replacing the main image with the newly edited one.
+- `saveMode`, `imageProperties`, `imageMeta` & `imageName` properties into filerobot object of upload mode to be used in determining the save/upload mode of filerobot whether to have a newly created image without the old image's properties & meta, duplicate the image data with the edits (different name with same old image's properties & meta with considering the new edits/design) or replacing the main image with the newly edited one.
 
 ## 3.12.5 - 2020-11-22
 ### Fixed
