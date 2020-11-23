@@ -5,7 +5,11 @@ const AdjustWrapper = styled.div`
   color: ${props => props.theme.colors.text};
   text-align: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+
+  div {
+    margin-left: 10px;
+  }
   
   @media (max-width: 768px) {
     flex-wrap: wrap;
