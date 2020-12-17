@@ -3,7 +3,7 @@ import ImageEditor from './ImageEditor';
 import { Container } from './styledComponents';
 import { ThemeProvider } from 'styled-components';
 import { Modal } from './components/Modal';
-import { CLOUDIMAGE_OPERATIONS, TOOLS, UPLOADER, ON_CLOSE_STATUSES, STANDARD_FONTS } from './config';
+import { CLOUDIMAGE_OPERATIONS, TOOLS, UPLOADER, ON_CLOSE_STATUSES, STANDARD_FONTS, CONTAINER_SELECTOR } from './config';
 import './assets/fonts/filerobot-font.css';
 import translations from './assets/i18n';
 import dark from './assets/theme/dark';
@@ -119,8 +119,8 @@ class ImageEditorWrapper extends Component {
 
     return (
       <ThemeProvider theme={{ ...theme }}>
-        {showInModal ?
-          <Modal
+        {showInModal
+        ? <Modal
             noBorder
             fullScreen={'lg'}
             isHideCloseBtn={true}
@@ -129,7 +129,15 @@ class ImageEditorWrapper extends Component {
             configModalId={config.elementId}
           >
             {Inner}
-          </Modal> : Inner}
+          </Modal>
+        : <div
+            className={CONTAINER_SELECTOR}
+            id={CONTAINER_SELECTOR}
+            style={{ width: '100%', height: '100%' }}
+          >
+            {Inner}
+          </div>
+        }
       </ThemeProvider>
     );
   }

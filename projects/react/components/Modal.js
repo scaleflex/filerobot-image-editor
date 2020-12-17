@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { CloseBtn } from './CloseBtn';
 import { variables } from '../styledComponents/styleUtils';
-import { MODAL_ID, ON_CLOSE_STATUSES } from '../config';
+import { CONTAINER_SELECTOR, MODAL_ID, ON_CLOSE_STATUSES } from '../config';
 
 
 const ModalOverlay = styled.div`
@@ -133,8 +133,8 @@ export class Modal extends Component {
     super(props);
 
     this.root = document.createElement('div');
-    this.root.classList.add('filerobot-image-editor-root');
-    this.root.id = 'filerobot-image-editor-root';
+    this.root.classList.add(CONTAINER_SELECTOR);
+    this.root.id = CONTAINER_SELECTOR;
 
     document.body.appendChild(this.root);
 

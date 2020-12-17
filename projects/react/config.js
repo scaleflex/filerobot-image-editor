@@ -1,3 +1,5 @@
+const CONTAINER_SELECTOR = 'filerobot-image-editor-root';
+
 // The library modal ID.
 const MODAL_ID = 'filerobot-image-editor-modal';
 
@@ -215,5 +217,6 @@ export {
   ON_CLOSE_STATUSES,
   CANVAS_ID,
   ORIGINAL_CANVAS_ID,
-  SAVE_MODES
+  SAVE_MODES,
+  CONTAINER_SELECTOR
 };

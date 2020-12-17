@@ -25,6 +25,10 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.8 - 2020-12-17
+### Fixed
+- showing the appropriate styles for the plugin while being showing inside page not as modal.
+
 ## 3.12.7 - 2020-11-23
 ### Fixed
 - Styling of adjust controls by having spaces between each control.
