@@ -25,7 +25,6 @@ export default class Add extends Component {
           range={opacity}
           updateRange={updateOpacity}
           labelBefore={true}
-          labelStyles={{ color: '#fff' }}
         />
         <FieldGroup>
           <FieldCustomLabel>Stroke Color</FieldCustomLabel>

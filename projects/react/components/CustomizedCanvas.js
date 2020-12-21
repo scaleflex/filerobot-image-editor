@@ -36,7 +36,9 @@ export default class CustomizedCanvas extends Component {
       this._canvas.addEventListener('mousedown', this.onSelect);
       this._context = this._canvas.getContext('2d');
 
-      const border = `1px solid ${this.props.colorScheme === 'light' ? '#000' : '#fff'}`;
+      const border = `1px solid ${
+        this.props.colorScheme?.text || (this.props.colorScheme === 'light' ? '#000' : '#fff')
+      }`;
       const availableShapes = [
         {
           label: 'Rectangle',

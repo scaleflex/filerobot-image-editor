@@ -204,7 +204,12 @@ const PositionSquare = styled('div')`
   display: inline-block;
   vertical-align: top;
   border: 1px solid ${p => p.theme.colors.secondaryBgHover};
-  background: ${p => p.clickable ? p.active ? p.theme.colors.accent : p.theme.colors.secondaryBg : p.theme.colors.disabledBg};
+  background: ${p =>
+    p.clickable
+      ? p.active
+        ? p.theme.colors.button?.primary || p.theme.colors.primaryBg
+        : p.theme.colors.accent
+      : p.theme.colors.disabledBg};
   cursor: ${p => p.clickable ? 'pointer' : 'not-allowed'};
   
   ${(p) => {

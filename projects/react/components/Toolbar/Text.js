@@ -86,7 +86,6 @@ export default class Text extends Component {
             range={opacity}
             updateRange={this.updateOpacity}
             labelBefore={true}
-            labelStyles={{ color: '#fff' }}
           />
           <FieldGroup>
             <FieldCustomLabel>Stroke Color</FieldCustomLabel>

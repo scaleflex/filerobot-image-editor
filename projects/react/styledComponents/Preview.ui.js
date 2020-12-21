@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 
 const PreviewWrapper = styled.div`
-  height: calc(100% - 170px);
+  height: calc(100% - 187px);
   text-align: center;
-  line-height: calc(100% - 170px);
+  line-height: calc(100% - 187px);
   padding: 20px;
   position: relative;
 

@@ -4,9 +4,7 @@ import { getIconStyles, getIconByName } from './styleUtils';
 
 const Toolbar = styled.div`
   height: 100px;
-  width: calc(100% - 200px);
-  border-left: 1px solid ${props => props.theme.colors.primaryBg};
-  border-right: 1px solid ${props => props.theme.colors.primaryBg};
+  width: 100%;
   overflow-x: ${p => p.overlayYHidden ? 'auto' : 'none'};
   overflow-y: ${p => p.overlayYHidden ? 'hidden' : 'visible'};
   white-space: nowrap;

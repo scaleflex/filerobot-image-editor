@@ -24,6 +24,7 @@ class ImageEditorWrapper extends Component {
     config.theme.fonts = config.theme.fonts || STANDARD_FONTS;
     config.colorScheme = config.colorScheme || 'dark';
     config.platform = config.platform || 'filerobot';
+    const isCustomColorScheme = typeof config.colorScheme === 'object';
 
     this.state = {
       isVisible: show,
@@ -33,10 +34,15 @@ class ImageEditorWrapper extends Component {
         ...translations[config.language],
         ...config.translations[config.language]
       },
-      colorScheme: config.colorScheme || 'dark',
+      colorScheme: isCustomColorScheme ? 'custom' : (config.colorScheme || 'dark'),
       theme: {
         colors: {
-          ...(config.colorScheme === 'light' ? light : dark).colors,
+          ...(isCustomColorScheme
+              ? { colors: config.colorScheme }
+              : config.colorScheme === 'light'
+                ? light
+                : dark
+            ).colors,
           ...config.theme.colors
         },
         fonts: config.theme.fonts

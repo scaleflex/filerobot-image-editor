@@ -85,7 +85,7 @@ const FieldGroup = styled.div`
 `;
 
 const FieldCustomLabel = styled.label`
-  color: #fff;
+  color: ${props => props.theme.colors.text || '#ffffff'};
   display: inline-block;
   margin-bottom: 0;
 `;

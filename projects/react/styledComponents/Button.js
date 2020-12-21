@@ -8,7 +8,8 @@ const Button = styled.button`
   padding: ${props => getElementStylesBySize(props, 'button', 'p')};
   font-size: ${props => getElementStylesBySize(props, 'button', 'fz')};
   line-height:  ${props => getElementStylesBySize(props, 'button', 'lh')};
-  min-width: ${props => props.fullSize ? '100%' : 'auto'};
+  min-width: ${props => props.fullSize ? '100%' : '62px'};
+  height: 30px;
   font-weight: 400;
   text-align: center;
   white-space: nowrap;
@@ -309,13 +310,13 @@ function getButtonStyles(props) {
   `;
   else if (props.themeColor) return `
     color: ${getColor(props, 'secondary', 'text')};
-    background-color: ${getColor(props, 'secondary')};
-    border-color: ${getColor(props, 'secondary', null, true, true)};
+    background-color: ${props.theme.colors.button?.primary || getColor(props, 'secondary')};
+    border-color: ${props.theme.colors.button?.border || getColor(props, 'secondary', null, true, true)};
     
     &:hover {
       color: ${getColor(props, 'secondary', 'text')};
-      background-color: ${getColor(props, 'secondary', null, true)};
-      border-color: ${getColor(props, 'secondary', null, true, true)};
+      background-color: ${props.theme.colors.button?.hover || getColor(props, 'secondary', null, true)};
+      border-color: ${props.theme.colors.button?.borderHover || getColor(props, 'secondary', null, true, true)};
     }
     
     &:focus {
@@ -325,9 +326,9 @@ function getButtonStyles(props) {
     
     :active {
       color: ${getColor(props, 'secondary', 'text')};
-      background-color: ${getColor(props, 'secondary', null, true)};
+      background-color: ${props.theme.colors.button?.active || getColor(props, 'secondary', null, true)};
       background-image: none;
-      border-color: ${getColor(props, 'secondary', null, true, true)};
+      border-color: ${props.theme.colors.button?.borderActive || getColor(props, 'secondary', null, true, true)};
     }
     
     ${props.disabled ? `

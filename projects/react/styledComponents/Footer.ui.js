@@ -5,6 +5,7 @@ import { getIconStyles, getIconByName } from './styleUtils';
 
 const Footer = styled.div`
   background: ${props => props.theme.colors.secondaryBg};
+  border-top: 1px solid ${props => props.theme.colors.border};
   height: 34px;
   position: relative;
   z-index: 1;
@@ -74,7 +75,7 @@ const SwitcherInner = styled.span`
   &:before {
     content: "ON";
     padding-left: 10px !important;
-    background-color: #01717d; 
+    background-color: ${p => p.theme.colors.button?.primary || '#01717d'}; 
     color: #fff;
   }
   
@@ -92,10 +93,10 @@ const SwitcherSwitch = styled.span`
     width: 10px;
     height: 10px;
     margin: 5.5px;
-    background: ${p =>  p.theme.colors.secondaryBg};
+    background: ${p =>  p.theme.colors.accent};
     position: absolute; top: 0; bottom: 0;
     right:  ${props => props.checked ? '0' : '37px'};
-    border: 1px solid ${p => p.theme.colors.secondaryBg}; 
+    border: 1px solid ${p => p.theme.colors.accent}; 
     border-radius: 12px;
     transition: all 0.3s ease-in 0s;
 `;

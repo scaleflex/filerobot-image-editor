@@ -26,7 +26,7 @@ export default class Image extends Component {
 
     return (
       <AddWrapper>
-        <SettingsWrapper>[
+        <SettingsWrapper>
           <Range
             label={t['common.opacity']}
             min={0}
@@ -35,7 +35,6 @@ export default class Image extends Component {
             range={opacity}
             updateRange={this.updateOpacity}
             labelBefore={true}
-            labelStyles={{ color: '#fff' }}
           />
           <FieldGroup>
             <FieldCustomLabel>Stroke Color</FieldCustomLabel>
@@ -66,7 +65,7 @@ export default class Image extends Component {
               onChange={this.updatePropertyFromEvent}
             />
           </FieldGroup>
-        </SettingsWrapper>]
+        </SettingsWrapper>
       </AddWrapper>
     )
   }
