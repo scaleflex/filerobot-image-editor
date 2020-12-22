@@ -8,13 +8,14 @@ const Toolbar = styled.div`
   overflow-x: ${p => p.overlayYHidden ? 'auto' : 'none'};
   overflow-y: ${p => p.overlayYHidden ? 'hidden' : 'visible'};
   white-space: nowrap;
+  text-align: center;
   
   ::-webkit-scrollbar {
     height: 10px !important;
   }
    
   ::-webkit-scrollbar-thumb {
-    background: #3b4d54;
+    background: ${props => props.theme.colors.border || '#3b4d54'};
     border-radius: 5px;
   }
   
@@ -66,7 +67,7 @@ const EffectsWrapper = styled.div`
   }
    
   ::-webkit-scrollbar-thumb {
-    background: #3b4d54;
+    background: ${props => props.theme.colors.border || '#3b4d54'};
     border-radius: 5px;
   }
 `;

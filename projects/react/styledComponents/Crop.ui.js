@@ -55,13 +55,13 @@ const FieldInput = styled.input.attrs(props => ({
   font-size: 12px;
   line-height: 30px;
   color: ${p => p.theme.colors.text};
-  background: ${props => props.dark ? props.theme.colors.primaryBg : props.theme.colors.secondaryBgHover};
-  border-radius: 3px;
+  background: ${props => props.dark ? props.theme.colors.primaryBg : props.theme.colors.secondaryBg};
+  border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px inset, rgba(82, 104, 109, 0.4) 0px 1px 0px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   vertical-align: middle;
-  border: 0px solid transparent;
   font-family: Roboto, sans-serif;
+  border: 1px solid ${props => props.theme.colors.border};
   
   ${p => p.type === 'number' && `::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -72,7 +72,6 @@ const FieldInput = styled.input.attrs(props => ({
   }
   
   &:focus {
-    border: 1px solid ${props => props.theme.colors.secondaryBg};
     outline: none;
     box-shadow: rgba(0, 112, 124, 0.5) 0px 1px 1px inset, rgba(0, 112, 124, 0.4) 0px 1px 0px;
   }

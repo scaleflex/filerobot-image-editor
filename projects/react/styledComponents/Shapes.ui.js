@@ -24,7 +24,7 @@ const ItemsWrapper = styled.div`
   }
    
   ::-webkit-scrollbar-thumb {
-    background: #3b4d54;
+    background: ${props => props.theme.colors.border || '#3b4d54'};
     border-radius: 5px;
   }
   

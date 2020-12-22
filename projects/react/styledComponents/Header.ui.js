@@ -30,6 +30,7 @@ const CancelBtn = styled(Button)`
   text-transform: ${props => props.noCapitalStrs ? 'none' : 'capitalize'};
   min-width: 62px;
   height: 30px;
+  margin-right: 8px;
 
   &:hover {
     background: ${props => getHoverColor(props.theme.colors.primaryBg)};
