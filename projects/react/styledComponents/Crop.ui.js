@@ -50,6 +50,7 @@ const FieldInput = styled.input.attrs(props => ({
 }))`
   display: inline-block;
   width: ${props => props.fullSize ? '100%' : props.theme.fieldWidth};
+  ${props => !props.fullSize && 'max-width: 400px;'};
   height: 30px;
   padding: 6px 12px;
   font-size: 12px;

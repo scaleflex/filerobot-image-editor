@@ -39,7 +39,6 @@ const ModalContent = styled.div`
   height: ${props => props.h || props.height || 'auto'};
   background: ${props => variables.colors.background.base || '#fff'};
   color: ${props => variables.colors.text || '#3d3d3d'};
-  filter: drop-shadow(0px 2px 4px rgba(77, 78, 78, 0.25));
 `;
 
 const ModalFullScreen = styled.div`
@@ -93,6 +92,7 @@ const ModalFullScreen = styled.div`
   display: block;
   animation: scaleflexFadeInAnimation 350ms ease-in-out both;
   font-family: 'Roboto', 'Arial', sans-serif;
+  filter: drop-shadow(0px 2px 4px rgba(77, 78, 78, 0.25));
   
   ${props => props.isTooSmall ? getSmallModalStyle() : ''};
   

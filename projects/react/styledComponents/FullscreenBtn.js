@@ -7,7 +7,7 @@ const FullscreenBtn = styled.span.attrs(() => ({
   cursor: pointer;
   position: absolute;
   font-weight: normal;
-  top: ${props => props.t || '10px'};
+  top: ${props => props.t || '18px'};
   right: ${props => props.r || 'auto'};
   left: ${props => props.l || '20px'};
   bottom: ${props => props.b || 'auto'};

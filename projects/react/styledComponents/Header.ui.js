@@ -10,17 +10,19 @@ const HeaderTop = styled.div`
   line-height: 35px;
   border-bottom: 1px solid ${props => props.theme.colors.primaryBg};
   background: ${props => props.theme.colors.primaryBg};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 12px;
+  padding: 8px 0;
 `;
 
 const Title = styled.div`
   text-align: center;
   text-transform: ${props => props.noCapitalStrs ? 'none' : 'capitalize'};
   color: ${props => props.theme.colors.text};
-  flex-grow: 1;
+`;
+
+const ButtonsWrapper = styled.div`
+  position: absolute;
+  right: 12px;
+  top: 8px;
 `;
 
 const CancelBtn = styled(Button)`
@@ -53,4 +55,4 @@ const ToolbarWrapper = styled.div`
   }
 `;
 
-export { HeaderWrapper, HeaderTop, Title, ToolbarWrapper, CancelBtn };
+export { HeaderWrapper, HeaderTop, Title, ButtonsWrapper, ToolbarWrapper, CancelBtn };

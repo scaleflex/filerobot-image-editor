@@ -134,6 +134,7 @@ const SelectWrapper = styled.div`
   display: ${p => p.display ? p.display : p.width ? 'inline-block' : 'block'};
   width: ${p => p.width || 'auto'};
   text-align: ${p => p.styles.textAlign ? p.styles.textAlign : 'left'};
+  max-width: 400px;
 `;
 
 const SelectedItem = styled(FileInput).attrs()`

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  HeaderWrapper, HeaderTop, Title, ToolbarWrapper, CancelBtn, Button, FullscreenBtn
+  HeaderWrapper, HeaderTop, Title, ButtonsWrapper, ToolbarWrapper, CancelBtn, Button, FullscreenBtn
 } from '../../styledComponents';
 import { Toolbar } from '../';
 import { toggleModalFullscreen } from '../../utils/full-screen-handle';
@@ -24,23 +24,25 @@ export default class extends Component {
       <HeaderWrapper>
         <HeaderTop>
           <Title noCapitalStrs={noCapitalStrs}>{t[`toolbar.${filteredName}`] || t[`header.image_editor_title`]}</Title>
-          <CancelBtn
-            hide={!activeTab}
-            onClick={isOneTool ? cancelBtnClosingFn : onRevert}
-            noCapitalStrs={noCapitalStrs}
-            sm default fullSize
-          >
-            {t[`toolbar.cancel`]}
-          </CancelBtn>
-          <Button
-            themeColor
-            sm
-            success={!activeTab || activeTab === 'resize'}
-            themeBtn={activeTab}
-            onClick={isOneTool ? applyAndSave : !activeTab ? () => { handleSave(); } : () => { apply(); }}
-          >
-            {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : t['toolbar.apply']}
-          </Button>
+          <ButtonsWrapper>
+            <CancelBtn
+              hide={!activeTab}
+              onClick={isOneTool ? cancelBtnClosingFn : onRevert}
+              noCapitalStrs={noCapitalStrs}
+              sm default fullSize
+            >
+              {t[`toolbar.cancel`]}
+            </CancelBtn>
+            <Button
+              themeColor
+              sm
+              success={!activeTab || activeTab === 'resize'}
+              themeBtn={activeTab}
+              onClick={isOneTool ? applyAndSave : !activeTab ? () => { handleSave(); } : () => { apply(); }}
+            >
+              {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : t['toolbar.apply']}
+            </Button>
+          </ButtonsWrapper>
           <FullscreenBtn onClick={() => toggleModalFullscreen(elementId)} title={t[`header.toggle_fullscreen`]} />
         </HeaderTop>
 

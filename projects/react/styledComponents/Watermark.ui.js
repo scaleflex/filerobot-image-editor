@@ -6,6 +6,8 @@ const WatermarkWrapper = styled.div`
   color: ${props => props.theme.colors.text};
   text-align: left;
   white-space: normal;
+  width: fit-content;
+  margin: 0 auto;
   
   .image-editor-range {
     display: inline-block;
@@ -88,9 +90,11 @@ const WatermarkInputs = styled('div')`
   width: calc(100% - 200px);
   display: inline-block;
   vertical-align: top;
+  padding: 0 40px;
   
   @media (max-width: 768px) {
     width: 100%;
+    padding: 0;
   }
 `;
 

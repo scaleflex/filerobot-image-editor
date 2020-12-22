@@ -40,6 +40,9 @@ const SettingsWrapper = styled.div`
   padding: 0 15px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto;
 `;
 
 const ItemGroup = styled.div`
