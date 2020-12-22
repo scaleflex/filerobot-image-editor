@@ -33,6 +33,7 @@ const CancelBtn = styled(Button)`
   min-width: 62px;
   height: 30px;
   margin-right: 8px;
+  border: 0;
 
   &:hover {
     background: ${props => getHoverColor(props.theme.colors.primaryBg)};

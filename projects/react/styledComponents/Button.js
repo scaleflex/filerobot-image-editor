@@ -21,11 +21,11 @@ const Button = styled.button`
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  border: 1px solid transparent;
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   border-radius: ${props => getElementStylesBySize(props, 'button', 'br')};
+  border: 0;
   
   &:focus, &:hover {
     text-decoration: none;

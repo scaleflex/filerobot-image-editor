@@ -827,7 +827,7 @@ export default class CustomizedCanvas extends Component {
           updatedData.text = updates.selectedShape.text = updatedData.text || targetShape.text;
         }
       } else {
-        const newData = {}
+        const newData = { ...updatedData }
 
         if (typeof updatedData.x !== 'undefined' && typeof updatedData.y !== 'undefined') {
           newData.x = updatedData.x;
