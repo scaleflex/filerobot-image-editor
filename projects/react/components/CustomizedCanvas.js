@@ -37,7 +37,7 @@ export default class CustomizedCanvas extends Component {
       this._context = this._canvas.getContext('2d');
 
       const border = `1px solid ${
-        this.props.colorScheme?.text || (this.props.colorScheme === 'light' ? '#000' : '#fff')
+        this.props.theme?.colors?.text || (this.props.colorScheme === 'light' ? '#000' : '#fff')
       }`;
       const availableShapes = [
         {

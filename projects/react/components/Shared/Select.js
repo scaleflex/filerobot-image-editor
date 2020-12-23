@@ -209,6 +209,7 @@ const getItemStyles = size => {
 const ItemName = styled.span`
   display: inline-block;
   vertical-align: middle;
+  white-space: break-spaces;
 `;
 
 const ItemIcon = styled.span`

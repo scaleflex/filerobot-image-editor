@@ -25,6 +25,13 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.9 - 2020-12-23
+### Fixed
+- Watermark's text font selection is now updated with the chosen text font.
+
+### Added
+- support custom theme's colors for more elements.
+
 ## 3.12.8 - 2020-12-17
 ### Fixed
 - showing the appropriate styles for the plugin while being showing inside page not as modal.

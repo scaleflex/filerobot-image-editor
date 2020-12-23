@@ -56,7 +56,7 @@ const FieldInput = styled.input.attrs(props => ({
   font-size: 12px;
   line-height: 30px;
   color: ${p => p.theme.colors.text};
-  background: ${props => props.dark ? props.theme.colors.primaryBg : props.theme.colors.secondaryBg};
+  background: ${props => props.theme.colors.primaryBg};
   border-radius: 2px;
   transition: border-color 0.15s ease-in-out;
   vertical-align: middle;
@@ -86,13 +86,16 @@ const FileInput = styled('input').attrs(props => ({
   font-size: 12px;
   line-height: 1;
   color: ${p => p.theme.colors.text};
-  background: ${props => props.dark ? props.theme.colors.primaryBg : props.theme.colors.secondaryBg};
+  background: ${props => props.theme.colors.primaryBg};
   border-radius: 2px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   vertical-align: middle;
   border: 0px solid transparent;
   font-family: Roboto, sans-serif;
   border: 1px solid ${props => props.theme.colors.border};
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   
   &:hover {
     outline: none;

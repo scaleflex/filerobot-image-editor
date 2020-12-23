@@ -13,7 +13,7 @@ let ImageEditorDownload, ImageEditorUpload, ImageEditorModify;
 
 // Image Editor to download images
 
-const customColorScheme = {
+const customThemeColors = {
   primaryBg: '#ffffff',
   primaryBgHover: '#f2f2f2',
   secondaryBg: '#F8FAFB',
@@ -38,7 +38,7 @@ const customColorScheme = {
 ImageEditorDownload = new FilerobotImageEditor({
     elementId: 'image-editor-download',
     isLowQualityPreview: true,
-    colorScheme: customColorScheme, // 'light', 'dark' or object like above customColorScheme variable
+    colorScheme: 'dark',
     reduceBeforeEdit: {
       mode: 'manual',
       widthLimit: 2000,
@@ -71,6 +71,7 @@ ImageEditorDownload = new FilerobotImageEditor({
       defaultText: 'Filerobot.....'
     },
     theme: {
+      // colors: customThemeColors,
       fonts: [
         { label: 'Arial', value: 'Arial' },
         { label: 'Tahoma', value: 'Tahoma' },
