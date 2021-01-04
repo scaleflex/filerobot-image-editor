@@ -25,6 +25,10 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.10 - 2020-1-4
+### Added
+- Close button (x) at the top left of the editor.
+
 ## 3.12.9 - 2020-12-23
 ### Fixed
 - Watermark's text font selection is now updated with the chosen text font.
