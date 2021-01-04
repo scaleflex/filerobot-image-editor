@@ -7,9 +7,9 @@ const CloseBtn = styled.span.attrs(() => ({
   cursor: pointer;
   position: absolute;
   font-weight: normal;
-  top: ${props => props.t || '10px'};
-  right: ${props => props.r || '10px'};
-  left: ${props => props.l || 'auto'};
+  top: ${props => props.t || '18px'};
+  right: ${props => props.r || 'auto'};
+  left: ${props => props.l || '10px'};
   bottom: ${props => props.b || 'auto'};
   font-size: ${props => props.fz || '18px'};
   z-index: 10;

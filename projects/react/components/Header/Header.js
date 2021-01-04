@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  HeaderWrapper, HeaderTop, Title, ButtonsWrapper, ToolbarWrapper, CancelBtn, Button, FullscreenBtn
+  HeaderWrapper, HeaderTop, Title, ButtonsWrapper, ToolbarWrapper, CancelBtn, Button, FullscreenBtn, CloseBtn
 } from '../../styledComponents';
 import { Toolbar } from '../';
 import { toggleModalFullscreen } from '../../utils/full-screen-handle';
@@ -44,6 +44,7 @@ export default class extends Component {
             </Button>
           </ButtonsWrapper>
           <FullscreenBtn onClick={() => toggleModalFullscreen(elementId)} title={t[`header.toggle_fullscreen`]} />
+          <CloseBtn onClick={onClose} title={t[`header.close_modal`]} />
         </HeaderTop>
 
         <ToolbarWrapper overlayYHidden={activeTab !== 'watermark'}>
