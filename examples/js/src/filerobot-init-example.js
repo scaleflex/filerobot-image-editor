@@ -86,6 +86,7 @@ ImageEditorDownload = new FilerobotImageEditor({
     noCapitalStrs: false, // default: false
     // closeButtonProps: {
     //   label: 'Back',
+    //   noLabel: false,
     //   title: 'Back to main',
     //   styles: "color: rgba(255, 255, 255, 0.75);",
     //   hoverStyles: "color: rgba(255, 255, 255, 1); text-decoration: underline;",

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { variables } from './styleUtils';
+import { getHoverColor } from './styleUtils';
 
 const CloseBtn = styled.span.attrs(() => ({
   role: 'button'
@@ -7,20 +7,24 @@ const CloseBtn = styled.span.attrs(() => ({
   cursor: pointer;
   position: absolute;
   font-weight: normal;
-  top: ${props => props.t || '18px'};
+  top: ${props => props.t || '12px'};
   right: ${props => props.r || 'auto'};
-  left: ${props => props.l || '10px'};
+  left: ${props => props.l || '12px'};
   bottom: ${props => props.b || 'auto'};
-  font-size: ${props => props.fz || '18px'};
+  font-size: ${props => props.fz || '12px'};
   z-index: 10;
-  font-family: 'filerobot-image-editor-font' !important;
-  color: ${props => variables.modal.colorMuted};
   speak: none;
-  font-style: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
+  background: ${props => props.theme.colors.secondaryBg};
+  border-color: ${props => props.theme.colors.secondaryBg};
+  color: ${props => props.theme.colors.text};
+  text-transform: ${props => props.noCapitalStrs ? 'none' : 'capitalize'};
+  min-width: 62px;
+  height: 30px;
+  border: 0;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 2px;
+  
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -33,7 +37,9 @@ const CloseBtn = styled.span.attrs(() => ({
   }
 
   &:hover {
-    color: ${props => variables.modal.colorMutedHover};
+    background: ${props => getHoverColor(props.theme.colors.primaryBg)};
+    border-color: ${props => props.theme.colors.primaryBg};
+    color: ${props => props.theme.colors.text};  
     ${props => props.hoverStyles};
   }
 `;

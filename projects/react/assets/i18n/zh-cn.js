@@ -1,8 +1,11 @@
 export default {
   'header.image_editor_title': 'Filerobot 图片编辑器',
+  'header.toggle_fullscreen': 'Toggle fullscreen', // TODO: Translate
+  'header.close_modal': 'Close window', // TODO: Translate
   'toolbar.download': '下载',
   'toolbar.save': '保存',
   'toolbar.apply': '应用',
+  'toolbar.close': 'Close', // TODO: Translate
   'toolbar.cancel': '取消',
   'toolbar.go_back': '后退',
   'toolbar.adjust': '调整',

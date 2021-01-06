@@ -1,8 +1,11 @@
 export default {
   'header.image_editor_title': 'Éditeur d\'Image Filerobot',
+  'header.toggle_fullscreen': 'Basculer en plein écran',
+  'header.close_modal': 'Fermer la fenêtre',
   'toolbar.download': 'Télécharger',
   'toolbar.save': 'Sauvegarder',
   'toolbar.apply': 'Appliquer',
+  'toolbar.close': 'Fermer',
   'toolbar.cancel': 'Annuler',
   'toolbar.go_back': 'Retour',
   'toolbar.adjust': 'Ajuster',

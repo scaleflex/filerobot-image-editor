@@ -44,7 +44,7 @@ export default class extends Component {
           </ButtonsWrapper>
           
           <CloseBtn onClick={onClose} title={t[`header.close_modal`]} {...closeButtonProps}>
-            {closeButtonProps?.label}
+            {!closeButtonProps?.noLabel && (closeButtonProps?.label || t['header.close'])}
           </CloseBtn>
         </HeaderTop>
 
