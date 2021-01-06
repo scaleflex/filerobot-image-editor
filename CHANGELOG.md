@@ -11,6 +11,7 @@ Types of changes:
 - `Removed` for now removed features.
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
+- `Improved` for improvements done in existing functionality.
 
 > Date format: YYYY-MM-DD
 
@@ -25,6 +26,14 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.11 - 2020-1-6
+### Added
+- `closeButtonProps` property to the config for customizing the top left corner close button (ex. label & styles).
+
+### Improved
+- Plugin's container recognition (for being fullscreened) logic improved.
+- Changed the place of fullscreen button to be bottom left corner besides undo/redo operations.
+
 ## 3.12.10 - 2020-1-4
 ### Added
 - Close button (x) at the top left of the editor.
