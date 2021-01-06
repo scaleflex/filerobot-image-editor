@@ -32,6 +32,13 @@ const ResetBtn = styled.div`
   ${props => getActionIconStyle(props)};
 `;
 
+const FullscreenBtn = styled.div`
+  ${props => getIconStyles(props)};
+  ${getIconByName('full-screen')};
+  
+  ${props => getActionIconStyle(props)};
+`;
+
 const SwitcherWrapper = styled.div`
   position: relative; 
   display: inline-block;
@@ -156,4 +163,4 @@ function getActionIconStyle(props) {
   `;
 }
 
-export { Footer, PreviousBtn, NextBtn, ResetBtn, Switcher };
+export { Footer, PreviousBtn, NextBtn, ResetBtn, FullscreenBtn, Switcher };

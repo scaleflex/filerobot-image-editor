@@ -452,6 +452,52 @@ The id used for the editor's wrapper element whether it's inside a modal or an e
 
 Disabling the auto capitalizing of first letter of strings using (text-transform) css property
 
+### `closeButtonProps`: object
+
+**default**: null
+
+Customizing the top left corner close button to fit your needs
+example:
+```
+config.closeButtonProps = {
+  label: 'Back',
+  title: 'Back to main',
+  styles: "color: rgba(255, 255, 255, 0.75);",
+  hoverStyles: "color: rgba(255, 255, 255, 1); text-decoration: underline;",
+  beforeStyles: "color: rgba(255, 255, 255, 0.5)"
+}
+```
+
+##### `label`: string
+
+**default**: null
+
+The label of the button to be shown for the user.
+
+##### `title`: string
+
+**default**: null
+
+The title of the button to be shown for the user when hovering the mouse on the button and leave the mouse hovered a bit.
+
+##### `styles`: object
+
+**default**: null
+
+Styles passed to the main styles of button's styles and it must be in normal CSS format.
+
+##### `beforeStyles`: object
+
+**default**: null
+
+Styles passed to the `:before` pseudo class of button's styles and it must be in normal CSS format.
+
+##### `hoverStyles`: object
+
+**default**: null
+
+Styles passed to the `:hover` pseudo class of button's styles and it must be in normal CSS format.
+
 ## <a name="filerobot_integration"></a>Filerobot Integration
 
 Upload the image in your Filerobot storage container, edit it in the Image Editor and upload the result.

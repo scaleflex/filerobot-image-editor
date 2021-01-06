@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {
-  HeaderWrapper, HeaderTop, Title, ButtonsWrapper, ToolbarWrapper, CancelBtn, Button, FullscreenBtn, CloseBtn
+  HeaderWrapper, HeaderTop, Title, ButtonsWrapper, ToolbarWrapper, CancelBtn, Button, CloseBtn
 } from '../../styledComponents';
 import { Toolbar } from '../';
-import { toggleModalFullscreen } from '../../utils/full-screen-handle';
 import { ON_CLOSE_STATUSES } from '../../config';
 
 
@@ -11,9 +10,9 @@ export default class extends Component {
   render() {
     const {
       activeTab, onRevert, apply, onClose, processWithCloudService, processWithFilerobot,
-      handleSave, activeBody, t, config
+      handleSave, t, config
     } = this.props;
-    const { tools, showGoBackBtn, elementId, noCapitalStrs } = config;
+    const { tools, closeButtonProps, noCapitalStrs } = config;
     const isOneTool = tools.length === 1;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
     const onFinishButtonLabel = (!processWithCloudService && !processWithFilerobot) ? t['toolbar.download'] : t['toolbar.save'];
@@ -43,8 +42,10 @@ export default class extends Component {
               {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : t['toolbar.apply']}
             </Button>
           </ButtonsWrapper>
-          <FullscreenBtn onClick={() => toggleModalFullscreen(elementId)} title={t[`header.toggle_fullscreen`]} />
-          <CloseBtn onClick={onClose} title={t[`header.close_modal`]} />
+          
+          <CloseBtn onClick={onClose} title={t[`header.close_modal`]} {...closeButtonProps}>
+            {closeButtonProps?.label}
+          </CloseBtn>
         </HeaderTop>
 
         <ToolbarWrapper overlayYHidden={activeTab !== 'watermark'}>

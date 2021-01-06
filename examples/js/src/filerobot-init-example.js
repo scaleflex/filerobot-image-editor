@@ -84,6 +84,13 @@ ImageEditorDownload = new FilerobotImageEditor({
     showGoBackBtn: false,
     showInModal: true,
     noCapitalStrs: false, // default: false
+    // closeButtonProps: {
+    //   label: 'Back',
+    //   title: 'Back to main',
+    //   styles: "color: rgba(255, 255, 255, 0.75);",
+    //   hoverStyles: "color: rgba(255, 255, 255, 1); text-decoration: underline;",
+    //   beforeStyles: "color: rgba(255, 255, 255, 0.5)"
+    // },
     // minCropAreaWidth: 600, //default: undefined
     // minCropAreaHeight: 500, // default: undefined
     //cropPresets: [

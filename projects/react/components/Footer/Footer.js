@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Footer, PreviousBtn, NextBtn, ResetBtn, Switcher } from '../../styledComponents';
+import { Footer, PreviousBtn, NextBtn, ResetBtn, Switcher, FullscreenBtn } from '../../styledComponents';
+import { toggleModalFullscreen } from '../../utils/full-screen-handle';
 
 
 export default class extends Component {
@@ -12,8 +13,9 @@ export default class extends Component {
   render() {
     const {
       initialZoom, operations, operationsZoomed, currentOperation = null, redoOperation,
-      resetOperations, activeBody, t, logoImage, watermark
+      resetOperations, activeBody, t, logoImage, watermark, config
     } = this.props;
+    const { elementId } = config;
     const operationList = initialZoom === 1 ? operations : operationsZoomed;
     const currentOperationIndex = operationList.findIndex(operation => operation === currentOperation);
     const isCurrentOperationLast = currentOperation && (operationList[operationList.length - 1] === currentOperation);
@@ -45,6 +47,7 @@ export default class extends Component {
           muted={isNextForbidden}
           title={t['footer.redo']}
         />
+        <FullscreenBtn onClick={() => toggleModalFullscreen(elementId)} title={t[`header.toggle_fullscreen`]} />
 
         {logoImage && watermark &&
         <Switcher

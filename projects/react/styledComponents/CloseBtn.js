@@ -24,14 +24,18 @@ const CloseBtn = styled.span.attrs(() => ({
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-  &:hover {
-    color: ${props => variables.modal.colorMutedHover};
-  }
+
+  ${props => props.styles};
   
   &:before {
-      content: '\\e90c'
-    }
+    ${props => !props.children && `content: '\\e90c'`};
+    ${props => props.beforeStyles};
+  }
+
+  &:hover {
+    color: ${props => variables.modal.colorMutedHover};
+    ${props => props.hoverStyles};
+  }
 `;
 
 export { CloseBtn };
