@@ -504,6 +504,8 @@ Styles passed to the `:before` pseudo class of button's styles and it must be in
 
 Styles passed to the `:hover` pseudo class of button's styles and it must be in normal CSS format.
 
+##### Any other acceptable property/event to HTML span element is accepted (ex., onContextMenu ...etc).
+
 ## <a name="filerobot_integration"></a>Filerobot Integration
 
 Upload the image in your Filerobot storage container, edit it in the Image Editor and upload the result.
