@@ -496,19 +496,21 @@ class Caman extends Module {
   // @param [DOMObject] newCanvas The canvas to swap into this instance.
   replaceCanvas(newCanvas) {
     const oldCanvas = this.canvas;
-    this.canvas = newCanvas;
-    this.context = this.canvas.getContext('2d');
+    const context = oldCanvas.getContext('2d');
 
-    oldCanvas.parentNode.replaceChild(this.canvas, oldCanvas);
+    this.width  = newCanvas.width;
+    this.height = newCanvas.height;
 
-    this.width  = this.canvas.width;
-    this.height = this.canvas.height;
+    context.clearRect(0, 0, oldCanvas.width, oldCanvas.height);
+    oldCanvas.width = newCanvas.width;
+    oldCanvas.height = newCanvas.height;
+    context.drawImage(newCanvas, 0, 0);
 
     this.reloadCanvasData();
 
     return this.dimensions = {
-      width: this.canvas.width,
-      height: this.canvas.height
+      width: newCanvas.width,
+      height: newCanvas.height
     };
   }
 
