@@ -4,21 +4,19 @@ import {
   b64toBlob,
   deepCopy,
   getBaseAPI,
-  getCanvasNode,
   getEffectHandlerName,
+  getImageSealingParams,
   getPubliclink,
   getSecretHeaderName,
-  getImageSealingParams,
   roundDecimalPoint
 } from '../../utils';
 import {
+  CANVAS_ID,
   CLOUDIMAGE_OPERATIONS,
   ON_CLOSE_STATUSES,
-  PREVIEW_CANVAS_ID,
-  WATERMARK_UNIQUE_KEY,
-  CANVAS_ID,
   ORIGINAL_CANVAS_ID,
-  SAVE_MODES
+  SAVE_MODES,
+  WATERMARK_UNIQUE_KEY
 } from '../../config';
 import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
@@ -51,15 +49,19 @@ export default class ImageManipulator extends Component {
 
     this.state = {
       canvas: null,
-      self: this
+      self: this,
+      canvasKey: 0,
+      canvasOriginalKey: 0
     };
 
     this.CamanInstance = null;
     this.CamanInstanceOriginal = null;
     this.CamanInstanceZoomed = null;
-  }
+    this.tempCanvasElement = null;
 
-  shouldComponentUpdate() { return false; }
+    this.originalCanvas = React.createRef();
+    this.editedCanvas = React.createRef();
+  }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const additionalState = {};
@@ -95,7 +97,7 @@ export default class ImageManipulator extends Component {
       restoreAll: this.restoreAll,
       cancelLastOperation: this.cancelLastOperation
     }, () => {
-      const canvas = this.getCanvas();
+      const canvas = this.editedCanvas.current;
       const ctx = canvas.getContext('2d');
 
       canvas.width = img.width;
@@ -113,20 +115,25 @@ export default class ImageManipulator extends Component {
           this.resize({ width: preCanvasDimensions.width, height: preCanvasDimensions.height });
 
           this.render(() => {
-            const resizedCanvas = that.replaceWithNewCanvas(CANVAS_ID);
-            const original = {
-              height: resizedCanvas.height,
-              width: resizedCanvas.width,
-              ratio: resizedCanvas.width / resizedCanvas.height
-            };
+            that.tempCanvasElement = that.editedCanvas.current;
 
-            updateState({
-              original,
-              canvasDimensions: { ...original },
-              canvasOriginal: that.cloneCanvas(resizedCanvas)
-            }, () => {
-              that.initializeCanvases(resizedCanvas);
-            });
+            that.setState({ canvasKey: that.state.canvasKey + 1 }, () => {
+              const resizedCanvas = that.applyTransformationsToNewCanvas();
+
+              const original = {
+                height: resizedCanvas.height,
+                width: resizedCanvas.width,
+                ratio: resizedCanvas.width / resizedCanvas.height
+              };
+
+              updateState({
+                original,
+                canvasDimensions: { ...original },
+                canvasOriginal: that.cloneCanvas(resizedCanvas)
+              }, () => {
+                that.initializeCanvases(resizedCanvas);
+              });
+            })
           });
         });
       } else {
@@ -135,18 +142,13 @@ export default class ImageManipulator extends Component {
     });
   }
 
-  getCanvas = (id = null, originalCanvas = false) => {
-    const editorWrapperId = this.props.config.elementId;
-    return getCanvasNode(editorWrapperId, id, originalCanvas);
-  }
-
   initializeCanvases = (elem) => {
     const that = this;
     const { config: { isLowQualityPreview } = {}, updateState } = this.props;
     let initialZoom = 1;
 
     if (isLowQualityPreview && elem.height > 1050) {
-      const canvasOriginal = this.getCanvas(null, true);
+      const canvasOriginal = this.originalCanvas.current;
       const ctxOriginal = canvasOriginal.getContext('2d');
 
       canvasOriginal.width = elem.width;
@@ -162,28 +164,30 @@ export default class ImageManipulator extends Component {
       updateState({ initialZoom, canvasOriginal: that.cloneCanvas(canvasOriginal) });
 
       setTimeout(() => {
-        const getCanvas = this.getCanvas;
-        new window.Caman(getCanvas(), function () {
+        new window.Caman(this.editedCanvas.current, function () {
           this.resize({ width: zoomedWidth, height: zoomedHeight });
 
           this.render(() => {
-            const canvasZoomed = that.replaceWithNewCanvas(CANVAS_ID);
+            that.tempCanvasElement = that.editedCanvas.current;
 
-            that.CamanInstanceZoomed = new window.Caman(
-              canvasZoomed,
-              function () {
-                that.CamanInstanceOriginal = new window.Caman(getCanvas(null, true), function () {});
-                updateState({ isShowSpinner: false, canvasZoomed: that.cloneCanvas(canvasZoomed) });
-              }
-            );
+            that.setState({ canvasKey: that.state.canvasKey + 1 }, () => {
+              const canvasZoomed = that.applyTransformationsToNewCanvas();
+
+              that.CamanInstanceZoomed = new window.Caman(
+                canvasZoomed,
+                function () {
+                  that.CamanInstanceOriginal = new window.Caman(that.originalCanvas.current, function () {});
+                  updateState({ isShowSpinner: false, canvasZoomed: that.cloneCanvas(canvasZoomed) });
+                }
+              );
+            });
           });
         });
       });
     } else {
       setTimeout(() => {
-        const getCanvas = this.getCanvas();
-        that.CamanInstance = new window.Caman(getCanvas, function () {
-          updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(getCanvas) });
+        that.CamanInstance = new window.Caman(that.editedCanvas.current, function () {
+          updateState({ isShowSpinner: false, canvasOriginal: that.cloneCanvas(that.editedCanvas.current) });
         });
       });
     }
@@ -218,45 +222,35 @@ export default class ImageManipulator extends Component {
     return newCanvas;
   }
 
-  replaceWithNewCanvas = (id, rounded = false) => {
-    //create a new canvas
-    const oldCanvas = this.getCanvas(id);
+  applyTransformationsToNewCanvas = (rounded = false, oldCanvas = this.tempCanvasElement, nextCanvas = this.editedCanvas.current) => {
     const { width, height } = oldCanvas;
-    let newCanvas = document.createElement('canvas');
-    let context = newCanvas.getContext('2d');
-    const container = oldCanvas.parentElement;
-    container.removeChild(oldCanvas)
+    const nextContext = nextCanvas.getContext('2d');
 
-    //set dimensions
-    newCanvas.width = width;
-    newCanvas.height = height;
-    newCanvas.id = `${this.props.config.elementId}_${id}`;
-    newCanvas.className = oldCanvas.className;
+    //reset dimensions
+    nextCanvas.width = width;
+    nextCanvas.height = height;
 
     //apply the old canvas to the new one
-    context.drawImage(oldCanvas, 0, 0);
+    nextContext.drawImage(oldCanvas, 0, 0);
 
     // Make the new canvas rounded if the crop is rounded style.
-    // round is a manually written protoype method from canvas-round file in utils.
-    if (rounded) { context.round() }
-
-    // Append the new canvas to the container of old canvas.
-    container.appendChild(newCanvas);
+    // round is a manually written prototype method from canvas-round file in utils.
+    if (rounded) { nextContext.round() }
 
     //return the new canvas
-    return newCanvas;
+    return nextCanvas;
   }
 
-  replaceCanvas = (newCanvas, id) => {
-    //create a new canvas
-    const oldCanvas = this.getCanvas(id);
-    const container = oldCanvas.parentElement;
-    container.removeChild(oldCanvas)
+  replaceCanvas = (oldCanvas) => {
+    const nextCanvas = this.editedCanvas.current;
+    const oldContext = nextCanvas.getContext('2d');
 
-    container.appendChild(newCanvas);
+    oldContext.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+    nextCanvas.width = oldCanvas.width;
+    nextCanvas.height = oldCanvas.height;
+    oldContext.drawImage(oldCanvas, 0, 0);
 
-    //return the new canvas
-    return newCanvas;
+    return nextCanvas;
   }
 
   saveImage = () => {
@@ -269,8 +263,7 @@ export default class ImageManipulator extends Component {
     const { filerobot = {}, platform = 'filerobot' } = config;
     const { imageMeta, imageProperties, imageName, saveMode = SAVE_MODES.DUPLICATE } = filerobot;
     const src = this.props.src.split('?')[0];
-    const canvasID = initialZoom !== 1 ? ORIGINAL_CANVAS_ID : CANVAS_ID;
-    const canvas = this.getCanvas(canvasID);
+    const canvas = this.editedCanvas.current;
     const baseAPI = getBaseAPI(filerobot.baseAPI, filerobot.container, platform);
     const uploadParams = filerobot.uploadParams || {};
     const dir = uploadParams.dir || 'image-editor';
@@ -309,7 +302,7 @@ export default class ImageManipulator extends Component {
 
       request.addEventListener("load", self.onFileLoad);
       formData.append('file', blob, name);
-      
+
       if (loweredSaveModeStr !== SAVE_MODES.NEW) {
         if (imageProperties && Object.keys(imageProperties).length > 0) {
           formData.append('properties[file]', JSON.stringify(imageProperties));
@@ -343,9 +336,7 @@ export default class ImageManipulator extends Component {
   }
 
   getResultCanvas = () => {
-    const { initialZoom } = this.props;
-    const canvasID = initialZoom !== 1 ? ORIGINAL_CANVAS_ID : CANVAS_ID;
-    const canvas = this.getCanvas(canvasID);
+    const canvas = this.editedCanvas.current;
 
     this.mergeCanvases(canvas);
 
@@ -426,7 +417,6 @@ export default class ImageManipulator extends Component {
     const orientationOperation = this.isOperationExist(operations, 'rotate');
     const focusPointOperation = this.isOperationExist(operations, 'focus_point');
     const watermarkOperation = watermark && logoImage && watermark.applyByDefault;
-    const isProcessImage = cropOperation || resizeOperation || orientationOperation || watermarkOperation || focusPointOperation;
 
     let cropQuery = '';
     let resizeQuery = '';
@@ -464,9 +454,9 @@ export default class ImageManipulator extends Component {
 
     if (imageSealing.enabled) {
       paramsStr = getImageSealingParams(
-          paramsStr,
-          imageSealing,
-          original.replace(url, '') // always remove cdn url, to support already cdnized links and doNotPrefixURL param
+        paramsStr,
+        imageSealing,
+        original.replace(url, '') // always remove cdn url, to support already cdnized links and doNotPrefixURL param
       );
     }
 
@@ -556,7 +546,7 @@ export default class ImageManipulator extends Component {
       flipX,
       flipY
     }, () => {
-      const oldCanvas = this.getCanvas();
+      const oldCanvas = this.editedCanvas.current
 
       if (initialZoom !== 1) {
         this.CamanInstanceZoomed.reset();
@@ -566,7 +556,7 @@ export default class ImageManipulator extends Component {
         if (nextRotateValue || correctionDegree) this.CamanInstanceZoomed.rotate((nextRotateValue || 0) + (correctionDegree || 0));
 
         this.CamanInstanceZoomed.render(() => {
-          this.getCanvas().className = oldCanvas.className;
+          this.editedCanvas.current.className = oldCanvas.className;
           updateState({ isHideCanvas: false, isShowSpinner: false });
         });
       } else {
@@ -577,7 +567,7 @@ export default class ImageManipulator extends Component {
         if (nextRotateValue || correctionDegree) this.CamanInstance.rotate((nextRotateValue || 0) + (correctionDegree || 0));
 
         this.CamanInstance.render(() => {
-          this.getCanvas().className = oldCanvas.className;
+          this.editedCanvas.current.className = oldCanvas.className;
           updateState({ isHideCanvas: false, isShowSpinner: false });
         });
       }
@@ -588,7 +578,7 @@ export default class ImageManipulator extends Component {
     const { updateState, initialZoom, rotate, correctionDegree, flipX, flipY } = this.props;
 
     updateState({ isHideCanvas: true, isShowSpinner: true }, () => {
-      const oldCanvas = this.getCanvas(null, true);
+      const oldCanvas = this.originalCanvas.current;
       let nextRotate = (rotate || 0) + (correctionDegree || 0);
 
       if (initialZoom !== 1) {
@@ -599,14 +589,14 @@ export default class ImageManipulator extends Component {
         if (rotate || correctionDegree) this.CamanInstanceOriginal.rotate(nextRotate);
 
         this.CamanInstanceOriginal.render(() => {
-          this.getCanvas(null, true).className = oldCanvas.className;
+          this.originalCanvas.current.className = oldCanvas.className;
           updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
             this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate } }, callback);
           });
         });
       } else {
-          this.getCanvas(null, true).className = oldCanvas.className;
-          updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
+        this.originalCanvas.current.className = oldCanvas.className;
+        updateState({ rotate: 0, flipX: false, flipY: false, correctionDegree: 0 }, () => {
           this.makeCanvasSnapshot({ operation: 'rotate', props: { rotate: nextRotate } }, callback);
         });
       }
@@ -644,7 +634,7 @@ export default class ImageManipulator extends Component {
 
   onInitCrop = () => {
     const {
-      updateState, 
+      updateState,
       config: {
         beginCropArea = 1,
         minCropAreaWidth,
@@ -655,7 +645,7 @@ export default class ImageManipulator extends Component {
     updateState(
       { isHideCanvas: true, isShowSpinner: true },
       () => {
-        const canvas = this.getCanvas();
+        const canvas = this.editedCanvas.current;
         const rect = canvas.getBoundingClientRect();
         const zoom = canvas.width / rect.width;
 
@@ -715,15 +705,17 @@ export default class ImageManipulator extends Component {
   }
 
   makeCanvasSnapshot = (operation, callback = () => {}, previewCanvas = false) => {
-    const { updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal,
-      operations, roundCrop } = this.props;
+    const {
+      updateState, initialZoom, operationsZoomed, currentOperation, operationsOriginal,
+      operations, roundCrop
+    } = this.props;
 
     const isZoomed = initialZoom !== 1;
 
     if (previewCanvas) {
       const lastOperationIndex = (isZoomed ? operationsZoomed : operations).indexOf(currentOperation) + 1;
 
-      const zoomedCanvas = this.cloneCanvas(this.getCanvas());
+      const zoomedCanvas = this.cloneCanvas(this.editedCanvas.current);
       const nextOperation = {
         ...operation,
         previewCanvas: true,
@@ -740,7 +732,7 @@ export default class ImageManipulator extends Component {
         stateObj.operationsZoomed = [...operationsZoomed.slice(0, lastOperationIndex), nextOperation];
         stateObj.operationsOriginal = [...operationsOriginal.slice(0, lastOperationIndex), {
           ...nextOperation,
-          canvas: this.cloneCanvas(this.getCanvas(null, true))
+          canvas: this.cloneCanvas(this.originalCanvas.current)
         }];
         stateObj.isHideCanvasOriginal = false;
         stateObj.isShowSpinnerOriginal = false;
@@ -756,58 +748,68 @@ export default class ImageManipulator extends Component {
       const lastOperationIndex = operationsZoomed.indexOf(currentOperation) + 1;
 
       this.CamanInstanceOriginal.render(() => {
-        const canvasOriginal = this.replaceWithNewCanvas(ORIGINAL_CANVAS_ID, roundCrop);
-        const nextOperation = {
-          ...operation,
-          canvas: this.cloneCanvas(this.getCanvas(null, true))
-        };
+        this.tempCanvasOriginalElement = this.originalCanvas.current;
 
-        this.CamanInstanceOriginal = new window.Caman(canvasOriginal, () => {
-          updateState({
-            isHideCanvasOriginal: false,
-            isShowSpinnerOriginal: false,
-            operationsOriginal: [...operationsOriginal.slice(0, lastOperationIndex), nextOperation]
-          }, callback);
-        });
+        this.setState({ canvasKey: this.state.canvasOriginalKey + 1 }, () => {
+          const canvasOriginal = this.applyTransformationsToNewCanvas(roundCrop, this.tempCanvasOriginalElement, this.originalCanvas.current);
+          const nextOperation = {
+            ...operation,
+            canvas: this.cloneCanvas(this.originalCanvas.current)
+          };
+
+          this.CamanInstanceOriginal = new window.Caman(canvasOriginal, () => {
+            updateState({
+              isHideCanvasOriginal: false,
+              isShowSpinnerOriginal: false,
+              operationsOriginal: [...operationsOriginal.slice(0, lastOperationIndex), nextOperation]
+            }, callback);
+          });
+        })
       });
 
-      const getCanvas = this.getCanvas;
-
       this.CamanInstanceZoomed.render(() => {
-        const canvasZoomed = this.replaceWithNewCanvas(CANVAS_ID, roundCrop);
-        const nextOperation = {
-          ...operation,
-          canvas: this.cloneCanvas(getCanvas())
-        };
+        this.tempCanvasElement = this.editedCanvas.current;
 
-        this.CamanInstanceZoomed = new window.Caman(canvasZoomed, () => {
-          updateState({
-            isHideCanvas: false,
-            isShowSpinner: false,
-            operationsZoomed: [...operationsZoomed.slice(0, lastOperationIndex), nextOperation],
-            currentOperation: nextOperation
+        this.setState({ canvasKey: this.state.canvasKey + 1 }, () => {
+          const canvasZoomed = this.applyTransformationsToNewCanvas(roundCrop);
+          const nextOperation = {
+            ...operation,
+            canvas: this.cloneCanvas(this.editedCanvas.current)
+          };
+
+          this.CamanInstanceZoomed = new window.Caman(canvasZoomed, () => {
+            updateState({
+              isHideCanvas: false,
+              isShowSpinner: false,
+              operationsZoomed: [...operationsZoomed.slice(0, lastOperationIndex), nextOperation],
+              currentOperation: nextOperation
+            });
           });
         });
+
       });
     } else {
       const lastOperationIndex = operations.indexOf(currentOperation) + 1;
-      const getCanvas = this.getCanvas;
-      
-      this.CamanInstance.render(() => {
-        const canvas = this.replaceWithNewCanvas(CANVAS_ID, roundCrop);
-        const nextOperation = {
-          ...operation,
-          canvas: this.cloneCanvas(getCanvas())
-        };
 
-        this.CamanInstance = new window.Caman(canvas, () => {
-          updateState({
-            isHideCanvas: false,
-            isShowSpinner: false,
-            operations: [...operations.slice(0, lastOperationIndex), nextOperation],
-            currentOperation: nextOperation
-          }, callback);
-        });
+      this.CamanInstance.render(() => {
+        this.tempCanvasElement = this.editedCanvas.current;
+
+        this.setState({ canvasKey: this.state.canvasKey + 1 }, () => {
+          const canvas = this.applyTransformationsToNewCanvas(roundCrop);
+          const nextOperation = {
+            ...operation,
+            canvas: this.cloneCanvas(this.editedCanvas.current)
+          };
+
+          this.CamanInstance = new window.Caman(canvas, () => {
+            updateState({
+              isHideCanvas: false,
+              isShowSpinner: false,
+              operations: [...operations.slice(0, lastOperationIndex), nextOperation],
+              currentOperation: nextOperation
+            }, callback);
+          });
+        })
       });
     }
   }
@@ -816,15 +818,19 @@ export default class ImageManipulator extends Component {
     this.cropper.destroy();
   }
 
-  getCropArguments = ({ width, height, x, y, roundCrop } = {}) => `tl_px=${Math.round(x)},${Math.round(y)}&br_px=${Math.round(x + width)},${Math.round(y + height)}${roundCrop ? `&radius=${Math.round(Math.max(width, height))}&force_format=png` : ''}`;
+  getCropArguments = ({
+                        width,
+                        height,
+                        x,
+                        y,
+                        roundCrop
+                      } = {}) => `tl_px=${Math.round(x)},${Math.round(y)}&br_px=${Math.round(x + width)},${Math.round(y + height)}${roundCrop ? `&radius=${Math.round(Math.max(width, height))}&force_format=png` : ''}`;
 
   /* Resize */
 
   initResize = () => {
     const { initialZoom, updateState } = this.props;
-    let canvas = this.getCanvas(
-      initialZoom !== 1 ? ORIGINAL_CANVAS_ID : CANVAS_ID
-    );
+    let canvas = initialZoom !== 1 ? this.originalCanvas.current : this.editedCanvas.current;
     const nextCanvasDimensions = { width: canvas.width, height: canvas.height, ratio: canvas.width / canvas.height };
 
     updateState({ canvasDimensions: nextCanvasDimensions });
@@ -882,7 +888,7 @@ export default class ImageManipulator extends Component {
 
   initFocusPoint = () => {
     const { updateState, original, focusPoint } = this.props;
-    const nextFocusPoint = {...focusPoint};
+    const nextFocusPoint = { ...focusPoint };
 
     if (nextFocusPoint.x === null) {
       nextFocusPoint.x = original.width / 2;
@@ -891,7 +897,7 @@ export default class ImageManipulator extends Component {
       nextFocusPoint.y = original.height / 2;
     }
 
-    this.tempFocusPoint = {...focusPoint};
+    this.tempFocusPoint = { ...focusPoint };
     updateState({
       focusPoint: nextFocusPoint,
       isHideCanvas: true,
@@ -916,12 +922,12 @@ export default class ImageManipulator extends Component {
     shapeOperations.updateShapes({ applied: true }, { selectedShape: {} },
       () => {
         this.makeCanvasSnapshot({
-        operation: 'shape',
-        props: {
-          shapes: this.props.shapes
-        }
-      }, callback, true);
-    });
+          operation: 'shape',
+          props: {
+            shapes: this.props.shapes
+          }
+        }, callback, true);
+      });
   }
 
   getFocusPointArguments = focusPoint => `gravity=${focusPoint.x},${focusPoint.y}`;
@@ -960,8 +966,8 @@ export default class ImageManipulator extends Component {
       (operationObject && operationObject.previewCanvas
         && operationObject.index - 1 === operationIndex)
       || (operation && operation.previewCanvas
-        && operationObject.index + 1 === operationIndex)
-     ) {
+      && operationObject.index + 1 === operationIndex)
+    ) {
       const { shapeOperations } = this.props;
 
       // If the current operation is shape operation replace with its shapes
@@ -972,9 +978,9 @@ export default class ImageManipulator extends Component {
         const allShapeOperations = (isZoomed
           ? operationsZoomed
           : operations)
-            .filter(
-              (op, index) => op.operation === 'shape' && index < operationObject.index
-            );
+          .filter(
+            (op, index) => op.operation === 'shape' && index < operationObject.index
+          );
 
         shapesReplacedWith = allShapeOperations.length > 0
           ? allShapeOperations[allShapeOperations.length - 1].props.shapes
@@ -989,7 +995,7 @@ export default class ImageManipulator extends Component {
       } else {
         nextOperation = hasMoreOperations ? operations[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
       }
-      
+
       updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation }, () => {
         if (callback) callback();
       });
@@ -1002,29 +1008,43 @@ export default class ImageManipulator extends Component {
     if (isZoomed) {
       const nextOperation = hasMoreOperations ?
         operationsZoomed[operationIndex] : { canvas: this.cloneCanvas(canvasZoomed) };
-      const canvasZoomedNext = this.replaceCanvas(nextOperation.canvas, CANVAS_ID);
 
-      this.CamanInstanceZoomed = new window.Caman(canvasZoomedNext, () => {
-        updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation }, () => {
-          if (callback) callback();
+      this.setState({ canvasKey: this.state.canvasKey + 1 }, () => {
+        const canvasZoomedNext = this.applyTransformationsToNewCanvas(false, nextOperation.canvas);
+
+        this.CamanInstanceZoomed = new window.Caman(canvasZoomedNext, () => {
+          updateState({ ...INITIAL_PARAMS, currentOperation: nextOperation }, () => {
+            if (callback) callback();
+          });
         });
+
       });
 
       const nextOperationOriginal = hasMoreOperations ?
         operationsOriginal[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
-      const canvasNext = this.replaceCanvas(nextOperationOriginal.canvas, ORIGINAL_CANVAS_ID);
 
-      this.CamanInstanceOriginal = new window.Caman(canvasNext, () => {});
+      this.setState({ canvasKey: this.state.canvasOriginalKey + 1 }, () => {
+        const canvasNext = this.applyTransformationsToNewCanvas(false, nextOperationOriginal.canvas, this.originalCanvas.current);
+
+        this.CamanInstanceOriginal = new window.Caman(canvasNext, () => {});
+      });
+
+
     } else {
       const nextOperationSimple = hasMoreOperations ?
         operations[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
-      const canvas = this.replaceCanvas(nextOperationSimple.canvas, CANVAS_ID);
 
-      this.CamanInstance = new window.Caman(canvas, () => {
-        updateState({ ...INITIAL_PARAMS, currentOperation: nextOperationSimple }, () => {
-          if (callback) callback();
+      this.setState({ canvasKey: this.state.canvasOriginalKey + 1 }, () => {
+        const canvas = this.applyTransformationsToNewCanvas(false, nextOperationSimple.canvas, this.originalCanvas.current);
+
+        this.CamanInstance = new window.Caman(canvas, () => {
+          updateState({ ...INITIAL_PARAMS, currentOperation: nextOperationSimple }, () => {
+            if (callback) callback();
+          });
         });
       });
+
+
     }
   }
 
@@ -1082,7 +1102,7 @@ export default class ImageManipulator extends Component {
 
   cancelAddedShapes = () => {
     const { shapeOperations } = this.props;
-    
+
     shapeOperations.deleteShapes({ all: true }, { selectedShape: {} });
   }
 
@@ -1163,7 +1183,11 @@ export default class ImageManipulator extends Component {
         );
       };
     } else {
-      shapeOperations.deleteShape({ index: watermarkLayer.index }, { watermark: tempWatermark, logoImage, selectedShape: {} });
+      shapeOperations.deleteShape({ index: watermarkLayer.index }, {
+        watermark: tempWatermark,
+        logoImage,
+        selectedShape: {}
+      });
     }
   }
 
@@ -1173,10 +1197,7 @@ export default class ImageManipulator extends Component {
     if (!watermarkObj) { return ''; }
 
     const { x, y, opacity, ...watermark } = watermarkObj;
-    const {
-      original: { width: imgWidth, height: imgHeight } = {}
-    } = this.state;
-    const { width: canvasWidth, height: canvasHeight } = this.getCanvas(PREVIEW_CANVAS_ID);
+    const { width: canvasWidth, height: canvasHeight } = this.editedCanvas.current;
 
     const xPos = roundDecimalPoint((x / canvasWidth) * 100);
     const yPos = roundDecimalPoint((y / canvasHeight) * 100);
@@ -1188,8 +1209,8 @@ export default class ImageManipulator extends Component {
     let queryUrl = `wat=1&wat_opacity=${opacity}&wat_scale=${watermarkScale}p&${gravityQuery}`;
 
     queryUrl += processWithCloudimage && watermark.text
-    ? `&wat_text=${watermark.text}&wat_font=${watermark.textFont}&wat_fontsize=${watermark.textSize}&wat_colour=${watermark.color.replace('#', '')}`
-    : `&wat_url=${watermark.img.src.split('?')[0]}`;
+      ? `&wat_text=${watermark.text}&wat_font=${watermark.textFont}&wat_fontsize=${watermark.textSize}&wat_colour=${watermark.color.replace('#', '')}`
+      : `&wat_url=${watermark.img.src.split('?')[0]}`;
 
     return queryUrl;
   };
@@ -1283,12 +1304,22 @@ export default class ImageManipulator extends Component {
   }
 
   render() {
-    const editorWrapperId = this.props.config.elementId;
+    const editorWrapperId = this.props.config.elementId = '';
 
     return (
       <>
-        <Canvas id={`${editorWrapperId}_${ORIGINAL_CANVAS_ID}`} className="filerobot-original-canvas" />
-        <Canvas id={`${editorWrapperId}_${CANVAS_ID}`} className="filerobot-edit-canvas" />
+        <Canvas
+          key={this.state.canvasOriginalKey}
+          ref={this.originalCanvas}
+          id={`${editorWrapperId}_${ORIGINAL_CANVAS_ID}`}
+          className="filerobot-original-canvas"
+        />
+        <Canvas
+          key={this.state.canvasKey}
+          ref={this.editedCanvas}
+          id={`${editorWrapperId}_${CANVAS_ID}`}
+          className="filerobot-edit-canvas"
+        />
       </>
     );
   }
