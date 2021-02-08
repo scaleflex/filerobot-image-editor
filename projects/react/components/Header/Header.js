@@ -4,20 +4,25 @@ import {
 } from '../../styledComponents';
 import { Toolbar } from '../';
 import { ON_CLOSE_STATUSES } from '../../config';
+import SaveActions from './SaveActions';
 
 
 export default class extends Component {
   render() {
     const {
       activeTab, onRevert, apply, onClose, processWithCloudService, processWithFilerobot,
-      handleSave, t, config
+      handleSave, t, config, updateState, filerobotSaveMode
     } = this.props;
     const { tools, closeButtonProps, noCapitalStrs } = config;
     const isOneTool = tools.length === 1;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
-    const onFinishButtonLabel = (!processWithCloudService && !processWithFilerobot) ? t['toolbar.download'] : t['toolbar.save'];
+    const onFinishButtonLabel = (!processWithCloudService && !processWithFilerobot)
+      ? t['toolbar.download']
+      : t[`toolbar.${processWithCloudService ? 'save' : filerobotSaveMode}`];
     const applyAndSave = () => { apply(handleSave); };
     const cancelBtnClosingFn = () => onClose(ON_CLOSE_STATUSES.TOOLBAR_CANCEL_BTN_CLICKED);
+
+    const isLastStep = !activeTab || activeTab === 'resize';
 
     return (
       <HeaderWrapper>
@@ -35,12 +40,16 @@ export default class extends Component {
             <Button
               themeColor
               sm
-              success={!activeTab || activeTab === 'resize'}
+              // success={!activeTab || activeTab === 'resize'}
               themeBtn={activeTab}
               onClick={isOneTool ? applyAndSave : !activeTab ? () => { handleSave(); } : () => { apply(); }}
+              borderRadius={'2px 0px 0px 2px'}
             >
-              {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : t['toolbar.apply']}
+              {isLastStep ? onFinishButtonLabel : t['toolbar.apply']}
             </Button>
+            {isLastStep && processWithFilerobot && !processWithCloudService && (
+              <SaveActions t={t} handleSave={handleSave} updateState={updateState} />
+            )}
           </ButtonsWrapper>
           
           <CloseBtn onClick={onClose} title={t[`header.close_modal`]} {...closeButtonProps}>

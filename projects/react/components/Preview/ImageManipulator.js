@@ -50,8 +50,8 @@ export default class ImageManipulator extends Component {
     this.state = {
       canvas: null,
       self: this,
-      canvasKey: 0,
-      canvasOriginalKey: 0
+      canvasKey: '0-edited', // the string here for avoiding first render warning only after that would be cleared
+      canvasOriginalKey: '0-original' // the string here for avoiding first render warning only after that would be cleared
     };
 
     this.CamanInstance = null;
@@ -117,7 +117,7 @@ export default class ImageManipulator extends Component {
           this.render(() => {
             that.tempCanvasElement = that.editedCanvas.current;
 
-            that.setState({ canvasKey: that.state.canvasKey + 1 }, () => {
+            that.setState({ canvasKey: parseInt(that.state.canvasKey) + 1 }, () => {
               const resizedCanvas = that.applyTransformationsToNewCanvas();
 
               const original = {
@@ -170,7 +170,7 @@ export default class ImageManipulator extends Component {
           this.render(() => {
             that.tempCanvasElement = that.editedCanvas.current;
 
-            that.setState({ canvasKey: that.state.canvasKey + 1 }, () => {
+            that.setState({ canvasKey: parseInt(that.state.canvasKey) + 1 }, () => {
               const canvasZoomed = that.applyTransformationsToNewCanvas();
 
               that.CamanInstanceZoomed = new window.Caman(
@@ -256,12 +256,12 @@ export default class ImageManipulator extends Component {
   saveImage = () => {
     const {
       onComplete, onClose, updateState, closeOnLoad, config, processWithCloudService, uploadCloudimageImage,
-      operations, initialZoom, operationsOriginal
+      operations, initialZoom, operationsOriginal, filerobotSaveMode
     } = this.props;
     const imageMime = this.getFinalImageMime();
     const imageNameFromUrl = this.getFinalImageName();
     const { filerobot = {}, platform = 'filerobot' } = config;
-    const { imageMeta, imageProperties, imageName, saveMode = SAVE_MODES.DUPLICATE } = filerobot;
+    const { imageMeta, imageProperties, imageName } = filerobot;
     const src = this.props.src.split('?')[0];
     const canvas = this.editedCanvas.current;
     const baseAPI = getBaseAPI(filerobot.baseAPI, filerobot.container, platform);
@@ -276,7 +276,7 @@ export default class ImageManipulator extends Component {
       const block = base64.split(";");
       const realData = block[1].split(",")[1];
       const blob = b64toBlob(realData, imageMime, null);
-      const loweredSaveModeStr = saveMode.toLowerCase();
+      const loweredSaveModeStr = filerobotSaveMode.toLowerCase();
       let name = imageName || imageNameFromUrl;
 
       if (loweredSaveModeStr !== SAVE_MODES.REPLACE) {
@@ -750,7 +750,7 @@ export default class ImageManipulator extends Component {
       this.CamanInstanceOriginal.render(() => {
         this.tempCanvasOriginalElement = this.originalCanvas.current;
 
-        this.setState({ canvasKey: this.state.canvasOriginalKey + 1 }, () => {
+        this.setState({ canvasKey: parseInt(this.state.canvasOriginalKey) + 1 }, () => {
           const canvasOriginal = this.applyTransformationsToNewCanvas(roundCrop, this.tempCanvasOriginalElement, this.originalCanvas.current);
           const nextOperation = {
             ...operation,
@@ -770,7 +770,7 @@ export default class ImageManipulator extends Component {
       this.CamanInstanceZoomed.render(() => {
         this.tempCanvasElement = this.editedCanvas.current;
 
-        this.setState({ canvasKey: this.state.canvasKey + 1 }, () => {
+        this.setState({ canvasKey: parseInt(this.state.canvasKey) + 1 }, () => {
           const canvasZoomed = this.applyTransformationsToNewCanvas(roundCrop);
           const nextOperation = {
             ...operation,
@@ -794,7 +794,7 @@ export default class ImageManipulator extends Component {
       this.CamanInstance.render(() => {
         this.tempCanvasElement = this.editedCanvas.current;
 
-        this.setState({ canvasKey: this.state.canvasKey + 1 }, () => {
+        this.setState({ canvasKey: parseInt(this.state.canvasKey) + 1 }, () => {
           const canvas = this.applyTransformationsToNewCanvas(roundCrop);
           const nextOperation = {
             ...operation,
@@ -1009,7 +1009,7 @@ export default class ImageManipulator extends Component {
       const nextOperation = hasMoreOperations ?
         operationsZoomed[operationIndex] : { canvas: this.cloneCanvas(canvasZoomed) };
 
-      this.setState({ canvasKey: this.state.canvasKey + 1 }, () => {
+      this.setState({ canvasKey: parseInt(this.state.canvasKey) + 1 }, () => {
         const canvasZoomedNext = this.applyTransformationsToNewCanvas(false, nextOperation.canvas);
 
         this.CamanInstanceZoomed = new window.Caman(canvasZoomedNext, () => {
@@ -1023,7 +1023,7 @@ export default class ImageManipulator extends Component {
       const nextOperationOriginal = hasMoreOperations ?
         operationsOriginal[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
 
-      this.setState({ canvasKey: this.state.canvasOriginalKey + 1 }, () => {
+      this.setState({ canvasKey: parseInt(this.state.canvasOriginalKey) + 1 }, () => {
         const canvasNext = this.applyTransformationsToNewCanvas(false, nextOperationOriginal.canvas, this.originalCanvas.current);
 
         this.CamanInstanceOriginal = new window.Caman(canvasNext, () => {});
@@ -1034,7 +1034,7 @@ export default class ImageManipulator extends Component {
       const nextOperationSimple = hasMoreOperations ?
         operations[operationIndex] : { canvas: this.cloneCanvas(canvasOriginal) };
 
-      this.setState({ canvasKey: this.state.canvasOriginalKey + 1 }, () => {
+      this.setState({ canvasKey: parseInt(this.state.canvasOriginalKey) + 1 }, () => {
         const canvas = this.applyTransformationsToNewCanvas(false, nextOperationSimple.canvas, this.originalCanvas.current);
 
         this.CamanInstance = new window.Caman(canvas, () => {

@@ -19,10 +19,10 @@ const CloseBtn = styled.span.attrs(() => ({
   color: ${props => props.theme.colors.text};
   text-transform: ${props => props.noCapitalStrs ? 'none' : 'capitalize'};
   min-width: 62px;
-  height: 30px;
+  height: 32px;
   border: 0;
   text-align: center;
-  line-height: 30px;
+  line-height: 32px;
   border-radius: 2px;
   
   /* Better Font Rendering =========== */

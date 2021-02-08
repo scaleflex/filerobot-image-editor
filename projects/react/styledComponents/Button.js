@@ -9,7 +9,7 @@ const Button = styled.button`
   font-size: ${props => getElementStylesBySize(props, 'button', 'fz')};
   line-height:  ${props => getElementStylesBySize(props, 'button', 'lh')};
   min-width: ${props => props.fullSize ? '100%' : '62px'};
-  height: 30px;
+  height: 32px;
   font-weight: 400;
   text-align: center;
   white-space: nowrap;
@@ -24,7 +24,7 @@ const Button = styled.button`
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
-  border-radius: ${props => getElementStylesBySize(props, 'button', 'br')};
+  border-radius: ${props => props.borderRadius || getElementStylesBySize(props, 'button', 'br')};
   border: 0;
   
   &:focus, &:hover {

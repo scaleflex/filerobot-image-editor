@@ -3,7 +3,7 @@ import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
 import { Footer, Header, PreResize, Preview } from './components/index';
 import imageType from 'image-type';
 import './lib/caman';
-import { DEFAULT_WATERMARK, ON_CLOSE_STATUSES } from './config';
+import { DEFAULT_WATERMARK, ON_CLOSE_STATUSES, SAVE_MODES } from './config';
 import { getCanvasNode } from './utils';
 
 
@@ -32,8 +32,17 @@ export default class extends Component {
     super();
 
     const {
-      processWithCloudimage, processWithFilerobot, processWithCloudService, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit,
-      watermark, imageSealing
+      processWithCloudimage,
+      processWithFilerobot,
+      processWithCloudService,
+      uploadWithCloudimageLink,
+      reduceBeforeEdit,
+      cropBeforeEdit,
+      watermark,
+      imageSealing,
+      filerobot: {
+        saveMode: filerobotSaveMode = SAVE_MODES.DUPLICATE
+      } = {}
     } = props.config;
 
     this.state = {
@@ -52,6 +61,7 @@ export default class extends Component {
       reduceBeforeEdit,
       cropBeforeEdit,
       roundCrop: false,
+      filerobotSaveMode,
       imageSealing: { enabled: false, salt: '', char_count: 10, include_params: null/* include all by default */, ...imageSealing },
 
       operationsOriginal: [],
@@ -375,7 +385,8 @@ export default class extends Component {
       shapeOperations,
       selectedShape,
       availableShapes,
-      latestCanvasSize
+      latestCanvasSize,
+      filerobotSaveMode
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, t = {}, theme } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
@@ -420,7 +431,8 @@ export default class extends Component {
       shapes,
       shapeOperations,
       selectedShape,
-      availableShapes
+      availableShapes,
+      filerobotSaveMode
     };
     const previewProps = {
       t,
@@ -458,6 +470,7 @@ export default class extends Component {
       imageName,
       isPreResize,
       preCanvasDimensions,
+      filerobotSaveMode,
       updateState: this.updateState,
       handleSave: this.handleSave,
       onPreResize: this.onPreResize,

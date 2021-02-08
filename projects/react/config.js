@@ -194,9 +194,9 @@ const ON_CLOSE_STATUSES = {
 }
 
 const SAVE_MODES = {
+  REPLACE: 'replace',
   NEW: 'new',
-  DUPLICATE: 'duplicate',
-  REPLACE: 'replace'
+  DUPLICATE: 'duplicate'
 }
 
 export {

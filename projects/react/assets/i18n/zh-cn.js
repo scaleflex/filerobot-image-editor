@@ -5,6 +5,9 @@ export default {
   'toolbar.download': '下载',
   'toolbar.save': '保存',
   'toolbar.apply': '应用',
+  'toolbar.replace': 'Save (Replace)', // TODO translate
+  'toolbar.duplicate': 'Duplicate', // TODO translate
+  'toolbar.new': 'Create New', // TODO translate
   'toolbar.close': 'Close', // TODO: Translate
   'toolbar.cancel': '取消',
   'toolbar.go_back': '后退',

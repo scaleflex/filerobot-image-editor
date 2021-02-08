@@ -23,6 +23,8 @@ const ButtonsWrapper = styled.div`
   position: absolute;
   right: 12px;
   top: 8px;
+  display: flex;
+  align-items: center;
 `;
 
 const CancelBtn = styled(Button)`
@@ -31,7 +33,7 @@ const CancelBtn = styled(Button)`
   color: ${props => props.theme.colors.text};
   text-transform: ${props => props.noCapitalStrs ? 'none' : 'capitalize'};
   min-width: 62px;
-  height: 30px;
+  height: 32px;
   margin-right: 8px;
   border: 0;
 
