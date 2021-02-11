@@ -13,18 +13,25 @@ const ResizeWrapper = styled.div`
 `;
 
 const ResizeBox = styled.div`
-  display: inline-block;
-  
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 8px 0 20px;
+
   @media (min-width: 768px) {
-    width: 300px;
-    padding: 20px;
-    height: 100px;
+    width: 500px;
+    margin: 0 auto;
   }
 `;
 
 const PreResizeActions = styled('div')`
   button {
     min-width: 240px;
+
+    @media(max-width: 768px) {
+      min-width: 174px;
+    }
   }
 `;
 
@@ -62,6 +69,7 @@ const PreResizeInner = styled('div')`
   
   h4 {
     line-height: 1.4;
+    margin: 0;
     font-size: 16px;
     color: ${p => p.theme.colors.text};
   }

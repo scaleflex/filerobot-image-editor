@@ -6,8 +6,10 @@ const PreviewWrapper = styled.div`
   height: calc(100% - 187px);
   text-align: center;
   line-height: calc(100% - 187px);
-  padding: 20px;
+  padding: 10px;
   position: relative;
+  flex-grow: 1;
+  overflow: auto;
 
   &:before {
     content: '';
