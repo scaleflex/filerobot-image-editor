@@ -6,7 +6,7 @@ import { getIconStyles, getIconByName } from './styleUtils';
 const Footer = styled.div`
   background: ${props => props.theme.colors.secondaryBg};
   border-top: 1px solid ${props => props.theme.colors.border};
-  height: 34px;
+  height: 35px;
   position: relative;
   z-index: 1;
 `;

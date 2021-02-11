@@ -65,7 +65,7 @@ const PreResizeInner = styled('div')`
   margin: 15px auto;
   background: ${p => p.theme.colors.secondaryBg};
   border-radius: 4px;
-  padding: 15px;
+  padding: 2px;
   
   h4 {
     line-height: 1.4;
