@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { SAVE_MODES } from '../../config';
 import {
   SaveActions as StyledSaveActions,
   SaveActionsSlideButton,
@@ -7,8 +6,6 @@ import {
   SaveActionsItem,
   SaveActionsBackdrop
 } from '../../styledComponents';
-
-const ACTIONS = Object.keys(SAVE_MODES);
 
 export default class SaveActions extends Component {
   constructor(props) {
@@ -25,15 +22,9 @@ export default class SaveActions extends Component {
 
   hideActionsMenu = () => this.toggleActionsMenu(false)
 
-  handleClickedAction = (action) => {
-    const { updateState, handleSave } = this.props;
-
-    updateState({
-      filerobotSaveMode: SAVE_MODES[action]
-    }, () => {
-      this.hideActionsMenu();
-      handleSave();
-    });
+  handleSaving = () => {
+    this.props.handleSaveAs()
+    this.hideActionsMenu()
   }
 
   render () {
@@ -46,11 +37,11 @@ export default class SaveActions extends Component {
           <i />
         </SaveActionsSlideButton>
         <SaveActionsMenu>
-          {this.state.show && ACTIONS.map((action) => (
-            <SaveActionsItem onClick={() => this.handleClickedAction(action)}>
-              {t[`toolbar.${action.toLowerCase()}`]}
+          {this.state.show && (
+            <SaveActionsItem onClick={this.handleSaving}>
+              {t['toolbar.saveAsNewImage']}
             </SaveActionsItem>
-          ))}
+          )}
         </SaveActionsMenu>
       </StyledSaveActions>
     );

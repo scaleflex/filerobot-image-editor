@@ -6,23 +6,26 @@ import { Toolbar } from '../';
 import { ON_CLOSE_STATUSES } from '../../config';
 import SaveActions from './SaveActions';
 
-
 export default class extends Component {
   render() {
     const {
       activeTab, onRevert, apply, onClose, processWithCloudService, processWithFilerobot,
-      handleSave, t, config, updateState, filerobotSaveMode
+      handleSave, t, config
     } = this.props;
-    const { tools, closeButtonProps, noCapitalStrs } = config;
+    const { tools, closeButtonProps, noCapitalStrs, filerobot } = config;
     const isOneTool = tools.length === 1;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
     const onFinishButtonLabel = (!processWithCloudService && !processWithFilerobot)
       ? t['toolbar.download']
-      : t[`toolbar.${processWithCloudService ? 'save' : filerobotSaveMode}`];
+      : t['toolbar.save'];
     const applyAndSave = () => { apply(handleSave); };
     const cancelBtnClosingFn = () => onClose(ON_CLOSE_STATUSES.TOOLBAR_CANCEL_BTN_CLICKED);
 
     const isLastStep = !activeTab || activeTab === 'resize';
+    const saveAsFn = () => { handleSave(true) };
+    const applySaveAsHandle = isOneTool
+      ? () => { apply(saveAsFn) }
+      : saveAsFn;
 
     return (
       <HeaderWrapper>
@@ -40,15 +43,14 @@ export default class extends Component {
             <Button
               themeColor
               sm
-              // success={!activeTab || activeTab === 'resize'}
               themeBtn={activeTab}
               onClick={isOneTool ? applyAndSave : !activeTab ? () => { handleSave(); } : () => { apply(); }}
               borderRadius={'2px 0px 0px 2px'}
             >
               {isLastStep ? onFinishButtonLabel : t['toolbar.apply']}
             </Button>
-            {isLastStep && processWithFilerobot && !processWithCloudService && (
-              <SaveActions t={t} handleSave={handleSave} updateState={updateState} />
+            {isLastStep && processWithFilerobot && !processWithCloudService && filerobot.onSaveAs && (
+              <SaveActions t={t} handleSaveAs={applySaveAsHandle} />
             )}
           </ButtonsWrapper>
           

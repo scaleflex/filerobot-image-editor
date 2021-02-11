@@ -127,18 +127,34 @@ const configUpload = {
     uploadParams: {
       dir: '/Github-Image-Editor'
     },
-    saveMode: 'duplicate', // default: 'duplicate'; 'new', 'duplicate', 'replace'
-    imageName: '',
-    imageProperties: {
-      description: 'testing',
-      tags: ['lorem ipsum', 'test', 'trying'],
-      // ...Any additonal properties to be added.
-    },
-    imageMeta: {
-      title: 'testing'
-      // ... Any additional image meta to be added.
-    }
+    // imageName: '',
+    // imageProperties: {
+    //   description: 'testing',
+    //   tags: ['lorem ipsum', 'test', 'trying'],
+    //   // ...Any additonal properties to be added.
+    // },
+    // imageMeta: {
+    //   title: 'testing'
+    //   // ... Any additional image meta to be added.
+    // },
+    // onSaveAs: (triggerUpload) => {
+    //   triggerUpload({
+    //     name: 'testX',
+    //     folder: '/Github-Image-Editor', // if not provided the above uploadParams.dir would be used
+    //     keepPropsAndMeta: true,
+    //     properties: {
+    //       tags: ['additional']
+    //     },
+    //     meta: {
+    //       title: 'Test'
+    //     }
+    //   })
+    // }
   },
+  // theme: {
+  //   colors: customThemeColors,
+
+  // },
   isLowQualityPreview: true,
   reduceBeforeEdit: {
     mode: 'manual',

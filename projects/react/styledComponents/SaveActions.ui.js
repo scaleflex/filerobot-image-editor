@@ -28,13 +28,14 @@ const SaveActionsSlideButton = styled(Button)`
 
 const SaveActionsMenu = styled.div`
   position: absolute;
-  top: 32px;
+  top: 31px;
   right: 0;
-  min-width: 135px;
+  min-width: 176px;
   z-index: 1111;
-  box-shadow: 0px 2px 4px rgba(77, 78, 78, 0.25);
-  border-radius: 2px;
-  background: #fff;
+  box-shadow: 0 2px 4px rgba(77, 78, 78, 0.25);
+  border-radius: 0 0 2px 2px;
+  background: ${props => props.theme.colors?.button?.primary || props.theme.colors?.accent || '#ccc'};
+  color: #fff;
 `;
 
 const SaveActionsItem = styled.div`

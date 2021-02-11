@@ -193,12 +193,6 @@ const ON_CLOSE_STATUSES = {
   IMAGE_UPLOADING_FAIL_FILEROBOT: 'image-uploading-fail-filerobot',
 }
 
-const SAVE_MODES = {
-  REPLACE: 'replace',
-  NEW: 'new',
-  DUPLICATE: 'duplicate'
-}
-
 export {
   MODAL_ID,
   PREVIEW_CANVAS_ID,
@@ -217,6 +211,5 @@ export {
   ON_CLOSE_STATUSES,
   CANVAS_ID,
   ORIGINAL_CANVAS_ID,
-  SAVE_MODES,
   CONTAINER_SELECTOR
 };

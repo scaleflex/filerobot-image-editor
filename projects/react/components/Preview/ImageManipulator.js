@@ -253,20 +253,19 @@ export default class ImageManipulator extends Component {
     return nextCanvas;
   }
 
-  saveImage = () => {
+  saveImage = (isSaveAs = false) => {
     const {
       onComplete, onClose, updateState, closeOnLoad, config, processWithCloudService, uploadCloudimageImage,
-      operations, initialZoom, operationsOriginal, filerobotSaveMode
+      operations, initialZoom, operationsOriginal
     } = this.props;
     const imageMime = this.getFinalImageMime();
     const imageNameFromUrl = this.getFinalImageName();
     const { filerobot = {}, platform = 'filerobot' } = config;
-    const { imageMeta, imageProperties, imageName } = filerobot;
+    const { onSaveAs, imageMeta, imageProperties, imageName } = filerobot;
     const src = this.props.src.split('?')[0];
     const canvas = this.editedCanvas.current;
     const baseAPI = getBaseAPI(filerobot.baseAPI, filerobot.container, platform);
     const uploadParams = filerobot.uploadParams || {};
-    const dir = uploadParams.dir || 'image-editor';
     const self = this;
 
     if (!processWithCloudService) {
@@ -276,44 +275,54 @@ export default class ImageManipulator extends Component {
       const block = base64.split(";");
       const realData = block[1].split(",")[1];
       const blob = b64toBlob(realData, imageMime, null);
-      const loweredSaveModeStr = filerobotSaveMode.toLowerCase();
-      let name = imageName || imageNameFromUrl;
 
-      if (loweredSaveModeStr !== SAVE_MODES.REPLACE) {
-        const splittedName = name.replace(/-version-.{6}/g, '').split('.');
-        const nameLength = splittedName.length;
+      // properties & meta for adding more properties & meta in the same uploading process.
+      const triggerUpload = ({ name, folder, keepPropsAndMeta = true, properties, meta } = {}) => {
+        const usedName = name || imageName || imageNameFromUrl;
+        const dir = folder || uploadParams.dir || 'image-editor';
+        let usedProperties = {};
+        let usedMeta = {};
 
-        if (nameLength <= 1) {
-          name = `${splittedName.join('.')}-version-${(uuidv4() || '').slice(0, 6)}`;
-        } else {
-          name = [
-            splittedName.slice(0, nameLength - 1).join('.'),
-            '-version-',
-            (uuidv4() || '').slice(0, 6),
-            '.',
-            splittedName[nameLength - 1]
-          ].join('');
+        const formData = new FormData();
+        formData.append('file', blob, usedName);
+
+        if (keepPropsAndMeta) {
+          usedProperties = { ...imageProperties }
+          usedMeta = { ...imageMeta }
         }
+
+        if (properties && Object.keys(properties).length > 0) {
+          usedProperties = {
+            ...usedProperties,
+            ...properties
+          }
+        }
+        if (meta && Object.keys(meta).length > 0) {
+          usedMeta = {
+            ...usedMeta,
+            ...meta
+          }
+        }
+
+        if (Object.keys(usedProperties).length > 0) {
+          formData.append('properties[file]', JSON.stringify(usedProperties));
+        }
+        if (Object.keys(usedMeta).length > 0) {
+          formData.append('meta[file]', JSON.stringify(usedMeta));
+        }
+
+        const request = new XMLHttpRequest();
+        request.addEventListener("load", self.onFileLoad);
+        request.open("POST", [baseAPI, `upload?dir=${dir}`].join(''));
+        request.setRequestHeader(getSecretHeaderName(platform), filerobot.uploadKey);
+        request.send(formData);
       }
 
-
-      const formData = new FormData();
-      const request = new XMLHttpRequest();
-
-      request.addEventListener("load", self.onFileLoad);
-      formData.append('file', blob, name);
-
-      if (loweredSaveModeStr !== SAVE_MODES.NEW) {
-        if (imageProperties && Object.keys(imageProperties).length > 0) {
-          formData.append('properties[file]', JSON.stringify(imageProperties));
-        }
-        if (imageMeta && Object.keys(imageMeta).length > 0) {
-          formData.append('meta[file]', JSON.stringify(imageMeta));
-        }
+      if (isSaveAs && onSaveAs) {
+        onSaveAs(triggerUpload, blob);
+      } else {
+        triggerUpload();
       }
-      request.open("POST", [baseAPI, `upload?dir=${dir}`].join(''));
-      request.setRequestHeader(getSecretHeaderName(platform), filerobot.uploadKey);
-      request.send(formData);
     } else {
       const resultOperations = initialZoom !== 1 ? operationsOriginal : operations;
       const allowedOperations = resultOperations.filter(({ operation }) => CLOUDIMAGE_OPERATIONS.includes(operation));

@@ -39,10 +39,7 @@ export default class extends Component {
       reduceBeforeEdit,
       cropBeforeEdit,
       watermark,
-      imageSealing,
-      filerobot: {
-        saveMode: filerobotSaveMode = SAVE_MODES.DUPLICATE
-      } = {}
+      imageSealing
     } = props.config;
 
     this.state = {
@@ -61,7 +58,6 @@ export default class extends Component {
       reduceBeforeEdit,
       cropBeforeEdit,
       roundCrop: false,
-      filerobotSaveMode,
       imageSealing: { enabled: false, salt: '', char_count: 10, include_params: null/* include all by default */, ...imageSealing },
 
       operationsOriginal: [],
@@ -231,11 +227,11 @@ export default class extends Component {
     flip(axis);
   }
 
-  onSave = () => {
+  onSave = (isSaveAs = false) => {
     const { saveImage } = this.state;
 
     this.setState({ isShowSpinner: true });
-    saveImage();
+    saveImage(isSaveAs);
   }
 
   onDownloadImage = () => {
@@ -287,13 +283,13 @@ export default class extends Component {
     );
   }
 
-  handleSave = () => {
+  handleSave = (isSaveAs = false) => {
     const { processWithFilerobot, processWithCloudService } = this.state;
 
     if (!processWithFilerobot && !processWithCloudService) {
       this.onDownloadImage();
     } else {
-      this.onSave();
+      this.onSave(isSaveAs);
     }
   }
 
@@ -385,8 +381,7 @@ export default class extends Component {
       shapeOperations,
       selectedShape,
       availableShapes,
-      latestCanvasSize,
-      filerobotSaveMode
+      latestCanvasSize
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, t = {}, theme } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
@@ -431,8 +426,7 @@ export default class extends Component {
       shapes,
       shapeOperations,
       selectedShape,
-      availableShapes,
-      filerobotSaveMode
+      availableShapes
     };
     const previewProps = {
       t,
@@ -470,7 +464,6 @@ export default class extends Component {
       imageName,
       isPreResize,
       preCanvasDimensions,
-      filerobotSaveMode,
       updateState: this.updateState,
       handleSave: this.handleSave,
       onPreResize: this.onPreResize,

@@ -5,9 +5,7 @@ export default {
   'toolbar.download': 'Télécharger',
   'toolbar.save': 'Sauvegarder',
   'toolbar.apply': 'Appliquer',
-  'toolbar.replace': 'Save (Replace)', // TODO translate
-  'toolbar.duplicate': 'Duplicate', // TODO translate
-  'toolbar.new': 'Create New', // TODO translate
+  'toolbar.saveAsNewImage': 'Save As New Image', // TODO translate
   'toolbar.close': 'Fermer',
   'toolbar.cancel': 'Annuler',
   'toolbar.go_back': 'Retour',
