@@ -26,9 +26,10 @@ const customThemeColors = {
   accent: '#D5D8DC',
   button: {
     primary: '#6879EB',
+    secondary: '#ffffff',
     border: 'transparent',
     hover: '#5064ea',
-    active: '#3c4ec7'
+    active: '#3c4ec7',
   },
   border: '#DFE7ED',
   borderLight: '#e1e1e1',
@@ -120,6 +121,7 @@ ImageEditorDownload = new FilerobotImageEditor({
 // Image Editor to upload images and get url in response
 
 const configUpload = {
+  // colorScheme: 'light',
   elementId: 'image-editor-upload',
   filerobot: {
     uploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',

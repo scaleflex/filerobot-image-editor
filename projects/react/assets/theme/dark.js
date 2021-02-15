@@ -10,7 +10,13 @@ export default {
     textWarn: '#f7931e',
     secondaryBgOpacity: 'rgba(0, 0, 0, 0.75)',
     accent: '#00707c',
-
+    button: {
+      primary: '#00707c',
+      secondary: '#00707c',
+      border: '#008D99',
+      // hover: '#5064ea',
+      // active: '#3c4ec7'
+    },
     border: '#161e23',
     borderLight: '#70777f',
     disabledBg: 'rgba(255, 0, 0, 0.1)',

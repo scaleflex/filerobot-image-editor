@@ -168,11 +168,10 @@ const SelectDropdown = styled.ul`
   margin: 2px 0 0 0;
   padding: 0;
   position: absolute;
-  background: #fff;
   width: ${p => p.limitedWidth ? '111px' : '100%'};
   border: none;
   color: ${p => p.theme.colors.text};
-  background: ${p => p.theme.colors.primaryBg};
+  background: ${p => p.theme.colors.primaryBg || '#fff'};
   box-shadow: inset 0 1px 1px rgba(0,0,0,0.5), 0 1px 0 rgba(82,104,109,.6);
   border-radius: .25rem;
   overflow: hidden;

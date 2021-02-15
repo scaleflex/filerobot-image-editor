@@ -26,6 +26,24 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.12 - 2020-2-15
+### Added
+- `onSaveAs` property to filerobot upload mode config for showing & handling Save As New Image Button as sliding item next to save button.
+- `keepPropsAndMeta` property to uploadParams of filerobot upload mode config for keeping the provided `imageProperties` & `imageMeta` in the saved image.
+- `onError` for handling the errors returned by the uploading process through filerobot or cloudimage.
+- `secondary` property to theme's button object which is used in the background color of selectable button (ex. saveAs).
+
+### Removed
+- `saveMode` property from the filerobot upload mode config.
+
+### Fixed
+- Rarely happened issue of duplicated canvases when doing some operation.
+- Warning of smiliar keys for canvases.
+
+### Improved
+- Styles of resizing image before editing warning.
+- Moving `imageProperties`, `imageMeta` & `imageName` to uploadParams object of filerobot upload mode.
+
 ## 3.12.11 - 2020-1-6
 ### Added
 - `closeButtonProps` property to the config for customizing the top left corner close button (ex. label & styles).

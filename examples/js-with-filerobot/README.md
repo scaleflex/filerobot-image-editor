@@ -50,26 +50,31 @@ minute and is totally free.
 
 Filerobot Container name.
 
+#### `filerobot.onSaveAs(triggerUpload: function)`: function (optional - but for showing saveAs button then it's required)
+
+The save as new image button is shown when this function is provided, and it is called after clicking the save as button and before uploading process as uploading is called through manually through this function.
+
+* `triggerUpload(overrides: object)`: function - The function that triggers the upload process to be handled from the plugin's side.
+
+  * **overrides**: object (default: {}) - Object which overrides the passed properties/values (uploadParams) at the filerobot config if it is not provided or some property is passed and another not the original property passed in the uploadParams object of filerobot config would be used. it accepts the exact properties of `filerobot.uploadParams` below.
 
 #### `filerobot.uploadParams`: object
 
 * **dir**: string (default: '/') - specify the folder where you want to upload the file. If the folder doesn't exist, it will be created.
 
+* **imageName**: string (default: image name from the url) - The name (includes image's extension) of opened image that would be used for the saved image.
+
+* **keepPropsAndMeta**: boolean (default: false) - whether or not to include the below `imageProperties` & `imageMeta` objects in the saved image's propeties & meta.
+
+* **imageProperties**: object (default: undefined) - The object that contains the main image properties to be moved into the saved image.
+
+* **imageMeta**: object (default: undefined) - The object that contains the main image meta to moved into the saved image.
+
+
 #### `onComplete(url: string, file: object)`: function (required)
 
 Callback, triggers on complete processing image.
 
-#### `saveMode`: string | default: 'duplicate'; 'new', 'duplicate', 'replace'
-The mode used in saving the uploaded image whether to have a new image and dismissing the main image's properties, copying the same properties of the main image into the new uploaded image or to replace/overwrite the main image.
-
-#### `imageProperties`: object
-The object that contains the main image properties to be copied into the duplicated image or the replacement image used in any of the both saveMode values (duplicate, replace).
-
-#### `imageMeta`: object
-The object that contains the main image meta to be copied into the duplicated image or the replacement image used in any of the both saveMode values (duplicate, replace).
-
-#### `imageName`: string
-The name (included image's extension) of opened image that would be used in the newly created image.
 
 ***
 [Go back to Image Editor](https://github.com/scaleflex/filerobot-image-editor)

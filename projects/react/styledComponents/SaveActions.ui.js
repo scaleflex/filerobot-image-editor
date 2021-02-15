@@ -34,8 +34,8 @@ const SaveActionsMenu = styled.div`
   z-index: 1111;
   box-shadow: 0 2px 4px rgba(77, 78, 78, 0.25);
   border-radius: 0 0 2px 2px;
-  background: ${props => props.theme.colors?.button?.primary || props.theme.colors?.accent || '#ccc'};
-  color: #fff;
+  background: ${props => props.theme.colors?.button?.secondary || props.theme.colors?.accent || '#ccc'};
+  color: ${props => props.theme.colors.text || '#fff'};
 `;
 
 const SaveActionsItem = styled.div`
