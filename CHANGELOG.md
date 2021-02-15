@@ -38,7 +38,7 @@ Types of changes:
 
 ### Fixed
 - Rarely happened issue of duplicated canvases when doing some operation.
-- Warning of smiliar keys for canvases.
+- Warning of similar keys for canvases.
 
 ### Improved
 - Styles of resizing image before editing warning.
