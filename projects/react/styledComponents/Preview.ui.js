@@ -31,6 +31,7 @@ const PreviewImgBox = styled.div`
   max-width: 100%;
   height: 100%;
   vertical-align: middle;
+  overflow: hidden;
 
   ${props => !props.hideCanvas ? `
   &:before {

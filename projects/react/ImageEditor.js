@@ -230,7 +230,9 @@ export default class extends Component {
   onSave = (isSaveAs = false) => {
     const { saveImage } = this.state;
 
-    this.setState({ isShowSpinner: true });
+    if (!isSaveAs) {
+      this.setState({ isShowSpinner: true });
+    }
     saveImage(isSaveAs);
   }
 
@@ -383,7 +385,7 @@ export default class extends Component {
       availableShapes,
       latestCanvasSize
     } = this.state;
-    const { src, config, onClose, onComplete, closeOnLoad = true, t = {}, theme } = this.props;
+    const { src, config, onClose, onComplete, onError, closeOnLoad = true, t = {}, theme } = this.props;
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
     const headerProps = {
       t,
@@ -445,6 +447,7 @@ export default class extends Component {
       imageMime,
       onClose,
       onComplete,
+      onError,
       canvasDimensions,
       closeOnLoad,
       config,

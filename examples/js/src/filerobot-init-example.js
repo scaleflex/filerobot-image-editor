@@ -125,30 +125,21 @@ const configUpload = {
     uploadKey: '7cc1f659309c480cbc8a608dc6ba5f03',
     container: 'scaleflex-tests-v5a',
     uploadParams: {
-      dir: '/Github-Image-Editor'
+      dir: '/Github-Image-Editor',
+      // keepPropsAndMeta: true,
+      // imageName: '',
+      // imageProperties: {
+      //   description: 'testing',
+      //   tags: ['lorem ipsum', 'test', 'trying'],
+      //   // ...Any additonal properties to be added.
+      // },
+      // imageMeta: {
+      //   title: 'testing'
+      //   // ... Any additional image meta to be added.
+      // },
     },
-    // imageName: '',
-    // imageProperties: {
-    //   description: 'testing',
-    //   tags: ['lorem ipsum', 'test', 'trying'],
-    //   // ...Any additonal properties to be added.
-    // },
-    // imageMeta: {
-    //   title: 'testing'
-    //   // ... Any additional image meta to be added.
-    // },
     // onSaveAs: (triggerUpload) => {
-    //   triggerUpload({
-    //     name: 'testX',
-    //     folder: '/Github-Image-Editor', // if not provided the above uploadParams.dir would be used
-    //     keepPropsAndMeta: true,
-    //     properties: {
-    //       tags: ['additional']
-    //     },
-    //     meta: {
-    //       title: 'Test'
-    //     }
-    //   })
+    //   triggerUpload();
     // }
   },
   // theme: {

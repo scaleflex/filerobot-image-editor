@@ -43,6 +43,7 @@ class FilerobotImageEditor {
         onBeforeComplete={callbacks.onBeforeComplete}
         onOpen={callbacks.onOpen}
         onClose={callbacks.onClose}
+        onError={callbacks.onError}
       />, container);
 
     this.component = renderApp(ImageEditor);
