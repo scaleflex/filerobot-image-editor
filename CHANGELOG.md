@@ -32,8 +32,8 @@ Types of changes:
 - Text watermark is not applied in modify/cloudimage mode.
 - Prohibit watermark positions square change if no watermark selected.
 - Making text watermark default if no watermark images provided.
-- Error while uploading watermark image.
-- Styles of un-selected watermark positions sqaure.
+- Error while uploading the watermark image.
+- Styles of un-selected watermark positions square.
 - Resize tab's header style.
 
 ## 3.12.12 - 2020-2-15
