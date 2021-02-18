@@ -30,7 +30,7 @@ const SaveActionsMenu = styled.div`
   position: absolute;
   top: 31px;
   right: 0;
-  min-width: 176px;
+  min-width: 150px;
   z-index: 1111;
   box-shadow: 0 2px 4px rgba(77, 78, 78, 0.25);
   border-radius: 0 0 2px 2px;
@@ -39,10 +39,11 @@ const SaveActionsMenu = styled.div`
 `;
 
 const SaveActionsItem = styled.div`
-  padding: 8px 12px;
   cursor: pointer;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 12px;
+  line-height: 14px;
+  padding: 9px 12px;
+  text-align: center;
 
   &:hover {
     backdrop-filter: brightness(0.95);

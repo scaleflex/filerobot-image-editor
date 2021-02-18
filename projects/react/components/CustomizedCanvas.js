@@ -959,7 +959,7 @@ export default class CustomizedCanvas extends Component {
     const img = new Image();
 
     img.crossOrigin = 'Anonymous';
-    img.src = `${src}?v=${Math.random()}`;
+    img.src = src.startsWith('data:image') ? src : `${src}?v=${Math.random()}`;
 
     img.onload = () =>  {
       if (dataObject) {

@@ -82,7 +82,7 @@ export default class extends Component {
       isWatermarkList: urls && urls.length > 1,
       applyByDefault: applyByDefault || false,
       showWaterMarkList: false,
-      selectedInputType: urls && urls.length > 1 ? 'gallery' : 'upload',
+      selectedInputType: urls && urls.length > 1 ? 'gallery' : 'text',
       text: '',
       color: '#000000',
       textSize: 62,
@@ -214,7 +214,11 @@ export default class extends Component {
   }
 
   onPositionChange = value => {
-    const { width, height } = this.getWatermarkLayer();
+    const { width, height } = this.getWatermarkLayer() || {};
+    if (!width && !height) {
+      return
+    }
+
     const [
       x,
       y,
@@ -364,14 +368,14 @@ export default class extends Component {
             />
             <span/>
           </label>
-          <label style={{ cursor: config.processWithCloudimage ? 'not-allowed' : 'auto' }}>
+          <label style={{ cursor: config.processWithCloudimage ? 'not-allowed' : undefined }}>
             {t['common.upload']}
             <input
               type="radio"
               value="upload"
               checked={selectedInputType === 'upload'}
               disabled={config.processWithCloudimage}
-              onChange={this.handleInputTypeChange}/>
+              onChange={!config.processWithCloudimage ? this.handleInputTypeChange : undefined}/>
             <span/>
           </label>
           <label>

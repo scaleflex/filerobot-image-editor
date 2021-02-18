@@ -9,7 +9,7 @@ export default {
     textMute: '#aaa',
     textWarn: '#f7931e',
     secondaryBgOpacity: 'rgba(0, 0, 0, 0.75)',
-    accent: '#00707c',
+    accent: '#1e262c',
     button: {
       primary: '#00707c',
       secondary: '#00707c',

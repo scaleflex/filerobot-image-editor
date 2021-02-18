@@ -4,11 +4,12 @@ import styled from 'styled-components';
 const ResizeWrapper = styled.div`
   color: ${props => props.theme.colors.text};
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   @media (max-width: 768px) {
-    display: flex;
     flex-direction: column;
-    justify-content: center;
   }
 `;
 
@@ -18,10 +19,11 @@ const ResizeBox = styled.div`
   justify-content: center;
   align-items: flex-end;
   padding: 8px 0 20px;
+  margin: 0 auto;
 
   @media (min-width: 768px) {
     width: 500px;
-    margin: 0 auto;
+    margin: 0;
   }
 `;
 

@@ -432,7 +432,7 @@ export default class ImageManipulator extends Component {
     const resizeOperation = this.isOperationExist(operations, 'resize');
     const orientationOperation = this.isOperationExist(operations, 'rotate');
     const focusPointOperation = this.isOperationExist(operations, 'focus_point');
-    const watermarkOperation = watermark && logoImage && watermark.applyByDefault;
+    const watermarkOperation = watermark && (logoImage || watermark.text) && watermark.applyByDefault;
 
     let cropQuery = '';
     let resizeQuery = '';
