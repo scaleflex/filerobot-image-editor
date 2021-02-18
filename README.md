@@ -1,6 +1,6 @@
 > Repository includes React version and Vanilla JS adapter for standalone usage
 
-[![Release](https://img.shields.io/badge/release-v3.12.12-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
+[![Release](https://img.shields.io/badge/release-v3.12.13-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Scaleflex team](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg)](https://www.scaleflex.it/en/home)
@@ -140,7 +140,7 @@ or use your custom color scheme
 Use the latest CDNized plugin version:
 
 ```html
-<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.12.12/filerobot-image-editor.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.12.13/filerobot-image-editor.min.js"></script>
 ```
 
 ### <a name="quick_start"></a>Quick start
@@ -392,18 +392,26 @@ example:
 ```
 config.theme = {
   colors: {
-    primaryBg: '#1e262c',
-    primaryBgHover: '#637381',
-    secondaryBg: '#263138',
-    secondaryBgHover: '#34444c',
-    text: '#F9FAFB',
-    textHover: '#fff',
+    primaryBg: '#ffffff',
+    primaryBgHover: '#f2f2f2',
+    secondaryBg: '#F8FAFB',
+    secondaryBgHover: '#DFE7ED',
+    secondaryBgOpacity: 'rgba(255,255,255, 0.75)',
+    text: '#5D6D7E',
+    textHover: '#1a2329',
     textMute: '#aaa',
     textWarn: '#f7931e',
-    secondaryBgOpacity: 'rgba(0, 0, 0, 0.75)',
-
-    border: '#161e23',
-    borderLight: '#70777f'
+    accent: '#D5D8DC',
+    button: {
+      primary: '#6879EB',
+      secondary: '#ffffff',
+      border: 'transparent',
+      hover: '#5064ea',
+      active: '#3c4ec7'
+    },
+    border: '#DFE7ED',
+    borderLight: '#e1e1e1',
+    disabledBg: 'rgba(255, 0, 0, 0.1)',
   },
   fonts: [
     { label: 'Arial', value: 'Arial' },

@@ -26,6 +26,16 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.13 - 2020-2-18
+### Fixed
+- The style of saveAs menu buttons.
+- Text watermark is not applied in modify/cloudimage mode.
+- Prohibit watermark positions square change if no watermark selected.
+- Making text watermark default if no watermark images provided.
+- Error while uploading watermark image.
+- Styles of un-selected watermark positions sqaure.
+- Resize tab's header style.
+
 ## 3.12.12 - 2020-2-15
 ### Added
 - `onSaveAs` property to filerobot upload mode config for showing & handling Save As New Image Button as sliding item next to save button.
