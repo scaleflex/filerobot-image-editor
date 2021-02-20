@@ -28,7 +28,7 @@ Types of changes:
 -------------
 ## 3.12.14 - 2020-2-20
 ### Improved
-- Update dependencies (styled-components, React, react-dom & @babel).
+- Update dependencies (styled-components v5.1.1, React v17.0.1, react-dom v17.0.1 & @babel).
 - Switching to automatic runtime for JSX transformation.
 - The styles of actions (save, save as, back, close, cancel & apply) buttons.
 
