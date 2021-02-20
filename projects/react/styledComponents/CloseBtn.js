@@ -7,40 +7,29 @@ const CloseBtn = styled.span.attrs(() => ({
   cursor: pointer;
   position: absolute;
   font-weight: normal;
-  top: ${props => props.t || '12px'};
-  right: ${props => props.r || 'auto'};
-  left: ${props => props.l || '12px'};
+  top: ${props => props.t || 0};
+  right: ${props => props.r || '12px'};
+  left: ${props => props.l};
   bottom: ${props => props.b || 'auto'};
-  font-size: ${props => props.fz || '12px'};
+  font-size: ${props => props.fz || '22px'};
   z-index: 10;
   speak: none;
-  background: ${props => props.theme.colors.secondaryBg};
-  border-color: ${props => props.theme.colors.secondaryBg};
   color: ${props => props.theme.colors.text};
-  text-transform: ${props => props.noCapitalStrs ? 'none' : 'capitalize'};
-  min-width: 62px;
-  height: 32px;
-  border: 0;
-  text-align: center;
-  line-height: 32px;
-  border-radius: 2px;
-  
+  font-family: 'filerobot-image-editor-font' !important;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  ${props => props.styles};
+  
+  &:hover {
+    filter: brightness(0.7);
+  }
   
   &:before {
-    ${props => !props.children && `content: '\\e90c'`};
-    ${props => props.beforeStyles};
-  }
-
-  &:hover {
-    background: ${props => getHoverColor(props.theme.colors.primaryBg)};
-    border-color: ${props => props.theme.colors.primaryBg};
-    color: ${props => props.theme.colors.text};  
-    ${props => props.hoverStyles};
+    content: '\\e90c';
   }
 `;
 

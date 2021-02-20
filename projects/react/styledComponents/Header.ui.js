@@ -7,10 +7,11 @@ const HeaderWrapper = styled.div`
 `;
 
 const HeaderTop = styled.div`
-  line-height: 35px;
   border-bottom: 1px solid ${props => props.theme.colors.primaryBg};
   background: ${props => props.theme.colors.primaryBg};
-  padding: 8px 0;
+  height: 46px;
+  line-height: 46px;
+  position: relative;
 `;
 
 const Title = styled.div`
@@ -21,10 +22,39 @@ const Title = styled.div`
 
 const ButtonsWrapper = styled.div`
   position: absolute;
-  right: 12px;
-  top: 8px;
+  top: 7px;
+  left: 12px;
   display: flex;
   align-items: center;
+`;
+
+const BackButtonWrapper = styled.div`
+  height: 32px;
+  display: flex;
+  align-items: center;
+
+  svg {
+    cursor: pointer;
+    padding: 9px 12px 9px 0;
+    width: 38px;
+    height: 32px;
+
+    path {
+      fill: ${props => props.theme.colors.text};
+    }
+
+    &:hover {
+      filter: brightness(0.7);
+    }
+  }
+`;
+
+const BackBtnSeparator = styled.div`
+  height: 100%;
+  width: 1px;
+  display: inline-block;
+  margin-right: 12px;
+  background: ${props => props.theme.colors.border};
 `;
 
 const CancelBtn = styled(Button)`
@@ -58,4 +88,13 @@ const ToolbarWrapper = styled.div`
   }
 `;
 
-export { HeaderWrapper, HeaderTop, Title, ButtonsWrapper, ToolbarWrapper, CancelBtn };
+export {
+  HeaderWrapper,
+  HeaderTop,
+  Title,
+  ButtonsWrapper,
+  BackButtonWrapper,
+  BackBtnSeparator,
+  ToolbarWrapper,
+  CancelBtn
+};

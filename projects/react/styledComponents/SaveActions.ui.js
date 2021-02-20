@@ -5,7 +5,6 @@ import { Button } from './Button';
 const SaveActions = styled.div`
   display: inline-block;
   margin-left: 1px;
-  position: relative;
 `;
 
 const SaveActionsSlideButton = styled(Button)`
@@ -29,8 +28,8 @@ const SaveActionsSlideButton = styled(Button)`
 const SaveActionsMenu = styled.div`
   position: absolute;
   top: 31px;
-  right: 0;
-  min-width: 150px;
+  left: 0;
+  min-width: 146px;
   z-index: 1111;
   box-shadow: 0 2px 4px rgba(77, 78, 78, 0.25);
   border-radius: 0 0 2px 2px;
