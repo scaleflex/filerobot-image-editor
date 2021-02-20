@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { ResizeWrapper, FieldSet, FieldLabel, FieldInput, ResizeBox } from '../../styledComponents';
 
 

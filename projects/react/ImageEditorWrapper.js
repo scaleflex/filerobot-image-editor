@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import ImageEditor from './ImageEditor';
 import { Container } from './styledComponents';
 import { ThemeProvider } from 'styled-components';

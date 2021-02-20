@@ -1,5 +1,4 @@
 import { render, unmountComponentAtNode } from 'react-dom';
-import React from 'react';
 import ImageEditor from '../react';
 
 

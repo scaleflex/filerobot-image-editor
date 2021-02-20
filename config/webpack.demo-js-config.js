@@ -1,6 +1,5 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-var _ = require('lodash');
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, "../examples/js/src/index.html"),

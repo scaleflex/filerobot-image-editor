@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import {
   CropWrapper, CustomLabel, FieldSet, FieldLabel, FieldInput, BlockRatioWrapper, BlockRatioBtn, BlockRatioIcon,
   CropBox, CropBoxInner, CropShape, CropLabel, CropShapeWrapper, ShapeAligner, PresetsWrapper

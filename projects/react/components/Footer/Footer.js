@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Footer, PreviousBtn, NextBtn, ResetBtn, Switcher, FullscreenBtn } from '../../styledComponents';
 import { toggleModalFullscreen } from '../../utils/full-screen-handle';
 

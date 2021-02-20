@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { AddWrapper, SettingsWrapper, FieldGroup, FieldCustomLabel } from '../../styledComponents/Shapes.ui';
 import { FieldInput } from '../../styledComponents';
 import Range from '../Range';

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { CloseBtn } from './CloseBtn';

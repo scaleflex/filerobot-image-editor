@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { FILTERS } from '../../config';
 import { EffectsWrapper } from '../../styledComponents';
 import Filter from './Filter';

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, useCallback } from 'react';
+import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import { debounce } from 'throttle-debounce';
 import { FocusPointContainer, FocusPointWrap, FocusPoint, FocusPointImg } from '../../styledComponents/Preview.ui';
 import { getInnerBoxSize } from '../../utils';

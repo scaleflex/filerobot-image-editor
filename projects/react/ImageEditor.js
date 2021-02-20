@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
 import { Footer, Header, PreResize, Preview } from './components/index';
 import imageType from 'image-type';

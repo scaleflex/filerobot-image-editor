@@ -23,7 +23,9 @@ module.exports = function (api) {
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-transform-arrow-functions",
     "@babel/plugin-syntax-jsx",
-    "@babel/plugin-transform-react-jsx",
+    ["@babel/plugin-transform-react-jsx", {
+      "runtime": "automatic"
+    }],
     [
       "@quickbaseoss/babel-plugin-styled-components-css-namespace",
       {"cssNamespace": "#filerobot-image-editor-root"}

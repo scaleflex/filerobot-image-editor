@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { AdjustWrapper } from '../../styledComponents';
 import Range from '../Range';
 

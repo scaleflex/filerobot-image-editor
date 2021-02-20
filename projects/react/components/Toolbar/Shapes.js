@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component, Fragment } from 'react';
 import { AddWrapper, ItemsWrapper, SettingsWrapper, ItemGroup, ItemIcon, FieldGroup, FieldCustomLabel } from '../../styledComponents/Shapes.ui';
 import { SHAPES_VARIANTS, STANDARD_FONTS } from '../../config';
 import { FieldInput } from '../../styledComponents';
@@ -16,7 +16,7 @@ export default class Add extends Component {
     const updatePropertyFromEvent = (e) => shapeOperations.updateShape({ [e.target.name]: e.target.value });
 
     const defaultSettings = (
-      <React.Fragment key="default-settings">
+      <Fragment key="default-settings">
         <Range
           label={t['common.opacity']}
           min={0}
@@ -45,7 +45,7 @@ export default class Add extends Component {
             min={0}
           />
         </FieldGroup>
-      </React.Fragment>
+      </Fragment>
     );
 
     const commonSettings = (
@@ -72,7 +72,7 @@ export default class Add extends Component {
         break;
       case SHAPES_VARIANTS.TEXT:
         const textFontField = (
-          <React.Fragment key="text-group-fields">
+          <Fragment key="text-group-fields">
             <FieldGroup>
               <FieldCustomLabel>Text</FieldCustomLabel>
               <FieldInput
@@ -107,7 +107,7 @@ export default class Add extends Component {
                 min={0}
               />
             </FieldGroup>
-          </React.Fragment>
+          </Fragment>
         );
         shownSettings.unshift(textFontField, commonSettings);
         break;

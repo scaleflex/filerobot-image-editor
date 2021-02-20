@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component, createRef } from 'react';
 import { Canvas } from '../../styledComponents';
 import {
   b64toBlob,
@@ -59,8 +59,8 @@ export default class ImageManipulator extends Component {
     this.CamanInstanceZoomed = null;
     this.tempCanvasElement = null;
 
-    this.originalCanvas = React.createRef();
-    this.editedCanvas = React.createRef();
+    this.originalCanvas = createRef();
+    this.editedCanvas = createRef();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {

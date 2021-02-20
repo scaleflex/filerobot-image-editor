@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { DarkBtn, OrientationWrapper, RotateButton, RotateIcon, RotateWrapper, ButtonGroup } from '../../styledComponents';
 import Range from '../Range'
 

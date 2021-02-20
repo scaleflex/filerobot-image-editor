@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Toolbar, NoClickOverlay, NoClickToolbar } from '../../styledComponents';
 import Tool from './Tool';
 import Effects from './Effects';

@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import { Component, createRef } from 'react';
 import { PreviewCanvas } from '../styledComponents';
 import { getWatermarkSquaredPosition } from '../utils';
 import { PREVIEW_CANVAS_ID, SHAPES_VARIANTS, WATERMARK_UNIQUE_KEY } from '../config';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { EffectWrapper, EffectIcon, EffectLabel} from '../../styledComponents';
 import { getIcon, getLabel } from '../../utils';
 
