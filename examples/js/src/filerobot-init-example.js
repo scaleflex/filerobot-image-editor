@@ -45,6 +45,7 @@ ImageEditorDownload = new FilerobotImageEditor({
       widthLimit: 2000,
       heightLimit: 2000
     },
+    // replaceCloseWithBackButton: true - default: false,
     beginCropArea: 1,
     //cropBeforeEdit: {
     //  width: 400,
@@ -85,14 +86,6 @@ ImageEditorDownload = new FilerobotImageEditor({
     showGoBackBtn: false,
     showInModal: true,
     noCapitalStrs: false, // default: false
-    // closeButtonProps: {
-    //   label: 'Back',
-    //   noLabel: false,
-    //   title: 'Back to main',
-    //   styles: "color: rgba(255, 255, 255, 0.75);",
-    //   hoverStyles: "color: rgba(255, 255, 255, 1); text-decoration: underline;",
-    //   beforeStyles: "color: rgba(255, 255, 255, 0.5)"
-    // },
     // minCropAreaWidth: 600, //default: undefined
     // minCropAreaHeight: 500, // default: undefined
     //cropPresets: [
@@ -146,8 +139,8 @@ const configUpload = {
   },
   // theme: {
   //   colors: customThemeColors,
-
   // },
+  replaceCloseWithBackButton: true,
   isLowQualityPreview: true,
   reduceBeforeEdit: {
     mode: 'manual',

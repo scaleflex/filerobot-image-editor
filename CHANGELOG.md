@@ -26,6 +26,18 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.14 - 2020-2-20
+### Improved
+- Update dependencies (styled-components, React, react-dom & @babel).
+- Switching to automatic runtime for JSX transformation.
+- The styles of actions (save, save as, back, close, cancel & apply) buttons.
+
+### Added
+- `replaceCloseWithBackButton` for replacing the close icon at the top right with a back button at the top left.
+
+### Removed
+- `closeButtonProps` property from the config and replaced with the above `replaceCloseWithBackButton`.
+
 ## 3.12.13 - 2020-2-18
 ### Fixed
 - The style of saveAs menu buttons.

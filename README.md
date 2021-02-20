@@ -1,6 +1,6 @@
 > Repository includes React version and Vanilla JS adapter for standalone usage
 
-[![Release](https://img.shields.io/badge/release-v3.12.13-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
+[![Release](https://img.shields.io/badge/release-v3.12.14-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Scaleflex team](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg)](https://www.scaleflex.it/en/home)
@@ -140,7 +140,7 @@ or use your custom color scheme
 Use the latest CDNized plugin version:
 
 ```html
-<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.12.13/filerobot-image-editor.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.12.14/filerobot-image-editor.min.js"></script>
 ```
 
 ### <a name="quick_start"></a>Quick start
@@ -466,22 +466,11 @@ The id used for the editor's wrapper element whether it's inside a modal or an e
 
 Disabling the auto capitalizing of first letter of strings using (text-transform) css property
 
-### `closeButtonProps`: object
+### `replaceCloseWithBackButton`: boolean
 
-**default**: null
+**default**: false
 
-Customizing the top left corner close button to fit your needs
-example:
-```
-config.closeButtonProps = {
-  label: 'Back',
-  noLabel: false,
-  title: 'Back to main',
-  styles: "color: rgba(255, 255, 255, 0.75);",
-  hoverStyles: "color: rgba(255, 255, 255, 1); text-decoration: underline;",
-  beforeStyles: "color: rgba(255, 255, 255, 0.5)"
-}
-```
+Removes the iconed close button on the top right & replaces it with an iconed back button on the top left.
 
 ##### `label`: string
 
