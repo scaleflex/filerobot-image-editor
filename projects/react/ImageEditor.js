@@ -190,9 +190,12 @@ export default class extends Component {
     if (this._isMounted) {
       const editorWrapperId = this.props.config.elementId;
       const canvas = getCanvasNode(editorWrapperId);
-      props.latestCanvasSize = {
-        width: canvas.width,
-        height: canvas.height
+
+      if (canvas) {
+        props.latestCanvasSize = {
+          width: canvas.width,
+          height: canvas.height
+        }
       }
 
       this.setState(props, callback);
