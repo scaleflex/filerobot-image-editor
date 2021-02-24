@@ -92,6 +92,8 @@ const Wrapper = styled.div`
   min-height: 520px;
   overflow: ${p => p.isLoading ? 'hidden' : 'auto'};
   font-size: 12px;
+  display: flex;
+  flex-direction: column;
   
   .filerobot-original-canvas {
     visibility: hidden;
