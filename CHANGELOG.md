@@ -34,11 +34,11 @@ Types of changes:
 
 ### Added
 - `finishButtonLabel` for customizing the label of the finish button.
-- `imageName` & `imageMime` to the returned object in the callbacks passed in default/downlaod mode.
+- `imageName` & `imageMime` to the returned object in the callbacks passed in default/download mode.
 
 ### Fixed
-- The icon of fullscreen at the footer which wasn't shown for some OS users.
-- The issue of not changing width or height of image before start editing.
+- The icon of fullscreen at the footer wasn't shown for some OS users.
+- The issue of not changing the width or height of the image before start editing.
 
 ## 3.12.14 - 2020-2-20
 ### Improved
