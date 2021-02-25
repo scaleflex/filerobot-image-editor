@@ -1,6 +1,6 @@
 {
   "name": "filerobot-image-editor",
-  "version": "3.12.14",
+  "version": "3.12.15",
   "main": "dist/index.js",
   "description": "Edit, resize, and filter any image!",
   "author": "scaleflex",
@@ -22,7 +22,9 @@
     "js-sha1": "^0.6.0",
     "styled-components": "5.1.1",
     "throttle-debounce": "^2.1.0",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.17",
@@ -51,10 +53,6 @@
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.2"
   },
-  "peerDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
-  },
   "scripts": {
     "start-demo-js": "webpack-dev-server --mode development --config config/webpack.demo-js-config.js",
     "start-demo-react": "webpack-dev-server --mode development --config config/webpack.demo-react-config.js",
@@ -68,7 +66,7 @@
     "build": "npm run clean-build && npm run build-new && ./scripts/copy_build.sh",
     "build-w": "npm run clean-build && npm run build-new && .\\scripts\\copy_build.sh",
     "clean-dist": "rm -rf dist",
-    "dist": "npm run clean-dist && npx babel projects/react --out-dir dist --copy-files",
+    "dist": "npm run clean-dist && npx babel src --out-dir dist --copy-files",
     "deploy": "gh-pages -d examples/js/dist",
     "publish-demo": "npm run build-demo-js && npm run deploy"
   }

@@ -1,6 +1,6 @@
 > Repository includes React version and Vanilla JS adapter for standalone usage
 
-[![Release](https://img.shields.io/badge/release-v3.12.14-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
+[![Release](https://img.shields.io/badge/release-v3.12.15-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Scaleflex team](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg)](https://www.scaleflex.it/en/home)
@@ -140,7 +140,7 @@ or use your custom color scheme
 Use the latest CDNized plugin version:
 
 ```html
-<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.12.14/filerobot-image-editor.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/filerobot-image-editor/3.12.15/filerobot-image-editor.min.js"></script>
 ```
 
 ### <a name="quick_start"></a>Quick start
@@ -164,7 +164,7 @@ Initialization of Filerobot Image Editor plugin.
 
 **`callbacks.onOpen(src: string/blob)`**: function - triggered when modal is opened
 
-**`callbacks.onBeforeComplete({ status: string, canvas: canvas element })`**: function - triggered before onComplete; if it returns `false`, it cancels the default behaviour and you can use canvas element to upload to a 3rd-party service
+**`callbacks.onBeforeComplete({ status: string, imageName: string, imageMime: string, canvas: canvas element })`**: function - triggered before onComplete; if it returns `false`, it cancels the default behaviour and you can use canvas element to upload to a 3rd-party service
 
 **`callbacks.onComplete(url: string, file: object)`**: function - triggered on completion and returnes the URL of the edited image
 
@@ -315,7 +315,7 @@ config.translations = {
 };
 ```
 
-[See all translation keys here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/i18n/en.js)
+[See all translation keys here](https://github.com/scaleflex/filerobot-image-editor/blob/master/src/assets/i18n/en.js)
 
 ### `reduceBeforeEdit`: object
 
@@ -385,7 +385,7 @@ Color schemes; currently two themes are available: 'dark', 'light'. There is a p
 
 ### `theme`: object
 
-Possibility to make your custom theme [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/theme/dark.js).
+Possibility to make your custom theme [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/src/assets/theme/dark.js).
 
 example:
 
@@ -426,11 +426,11 @@ config.theme = {
 
 ### `cropPresets`: object
 
-Add custom crop templates. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/cropPresets.js)
+Add custom crop templates. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/src/assets/templates/cropPresets.js)
 
 ### `resizePresets`: object
 
-Add custom resize templates. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/projects/react/assets/templates/resizePresets.js)
+Add custom resize templates. [See the example here](https://github.com/scaleflex/filerobot-image-editor/blob/master/src/assets/templates/resizePresets.js)
 
 ### `beginCropArea`: number | [0-1] - default: 1 (image size)
 The crop area size shown/used automatically on starting crop.
@@ -440,12 +440,6 @@ The minimum size in pixels for crop area's width custom resizing, the user won't
 
 ### `minCropAreaHeight`: number | default: undefined (no minimum)
 The minimum size in pixels for crop area's height custom resizing, the user won't be able to resize the crop area height less than that size unless the crop area is resized through some crop preset.
-
-### `showGoBackBtn`: bool 
-
-**default**: false
-
-Display back button all the time, duplication of cross button.
 
 ### `showInModal`: bool
 
@@ -472,42 +466,11 @@ Disabling the auto capitalizing of first letter of strings using (text-transform
 
 Removes the iconed close button on the top right & replaces it with an iconed back button on the top left.
 
-##### `label`: string
+### `finishButtonLabel`: string
 
-**default**: Close
+**default**: download for default mode - save for other modes
 
-The label of the button to be shown for the user.
-
-##### `noLabel`: boolean
-**default**: false
-
-for choosing whether to show or hide the string label of the button.
-
-##### `title`: string
-
-**default**: Close window
-
-The title of the button to be shown for the user when hovering the mouse on the button and leave the mouse hovered a bit.
-
-##### `styles`: object
-
-**default**: null
-
-Styles passed to the main styles of button's styles and it must be in normal CSS format.
-
-##### `beforeStyles`: object
-
-**default**: null
-
-Styles passed to the `:before` pseudo class of button's styles and it must be in normal CSS format.
-
-##### `hoverStyles`: object
-
-**default**: null
-
-Styles passed to the `:hover` pseudo class of button's styles and it must be in normal CSS format.
-
-##### Any other acceptable property/event to HTML span element is accepted (ex., onContextMenu ...etc).
+The label shown in the finish button that triggers the completition methods & finish editing.
 
 ## <a name="filerobot_integration"></a>Filerobot Integration
 

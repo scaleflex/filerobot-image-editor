@@ -26,6 +26,20 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.15 - 2020-2-25
+### Improved
+- The styles of footer for the editor with changing the full-screen icon.
+- Moving react v17.0.1 & react-dom v17.0.1 from peerDependencies to dependencies for working with projects have lower versions of react.
+- Improving full-screen logic.
+
+### Added
+- `finishButtonLabel` for customizing the label of the finish button.
+- `imageName` & `imageMime` to the returned object in the callbacks passed in default/downlaod mode.
+
+### Fixed
+- The icon of fullscreen at the footer which wasn't shown for some OS users.
+- The issue of not changing width or height of image before start editing.
+
 ## 3.12.14 - 2020-2-20
 ### Improved
 - Update dependencies (styled-components v5.1.1, React v17.0.1, react-dom v17.0.1 & @babel).
