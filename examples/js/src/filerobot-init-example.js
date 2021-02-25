@@ -1,4 +1,4 @@
-import '../../../projects/js/index';
+import '../../../src/connectors/js/index';
 
 
 const buttonEditDownload = document.getElementById('edit-btn-download');

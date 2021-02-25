@@ -1,5 +1,5 @@
 # .npmignore
-projects
+src
 examples
 config
 build

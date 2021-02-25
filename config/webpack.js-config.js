@@ -15,7 +15,7 @@ const banner = `
 
 module.exports = (env = {}) => {
   return {
-    entry: path.join(__dirname, "../projects/js/index.js"),
+    entry: path.join(__dirname, "../src/connectors/js/index.js"),
     output: {
       path: path.join(__dirname, `../build/${pkg.version}`),
       filename: `${pkg.name}.min.js`,

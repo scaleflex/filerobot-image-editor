@@ -1,4 +1,4 @@
-import { getBaseUrl } from './';
+import { getBaseUrl } from '.';
 
 
 export const getBaseAPI = (baseAPI, container, platform) =>

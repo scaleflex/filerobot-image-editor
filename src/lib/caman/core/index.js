@@ -1,5 +1,5 @@
 import Module from './module';
-import { Util, $ } from '../core/util';
+import { Util, $ } from './util';
 import { Log } from './logger';
 import Store from './store';
 import Renderer from './renderer';

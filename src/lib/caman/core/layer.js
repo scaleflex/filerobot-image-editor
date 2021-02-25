@@ -1,5 +1,5 @@
-import { Util, $ } from '../core/util';
-import Blender from '../core/blander';
+import { Util, $ } from './util';
+import Blender from './blander';
 
 /*
  * decaffeinate suggestions:

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { render } from 'react-dom';
-import FilerobotImageEditor from '../../../projects/react';
+import FilerobotImageEditor from '../../../src';
 
 
 const App = () => {
@@ -30,7 +30,7 @@ render(<App/>, document.getElementById('app'));
 
 //import { Component } from 'react';
 //import { render } from 'react-dom';
-//import FilerobotImageEditor from '../../../projects/react';
+//import FilerobotImageEditor from '../../../src';
 
 
 //const config = {

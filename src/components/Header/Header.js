@@ -3,7 +3,7 @@ import {
   HeaderWrapper, HeaderTop, Title, ButtonsWrapper, BackButtonWrapper, BackBtnSeparator,
   ToolbarWrapper, CancelBtn, Button, CloseBtn
 } from '../../styledComponents';
-import { Toolbar } from '../';
+import { Toolbar } from '..';
 import { ON_CLOSE_STATUSES } from '../../config';
 import SaveActions from './SaveActions';
 

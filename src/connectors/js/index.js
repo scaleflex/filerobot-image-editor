@@ -1,5 +1,5 @@
 import { render, unmountComponentAtNode } from 'react-dom';
-import ImageEditor from '../react';
+import ImageEditor from '../../';
 
 
 class FilerobotImageEditor {
