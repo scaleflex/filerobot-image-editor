@@ -13,12 +13,14 @@ export default class extends Component {
       activeTab, onRevert, apply, onClose, processWithCloudService, processWithFilerobot,
       handleSave, t, config
     } = this.props;
-    const { tools, replaceCloseWithBackButton, noCapitalStrs, filerobot } = config;
+    const { tools, replaceCloseWithBackButton, noCapitalStrs, filerobot, finishButtonLabel } = config;
     const isOneTool = tools.length === 1;
     const filteredName = activeTab === 'rotate' ? 'orientation' : activeTab;
-    const onFinishButtonLabel = (!processWithCloudService && !processWithFilerobot)
+    const onFinishButtonLabel = finishButtonLabel || (
+      (!processWithCloudService && !processWithFilerobot)
       ? t['toolbar.download']
-      : t['toolbar.save'];
+      : t['toolbar.save']
+    );
     const applyAndSave = () => { apply(handleSave); };
     const cancelBtnClosingFn = () => onClose(ON_CLOSE_STATUSES.TOOLBAR_CANCEL_BTN_CLICKED);
 

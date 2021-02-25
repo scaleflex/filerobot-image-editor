@@ -418,7 +418,7 @@ function getIconByName(name) {
       char = 'T';
       break;
     case 'full-screen':
-      char = '\\26F6';
+      char = '\\e91c';
       break;
     default:
       return;

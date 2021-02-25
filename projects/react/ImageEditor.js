@@ -241,17 +241,20 @@ export default class extends Component {
 
   onDownloadImage = () => {
     const { onBeforeComplete } = this.props;
-    const { downloadImage, getResultCanvas } = this.state;
+    const { downloadImage, getResultCanvas, imageMime, imageName } = this.state;
     const canvas = getResultCanvas();
-    const isDownload = onBeforeComplete ? onBeforeComplete({ status: 'before-complete', canvas }) : true;
+    const returnedImgObject = { imageMime, imageName, canvas }
+    const isDownload = onBeforeComplete
+      ? onBeforeComplete({ status: 'before-complete', ...returnedImgObject })
+      : true;
 
     if (isDownload) {
       downloadImage(() => {
-        this.props.onComplete({ status: 'success', canvas });
+        this.props.onComplete({ status: 'success', ...returnedImgObject });
         this.props.onClose(ON_CLOSE_STATUSES.IMAGE_DOWNLOADED);
       });
     } else {
-      this.props.onComplete({ status: 'success', canvas });
+      this.props.onComplete({ status: 'success', ...returnedImgObject });
       this.props.onClose(ON_CLOSE_STATUSES.IMAGE_EDITS_COMPLETED);
     }
   }

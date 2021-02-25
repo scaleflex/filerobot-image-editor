@@ -54,6 +54,7 @@ ImageEditorDownload = new FilerobotImageEditor({
     translations: {
       en: {}
     },
+    // finishButtonLabel: 'Save',
     language: 'en',
     watermark: {
       url: 'https://cdn.scaleflex.it/demo/filerobot.png',
@@ -83,7 +84,6 @@ ImageEditorDownload = new FilerobotImageEditor({
         { label: 'Verdana', value: 'Verdana' }
       ]
     },
-    showGoBackBtn: false,
     showInModal: true,
     noCapitalStrs: false, // default: false
     // minCropAreaWidth: 600, //default: undefined

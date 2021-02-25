@@ -1320,7 +1320,7 @@ export default class ImageManipulator extends Component {
   }
 
   render() {
-    const editorWrapperId = this.props.config.elementId = '';
+    const editorWrapperId = this.props.config.elementId;
 
     return (
       <>

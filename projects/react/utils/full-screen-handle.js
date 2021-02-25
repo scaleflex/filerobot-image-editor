@@ -1,13 +1,13 @@
 import { MODAL_ID } from '../config';
 
 export const toggleModalFullscreen = (configElementId) => {
-  // It should be .getElementById but it is not as we user might have multiple blocks with same ID (which is not right)
-  // but we do that for making sure right implement most of the time
+  // It should be .getElementById but it is not as user might have multiple blocks with same ID (which is not right)
+  // but we do that for making sure right implementation most of the time
   // so that we would have the last added block with that ID to be fullscreened as most probably it would be the plugin.
-  const modalElems = document.querySelectorAll(`#${configElementId || MODAL_ID}`);
-  const modal = modalElems[modalElems.length - 1];
+  const foundElements = document.querySelectorAll(`#${configElementId || MODAL_ID}`);
+  const element = foundElements[foundElements.length - 1];
 
-  if (!modal) { return; }
+  if (!element) { return; }
 
   document.fullscreenElement = document.fullscreenElement || document.mozFullscreenElement
     || document.msFullscreenElement || document.webkitFullscreenDocument;
@@ -15,11 +15,11 @@ export const toggleModalFullscreen = (configElementId) => {
   document.exitFullscreen = document.exitFullscreen || document.mozExitFullscreen
     || document.msExitFullscreen || document.webkitExitFullscreen;
 
-  modal.requestFullscreen = modal.requestFullscreen || modal.mozRequestFullscreen
-    || modal.msRequestFullscreen || modal.webkitRequestFullscreen;
+  element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen
+    || element.msRequestFullscreen || element.webkitRequestFullscreen;
 
   if (!document.fullscreenElement) {
-    modal.requestFullscreen()
+    element.requestFullscreen()
       .catch(err => {
         alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
       });
