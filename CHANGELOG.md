@@ -26,12 +26,12 @@ Types of changes:
 - ...
 
 -------------
-## 3.12.16 - 2020-3-05
+## 3.12.16 - 2021-3-05
 ### Added
 - `exitFullscreenModal` callback function inside `onSaveAs` function for turning the fullscreen off in case it's opened.
-- `dontCleanQuery` property inside `cloudimage` object for avoid cleaning the query of the passed image's url and appending it to the cloudimage url.
+- `dontCleanQuery` property inside `cloudimage` object to avoid cleaning the query of the passed image's URL and appending it to the cloudimage URL.
 
-## 3.12.15 - 2020-2-25
+## 3.12.15 - 2021-2-25
 ### Improved
 - The styles of footer for the editor with changing the full-screen icon.
 - Moving react v17.0.1 & react-dom v17.0.1 from peerDependencies to dependencies for working with projects have lower versions of react.
@@ -45,7 +45,7 @@ Types of changes:
 - The icon of fullscreen at the footer wasn't shown for some OS users.
 - The issue of not changing the width or height of the image before start editing.
 
-## 3.12.14 - 2020-2-20
+## 3.12.14 - 2021-2-20
 ### Improved
 - Update dependencies (styled-components v5.1.1, React v17.0.1, react-dom v17.0.1 & @babel).
 - Switching to automatic runtime for JSX transformation.
@@ -57,7 +57,7 @@ Types of changes:
 ### Removed
 - `closeButtonProps` property from the config and replaced with the above `replaceCloseWithBackButton`.
 
-## 3.12.13 - 2020-2-18
+## 3.12.13 - 2021-2-18
 ### Fixed
 - The style of saveAs menu buttons.
 - Text watermark is not applied in modify/cloudimage mode.
@@ -67,7 +67,7 @@ Types of changes:
 - Styles of un-selected watermark positions square.
 - Resize tab's header style.
 
-## 3.12.12 - 2020-2-15
+## 3.12.12 - 2021-2-15
 ### Added
 - `onSaveAs` property to filerobot upload mode config for showing & handling Save As New Image Button as sliding item next to save button.
 - `keepPropsAndMeta` property to uploadParams of filerobot upload mode config for keeping the provided `imageProperties` & `imageMeta` in the saved image.
@@ -85,7 +85,7 @@ Types of changes:
 - Styles of resizing image before editing warning.
 - Moving `imageProperties`, `imageMeta` & `imageName` to uploadParams object of filerobot upload mode.
 
-## 3.12.11 - 2020-1-6
+## 3.12.11 - 2021-1-6
 ### Added
 - `closeButtonProps` property to the config for customizing the top left corner close button (ex. label & styles).
 
@@ -93,7 +93,7 @@ Types of changes:
 - Plugin's container recognition (for being fullscreened) logic improved.
 - Changed the place of fullscreen button to be bottom left corner besides undo/redo operations.
 
-## 3.12.10 - 2020-1-4
+## 3.12.10 - 2021-1-4
 ### Added
 - Close button (x) at the top left of the editor.
 
