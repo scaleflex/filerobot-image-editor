@@ -133,7 +133,8 @@ const configUpload = {
       //   // ... Any additional image meta to be added.
       // },
     },
-    // onSaveAs: (triggerUpload) => {
+    // onSaveAs: (triggerUpload, closeFullscreenModal) => {
+    //   closeFullscreenModal()
     //   triggerUpload();
     // }
   },
@@ -194,9 +195,10 @@ ImageEditorUpload = new FilerobotImageEditor(configUpload, onCompleteUpload);
 
 const configModify = {
   elementId: 'image-editor-modify',
-  //cloudimage: {
-  //  token: 'scaleflex'
-  //},
+  cloudimage: {
+    // token: 'scaleflex'
+    // dontCleanQuery: false
+  },
   filerobot: {
     token: 'fumwdnfm', // 'fumwdnfm' - sealing token, 'fusqadtm' - not sealing token
     // doNotPrefixURL: true,
@@ -227,7 +229,7 @@ const configModify = {
     defaultText: 'Filerobot.....'
   },
   imageSealing: {
-   enabled: true,
+   enabled: false,
    salt: 'test',
    char_count: 10,
    include_params: ['wat', 'wat_url', 'wat_opacity', 'wat_scale', 'wat_pad', 'wat_gravity', 'wat_pos'], // optional, by default include all

@@ -22,6 +22,7 @@ import Cropper from 'cropperjs';
 import uuidv4 from 'uuid/v4';
 import '../../utils/canvas-round';
 import '../../utils/map-number-range';
+import { toggleModalFullscreen } from '../../utils/full-screen-handle';
 
 
 const INITIAL_PARAMS = {
@@ -260,9 +261,8 @@ export default class ImageManipulator extends Component {
     } = this.props;
     const imageMime = this.getFinalImageMime();
     const imageNameFromUrl = this.getFinalImageName();
-    const { filerobot = {}, platform = 'filerobot' } = config;
+    const { filerobot = {}, platform = 'filerobot', elementId, cloudimage = {} } = config;
     const { dir, ...uploadParams } = filerobot.uploadParams || {};
-    const src = this.props.src.split('?')[0];
     const canvas = this.editedCanvas.current;
     const baseAPI = getBaseAPI(filerobot.baseAPI, filerobot.container, platform);
     const self = this;
@@ -326,11 +326,13 @@ export default class ImageManipulator extends Component {
       }
 
       if (isSaveAs && filerobot.onSaveAs) {
-        filerobot.onSaveAs(triggerUpload);
+        const exitFullscreenModal = () => toggleModalFullscreen(elementId, true)
+        filerobot.onSaveAs(triggerUpload, exitFullscreenModal);
       } else {
         triggerUpload();
       }
     } else {
+      const src = cloudimage.dontCleanQuery ? this.props.src : this.props.src.split('?')[0];
       const resultOperations = initialZoom !== 1 ? operationsOriginal : operations;
       const allowedOperations = resultOperations.filter(({ operation }) => CLOUDIMAGE_OPERATIONS.includes(operation));
       const url = this.generateCloudimageURL(allowedOperations, src.replace(/https?:\/\/scaleflex.ultrafast.io\//, ''));
@@ -463,7 +465,9 @@ export default class ImageManipulator extends Component {
         this.getFocusPointArguments(focusPointOperation.props);
     }
 
-    original = original.split('?')[0]; // remove quesry string from original url
+    if (!cloudimage.dontCleanQuery) {
+      original = original.split('?')[0]; // remove quesry string from original url
+    }
     original = original.replace(baseURL, ''); // remove duplication in case when original url already include cdn prefix
 
     let paramsStr = cropQuery + resizeQuery + orientationQuery + watermarkQuery + focusPointQuery;
@@ -476,7 +480,10 @@ export default class ImageManipulator extends Component {
       );
     }
 
-    return baseURL + original + (paramsStr ? '?' : '') + paramsStr;
+    const originalImgCdnized = baseURL + original
+    const queryPrefixOperator = originalImgCdnized.indexOf('?') === -1 ? '?' : '&'
+
+    return `${originalImgCdnized}${paramsStr ? `${queryPrefixOperator}${paramsStr.replace(/&$/, '')}` : ''}`;
   }
 
   /* Filters and Effects */
