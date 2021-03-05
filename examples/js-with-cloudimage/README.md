@@ -46,6 +46,10 @@ Your Cloudimage customer token.
 Cloudimage account to get one. The subscription takes less than a
 minute and is totally free.
 
+#### `cloudimage.dontCleanQuery`: boolean (optional)
+
+Normally the passed image's url's query is cleaned before processing to cloudimage url for avoiding conflicts or overriding, but with this property if you passed it `true` no query cleaning would be happen but it is not guaranteed that the results would be as expected.
+
 #### `onComplete(url: string)`: function (required)
 
 Callback, triggers on complete processing image.

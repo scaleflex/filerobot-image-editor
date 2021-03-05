@@ -50,13 +50,15 @@ minute and is totally free.
 
 Filerobot Container name.
 
-#### `filerobot.onSaveAs(triggerUpload: function)`: function (optional - but for showing saveAs button then it's required)
+#### `filerobot.onSaveAs(triggerUpload: function, exitFullscreenModal: function)`: function (optional - but for showing saveAs button then it's required)
 
 The save as new image button is shown when this function is provided, and it is called after clicking the save as button and before uploading process as uploading is called through manually through this function.
 
 * `triggerUpload(overrides: object)`: function - The function that triggers the upload process to be handled from the plugin's side.
 
   * **overrides**: object (default: {}) - Object which overrides the passed properties/values (uploadParams) at the filerobot config if it is not provided or some property is passed and another not the original property passed in the uploadParams object of filerobot config would be used. it accepts the exact properties of `filerobot.uploadParams` below.
+
+* `exitFullscreenModal`: a callback function for closing the modal fullscreen off in case it is opened or fullscreened.
 
 #### `filerobot.uploadParams`: object
 

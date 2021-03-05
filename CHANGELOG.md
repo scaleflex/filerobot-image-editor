@@ -26,6 +26,11 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.16 - 2020-3-05
+### Added
+- `exitFullscreenModal` callback function inside `onSaveAs` function for turning the fullscreen off in case it's opened.
+- `dontCleanQuery` property inside `cloudimage` object for avoid cleaning the query of the passed image's url and appending it to the cloudimage url.
+
 ## 3.12.15 - 2020-2-25
 ### Improved
 - The styles of footer for the editor with changing the full-screen icon.
