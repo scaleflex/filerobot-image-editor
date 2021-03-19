@@ -224,6 +224,9 @@ export default class ImageManipulator extends Component {
   }
 
   applyTransformationsToNewCanvas = (rounded = false, oldCanvas = this.tempCanvasElement, nextCanvas = this.editedCanvas.current) => {
+    // If the old canvas is the same as new don't do anything and return any of them as they're same!
+    if (oldCanvas === nextCanvas) { return nextCanvas; }
+
     const { width, height } = oldCanvas;
     const nextContext = nextCanvas.getContext('2d');
 
@@ -263,7 +266,7 @@ export default class ImageManipulator extends Component {
     const imageNameFromUrl = this.getFinalImageName();
     const { filerobot = {}, platform = 'filerobot', elementId, cloudimage = {} } = config;
     const { dir, ...uploadParams } = filerobot.uploadParams || {};
-    const canvas = this.editedCanvas.current;
+    const canvas = initialZoom !== 1 ? this.originalCanvas.current : this.editedCanvas.current;
     const baseAPI = getBaseAPI(filerobot.baseAPI, filerobot.container, platform);
     const self = this;
 
@@ -354,7 +357,7 @@ export default class ImageManipulator extends Component {
   }
 
   getResultCanvas = () => {
-    const canvas = this.editedCanvas.current;
+    const canvas = this.props.initialZoom !== 1 ? this.originalCanvas.current : this.editedCanvas.current;
 
     this.mergeCanvases(canvas);
 
@@ -699,6 +702,10 @@ export default class ImageManipulator extends Component {
 
   applyCrop = (callback = () => {}) => {
     const { initialZoom, updateState, cropDetails, roundCrop } = this.props;
+    // Rounding for matching the same rounded value at the crop inputs.
+    Object.keys(cropDetails).forEach((key) => {
+      cropDetails[key] = Math.round(cropDetails[key]);
+    })
     const { width, height, x, y } = cropDetails;
 
     updateState({ isShowSpinner: true }, () => {

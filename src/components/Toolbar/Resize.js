@@ -62,7 +62,7 @@ export default class extends Component {
             <FieldLabel>{t['common.width']}</FieldLabel>
             <FieldInput
               fullSize
-              value={parseInt(canvasDimensions.width, 10) || ''}
+              value={Math.round(canvasDimensions.width) || ''}
               onChange={this.changeWidth}
             />
           </FieldSet>
@@ -80,7 +80,7 @@ export default class extends Component {
             <FieldLabel>{t['common.height']}</FieldLabel>
             <FieldInput
               fullSize
-              value={parseInt(canvasDimensions.height, 10) || ''}
+              value={Math.round(canvasDimensions.height) || ''}
               onChange={this.changeHeight}
             />
           </FieldSet>
