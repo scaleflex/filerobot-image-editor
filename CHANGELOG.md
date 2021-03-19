@@ -26,6 +26,10 @@ Types of changes:
 - ...
 
 -------------
+## 3.12.17 - 2021-3-19
+### Fixed
+- Issue of cropping dimensions not accurate.
+
 ## 3.12.16 - 2021-3-05
 ### Added
 - `exitFullscreenModal` callback function inside `onSaveAs` function for turning the fullscreen off in case it's opened.
