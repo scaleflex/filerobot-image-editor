@@ -1,0 +1,1 @@
+# Filerobot Image Editor (filerobot-image-editor)
