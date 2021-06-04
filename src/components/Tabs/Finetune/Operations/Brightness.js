@@ -1,30 +1,25 @@
-import React, { useContext, useState } from 'react';
-import { fabric } from 'fabric';
+import React from 'react';
 
-import AppContext from '../../../../AppContext';
 import { FintuneOperationWrapper } from './Operations.styled';
+import useImageFilter from '../../../../hooks/useImageFilter';
 
 const Brightness = () => {
-  const { canvas, canvasedImage } = useContext(AppContext);
-  const [value, setValue] = useState(0);
-  console.log(canvasedImage)
-  console.log(canvasedImage.filters)
+  const [value, setValue] = useImageFilter({
+    filterClassNameInLib: 'Brighten',
+    valueObject: {
+      brightness: 0
+    }
+  });
 
-  const test = (e) => {
-    setValue(e.target.value)
-    canvasedImage.filters.push([
-      new fabric.Image.filters.Contrast({
-        contrast: e.target.value
-      })
-    ]
-    )
-    canvasedImage.applyFilters();
-    canvas.renderAll();
+  const changeValue = (e) => {
+    setValue({
+      brightness: +e.target.value
+    });
   }
 
   return (
     <FintuneOperationWrapper>
-      <input type="range" min="-1" max="1" value={value} onChange={test} />
+      <input type="range" min="-1" step="0.1" max="1" value={value.brightness} onChange={changeValue} />
     </FintuneOperationWrapper>
   );
 }

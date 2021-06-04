@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AppContext from '.';
+import Context from '.';
 
 import defaultState from './defaultState';
 
@@ -14,14 +14,14 @@ const AppProvider = ({ children }) => {
   })
 
   return (
-    <AppContext.Provider
+    <Context.Provider
       value={{
         ...state,
         updateState
       }}
     >
       {children}
-    </AppContext.Provider>
+    </Context.Provider>
   );
 }
 

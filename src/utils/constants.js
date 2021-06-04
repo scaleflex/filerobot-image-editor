@@ -1,5 +1,7 @@
 import { Adjust, ImageFilters, Crop, Watermark, Annotation } from '@scaleflex/icons';
 
+export const EDITED_IMAGE_LAYER_ID = 'being-edited-image';
+
 export const AVAILABLE_TABS = [
   {
     id: 'FINETUNE',

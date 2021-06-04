@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { fabric } from 'fabric';
 
-import AppContext from '../../AppContext';
+import AppContext from '../../context';
 
 const MAIN_CANVAS_ID = 'filerobot-image-editor_main-canvas';
 
@@ -10,7 +10,12 @@ const MAX_CANVAS_WIDTH = 800;
 const MAX_CANVAS_HEIGHT = 800;
 
 const MainCanvas = ({ imageSrc }) => {
-  const { updateState, canvas } = useContext(AppContext)
+  const {
+    updateState,
+    canvasedImage,
+    canvas,
+    appliedFilters,
+  } = useContext(AppContext)
 
   useEffect(() => {
     updateState({
@@ -56,7 +61,19 @@ const MainCanvas = ({ imageSrc }) => {
         canvasedImage: img // The image transformed in fabricjs object and would be used in doing the operations.
       })
     }, { crossOrigin: 'anonymous' });
-  }, [canvas, imageSrc])
+  }, [canvas, imageSrc]);
+
+  useEffect(() => {
+    if (canvas && canvasedImage) {
+      const latestFilters = Object.values(appliedFilters).filter(Boolean);
+console.log(latestFilters);
+      if (JSON.stringify(canvasedImage.filters) !== JSON.stringify(latestFilters)) {
+        canvasedImage.filters = latestFilters;
+        canvasedImage.applyFilters();
+        canvas.renderAll();
+      }
+    }
+  }, [canvasedImage, appliedFilters, canvas]);
 
   return <canvas id={MAIN_CANVAS_ID} />
 }

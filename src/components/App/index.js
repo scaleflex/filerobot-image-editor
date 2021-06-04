@@ -1,7 +1,7 @@
 import React from 'react';
 import ThemeProvider from '@scaleflex/ui/theme';
 
-import AppProvider from '../../AppContext/AppProvider';
+import AppProvider from '../../context/AppProvider';
 import Wrapper from '../Wrapper';
 
 const App = (props) => (

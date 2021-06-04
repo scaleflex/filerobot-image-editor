@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { IconButton } from '@scaleflex/ui/core';
 
-import AppContext from '../../AppContext';
+import Context from '../../context';
 import { StyledTopbarItem } from './Topbar.styled';
 
 const TopbarItem = ({ item }) => {
   const { label, icon: Icon } = item;
-  const { updateState, tab, subTab } = useContext(AppContext);
+  const { updateState, tab, subTab } = useContext(Context);
 
   const selectTab = () => {
     updateState({

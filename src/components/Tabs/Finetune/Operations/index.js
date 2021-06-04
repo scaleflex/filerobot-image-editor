@@ -12,6 +12,8 @@ const Vignette = lazy(() => import('./Vignette'));
 
 const Blur = lazy(() => import('./Blur'));
 
+const Grayscale = lazy(() => import('./Grayscale'));
+
 export {
   Brightness,
   Contrast,
@@ -19,4 +21,5 @@ export {
   Warmth,
   Vignette,
   Blur,
+  Grayscale,
 }

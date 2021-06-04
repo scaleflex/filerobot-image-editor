@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 
-import AppContext from '../../../AppContext';
+import Context from '../../../context';
 import { StyledFilterItem, FilterItemLabel } from './Filters.styled';
 
 const FilterItem = () => {
-  const { originalImage } = useContext(AppContext);
+  const { originalImage } = useContext(Context);
 
   return (
     <StyledFilterItem>

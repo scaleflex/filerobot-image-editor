@@ -1,9 +1,8 @@
 const defaultState = {
   tab: null,
   subTab: null,
-  fabric: {
-    appliedFilters: []
-  }
+  canvasedImage: null,
+  appliedFilters: {}
 }
 
 export default defaultState;

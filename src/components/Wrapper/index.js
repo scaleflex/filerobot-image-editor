@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import AppContext from '../../AppContext';
+import Context from '../../context';
 import Bottombar from '../Bottombar';
 import MainCanvas from '../MainCanvas';
 import { AVAILABLE_TABS } from '../../utils/constants';
@@ -9,14 +9,14 @@ import { StyledWrapper } from './Wrapper.styled';
 import * as TabsComponents from '../Tabs';
 
 
-const Wrapper = ({ imageSrc }) => {
-  const { tab } = useContext(AppContext);
+const Wrapper = ({ image }) => {
+  const { tab } = useContext(Context);
   
   return (
     <StyledWrapper>
       <TitleBar />
       <Topbar tabsComponents={TabsComponents} tabs={AVAILABLE_TABS} tab={tab} />
-      <MainCanvas imageSrc={imageSrc} />
+      <MainCanvas image={image} />
       <Bottombar />
     </StyledWrapper>
   )

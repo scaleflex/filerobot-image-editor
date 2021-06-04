@@ -4,7 +4,8 @@
   "dependencies": {
     "@scaleflex/icons": "^1.0.0-beta.33",
     "@scaleflex/ui": "^1.0.0-beta.37",
-    "fabric": "^4.5.0"
+    "konva": "^8.0.2",
+    "react-konva": "^17.0.2-4"
   },
   "peerDependencies": {
     "react": "^16.8.0",
@@ -14,9 +15,9 @@
   "devDependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "styled-components": "^5.1.1",
     "react-scripts": "4.0.3",
-    "source-map-explorer": "^2.5.2"
+    "source-map-explorer": "^2.5.2",
+    "styled-components": "^5.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

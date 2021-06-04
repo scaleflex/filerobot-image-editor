@@ -31,4 +31,9 @@ export const OPERATIONS = [
     label: 'Blur',
     icon: Annotation,
   },
+  {
+    id: 'GRAYSCALE',
+    label: 'Grayscale',
+    icon: Annotation,
+  },
 ];

@@ -3,10 +3,10 @@ import React, { Suspense } from 'react';
 import { StyledTopbar } from './Topbar.styled';
 import Loading from '../Loading';
 import TopbarItem from './TopbarItem';
-import getTabComponentName from '../../utils/getTabComponentName';
+import upperCaseFirstLetter from '../../utils/upperCaseFirstLetter';
 
 const Topbar = ({ tabsComponents, tabs = [], tab, hideTabs = true }) => {
-  const renderAvailableTabs = (noPadding = false) => (
+  const renderAvailableTabs = () => (
     <StyledTopbar>
       {tabs.map(
         (option) => <TopbarItem key={option.id} item={option} />
@@ -23,7 +23,7 @@ const Topbar = ({ tabsComponents, tabs = [], tab, hideTabs = true }) => {
     </StyledTopbar>
   )
 
-  const TabComponent = tab ? tabsComponents[getTabComponentName(tab.label)] : null;
+  const TabComponent = tab ? tabsComponents[upperCaseFirstLetter(tab.label)] : null;
 
   return (
     !tab

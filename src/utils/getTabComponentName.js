@@ -1,5 +1,5 @@
-const getTabComponentName = (tabId) => (
-  `${tabId[0].toUpperCase()}${tabId.toLowerCase().substr(1)}`
-)
+import upperCaseFirstLetter from "./upperCaseFirstLetter";
+
+const getTabComponentName = upperCaseFirstLetter;
 
 export default getTabComponentName;

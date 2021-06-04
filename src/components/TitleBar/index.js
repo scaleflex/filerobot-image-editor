@@ -3,10 +3,10 @@ import React, { useContext } from 'react';
 import { StyledTitleBar, TitleBarLeft, TitleBarCenter, TitleBarRight } from './TitleBar.styled';
 import GoBackButton from './GoBackButton';
 import SaveButton from './SaveButton';
-import AppContext from '../../AppContext';
+import Context from '../../context';
 
 const TitleBar = () => {
-  const { tab } = useContext(AppContext);
+  const { tab } = useContext(Context);
 
   return (
     <StyledTitleBar>
