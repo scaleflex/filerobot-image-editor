@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import { StyledTopbar } from './Topbar.styled';
 import Loading from '../Loading';
 import TopbarItem from './TopbarItem';
-import upperCaseFirstLetter from '../../utils/upperCaseFirstLetter';
+import capitalize from '../../utils/capitalize';
 
 const Topbar = ({ tabsComponents, tabs = [], tab, hideTabs = true }) => {
   const renderAvailableTabs = () => (
@@ -23,7 +23,9 @@ const Topbar = ({ tabsComponents, tabs = [], tab, hideTabs = true }) => {
     </StyledTopbar>
   )
 
-  const TabComponent = tab ? tabsComponents[upperCaseFirstLetter(tab.label)] : null;
+  const TabComponent = tab
+    ? tabsComponents[capitalize(tab.label)] || tabsComponents[tab.label.toUpperCase()]
+    : null;
 
   return (
     !tab

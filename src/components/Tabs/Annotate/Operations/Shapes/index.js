@@ -5,7 +5,6 @@ import { AnnotateOperationsWrapper } from './Operations.styled';
 const Shapes = () => {
   return (
     <AnnotateOperationsWrapper>
-      Hello, there!
     </AnnotateOperationsWrapper>
   );
 }

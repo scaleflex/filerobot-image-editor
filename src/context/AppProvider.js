@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Context from '.';
+import Context from './';
 
 import defaultState from './defaultState';
 

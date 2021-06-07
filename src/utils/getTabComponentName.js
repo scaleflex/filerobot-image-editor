@@ -1,5 +1,5 @@
-import upperCaseFirstLetter from "./upperCaseFirstLetter";
+import capitalize from "./capitalize";
 
-const getTabComponentName = upperCaseFirstLetter;
+const getTabComponentName = capitalize;
 
 export default getTabComponentName;

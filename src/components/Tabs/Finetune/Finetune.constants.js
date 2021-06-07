@@ -17,8 +17,13 @@ export const OPERATIONS = [
     icon: Crop,
   },
   {
-    id: 'SATURATION',
-    label: 'Saturation',
+    id: 'HSL',
+    label: 'HSL',
+    icon: Watermark,
+  },
+  {
+    id: 'HSV',
+    label: 'HSV',
     icon: Watermark,
   },
   {

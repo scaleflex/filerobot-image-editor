@@ -1,6 +1,6 @@
 import { Adjust, ImageFilters, Crop, Watermark, Annotation } from '@scaleflex/icons';
 
-export const EDITED_IMAGE_LAYER_ID = 'being-edited-image';
+export const EDITED_IMAGE_LAYER_ID = 'filerobot-image-editor_in-edit-image-layer';
 
 export const AVAILABLE_TABS = [
   {

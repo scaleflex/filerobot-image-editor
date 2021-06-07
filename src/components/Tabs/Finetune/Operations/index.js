@@ -6,7 +6,9 @@ const Contrast = lazy(() => import('./Contrast'));
 
 const Warmth = lazy(() => import('./Warmth'));
 
-const Saturation = lazy(() => import('./Saturation'));
+const HSL = lazy(() => import('./HSL'));
+
+const HSV = lazy(() => import('./HSV'));
 
 const Vignette = lazy(() => import('./Vignette'));
 
@@ -17,7 +19,8 @@ const Grayscale = lazy(() => import('./Grayscale'));
 export {
   Brightness,
   Contrast,
-  Saturation,
+  HSL,
+  HSV,
   Warmth,
   Vignette,
   Blur,

@@ -1,7 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import { fabric } from 'fabric';
+import React, { useContext, useEffect, useState } from 'react';
+import Konva from 'konva';
 
-import AppContext from '../../context';
+import * as CustomKonvaFilters from '../../custom/filters';
+import Loading from '../Loading';
+import Context from '../../context';
 
 const MAIN_CANVAS_ID = 'filerobot-image-editor_main-canvas';
 
@@ -9,73 +11,122 @@ const MAIN_CANVAS_ID = 'filerobot-image-editor_main-canvas';
 const MAX_CANVAS_WIDTH = 800;
 const MAX_CANVAS_HEIGHT = 800;
 
-const MainCanvas = ({ imageSrc }) => {
+const MainCanvas = ({ image }) => {
   const {
     updateState,
     canvasedImage,
     canvas,
     appliedFilters,
-  } = useContext(AppContext)
+  } = useContext(Context);
+  const [preparedImage, setPreparedImage] = useState(null);
 
   useEffect(() => {
-    updateState({
-      canvas: new fabric.Canvas(MAIN_CANVAS_ID),
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!canvas || !imageSrc) {
-      return;
+    if (!image) {
+      throw new Error('`image` property must be provided');
     }
 
-    fabric.Image.fromURL(imageSrc, (img) => {
-      const ratio = img.height / img.width;
-      const originalImage = {
-        src: imageSrc,
-        width: img.width,
-        height: img.height,
-        ratio
+    if (typeof image === 'string') {
+      const imageElement = new Image();
+      imageElement.src = image;
+      imageElement.crossOrigin = 'Anonymous';
+      imageElement.onload = () => {
+        changeImage(imageElement);
       }
-
-      const isVerticalImage = ratio > 1;
-
-      if (img.width > MAX_CANVAS_WIDTH && !isVerticalImage) {
-        img.width = MAX_CANVAS_WIDTH;
-        img.height = ratio * img.width;
+      imageElement.onerror = () => {
+        changeImage(false);
+        throw new Error(`Issue while loading the provided image with the following url: ${image}`);
       }
-      if (img.height > MAX_CANVAS_HEIGHT && isVerticalImage) {
-        img.height = MAX_CANVAS_HEIGHT;
-        img.width = img.height / ratio;
-      }
+    } else {
+      changeImage(image);
+    }
+  }, [image]);
 
-      img.selectable = false;
-      img.hoverCursor = 'default';
+  useEffect(() => {
+    if (!canvas && preparedImage) {
+      const canvas = new Konva.Stage({
+        container: MAIN_CANVAS_ID,
+        width: preparedImage.width,
+        height: preparedImage.height
+      });
+      const imageLayer = new Konva.FastLayer();
+      canvas.add(imageLayer);
 
-      canvas.setWidth(img.width);
-      canvas.setHeight(img.height);
+      const konvaImage = new Konva.Image({
+        image: preparedImage,
+        x: 0,
+        y: 0,
+      });
+      konvaImage.cache();
 
-      canvas.add(img);
+      imageLayer.add(konvaImage);
 
       updateState({
-        originalImage, // the origin image provided.
-        canvasedImage: img // The image transformed in fabricjs object and would be used in doing the operations.
-      })
-    }, { crossOrigin: 'anonymous' });
-  }, [canvas, imageSrc]);
+        canvas,
+        canvasedImage: konvaImage
+      });
+    } else if (preparedImage) {
+      canvas.height(preparedImage.height);
+      canvas.width(preparedImage.height);
+      canvasedImage.image(preparedImage);
+    }
+  }, [preparedImage]);
 
   useEffect(() => {
     if (canvas && canvasedImage) {
-      const latestFilters = Object.values(appliedFilters).filter(Boolean);
-console.log(latestFilters);
-      if (JSON.stringify(canvasedImage.filters) !== JSON.stringify(latestFilters)) {
-        canvasedImage.filters = latestFilters;
-        canvasedImage.applyFilters();
-        canvas.renderAll();
-      }
+      const latestFilters = Object.keys(appliedFilters);
+      latestFilters.forEach((filter) => {
+        Object.keys(appliedFilters[filter]).forEach((functionName) => {
+          canvasedImage[functionName](appliedFilters[filter][functionName]);
+        })
+      });
+      canvasedImage.filters(latestFilters.map((f) => Konva.Filters[f] ?? CustomKonvaFilters[f]));
     }
   }, [canvasedImage, appliedFilters, canvas]);
 
-  return <canvas id={MAIN_CANVAS_ID} />
+  const changeImage = (loadedImage) => {
+    const ratio = loadedImage.height / loadedImage.width;
+    
+    const originalImage = {
+      src: loadedImage.src,
+      width: loadedImage.width,
+      height: loadedImage.height,
+      ratio
+    }
+
+    const isVerticalImage = ratio > 1;
+
+    if (loadedImage.width > MAX_CANVAS_WIDTH && !isVerticalImage) {
+      loadedImage.width = MAX_CANVAS_WIDTH;
+      loadedImage.height = ratio * loadedImage.width;
+    }
+
+    if (loadedImage.height > MAX_CANVAS_HEIGHT && isVerticalImage) {
+      loadedImage.height = MAX_CANVAS_HEIGHT;
+      loadedImage.width = loadedImage.height / ratio;
+    }
+    
+    setPreparedImage(loadedImage);
+
+    updateState({
+      originalImage // the original image provided.
+    });
+  }
+
+   // TODO: Make a separate Error compoennt.
+   if (preparedImage === false) {
+    return (
+      <div>
+        Error in loading provided image.
+      </div>
+    )
+  }
+
+  // TODO: Make better loading content to be like (Creating preview... 🔃) or (Loading image... 🔃)
+  if (!preparedImage) {
+    return <Loading />
+  }
+
+  return <div id={MAIN_CANVAS_ID} />
 }
 
 export default MainCanvas;

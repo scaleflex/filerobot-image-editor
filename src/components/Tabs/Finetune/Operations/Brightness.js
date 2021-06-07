@@ -19,7 +19,7 @@ const Brightness = () => {
 
   return (
     <FintuneOperationWrapper>
-      <input type="range" min="-1" step="0.1" max="1" value={value.brightness} onChange={changeValue} />
+      <input type="range" min="-1" step="0.05" max="1" value={value.brightness} onChange={changeValue} />
     </FintuneOperationWrapper>
   );
 }

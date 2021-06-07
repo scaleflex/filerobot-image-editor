@@ -4,15 +4,22 @@ import { FintuneOperationWrapper } from './Operations.styled';
 import useImageFilter from '../../../../hooks/useImageFilter';
 
 const Contrast = () => {
-  const [value, setValue] = useImageFilter({ stateFilterName: 'contrast' });
+  const [value, setValue] = useImageFilter({
+    filterClassNameInLib: 'Contrast',
+    valueObject: {
+      contrast: 0
+    }
+  });
 
   const changeValue = (e) => {
-    setValue(e.target.value);
+    setValue({
+      contrast: +e.target.value
+    });
   }
 
   return (
     <FintuneOperationWrapper>
-      <input type="range" min="-1" step="0.1" max="1" value={value} onChange={changeValue} />
+      <input type="range" min="-100" step="1" max="100" value={value.contrast} onChange={changeValue} />
     </FintuneOperationWrapper>
   );
 }
