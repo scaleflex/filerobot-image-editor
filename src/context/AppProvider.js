@@ -8,9 +8,13 @@ const AppProvider = ({ children }) => {
     () => defaultState
   );
 
-  const updateState = (objectToBeAdded) => setState({
+  const updateState = (objToBeAddedOrFnReceivesStateReturnsObj) => setState({
     ...state,
-    ...objectToBeAdded
+    ...(
+      typeof objToBeAddedOrFnReceivesStateReturnsObj === 'function'
+        ? objToBeAddedOrFnReceivesStateReturnsObj(state)
+        : objToBeAddedOrFnReceivesStateReturnsObj
+    )
   })
 
   return (

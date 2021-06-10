@@ -4,7 +4,7 @@ import { IconButton } from '@scaleflex/ui/core';
 import Context from '../../context';
 import { StyledTopbarItem } from './Topbar.styled';
 
-const TopbarItem = ({ item }) => {
+const TopbarItem = ({ item, onSelect, isSelected }) => {
   const { label, icon: Icon } = item;
   const { updateState, tab, subTab } = useContext(Context);
 
@@ -16,8 +16,8 @@ const TopbarItem = ({ item }) => {
 
   return (
     <StyledTopbarItem
-      onClick={selectTab}
-      selected={(subTab?.id ?? tab?.id) === item.id}
+      onClick={onSelect ?? selectTab}
+      selected={isSelected ?? ((subTab?.id ?? tab?.id) === item.id)}
     >
       <IconButton
         color="link"

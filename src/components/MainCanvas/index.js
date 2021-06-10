@@ -14,9 +14,13 @@ const MAX_CANVAS_HEIGHT = 800;
 const MainCanvas = ({ image }) => {
   const {
     updateState,
-    canvasedImage,
+    imageLayer,
+    designLayer,
+    transformer,
+    selections,
     canvas,
-    appliedFilters,
+    finetune,
+    tmpAnnotate
   } = useContext(Context);
   const [preparedImage, setPreparedImage] = useState(null);
 
@@ -48,8 +52,15 @@ const MainCanvas = ({ image }) => {
         width: preparedImage.width,
         height: preparedImage.height
       });
-      const imageLayer = new Konva.FastLayer();
+      const imageLayer = new Konva.Layer(); // for having the image and applying filters
       canvas.add(imageLayer);
+      const designLayer = new Konva.Layer(); // for having the other tools for editing ex. shapes, drawing...etc.
+      canvas.add(designLayer);
+      const transformer = new Konva.Transformer({
+        centeredScaling: false,
+        nodes: []
+      });
+      designLayer.add(transformer);
 
       const konvaImage = new Konva.Image({
         image: preparedImage,
@@ -59,29 +70,63 @@ const MainCanvas = ({ image }) => {
       konvaImage.cache();
 
       imageLayer.add(konvaImage);
-
+      
       updateState({
         canvas,
-        canvasedImage: konvaImage
+        designLayer,
+        imageLayer,
+        konvaImage: konvaImage,
+        transformer,
       });
     } else if (preparedImage) {
       canvas.height(preparedImage.height);
       canvas.width(preparedImage.height);
-      canvasedImage.image(preparedImage);
+      imageLayer.image(preparedImage);
     }
   }, [preparedImage]);
 
   useEffect(() => {
-    if (canvas && canvasedImage) {
-      const latestFilters = Object.keys(appliedFilters);
-      latestFilters.forEach((filter) => {
-        Object.keys(appliedFilters[filter]).forEach((functionName) => {
-          canvasedImage[functionName](appliedFilters[filter][functionName]);
+    if (canvas && imageLayer) {
+      const latestFinetune = Object.keys(finetune);
+      latestFinetune.forEach((filter) => {
+        Object.keys(finetune[filter]).forEach((functionName) => {
+          imageLayer[functionName](finetune[filter][functionName]);
         })
       });
-      canvasedImage.filters(latestFilters.map((f) => Konva.Filters[f] ?? CustomKonvaFilters[f]));
+      imageLayer.filters(latestFinetune.map((f) => Konva.Filters[f] ?? CustomKonvaFilters[f]));
     }
-  }, [canvasedImage, appliedFilters, canvas]);
+  }, [finetune, imageLayer, canvas]);
+
+  useEffect(() => {
+    if (canvas && imageLayer && designLayer && tmpAnnotate) {
+      const canvasDimensions = canvas.content.getBoundingClientRect();
+      
+      const { className, ...annotate} = tmpAnnotate;
+      const shape = new Konva[className]({
+        ...annotate,
+        x: annotate.x - canvasDimensions.x,
+        y: annotate.y - canvasDimensions.y,
+      });
+
+      // shape.on('mouseenter', () => {
+      //   canvas.content.style.cursor = 'move';
+      // })
+      designLayer.add(shape);
+
+      updateState((state) => ({
+        annotate: {
+          ...state.annotate,
+          [annotate.key]: shape
+        }
+      }));
+    }
+  }, [tmpAnnotate, designLayer, imageLayer, canvas]);
+
+  useEffect(() => {
+    if (transformer && selections) {
+      transformer.nodes(selections);
+    }
+  }, [transformer, selections]);
 
   const changeImage = (loadedImage) => {
     const ratio = loadedImage.height / loadedImage.width;

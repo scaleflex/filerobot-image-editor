@@ -7,7 +7,7 @@ const useImageFilter = ({
   valueObject = {},
 }) => {
   const {
-    appliedFilters,
+    finetune,
     updateState
   } = useContext(Context);
   const [value, setValue] = useState(() => valueObject);
@@ -15,10 +15,10 @@ const useImageFilter = ({
   useEffect(() => {
     if (filterClassNameInLib) {
       updateState({
-        appliedFilters: {
-          ...appliedFilters,
+        finetune: {
+          ...finetune,
           [filterClassNameInLib]: {
-            ...appliedFilters[filterClassNameInLib],
+            ...finetune[filterClassNameInLib],
             ...value
           }
         }
