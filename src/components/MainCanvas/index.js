@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Konva from 'konva';
+import { useTheme } from '@scaleflex/ui/theme/hooks';
 
 import * as CustomKonvaFilters from '../../custom/filters';
 import Loading from '../Loading';
 import Context from '../../context';
+import removeIcon from './removeIcon';
 
 const MAIN_CANVAS_ID = 'filerobot-image-editor_main-canvas';
 
@@ -22,6 +24,7 @@ const MainCanvas = ({ image }) => {
     finetune,
     tmpAnnotate
   } = useContext(Context);
+  const theme = useTheme();
   const [preparedImage, setPreparedImage] = useState(null);
 
   useEffect(() => {
@@ -58,24 +61,47 @@ const MainCanvas = ({ image }) => {
       canvas.add(designLayer);
       const transformer = new Konva.Transformer({
         centeredScaling: false,
-        nodes: []
+        rotationSnaps: [0, 90, 180, 270],
+        nodes: [],
+        anchorStroke: theme.palette['borders-strong'],
+        anchorFill: theme.palette['accent-primary'],
+        anchorSize: 10,
+        enabledAnchors: ['bottom-left', 'bottom-right'],
+        anchorCornerRadius: 5,
+        borderStroke: theme.palette['access-primary'],
+        padding: 1,
+        borderDash: [3, 20, 7],
+        ignoreStroke: false,
       });
       designLayer.add(transformer);
 
-      const konvaImage = new Konva.Image({
+      const deleteButton = new Konva.Image({
+        x: transformer.getWidth(),
+        y: 0,
+        image: removeIcon,
+      });
+      deleteButton.on('click tap', () => {
+        transformer.nodes().forEach((node) => { node.destroy() });
+      });
+      transformer.on('transform', () => {
+        deleteButton.x(transformer.getWidth());
+      })
+      transformer.add(deleteButton);
+
+      const canvasedImage = new Konva.Image({
         image: preparedImage,
         x: 0,
         y: 0,
       });
-      konvaImage.cache();
+      canvasedImage.cache();
 
-      imageLayer.add(konvaImage);
+      imageLayer.add(canvasedImage);
       
       updateState({
         canvas,
         designLayer,
         imageLayer,
-        konvaImage: konvaImage,
+        canvasedImage: canvasedImage,
         transformer,
       });
     } else if (preparedImage) {
@@ -101,23 +127,26 @@ const MainCanvas = ({ image }) => {
     if (canvas && imageLayer && designLayer && tmpAnnotate) {
       const canvasDimensions = canvas.content.getBoundingClientRect();
       
-      const { className, ...annotate} = tmpAnnotate;
+      const { className, eventsToApply, ...annotate} = tmpAnnotate;
       const shape = new Konva[className]({
         ...annotate,
         x: annotate.x - canvasDimensions.x,
         y: annotate.y - canvasDimensions.y,
       });
 
-      // shape.on('mouseenter', () => {
-      //   canvas.content.style.cursor = 'move';
-      // })
+      // Applying events on the object.
+      Object.keys(eventsToApply).forEach((eventName) => {
+        shape.on(eventName, eventsToApply[eventName]);
+      })
+
       designLayer.add(shape);
 
       updateState((state) => ({
         annotate: {
           ...state.annotate,
           [annotate.key]: shape
-        }
+        },
+        tmpAnnotate: null
       }));
     }
   }, [tmpAnnotate, designLayer, imageLayer, canvas]);

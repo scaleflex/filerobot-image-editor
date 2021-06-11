@@ -8,14 +8,17 @@ const AppProvider = ({ children }) => {
     () => defaultState
   );
 
-  const updateState = (objToBeAddedOrFnReceivesStateReturnsObj) => setState({
-    ...state,
-    ...(
-      typeof objToBeAddedOrFnReceivesStateReturnsObj === 'function'
-        ? objToBeAddedOrFnReceivesStateReturnsObj(state)
-        : objToBeAddedOrFnReceivesStateReturnsObj
-    )
-  })
+  const updateState = (objToBeAddedOrFnReceivesStateReturnsObj) => {
+      setState((latestState) => ({
+        ...latestState,
+        ...(
+          typeof objToBeAddedOrFnReceivesStateReturnsObj === 'function'
+            ? objToBeAddedOrFnReceivesStateReturnsObj(latestState)
+            : objToBeAddedOrFnReceivesStateReturnsObj
+        )
+      })
+    );
+  }
 
   return (
     <Context.Provider

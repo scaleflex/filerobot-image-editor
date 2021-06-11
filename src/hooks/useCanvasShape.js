@@ -3,9 +3,45 @@ import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Context from '../context';
 import randomId from '../utils/randomId';
 import getTouchPosOrEvent from '../utils/getTouchPosOrEvent';
+import { POINTER_MODES, POINTER_ICONS, TABS_IDS } from '../utils/constants';
 
-const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, ...defaultProperties }) => {
-  const { canvas, updateState } = useContext(Context);
+const getShapeDefaultEvents = ({ updateState, canvas }) => ({
+  'mouseenter touchstart': (e) => {
+    updateState(
+      (updatedState) => {
+        if (updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.tab.id === TABS_IDS.ANNOTATE) {
+          canvas.content.style.cursor = POINTER_ICONS.MOVE;
+          e.target.draggable(true);
+        }
+      }
+    )
+  },
+  'mouseout mouseleave touchleave touchcancel': (e) => {
+    updateState(
+      (updatedState) => {
+        canvas.content.style.cursor = POINTER_ICONS[updatedState.pointerMode === POINTER_MODES.DRAW ? 'CROSSHAIR' : 'DEFAULT'];
+        e.target.draggable(false);
+      }
+    )
+  },
+  'click tap': (e) => {
+    updateState((updatedState) => {
+      if (updatedState.tab.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT) {
+        return { selections: [e.target] };
+      }
+    });
+  },
+  'dragstart': (e) => {
+    updateState((updatedState) => {
+      if (updatedState.tab.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT) {
+        return { selections: [e.target] };
+      }
+    });
+  }
+})
+
+const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, events, ...defaultProperties }) => {
+  const { canvas, pointerMode, selections, updateState } = useContext(Context);
   const [currentShape, setCurrentShape] = useState(
     () => ({
       draw: false,
@@ -14,7 +50,10 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, .
       x: 0,
       y: 0,
       fill: defaultFill,
-      draggable: true,
+      eventsToApply: {
+        ...getShapeDefaultEvents({ updateState, canvas }),
+        ...events,
+      },
       ...defaultProperties
     })
   );
@@ -35,7 +74,7 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, .
       };
     }
     return positionDiffDimensions;
-  }, []);
+  }, [calcDimensionsProps]);
 
   const handleDimensionsMapping = useCallback((e) => {
     const event = getTouchPosOrEvent(e);
@@ -103,7 +142,7 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, .
     }
   }, [handleDimensionsMapping]);
 
-  const handlePointerUp = useCallback(() => {
+  const handlePointerUp = useCallback(() => {   
     setCurrentShape(
       (updatedCurrentShape) => ({
         ...updatedCurrentShape,
@@ -123,6 +162,7 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, .
   }, [canvas, handleDimensionsMapping, handlePointerMove, handlePointerOut]);
 
   const handlePointerDown = useCallback((e) => {
+    canvas.content.style.cursor = POINTER_ICONS.CROSSHAIR;
     const event = getTouchPosOrEvent(e);
     startPosition.current = {
       x: event.pageX,
@@ -140,15 +180,25 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, .
 
   // useEffect is declared at the end as the fucntion is specificed in the dependecies array.
   useEffect(() => {
-    canvas.on('mousedown touchstart', handlePointerDown);
-    canvas.content.style.cursor = 'crosshair';
     canvasDimensions.current = canvas.content.getBoundingClientRect();
     
-    return () => {
-      canvas.content.style.cursor = 'default';
-      canvas.off('mousedown touchstart', handlePointerDown);
+    if (pointerMode === POINTER_MODES.DRAW) {
+      canvas.on('mousedown touchstart', handlePointerDown);
+      canvas.content.style.cursor = POINTER_ICONS.CROSSHAIR;
+      if (selections && selections.length > 0) {
+        updateState({
+          selections: []
+        })
+      }
+    } else {
+      canvas.content.style.cursor = POINTER_ICONS.DEFAULT;
     }
-  }, [canvas, handlePointerDown]);
+    
+    return () => {
+      canvas.off('mousedown touchstart', handlePointerDown);
+      canvas.content.style.cursor = POINTER_ICONS.DEFAULT;
+    }
+  }, [pointerMode, canvas, handlePointerDown]);
 
   useEffect(() => {
     if (currentShape.draw) {

@@ -5,6 +5,7 @@ import FullscreenButton from './FullscreenButton';
 import ResetButton from './ResetButton';
 import UndoButton from './UndoButton';
 import RedoButton from './RedoButton';
+import PointerMode from '../PointerMode';
 
 const Bottombar = () => (
   <StyledBottombar>
@@ -12,6 +13,7 @@ const Bottombar = () => (
     <UndoButton />
     <RedoButton />
     <FullscreenButton />
+    <PointerMode />
   </StyledBottombar>
 )
 

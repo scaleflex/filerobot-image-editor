@@ -2,30 +2,49 @@ import { Adjust, ImageFilters, Crop, Watermark, Annotation } from '@scaleflex/ic
 
 export const EDITED_IMAGE_LAYER_ID = 'filerobot-image-editor_in-edit-image-layer';
 
+export const TABS_IDS = {
+  FINETUNE: 'FINTUNE',
+  FILTERS: 'FILTERS',
+  ADJUST: 'ADJUST',
+  WATERMARK: 'WATERMARK',
+  ANNOTATE: 'ANNOTATE'
+}
+
 export const AVAILABLE_TABS = [
   {
-    id: 'FINETUNE',
+    id: TABS_IDS.FINETUNE,
     label: 'Finetune',
     icon: Adjust,
   },
   {
-    id: 'FILTERS',
+    id: TABS_IDS.FILTERS,
     label: 'Filters',
     icon: ImageFilters,
   },
   {
-    id: 'ADJUST',
+    id: TABS_IDS.ADJUST,
     label: 'Adjust',
     icon: Crop,
   },
   {
-    id: 'WATERMARK',
+    id: TABS_IDS.WATERMARK,
     label: 'Watermark',
     icon: Watermark,
   },
   {
-    id: 'ANNOTATE',
+    id: TABS_IDS.ANNOTATE,
     label: 'Annotate',
     icon: Annotation,
   },
 ];
+
+export const POINTER_MODES = {
+  SELECT: 'SELECT',
+  DRAW: 'DRAW',
+};
+
+export const POINTER_ICONS = {
+  DEFAULT: 'default',
+  CROSSHAIR: 'crosshair',
+  MOVE: 'move'
+};
