@@ -4,6 +4,15 @@ import Context from '../context';
 import randomId from '../utils/randomId';
 import getTouchPosOrEvent from '../utils/getTouchPosOrEvent';
 import { POINTER_MODES, POINTER_ICONS, TABS_IDS } from '../utils/constants';
+import { AVAILABLE_ANNOTATIONS_NAMES } from '../components/Tabs/Annotate/OptionsPopup/OptionsPopup.constants';
+
+let timeout = null;
+
+const getProperSelectionTarget = (e) => (
+  e.target.name() === AVAILABLE_ANNOTATIONS_NAMES.FREEHAND_LINE
+    ? e.target.parent
+    : e.target
+);
 
 const getShapeDefaultEvents = ({ updateState, canvas }) => ({
   'mouseenter touchstart': (e) => {
@@ -11,7 +20,7 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
       (updatedState) => {
         if (updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.tab.id === TABS_IDS.ANNOTATE) {
           canvas.content.style.cursor = POINTER_ICONS.MOVE;
-          e.target.draggable(true);
+          getProperSelectionTarget(e).draggable(true);
         }
       }
     )
@@ -20,47 +29,66 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
     updateState(
       (updatedState) => {
         canvas.content.style.cursor = POINTER_ICONS[updatedState.pointerMode === POINTER_MODES.DRAW ? 'CROSSHAIR' : 'DEFAULT'];
-        e.target.draggable(false);
+        getProperSelectionTarget(e).draggable(false);
       }
     )
   },
   'click tap': (e) => {
     updateState((updatedState) => {
-      if (updatedState.tab.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT) {
-        return { selections: [e.target] };
+      const selection = getProperSelectionTarget(e);
+      if (updatedState.tab.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.selections[0] !== selection) {
+        return { selections: [selection] };
       }
     });
   },
   'dragstart': (e) => {
     updateState((updatedState) => {
-      if (updatedState.tab.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT) {
-        return { selections: [e.target] };
+      const selection = getProperSelectionTarget(e);
+      if (updatedState.tab.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.selections[0] !== selection) {
+        return { selections: [selection] };
       }
     });
+  },
+  'dragend': (e) => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+
+    timeout = setTimeout(() => {
+      updateState({ selections: [getProperSelectionTarget(e)] });
+    }, 50);
   }
 })
 
-const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, events, ...defaultProperties }) => {
+const useAnnotation = ({
+  defaultFill = '#000000', libClassName, name, calcDimensionsProps, noDimensionsMapping = false, events,
+  defaultDraw = false, noPointerEvents = false, ...otherProps
+}) => {
   const { canvas, pointerMode, selections, updateState } = useContext(Context);
-  const [currentShape, setCurrentShape] = useState(
+  const [currentAnnotation, setCurrentAnnotation] = useState(
     () => ({
-      draw: false,
-      key: randomId(className),
-      className: className,
+      draw: defaultDraw,
+      id: name && randomId(name),
+      libClassName,
+      name,
+      hitStrokeWidth: 6,
       x: 0,
       y: 0,
+      shadowColor: '#000000',
+      stroke: '#000000',
+      strokeWidth: 0,
       fill: defaultFill,
       eventsToApply: {
         ...getShapeDefaultEvents({ updateState, canvas }),
         ...events,
       },
-      ...defaultProperties
+      ...otherProps
     })
   );
   const canvasDimensions = useRef({});
   const startPosition = useRef({});
 
-  const positionDiffStartToEnd = useCallback((event) => {
+  const positionDiffStartToEnd = useCallback((event, updatedCurrentAnnotation = {}) => {
     let positionDiffDimensions = {};
     positionDiffDimensions.x = Math.min(event.pageX, startPosition.current.x);
     positionDiffDimensions.y = Math.min(event.pageY, startPosition.current.y);
@@ -70,7 +98,16 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, e
     if (calcDimensionsProps && typeof calcDimensionsProps === 'function') {
       positionDiffDimensions = {
         ...positionDiffDimensions,
-        ...calcDimensionsProps(positionDiffDimensions.width, positionDiffDimensions.height)
+        ...calcDimensionsProps({
+          ...positionDiffDimensions,
+          startX: startPosition.current.x - canvasDimensions.current.x,
+          startY: startPosition.current.y - canvasDimensions.current.y,
+          endX: event.pageX - canvasDimensions.current.x,
+          endY: event.pageY - canvasDimensions.current.y,
+          prevX: updatedCurrentAnnotation.points?.[2] ?? updatedCurrentAnnotation.x,
+          prevY: updatedCurrentAnnotation.points?.[3] ??updatedCurrentAnnotation.y,
+          prevPoints: updatedCurrentAnnotation.points,
+        })
       };
     }
     return positionDiffDimensions;
@@ -78,8 +115,8 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, e
 
   const handleDimensionsMapping = useCallback((e) => {
     const event = getTouchPosOrEvent(e);
-    setCurrentShape(
-      (updatedCurrentShape) => {
+    setCurrentAnnotation(
+      (updatedcurrentAnnotation) => {
         const mappedDimensions = positionDiffStartToEnd(event);
 
         // pointer end position is before the pointer start and before the canvas left.
@@ -98,18 +135,18 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, e
         // pointer end position is after the canvas right
         if (event.pageX > canvasDimensions.current.width + canvasDimensions.current.x) {
           mappedDimensions.width = canvasDimensions.current.x + (
-            canvasDimensions.current.width - updatedCurrentShape.x
+            canvasDimensions.current.width - updatedcurrentAnnotation.x
           );
         }
         // pointer end position is after the canvas bottom
         if (event.pageY > canvasDimensions.current.height + canvasDimensions.current.y) {
           mappedDimensions.height = canvasDimensions.current.y + (
-            canvasDimensions.current.height - updatedCurrentShape.y
+            canvasDimensions.current.height - updatedcurrentAnnotation.y
           );
         }
 
         return {
-          ...updatedCurrentShape,
+          ...updatedcurrentAnnotation,
           ...mappedDimensions,
         };
       }
@@ -125,27 +162,27 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, e
       startPosition.current.isMouseOut = false;
     }
 
-    setCurrentShape(
-      (updatedCurrentShape) => ({
-        ...updatedCurrentShape,
-        ...positionDiffStartToEnd(event),
-        draw: false,
+    setCurrentAnnotation(
+      (updatedcurrentAnnotation) => ({
+        ...updatedcurrentAnnotation,
+        draw: defaultDraw,
+        ...positionDiffStartToEnd(event, updatedcurrentAnnotation),
       })
     );
-  }, [handleDimensionsMapping, positionDiffStartToEnd]);
+  }, [defaultDraw, handleDimensionsMapping, positionDiffStartToEnd]);
 
   const handlePointerOut = useCallback((e) => {
-    if (!startPosition.current.isMouseOut) {
+    if (!noDimensionsMapping && !startPosition.current.isMouseOut) {
       document.addEventListener('mousemove', handleDimensionsMapping);
       document.addEventListener('touchmove', handleDimensionsMapping);
       startPosition.current.isMouseOut = true;
     }
-  }, [handleDimensionsMapping]);
+  }, [handleDimensionsMapping, noDimensionsMapping]);
 
   const handlePointerUp = useCallback(() => {   
-    setCurrentShape(
-      (updatedCurrentShape) => ({
-        ...updatedCurrentShape,
+    setCurrentAnnotation(
+      (updatedcurrentAnnotation) => ({
+        ...updatedcurrentAnnotation,
         draw: true,
       })
     );
@@ -180,8 +217,9 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, e
 
   // useEffect is declared at the end as the fucntion is specificed in the dependecies array.
   useEffect(() => {
+    if (!currentAnnotation.libClassName || noPointerEvents) { return; }
     canvasDimensions.current = canvas.content.getBoundingClientRect();
-    
+
     if (pointerMode === POINTER_MODES.DRAW) {
       canvas.on('mousedown touchstart', handlePointerDown);
       canvas.content.style.cursor = POINTER_ICONS.CROSSHAIR;
@@ -198,24 +236,20 @@ const useCanvasShape = ({ defaultFill = 'red', className, calcDimensionsProps, e
       canvas.off('mousedown touchstart', handlePointerDown);
       canvas.content.style.cursor = POINTER_ICONS.DEFAULT;
     }
-  }, [pointerMode, canvas, handlePointerDown]);
+  }, [currentAnnotation.libClassName, pointerMode, canvas, handlePointerDown, noPointerEvents]);
 
   useEffect(() => {
-    if (currentShape.draw) {
-      const shapeToProvide ={ ...currentShape };
+    if (currentAnnotation.draw) {
+      const shapeToProvide ={ ...currentAnnotation };
       delete shapeToProvide.draw;
-      delete shapeToProvide.key;
 
       updateState({
-        tmpAnnotate: {
-          ...shapeToProvide,
-          key: currentShape.key
-        }
+        tmpAnnotate: shapeToProvide
       });
     }
-  }, [currentShape])
+  }, [currentAnnotation]);
 
-  return [currentShape, setCurrentShape];
+  return [currentAnnotation, setCurrentAnnotation];
 }
 
-export default useCanvasShape;
+export default useAnnotation;

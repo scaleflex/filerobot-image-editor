@@ -5,7 +5,7 @@ import App from './components/App';
 
 const demoProps = {
   // string or image html element
-  image: 'https://res.cloudinary.com/daily-now/image/upload/f_auto,q_auto/v1/posts/1fc0fa2c240b628c4117efd4c2b56ce8'
+  image: 'https://images.unsplash.com/photo-1553451166-232112bda6f6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920'
 }
 
 render(

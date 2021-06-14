@@ -48,3 +48,7 @@ export const POINTER_ICONS = {
   CROSSHAIR: 'crosshair',
   MOVE: 'move'
 };
+
+export const DEFAULT_ENABLED_ANCHORS = ['top-left', 'top-center', 'top-right', 'middle-right', 'middle-left', 'bottom-left', 'bottom-center', 'bottom-right'];
+
+export const DEFAULT_FONTS = ['Arial', 'Tahoma', 'Sans-serif', 'Roboto', 'Comic-sans', 'Times New Roman', 'Lato'];

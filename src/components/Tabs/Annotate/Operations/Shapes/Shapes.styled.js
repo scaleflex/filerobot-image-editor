@@ -1,3 +1,4 @@
+import { InputGroup } from '@scaleflex/ui/core';
 import styled, { css } from 'styled-components';
 
 const ShapesWrapper = styled.div`
@@ -13,38 +14,6 @@ const ShapesWrapper = styled.div`
       width: fit-content;
     `
     : undefined}
-`;
-
-const SideShapesWrapper = styled.div(
-  ({ theme }) => css`
-    max-height: 45px;
-    overflow: auto;
-    
-    /* width */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-      background: ${theme.palette['active-secondary-active']}; 
-    }
-    
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-      background: ${theme.palette['accent-primary']}; 
-    }
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-      background: ${theme.palette['accent-primary-active']};
-    }
-  `
-);
-
-const CurrentShapeWrapper = styled.div`
-  flex-grow: 1;
-  margin: 0 auto;
 `;
 
 const PreviewRect = styled.div.attrs(
@@ -139,8 +108,6 @@ const PreviewPolygon = styled.div.attrs(
 
 export {
   ShapesWrapper,
-  SideShapesWrapper,
-  CurrentShapeWrapper,
   PreviewRect,
   PreviewCircle,
   PreviewEllipse,
