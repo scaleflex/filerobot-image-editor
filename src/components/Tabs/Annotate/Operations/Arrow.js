@@ -8,6 +8,7 @@ import { AnnotateOperationsWrapper } from './Operations.styled';
 import calcLineDimensionProps from './calcLineDimensionProps';
 
 const Arrow = ({ defaultStrokeColor = '#000000', defaultStrokeSize = 3, defaultLineCap = 'butt' }) => {
+  const { selections = [] } = useContext(Context);
   useAnnotation({
     libClassName: 'Arrow',
     name: AVAILABLE_ANNOTATIONS_NAMES.ARROW,
@@ -18,6 +19,8 @@ const Arrow = ({ defaultStrokeColor = '#000000', defaultStrokeSize = 3, defaultL
     dash: [10, 10],
     dashEnabled: false,
   });
+
+  if (!selections[0]) { return ''; }
 
   return (
     <AnnotateOperationsWrapper>

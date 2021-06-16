@@ -8,6 +8,7 @@ import { AnnotateOperationsWrapper } from './Operations.styled';
 import calcLineDimensionProps from './calcLineDimensionProps';
 
 const Line = ({ defaultStrokeColor = '#000000', defaultStrokeSize = 3, defaultLineCap = 'butt' }) => {
+  const { selections = [] } = useContext(Context);
   useAnnotation({
     libClassName: 'Line',
     name: AVAILABLE_ANNOTATIONS_NAMES.LINE,
@@ -18,6 +19,8 @@ const Line = ({ defaultStrokeColor = '#000000', defaultStrokeSize = 3, defaultLi
     dash: [10, 10],
     dashEnabled: false,
   });
+
+  if (!selections[0]) { return ''; }
 
   return (
     <AnnotateOperationsWrapper>

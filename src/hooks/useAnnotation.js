@@ -58,7 +58,7 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
       updateState({ selections: [getProperSelectionTarget(e)] });
     }, 50);
   }
-})
+});
 
 const useAnnotation = ({
   defaultFill = '#000000', libClassName, name, calcDimensionsProps, noDimensionsMapping = false, events,

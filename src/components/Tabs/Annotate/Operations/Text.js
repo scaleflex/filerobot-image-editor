@@ -11,7 +11,7 @@ import { AnnotateOperationsWrapper } from './Operations.styled';
 const Text = ({
   defaultFill = '#000000', defaultText = 'Filerobot', defaultFontFamily = DEFAULT_FONTS[0], defaultFontSize = 20
 }) => {
-  const { transformer } = useContext(Context);
+  const { transformer, selections = [] } = useContext(Context);
   useAnnotation({
     defaultFill,
     libClassName: 'Text',
@@ -44,6 +44,8 @@ const Text = ({
       transformer.boundBoxFunc(undefined);
     }
   }, [transformer]);
+
+  if (!selections[0]) { return ''; }
 
   return (
     <AnnotateOperationsWrapper>

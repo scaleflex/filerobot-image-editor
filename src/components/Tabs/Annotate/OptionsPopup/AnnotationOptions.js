@@ -13,6 +13,7 @@ const accordionDetailStyle = { marginTop: 8, marginBottom: 8 };
 
 // TODO: Make options container resizable, opacity changing, movable and have cancel button.
 // TODO: Split this component into sub components and imprvoe them with adding more options if available.
+// TODO: Make freehand options applying more faster by making it non-blocking for the UI.
 const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
   const { selections = [] } = useContext(Context);
   const [showGeneralOptions, setShowGeneralOptions] = useState(true);

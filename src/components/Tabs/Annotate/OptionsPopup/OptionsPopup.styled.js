@@ -22,6 +22,8 @@ const SelectedAnnotationPopupWrapper = styled.div.attrs(
 const OptionsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+
+  ${props => props.alignedCenter ? 'justify-content: center;' : ''}
 `;
 
 const OptionInputWrapper = styled.div`
