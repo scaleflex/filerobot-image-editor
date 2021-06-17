@@ -126,8 +126,8 @@ const MainCanvas = ({ image }) => {
       const { libClassName, eventsToApply, ...annotate} = tmpAnnotate;
       const shape = new Konva[libClassName]({
         ...annotate,
-        x: annotate.x ? annotate.x - canvasDimensions.x : 0,
-        y: annotate.y ? annotate.y - canvasDimensions.y : 0,
+        x: annotate.absoluteDimensions ? annotate.x - canvasDimensions.x : annotate.x ?? 0,
+        y: annotate.absoluteDimensions ? annotate.y - canvasDimensions.y : annotate.y ?? 0,
       });
 
       // Applying events on the object.

@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import Context from '../../../../context';
 import useAnnotation from '../../../../hooks/useAnnotation';
 import OptionsPopup from '../OptionsPopup';
-import { AVAILABLE_ANNOTATIONS_NAMES } from '../OptionsPopup/OptionsPopup.constants';
+import { AVAILABLE_ANNOTATIONS_NAMES } from '../Annotate.constants';
 import { AnnotateOperationsWrapper } from './Operations.styled';
 import calcLineDimensionProps from './calcLineDimensionProps';
 

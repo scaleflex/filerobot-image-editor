@@ -23,7 +23,13 @@ const OptionsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  ${props => props.alignedCenter ? 'justify-content: center;' : ''}
+  ${props => `
+    ${props.colDirection ? 'flex-direction: column;' : ''}
+    ${props.alignedLeft ? 'align-items: flex-start;' : ''}
+    ${props.alignedCenter ? 'justify-content: center;' : ''}
+    ${props.spaceBetween ? 'justify-content: space-between;' : ''}
+    ${props.verticallyCentered ? 'align-items: center;' : ''}
+  `}
 `;
 
 const OptionInputWrapper = styled.div`

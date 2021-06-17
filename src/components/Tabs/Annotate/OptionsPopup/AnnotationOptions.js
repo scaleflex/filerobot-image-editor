@@ -3,7 +3,7 @@ import { Accordion, Arrow, IconButton, InputGroup, Label, MenuItem, SelectGroup,
 import { Minus } from '@scaleflex/icons';
 
 import Context from '../../../../context';
-import { AVAILABLE_ANNOTATIONS_NAMES } from './OptionsPopup.constants';
+import { AVAILABLE_ANNOTATIONS_NAMES } from '../Annotate.constants';
 import { DEFAULT_FONTS } from '../../../../utils/constants';
 import { OptionsWrapper, OptionInputWrapper, OptionInput } from './OptionsPopup.styled';
 import capitalize from '../../../../utils/capitalize';
@@ -15,7 +15,7 @@ const accordionDetailStyle = { marginTop: 8, marginBottom: 8 };
 // TODO: Split this component into sub components and imprvoe them with adding more options if available.
 // TODO: Make freehand options applying more faster by making it non-blocking for the UI.
 const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
-  const { selections = [] } = useContext(Context);
+  const { designLayer, selections = [] } = useContext(Context);
   const [showGeneralOptions, setShowGeneralOptions] = useState(true);
   const [showShadowOptions, setShowShadowOptions] = useState(true);
   const [showMoreOptions, setShowMoreOptions] = useState(true);
@@ -37,12 +37,18 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
         lineOptions: isFreehand || AVAILABLE_ANNOTATIONS_NAMES.LINE === selectedAnnotationName,
         arrowOptions: isArrow,
         freehandOptions: isFreehand,
+        imageOptions: AVAILABLE_ANNOTATIONS_NAMES.IMAGE === selectedAnnotationName,
       })
     }, [selections]
   );
   const selectedAnnotation = doesShapeNeed.freehandOptions ? selections[0].children[0] : selections[0];
+  const siblingsLength = useMemo(() => {
+    return +((designLayer.children.length || 1) - 1);
+  }, [designLayer]); // -1 since transformer considered layer
 
-  const dontShowMoreOptionsSection = doesShapeNeed.cornerRadiusOnly || doesShapeNeed.freehandOptions;
+  const dontShowMoreOptionsSection = doesShapeNeed.cornerRadiusOnly ||
+    doesShapeNeed.freehandOptions ||
+    doesShapeNeed.imageOptions;
 
   const applyOptionChangeToFreehand = (name, value) => new Promise((resolve, reject) => {
     selections[0].children.forEach((freehandLine) => {
@@ -136,6 +142,21 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               maxWidth={66}
             />
           </OptionInputWrapper>
+          <OptionInputWrapper>
+            <OptionInput
+              inputProps={{ type: 'number', id: 'filerobot-image-editor_shape-order' }}
+              LabelProps={{ htmlFor: 'filerobot-image-editor_shape-order'}}
+              label="Order"
+              onChange={changeOption}
+              name="zIndex"
+              type="input"
+              defaultValue={+selectedAnnotation.zIndex() ?? 1}
+              min={1}
+              step={1}
+              max={siblingsLength}
+              maxWidth={80}
+            />
+          </OptionInputWrapper>
           {doesShapeNeed.cornerRadiusOnly && (
             <OptionInputWrapper>
               <OptionInput
@@ -166,7 +187,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               maxWidth={66}
             />
           </OptionInputWrapper>
-          {!doesShapeNeed.lineOptions && (
+          {!(doesShapeNeed.lineOptions || doesShapeNeed.imageOptions) && (
             <OptionInputWrapper>
               <OptionInput
                 inputProps={{ type: 'color', id: 'filerobot-image-editor_shape-fill' }}
@@ -249,6 +270,21 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               defaultValue={+selectedAnnotation.shadowBlur() ?? 0}
               min={0}
               max={100}
+              maxWidth={66}
+            />
+          </OptionInputWrapper>
+          <OptionInputWrapper>
+            <OptionInput
+              inputProps={{ type: 'number', id: 'filerobot-image-editor_shape-shadow-transparency' }}
+              LabelProps={{ htmlFor: 'filerobot-image-editor_shape-shadow-transparency'}}
+              label="Transparency"
+              onChange={changeOption}
+              name="shadowOpacity"
+              type="input"
+              defaultValue={+selectedAnnotation.shadowOpacity() ?? 1}
+              min={0}
+              step={0.1}
+              max={1}
               maxWidth={66}
             />
           </OptionInputWrapper>

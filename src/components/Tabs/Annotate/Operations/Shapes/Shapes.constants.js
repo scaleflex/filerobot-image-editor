@@ -1,6 +1,6 @@
 import { Annotation } from '@scaleflex/icons';
 
-import { AVAILABLE_ANNOTATIONS_NAMES } from '../../OptionsPopup/OptionsPopup.constants';
+import { AVAILABLE_ANNOTATIONS_NAMES } from '../../Annotate.constants';
 
 export const AVAILABLE_SHAPES_OBJECTS = [
   {

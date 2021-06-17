@@ -1,5 +1,5 @@
 import randomId from '../../../../../utils/randomId';
-import { AVAILABLE_ANNOTATIONS_NAMES } from '../../OptionsPopup/OptionsPopup.constants';
+import { AVAILABLE_ANNOTATIONS_NAMES } from '../../Annotate.constants';
 
 const getShapeDefaultState = (shapeObject) => {
   const state = {

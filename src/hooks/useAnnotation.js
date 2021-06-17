@@ -4,7 +4,7 @@ import Context from '../context';
 import randomId from '../utils/randomId';
 import getTouchPosOrEvent from '../utils/getTouchPosOrEvent';
 import { POINTER_MODES, POINTER_ICONS, TABS_IDS } from '../utils/constants';
-import { AVAILABLE_ANNOTATIONS_NAMES } from '../components/Tabs/Annotate/OptionsPopup/OptionsPopup.constants';
+import { AVAILABLE_ANNOTATIONS_NAMES } from '../components/Tabs/Annotate/Annotate.constants';
 
 let timeout = null;
 
@@ -18,7 +18,7 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
   'mouseenter touchstart': (e) => {
     updateState(
       (updatedState) => {
-        if (updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.tab.id === TABS_IDS.ANNOTATE) {
+        if (updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.tab?.id === TABS_IDS.ANNOTATE) {
           canvas.content.style.cursor = POINTER_ICONS.MOVE;
           getProperSelectionTarget(e).draggable(true);
         }
@@ -36,7 +36,7 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
   'click tap': (e) => {
     updateState((updatedState) => {
       const selection = getProperSelectionTarget(e);
-      if (updatedState.tab.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.selections[0] !== selection) {
+      if (updatedState.tab?.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.selections[0] !== selection) {
         return { selections: [selection] };
       }
     });
@@ -44,7 +44,7 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
   'dragstart': (e) => {
     updateState((updatedState) => {
       const selection = getProperSelectionTarget(e);
-      if (updatedState.tab.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.selections[0] !== selection) {
+      if (updatedState.tab?.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.selections[0] !== selection) {
         return { selections: [selection] };
       }
     });
@@ -62,7 +62,7 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
 
 const useAnnotation = ({
   defaultFill = '#000000', libClassName, name, calcDimensionsProps, noDimensionsMapping = false, events,
-  defaultDraw = false, noPointerEvents = false, ...otherProps
+  defaultDraw = false, noPointerEvents = false, absoluteDimensions = true, ...otherProps
 }) => {
   const { canvas, pointerMode, selections, updateState } = useContext(Context);
   const [currentAnnotation, setCurrentAnnotation] = useState(
@@ -73,6 +73,7 @@ const useAnnotation = ({
       name,
       hitStrokeWidth: 6,
       x: 0,
+      absoluteDimensions: absoluteDimensions,
       y: 0,
       shadowColor: '#000000',
       stroke: '#000000',
