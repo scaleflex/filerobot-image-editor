@@ -5,11 +5,11 @@ import Konva from 'konva';
 import Context from '../../../../context';
 import useAnnotation from '../../../../hooks/useAnnotation';
 import { POINTER_MODES } from '../../../../utils/constants';
-import OptionsPopup from '../OptionsPopup';
-import { AVAILABLE_ANNOTATIONS_NAMES } from '../Annotate.constants';
+import ShapesOptionsPopup from '../../../ShapesOptionsPopup';
+import { SHAPES_NAMES } from '../../../../utils/constants';
 
 import { AnnotateOperationsWrapper } from './Operations.styled';
-import { OptionInput, OptionInputWrapper, OptionsWrapper } from '../OptionsPopup/OptionsPopup.styled';
+import { OptionInput, OptionInputWrapper, OptionsWrapper } from '../../../ShapesOptionsPopup/ShapesOptionsPopup.styled';
 
 const TOOL_BRUSH = 'brush';
 const TOOL_ERASE = 'erase';
@@ -19,9 +19,10 @@ const Freehand = ({
 }) => {
   const [_, addNewGroup] = useAnnotation({
     libClassName: 'Group',
-    name: AVAILABLE_ANNOTATIONS_NAMES.FREEHAND,
+    name: SHAPES_NAMES.FREEHAND,
     defaultDraw: true,
     noPointerEvents: true,
+    absoluteDimensions: false,
   });
   const { canvas, designLayer, pointerMode } = useContext(Context);
   const [brushOptions, setBrushOptions] = useState({
@@ -62,12 +63,12 @@ const Freehand = ({
         strokeWidth: +brushOptions.strokeSize,
         tension: defaultTension,
         lineCap: defaultLineCap,
-        name: AVAILABLE_ANNOTATIONS_NAMES.FREEHAND_LINE,
+        name: SHAPES_NAMES.FREEHAND_LINE,
         points: [lastPosition.current.x, lastPosition.current.y, point.x, point.y],
       });
       lastPosition.current = point;
       lastGroupRef.current.add(newLine);
-    } else if (e.target.name() === AVAILABLE_ANNOTATIONS_NAMES.FREEHAND_LINE) {
+    } else if (e.target.name() === SHAPES_NAMES.FREEHAND_LINE) {
       // if the parent children has no other lines except the current one then destory the whole paths' group otherwise destroy the line only.
       if ((e.target.parent.children || []).length - 1 === 0) {
         e.target.parent.destroy();
@@ -87,7 +88,7 @@ const Freehand = ({
   const handlePointerDown = useCallback((e) => {
     if (tool !== TOOL_ERASE) {
       addNewGroup((updatedShape) => ({ ...updatedShape }));
-      const groups = designLayer.find(`.${AVAILABLE_ANNOTATIONS_NAMES.FREEHAND}`);
+      const groups = designLayer.find(`.${SHAPES_NAMES.FREEHAND}`);
       lastGroupRef.current = groups[groups.length - 1];
   
       const pos = e.target.getStage().getPointerPosition();
@@ -179,7 +180,7 @@ const Freehand = ({
         )}
         {renderToolRadio()}
       </OptionsWrapper>
-      <OptionsPopup />
+      <ShapesOptionsPopup />
     </AnnotateOperationsWrapper>
   );
 }

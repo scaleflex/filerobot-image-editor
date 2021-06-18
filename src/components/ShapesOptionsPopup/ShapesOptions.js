@@ -2,11 +2,11 @@ import React, { useContext, useMemo, useState } from 'react';
 import { Accordion, Arrow, IconButton, InputGroup, Label, MenuItem, SelectGroup, SwitcherGroup } from '@scaleflex/ui/core';
 import { Minus } from '@scaleflex/icons';
 
-import Context from '../../../../context';
-import { AVAILABLE_ANNOTATIONS_NAMES } from '../Annotate.constants';
-import { DEFAULT_FONTS } from '../../../../utils/constants';
-import { OptionsWrapper, OptionInputWrapper, OptionInput } from './OptionsPopup.styled';
-import capitalize from '../../../../utils/capitalize';
+import Context from '../../context';
+import { DEFAULT_FONTS, SHAPES_NAMES } from '../../utils/constants';
+import { OptionsWrapper, OptionInputWrapper, OptionInput } from './ShapesOptionsPopup.styled';
+import capitalize from '../../utils/capitalize';
+import { getAlignmentBaseValX, getAlignmentBaseValY } from './getShapeAlignmentBase';
 
 const accordionHeaderStyle = { marginTop: 4, marginBottom: 6 };
 const accordionDetailStyle = { marginTop: 8, marginBottom: 8 };
@@ -14,34 +14,39 @@ const accordionDetailStyle = { marginTop: 8, marginBottom: 8 };
 // TODO: Make options container resizable, opacity changing, movable and have cancel button.
 // TODO: Split this component into sub components and imprvoe them with adding more options if available.
 // TODO: Make freehand options applying more faster by making it non-blocking for the UI.
-const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
+const ShapesOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
   const { designLayer, selections = [] } = useContext(Context);
   const [showGeneralOptions, setShowGeneralOptions] = useState(true);
   const [showShadowOptions, setShowShadowOptions] = useState(true);
+  const [showAlignmentOptions, setShowAlignmentOptions] = useState(true);
   const [showMoreOptions, setShowMoreOptions] = useState(true);
   const [reRenderVal, reRender] = useState(false); // for re-rendering the chosen font family/style.
 
+  const { designLayerWidth, designLayerHeight } = useMemo(() => ({
+    designLayerWidth: designLayer?.getWidth(),
+    designLayerHeight: designLayer?.getHeight()
+  }), [designLayer]);
   const doesShapeNeed = useMemo(
     () => {
-      const selectedAnnotationName = selections[0].name();
-      const isPolygon = AVAILABLE_ANNOTATIONS_NAMES.POLYGON === selectedAnnotationName;
-      const isArrow = AVAILABLE_ANNOTATIONS_NAMES.ARROW === selectedAnnotationName;
-      const isFreehand = AVAILABLE_ANNOTATIONS_NAMES.FREEHAND === selectedAnnotationName;
+      const selectedShapeName = selections[0].name();
+      const isPolygon = SHAPES_NAMES.POLYGON === selectedShapeName;
+      const isArrow = SHAPES_NAMES.ARROW === selectedShapeName;
+      const isFreehand = SHAPES_NAMES.FREEHAND === selectedShapeName;
 
       return ({
-        cornerRadiusOnly: AVAILABLE_ANNOTATIONS_NAMES.RECT === selectedAnnotationName,
+        cornerRadiusOnly: SHAPES_NAMES.RECT === selectedShapeName,
         sides: isPolygon,
-        radius: isPolygon || AVAILABLE_ANNOTATIONS_NAMES.CIRCLE === selectedAnnotationName,
-        radiusXY: AVAILABLE_ANNOTATIONS_NAMES.ELLIPSE === selectedAnnotationName,
-        textOptions: AVAILABLE_ANNOTATIONS_NAMES.TEXT === selectedAnnotationName,
-        lineOptions: isFreehand || AVAILABLE_ANNOTATIONS_NAMES.LINE === selectedAnnotationName,
+        radius: isPolygon || SHAPES_NAMES.CIRCLE === selectedShapeName,
+        radiusXY: SHAPES_NAMES.ELLIPSE === selectedShapeName,
+        textOptions: SHAPES_NAMES.TEXT === selectedShapeName,
+        lineOptions: isFreehand || SHAPES_NAMES.LINE === selectedShapeName,
         arrowOptions: isArrow,
         freehandOptions: isFreehand,
-        imageOptions: AVAILABLE_ANNOTATIONS_NAMES.IMAGE === selectedAnnotationName,
+        imageOptions: SHAPES_NAMES.IMAGE === selectedShapeName,
       })
     }, [selections]
   );
-  const selectedAnnotation = doesShapeNeed.freehandOptions ? selections[0].children[0] : selections[0];
+  const selectedShape = doesShapeNeed.freehandOptions ? selections[0].children[0] : selections[0];
   const siblingsLength = useMemo(() => {
     return +((designLayer.children.length || 1) - 1);
   }, [designLayer]); // -1 since transformer considered layer
@@ -73,47 +78,87 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
     if (doesShapeNeed.freehandOptions) {
       applyOptionChangeToFreehand(event.target.name, value);
     } else {
-      selectedAnnotation.setAttr(event.target.name, value);
+      selectedShape.setAttr(event.target.name, value);
     }
-    
+  }
+
+  const changeShapeAlignment = (alignmentDir) => {
+    switch (alignmentDir) {
+      case 'left':
+        selectedShape.x(getAlignmentBaseValX(selectedShape));
+        break;
+      case 'center':
+        selectedShape.x(
+          (designLayerWidth / 2) - (
+            (selectedShape.width() / 2) - getAlignmentBaseValX(selectedShape)
+          )
+        );
+        break;
+      case 'right':
+        selectedShape.x(
+          designLayerWidth - (
+            selectedShape.width() - getAlignmentBaseValX(selectedShape)
+          )
+        );
+        break;
+      case 'top':
+        selectedShape.y(getAlignmentBaseValY(selectedShape));
+        break;
+      case 'middle':
+        selectedShape.y(
+          (designLayerHeight / 2) - (
+            (selectedShape.height() / 2) - getAlignmentBaseValY(selectedShape)
+          )
+        );
+        break;
+      case 'bottom':
+        selectedShape.y(
+            designLayerHeight - (
+            selectedShape.height() - getAlignmentBaseValY(selectedShape)
+          )
+        );
+        break;
+      default:
+        break;
+    }
   }
 
   const changeFontFamily = (fontFamily) => {
-    selectedAnnotation.fontFamily(fontFamily);
+    selectedShape.fontFamily(fontFamily);
     reRender(!reRenderVal);
   }
 
   const changeFontStyle = (fontStyle) => {
-    selectedAnnotation.fontStyle(fontStyle);
+    selectedShape.fontStyle(fontStyle);
     reRender(!reRenderVal);
   }
   
   const changeTextAlignment = (isVerticalAlign, alignmentDirection) => {
     if (isVerticalAlign) {
-      selectedAnnotation.verticalAlign(alignmentDirection);
+      selectedShape.verticalAlign(alignmentDirection);
     } else {
-      selectedAnnotation.align(alignmentDirection);
+      selectedShape.align(alignmentDirection);
     }
     reRender(!reRenderVal);
   }
 
   const changeTextDecoration = (value) => {
-    selectedAnnotation.textDecoration(value);
+    selectedShape.textDecoration(value);
     reRender(!reRenderVal);
   }
 
   const changeLineCap = (value) => {
-    selectedAnnotation.lineCap(value);
+    selectedShape.lineCap(value);
     reRender(!reRenderVal);
   }
 
   const toggleLineDashing = (event) => {
-    selectedAnnotation.dashEnabled(event.target.checked);
+    selectedShape.dashEnabled(event.target.checked);
     reRender(!reRenderVal);
   }
 
   const togglePointer = (event) => {
-    selectedAnnotation[event.target.name](event.target.checked);
+    selectedShape[event.target.name](event.target.checked);
     reRender(!reRenderVal);
   }
 
@@ -135,7 +180,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               onChange={changeOption}
               name="opacity"
               type="input"
-              defaultValue={+selectedAnnotation.opacity() ?? 1}
+              defaultValue={+selectedShape.opacity() ?? 1}
               min={0}
               step={0.1}
               max={1}
@@ -150,7 +195,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               onChange={changeOption}
               name="zIndex"
               type="input"
-              defaultValue={+selectedAnnotation.zIndex() ?? 1}
+              defaultValue={+selectedShape.zIndex() ?? 1}
               min={1}
               step={1}
               max={siblingsLength}
@@ -166,7 +211,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                 onChange={changeOption}
                 name="cornerRadius"
                 type="input"
-                defaultValue={+selectedAnnotation.cornerRadius() ?? 0}
+                defaultValue={+selectedShape.cornerRadius() ?? 0}
                 min={0}
                 max={100}
                 maxWidth={66}
@@ -181,7 +226,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               onChange={changeOption}
               name="strokeWidth"
               type="input"
-              defaultValue={+selectedAnnotation.strokeWidth() ?? 0}
+              defaultValue={+selectedShape.strokeWidth() ?? 0}
               min={doesShapeNeed.lineOptions || doesShapeNeed.arrowOptions ? 1 : 0}
               max={100}
               maxWidth={66}
@@ -196,7 +241,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                 onChange={changeOption}
                 name="fill"
                 type="input"
-                defaultValue={selectedAnnotation.fill()}
+                defaultValue={selectedShape.fill()}
                 maxWidth={50}
                 noBorder
                 noPadding
@@ -213,7 +258,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               onChange={changeOption}
               name="stroke"
               type="input"
-              defaultValue={selectedAnnotation.stroke() ?? '#000000'}
+              defaultValue={selectedShape.stroke() ?? '#000000'}
               maxWidth={64}
               noBorder
               noPadding
@@ -239,7 +284,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               onChange={changeOption}
               name="shadowOffsetX"
               type="input"
-              defaultValue={+selectedAnnotation.shadowOffsetX() ?? 0}
+              defaultValue={+selectedShape.shadowOffsetX() ?? 0}
               min={0}
               max={100}
               maxWidth={66}
@@ -253,7 +298,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               onChange={changeOption}
               name="shadowOffsetY"
               type="input"
-              defaultValue={+selectedAnnotation.shadowOffsetY() ?? 0}
+              defaultValue={+selectedShape.shadowOffsetY() ?? 0}
               min={0}
               max={100}
               maxWidth={66}
@@ -267,7 +312,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               onChange={changeOption}
               name="shadowBlur"
               type="input"
-              defaultValue={+selectedAnnotation.shadowBlur() ?? 0}
+              defaultValue={+selectedShape.shadowBlur() ?? 0}
               min={0}
               max={100}
               maxWidth={66}
@@ -281,7 +326,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               onChange={changeOption}
               name="shadowOpacity"
               type="input"
-              defaultValue={+selectedAnnotation.shadowOpacity() ?? 1}
+              defaultValue={+selectedShape.shadowOpacity() ?? 1}
               min={0}
               step={0.1}
               max={1}
@@ -296,7 +341,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
               onChange={changeOption}
               name="shadowColor"
               type="input"
-              defaultValue={selectedAnnotation.shadowColor() ?? '#000000'}
+              defaultValue={selectedShape.shadowColor() ?? '#000000'}
               maxWidth={64}
               noBorder
               noPadding
@@ -306,10 +351,74 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
           </OptionInputWrapper>
         </OptionsWrapper>
         </Accordion>
+      {!doesShapeNeed.freehandOptions && (
+        <Accordion
+          expanded={showAlignmentOptions}
+          label="Alignment options"
+          onChange={setShowAlignmentOptions}
+          headerStyle={accordionHeaderStyle}
+          detailStyle={accordionDetailStyle}
+        >
+          <OptionsWrapper>
+            <OptionInputWrapper>
+              <Label>
+                Horizontal
+              </Label>
+              <IconButton
+                size="sm"
+                color="link"
+                onClick={() => changeShapeAlignment('left')}
+              >
+                <Arrow size={12} type="left" />
+              </IconButton>
+              <IconButton
+                size="sm"
+                color="link"
+                onClick={() => changeShapeAlignment('center')}
+              >
+                <Minus size={12} />
+              </IconButton>
+              <IconButton
+                size="sm"
+                color="link"
+                onClick={() => changeShapeAlignment('right')}
+              >
+                <Arrow size={12} type="right" />
+              </IconButton>
+            </OptionInputWrapper>
+            <OptionInputWrapper>
+              <Label>
+                Vertical
+              </Label>
+              <IconButton
+                size="sm"
+                color="link"
+                onClick={() => changeShapeAlignment('top')}
+              >
+                <Arrow size={12} type="top" />
+              </IconButton>
+              <IconButton
+                size="sm"
+                color="link"
+                onClick={() => changeShapeAlignment('middle')}
+              >
+                <Minus size={12} />
+              </IconButton>
+              <IconButton
+                size="sm"
+                color="link"
+                onClick={() => changeShapeAlignment('bottom')}
+              >
+                <Arrow size={12} type="bottom" />
+              </IconButton>
+            </OptionInputWrapper>
+          </OptionsWrapper>
+          </Accordion>
+        )}
         {!dontShowMoreOptionsSection && (
           <Accordion
             expanded={showMoreOptions}
-            label={`${capitalize(selectedAnnotation.name())} options`}
+            label={`${capitalize(selectedShape.name())} options`}
             onChange={setShowMoreOptions}
             headerStyle={accordionHeaderStyle}
             detailStyle={accordionDetailStyle}
@@ -324,7 +433,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                     onChange={changeOption}
                     name="radius"
                     type="input"
-                    defaultValue={+selectedAnnotation.radius() ?? 0}
+                    defaultValue={+selectedShape.radius() ?? 0}
                     min={0}
                     max={250}
                     maxWidth={66}
@@ -341,7 +450,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       onChange={changeOption}
                       name="radiusX"
                       type="input"
-                      defaultValue={+selectedAnnotation.radiusX() ?? 0}
+                      defaultValue={+selectedShape.radiusX() ?? 0}
                       min={0}
                       max={250}
                       maxWidth={90}
@@ -355,7 +464,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       onChange={changeOption}
                       name="radiusY"
                       type="input"
-                      defaultValue={+selectedAnnotation.radiusY() ?? 0}
+                      defaultValue={+selectedShape.radiusY() ?? 0}
                       min={0}
                       max={250}
                       maxWidth={75}
@@ -372,7 +481,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                     onChange={changeOption}
                     name="sides"
                     type="input"
-                    defaultValue={+selectedAnnotation.sides() ?? 3}
+                    defaultValue={+selectedShape.sides() ?? 3}
                     min={0}
                     max={100}
                     maxWidth={66}
@@ -386,12 +495,12 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       fullWidth={false}
                       label="Line cap"
                       onChange={changeLineCap}
-                      value={selectedAnnotation.lineCap()}
+                      value={selectedShape.lineCap()}
                       name="lineCap"
                     >
                       {['Butt', 'Round', 'Square'].map((lineCap) => (
                         <MenuItem
-                          active={selectedAnnotation.lineCap() === lineCap}
+                          active={selectedShape.lineCap() === lineCap}
                           size="md"
                           value={lineCap.toLowerCase()}
                           key={lineCap}
@@ -403,7 +512,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                   </OptionInputWrapper>
                   <OptionInputWrapper>
                     <SwitcherGroup
-                      checked={selectedAnnotation.dashEnabled()}
+                      checked={selectedShape.dashEnabled()}
                       label="Dashed line"
                       onChange={toggleLineDashing}
                       switcherProps={{ name: 'dashEnabled' }}
@@ -419,7 +528,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                           onChange={changeOption}
                           name="pointerLength"
                           type="input"
-                          defaultValue={+selectedAnnotation.pointerLength()}
+                          defaultValue={+selectedShape.pointerLength()}
                           min={0}
                           max={100}
                           maxWidth={66}
@@ -433,7 +542,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                           onChange={changeOption}
                           name="pointerWidth"
                           type="input"
-                          defaultValue={+selectedAnnotation.pointerWidth()}
+                          defaultValue={+selectedShape.pointerWidth()}
                           min={1}
                           max={100}
                           maxWidth={66}
@@ -441,7 +550,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       </OptionInputWrapper>
                       <OptionInputWrapper>
                         <SwitcherGroup
-                          checked={selectedAnnotation.pointerAtBeginning()}
+                          checked={selectedShape.pointerAtBeginning()}
                           label="Start pointer"
                           onChange={togglePointer}
                           switcherProps={{ name: 'pointerAtBeginning' }}
@@ -449,7 +558,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       </OptionInputWrapper>
                       <OptionInputWrapper>
                         <SwitcherGroup
-                          checked={selectedAnnotation.pointerAtEnding()}
+                          checked={selectedShape.pointerAtEnding()}
                           label="End pointer"
                           onChange={togglePointer}
                           switcherProps={{ name: 'pointerAtEnding' }}
@@ -466,12 +575,12 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       fullWidth={false}
                       label="Font family"
                       onChange={changeFontFamily}
-                      value={selectedAnnotation.fontFamily()}
+                      value={selectedShape.fontFamily()}
                       name="fontFamily"
                     >
                       {fontFamilies.map((fontFamily) => (
                         <MenuItem
-                          active={selectedAnnotation.fontFamily() === fontFamily}
+                          active={selectedShape.fontFamily() === fontFamily}
                           size="md"
                           value={fontFamily}
                           key={fontFamily}
@@ -486,12 +595,12 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       fullWidth={false}
                       label="Font style"
                       onChange={changeFontStyle}
-                      value={selectedAnnotation.fontStyle()}
+                      value={selectedShape.fontStyle()}
                       name="fontStyle"
                     >
                       {['Normal', 'Bold', 'Bold italic'].map((fontStyle) => (
                         <MenuItem
-                          active={selectedAnnotation.fontStyle() === fontStyle}
+                          active={selectedShape.fontStyle() === fontStyle}
                           size="md"
                           value={fontStyle.toLowerCase()}
                           key={fontStyle}
@@ -509,7 +618,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       onChange={changeOption}
                       name="fontSize"
                       type="input"
-                      defaultValue={+selectedAnnotation.fontSize() ?? 20}
+                      defaultValue={+selectedShape.fontSize() ?? 20}
                       min={0}
                       max={150}
                       maxWidth={66}
@@ -523,7 +632,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       onChange={changeOption}
                       name="padding"
                       type="input"
-                      defaultValue={+selectedAnnotation.padding() ?? 0}
+                      defaultValue={+selectedShape.padding() ?? 0}
                       min={0}
                       max={30}
                       maxWidth={60}
@@ -537,7 +646,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       onChange={changeOption}
                       name="lineHeight"
                       type="input"
-                      defaultValue={+selectedAnnotation.lineHeight() ?? 1}
+                      defaultValue={+selectedShape.lineHeight() ?? 1}
                       min={0}
                       max={20}
                       maxWidth={66}
@@ -555,7 +664,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       onChange={changeOption}
                       name="text"
                       type="textarea"
-                      defaultValue={selectedAnnotation.text()}
+                      defaultValue={selectedShape.text()}
                       style={{ width: 111, height: 50, resize: 'both' }}
                     />
                   </OptionInputWrapper>
@@ -567,7 +676,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       size="sm"
                       color="link"
                       onClick={() => changeTextAlignment(false, 'left')}
-                      disabled={selectedAnnotation.align === 'left'}
+                      disabled={selectedShape.align === 'left'}
                     >
                       <Arrow size={12} type="left" />
                     </IconButton>
@@ -575,7 +684,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       size="sm"
                       color="link"
                       onClick={() => changeTextAlignment(false, 'center')}
-                      disabled={selectedAnnotation.align === 'center'}
+                      disabled={selectedShape.align === 'center'}
                     >
                       <Minus size={12} />
                     </IconButton>
@@ -583,7 +692,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       size="sm"
                       color="link"
                       onClick={() => changeTextAlignment(false, 'right')}
-                      disabled={selectedAnnotation.align === 'right'}
+                      disabled={selectedShape.align === 'right'}
                     >
                       <Arrow size={12} />
                     </IconButton>
@@ -596,7 +705,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       size="sm"
                       color="link"
                       onClick={() => changeTextAlignment(true, 'top')}
-                      disabled={selectedAnnotation.verticalAlign === 'top'}
+                      disabled={selectedShape.verticalAlign === 'top'}
                     >
                       <Arrow size={12} type="top" />
                     </IconButton>
@@ -604,7 +713,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       size="sm"
                       color="link"
                       onClick={() => changeTextAlignment(true, 'middle')}
-                      disabled={selectedAnnotation.verticalAlign === 'middle'}
+                      disabled={selectedShape.verticalAlign === 'middle'}
                     >
                       <Minus size={12} />
                     </IconButton>
@@ -612,7 +721,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       size="sm"
                       color="link"
                       onClick={() => changeTextAlignment(true, 'bottom')}
-                      disabled={selectedAnnotation.verticalAlign === 'bottom'}
+                      disabled={selectedShape.verticalAlign === 'bottom'}
                     >
                       <Arrow size={12} type="bottom" />
                     </IconButton>
@@ -625,7 +734,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       size="sm"
                       color="link"
                       onClick={() => changeTextDecoration('')}
-                      disabled={!selectedAnnotation.textDecoration}
+                      disabled={!selectedShape.textDecoration}
                     >
                       T
                     </IconButton>
@@ -633,7 +742,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       size="sm"
                       color="link"
                       onClick={() => changeTextDecoration('underline')}
-                      disabled={selectedAnnotation.textDecoration === 'underline'}
+                      disabled={selectedShape.textDecoration === 'underline'}
                     >
                       __
                     </IconButton>
@@ -641,7 +750,7 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
                       size="sm"
                       color="link"
                       onClick={() => changeTextDecoration('line-through')}
-                      disabled={selectedAnnotation.textDecoration === 'line-through'}
+                      disabled={selectedShape.textDecoration === 'line-through'}
                     >
                       <Minus size={12} />
                     </IconButton>
@@ -655,10 +764,10 @@ const AnnotationOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
   );
 
   return (
-    selectedAnnotation && !selectedAnnotation.isDragging()
+    selectedShape && !selectedShape.isDragging()
       ? renderOptions()
       : ''
   )
 }
 
-export default AnnotationOptions;
+export default ShapesOptions;

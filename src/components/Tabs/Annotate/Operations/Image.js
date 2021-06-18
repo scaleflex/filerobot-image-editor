@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { Button, InputGroup, RadioGroup, UploadInput } from '@scaleflex/ui/core';
 
-import { AVAILABLE_ANNOTATIONS_NAMES } from '../Annotate.constants';
+import { SHAPES_NAMES } from '../../../../utils/constants';
 import { AnnotateOperationsWrapper } from './Operations.styled';
 import Loading from '../../../Loading';
 import useAnnotation from '../../../../hooks/useAnnotation';
 import RobotPopup from '../../../RobotPopup';
 import Context from '../../../../context';
-import { OptionInputWrapper, OptionsWrapper } from '../OptionsPopup/OptionsPopup.styled';
-import OptionsPopup from '../OptionsPopup';
+import { OptionInputWrapper, OptionsWrapper } from '../../../ShapesOptionsPopup/ShapesOptionsPopup.styled';
+import ShapesOptionsPopup from '../../../ShapesOptionsPopup';
 
 const IMAGE_MODES = {
   URL_IMPORT: 'url-import',
@@ -31,7 +31,7 @@ const ImageTab = () => {
   const [imgsToImportUrlsString, setImgsToImportUrlsString] = useState('');
   const [_, addNewImage] = useAnnotation({
     libClassName: 'Image',
-    name: AVAILABLE_ANNOTATIONS_NAMES.IMAGE,
+    name: SHAPES_NAMES.IMAGE,
     noPointerEvents: true,
     absoluteDimensions: false,
   });
@@ -215,7 +215,7 @@ const ImageTab = () => {
           : renderModesInputs()}
       </OptionsWrapper>
       <RobotPopup show={Boolean(error)} message={error} status="worried" onClose={clearError}/>
-      <OptionsPopup />
+      <ShapesOptionsPopup />
     </AnnotateOperationsWrapper>
   );
 }

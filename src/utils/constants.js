@@ -38,6 +38,20 @@ export const AVAILABLE_TABS = [
   },
 ];
 
+export const SHAPES_NAMES = {
+  RECT: 'rect',
+  CIRCLE: 'circle',
+  ELLIPSE: 'ellipse',
+  POLYGON: 'polygon',
+  TEXT: 'text',
+  LINE: 'line',
+  IMAGE: 'image',
+  ARROW: 'arrow',
+  WATERMARK: 'watermark',
+  FREEHAND: 'freehand',
+  FREEHAND_LINE: 'freehand_group_line',
+};
+
 export const POINTER_MODES = {
   SELECT: 'SELECT',
   DRAW: 'DRAW',

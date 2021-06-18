@@ -2,9 +2,8 @@ import React, { useContext, useEffect } from 'react';
 
 import Context from '../../../../context';
 import useAnnotation from '../../../../hooks/useAnnotation';
-import { DEFAULT_FONTS } from '../../../../utils/constants';
-import OptionsPopup from '../OptionsPopup';
-import { AVAILABLE_ANNOTATIONS_NAMES } from '../Annotate.constants';
+import { DEFAULT_FONTS, SHAPES_NAMES } from '../../../../utils/constants';
+import ShapesOptionsPopup from '../../../ShapesOptionsPopup';
 
 import { AnnotateOperationsWrapper } from './Operations.styled';
 
@@ -15,7 +14,7 @@ const Text = ({
   useAnnotation({
     defaultFill,
     libClassName: 'Text',
-    name: AVAILABLE_ANNOTATIONS_NAMES.TEXT,
+    name: SHAPES_NAMES.TEXT,
     text: defaultText,
     fontFamily: defaultFontFamily,
     fontSize: defaultFontSize,
@@ -49,7 +48,7 @@ const Text = ({
 
   return (
     <AnnotateOperationsWrapper>
-      <OptionsPopup />
+      <ShapesOptionsPopup />
     </AnnotateOperationsWrapper>
   );
 }

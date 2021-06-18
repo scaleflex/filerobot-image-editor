@@ -63,6 +63,9 @@ const MainCanvas = ({ image }) => {
       const designLayer = new Konva.Layer(); // for having the other tools for editing ex. shapes, drawing...etc.
       canvas.add(designLayer);
 
+      const previewLayer = new Konva.Layer(); // for showing the current shape preview that would be drawn.
+      canvas.add(previewLayer);
+
       const transformer = new Konva.Transformer({
         centeredScaling: false,
         rotationSnaps: [0, 90, 180, 270],
@@ -95,8 +98,9 @@ const MainCanvas = ({ image }) => {
       
       updateState({
         canvas,
-        designLayer,
         imageLayer,
+        designLayer,
+        previewLayer,
         canvasedImage: canvasedImage,
         transformer,
       });
@@ -136,6 +140,7 @@ const MainCanvas = ({ image }) => {
       })
 
       designLayer.add(shape);
+      transformer.moveToTop();
 
       updateState((state) => ({
         annotations: {

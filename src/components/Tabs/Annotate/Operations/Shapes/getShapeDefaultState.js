@@ -1,5 +1,5 @@
 import randomId from '../../../../../utils/randomId';
-import { AVAILABLE_ANNOTATIONS_NAMES } from '../../Annotate.constants';
+import { SHAPES_NAMES } from '../../../../../utils/constants';
 
 const getShapeDefaultState = (shapeObject) => {
   const state = {
@@ -10,13 +10,13 @@ const getShapeDefaultState = (shapeObject) => {
   }
 
   switch (shapeObject.name) {
-    case AVAILABLE_ANNOTATIONS_NAMES.CIRCLE:
+    case SHAPES_NAMES.CIRCLE:
       state.calcDimensionsProps = ({ width, height }) => ({ radius: Math.max(width, height) });
       break;
-    case AVAILABLE_ANNOTATIONS_NAMES.ELLIPSE:
+    case SHAPES_NAMES.ELLIPSE:
       state.calcDimensionsProps = ({ width, height }) => ({ radiusX: width, radiusY: height });
       break;
-    case AVAILABLE_ANNOTATIONS_NAMES.POLYGON:
+    case SHAPES_NAMES.POLYGON:
       state.sides = 3;
       state.calcDimensionsProps = ({ width, height }) => ({ radius: Math.max(width, height) });
       break;

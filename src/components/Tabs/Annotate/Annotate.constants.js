@@ -32,16 +32,3 @@ export const OPERATIONS = [
     icon: Annotation,
   },
 ];
-
-export const AVAILABLE_ANNOTATIONS_NAMES = {
-  RECT: 'rect',
-  CIRCLE: 'circle',
-  ELLIPSE: 'ellipse',
-  POLYGON: 'polygon',
-  TEXT: 'text',
-  LINE: 'line',
-  IMAGE: 'image',
-  ARROW: 'arrow',
-  FREEHAND: 'freehand',
-  FREEHAND_LINE: 'freehand_group_line',
-};

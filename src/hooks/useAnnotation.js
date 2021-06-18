@@ -3,13 +3,13 @@ import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Context from '../context';
 import randomId from '../utils/randomId';
 import getTouchPosOrEvent from '../utils/getTouchPosOrEvent';
-import { POINTER_MODES, POINTER_ICONS, TABS_IDS } from '../utils/constants';
-import { AVAILABLE_ANNOTATIONS_NAMES } from '../components/Tabs/Annotate/Annotate.constants';
+import { POINTER_MODES, POINTER_ICONS, TABS_IDS, SHAPES_NAMES } from '../utils/constants';
+import Konva from 'konva';
 
 let timeout = null;
 
 const getProperSelectionTarget = (e) => (
-  e.target.name() === AVAILABLE_ANNOTATIONS_NAMES.FREEHAND_LINE
+  e.target.name() === SHAPES_NAMES.FREEHAND_LINE
     ? e.target.parent
     : e.target
 );
@@ -62,9 +62,10 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
 
 const useAnnotation = ({
   defaultFill = '#000000', libClassName, name, calcDimensionsProps, noDimensionsMapping = false, events,
-  defaultDraw = false, noPointerEvents = false, absoluteDimensions = true, ...otherProps
+  defaultDraw = false, noPointerEvents = false, absoluteDimensions = true, shapePreviewOpacity = 0.7,
+  ...otherProps
 }) => {
-  const { canvas, pointerMode, selections, updateState } = useContext(Context);
+  const { canvas, previewLayer, pointerMode, selections, updateState } = useContext(Context);
   const [currentAnnotation, setCurrentAnnotation] = useState(
     () => ({
       draw: defaultDraw,
@@ -154,6 +155,22 @@ const useAnnotation = ({
     );
   }, [positionDiffStartToEnd]);
 
+  const updateShapePreview = useCallback((shape) => {
+    previewLayer.destroyChildren();
+    previewLayer.add(
+      new Konva[shape.libClassName]({
+        ...shape,
+        opacity: shapePreviewOpacity,
+        x: shape.absoluteDimensions
+          ? shape.x - canvasDimensions.current.x
+          : shape.x ?? 0,
+        y: shape.absoluteDimensions
+          ? shape.y - canvasDimensions.current.y
+          : shape.y ?? 0,
+      })
+    );
+  }, [previewLayer]);
+
   const handlePointerMove = useCallback((e) => {
     const event = getTouchPosOrEvent(e);
 
@@ -164,11 +181,16 @@ const useAnnotation = ({
     }
 
     setCurrentAnnotation(
-      (updatedcurrentAnnotation) => ({
-        ...updatedcurrentAnnotation,
-        draw: defaultDraw,
-        ...positionDiffStartToEnd(event, updatedcurrentAnnotation),
-      })
+      (updatedcurrentAnnotation) => {
+        const shapeWithChanges = {
+          ...updatedcurrentAnnotation,
+          draw: defaultDraw,
+          ...positionDiffStartToEnd(event, updatedcurrentAnnotation),
+        };
+
+        updateShapePreview(shapeWithChanges);
+        return shapeWithChanges;
+      }
     );
   }, [defaultDraw, handleDimensionsMapping, positionDiffStartToEnd]);
 
@@ -181,6 +203,8 @@ const useAnnotation = ({
   }, [handleDimensionsMapping, noDimensionsMapping]);
 
   const handlePointerUp = useCallback(() => {   
+    previewLayer.destroyChildren();
+
     setCurrentAnnotation(
       (updatedcurrentAnnotation) => ({
         ...updatedcurrentAnnotation,
@@ -200,6 +224,10 @@ const useAnnotation = ({
   }, [canvas, handleDimensionsMapping, handlePointerMove, handlePointerOut]);
 
   const handlePointerDown = useCallback((e) => {
+    if (previewLayer) {
+      previewLayer.destroyChildren();
+    }
+
     canvas.content.style.cursor = POINTER_ICONS.CROSSHAIR;
     const event = getTouchPosOrEvent(e);
     startPosition.current = {

@@ -1,19 +1,16 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import TopbarItem from '../../../../Topbar/TopbarItem';
 import { AnnotateOperationsWrapper } from '../Operations.styled';
 import { ShapesWrapper } from './Shapes.styled';
-import Context from '../../../../../context';
 import useAnnotation from '../../../../../hooks/useAnnotation';
 import { AVAILABLE_SHAPES_OBJECTS } from './Shapes.constants';
 import getShapeDefaultState from './getShapeDefaultState';
-import OptionsPopup from '../../OptionsPopup';
+import ShapesOptionsPopup from '../../../../ShapesOptionsPopup';
 
 const Shapes = ({ defaultFill = '#cceacc'}) => {
   const [_, updateShapeToBeAdded] = useAnnotation({ defaultFill });
-  const { selections = [] } = useContext(Context);
   const [chosenShapeObject, setChosenShapeObject] = useState(null);
-  const selectedShape = selections[0];
 
   const selectShapeObject = useCallback((shapeObject) => {
     updateShapeToBeAdded(
@@ -40,7 +37,7 @@ const Shapes = ({ defaultFill = '#cceacc'}) => {
   return (
     <AnnotateOperationsWrapper>
       <ShapesWrapper alignCenter>
-        <OptionsPopup />
+        <ShapesOptionsPopup />
         {renderAvailableShapesObjects()}
       </ShapesWrapper>
     </AnnotateOperationsWrapper>

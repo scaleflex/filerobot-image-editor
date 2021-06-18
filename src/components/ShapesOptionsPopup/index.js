@@ -1,12 +1,14 @@
-import React, { Suspense, useCallback, useContext, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useContext, useEffect, useState, lazy } from 'react';
 import { Popper } from '@scaleflex/ui/core';
 
-import Context from '../../../../context';
-import Loading from '../../../Loading';
-import { SelectedAnnotationPopupWrapper } from './OptionsPopup.styled';
-import { AnnotationOptionsLazy } from './OptionsPopup.constants';
+import Context from '../../context';
+import Loading from '../Loading';
+import { SelectedShapePopupWrapper } from './ShapesOptionsPopup.styled';
 
-const OptionsPopup = () => {
+
+const ShapesOptionsLazy = lazy(() => import('./ShapesOptions'));
+
+const ShapesOptionsPopup = () => {
   const { canvas, selections = [] } = useContext(Context);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -42,14 +44,14 @@ const OptionsPopup = () => {
       open={Boolean(anchorEl)}
     >
       {selections[0] && !selections[0].isDragging() && (
-        <SelectedAnnotationPopupWrapper>
+        <SelectedShapePopupWrapper>
           <Suspense fallback={<Loading style={{ width: 150, height: 100 }} />}>
-            <AnnotationOptionsLazy />
+            <ShapesOptionsLazy />
           </Suspense>
-        </SelectedAnnotationPopupWrapper>
+        </SelectedShapePopupWrapper>
       )}
     </Popper>
   );
 }
 
-export default OptionsPopup;
+export default ShapesOptionsPopup;

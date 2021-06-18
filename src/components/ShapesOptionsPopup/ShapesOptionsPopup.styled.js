@@ -1,7 +1,7 @@
 import { InputGroup } from '@scaleflex/ui/core';
 import styled, { css } from 'styled-components';
 
-const SelectedAnnotationPopupWrapper = styled.div.attrs(
+const SelectedShapePopupWrapper = styled.div.attrs(
   (props) => ({
     style: {
       opacity: props.opacity || 0.9,
@@ -55,7 +55,7 @@ const OptionInput = styled(InputGroup)`
 
 
 export {
-  SelectedAnnotationPopupWrapper,
+  SelectedShapePopupWrapper,
   OptionsWrapper,
   OptionInputWrapper,
   OptionInput
