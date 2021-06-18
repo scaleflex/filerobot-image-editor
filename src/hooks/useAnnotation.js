@@ -115,6 +115,22 @@ const useAnnotation = ({
     return positionDiffDimensions;
   }, [calcDimensionsProps]);
 
+  const updateShapePreview = useCallback((shape) => {
+    previewLayer.destroyChildren();
+    previewLayer.add(
+      new Konva[shape.libClassName]({
+        ...shape,
+        opacity: shapePreviewOpacity,
+        x: shape.absoluteDimensions
+          ? shape.x - canvasDimensions.current.x
+          : shape.x ?? 0,
+        y: shape.absoluteDimensions
+          ? shape.y - canvasDimensions.current.y
+          : shape.y ?? 0,
+      })
+    );
+  }, [previewLayer, shapePreviewOpacity]);
+
   const handleDimensionsMapping = useCallback((e) => {
     const event = getTouchPosOrEvent(e);
     setCurrentAnnotation(
@@ -147,29 +163,17 @@ const useAnnotation = ({
           );
         }
 
-        return {
+        const latestUpdatedShape = {
           ...updatedcurrentAnnotation,
           ...mappedDimensions,
-        };
+        }
+
+        updateShapePreview(latestUpdatedShape);
+
+        return latestUpdatedShape;
       }
     );
   }, [positionDiffStartToEnd]);
-
-  const updateShapePreview = useCallback((shape) => {
-    previewLayer.destroyChildren();
-    previewLayer.add(
-      new Konva[shape.libClassName]({
-        ...shape,
-        opacity: shapePreviewOpacity,
-        x: shape.absoluteDimensions
-          ? shape.x - canvasDimensions.current.x
-          : shape.x ?? 0,
-        y: shape.absoluteDimensions
-          ? shape.y - canvasDimensions.current.y
-          : shape.y ?? 0,
-      })
-    );
-  }, [previewLayer]);
 
   const handlePointerMove = useCallback((e) => {
     const event = getTouchPosOrEvent(e);
