@@ -66,3 +66,20 @@ export const POINTER_ICONS = {
 export const DEFAULT_ENABLED_ANCHORS = ['top-left', 'top-center', 'top-right', 'middle-right', 'middle-left', 'bottom-left', 'bottom-center', 'bottom-right'];
 
 export const DEFAULT_FONTS = ['Arial', 'Tahoma', 'Sans-serif', 'Roboto', 'Comic-sans', 'Times New Roman', 'Lato'];
+
+export const ORIGINAL_CROP_RATIO = 'original';
+export const CUSTOM_CROP_RATIO = 'custom';
+export const CROP_RATIOS = [
+  { label: 'Original', value: ORIGINAL_CROP_RATIO },
+  { label: '1:1', value: 1/1 },
+  { label: '3:2', value: 3/2 },
+  { label: '2:3', value: 2/3 },
+  { label: '4:3', value: 4/3 },
+  { label: '5:4', value: 5/4 },
+  { label: '7:5', value: 7/5 },
+  { label: '16:9', value: 16/9 },
+  { label: '9:16', value: 9/16 },
+  { label: '21:9', value: 21/9 },
+  { label: '9:21', value: 9/21 },
+  { label: 'Custom', value: CUSTOM_CROP_RATIO }
+];

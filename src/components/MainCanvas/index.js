@@ -112,16 +112,16 @@ const MainCanvas = ({ image }) => {
   }, [preparedImage, theme.palette]);
 
   useEffect(() => {
-    if (canvas && imageLayer) {
+    if (canvas && canvasedImage) {
       const latestFinetune = Object.keys(finetune);
       latestFinetune.forEach((filter) => {
         Object.keys(finetune[filter]).forEach((functionName) => {
-          imageLayer[functionName](finetune[filter][functionName]);
+          canvasedImage[functionName](finetune[filter][functionName]);
         })
       });
-      imageLayer.filters(latestFinetune.map((f) => Konva.Filters[f] ?? CustomKonvaFilters[f]));
+      canvasedImage.filters(latestFinetune.map((f) => Konva.Filters[f] ?? CustomKonvaFilters[f]));
     }
-  }, [finetune, imageLayer, canvas]);
+  }, [finetune, canvasedImage, canvas]);
 
   useEffect(() => {
     if (canvas && imageLayer && designLayer && tmpAnnotate) {

@@ -42,21 +42,21 @@ const ImageTab = () => {
 
   const addImageToCanvas = (img) => {
     if (canvas && img) {
-      const canvasWidth = canvas.getWidth();
-      const canvasHeight = canvas.getHeight();
+      const canvasWidth = canvas.width();
+      const canvasHeight = canvas.height();
     
-      const imgRatio = img.width / img.height;
+      const imgAspectRatio = img.width / img.height;
       const scale = {
         x: 1,
         y: 1
       };
 
-      if (imgRatio < 1 && img.height > canvasHeight) {
+      if (imgAspectRatio < 1 && img.height > canvasHeight) {
         scale.y = (canvasHeight / img.height) - ADDED_IMAGE_SCALE_MARGIN;
-        scale.x = (((scale.y * img.height)) * imgRatio) / img.width;
+        scale.x = (((scale.y * img.height)) * imgAspectRatio) / img.width;
       } else if (img.width > canvasWidth) {
         scale.x = (canvasWidth / img.width) - ADDED_IMAGE_SCALE_MARGIN;
-        scale.y = (((scale.x * img.width)) / imgRatio) / img.height;
+        scale.y = (((scale.x * img.width)) / imgAspectRatio) / img.height;
       }
 
       addNewImage((lastImageData) => ({
