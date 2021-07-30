@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { Select, SwitcherGroup } from '@scaleflex/ui/core';
+import { Button, Select, SwitcherGroup } from '@scaleflex/ui/core';
 import Konva from 'konva';
 
 import { AdjustOperationWrapper } from '../Operations.styled';
@@ -8,7 +8,7 @@ import { CROP_RATIOS, CUSTOM_CROP_RATIO, ORIGINAL_CROP_RATIO } from '../../../..
 import CropSelectItem from './CropSelectItem';
 import boundCropBox from './boundCropBox';
 
-const SHAPE_PROPERTIES = {
+const FIXED_SHAPE_PROPERTIES = {
   draggable: true,
   fill: '#fff',
   name: 'crop-shape',
@@ -17,6 +17,7 @@ const SHAPE_PROPERTIES = {
   y: 0,
 }
 
+// TODO: REFACTOR THIS>>>
 // props =>> defaultCropWidth, defaultCropHeight, cropMaxWidth = 0, cropMaxHeight = 0, cropMinWidth, cropMinHeight,
 const Crop = () => {
   const { updateState, designLayer, canvasedImage, adjust = {} } = useContext(Context);
@@ -40,8 +41,8 @@ const Crop = () => {
     },
     {
       min: {
-        width: 5,
-        height: 5,
+        width: 20,
+        height: 20,
       },
       max: {
         x: canvasedImage.width(),
@@ -56,18 +57,48 @@ const Crop = () => {
     setIsRoundCrop(event.target.checked);
   }, []);
 
-  const addCropShape = useCallback(() => {
-    cropShape.current = new Konva.Rect({
-      ...SHAPE_PROPERTIES,
+  const addUpdateCropShape = useCallback(() => {
+    const currentCropShape = cropShape.current;
+    let shapeProperties = {
+      ...FIXED_SHAPE_PROPERTIES,
       dragBoundFunc: (pos) => restrictBox({ current: pos }),
       width: canvasedImage.width(),
       height: canvasedImage.height(),
-    });
+    };
+
+    if (currentCropShape) {
+      currentCropShape.destroy();
+
+      shapeProperties = {
+        ...shapeProperties,
+        scaleX: currentCropShape.scaleX(),
+        scaleY: currentCropShape.scaleY(),
+        x: currentCropShape.x(),
+        y: currentCropShape.y(),
+        width: currentCropShape.width(),
+        height: currentCropShape.height(),
+      };
+    };
+
+    if (isRoundCrop) {
+      cropShape.current = new Konva.Ellipse({
+        ...shapeProperties,
+        offsetX: -shapeProperties.width / 2,
+        offsetY: -shapeProperties.height / 2,
+      });
+    } else {
+      cropShape.current = new Konva.Rect(shapeProperties);
+    };
 
     designLayer.add(cropShape.current);
-  }, [canvasedImage, designLayer, restrictBox]);
+    if (cropTransformer.current) {
+      cropTransformer.current.nodes([cropShape.current]);
+    };
+  }, [canvasedImage, designLayer, isRoundCrop, restrictBox]);
 
   const addCropTransformer = useCallback(() => {
+    if (cropTransformer.current) { cropTransformer.current.destroy(); };
+
     cropTransformer.current = new Konva.Transformer({
       rotateEnabled: false,
       nodes: [cropShape.current],
@@ -101,18 +132,31 @@ const Crop = () => {
     
     setCropInputValue(ratio);
   }, [imgAspectRatio]);
+
+  const applyCrop = useCallback(() => {
+    updateState(({ adjust }) => ({
+      subTab: null,
+      adjust: {
+        ...adjust,
+        crop: {
+          ratio: cropRatio,
+          isRound: isRoundCrop,
+          width: cropTransformer.current?.width(),
+          height: cropTransformer.current?.height(),
+        }
+      }
+    }));
+  }, [cropRatio, isRoundCrop]);
   
   useEffect(() => {
     if (canvasedImage && designLayer) {
-      addCropShape();
-      addCropTransformer();
+      addUpdateCropShape();
+      
+      if (!cropTransformer.current) {
+        addCropTransformer();
+      }
     }
-
-    return () => {
-      if (cropTransformer.current) { cropTransformer.current.destroy(); }
-      if (cropShape.current) { cropShape.current.destroy(); }
-    }
-  }, [addCropShape, addCropTransformer, canvasedImage, designLayer]);
+  }, [isRoundCrop, canvasedImage, designLayer]);
 
   useEffect(() => {
     if (cropShape.current && cropTransformer.current) {
@@ -120,17 +164,24 @@ const Crop = () => {
       const currCropTransformer = cropTransformer.current;
       const imgWidth = canvasedImage.width();
       const imgHeight = canvasedImage.height();
+      const currScaleX = currCropShape.scaleX();
+      const currScaleY = currCropShape.scaleY();
 
       if (cropRatio >= imgAspectRatio) {
-        currCropShape.width(imgWidth);
-        currCropShape.height(imgWidth / cropRatio);
+        currCropShape.width(imgWidth * currScaleX);
+        currCropShape.height((imgWidth / cropRatio) * currScaleY);
       } else {
-        currCropShape.width(imgHeight * cropRatio);
-        currCropShape.height(imgHeight);
+        currCropShape.width((imgHeight * cropRatio) * currScaleX);
+        currCropShape.height(imgHeight * currScaleY);
       }
 
-      currCropShape.x((imgWidth / 2) - (currCropShape.width() / 2));
-      currCropShape.y((imgHeight / 2) - (currCropShape.height() / 2));
+      currCropShape.x((imgWidth / 2) - ((currCropShape.width() * currScaleX) / 2));
+      currCropShape.y((imgHeight / 2) - ((currCropShape.height() * currScaleY) / 2));
+      
+      if (isRoundCrop) {
+        currCropShape.offsetX(-currCropShape.width() / 2);
+        currCropShape.offsetY(-currCropShape.height() / 2);
+      }
 
       if (isCustomCrop && currCropTransformer.keepRatio()) {
         currCropTransformer.keepRatio(false);
@@ -141,31 +192,11 @@ const Crop = () => {
   }, [canvasedImage, cropRatio, cropInputValue, isCustomCrop, imgAspectRatio]);
 
   useEffect(() => {
-    if (designLayer && cropShape.current) {
-      cropShape.current.destroy();
-      const commonShapeProperties = {
-        ...SHAPE_PROPERTIES,
-        x: cropShape.current.x(),
-        y: cropShape.current.y(),
-        width: cropShape.current.width(),
-        height: cropShape.current.height(),
-      };
-
-      if (isRoundCrop) {
-        cropShape.current = new Konva.Ellipse({
-          ...commonShapeProperties,
-          offsetX: -cropShape.current.width() / 2,
-          offsetY: -cropShape.current.height() / 2,
-        });
-      } else {
-        cropShape.current = new Konva.Rect(commonShapeProperties);
-      }
-
-      designLayer.add(cropShape.current);
-      cropTransformer.current.nodes([cropShape.current]);
+    return () => {
+      if (cropTransformer.current) { cropTransformer.current.destroy(); }
+      if (cropShape.current) { cropShape.current.destroy(); }
     }
-  }, [designLayer, isRoundCrop]);
-
+  }, []);
 
   return (
     <AdjustOperationWrapper>
@@ -182,6 +213,13 @@ const Crop = () => {
         label="Round crop"
         onChange={enableRoundCrop}
       />
+      <Button
+        color="secondary"
+        size="md"
+        onClick={applyCrop}
+      >
+        Apply
+      </Button>
     </AdjustOperationWrapper>
   );
 }

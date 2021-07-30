@@ -15,7 +15,7 @@ const boundCropBox = (dimensions,  rangeDimensions) => {
     if (resizingAndNotCustom) {
       newDimensions.height = old.height;
       newDimensions.y = old.y;
-    }
+    };
   };
 
   if (current.y < 0) {
@@ -24,12 +24,10 @@ const boundCropBox = (dimensions,  rangeDimensions) => {
     if (resizingAndNotCustom) {
       newDimensions.width = old.width;
       newDimensions.x = old.x;
-    }
+    };
   };
 
-  if (newDimensions.width < min.width) { newDimensions.width = min.width; }
-
-  if (max.width && newDimensions.width > max.width) { newDimensions.width = max.width; }
+  if (max.width && newDimensions.width > max.width) { newDimensions.width = max.width; };
 
   if (newDimensions.x + newDimensions.width > max.x) {
     if (isResizing) {
@@ -38,15 +36,20 @@ const boundCropBox = (dimensions,  rangeDimensions) => {
       if (!isCustomCrop) {
         newDimensions.y = old.y;  
         newDimensions.height = old.height;  
-      }
+      };
     } else {
       newDimensions.x = max.x - current.width;
-    }
+    };
   };
 
-  if (newDimensions.height < min.height) { newDimensions.height = min.height; }
+  if (newDimensions.width < min.width || newDimensions.height < min.height) {
+    newDimensions.height = old.height;
+    newDimensions.width = old.width;
+    newDimensions.x = old.x;
+    newDimensions.y = old.y;
+  };
 
-  if (max.height && newDimensions.height > max.height) { newDimensions.height = max.height; }
+  if (max.height && newDimensions.height > max.height) { newDimensions.height = max.height; };
   
   if (newDimensions.y + newDimensions.height > max.y) {
     if (isResizing) {
@@ -58,10 +61,14 @@ const boundCropBox = (dimensions,  rangeDimensions) => {
       }
     } else {
       newDimensions.y = max.y - current.height;
-    }
+    };
   };
 
+  // if (!isCustomCrop && newDimensions.width / newDimensions.height !== current.width / current.height) {
+  //   return current;
+  // };
+
   return newDimensions;
-}
+};
 
 export default boundCropBox;
