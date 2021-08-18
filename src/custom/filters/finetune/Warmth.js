@@ -1,7 +1,7 @@
-
+// USED IN FINETUNE.
 import Konva from 'konva';
 
-import addGetterSetter from '../../utils/addGetterSetter';
+import addGetterSetter from '../../../utils/addGetterSetter';
 
 /**
  * Warmth Filter.

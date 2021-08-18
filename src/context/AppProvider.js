@@ -1,30 +1,33 @@
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Context from './';
 
 import defaultState from './defaultState';
 
-const AppProvider = ({ children }) => {
+const AppProvider = ({ children, value }) => {
   const [state, setState] = useState(
     () => defaultState
   );
 
-  const updateState = (objToBeAddedOrFnReceivesStateReturnsObj) => {
-      setState((latestState) => ({
-        ...latestState,
-        ...(
-          typeof objToBeAddedOrFnReceivesStateReturnsObj === 'function'
-            ? objToBeAddedOrFnReceivesStateReturnsObj(latestState)
-            : objToBeAddedOrFnReceivesStateReturnsObj
-        )
-      })
-    );
-  }
+  const updateState = useCallback((objToBeAddedOrFnReceivesStateReturnsObj) => {
+    setState((latestState) => {
+      const stateToBeAdded = typeof objToBeAddedOrFnReceivesStateReturnsObj === 'function'
+          ? objToBeAddedOrFnReceivesStateReturnsObj(latestState)
+          : objToBeAddedOrFnReceivesStateReturnsObj;
+
+      return stateToBeAdded
+        ? ({
+          ...latestState,
+          ...stateToBeAdded,
+        })
+        : latestState;
+    })
+  }, []);
 
   return (
     <Context.Provider
-      value={{
+      value={value || {
         ...state,
-        updateState
+        updateState,
       }}
     >
       {children}

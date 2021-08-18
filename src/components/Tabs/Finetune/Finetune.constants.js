@@ -37,8 +37,8 @@ export const OPERATIONS = [
     icon: Annotation,
   },
   {
-    id: 'GRAYSCALE',
-    label: 'Grayscale',
+    id: 'THRESHOLD',
+    label: 'Threshold',
     icon: Annotation,
   },
 ];

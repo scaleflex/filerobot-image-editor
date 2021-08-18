@@ -10,6 +10,7 @@ const StyledTopbar = styled.div`
   padding: 16px 0;
   min-height: 50px;
   justify-content: center;
+  width: 100%;
 `;
 
 const StyledTopbarItem = styled.div(
