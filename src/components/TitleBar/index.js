@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 
-import { StyledTitleBar, TitleBarLeft, TitleBarCenter, TitleBarRight } from './TitleBar.styled';
+import {
+  StyledTitleBar, TitleBarLeft, TitleBarCenter, TitleBarRight,
+} from './TitleBar.styled';
 import GoBackButton from './GoBackButton';
 import SaveButton from './SaveButton';
 import Context from '../../context';
@@ -13,12 +15,15 @@ const TitleBar = () => {
       <TitleBarLeft>
         <GoBackButton />
       </TitleBarLeft>
-      <TitleBarCenter>{tab && `${tab.label} - `}Filerobot Image Editor</TitleBarCenter>
+      <TitleBarCenter>
+        {tab && `${tab.label} - `}
+        Filerobot Image Editor
+      </TitleBarCenter>
       <TitleBarRight>
         <SaveButton />
       </TitleBarRight>
     </StyledTitleBar>
-  )
-}
+  );
+};
 
 export default TitleBar;

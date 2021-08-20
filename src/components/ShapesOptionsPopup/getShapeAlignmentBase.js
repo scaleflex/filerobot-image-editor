@@ -1,4 +1,4 @@
-import { SHAPES_NAMES } from "../../utils/constants";
+import { SHAPES_NAMES } from '../../utils/constants';
 
 // TODO: Consider rotation angle in aligning.
 export const getAlignmentBaseValX = (shape) => {

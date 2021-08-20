@@ -5,11 +5,13 @@ import Loading from '../Loading';
 import TopbarItem from './TopbarItem';
 import capitalize from '../../utils/capitalize';
 
-const Topbar = ({ tabsComponents, tabs = [], tab, hideTabs = true }) => {
+const Topbar = ({
+  tabsComponents, tabs = [], tab, hideTabs = true,
+}) => {
   const renderAvailableTabs = () => (
     <StyledTopbar>
       {tabs.map(
-        (option) => <TopbarItem key={option.id} item={option} />
+        (option) => <TopbarItem key={option.id} item={option} />,
       )}
     </StyledTopbar>
   );
@@ -21,7 +23,7 @@ const Topbar = ({ tabsComponents, tabs = [], tab, hideTabs = true }) => {
         {TabComponent && <TabComponent />}
       </Suspense>
     </StyledTopbar>
-  )
+  );
 
   const TabComponent = tab
     ? tabsComponents[capitalize(tab.label)] || tabsComponents[tab.label.toUpperCase()]
@@ -31,7 +33,7 @@ const Topbar = ({ tabsComponents, tabs = [], tab, hideTabs = true }) => {
     !tab
       ? renderAvailableTabs()
       : renderSelectedTab()
-  )
-}
+  );
+};
 
 export default Topbar;

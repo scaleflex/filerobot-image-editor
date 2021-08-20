@@ -10,4 +10,4 @@ const StyledBottombar = styled.div`
 
 export {
   StyledBottombar,
-}
+};

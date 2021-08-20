@@ -7,6 +7,6 @@ const Loading = ({ style }) => (
   <StyledLoading style={style}>
     <Spinner />
   </StyledLoading>
-)
+);
 
 export default Loading;

@@ -1,10 +1,11 @@
-import React, { Suspense, useCallback, useContext, useEffect, useState, lazy } from 'react';
+import React, {
+  Suspense, useCallback, useContext, useEffect, useState, lazy,
+} from 'react';
 import { Popper } from '@scaleflex/ui/core';
 
-import Context from '../../context';
-import Loading from '../Loading';
+import Context from 'context';
+import Loading from 'components/Loading';
 import { SelectedShapePopupWrapper } from './ShapesOptionsPopup.styled';
-
 
 const ShapesOptionsLazy = lazy(() => import('./ShapesOptions'));
 
@@ -22,15 +23,15 @@ const ShapesOptionsPopup = () => {
       right: shapeBoundingRect.x + canvasDimensions.x,
       bottom: shapeBoundingRect.y + canvasDimensions.y,
       left: shapeBoundingRect.x + canvasDimensions.x,
-    })
+    });
   }, [canvas]);
 
   useEffect(() => {
     if (selections[0]) {
       setAnchorEl({
         getBoundingClientRect: generateGetBoundingClientRect(
-          selections[0].getClientRect()
-        )
+          selections[0].getClientRect(),
+        ),
       });
     } else {
       setAnchorEl(null);
@@ -52,6 +53,6 @@ const ShapesOptionsPopup = () => {
       )}
     </Popper>
   );
-}
+};
 
 export default ShapesOptionsPopup;

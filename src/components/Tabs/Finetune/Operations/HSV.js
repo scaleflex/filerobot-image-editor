@@ -1,23 +1,23 @@
 import React from 'react';
 
 import { FintuneOperationWrapper } from './Operations.styled';
-import useImageFilter from '../../../../hooks/useImageFilter';
+import useFinetuneFilter from '../../../../hooks/useFinetuneFilter';
 
 const HSV = () => {
-  const [value, setValue] = useImageFilter({
+  const [value, setValue] = useFinetuneFilter({
     filterClassNameInLib: 'HSV',
     valueObject: {
       hue: 0,
       saturation: 0,
       value: 0,
-    }
+    },
   });
 
   const changeValue = (e) => {
     setValue({
-      [e.target.name]: +e.target.value
+      [e.target.name]: +e.target.value,
     });
-  }
+  };
 
   return (
     <FintuneOperationWrapper>
@@ -29,6 +29,6 @@ const HSV = () => {
       <input type="range" min="-2" step="0.1" max="2" value={value.value} onChange={changeValue} name="value" />
     </FintuneOperationWrapper>
   );
-}
+};
 
 export default HSV;

@@ -8,7 +8,7 @@ import { AVAILABLE_SHAPES_OBJECTS } from './Shapes.constants';
 import getShapeDefaultState from './getShapeDefaultState';
 import ShapesOptionsPopup from '../../../../ShapesOptionsPopup';
 
-const Shapes = ({ defaultFill = '#cceacc'}) => {
+const Shapes = ({ defaultFill = '#cceacc' }) => {
   const [_, updateShapeToBeAdded] = useAnnotation({ defaultFill });
   const [chosenShapeObject, setChosenShapeObject] = useState(null);
 
@@ -16,9 +16,9 @@ const Shapes = ({ defaultFill = '#cceacc'}) => {
     updateShapeToBeAdded(
       (updatedShapeData) => ({
         ...updatedShapeData,
-        ...getShapeDefaultState(shapeObject)
+        ...getShapeDefaultState(shapeObject),
       }),
-      true
+      true,
     );
     setChosenShapeObject(shapeObject);
   }, [updateShapeToBeAdded]);
@@ -31,8 +31,8 @@ const Shapes = ({ defaultFill = '#cceacc'}) => {
         isSelected={chosenShapeObject?.name === shape.name}
         item={shape}
       />
-    )
-  ), [chosenShapeObject?.name, selectShapeObject]);
+    )), [chosenShapeObject?.name, selectShapeObject],
+  );
 
   return (
     <AnnotateOperationsWrapper>
@@ -42,6 +42,6 @@ const Shapes = ({ defaultFill = '#cceacc'}) => {
       </ShapesWrapper>
     </AnnotateOperationsWrapper>
   );
-}
+};
 
 export default Shapes;

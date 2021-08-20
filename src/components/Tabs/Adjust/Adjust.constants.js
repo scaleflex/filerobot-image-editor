@@ -1,4 +1,6 @@
-import { Crop, Resize, RotationRight } from '@scaleflex/icons';
+import {
+  Crop, Resize, RotationRight, FlipVertically,
+} from '@scaleflex/icons';
 
 export const OPERATIONS = [
   {
@@ -15,5 +17,10 @@ export const OPERATIONS = [
     id: 'Rotate',
     label: 'Rotate',
     icon: RotationRight,
+  },
+  {
+    id: 'Flip',
+    label: 'Flip',
+    icon: FlipVertically,
   },
 ];

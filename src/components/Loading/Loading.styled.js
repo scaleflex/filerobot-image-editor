@@ -32,5 +32,5 @@ const StyledLoading = styled.div`
 `;
 
 export {
-  StyledLoading
+  StyledLoading,
 };

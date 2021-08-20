@@ -5,11 +5,13 @@ import AppProvider from '../../context/AppProvider';
 import Wrapper from '../Wrapper';
 
 const App = (props) => (
-  <React.StrictMode> {/* TODO: Remove StrictMode */}
+  <React.StrictMode>
+    {' '}
+    {/* TODO: Remove StrictMode */}
     <ThemeProvider
       theme={{
         typography: {
-          fontFamily: 'Roboto, sans-serif'
+          fontFamily: 'Roboto, sans-serif',
         },
       }}
     >
@@ -18,6 +20,6 @@ const App = (props) => (
       </AppProvider>
     </ThemeProvider>
   </React.StrictMode>
-)
+);
 
 export default App;

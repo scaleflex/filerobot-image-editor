@@ -8,7 +8,7 @@ import ShapesOptionsPopup from '../../../ShapesOptionsPopup';
 import { AnnotateOperationsWrapper } from './Operations.styled';
 
 const Text = ({
-  defaultFill = '#000000', defaultText = 'Filerobot', defaultFontFamily = DEFAULT_FONTS[0], defaultFontSize = 20
+  defaultFill = '#000000', defaultText = 'Filerobot', defaultFontFamily = DEFAULT_FONTS[0], defaultFontSize = 20,
 }) => {
   const { transformer, selections = [] } = useContext(Context);
   useAnnotation({
@@ -28,7 +28,7 @@ const Text = ({
           scaleX: 1,
           scaleY: 1,
         });
-      }
+      },
     },
   });
 
@@ -41,16 +41,12 @@ const Text = ({
 
     return () => {
       transformer.boundBoxFunc(undefined);
-    }
+    };
   }, [transformer]);
 
   if (!selections[0]) { return ''; }
 
-  return (
-    <AnnotateOperationsWrapper>
-      <ShapesOptionsPopup />
-    </AnnotateOperationsWrapper>
-  );
-}
+  return <ShapesOptionsPopup />;
+};
 
 export default Text;

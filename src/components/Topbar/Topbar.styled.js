@@ -24,9 +24,9 @@ const StyledTopbarItem = styled.div(
     margin: 0 8px;
 
     * {
-      ${(props) => props.selected ? `color: ${theme.palette['accent-primary']};` : undefined}
+      ${(props) => (props.selected ? `color: ${theme.palette['accent-primary']};` : undefined)}
     }
-  `
+  `,
 );
 
-export { StyledTopbar, StyledTopbarItem }
+export { StyledTopbar, StyledTopbarItem };

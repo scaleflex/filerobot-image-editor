@@ -7,9 +7,9 @@ import { StyledSaveAsButton, StyledSaveButton, StyledSaveButtonWrapper } from '.
 const SaveButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleOpen = (e) => setAnchorEl(e.currentTarget)
+  const handleOpen = (e) => setAnchorEl(e.currentTarget);
 
-  const handleClose = () => setAnchorEl(null)
+  const handleClose = () => setAnchorEl(null);
 
   return (
     <StyledSaveButtonWrapper>
@@ -32,16 +32,16 @@ const SaveButton = () => {
         open
         position="bottom"
       >
-      <MenuItem
-        active={false}
-        onClick={handleClose}
-        size="sm"
-      >
-        Item 3
-      </MenuItem>
-    </Menu>
-  </StyledSaveButtonWrapper>
-  )
-}
+        <MenuItem
+          active={false}
+          onClick={handleClose}
+          size="sm"
+        >
+          Item 3
+        </MenuItem>
+      </Menu>
+    </StyledSaveButtonWrapper>
+  );
+};
 
 export default SaveButton;

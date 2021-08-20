@@ -1,12 +1,13 @@
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback, useContext, useEffect, useMemo, useRef, useState,
+} from 'react';
 import { RadioGroup } from '@scaleflex/ui/core';
 import Konva from 'konva';
 
 import Context from '../../../../context';
 import useAnnotation from '../../../../hooks/useAnnotation';
-import { POINTER_MODES } from '../../../../utils/constants';
+import { POINTER_MODES, SHAPES_NAMES } from '../../../../utils/constants';
 import ShapesOptionsPopup from '../../../ShapesOptionsPopup';
-import { SHAPES_NAMES } from '../../../../utils/constants';
 
 import { AnnotateOperationsWrapper } from './Operations.styled';
 import { OptionInput, OptionInputWrapper, OptionsWrapper } from '../../../ShapesOptionsPopup/ShapesOptionsPopup.styled';
@@ -15,7 +16,7 @@ const TOOL_BRUSH = 'brush';
 const TOOL_ERASE = 'erase';
 
 const Freehand = ({
-  defaultStrokeColor = '#ffffff', defaultStrokeSize = 4, defaultTension = 0.5, defaultLineCap = 'round'
+  defaultStrokeColor = '#ffffff', defaultStrokeSize = 4, defaultTension = 0.5, defaultLineCap = 'round',
 }) => {
   const [_, addNewGroup] = useAnnotation({
     libClassName: 'Group',
@@ -28,7 +29,7 @@ const Freehand = ({
   const [brushOptions, setBrushOptions] = useState({
     color: defaultStrokeColor,
     strokeSize: defaultStrokeSize,
-  })
+  });
   const [tool, setTool] = useState(TOOL_BRUSH);
   const lastPosition = useRef({});
   const lastGroupRef = useRef(null);
@@ -47,7 +48,7 @@ const Freehand = ({
     const { name, value } = e.target;
     setBrushOptions((latestBrushInfo) => ({
       ...latestBrushInfo,
-      [name]: value
+      [name]: value,
     }));
   }, []);
 
@@ -75,7 +76,6 @@ const Freehand = ({
       } else {
         e.target.destroy();
       }
-
     }
   }, [brushOptions, defaultLineCap, defaultTension, tool]);
 
@@ -90,7 +90,7 @@ const Freehand = ({
       addNewGroup((updatedShape) => ({ ...updatedShape }));
       const groups = designLayer.find(`.${SHAPES_NAMES.FREEHAND}`);
       lastGroupRef.current = groups[groups.length - 1];
-  
+
       const pos = e.target.getStage().getPointerPosition();
       lastPosition.current = {
         x: pos.x,
@@ -115,7 +115,7 @@ const Freehand = ({
       if (canvas) {
         canvas.off('mousedown touchstart', handlePointerDown);
       }
-    }
+    };
   }, [canvas, handlePointerDown, pointerMode]);
 
   const renderToolRadio = () => {
@@ -139,7 +139,7 @@ const Freehand = ({
     );
 
     return isBrushOn ? <div>{toolRadioInputs}</div> : toolRadioInputs;
-  }
+  };
 
   return (
     <AnnotateOperationsWrapper>
@@ -149,7 +149,7 @@ const Freehand = ({
             <OptionInputWrapper>
               <OptionInput
                 inputProps={{ type: 'number', id: 'filerobot-image-editor_shape-freehand-width' }}
-                LabelProps={{ htmlFor: 'filerobot-image-editor_shape-freehand-width'}}
+                LabelProps={{ htmlFor: 'filerobot-image-editor_shape-freehand-width' }}
                 label="Stroke size"
                 onChange={changeBrushOption}
                 name="strokeSize"
@@ -163,7 +163,7 @@ const Freehand = ({
             <OptionInputWrapper>
               <OptionInput
                 inputProps={{ type: 'color', id: 'filerobot-image-editor_freehand-color' }}
-                LabelProps={{ htmlFor: 'filerobot-image-editor_freehand-color'}}
+                LabelProps={{ htmlFor: 'filerobot-image-editor_freehand-color' }}
                 label="Color"
                 onChange={changeBrushOption}
                 type="input"
@@ -183,6 +183,6 @@ const Freehand = ({
       <ShapesOptionsPopup />
     </AnnotateOperationsWrapper>
   );
-}
+};
 
 export default Freehand;

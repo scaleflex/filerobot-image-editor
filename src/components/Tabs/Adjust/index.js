@@ -9,7 +9,7 @@ const Adjust = () => {
 
   return (
     <Topbar tabsComponents={OperationsComopnents} tabs={OPERATIONS} tab={subTab} hideTabs={false} />
-  )
-}
+  );
+};
 
 export default Adjust;

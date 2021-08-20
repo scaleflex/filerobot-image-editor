@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { Button, InputGroup, RadioGroup, UploadInput } from '@scaleflex/ui/core';
+import {
+  Button, InputGroup, RadioGroup, UploadInput,
+} from '@scaleflex/ui/core';
 
 import { SHAPES_NAMES } from '../../../../utils/constants';
 import { AnnotateOperationsWrapper } from './Operations.styled';
@@ -12,7 +14,7 @@ import ShapesOptionsPopup from '../../../ShapesOptionsPopup';
 
 const IMAGE_MODES = {
   URL_IMPORT: 'url-import',
-  LOCAL_UPLOAD: 'local-upload'
+  LOCAL_UPLOAD: 'local-upload',
 };
 
 const importFromUrlInputPlaceholder = `https://example.com/img1.png
@@ -38,17 +40,17 @@ const ImageTab = () => {
 
   const clearError = () => {
     setError('');
-  }
+  };
 
   const addImageToCanvas = (img) => {
     if (canvas && img) {
       const canvasWidth = canvas.width();
       const canvasHeight = canvas.height();
-    
+
       const imgAspectRatio = img.width / img.height;
       const scale = {
         x: 1,
-        y: 1
+        y: 1,
       };
 
       if (imgAspectRatio < 1 && img.height > canvasHeight) {
@@ -60,29 +62,28 @@ const ImageTab = () => {
       }
 
       addNewImage((lastImageData) => ({
-          ...lastImageData,
-          image: img,
-          scale,
-          width: img.width,
-          height: img.height,
-          draw: true,
-          x: (canvasWidth / 2) - ((img.width * scale.x) / 2),
-          y: (canvasHeight / 2) - ((img.height * scale.y) / 2),
-        })
-      );
+        ...lastImageData,
+        image: img,
+        scale,
+        width: img.width,
+        height: img.height,
+        draw: true,
+        x: (canvasWidth / 2) - ((img.width * scale.x) / 2),
+        y: (canvasHeight / 2) - ((img.height * scale.y) / 2),
+      }));
     }
-  }
+  };
 
   const hideLoaderIfLastIndex = (arr = [], index) => {
     if (arr.length - 1 === index) {
       setIsLoading(false);
     }
-  }
+  };
 
   const uploadImages = (e) => {
     if (e.target.files) {
       setIsLoading(true);
-      
+
       const wrongFilesNames = [];
 
       const filesArray = Array.from(e.target.files);
@@ -93,17 +94,17 @@ const ImageTab = () => {
             addImageToCanvas(img);
             URL.revokeObjectURL(file);
             hideLoaderIfLastIndex(filesArray, i);
-          }
+          };
           img.onerror = () => {
             setError('Error while uploading the image.');
             hideLoaderIfLastIndex(filesArray, i);
-          }
+          };
           img.src = URL.createObjectURL(file);
         } else {
           wrongFilesNames.push(file.name);
         }
       });
-      
+
       if (wrongFilesNames.length > 0) {
         const errorLabel = wrongFilesNames.length > 1 ? 'aren\'t images' : 'isn\'t an image';
         setError(`${wrongFilesNames.join(', ')} ${errorLabel} to be uploaded`);
@@ -113,19 +114,19 @@ const ImageTab = () => {
     }
 
     e.target.value = '';
-  }
+  };
 
   const changeModeToLocalUpload = () => {
     setMode(IMAGE_MODES.LOCAL_UPLOAD);
-  }
+  };
 
   const changeModeToUrlImport = () => {
     setMode(IMAGE_MODES.URL_IMPORT);
-  }
+  };
 
   const updateImagesToImportUrls = (e) => {
     setImgsToImportUrlsString(e.target.value);
-  }
+  };
 
   const importImagesFromUrls = () => {
     setIsLoading(true);
@@ -139,57 +140,59 @@ const ImageTab = () => {
         img.crossOrigin = 'Anonymous';
         img.onload = () => {
           if (!img.width || !img.height) {
-            setError('Importing error, not a valid image.')
+            setError('Importing error, not a valid image.');
             return;
           }
-          
+
           addImageToCanvas(img);
           hideLoaderIfLastIndex(imgsUrls, i);
-        }
+        };
         img.onerror = () => {
-          setError('Importing error, not a valid image URL.')
+          setError('Importing error, not a valid image URL.');
           hideLoaderIfLastIndex(imgsUrls, i);
-        }
+        };
         img.src = imgUrl;
       });
     }
-  }
+  };
 
   const renderModesInputs = () => (
     mode === IMAGE_MODES.LOCAL_UPLOAD
-    ? (<UploadInput
-        background="primary"
-        buttonLabel="Choose images"
-        multiple
-        onChange={uploadImages}
-        placeholder="No image chosen"
-        size="md"
-      />)
-    : (
-      <>
-        <OptionInputWrapper>
-          <InputGroup
-            hint="Enter each image URL in a new line."
-            placeholder={importFromUrlInputPlaceholder}
-            label="Images URLs"
-            style={{ resize: 'both' }}
-            onChange={updateImagesToImportUrls}
-            type="textarea"
-            value={imgsToImportUrlsString}
-          />
-        </OptionInputWrapper>
-        <OptionInputWrapper>
-          <Button
-            color="secondary"
-            size="md"
-            onClick={importImagesFromUrls}
-          >
-            Import
-          </Button>
-        </OptionInputWrapper>
-      </>
-    )
-  )
+      ? (
+        <UploadInput
+          background="primary"
+          buttonLabel="Choose images"
+          multiple
+          onChange={uploadImages}
+          placeholder="No image chosen"
+          size="md"
+        />
+      )
+      : (
+        <>
+          <OptionInputWrapper>
+            <InputGroup
+              hint="Enter each image URL in a new line."
+              placeholder={importFromUrlInputPlaceholder}
+              label="Images URLs"
+              style={{ resize: 'both' }}
+              onChange={updateImagesToImportUrls}
+              type="textarea"
+              value={imgsToImportUrlsString}
+            />
+          </OptionInputWrapper>
+          <OptionInputWrapper>
+            <Button
+              color="secondary"
+              size="md"
+              onClick={importImagesFromUrls}
+            >
+              Import
+            </Button>
+          </OptionInputWrapper>
+        </>
+      )
+  );
 
   return (
     <AnnotateOperationsWrapper>
@@ -214,10 +217,10 @@ const ImageTab = () => {
           ? <Loading />
           : renderModesInputs()}
       </OptionsWrapper>
-      <RobotPopup show={Boolean(error)} message={error} status="worried" onClose={clearError}/>
+      <RobotPopup show={Boolean(error)} message={error} status="worried" onClose={clearError} />
       <ShapesOptionsPopup />
     </AnnotateOperationsWrapper>
   );
-}
+};
 
 export default ImageTab;

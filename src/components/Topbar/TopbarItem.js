@@ -10,9 +10,9 @@ const TopbarItem = ({ item, onSelect, isSelected }) => {
 
   const selectTab = () => {
     updateState({
-      [tab ? 'subTab' : 'tab']: item
+      [tab ? 'subTab' : 'tab']: item,
     });
-  }
+  };
 
   return (
     <StyledTopbarItem
@@ -28,6 +28,6 @@ const TopbarItem = ({ item, onSelect, isSelected }) => {
       <div>{label}</div>
     </StyledTopbarItem>
   );
-}
+};
 
 export default TopbarItem;

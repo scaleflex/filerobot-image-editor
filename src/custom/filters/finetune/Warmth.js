@@ -14,11 +14,11 @@ import addGetterSetter from '../../../utils/addGetterSetter';
  *  Red (r) > Blue (b) means warmer effect
   * Red (r) < Blue (b) means cooler effect
  */
-function Warmth (imageData) {
+function Warmth(imageData) {
   const warmthValue = this.warmth();
   const pixels = imageData.data; //  [0, 1, 2, 3,...] => [r, g, b, a, ...]
   const len = pixels.length;
-  
+
   for (let i = 0; i < len; i += 4) {
     // red
     pixels[i] += warmthValue;
@@ -29,12 +29,11 @@ function Warmth (imageData) {
 
 export default Warmth;
 
-
 /**
  * adds warmth parameter (0 - 200), 0 means no value... 200 max value.
  */
 addGetterSetter(
   Konva.Image,
   'warmth',
-  0
+  0,
 );

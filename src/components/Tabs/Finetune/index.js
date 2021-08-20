@@ -9,7 +9,7 @@ const Finetune = () => {
 
   return (
     <Topbar tabsComponents={OperationsComopnents} tabs={OPERATIONS} tab={subTab} hideTabs={false} />
-  )
-}
+  );
+};
 
 export default Finetune;

@@ -6,4 +6,4 @@ const AnnotateOperationsWrapper = styled.div`
 
 export {
   AnnotateOperationsWrapper,
-}
+};

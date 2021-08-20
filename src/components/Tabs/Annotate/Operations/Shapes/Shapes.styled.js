@@ -7,14 +7,14 @@ const ShapesWrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  ${props => props.alignCenter
+  ${(props) => (props.alignCenter
     ? `
       margin: 0 auto;
       width: fit-content;
     `
-    : undefined}
+    : undefined)}
 `;
 
 export {
   ShapesWrapper,
-}
+};

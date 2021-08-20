@@ -1,10 +1,14 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import {
+  useCallback, useContext, useEffect, useRef, useState,
+} from 'react';
 
+import Konva from 'konva';
 import Context from '../context';
 import randomId from '../utils/randomId';
 import getTouchPosOrEvent from '../utils/getTouchPosOrEvent';
-import { POINTER_MODES, POINTER_ICONS, TABS_IDS, SHAPES_NAMES } from '../utils/constants';
-import Konva from 'konva';
+import {
+  POINTER_MODES, POINTER_ICONS, TABS_IDS, SHAPES_NAMES,
+} from '../utils/constants';
 
 let timeout = null;
 
@@ -22,16 +26,16 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
           canvas.content.style.cursor = POINTER_ICONS.MOVE;
           getProperSelectionTarget(e).draggable(true);
         }
-      }
-    )
+      },
+    );
   },
   'mouseout mouseleave touchleave touchcancel': (e) => {
     updateState(
       (updatedState) => {
         canvas.content.style.cursor = POINTER_ICONS[updatedState.pointerMode === POINTER_MODES.DRAW ? 'CROSSHAIR' : 'DEFAULT'];
         getProperSelectionTarget(e).draggable(false);
-      }
-    )
+      },
+    );
   },
   'click tap': (e) => {
     updateState((updatedState) => {
@@ -41,7 +45,7 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
       }
     });
   },
-  'dragstart': (e) => {
+  dragstart: (e) => {
     updateState((updatedState) => {
       const selection = getProperSelectionTarget(e);
       if (updatedState.tab?.id === TABS_IDS.ANNOTATE && updatedState.pointerMode === POINTER_MODES.SELECT && updatedState.selections[0] !== selection) {
@@ -49,7 +53,7 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
       }
     });
   },
-  'dragend': (e) => {
+  dragend: (e) => {
     if (timeout) {
       clearTimeout(timeout);
     }
@@ -57,7 +61,7 @@ const getShapeDefaultEvents = ({ updateState, canvas }) => ({
     timeout = setTimeout(() => {
       updateState({ selections: [getProperSelectionTarget(e)] });
     }, 50);
-  }
+  },
 });
 
 const useAnnotation = ({
@@ -65,7 +69,9 @@ const useAnnotation = ({
   defaultDraw = false, noPointerEvents = false, absoluteDimensions = true, shapePreviewOpacity = 0.7,
   ...otherProps
 }) => {
-  const { canvas, previewLayer, pointerMode, selections, updateState } = useContext(Context);
+  const {
+    canvas, previewLayer, pointerMode, selections, updateState,
+  } = useContext(Context);
   const [currentAnnotation, setCurrentAnnotation] = useState(
     () => ({
       draw: defaultDraw,
@@ -74,7 +80,7 @@ const useAnnotation = ({
       name,
       hitStrokeWidth: 6,
       x: 0,
-      absoluteDimensions: absoluteDimensions,
+      absoluteDimensions,
       y: 0,
       shadowColor: '#000000',
       stroke: '#000000',
@@ -84,8 +90,8 @@ const useAnnotation = ({
         ...getShapeDefaultEvents({ updateState, canvas }),
         ...events,
       },
-      ...otherProps
-    })
+      ...otherProps,
+    }),
   );
   const canvasDimensions = useRef({});
   const startPosition = useRef({});
@@ -107,9 +113,9 @@ const useAnnotation = ({
           endX: event.pageX - canvasDimensions.current.x,
           endY: event.pageY - canvasDimensions.current.y,
           prevX: updatedCurrentAnnotation.points?.[2] ?? updatedCurrentAnnotation.x,
-          prevY: updatedCurrentAnnotation.points?.[3] ??updatedCurrentAnnotation.y,
+          prevY: updatedCurrentAnnotation.points?.[3] ?? updatedCurrentAnnotation.y,
           prevPoints: updatedCurrentAnnotation.points,
-        })
+        }),
       };
     }
     return positionDiffDimensions;
@@ -127,7 +133,7 @@ const useAnnotation = ({
         y: shape.absoluteDimensions
           ? shape.y - canvasDimensions.current.y
           : shape.y ?? 0,
-      })
+      }),
     );
   }, [previewLayer, shapePreviewOpacity]);
 
@@ -166,12 +172,12 @@ const useAnnotation = ({
         const latestUpdatedShape = {
           ...updatedcurrentAnnotation,
           ...mappedDimensions,
-        }
+        };
 
         updateShapePreview(latestUpdatedShape);
 
         return latestUpdatedShape;
-      }
+      },
     );
   }, [positionDiffStartToEnd]);
 
@@ -194,7 +200,7 @@ const useAnnotation = ({
 
         updateShapePreview(shapeWithChanges);
         return shapeWithChanges;
-      }
+      },
     );
   }, [defaultDraw, handleDimensionsMapping, positionDiffStartToEnd]);
 
@@ -206,14 +212,14 @@ const useAnnotation = ({
     }
   }, [handleDimensionsMapping, noDimensionsMapping]);
 
-  const handlePointerUp = useCallback(() => {   
+  const handlePointerUp = useCallback(() => {
     previewLayer.destroyChildren();
 
     setCurrentAnnotation(
       (updatedcurrentAnnotation) => ({
         ...updatedcurrentAnnotation,
         draw: true,
-      })
+      }),
     );
 
     canvas.off('mousemove touchmove', handlePointerMove);
@@ -258,31 +264,33 @@ const useAnnotation = ({
       canvas.content.style.cursor = POINTER_ICONS.CROSSHAIR;
       if (selections && selections.length > 0) {
         updateState({
-          selections: []
-        })
+          selections: [],
+        });
       }
     } else {
       canvas.content.style.cursor = POINTER_ICONS.DEFAULT;
     }
-    
+
     return () => {
       canvas.off('mousedown touchstart', handlePointerDown);
       canvas.content.style.cursor = POINTER_ICONS.DEFAULT;
-    }
+    };
   }, [currentAnnotation.libClassName, pointerMode, canvas, handlePointerDown, noPointerEvents]);
 
   useEffect(() => {
     if (currentAnnotation.draw) {
-      const shapeToProvide ={ ...currentAnnotation };
+      const shapeToProvide = { ...currentAnnotation };
       delete shapeToProvide.draw;
 
       updateState({
-        tmpAnnotate: shapeToProvide
+        tmpAnnotate: shapeToProvide,
       });
+      
+      previewLayer.clear();
     }
   }, [currentAnnotation]);
 
   return [currentAnnotation, setCurrentAnnotation];
-}
+};
 
 export default useAnnotation;

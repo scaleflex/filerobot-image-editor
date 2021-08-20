@@ -1,18 +1,18 @@
 import React, { useCallback, useState } from 'react';
-import Context from './';
+import Context from '.';
 
 import defaultState from './defaultState';
 
 const AppProvider = ({ children, value }) => {
   const [state, setState] = useState(
-    () => defaultState
+    () => defaultState,
   );
 
   const updateState = useCallback((objToBeAddedOrFnReceivesStateReturnsObj) => {
     setState((latestState) => {
       const stateToBeAdded = typeof objToBeAddedOrFnReceivesStateReturnsObj === 'function'
-          ? objToBeAddedOrFnReceivesStateReturnsObj(latestState)
-          : objToBeAddedOrFnReceivesStateReturnsObj;
+        ? objToBeAddedOrFnReceivesStateReturnsObj(latestState)
+        : objToBeAddedOrFnReceivesStateReturnsObj;
 
       return stateToBeAdded
         ? ({
@@ -20,7 +20,7 @@ const AppProvider = ({ children, value }) => {
           ...stateToBeAdded,
         })
         : latestState;
-    })
+    });
   }, []);
 
   return (
@@ -33,8 +33,6 @@ const AppProvider = ({ children, value }) => {
       {children}
     </Context.Provider>
   );
-}
-
-
+};
 
 export default AppProvider;

@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Watermark = () => {
-  return (
-    <div>
-      Hello there, this is watermark!
-    </div>
-  )
-}
+const Watermark = () => (
+  <div>
+    Hello there, this is watermark!
+  </div>
+);
 
 export default Watermark;

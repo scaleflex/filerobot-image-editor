@@ -16,7 +16,7 @@ const BaseFilters = {
       factor * (pixelRGB[0] - 128) + 128,
       factor * (pixelRGB[1] - 128) + 128,
       factor * (pixelRGB[2] - 128) + 128,
-    ]
+    ];
   },
   saturation: (pixelRGB, value) => {
     value = value < -1 ? -1 : value;
@@ -24,11 +24,11 @@ const BaseFilters = {
     const g = pixelRGB[1];
     const b = pixelRGB[2];
 
-    const gray = 0.2989 * r + 0.5870 * g + 0.1140 * b; //weights from CCIR 601 spec
+    const gray = 0.2989 * r + 0.5870 * g + 0.1140 * b; // weights from CCIR 601 spec
     return [
       -gray * value + r * (1 + value),
       -gray * value + g * (1 + value),
-      -gray * value + b * (1 + value)
+      -gray * value + b * (1 + value),
     ];
   },
   grayscale: (pixelRGB) => {
@@ -45,9 +45,9 @@ const BaseFilters = {
     const b = pixelRGB[2];
 
     return [
-      r * (1 - 0.607 * value) + g * .769 * value + b * .189 * value,
-      r * .349 * value + g * (1 - 0.314 * value) + b * .168 * value,
-      r * .272 * value + g * .534 * value + b * (1 - 0.869 * value)
+      r * (1 - 0.607 * value) + g * 0.769 * value + b * 0.189 * value,
+      r * 0.349 * value + g * (1 - 0.314 * value) + b * 0.168 * value,
+      r * 0.272 * value + g * 0.534 * value + b * (1 - 0.869 * value),
     ];
   },
   adjustRGB: (pixelRGB, adjustingRGB) => [

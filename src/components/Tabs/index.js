@@ -16,4 +16,4 @@ export {
   Annotate,
   Filters,
   Watermark,
-}
+};

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { GoBack } from "@scaleflex/icons";
-import { IconButton } from "@scaleflex/ui/core";
+import { GoBack } from '@scaleflex/icons';
+import { IconButton } from '@scaleflex/ui/core';
 import Context from '../../context';
 
 const GoBackButton = () => {
@@ -9,10 +9,10 @@ const GoBackButton = () => {
   const goBack = () => {
     if (subTab || tab) {
       updateState({
-        [subTab ? 'subTab' : 'tab']: null
-      })
+        [subTab ? 'subTab' : 'tab']: null,
+      });
     }
-  }
+  };
 
   return (
     <IconButton
@@ -23,6 +23,6 @@ const GoBackButton = () => {
       <GoBack />
     </IconButton>
   );
-}
+};
 
 export default GoBackButton;

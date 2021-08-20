@@ -6,4 +6,4 @@ const FintuneOperationWrapper = styled.div`
 
 export {
   FintuneOperationWrapper,
-}
+};

@@ -1,4 +1,6 @@
-import { Adjust, ImageFilters, Crop, Watermark, Annotation } from '@scaleflex/icons';
+import {
+  Adjust, ImageFilters, Crop, Watermark, Annotation,
+} from '@scaleflex/icons';
 
 export const OPERATIONS = [
   {

@@ -3,7 +3,7 @@
  * https://github.com/konvajs/konva/blob/501c73bf570fe310ad44ad92d9e60f983a5a1559/src/Factory.ts#L8
  */
 
-import capitalize from "./capitalize";
+import capitalize from './capitalize';
 
 const GET = 'get';
 const SET = 'set';
@@ -11,9 +11,8 @@ const SET = 'set';
 export const addGetter = (constructor, attribute, defaultValue) => {
   const method = GET + capitalize(attribute);
 
-  constructor.prototype[method] =
-    constructor.prototype[method] ||
-    function () {
+  constructor.prototype[method] = constructor.prototype[method]
+    || function () {
       const val = this.attrs[attribute];
       return val === undefined ? defaultValue : val;
     };

@@ -7,7 +7,7 @@ const getShapeDefaultState = (shapeObject) => {
     id: randomId(shapeObject.name),
     name: shapeObject.name,
     libClassName: shapeObject.libClassName,
-  }
+  };
 
   switch (shapeObject.name) {
     case SHAPES_NAMES.CIRCLE:
@@ -25,6 +25,6 @@ const getShapeDefaultState = (shapeObject) => {
   }
 
   return state;
-}
+};
 
 export default getShapeDefaultState;

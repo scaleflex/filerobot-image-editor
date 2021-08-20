@@ -6,4 +6,4 @@ const StyledMainCanvas = styled.canvas`
 
 export {
   StyledMainCanvas,
-}
+};

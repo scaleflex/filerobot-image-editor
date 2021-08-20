@@ -7,5 +7,5 @@ const StyledWrapper = styled.div`
 `;
 
 export {
-  StyledWrapper
-}
+  StyledWrapper,
+};

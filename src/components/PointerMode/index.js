@@ -12,11 +12,12 @@ const PointerMode = () => {
   const { pointerMode, updateState } = useContext(Context);
   const changePointerMode = (mode) => {
     if (mode) {
-      updateState ({
-        pointerMode: mode
-      })
+      updateState({
+        pointerMode: mode,
+        selections: []
+      });
     }
-  }
+  };
 
   return (
     <PointerModeWrapper>
@@ -41,7 +42,7 @@ const PointerMode = () => {
         />
       </IconButton>
     </PointerModeWrapper>
-  )
-}
+  );
+};
 
 export default PointerMode;

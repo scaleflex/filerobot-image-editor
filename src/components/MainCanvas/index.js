@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Konva from 'konva';
 import { useTheme } from '@scaleflex/ui/theme/hooks';
 
-import * as CustomKonvaFilters from '../../custom/filters';
+// import * as CustomKonvaFilters from '../../custom/filters';
 import Loading from '../Loading';
 import Context from '../../context';
 
@@ -23,7 +23,7 @@ const MainCanvas = ({ image }) => {
     selections = [],
     canvas,
     finetune,
-    tmpAnnotate
+    tmpAnnotate,
   } = useContext(Context);
   const theme = useTheme();
   const [preparedImage, setPreparedImage] = useState(null);
@@ -39,11 +39,11 @@ const MainCanvas = ({ image }) => {
       imageElement.crossOrigin = 'Anonymous';
       imageElement.onload = () => {
         changeImage(imageElement);
-      }
+      };
       imageElement.onerror = () => {
         changeImage(false);
         throw new Error(`Issue while loading the provided image with the following url: ${image}`);
-      }
+      };
     } else {
       changeImage(image);
     }
@@ -54,16 +54,22 @@ const MainCanvas = ({ image }) => {
       const canvas = new Konva.Stage({
         container: MAIN_CANVAS_ID,
         width: preparedImage.width,
-        height: preparedImage.height
+        height: preparedImage.height,
+        offsetX: preparedImage.width / 2,
+        offsetY: preparedImage.height / 2,
+        x: preparedImage.width / 2,
+        y: preparedImage.height / 2,
       });
 
       const imageLayer = new Konva.Layer(); // for having the image and applying filters
       canvas.add(imageLayer);
 
-      const designLayer = new Konva.Layer(); // for having the other tools for editing ex. shapes, drawing...etc.
+      // for having the other tools for editing ex. shapes, drawing...etc.
+      const designLayer = new Konva.Layer();
       canvas.add(designLayer);
 
-      const previewLayer = new Konva.Layer(); // for showing the current shape preview that would be drawn.
+      // for showing the current shape preview that would be drawn.
+      const previewLayer = new Konva.Layer({ listening: false });
       canvas.add(previewLayer);
 
       const transformer = new Konva.Transformer({
@@ -89,45 +95,61 @@ const MainCanvas = ({ image }) => {
 
       const canvasedImage = new Konva.Image({
         image: preparedImage,
-        x: 0,
-        y: 0,
+        x: preparedImage.width / 2,
+        y: preparedImage.height / 2,
+        offsetX: preparedImage.width / 2,
+        offsetY: preparedImage.height / 2,
       });
       canvasedImage.cache();
 
       imageLayer.add(canvasedImage);
-      
+
       updateState({
         canvas,
         imageLayer,
         designLayer,
         previewLayer,
-        canvasedImage: canvasedImage,
+        canvasedImage,
         transformer,
       });
     } else if (preparedImage) {
-      canvas.height(preparedImage.height);
-      canvas.width(preparedImage.height);
-      canvasedImage.image(preparedImage);
+      canvas
+        .height(preparedImage.height)
+        .width(preparedImage.height);
+      canvasedImage
+        .image(preparedImage)
+        .offset({
+          x: preparedImage.width / 2,
+          y: preparedImage.height / 2,
+        });
     }
   }, [preparedImage, theme.palette]);
 
-  useEffect(() => {
-    if (canvas && canvasedImage) {
-      const latestFinetune = Object.keys(finetune);
-      latestFinetune.forEach((filter) => {
-        Object.keys(finetune[filter]).forEach((functionName) => {
-          canvasedImage[functionName](finetune[filter][functionName]);
-        })
-      });
-      canvasedImage.filters(latestFinetune.map((f) => Konva.Filters[f] ?? CustomKonvaFilters[f]));
-    }
-  }, [finetune, canvasedImage, canvas]);
+  // // TODO: Optimize this more & move it.
+  // useEffect(() => {
+  //   if (canvas && canvasedImage) {
+  //     const latestFinetune = Object.keys(finetune);
+  //     latestFinetune.forEach((filter) => {
+  //       Object.keys(finetune[filter]).forEach((filterValueFnName) => {
+  //         const filterValue = finetune[filter][filterValueFnName];
+  //         if (canvasedImage.attrs[filterValueFnName] !== filterValue) {
+  //           canvasedImage[filterValueFnName](filterValue);
+  //         }
+  //       })
+  //     });
+
+  //     const currentFilters = canvasedImage.filters();
+  //     if (latestFinetune.length !== currentFilters?.length) {
+  //       canvasedImage.filters(latestFinetune.map((f) => Konva.Filters[f] ?? CustomKonvaFilters[f]));
+  //     }
+  //   }
+  // }, [finetune, canvasedImage, canvas]);
 
   useEffect(() => {
     if (canvas && imageLayer && designLayer && tmpAnnotate) {
       const canvasDimensions = canvas.content.getBoundingClientRect();
-      
-      const { libClassName, eventsToApply, ...annotate} = tmpAnnotate;
+
+      const { libClassName, eventsToApply, ...annotate } = tmpAnnotate;
       const shape = new Konva[libClassName]({
         ...annotate,
         x: annotate.absoluteDimensions ? annotate.x - canvasDimensions.x : annotate.x ?? 0,
@@ -137,7 +159,7 @@ const MainCanvas = ({ image }) => {
       // Applying events on the object.
       Object.keys(eventsToApply).forEach((eventName) => {
         shape.on(eventName, eventsToApply[eventName]);
-      })
+      });
 
       designLayer.add(shape);
       transformer.moveToTop();
@@ -145,63 +167,63 @@ const MainCanvas = ({ image }) => {
       updateState((state) => ({
         annotations: {
           ...state.annotations,
-          [annotate.id]: shape
+          [annotate.id]: shape,
         },
-        tmpAnnotate: null
+        tmpAnnotate: null,
       }));
     }
   }, [tmpAnnotate, designLayer, imageLayer, canvas]);
 
   useEffect(() => {
     if (transformer) {
-      transformer.nodes(selections)
+      transformer.nodes(selections);
     }
   }, [transformer, selections]);
 
   const changeImage = (loadedImage) => {
-    const ratio = loadedImage.height / loadedImage.width;
-    
+    const ratio = loadedImage.width / loadedImage.height;
+
     const originalImage = {
       src: loadedImage.src,
       width: loadedImage.width,
       height: loadedImage.height,
-      ratio
-    }
+      ratio,
+    };
 
-    const isVerticalImage = ratio > 1;
+    const isVerticalImage = ratio < 1;
 
     if (loadedImage.width > MAX_CANVAS_WIDTH && !isVerticalImage) {
       loadedImage.width = MAX_CANVAS_WIDTH;
-      loadedImage.height = ratio * loadedImage.width;
+      loadedImage.height = loadedImage.width / ratio;
     }
 
     if (loadedImage.height > MAX_CANVAS_HEIGHT && isVerticalImage) {
       loadedImage.height = MAX_CANVAS_HEIGHT;
-      loadedImage.width = loadedImage.height / ratio;
+      loadedImage.width = loadedImage.height * ratio;
     }
-    
+
     setPreparedImage(loadedImage);
 
     updateState({
-      originalImage // the original image provided.
+      originalImage, // the original image provided.
     });
-  }
+  };
 
-   // TODO: Make a separate Error compoennt.
-   if (preparedImage === false) {
+  // TODO: Make a separate Error compoennt.
+  if (preparedImage === false) {
     return (
       <div>
         Error in loading provided image.
       </div>
-    )
+    );
   }
 
   // TODO: Make better loading content to be like (Creating preview... 🔃) or (Loading image... 🔃)
   if (!preparedImage) {
-    return <Loading />
+    return <Loading />;
   }
 
-  return <div id={MAIN_CANVAS_ID} />
-}
+  return <div id={MAIN_CANVAS_ID} />;
+};
 
 export default MainCanvas;

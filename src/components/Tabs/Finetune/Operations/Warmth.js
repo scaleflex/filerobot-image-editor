@@ -1,27 +1,38 @@
 import React from 'react';
 
+import useFinetuneFilter from 'hooks/useFinetuneFilter';
+import restrictNumber from 'utils/restrictNumber';
 import { FintuneOperationWrapper } from './Operations.styled';
-import useImageFilter from '../../../../hooks/useImageFilter';
+
+const MIN_VALUE = 0;
+const MAX_VALUE = 200;
 
 const Warmth = () => {
-  const [value, setValue] = useImageFilter({
+  const [value, setValue] = useFinetuneFilter({
     filterClassNameInLib: 'Warmth',
     valueObject: {
-      warmth: 0
-    }
+      warmth: 0,
+    },
   });
 
   const changeValue = (e) => {
     setValue({
-      warmth: +e.target.value
+      warmth: restrictNumber(e.target.value, MIN_VALUE, MAX_VALUE),
     });
-  }
+  };
 
   return (
     <FintuneOperationWrapper>
-      <input type="range" min="0" step="0.01" max="200" value={value.warmth} onChange={changeValue} />
+      <input
+        type="range"
+        min={MIN_VALUE}
+        step="0.01"
+        max={MAX_VALUE}
+        value={value.warmth}
+        onChange={changeValue}
+      />
     </FintuneOperationWrapper>
   );
-}
+};
 
 export default Warmth;

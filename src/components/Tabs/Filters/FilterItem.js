@@ -1,18 +1,22 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, {
+  memo, useCallback, useContext, useEffect, useRef,
+} from 'react';
 import Konva from 'konva';
 
-import Context from '../../../context';
-import * as CustomKonvaFilters from '../../../custom/filters';
+import Context from 'context';
+import * as CustomKonvaFilters from 'custom/filters';
 import { StyledFilterItem, FilterItemPreview, FilterItemLabel } from './Filters.styled';
 
 const FILTER_PREVIEW_WIDTH = 40;
 const FILTER_PREVIEW_HEIGHT = 40;
 
-const FilterItem = ({ filterName, filterClassName }) => {
+const FilterItem = ({
+  filterName, filterClassName, applyFilter, isSelected,
+}) => {
   const {
     originalImage = {},
-    canvasedImage = {},
   } = useContext(Context);
+
   const stageRef = useRef();
   const filteredImgLayerRef = useRef();
 
@@ -53,22 +57,21 @@ const FilterItem = ({ filterName, filterClassName }) => {
     }
   }, [filterClassName, originalImage.src]);
 
-  const applyFilter = useCallback(() => {
-    const foundFilter = Konva.Filters[filterClassName] ?? CustomKonvaFilters[filterClassName];
-    canvasedImage.filters(
-      foundFilter ? [foundFilter] : []
-    );
-  }, [canvasedImage, filterClassName]);
+  const handleFilterApplying = useCallback(() => {
+    if (!isSelected) {
+      applyFilter(filterClassName, filterName);
+    }
+  }, [filterClassName, filterName, isSelected]);
 
   useEffect(manipulateFilterPreviewCanvas, [manipulateFilterPreviewCanvas]);
   useEffect(loadImage, [loadImage]);
 
   return (
-    <StyledFilterItem onClick={applyFilter}>
+    <StyledFilterItem onClick={handleFilterApplying} active={isSelected}>
       <FilterItemPreview id={filterName} />
       <FilterItemLabel>{filterName}</FilterItemLabel>
     </StyledFilterItem>
   );
-}
+};
 
-export default FilterItem;
+export default memo(FilterItem);

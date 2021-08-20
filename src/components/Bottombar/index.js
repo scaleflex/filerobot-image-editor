@@ -15,6 +15,6 @@ const Bottombar = () => (
     <FullscreenButton />
     <PointerMode />
   </StyledBottombar>
-)
+);
 
 export default Bottombar;

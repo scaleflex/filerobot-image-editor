@@ -19,4 +19,4 @@ export {
   Line,
   Arrow,
   Freehand,
-}
+};

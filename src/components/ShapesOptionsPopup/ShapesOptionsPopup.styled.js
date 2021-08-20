@@ -5,8 +5,8 @@ const SelectedShapePopupWrapper = styled.div.attrs(
   (props) => ({
     style: {
       opacity: props.opacity || 0.9,
-    }
-  })
+    },
+  }),
 )(
   ({ theme }) => css`
     position: relative;
@@ -16,14 +16,14 @@ const SelectedShapePopupWrapper = styled.div.attrs(
     border-top-left-radius: 0;
     padding: 4px;
     box-shadow: 0px 0px 4px 1px rgba(77, 78, 78, 0.3);
-  `
+  `,
 );
 
 const OptionsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  ${props => `
+  ${(props) => `
     ${props.colDirection ? 'flex-direction: column;' : ''}
     ${props.alignedLeft ? 'align-items: flex-start;' : ''}
     ${props.alignedCenter ? 'justify-content: center;' : ''}
@@ -41,7 +41,7 @@ const OptionInput = styled(InputGroup)`
   
   input {
     height: 100%;
-    ${(props) => props.pointerCursor ? 'cursor: pointer;' : undefined}
+    ${(props) => (props.pointerCursor ? 'cursor: pointer;' : undefined)}
   }
 
   ${(props) => `
@@ -53,10 +53,9 @@ const OptionInput = styled(InputGroup)`
   `}
 `;
 
-
 export {
   SelectedShapePopupWrapper,
   OptionsWrapper,
   OptionInputWrapper,
-  OptionInput
-}
+  OptionInput,
+};

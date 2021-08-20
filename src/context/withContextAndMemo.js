@@ -6,11 +6,11 @@ import Context from '.';
 // to be able to use memo for having avoiding un-needed renders for components.
 const withContextAndMemo = (WrappedComponent, shouldComponentMemoFn = undefined) => {
   const WrappedComponentMemoized = memo(WrappedComponent, shouldComponentMemoFn);
-  
+
   return () => {
     const globalState = useContext(Context);
     return <WrappedComponentMemoized {...globalState} />;
-  }
-}
+  };
+};
 
 export default withContextAndMemo;

@@ -1,32 +1,45 @@
-import { useContext, useEffect, useState } from 'react';
+import {
+  useCallback, useContext, useMemo, useState,
+} from 'react';
+import Konva from 'konva';
 
-import Context from '../context';
+import Context from 'context';
+import * as CustomKonvaFilters from 'custom/filters';
 
-const useImageFilter = ({
-  filterClassNameInLib,
-  valueObject = {},
-}) => {
-  const {
-    finetune,
-    updateState
-  } = useContext(Context);
-  const [value, setValue] = useState(() => valueObject);
-  
-  useEffect(() => {
-    if (filterClassNameInLib) {
-      updateState({
-        finetune: {
-          ...finetune,
-          [filterClassNameInLib]: {
-            ...finetune[filterClassNameInLib],
-            ...value
-          }
-        }
-      })
+const useImageFilter = () => {
+  const { canvasedImage } = useContext(Context);
+  const currentFilterName = useMemo(() => (
+    (
+      (
+        canvasedImage.filters() || []
+      ).filter((f) => f.isImageFilter)[0] || {}
+    ).name
+  ), [canvasedImage]);
+  const [appliedFilter, setAppliedFilter] = useState(() => currentFilterName);
+
+  const applyFilter = useCallback((
+    filterClassName,
+    filterName,
+  ) => {
+    if (canvasedImage) {
+      const currentFilters = canvasedImage.filters() || [];
+      const uniqueFilters = currentFilters.filter(
+        (filter) => !filter.isImageFilter && filter.name !== filterClassName,
+      );
+      const filterFn = Konva.Filters[filterClassName] ?? CustomKonvaFilters[filterClassName];
+
+      if (filterFn) {
+        filterFn.isImageFilter = true; // used in removing any previous image filter applied.
+        uniqueFilters.push(filterFn);
+      }
+
+      canvasedImage.filters(uniqueFilters);
+
+      setAppliedFilter(filterName);
     }
-  }, [value]);
+  }, [canvasedImage]);
 
-  return [value, setValue];
-}
+  return [appliedFilter, applyFilter];
+};
 
 export default useImageFilter;

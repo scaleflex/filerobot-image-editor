@@ -23,11 +23,7 @@ const Line = ({ defaultStrokeColor = '#000000', defaultStrokeSize = 3, defaultLi
 
   if (!selections[0]) { return ''; }
 
-  return (
-    <AnnotateOperationsWrapper>
-      <ShapesOptionsPopup />
-    </AnnotateOperationsWrapper>
-  );
-}
+  return <ShapesOptionsPopup />;
+};
 
 export default Line;

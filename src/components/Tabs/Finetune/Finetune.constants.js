@@ -1,4 +1,6 @@
-import { Adjust, ImageFilters, Crop, Watermark, Annotation } from '@scaleflex/icons';
+import {
+  Adjust, ImageFilters, Crop, Watermark, Annotation,
+} from '@scaleflex/icons';
 
 export const OPERATIONS = [
   {
@@ -15,11 +17,6 @@ export const OPERATIONS = [
     id: 'WARMTH',
     label: 'Warmth',
     icon: Crop,
-  },
-  {
-    id: 'HSL',
-    label: 'HSL',
-    icon: Watermark,
   },
   {
     id: 'HSV',
@@ -39,6 +36,21 @@ export const OPERATIONS = [
   {
     id: 'THRESHOLD',
     label: 'Threshold',
+    icon: Annotation,
+  },
+  {
+    id: 'POSTERIZE',
+    label: 'Posterize',
+    icon: Annotation,
+  },
+  {
+    id: 'PIXELATE',
+    label: 'Pixelate',
+    icon: Annotation,
+  },
+  {
+    id: 'NOISE',
+    label: 'Noise',
     icon: Annotation,
   },
 ];

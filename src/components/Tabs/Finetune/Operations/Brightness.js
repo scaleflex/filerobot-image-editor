@@ -1,27 +1,38 @@
 import React from 'react';
 
+import useFinetuneFilter from 'hooks/useFinetuneFilter';
+import restrictNumber from 'utils/restrictNumber';
 import { FintuneOperationWrapper } from './Operations.styled';
-import useImageFilter from '../../../../hooks/useImageFilter';
+
+const MIN_VALUE = -1;
+const MAX_VALUE = 1;
 
 const Brightness = () => {
-  const [value, setValue] = useImageFilter({
+  const [value, setValue] = useFinetuneFilter({
     filterClassNameInLib: 'Brighten',
     valueObject: {
-      brightness: 0
-    }
+      brightness: 0,
+    },
   });
 
   const changeValue = (e) => {
     setValue({
-      brightness: +e.target.value
+      brightness: restrictNumber(e.target.value, MIN_VALUE, MAX_VALUE),
     });
-  }
+  };
 
   return (
     <FintuneOperationWrapper>
-      <input type="range" min="-1" step="0.05" max="1" value={value.brightness} onChange={changeValue} />
+      <input
+        type="range"
+        min={MIN_VALUE}
+        step="0.05"
+        max={MAX_VALUE}
+        value={value.brightness}
+        onChange={changeValue}
+      />
     </FintuneOperationWrapper>
   );
-}
+};
 
 export default Brightness;

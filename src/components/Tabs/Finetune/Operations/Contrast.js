@@ -1,27 +1,38 @@
 import React from 'react';
 
+import useFinetuneFilter from 'hooks/useFinetuneFilter';
+import restrictNumber from 'utils/restrictNumber';
 import { FintuneOperationWrapper } from './Operations.styled';
-import useImageFilter from '../../../../hooks/useImageFilter';
+
+const MIN_VALUE = -100;
+const MAX_VALUE = 100;
 
 const Contrast = () => {
-  const [value, setValue] = useImageFilter({
+  const [value, setValue] = useFinetuneFilter({
     filterClassNameInLib: 'Contrast',
     valueObject: {
-      contrast: 0
-    }
+      contrast: 0,
+    },
   });
 
   const changeValue = (e) => {
     setValue({
-      contrast: +e.target.value
+      contrast: restrictNumber(e.target.value),
     });
-  }
+  };
 
   return (
     <FintuneOperationWrapper>
-      <input type="range" min="-100" step="1" max="100" value={value.contrast} onChange={changeValue} />
+      <input
+        type="range"
+        min={MIN_VALUE}
+        step="1"
+        max={MAX_VALUE}
+        value={value.contrast}
+        onChange={changeValue}
+      />
     </FintuneOperationWrapper>
   );
-}
+};
 
 export default Contrast;

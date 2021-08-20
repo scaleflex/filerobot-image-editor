@@ -3,10 +3,12 @@ import { Popup } from '@scaleflex/ui/core';
 
 const defaultAnchorOrigin = {
   horizontal: 'center',
-  vertical: 'bottom'
+  vertical: 'bottom',
 };
 
-const RobotPopup = ({ anchorOrigin = defaultAnchorOrigin, message = '', show = false, status, onClose }) => (
+const RobotPopup = ({
+  anchorOrigin = defaultAnchorOrigin, message = '', show = false, status, onClose,
+}) => (
   <Popup
     anchorOrigin={anchorOrigin}
     autoHideDuration={3000}
