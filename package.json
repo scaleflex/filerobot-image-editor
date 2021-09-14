@@ -20,11 +20,11 @@
     "cropperjs": "^1.5.5",
     "image-type": "^4.1.0",
     "js-sha1": "^0.6.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "styled-components": "5.1.1",
     "throttle-debounce": "^2.1.0",
-    "uuid": "^3.4.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.17",
@@ -43,6 +43,7 @@
     "ajv-keywords": "^3.4.1",
     "babel-loader": "^8.1.0",
     "css-loader": "0.28.7",
+    "file-loader": "^6.2.0",
     "gh-pages": "^2.2.0",
     "highlight.js": "9.13.1",
     "html-webpack-plugin": "^3.2.0",
@@ -63,6 +64,7 @@
     "build-demo-react": "npm run clean-demo-react && webpack --mode production --config config/webpack.demo-react-config.js",
     "clean-build": "rm -rf build",
     "build-new": "webpack --mode production --config config/webpack.js-config.js",
+    "build-new-local": "webpack --mode production --config config/webpack.js-local-config.js",
     "build": "npm run clean-build && npm run build-new && ./scripts/copy_build.sh",
     "build-w": "npm run clean-build && npm run build-new && .\\scripts\\copy_build.sh",
     "clean-dist": "rm -rf dist",

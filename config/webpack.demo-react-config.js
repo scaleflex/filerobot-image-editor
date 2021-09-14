@@ -12,7 +12,8 @@ module.exports = (env, options) => {
     output: {
       path: path.join(__dirname, "../examples/react/dist"),
       filename: "filerobot-image-editor.[chunkhash].js",
-      chunkFilename: 'filerobot-image-editor.[name].[chunkhash].js'
+      chunkFilename: 'filerobot-image-editor.[name].[chunkhash].js',
+      publicPath: `https://cdn.scaleflex.it/plugins/${pkg.name}/`
     },
     module: {
       rules: [
@@ -24,6 +25,25 @@ module.exports = (env, options) => {
         {
           test: /\.css$/,
           use: ["style-loader", "css-loader"]
+        },
+        {
+          test: /\.(png|jpe?g|gif)$/i,
+          loader: 'file-loader',
+          options: {
+            context: 'src',
+            emitFile: false,
+            name: '[path][name].[ext]'
+          }
+        },
+        {
+          test: /\.(woff|ttf|otf|eot|woff2|svg)$/i,
+          loader: 'file-loader',
+          options: {
+            context: 'src',
+            emitFile: false,
+            name: '[path][name].[ext]',
+            esModule: false
+          }
         }
       ]
     },

@@ -7,7 +7,7 @@ const banner = `
  ${pkg.name} v${pkg.version}
  ${pkg.repository.url}
 
- Copyright (c) 2019 ${pkg.author}
+ Copyright (c) ${now.getFullYear()} ${pkg.author}
  Released under the ${pkg.license} license
 
  Date: ${now.toISOString()}
@@ -17,11 +17,10 @@ module.exports = (env = {}) => {
   return {
     entry: path.join(__dirname, "../src/connectors/js/index.js"),
     output: {
-      path: path.join(__dirname, `../build/${pkg.version}`),
+      path: path.join(__dirname, `../build/${pkg.version}-local`),
       filename: `${pkg.name}.min.js`,
       chunkFilename: `[name].min.js`,
-      jsonpFunction: 'webpackJsonp' + Date.now(),
-      publicPath: `https://cdn.scaleflex.it/plugins/${pkg.name}/`
+      publicPath: ""
     },
     module: {
       rules: [
@@ -39,7 +38,6 @@ module.exports = (env = {}) => {
           loader: 'file-loader',
           options: {
             context: 'src',
-            emitFile: false,
             name: '[path][name].[ext]'
           }
         },
@@ -48,7 +46,6 @@ module.exports = (env = {}) => {
           loader: 'file-loader',
           options: {
             context: 'src',
-            emitFile: false,
             name: '[path][name].[ext]',
             esModule: false
           }

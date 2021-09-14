@@ -1,59 +1,88 @@
+// filters
+import colorize from '../assets/images/filters/colorize.jpg';
+import contrast from '../assets/images/filters/contrast.png';
+import cross_process from '../assets/images/filters/cross_process.png';
+import glow_sun from '../assets/images/filters/glow_sun.png';
+import hdr_effect from '../assets/images/filters/hdr_effect.png';
+import jarques from '../assets/images/filters/jarques.png';
+import love from '../assets/images/filters/love.png';
+import old_boot from '../assets/images/filters/old_boot.png';
+import orange_peel from '../assets/images/filters/orange_peel.png';
+import pin_hole from '../assets/images/filters/pin_hole.png';
+import pleasant from '../assets/images/filters/pleasant.png';
+import sepia from '../assets/images/filters/sepia.png';
+import sun_rise from '../assets/images/filters/sun_rise.png';
+import vintage from '../assets/images/filters/vintage.png';
+// effects
+import clarity from '../assets/images/effects/clarity.png';
+import edge_enhance from '../assets/images/effects/edge_enhance.png';
+import emboss from '../assets/images/effects/emboss.png';
+import grungy from '../assets/images/effects/grungy.png';
+import hazy from '../assets/images/effects/hazy.png';
+import lomo from '../assets/images/effects/lomo.png';
+import noise from '../assets/images/effects/noise.png';
+import old_paper from '../assets/images/effects/old_paper.png';
+import posterize from '../assets/images/effects/posterize.png';
+import radial_blur from '../assets/images/effects/radial_blur.png';
+import sin_city from '../assets/images/effects/sin_city.png';
+import tilt_shift from '../assets/images/effects/tilt_shift.png';
+
 export const getIcon = (name) => {
   switch (name) {
     //filters
     case 'colorize':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/colorize.jpg';
+      return colorize;
     case 'contrast':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/contrast.png';
+      return contrast;
     case 'cross_process':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/cross_process.png';
+      return cross_process;
     case 'glow_sun':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/glow_sun.png';
+      return glow_sun;
     case 'hdr_effect':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/hdr_effect.png';
+      return hdr_effect;
     case 'jarques':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/jarques.png';
+      return jarques;
     case 'love':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/love.png';
+      return love;
     case 'old_boot':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/old_boot.png';
+      return old_boot;
     case 'orange_peel':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/orange_peel.png';
+      return orange_peel;
     case 'pin_hole':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/pin_hole.png';
+      return pin_hole;
     case 'pleasant':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/pleasant.png';
+      return pleasant;
     case 'sepia':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/sepia.png';
+      return sepia;
     case 'sun_rise':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/sun_rise.png';
+      return sun_rise;
     case 'vintage':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/filters/vintage.png';
+      return vintage;
     //effets
     case 'clarity':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/clarity.png';
+      return clarity;
     case 'edge_enhance':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/edge_enhance.png';
+      return edge_enhance;
     case 'emboss':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/emboss.png';
+      return emboss;
     case 'grungy':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/grungy.png';
+      return grungy;
     case 'hazy':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/hazy.png';
+      return hazy;
     case 'lomo':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/lomo.png';
+      return lomo;
     case 'noise':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/noise.png';
+      return noise;
     case 'old_paper':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/old_paper.png';
-    case 'posterize':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/posterize.png';
+      return old_paper;
+  case 'posterize':
+      return posterize;
     case 'radial_blur':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/radial_blur.png';
+      return radial_blur;
     case 'sin_city':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/sin_city.png';
+      return sin_city;
     case 'tilt_shift':
-      return 'https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/images/effects/tilt_shift.png';
+      return tilt_shift;
     default:
       return '';
   }

@@ -1,10 +1,7 @@
 @font-face {
   font-family: 'filerobot-image-editor-font';
-  src:  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/v5/filerobot-image-editor-font.eot?ua0hzun3');
-  src:  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/v5/filerobot-image-editor-font.eot?ua0hzun3#iefix') format('embedded-opentype'),
-  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/v5/filerobot-image-editor-font.ttf?ua0hzun3') format('truetype'),
-  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/v5/filerobot-image-editor-font.woff?ua0hzun3') format('woff'),
-  url('https://cdn.scaleflex.it/plugins/filerobot-image-editor/assets/fonts/filerobot-image-editor-font/v5/filerobot-image-editor-font.svg?ua0hzun3#filerobot-image-editor-font') format('svg');
+  /* woff is supported by any relevant browser: https://caniuse.com/mdn-css_at-rules_font-face_woff */
+  src: url('filerobot-image-editor-font/v5/filerobot-image-editor-font.woff?ua0hzun3') format('woff');
   font-weight: normal;
   font-style: normal;
 }
