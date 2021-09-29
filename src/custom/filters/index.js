@@ -1,9 +1,3 @@
-export { default as Warmth } from './finetune/Warmth';
-
-export { default as Vignette } from './finetune/Vignette';
-
-export { default as CustomThreshold } from './finetune/CustomThreshold';
-
 export { default as BlackAndWhite } from './BlackAndWhite';
 
 export { default as Clarendon } from './Clarendon';

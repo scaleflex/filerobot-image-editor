@@ -3,13 +3,13 @@ import React, {
 } from 'react';
 import { Popper } from '@scaleflex/ui/core';
 
-import Context from 'context';
 import Loading from 'components/Loading';
 import { SelectedShapePopupWrapper } from './ShapesOptionsPopup.styled';
 
 const ShapesOptionsLazy = lazy(() => import('./ShapesOptions'));
 
 const ShapesOptionsPopup = () => {
+  return;
   const { canvas, selections = [] } = useContext(Context);
   const [anchorEl, setAnchorEl] = useState(null);
 

@@ -4,8 +4,7 @@ import {
 } from '@scaleflex/ui/core';
 import { Minus } from '@scaleflex/icons';
 
-import Context from '../../context';
-import { DEFAULT_FONTS, SHAPES_NAMES } from '../../utils/constants';
+import { DEFAULT_FONTS, ANNOTATIONS_NAMES } from '../../utils/constants';
 import { OptionsWrapper, OptionInputWrapper, OptionInput } from './ShapesOptionsPopup.styled';
 import capitalize from '../../utils/capitalize';
 import { getAlignmentBaseValX, getAlignmentBaseValY } from './getShapeAlignmentBase';
@@ -17,6 +16,7 @@ const accordionDetailStyle = { marginTop: 8, marginBottom: 8 };
 // TODO: Split this component into sub components and imprvoe them with adding more options if available.
 // TODO: Make freehand options applying more faster by making it non-blocking for the UI.
 const ShapesOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
+  return;
   const { designLayer, selections = [] } = useContext(Context);
   const [showGeneralOptions, setShowGeneralOptions] = useState(true);
   const [showShadowOptions, setShowShadowOptions] = useState(true);
@@ -31,20 +31,20 @@ const ShapesOptions = ({ fontFamilies = DEFAULT_FONTS }) => {
   const doesShapeNeed = useMemo(
     () => {
       const selectedShapeName = selections[0].name();
-      const isPolygon = SHAPES_NAMES.POLYGON === selectedShapeName;
-      const isArrow = SHAPES_NAMES.ARROW === selectedShapeName;
-      const isFreehand = SHAPES_NAMES.FREEHAND === selectedShapeName;
+      const isPolygon = ANNOTATIONS_NAMES.POLYGON === selectedShapeName;
+      const isArrow = ANNOTATIONS_NAMES.ARROW === selectedShapeName;
+      const isFreehand = ANNOTATIONS_NAMES.FREEHAND === selectedShapeName;
 
       return ({
-        cornerRadiusOnly: SHAPES_NAMES.RECT === selectedShapeName,
+        cornerRadiusOnly: ANNOTATIONS_NAMES.RECT === selectedShapeName,
         sides: isPolygon,
-        radius: isPolygon || SHAPES_NAMES.CIRCLE === selectedShapeName,
-        radiusXY: SHAPES_NAMES.ELLIPSE === selectedShapeName,
-        textOptions: SHAPES_NAMES.TEXT === selectedShapeName,
-        lineOptions: isFreehand || SHAPES_NAMES.LINE === selectedShapeName,
+        radius: isPolygon || ANNOTATIONS_NAMES.CIRCLE === selectedShapeName,
+        radiusXY: ANNOTATIONS_NAMES.ELLIPSE === selectedShapeName,
+        textOptions: ANNOTATIONS_NAMES.TEXT === selectedShapeName,
+        lineOptions: isFreehand || ANNOTATIONS_NAMES.LINE === selectedShapeName,
         arrowOptions: isArrow,
         freehandOptions: isFreehand,
-        imageOptions: SHAPES_NAMES.IMAGE === selectedShapeName,
+        imageOptions: ANNOTATIONS_NAMES.IMAGE === selectedShapeName,
       });
     }, [selections],
   );

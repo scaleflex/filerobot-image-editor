@@ -1,10 +1,7 @@
-import {
-  Adjust, ImageFilters, Crop, Watermark, Annotation,
-} from '@scaleflex/icons';
+export const MAX_CANVAS_WIDTH = 800;
+export const MAX_CANVAS_HEIGHT = 800;
 
 export const ROOT_CONTAINER_ID = 'filerobot-image-editor_root-container';
-
-export const EDITED_IMAGE_LAYER_ID = 'filerobot-image-editor_in-edit-image-layer';
 
 export const TABS_IDS = {
   FINETUNE: 'FINTUNE',
@@ -12,37 +9,46 @@ export const TABS_IDS = {
   ADJUST: 'ADJUST',
   WATERMARK: 'WATERMARK',
   ANNOTATE: 'ANNOTATE',
+  RESIZE: 'RESIZE',
 };
 
-export const AVAILABLE_TABS = [
-  {
-    id: TABS_IDS.FINETUNE,
-    label: 'Finetune',
-    icon: Adjust,
-  },
-  {
-    id: TABS_IDS.FILTERS,
-    label: 'Filters',
-    icon: ImageFilters,
-  },
-  {
-    id: TABS_IDS.ADJUST,
-    label: 'Adjust',
-    icon: Crop,
-  },
-  {
-    id: TABS_IDS.WATERMARK,
-    label: 'Watermark',
-    icon: Watermark,
-  },
-  {
-    id: TABS_IDS.ANNOTATE,
-    label: 'Annotate',
-    icon: Annotation,
-  },
-];
+export const TOOLS_IDS = {
+  CROP: 'Crop',
+  ROTATE: 'Rotate',
+  FLIP_X: 'Flip_X',
+  FLIP_Y: 'Flip_Y',
+  BRIGHTNESS: 'Brightness',
+  CONTRAST: 'Contrast',
+  HSV: 'HueSaturationValue',
+  WARMTH: 'Warmth',
+  BLUR: 'Blur',
+  THRESHOLD: 'Threshold',
+  POSTERIZE: 'Posterize',
+  PIXELATE: 'Pixelate',
+  NOISE: 'Noise',
+  // Vignette: 'Vignette',
+  FILTERS: 'Filters',
+  RECT: 'Rect',
+  CIRCLE: 'Circle',
+  ELLIPSE: 'Ellipse',
+  POLYGON: 'Polygon',
+  TEXT: 'Text',
+  LINE: 'Line',
+  IMAGE: 'Image',
+  ARROW: 'Arrow',
+  WATERMARK: 'Watermark',
+  PEN: 'Pen',
+};
 
-export const SHAPES_NAMES = {
+export const FLIP_DIRECTIONS = {
+  X: 'X',
+  Y: 'Y',
+};
+
+export const DEFAULT_ZOOM_FACTOR = 1;
+
+// TODO: We might remove it.
+export const ANNOTATIONS_NAMES = {
   RECT: 'rect',
   CIRCLE: 'circle',
   ELLIPSE: 'ellipse',
@@ -52,24 +58,44 @@ export const SHAPES_NAMES = {
   IMAGE: 'image',
   ARROW: 'arrow',
   WATERMARK: 'watermark',
-  FREEHAND: 'freehand',
+  FREEHANDS: 'freehands',
   FREEHAND_LINE: 'freehand_group_line',
 };
 
 export const POINTER_MODES = {
-  SELECT: 'SELECT',
+  DEFAULT: 'DEFAULT',
   DRAW: 'DRAW',
+  SELECT: 'SELECT',
+  GRAB: 'GRAB',
 };
 
 export const POINTER_ICONS = {
-  DEFAULT: 'default',
-  CROSSHAIR: 'crosshair',
-  MOVE: 'move',
+  [POINTER_MODES.DEFAULT]: 'default',
+  [POINTER_MODES.DRAW]: 'crosshair',
+  [POINTER_MODES.SELECT]: 'default',
+  [POINTER_MODES.GRAB]: 'grab',
 };
 
-export const DEFAULT_ENABLED_ANCHORS = ['top-left', 'top-center', 'top-right', 'middle-right', 'middle-left', 'bottom-left', 'bottom-center', 'bottom-right'];
+export const DEFAULT_ENABLED_ANCHORS = [
+  'top-left',
+  'top-center',
+  'top-right',
+  'middle-right',
+  'middle-left',
+  'bottom-left',
+  'bottom-center',
+  'bottom-right',
+];
 
-export const DEFAULT_FONTS = ['Arial', 'Tahoma', 'Sans-serif', 'Roboto', 'Comic-sans', 'Times New Roman', 'Lato'];
+export const DEFAULT_FONTS = [
+  'Arial',
+  'Tahoma',
+  'Sans-serif',
+  'Roboto',
+  'Comic-sans',
+  'Times New Roman',
+  'Lato',
+];
 
 export const ORIGINAL_CROP_RATIO = 'original';
 export const CUSTOM_CROP_RATIO = 'custom';
@@ -87,3 +113,5 @@ export const CROP_RATIOS = [
   { label: '9:21', value: 9 / 21 },
   { label: 'Custom', value: CUSTOM_CROP_RATIO },
 ];
+
+export const MAIN_CANVAS_ID = 'filerobot-image-editor_main-canvas';

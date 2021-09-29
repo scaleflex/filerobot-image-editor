@@ -1,8 +1,9 @@
+/** External Dependencies */
 import {
   Adjust, ImageFilters, Crop, Watermark, Annotation,
 } from '@scaleflex/icons';
 
-export const OPERATIONS = [
+export const TABS = [
   {
     id: 'SHAPES',
     label: 'Shapes',

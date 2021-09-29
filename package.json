@@ -4,9 +4,11 @@
   "dependencies": {
     "@scaleflex/icons": "^1.0.0-beta.45",
     "@scaleflex/ui": "^1.0.0-beta.45",
-    "konva": "^8.0.2"
+    "konva": "^8.0.2",
+    "react-konva": "^17.0.2-5"
   },
   "peerDependencies": {
+    "prop-types": "^15.7.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "styled-components": "^5.0.0"
@@ -14,10 +16,13 @@
   "devDependencies": {
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4",
+    "prettier": "^2.4.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-scripts": "4.0.3",
@@ -26,7 +31,7 @@
   },
   "scripts": {
     "fix": "eslint . --fix",
-    "start": "react-scripts start",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "react-scripts build"
   },
   "browserslist": {

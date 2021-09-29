@@ -4,9 +4,8 @@ import React, {
 import { RadioGroup } from '@scaleflex/ui/core';
 import Konva from 'konva';
 
-import Context from '../../../../context';
 import useAnnotation from '../../../../hooks/useAnnotation';
-import { POINTER_MODES, SHAPES_NAMES } from '../../../../utils/constants';
+import { POINTER_MODES, ANNOTATIONS_NAMES } from '../../../../utils/constants';
 import ShapesOptionsPopup from '../../../ShapesOptionsPopup';
 
 import { AnnotateOperationsWrapper } from './Operations.styled';
@@ -18,9 +17,10 @@ const TOOL_ERASE = 'erase';
 const Freehand = ({
   defaultStrokeColor = '#ffffff', defaultStrokeSize = 4, defaultTension = 0.5, defaultLineCap = 'round',
 }) => {
+  return;
   const [_, addNewGroup] = useAnnotation({
     libClassName: 'Group',
-    name: SHAPES_NAMES.FREEHAND,
+    name: ANNOTATIONS_NAMES.FREEHAND,
     defaultDraw: true,
     noPointerEvents: true,
     absoluteDimensions: false,
@@ -64,12 +64,12 @@ const Freehand = ({
         strokeWidth: +brushOptions.strokeSize,
         tension: defaultTension,
         lineCap: defaultLineCap,
-        name: SHAPES_NAMES.FREEHAND_LINE,
+        name: ANNOTATIONS_NAMES.FREEHAND_LINE,
         points: [lastPosition.current.x, lastPosition.current.y, point.x, point.y],
       });
       lastPosition.current = point;
       lastGroupRef.current.add(newLine);
-    } else if (e.target.name() === SHAPES_NAMES.FREEHAND_LINE) {
+    } else if (e.target.name() === ANNOTATIONS_NAMES.FREEHAND_LINE) {
       // if the parent children has no other lines except the current one then destory the whole paths' group otherwise destroy the line only.
       if ((e.target.parent.children || []).length - 1 === 0) {
         e.target.parent.destroy();
@@ -88,7 +88,7 @@ const Freehand = ({
   const handlePointerDown = useCallback((e) => {
     if (tool !== TOOL_ERASE) {
       addNewGroup((updatedShape) => ({ ...updatedShape }));
-      const groups = designLayer.find(`.${SHAPES_NAMES.FREEHAND}`);
+      const groups = designLayer.find(`.${ANNOTATIONS_NAMES.FREEHAND}`);
       lastGroupRef.current = groups[groups.length - 1];
 
       const pos = e.target.getStage().getPointerPosition();

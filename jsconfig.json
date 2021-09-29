@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "jsx": "preserve"
   },
   "include": ["src"]
 }

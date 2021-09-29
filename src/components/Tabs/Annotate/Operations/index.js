@@ -1,3 +1,4 @@
+// TODO: Remove the whole folder when new design is ready.
 import { lazy } from 'react';
 
 const Shapes = lazy(() => import('./Shapes'));

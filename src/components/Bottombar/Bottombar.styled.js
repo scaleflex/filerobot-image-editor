@@ -1,3 +1,4 @@
+/** External Dependencies */
 import styled from 'styled-components';
 
 const StyledBottombar = styled.div`
@@ -9,5 +10,6 @@ const StyledBottombar = styled.div`
 `;
 
 export {
+  // eslint-disable-next-line import/prefer-default-export
   StyledBottombar,
 };
