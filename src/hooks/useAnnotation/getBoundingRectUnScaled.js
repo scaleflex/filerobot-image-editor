@@ -2,17 +2,17 @@ const getBoundingRectUnScaled = (
   pointerOffsets = {},
   pointerDown = {},
   canvas,
-  previewLayer,
+  previewGroup,
   // updatedCurrentAnnotation = {},
 ) => {
   const scale = canvas.scale();
   const boundingRect = {};
   boundingRect.x =
     Math.min(pointerOffsets.offsetX, pointerDown.startedX) / scale.x -
-      previewLayer.x() || 0;
+      previewGroup.parent.attrs.xPadding || 0;
   boundingRect.y =
     Math.min(pointerOffsets.offsetY, pointerDown.startedY) / scale.y -
-      previewLayer.y() || 0;
+      previewGroup.parent.attrs.yPadding || 0;
   boundingRect.width =
     Math.abs(pointerOffsets.offsetX - pointerDown.startedX) / scale.x;
   boundingRect.height =

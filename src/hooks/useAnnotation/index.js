@@ -1,7 +1,5 @@
 /** External Dependencies */
-import {
-  useCallback, useContext, useEffect, useMemo, useState,
-} from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 /** Internal Dependencies */
 import AppContext from 'context';
@@ -14,33 +12,25 @@ const DEFAULTS = {
 };
 
 const useAnnotation = (annotation = {}, enablePreview = true) => {
-  const {
-    dispatch,
-    previewLayer,
-    annotations,
-    pointerMode,
-  } = useContext(AppContext);
+  const { dispatch, previewGroup, annotations, pointerMode } =
+    useContext(AppContext);
   const [tmpAnnotation, setTmpAnnotation] = useState(() => ({
     ...DEFAULTS,
     ...annotation,
   }));
-  const canvas = previewLayer.parent || {};
+  const canvas = previewGroup.getStage() || {};
 
-  const usedAnnotation = useMemo(() => (
-    annotations[annotation.id] || tmpAnnotation
-  ), [annotations[annotation.id], tmpAnnotation]);
-
-  const updateTmpAnnotationNoDraw = useCallback(
-    (updates) => {
-      setTmpAnnotation(
-        (latest) => ({
-          ...latest,
-          ...updates,
-        }),
-      );
-    },
-    [],
+  const usedAnnotation = useMemo(
+    () => annotations[annotation.id] || tmpAnnotation,
+    [annotations[annotation.id], tmpAnnotation],
   );
+
+  const updateTmpAnnotationNoDraw = useCallback((updates) => {
+    setTmpAnnotation((latest) => ({
+      ...latest,
+      ...updates,
+    }));
+  }, []);
 
   const updateFinalAnnotationWithDraw = useCallback((newAnnotationProps) => {
     dispatch({
@@ -78,7 +68,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
       stopAnnotationEventsListening = previewThenCallAnnotationAdding(
         canvas,
         usedAnnotation,
-        previewLayer,
+        previewGroup,
         updateFinalAnnotationWithDraw,
       );
     }
@@ -88,17 +78,14 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
         stopAnnotationEventsListening();
       }
     };
-  }, [canvas, usedAnnotation, pointerMode, previewLayer]);
+  }, [canvas, usedAnnotation, pointerMode, previewGroup]);
 
   const updateAnnotationFn = usedAnnotation.id
     ? updateFinalAnnotationWithDraw(usedAnnotation)
     : updateTmpAnnotationNoDraw;
 
   return useMemo(
-    () => [
-      usedAnnotation,
-      updateAnnotationFn,
-    ],
+    () => [usedAnnotation, updateAnnotationFn],
     [usedAnnotation, updateAnnotationFn],
   );
 };

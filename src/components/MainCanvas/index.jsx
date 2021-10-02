@@ -3,11 +3,7 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import Konva from 'konva';
 
 /** Internal Dependencies */
-import {
-  DesignLayer,
-  PreviewLayer,
-  TransformersLayer,
-} from 'components/Layers';
+import { DesignLayer, TransformersLayer } from 'components/Layers';
 import AppContext, {
   AppProviderOverridenValue,
   memoAndMapContextToProps,
@@ -44,9 +40,9 @@ const MainCanvas = () => {
     const originalKonvaRotationFn = Konva.Node.prototype.setRotation;
     Konva.Node.prototype.setRotation = function setRotation(rotationAngle) {
       const currentNodeContext = this;
-      if (currentNodeContext.attrs.isTransformedFromAnchor) {
-        return originalKonvaRotationFn.call(currentNodeContext, rotationAngle);
-      }
+      // if (currentNodeContext.attrs.isTransformedFromAnchor) {
+      return originalKonvaRotationFn.call(currentNodeContext, rotationAngle);
+      // }
 
       return rotateNodeAroundCenter(currentNodeContext, rotationAngle);
     };
@@ -57,7 +53,6 @@ const MainCanvas = () => {
       <CanvasNode>
         <AppProviderOverridenValue overridingValue={providedAppContext}>
           <DesignLayer />
-          <PreviewLayer />
           <TransformersLayer />
         </AppProviderOverridenValue>
       </CanvasNode>

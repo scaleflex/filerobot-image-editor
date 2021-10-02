@@ -11,35 +11,22 @@ import ToolsBarItemOptionsWrapper from './ToolsBarItemOptionsWrapper';
 const ToolsBar = () => {
   const { dispatch, tabId, toolId } = useContext(AppContext);
 
-  const tabTools = useMemo(
-    () => TABS_TOOLS[tabId],
-    [tabId],
-  );
+  const tabTools = useMemo(() => TABS_TOOLS[tabId], [tabId]);
 
-  const selectTool = useCallback(
-    (newToolId) => {
-      dispatch({
-        type: SELECT_TOOL,
-        payload: {
-          toolId: newToolId,
-        },
-      });
-    },
-    [],
-  );
+  const selectTool = useCallback((newToolId) => {
+    dispatch({
+      type: SELECT_TOOL,
+      payload: {
+        toolId: newToolId,
+      },
+    });
+  }, []);
 
   const items = useMemo(
-    () => tabTools.map(
-      ({
-        Item, id,
-      }) => (
-        <Item
-          key={id}
-          selectTool={selectTool}
-          isSelected={toolId === id}
-        />
-      ),
-    ),
+    () =>
+      tabTools.map(({ Item, id }) => (
+        <Item key={id} selectTool={selectTool} isSelected={toolId === id} />
+      )),
     [tabTools, toolId],
   );
 
@@ -51,13 +38,9 @@ const ToolsBar = () => {
   return (
     <StyledToolsBar>
       <ToolsBarItemOptionsWrapper>
-        {ToolOptionsComponent && (
-          <ToolOptionsComponent />
-        )}
+        {ToolOptionsComponent && <ToolOptionsComponent />}
       </ToolsBarItemOptionsWrapper>
-      <StyledToolsBarItems>
-        {items}
-      </StyledToolsBarItems>
+      <StyledToolsBarItems>{items}</StyledToolsBarItems>
     </StyledToolsBar>
   );
 };

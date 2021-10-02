@@ -15,7 +15,7 @@ const annotationsNamesToKonvaClasses = {
   [ANNOTATIONS_NAMES.ARROW]: Konva.Arrow,
 };
 
-const getNewAnnotationPreview = (annotation) => (
+const getNewAnnotationPreview = (annotation) =>
   new annotationsNamesToKonvaClasses[annotation.name]({
     ...annotation,
     opacity: 0.7,
@@ -27,7 +27,6 @@ const getNewAnnotationPreview = (annotation) => (
     // y: annotation.absoluteDimensions
     //   ? annotation.y - canvasDimensions.y
     //   : annotation.y ?? 0,
-  })
-);
+  });
 
 export default getNewAnnotationPreview;

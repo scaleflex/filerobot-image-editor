@@ -15,9 +15,10 @@ const rotatePoint = ({ x, y }, rad) => {
 const rotateNodeAroundCenter = (node, rotation) => {
   // current rotation origin (0, 0)
   // relative to desired origin - center (node.width()/2, node.height()/2)
+  const nodeScale = node.scale() || { x: 1, y: 1 };
   const topLeft = {
-    x: -node.width() / 2,
-    y: -node.height() / 2,
+    x: (-node.width() * nodeScale.x) / 2,
+    y: (-node.height() * nodeScale.y) / 2,
   };
   const current = rotatePoint(topLeft, Konva.getAngle(node.rotation()));
   const rotated = rotatePoint(topLeft, Konva.getAngle(rotation));

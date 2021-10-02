@@ -19,14 +19,14 @@ let latestAnnotationProps = null;
 const previewThenCallAnnotationAdding = (
   canvas,
   annotation,
-  previewLayer,
+  previewGroup,
   callbkAfterPreview,
 ) => {
   const getCanvasBoundingRect = () => canvas.content.getBoundingClientRect();
 
   const previewAnnotation = (preparedAnnotation) => {
     shownAnnotationPreview = getNewAnnotationPreview(preparedAnnotation);
-    previewLayer.add(shownAnnotationPreview);
+    previewGroup.add(shownAnnotationPreview);
     latestAnnotationProps = preparedAnnotation;
   };
 
@@ -48,7 +48,7 @@ const previewThenCallAnnotationAdding = (
         pointerOffsets,
         pointerDown,
         canvas,
-        previewLayer,
+        previewGroup,
       ),
     );
   };
@@ -83,7 +83,7 @@ const previewThenCallAnnotationAdding = (
       pointerOffsets,
       pointerDown,
       canvas,
-      previewLayer,
+      previewGroup,
     );
     if (shownAnnotationPreview) {
       updateAnnotationPreview(boundingRect);

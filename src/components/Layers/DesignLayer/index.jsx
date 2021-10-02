@@ -13,7 +13,9 @@ import AppContext from 'context';
 import getDimensionsMinimalRatio from 'utils/getDimensionsMinimalRatio';
 import { SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import getProperImageToCanvasSpacing from 'utils/getProperImageToCanvasSpacing';
+import getRotatedImageSize from 'utils/getRotatedImageSize';
 import AnnotationNodes from './AnnotationNodes';
+import PreviewGroup from './PreviewGroup';
 
 const CANVAS_TO_IMG_BOTH_SIDES_SPACING = getProperImageToCanvasSpacing() * 2;
 
@@ -30,23 +32,14 @@ const DesignLayer = () => {
     finetunes = [],
     finetunesProps = {},
     filter = null,
+    adjustments: { rotation = 0 },
   } = useContext(AppContext);
   const imageNodeRef = useRef();
+  const previewGroupRef = useRef();
 
   const finetunesAndFilter = useMemo(
     () => (filter ? [...finetunes, filter] : finetunes),
     [finetunes, filter],
-  );
-
-  const originalImgInitialScale = useMemo(
-    () =>
-      getDimensionsMinimalRatio(
-        initialCanvasWidth,
-        initialCanvasHeight,
-        originalImage.width,
-        originalImage.height,
-      ),
-    [initialCanvasWidth, initialCanvasHeight, originalImage],
   );
 
   const { originalImgSpacedWidth, originalImgSpacedHeight } = useMemo(
@@ -59,26 +52,58 @@ const DesignLayer = () => {
     [originalImage],
   );
 
+  const originalImgInitialScale = useMemo(
+    () =>
+      getDimensionsMinimalRatio(
+        initialCanvasWidth,
+        initialCanvasHeight,
+        originalImage.width,
+        originalImage.height,
+      ),
+    [originalImage, initialCanvasWidth, initialCanvasHeight],
+  );
+
+  const originalImgScaled = useMemo(
+    () => ({
+      width: originalImgSpacedWidth * originalImgInitialScale,
+      height: originalImgSpacedHeight * originalImgInitialScale,
+    }),
+    [initialCanvasWidth, initialCanvasHeight, originalImgInitialScale],
+  );
+
+  const scaleAfterRotation = useMemo(() => {
+    const rotatedImgSize = getRotatedImageSize(
+      originalImgScaled.width,
+      originalImgScaled.height,
+      rotation,
+    );
+
+    return getDimensionsMinimalRatio(
+      originalImgScaled.width,
+      originalImgScaled.height,
+      rotatedImgSize.width,
+      rotatedImgSize.height,
+    );
+  }, [originalImgScaled, rotation, initialCanvasWidth, initialCanvasHeight]);
+
   const xOffsetToCenterImgInCanvas =
-    canvasWidth / (2 * canvasScale) -
-    (originalImgSpacedWidth * originalImgInitialScale) / 2;
+    canvasWidth / (2 * canvasScale) - originalImgScaled.width / 2;
 
   const yOffsetToCenterImgInCanvas =
-    canvasHeight / (2 * canvasScale) -
-    (originalImgSpacedHeight * originalImgInitialScale) / 2;
+    canvasHeight / (2 * canvasScale) - originalImgScaled.height / 2;
 
   const imageDimensions = useMemo(
     () => ({
       x: xOffsetToCenterImgInCanvas,
       y: yOffsetToCenterImgInCanvas,
-      width: originalImgSpacedWidth * originalImgInitialScale,
-      height: originalImgSpacedHeight * originalImgInitialScale,
+      width: originalImgScaled.width,
+      height: originalImgScaled.height,
     }),
     [
       xOffsetToCenterImgInCanvas,
       yOffsetToCenterImgInCanvas,
       originalImage,
-      originalImgInitialScale,
+      originalImgScaled,
     ],
   );
 
@@ -115,7 +140,8 @@ const DesignLayer = () => {
         type: SET_SHOWN_IMAGE_DIMENSIONS,
         payload: {
           shownImageDimensions: imageDimensions,
-          designLayer: designLayerRef,
+          designLayer: designLayerRef.current,
+          previewGroup: previewGroupRef.current,
         },
       });
     }
@@ -128,13 +154,19 @@ const DesignLayer = () => {
   ) {
     return null;
   }
-
   return (
     <Layer
       ref={designLayerRef}
-      x={xOffsetToCenterImgInCanvas}
-      y={yOffsetToCenterImgInCanvas}
+      rotation={rotation}
+      xPadding={xOffsetToCenterImgInCanvas}
+      yPadding={yOffsetToCenterImgInCanvas}
+      x={xOffsetToCenterImgInCanvas + originalImgScaled.width / 2}
+      y={yOffsetToCenterImgInCanvas + originalImgScaled.height / 2}
       clip={clipBox}
+      offsetX={originalImgScaled.width / 2}
+      offsetY={originalImgScaled.height / 2}
+      scaleX={scaleAfterRotation}
+      scaleY={scaleAfterRotation}
     >
       <Image
         image={originalImage}
@@ -148,6 +180,7 @@ const DesignLayer = () => {
         {...finetunesProps}
       />
       <AnnotationNodes />
+      <PreviewGroup ref={previewGroupRef} />
     </Layer>
   );
 };
