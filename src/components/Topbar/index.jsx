@@ -10,7 +10,10 @@ import UndoButton from './UndoButton';
 import RedoButton from './RedoButton';
 import ImageDimensionsAndDisplayToggle from './ImageDimensionsAndDisplayToggle';
 import CanvasZooming from './CanvasZooming';
-import { StyledTopbar, StyledFlexCenterAlignedContainer } from './Topbar.styles';
+import {
+  StyledTopbar,
+  StyledFlexCenterAlignedContainer,
+} from './Topbar.styled';
 
 const Topbar = () => (
   <StyledTopbar>

@@ -6,7 +6,7 @@ import { Reset } from '@scaleflex/icons';
 /** Internal Dependencies */
 import { memoAndMapContextToProps } from 'context';
 import { RESET } from 'actions';
-import { StyledHistoryButton } from './Topbar.styles';
+import { StyledHistoryButton } from './Topbar.styled';
 
 const ResetButton = ({ dispatch, isResetted }) => {
   const dispatchReset = useCallback(() => {

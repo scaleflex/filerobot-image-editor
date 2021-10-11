@@ -5,7 +5,7 @@ import React, { useCallback, useContext, useMemo } from 'react';
 import AppContext from 'context';
 import { SELECT_TOOL } from 'actions';
 import { TABS_TOOLS, TOOLS_ITEMS } from 'components/tools/tools.constants';
-import { StyledToolsBar, StyledToolsBarItems } from './ToolsBar.styles';
+import { StyledToolsBar, StyledToolsBarItems } from './ToolsBar.styled';
 import ToolsBarItemOptionsWrapper from './ToolsBarItemOptionsWrapper';
 
 const ToolsBar = () => {

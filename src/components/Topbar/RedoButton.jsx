@@ -6,7 +6,7 @@ import { Redo } from '@scaleflex/icons';
 /** Internal Dependencies */
 import { memoAndMapContextToProps } from 'context';
 import { REDO } from 'actions';
-import { StyledHistoryButton } from './Topbar.styles';
+import { StyledHistoryButton } from './Topbar.styled';
 
 const RedoButton = ({ dispatch, hasRedo }) => {
   const dispatchRedo = useCallback(() => {

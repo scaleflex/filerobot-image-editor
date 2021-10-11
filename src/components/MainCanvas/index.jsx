@@ -12,7 +12,7 @@ import { SET_CANVAS_SIZE } from 'actions';
 import { useResizeObserver } from 'hooks';
 import rotateNodeAroundCenter from './rotateNodeAroundCenter';
 import CanvasNode from './CanvasNode';
-import { CanvasContainer } from './MainCanvas.styles';
+import { CanvasContainer } from './MainCanvas.styled';
 
 const MainCanvas = () => {
   const [observeResize] = useResizeObserver();

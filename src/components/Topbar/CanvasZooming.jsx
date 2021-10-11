@@ -6,13 +6,10 @@ import { Label } from '@scaleflex/ui/core';
 /** Internal Dependencies */
 import AppContext from 'context';
 import { ZOOM_CANVAS } from 'actions';
-import { StyledSmallButton } from './Topbar.styles';
+import { StyledSmallButton } from './Topbar.styled';
 
 const CanvasZooming = () => {
-  const {
-    dispatch,
-    zoom = {},
-  } = useContext(AppContext);
+  const { dispatch, zoom = {} } = useContext(AppContext);
 
   const zoomIn = useCallback(() => {
     dispatch({
@@ -34,17 +31,11 @@ const CanvasZooming = () => {
 
   return (
     <>
-      <StyledSmallButton
-        onClick={zoomOut}
-        color="link"
-      >
+      <StyledSmallButton onClick={zoomOut} color="link">
         <Minus />
       </StyledSmallButton>
       <Label>{`${parseInt(zoom.factor * 100, 10)}%`}</Label>
-      <StyledSmallButton
-        onClick={zoomIn}
-        color="link"
-      >
+      <StyledSmallButton onClick={zoomIn} color="link">
         <Plus />
       </StyledSmallButton>
     </>

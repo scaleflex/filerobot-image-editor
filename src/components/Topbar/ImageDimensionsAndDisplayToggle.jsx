@@ -6,7 +6,7 @@ import { Label } from '@scaleflex/ui/core';
 import AppContext from 'context';
 import { TOGGLE_ORIGINAL_IMAGE_DISPLAY } from 'actions';
 import { Union } from 'components/common/icons';
-import { StyledSmallButton } from './Topbar.styles';
+import { StyledSmallButton } from './Topbar.styled';
 
 const ImageDimensionsAndDisplayToggle = () => {
   const { dispatch, isResetted = true, originalImage } = useContext(AppContext);
@@ -29,13 +29,13 @@ const ImageDimensionsAndDisplayToggle = () => {
     });
   }, []);
 
-  if (!originalImage) { return null; }
+  if (!originalImage) {
+    return null;
+  }
 
   return (
     <>
-      <Label>
-        {`${originalImage.width} x ${originalImage.height} px`}
-      </Label>
+      <Label>{`${originalImage.width} x ${originalImage.height} px`}</Label>
       <StyledSmallButton
         color="link"
         horizontalMargin="8px"

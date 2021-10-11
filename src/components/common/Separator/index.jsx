@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
-import { StyledSeparator } from './Separator.styles';
+import { StyledSeparator } from './Separator.styled';
 
 const Separator = ({ height, width }) => (
   <StyledSeparator height={height} width={width} />

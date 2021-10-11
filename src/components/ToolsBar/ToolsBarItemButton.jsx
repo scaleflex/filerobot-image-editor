@@ -3,25 +3,21 @@ import React, { useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
-import { StyledToolsBarItemButton, StyledToolsBarItemButtonLabel } from './ToolsBar.styles';
+import {
+  StyledToolsBarItemButton,
+  StyledToolsBarItemButtonLabel,
+} from './ToolsBar.styled';
 
-const ToolsBarItemButton = ({
-  id, label, onClick, Icon, isSelected,
-}) => {
-  const handleClick = useCallback(
-    () => {
-      onClick(id);
-    },
-    [],
-  );
+const ToolsBarItemButton = ({ id, label, onClick, Icon, isSelected }) => {
+  const handleClick = useCallback(() => {
+    onClick(id);
+  }, []);
 
   return (
     <StyledToolsBarItemButton onClick={handleClick} aria-selected={isSelected}>
       <Icon size={16} />
       {label && (
-        <StyledToolsBarItemButtonLabel>
-          {label}
-        </StyledToolsBarItemButtonLabel>
+        <StyledToolsBarItemButtonLabel>{label}</StyledToolsBarItemButtonLabel>
       )}
     </StyledToolsBarItemButton>
   );

@@ -3,7 +3,7 @@ import React, { useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
-import { StyledTabItem, StyledTabItemLabel } from './Tabs.styles';
+import { StyledTabItem, StyledTabItemLabel } from './Tabs.styled';
 
 const TabItem = ({ id, label, Icon, isSelected, onClick }) => {
   const handleClick = useCallback(() => {

@@ -4,7 +4,11 @@ import { Menu, MenuItem } from '@scaleflex/ui/core';
 import { Arrow } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { StyledSaveAsButton, StyledSaveButton, StyledSaveButtonWrapper } from './Topbar.styles';
+import {
+  StyledSaveAsButton,
+  StyledSaveButton,
+  StyledSaveButtonWrapper,
+} from './Topbar.styled';
 
 const SaveButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -15,30 +19,14 @@ const SaveButton = () => {
 
   return (
     <StyledSaveButtonWrapper>
-      <StyledSaveButton
-        color="primary"
-        size="sm"
-      >
+      <StyledSaveButton color="primary" size="sm">
         Save
       </StyledSaveButton>
-      <StyledSaveAsButton
-        color="primary"
-        size="sm"
-        onClick={handleOpen}
-      >
+      <StyledSaveAsButton color="primary" size="sm" onClick={handleOpen}>
         <Arrow />
       </StyledSaveAsButton>
-      <Menu
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        open
-        position="bottom"
-      >
-        <MenuItem
-          active={false}
-          onClick={handleClose}
-          size="sm"
-        >
+      <Menu anchorEl={anchorEl} onClose={handleClose} open position="bottom">
+        <MenuItem active={false} onClick={handleClose} size="sm">
           Item 3
         </MenuItem>
       </Menu>

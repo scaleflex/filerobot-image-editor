@@ -6,7 +6,7 @@ import AppContext from 'context';
 import { SELECT_TAB } from 'actions';
 import TabItem from './TabItem';
 import { AVAILABLE_TABS } from './Tabs.constants';
-import { StyledTabs } from './Tabs.styles';
+import { StyledTabs } from './Tabs.styled';
 
 const Tabs = () => {
   const { dispatch, tabId = null } = useContext(AppContext);

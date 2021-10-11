@@ -1,6 +1,7 @@
 /** Internal Dependencies */
 import { DEFAULT_ZOOM_FACTOR, POINTER_MODES, TABS_IDS } from 'utils/constants';
 
+// TODO: make some of these configurable
 export default {
   canvasScale: 1,
   shownImageDimensions: {},
@@ -20,7 +21,7 @@ export default {
   annotations: {},
   // --- End of design states ---
   selectionsIds: [],
-  tabId: TABS_IDS.ADJUST,
+  tabId: TABS_IDS.ANNOTATE,
   toolId: null,
   /* For UNDO/REDO/RESET,
    * Current/present state => considered properties related to design of the whole 1st order state.

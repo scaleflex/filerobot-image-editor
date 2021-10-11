@@ -6,7 +6,7 @@ import { Undo } from '@scaleflex/icons';
 /** Internal Dependencies */
 import { memoAndMapContextToProps } from 'context';
 import { UNDO } from 'actions';
-import { StyledHistoryButton } from './Topbar.styles';
+import { StyledHistoryButton } from './Topbar.styled';
 
 const UndoButton = ({ dispatch, hasUndo }) => {
   const dispatchUndo = useCallback(() => {

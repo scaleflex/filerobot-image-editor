@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
-import { StyledToolsBarItemOptionsWrapper } from './ToolsBar.styles';
+import { StyledToolsBarItemOptionsWrapper } from './ToolsBar.styled';
 
 const ToolsBarItemOptionsWrapper = ({ children }) => (
   <StyledToolsBarItemOptionsWrapper hasChildren={Boolean(children)}>

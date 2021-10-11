@@ -15,7 +15,7 @@ import {
   StyledWrapper,
   StyledMainContent,
   StyledCanvasAndTools,
-} from './Wrapper.styles';
+} from './Wrapper.styled';
 
 const Wrapper = ({ image }) => {
   const { isLoadingGlobally, error, dispatch, originalImage } =
