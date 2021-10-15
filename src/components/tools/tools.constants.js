@@ -9,7 +9,14 @@ import { HSV, HSVOptions } from './HSV';
 import { Blur, BlurOptions } from './Blur';
 import { Warmth, WarmthOptions } from './Warmth';
 import { Filters } from './Filters';
-import { Rect, RectOptions } from './Rect';
+import { TextButton, TextOptions } from './Text';
+import { ImageButton, ImageOptions } from './Image';
+import { RectButton, RectOptions } from './Rect';
+import { EllipseButton, EllipseOptions } from './Ellipse';
+import { PenButton, PenOptions } from './Pen';
+import { LineButton, LineOptions } from './Line';
+import { ArrowButton, ArrowOptions } from './Arrow';
+import { PolygonButton, PolygonOptions } from './Polygon';
 
 export const TOOLS_ITEMS = {
   [TOOLS_IDS.CROP]: {
@@ -59,10 +66,45 @@ export const TOOLS_ITEMS = {
     id: TOOLS_IDS.FILTERS,
     Item: Filters,
   },
+  [TOOLS_IDS.TEXT]: {
+    id: TOOLS_IDS.TEXT,
+    Item: TextButton,
+    ItemOptions: TextOptions,
+  },
+  [TOOLS_IDS.IMAGE]: {
+    id: TOOLS_IDS.IMAGE,
+    Item: ImageButton,
+    ItemOptions: ImageOptions,
+  },
   [TOOLS_IDS.RECT]: {
     id: TOOLS_IDS.RECT,
-    Item: Rect,
+    Item: RectButton,
     ItemOptions: RectOptions,
+  },
+  [TOOLS_IDS.POLYGON]: {
+    id: TOOLS_IDS.POLYGON,
+    Item: PolygonButton,
+    ItemOptions: PolygonOptions,
+  },
+  [TOOLS_IDS.ELLIPSE]: {
+    id: TOOLS_IDS.ELLIPSE,
+    Item: EllipseButton,
+    ItemOptions: EllipseOptions,
+  },
+  [TOOLS_IDS.PEN]: {
+    id: TOOLS_IDS.PEN,
+    Item: PenButton,
+    ItemOptions: PenOptions,
+  },
+  [TOOLS_IDS.LINE]: {
+    id: TOOLS_IDS.LINE,
+    Item: LineButton,
+    ItemOptions: LineOptions,
+  },
+  [TOOLS_IDS.ARROW]: {
+    id: TOOLS_IDS.ARROW,
+    Item: ArrowButton,
+    ItemOptions: ArrowOptions,
   },
 };
 
@@ -80,10 +122,15 @@ export const TABS_TOOLS = {
     TOOLS_ITEMS[TOOLS_IDS.BLUR],
     TOOLS_ITEMS[TOOLS_IDS.WARMTH],
   ],
-  [TABS_IDS.FILTERS]: [
-    TOOLS_ITEMS[TOOLS_IDS.FILTERS],
-  ],
+  [TABS_IDS.FILTERS]: [TOOLS_ITEMS[TOOLS_IDS.FILTERS]],
   [TABS_IDS.ANNOTATE]: [
+    TOOLS_ITEMS[TOOLS_IDS.TEXT],
+    TOOLS_ITEMS[TOOLS_IDS.IMAGE],
     TOOLS_ITEMS[TOOLS_IDS.RECT],
+    TOOLS_ITEMS[TOOLS_IDS.ELLIPSE],
+    TOOLS_ITEMS[TOOLS_IDS.POLYGON],
+    TOOLS_ITEMS[TOOLS_IDS.PEN],
+    TOOLS_ITEMS[TOOLS_IDS.LINE],
+    TOOLS_ITEMS[TOOLS_IDS.ARROW],
   ],
 };

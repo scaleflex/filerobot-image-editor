@@ -4,15 +4,16 @@ import { Label } from '@scaleflex/ui/core';
 
 const StyledToolsBar = styled.div`
   padding: 8px 1px 0;
-  width: 100%;
+  width: fit-content;
+  margin: 0 auto;
+  max-width: 100%;
   max-height: 82px;
-  overflow: auto;
 `;
 
 const StyledToolsBarItems = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  overflow-x: auto;
 `;
 
 const StyledToolsBarItemButton = styled.div(

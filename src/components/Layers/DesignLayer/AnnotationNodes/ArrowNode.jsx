@@ -3,57 +3,74 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Arrow } from 'react-konva';
 
+/** Internal Dependencies */
+import nodesCommonPropTypes from '../nodesCommonPropTypes';
+
 const ArrowNode = ({
-  id, name, fill, width, height, scaleX, scaleY, rotation, annotationEvents,
-  points, stroke, strokeWidth, lineCap, ...otherProps
+  id,
+  name,
+  fill,
+  pointerLength,
+  pointerWidth,
+  scaleX,
+  scaleY,
+  rotation,
+  annotationEvents,
+  points,
+  lineCap,
+  stroke,
+  strokeWidth,
+  shadowOffsetX,
+  shadowOffsetY,
+  shadowBlur,
+  shadowColor,
+  shadowOpacity,
+  opacity,
+  ...otherProps
 }) => (
   <Arrow
     id={id}
     name={name}
+    rotation={rotation}
+    scaleX={scaleX}
+    scaleY={scaleY}
+    stroke={stroke}
+    strokeWidth={strokeWidth}
+    shadowOffsetX={shadowOffsetX}
+    shadowOffsetY={shadowOffsetY}
+    shadowBlur={shadowBlur}
+    shadowColor={shadowColor}
+    shadowOpacity={shadowOpacity}
     fill={fill}
     x={0}
     y={0}
     points={points}
-    width={width}
-    height={height}
-    scaleX={scaleX}
-    scaleY={scaleY}
-    rotation={rotation}
-    dash={[10, 10]}
-    dashEnabled={false}
-    stroke={stroke}
-    strokeWidth={strokeWidth}
+    pointerLength={pointerLength}
+    pointerWidth={pointerWidth}
     lineCap={lineCap}
+    opacity={opacity}
     {...annotationEvents}
     {...otherProps}
   />
 );
 
 ArrowNode.defaultProps = {
-  fill: '#000',
-  stroke: '#000',
-  strokeWidth: 3,
+  ...nodesCommonPropTypes.defaults,
+  stroke: '#000000',
+  strokeWidth: 6,
+  fill: undefined,
   lineCap: 'butt',
-  rotation: 0,
-  width: 0,
-  height: 0,
-  scaleX: 1,
-  scaleY: 1,
+  pointerLength: undefined,
+  pointerWidth: undefined,
 };
 
 ArrowNode.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  ...nodesCommonPropTypes.definitions,
   points: PropTypes.instanceOf(Array).isRequired,
   annotationEvents: PropTypes.instanceOf(Object).isRequired,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  pointerLength: PropTypes.number,
+  pointerWidth: PropTypes.number,
   fill: PropTypes.string,
-  rotation: PropTypes.number,
-  scaleX: PropTypes.number,
-  scaleY: PropTypes.number,
-  stroke: PropTypes.string,
-  strokeWidth: PropTypes.number,
   lineCap: PropTypes.string,
 };
 

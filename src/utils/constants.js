@@ -29,7 +29,6 @@ export const TOOLS_IDS = {
   // Vignette: 'Vignette',
   FILTERS: 'Filters',
   RECT: 'Rect',
-  CIRCLE: 'Circle',
   ELLIPSE: 'Ellipse',
   POLYGON: 'Polygon',
   TEXT: 'Text',
@@ -50,30 +49,20 @@ export const DEFAULT_ZOOM_FACTOR = 1;
 // TODO: We might remove it.
 export const ANNOTATIONS_NAMES = {
   RECT: 'rect',
-  CIRCLE: 'circle',
   ELLIPSE: 'ellipse',
   POLYGON: 'polygon',
   TEXT: 'text',
   LINE: 'line',
   IMAGE: 'image',
   ARROW: 'arrow',
-  WATERMARK: 'watermark',
-  FREEHANDS: 'freehands',
-  FREEHAND_LINE: 'freehand_group_line',
-};
-
-export const POINTER_MODES = {
-  DEFAULT: 'DEFAULT',
-  DRAW: 'DRAW',
-  SELECT: 'SELECT',
-  GRAB: 'GRAB',
+  PEN: 'pen',
+  PEN_LINE: 'pen-line',
 };
 
 export const POINTER_ICONS = {
-  [POINTER_MODES.DEFAULT]: 'default',
-  [POINTER_MODES.DRAW]: 'crosshair',
-  [POINTER_MODES.SELECT]: 'default',
-  [POINTER_MODES.GRAB]: 'grab',
+  DEFAULT: 'default',
+  DRAW: 'crosshair',
+  MOVE: 'move',
 };
 
 export const DEFAULT_ENABLED_ANCHORS = [
@@ -115,3 +104,15 @@ export const CROP_RATIOS = [
 ];
 
 export const MAIN_CANVAS_ID = 'filerobot-image-editor_main-canvas';
+
+export const POSITIONS = {
+  TOP_LEFT: 'top-left',
+  TOP_CENTER: 'top-center',
+  TOP_RIGHT: 'top-right',
+  MIDDLE_LEFT: 'middle-left',
+  MIDDLE_CENTER: 'middle-center',
+  MIDDLE_RIGHT: 'middle-right',
+  BOTTOM_LEFT: 'bottom-left',
+  BOTTOM_CENTER: 'bottom-center',
+  BOTTOM_RIGHT: 'bottom-right',
+};

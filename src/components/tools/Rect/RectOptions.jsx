@@ -1,26 +1,26 @@
 /** External Dependencies */
 import React from 'react';
-import Konva from 'konva';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
 import { ANNOTATIONS_NAMES } from 'utils/constants';
+import AnnotationOptions from 'components/common/AnnotationOptions';
+import {
+  rectOptionsPopupComponents,
+  RECT_POPPABLE_OPTIONS,
+} from './Rect.constants';
 
 const RectOptions = () => {
-  const [rect, updateRect] = useAnnotation({
+  const [rect, saveRect] = useAnnotation({
     name: ANNOTATIONS_NAMES.RECT,
   });
 
-  const changeRect = (e) => {
-    updateRect({
-      fill: e.target.value,
-    });
-  };
-
   return (
-    <input
-      type="color"
-      onChange={changeRect}
+    <AnnotationOptions
+      moreOptionsPopupComponentsObj={rectOptionsPopupComponents}
+      morePoppableOptionsPrepended={RECT_POPPABLE_OPTIONS}
+      annotation={rect}
+      updateAnnotation={saveRect}
     />
   );
 };

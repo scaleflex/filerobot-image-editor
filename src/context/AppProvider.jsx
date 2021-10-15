@@ -23,9 +23,7 @@ const AppProvider = ({ children }) => {
   );
 
   return (
-    <AppContext.Provider value={providedValue}>
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={providedValue}>{children}</AppContext.Provider>
   );
 };
 

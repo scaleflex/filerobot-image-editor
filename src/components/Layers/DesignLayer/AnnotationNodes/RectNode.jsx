@@ -3,53 +3,70 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Rect } from 'react-konva';
 
+/** Internal Dependencies */
+import nodesCommonPropTypes from '../nodesCommonPropTypes';
+
 const RectNode = ({
-  id, name, fill, x, y, width, height, scaleX, scaleY, rotation, annotationEvents,
-  stroke, strokeWidth, ...otherProps
+  id,
+  name,
+  fill,
+  x,
+  y,
+  width,
+  height,
+  scaleX,
+  scaleY,
+  rotation,
+  annotationEvents,
+  stroke,
+  strokeWidth,
+  shadowOffsetX,
+  shadowOffsetY,
+  shadowBlur,
+  shadowColor,
+  shadowOpacity,
+  opacity,
+  ...otherProps
 }) => (
   <Rect
     id={id}
     name={name}
+    rotation={rotation}
+    scaleX={scaleX}
+    scaleY={scaleY}
+    stroke={stroke}
+    strokeWidth={strokeWidth}
+    shadowOffsetX={shadowOffsetX}
+    shadowOffsetY={shadowOffsetY}
+    shadowBlur={shadowBlur}
+    shadowColor={shadowColor}
+    shadowOpacity={shadowOpacity}
     fill={fill}
     x={x}
     y={y}
     width={width}
     height={height}
-    scaleX={scaleX}
-    scaleY={scaleY}
-    stroke={stroke}
-    strokeWidth={strokeWidth}
-    rotation={rotation}
+    opacity={opacity}
     {...annotationEvents}
     {...otherProps}
   />
 );
 
 RectNode.defaultProps = {
+  ...nodesCommonPropTypes.defaults,
   fill: '#000',
-  rotation: 0,
   width: 0,
   height: 0,
-  scaleX: 1,
-  scaleY: 1,
-  stroke: '#000',
-  strokeWidth: 0,
 };
 
 RectNode.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  ...nodesCommonPropTypes.definitions,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   annotationEvents: PropTypes.instanceOf(Object).isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
   fill: PropTypes.string,
-  rotation: PropTypes.number,
-  scaleX: PropTypes.number,
-  scaleY: PropTypes.number,
-  stroke: PropTypes.string,
-  strokeWidth: PropTypes.number,
 };
 
 export default RectNode;

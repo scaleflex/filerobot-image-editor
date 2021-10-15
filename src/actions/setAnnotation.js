@@ -3,7 +3,6 @@ import randomId from 'utils/randomId';
 export const SET_ANNOTATION = 'SET_ANNOTATION';
 
 const setAnnotation = (state, payload) => {
-  // const { absoluteDimensions, ...newAnnotation } = payload;
   const newAnnotation = payload;
   const annotationId = payload.id ?? randomId(newAnnotation.name);
 
@@ -15,7 +14,6 @@ const setAnnotation = (state, payload) => {
       [annotationId]: {
         ...state.annotations[annotationId],
         ...newAnnotation,
-        id: annotationId,
       },
     },
   };

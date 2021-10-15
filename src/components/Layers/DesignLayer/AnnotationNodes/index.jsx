@@ -7,7 +7,7 @@ import { useAnnotationEvents } from 'hooks';
 import { ANNOTATION_NAMES_TO_COMPONENT } from './AnnotationNodes.constants';
 
 const AnnotationNodes = () => {
-  const { annotations = {} } = useContext(AppContext);
+  const { annotations = {}, selectionsIds = [] } = useContext(AppContext);
   const annotationEvents = useAnnotationEvents();
 
   const renderAnnotation = (annotation) => {
@@ -17,6 +17,7 @@ const AnnotationNodes = () => {
       <AnnotationComponent
         key={annotation.id}
         annotationEvents={annotationEvents}
+        draggable={selectionsIds.includes(annotation.id)}
         {...annotation}
       />
     );
@@ -24,7 +25,7 @@ const AnnotationNodes = () => {
 
   return useMemo(
     () => Object.values(annotations).map(renderAnnotation),
-    [annotations, annotationEvents],
+    [annotations, annotationEvents, selectionsIds],
   );
 };
 

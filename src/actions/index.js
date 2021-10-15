@@ -11,7 +11,7 @@ import selectTab, { SELECT_TAB } from './selectTab';
 import undo, { UNDO } from './undo';
 import setFinetune, { SET_FINETUNE } from './setFinetune';
 import setAnnotation, { SET_ANNOTATION } from './setAnnotation';
-import changePointerMode, { CHANGE_POINTER_MODE } from './changePointerMode';
+import changePointerIcon, { CHANGE_POINTER_ICON } from './changePointerIcon';
 import selectAddedAnnotation, {
   SELECT_ADDED_ANNOTATION,
 } from './selectAddedAnnotation';
@@ -38,7 +38,7 @@ export default {
   [SHOW_LOADER]: showLoader,
   [HIDE_LOADER]: hideLoader,
   [TOGGLE_SUB_TAB_SELECTION]: toggleSubTabSelection,
-  [CHANGE_POINTER_MODE]: changePointerMode,
+  [CHANGE_POINTER_ICON]: changePointerIcon,
   [SELECT_ADDED_ANNOTATION]: selectAddedAnnotation,
   [CLEAR_ANNOTATIONS_SELECTIONS]: clearAnnotationsSelections,
   [TOGGLE_ORIGINAL_IMAGE_DISPLAY]: toggleOriginalImageDisplay,
@@ -66,7 +66,7 @@ export {
   SHOW_LOADER,
   HIDE_LOADER,
   TOGGLE_SUB_TAB_SELECTION,
-  CHANGE_POINTER_MODE,
+  CHANGE_POINTER_ICON,
   SELECT_ADDED_ANNOTATION,
   CLEAR_ANNOTATIONS_SELECTIONS,
   TOGGLE_ORIGINAL_IMAGE_DISPLAY,

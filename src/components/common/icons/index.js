@@ -38,3 +38,25 @@ export { default as Pen } from './Pen';
 export { default as Transparency } from './Transparency';
 
 export { default as Stroke } from './Stroke';
+
+export { default as Bold } from './Bold';
+
+export { default as Italic } from './Italic';
+
+export { default as TextSpacings } from './TextSpacings';
+
+export { default as Shadow } from './Shadow';
+
+export { default as CenterAlignment } from './CenterAlignment';
+
+export { default as LeftAlignment } from './LeftAlignment';
+
+export { default as Position } from './Position';
+
+export { default as Image } from './Image';
+
+export { default as CornerRadius } from './CornerRadius';
+
+export { default as Polygon } from './Polygon';
+
+export { default as SidesAmount } from './SidesAmount';

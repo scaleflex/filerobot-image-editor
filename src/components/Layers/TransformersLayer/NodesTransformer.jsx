@@ -1,20 +1,19 @@
 /** External Dependencies */
 import React, { useContext, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Transformer } from 'react-konva';
 
 /** Internal Dependencies */
 import AppContext from 'context';
 
-const NodesTransformer = ({ designLayer }) => {
-  const { selectionsIds = [], theme } = useContext(AppContext);
+const NodesTransformer = () => {
+  const { selectionsIds = [], theme, designLayer } = useContext(AppContext);
 
   const selections = useMemo(
     () =>
-      designLayer.findOne
-        ? selectionsIds.map((selectionId) =>
-            designLayer.findOne(`#${selectionId}`),
-          )
+      designLayer?.findOne
+        ? selectionsIds
+            .map((selectionId) => designLayer.findOne(`#${selectionId}`))
+            .filter(Boolean)
         : [],
     [selectionsIds],
   );
@@ -26,26 +25,21 @@ const NodesTransformer = ({ designLayer }) => {
       centeredScaling={false}
       rotationSnaps={[0, 45, 90, 135, 180, 225, 270, 315]}
       nodes={selections}
-      rotateAnchorOffset={25}
-      anchorSize={11}
-      anchorCornerRadius={5}
+      rotateAnchorOffset={30}
+      anchorSize={14}
+      anchorCornerRadius={7}
       padding={1}
-      borderDash={[3, 20, 7]}
       ignoreStroke={false}
-      anchorStroke={theme.palette['borders-strong']}
-      anchorFill={theme.palette['accent-primary']}
-      borderStroke={theme.palette['access-primary']}
+      anchorStroke={theme.palette['accent-primary']}
+      anchorFill={theme.palette['access-primary']}
+      anchorStrokeWidth={2}
+      borderStroke={theme.palette['accent-primary']}
+      borderStrokeWidth={2}
+      borderDash={[4]}
+      shouldOverdrawWholeArea
       flipEnabled
     />
   );
-};
-
-NodesTransformer.defaultProps = {
-  designLayer: {},
-};
-
-NodesTransformer.propTypes = {
-  designLayer: PropTypes.instanceOf(Object),
 };
 
 export default NodesTransformer;

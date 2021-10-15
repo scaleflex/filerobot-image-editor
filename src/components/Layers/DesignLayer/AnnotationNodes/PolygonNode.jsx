@@ -3,57 +3,71 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { RegularPolygon } from 'react-konva';
 
+/** Internal Dependencies */
+import nodesCommonPropTypes from '../nodesCommonPropTypes';
+
 const PolygonNode = ({
-  id, name, fill, x, y, width, height, scaleX, scaleY, rotation, annotationEvents,
-  stroke, strokeWidth, sides, ...otherProps
+  id,
+  name,
+  fill,
+  x,
+  y,
+  radius,
+  scaleX,
+  scaleY,
+  rotation,
+  sides,
+  annotationEvents,
+  stroke,
+  strokeWidth,
+  shadowOffsetX,
+  shadowOffsetY,
+  shadowBlur,
+  shadowColor,
+  shadowOpacity,
+  opacity,
+  ...otherProps
 }) => (
   <RegularPolygon
     id={id}
     name={name}
-    fill={fill}
-    x={x}
-    y={y}
-    width={width}
-    height={height}
-    radius={Math.max(width, height)}
+    rotation={rotation}
     scaleX={scaleX}
     scaleY={scaleY}
     stroke={stroke}
     strokeWidth={strokeWidth}
-    rotation={rotation}
+    shadowOffsetX={shadowOffsetX}
+    shadowOffsetY={shadowOffsetY}
+    shadowBlur={shadowBlur}
+    shadowColor={shadowColor}
+    shadowOpacity={shadowOpacity}
+    fill={fill}
+    x={x}
+    y={y}
+    radius={radius}
+    offsetX={-radius}
+    offsetY={-radius}
     sides={sides}
+    opacity={opacity}
     {...annotationEvents}
     {...otherProps}
   />
 );
 
 PolygonNode.defaultProps = {
+  ...nodesCommonPropTypes.defaults,
   fill: '#000',
-  rotation: 0,
-  width: 0,
-  height: 0,
-  scaleX: 1,
-  scaleY: 1,
   sides: 3,
-  stroke: '#000',
-  strokeWidth: 0,
 };
 
 PolygonNode.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  ...nodesCommonPropTypes.definitions,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   annotationEvents: PropTypes.instanceOf(Object).isRequired,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  radius: PropTypes.number.isRequired,
   fill: PropTypes.string,
-  rotation: PropTypes.number,
-  scaleX: PropTypes.number,
-  scaleY: PropTypes.number,
   sides: PropTypes.number,
-  stroke: PropTypes.string,
-  strokeWidth: PropTypes.number,
 };
 
 export default PolygonNode;

@@ -3,8 +3,8 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 /** Internal Dependencies */
 import AppContext from 'context';
-import { CHANGE_POINTER_MODE, SET_ANNOTATION } from 'actions';
-import { POINTER_MODES } from 'utils/constants';
+import { SELECT_ADDED_ANNOTATION, SET_ANNOTATION } from 'actions';
+import randomId from 'utils/randomId';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
 
 const DEFAULTS = {
@@ -12,64 +12,70 @@ const DEFAULTS = {
 };
 
 const useAnnotation = (annotation = {}, enablePreview = true) => {
-  const { dispatch, previewGroup, annotations, pointerMode } =
-    useContext(AppContext);
+  const { dispatch, previewGroup, pointerMode } = useContext(AppContext);
   const [tmpAnnotation, setTmpAnnotation] = useState(() => ({
     ...DEFAULTS,
     ...annotation,
   }));
-  const canvas = previewGroup.getStage() || {};
+  const canvas = previewGroup?.getStage();
 
-  const usedAnnotation = useMemo(
-    () => annotations[annotation.id] || tmpAnnotation,
-    [annotations[annotation.id], tmpAnnotation],
-  );
-
-  const updateTmpAnnotationNoDraw = useCallback((updates) => {
-    setTmpAnnotation((latest) => ({
-      ...latest,
-      ...updates,
-    }));
-  }, []);
-
-  const updateFinalAnnotationWithDraw = useCallback((newAnnotationProps) => {
+  const saveAnnotation = useCallback((annotationData) => {
     dispatch({
       type: SET_ANNOTATION,
-      payload: newAnnotationProps,
+      payload: annotationData,
     });
+    if (annotationData.id) {
+      dispatch({
+        type: SELECT_ADDED_ANNOTATION,
+        payload: {
+          annotationId: annotationData.id,
+        },
+      });
+    }
   }, []);
 
-  const disableDrawMode = useCallback(() => {
-    dispatch({
-      type: CHANGE_POINTER_MODE,
-      payload: {
-        mode: POINTER_MODES.SELECT,
-      },
-    });
+  const updateAnnotationProps = useCallback(
+    (updatesObjOrFn, updateDrawnAnnotation = false) => {
+      // We used to this solution for not adding deps. in the useCallback for avoiding changing the function's ref.
+      let annotationUpdated;
+      setTmpAnnotation((latest) => {
+        annotationUpdated = {
+          ...latest,
+          ...(typeof updatesObjOrFn === 'function'
+            ? updatesObjOrFn(latest)
+            : updatesObjOrFn),
+        };
+        return annotationUpdated;
+      });
+
+      if (updateDrawnAnnotation && annotationUpdated.id) {
+        saveAnnotation(annotationUpdated);
+      }
+    },
+    [],
+  );
+
+  const addNewAnnotation = useCallback((newAnnotationObjOrFn) => {
+    updateAnnotationProps(
+      (latestAnnotation) => ({
+        ...(typeof newAnnotationObjOrFn === 'function'
+          ? newAnnotationObjOrFn(latestAnnotation)
+          : newAnnotationObjOrFn),
+        id: randomId(annotation.name), // new id would be the reason for adding as new annotation.
+      }),
+      true,
+    );
   }, []);
-
-  const enableAndDisableDrawMode = useCallback(() => {
-    dispatch({
-      type: CHANGE_POINTER_MODE,
-      payload: {
-        mode: POINTER_MODES.DRAW,
-      },
-    });
-
-    return disableDrawMode;
-  }, []);
-
-  useEffect(enableAndDisableDrawMode, []);
 
   useEffect(() => {
     let stopAnnotationEventsListening = null;
 
-    if (enablePreview && pointerMode === POINTER_MODES.DRAW) {
+    if (canvas && enablePreview) {
       stopAnnotationEventsListening = previewThenCallAnnotationAdding(
         canvas,
-        usedAnnotation,
+        tmpAnnotation,
         previewGroup,
-        updateFinalAnnotationWithDraw,
+        addNewAnnotation,
       );
     }
 
@@ -78,15 +84,11 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
         stopAnnotationEventsListening();
       }
     };
-  }, [canvas, usedAnnotation, pointerMode, previewGroup]);
-
-  const updateAnnotationFn = usedAnnotation.id
-    ? updateFinalAnnotationWithDraw(usedAnnotation)
-    : updateTmpAnnotationNoDraw;
+  }, [canvas, tmpAnnotation, pointerMode, previewGroup]);
 
   return useMemo(
-    () => [usedAnnotation, updateAnnotationFn],
-    [usedAnnotation, updateAnnotationFn],
+    () => [tmpAnnotation, updateAnnotationProps, addNewAnnotation],
+    [tmpAnnotation, updateAnnotationProps, addNewAnnotation],
   );
 };
 

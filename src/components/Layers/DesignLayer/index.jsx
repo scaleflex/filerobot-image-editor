@@ -154,6 +154,7 @@ const DesignLayer = () => {
   ) {
     return null;
   }
+
   return (
     <Layer
       ref={designLayerRef}

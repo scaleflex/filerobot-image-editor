@@ -10,6 +10,7 @@ import Tabs from 'components/Tabs';
 import AppContext from 'context';
 import ToolsBar from 'components/ToolsBar';
 import { SET_ERROR, SET_ORIGINAL_IMAGE, SHOW_LOADER } from 'actions';
+import ErrorPopup from 'components/ErrorPopup';
 import loadImage from 'utils/loadImage';
 import {
   StyledWrapper,
@@ -18,8 +19,7 @@ import {
 } from './Wrapper.styled';
 
 const Wrapper = ({ image }) => {
-  const { isLoadingGlobally, error, dispatch, originalImage } =
-    useContext(AppContext);
+  const { isLoadingGlobally, dispatch, originalImage } = useContext(AppContext);
 
   const setNewOriginalImage = useCallback((newOriginalImage) => {
     dispatch({
@@ -54,7 +54,6 @@ const Wrapper = ({ image }) => {
   return (
     <StyledWrapper id={ROOT_CONTAINER_ID}>
       {isLoadingGlobally && 'Loading globally from wrapper...'}
-      {error && 'found some error...'}
       <Topbar />
       {originalImage && (
         <StyledMainContent>
@@ -65,6 +64,7 @@ const Wrapper = ({ image }) => {
           </StyledCanvasAndTools>
         </StyledMainContent>
       )}
+      <ErrorPopup />
     </StyledWrapper>
   );
 };

@@ -1,3 +1,3 @@
-export { default as Rect } from './Rect';
+export { default as RectButton } from './RectButton';
 
 export { default as RectOptions } from './RectOptions';

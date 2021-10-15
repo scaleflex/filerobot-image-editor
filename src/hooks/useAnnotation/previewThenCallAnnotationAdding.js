@@ -1,7 +1,11 @@
 /** Internal Dependencies */
+import { ANNOTATIONS_NAMES } from 'utils/constants';
 import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
 import getBoundingRectUnScaled from './getBoundingRectUnScaled';
-import getNewAnnotationPreview from './getNewAnnotationPreview';
+import getNewAnnotationPreview, {
+  dimensToProperAnnotationDimens,
+  NO_WIDTH_HEIGHT_ANNOTATIONS,
+} from './getNewAnnotationPreview';
 
 const pointerDown = {
   startedX: undefined,
@@ -13,7 +17,10 @@ const eventsOptions = {
   passive: true,
 };
 
+const MIN_PIXELS = 1;
+
 let shownAnnotationPreview = null;
+let textAnnotationWrappedRect = null;
 let latestAnnotationProps = null;
 
 const previewThenCallAnnotationAdding = (
@@ -24,17 +31,42 @@ const previewThenCallAnnotationAdding = (
 ) => {
   const getCanvasBoundingRect = () => canvas.content.getBoundingClientRect();
 
+  const wrapTextBoundsPreviewByRect = (textAnnotation) => {
+    textAnnotationWrappedRect = getNewAnnotationPreview({
+      ...textAnnotation,
+      name: ANNOTATIONS_NAMES.RECT,
+      fill: '',
+      stroke: '#000000',
+      strokeWidth: 2,
+      shadowColor: '#ffffff',
+      shadowBlur: 1,
+      shadowOpacity: 0.7,
+    });
+    previewGroup.add(textAnnotationWrappedRect);
+  };
+
   const previewAnnotation = (preparedAnnotation) => {
     shownAnnotationPreview = getNewAnnotationPreview(preparedAnnotation);
     previewGroup.add(shownAnnotationPreview);
+    if (preparedAnnotation.name === ANNOTATIONS_NAMES.TEXT) {
+      wrapTextBoundsPreviewByRect(preparedAnnotation);
+    }
     latestAnnotationProps = preparedAnnotation;
   };
 
-  const updateAnnotationPreview = (preparedBoundingRect) => {
-    shownAnnotationPreview.setAttrs(preparedBoundingRect);
+  const updateAnnotationPreview = (preparedBoundingRect, isShiftKeyPressed) => {
+    const transformedAnnotation = dimensToProperAnnotationDimens(
+      preparedBoundingRect,
+      latestAnnotationProps.name,
+      isShiftKeyPressed,
+    );
+    if (textAnnotationWrappedRect) {
+      textAnnotationWrappedRect.setAttrs(transformedAnnotation);
+    }
+    shownAnnotationPreview.setAttrs(transformedAnnotation);
     latestAnnotationProps = {
       ...latestAnnotationProps,
-      ...preparedBoundingRect,
+      ...transformedAnnotation,
     };
   };
 
@@ -43,6 +75,7 @@ const previewThenCallAnnotationAdding = (
       e,
       getCanvasBoundingRect(),
     );
+
     updateAnnotationPreview(
       getBoundingRectUnScaled(
         pointerOffsets,
@@ -50,12 +83,13 @@ const previewThenCallAnnotationAdding = (
         canvas,
         previewGroup,
       ),
+      e.shiftKey,
     );
   };
 
-  const destroyLatestShownPreview = () => {
-    if (shownAnnotationPreview) {
-      shownAnnotationPreview.destroy();
+  const destroyShownPreview = () => {
+    if (previewGroup && shownAnnotationPreview) {
+      previewGroup.destroyChildren();
     }
   };
 
@@ -86,10 +120,11 @@ const previewThenCallAnnotationAdding = (
       previewGroup,
     );
     if (shownAnnotationPreview) {
-      updateAnnotationPreview(boundingRect);
+      updateAnnotationPreview(boundingRect, e.evt.shiftKey);
     } else {
+      const { id, x, y, points, ...currentAnnotationProps } = annotation;
       previewAnnotation({
-        ...annotation,
+        ...currentAnnotationProps,
         ...boundingRect,
       });
     }
@@ -113,17 +148,39 @@ const previewThenCallAnnotationAdding = (
   };
 
   const handlePointerUp = () => {
-    destroyLatestShownPreview();
-
-    if (latestAnnotationProps) {
-      callbkAfterPreview(latestAnnotationProps);
+    destroyShownPreview();
+    if (
+      latestAnnotationProps &&
+      ((latestAnnotationProps.width >= MIN_PIXELS &&
+        latestAnnotationProps.height >= MIN_PIXELS) ||
+        (latestAnnotationProps.radiusX >= MIN_PIXELS &&
+          latestAnnotationProps.radiusY >= MIN_PIXELS) ||
+        latestAnnotationProps.points?.[2] !== MIN_PIXELS ||
+        latestAnnotationProps.points?.[3] !== MIN_PIXELS ||
+        latestAnnotationProps.radius >= MIN_PIXELS)
+    ) {
+      const {
+        startedX,
+        startedY,
+        offsetX,
+        offsetY,
+        width,
+        height,
+        ...savableAnnotation
+      } = latestAnnotationProps;
+      if (!NO_WIDTH_HEIGHT_ANNOTATIONS.includes(annotation.name)) {
+        savableAnnotation.width = width;
+        savableAnnotation.height = height;
+      }
+      callbkAfterPreview(savableAnnotation);
     }
 
     shownAnnotationPreview = null;
+    textAnnotationWrappedRect = null;
     latestAnnotationProps = null;
 
     canvas.off('mousemove touchmove', handlePointerMove);
-    canvas.off('mouseout touchcancel', handlePointerOut);
+    canvas.off('mouseleave touchcancel', handlePointerOut);
     document.removeEventListener('mouseup', handlePointerUp, eventsOptions);
     document.removeEventListener('touchend', handlePointerUp, eventsOptions);
     document.removeEventListener('mouseleave', handlePointerUp, eventsOptions);
@@ -142,7 +199,10 @@ const previewThenCallAnnotationAdding = (
   };
 
   const handlePointerDown = (e) => {
-    destroyLatestShownPreview();
+    if (e.target.attrs.draggable) {
+      return;
+    }
+    destroyShownPreview();
     const pointerOffsets = getPointerOffsetPositionBoundedToObject(
       e,
       getCanvasBoundingRect(),
@@ -153,7 +213,7 @@ const previewThenCallAnnotationAdding = (
     pointerDown.isOutOfCanvas = false;
 
     canvas.on('mousemove touchmove', handlePointerMove);
-    canvas.on('mouseout touchcancel', handlePointerOut);
+    canvas.on('mouseleave touchcancel', handlePointerOut);
     document.addEventListener('mouseup', handlePointerUp, eventsOptions);
     document.addEventListener('touchend', handlePointerUp, eventsOptions);
     document.addEventListener('mouseleave', handlePointerUp, eventsOptions);
@@ -163,7 +223,7 @@ const previewThenCallAnnotationAdding = (
   canvas.on('mousedown touchstart', handlePointerDown);
 
   return () => {
-    destroyLatestShownPreview();
+    destroyShownPreview();
     canvas.off('mousedown touchstart', handlePointerDown);
   };
 };

@@ -1,8 +1,10 @@
 /** Internal Dependencies */
-import { DEFAULT_ZOOM_FACTOR, POINTER_MODES, TABS_IDS } from 'utils/constants';
+import { TABS_TOOLS } from 'components/tools/tools.constants';
+import { DEFAULT_ZOOM_FACTOR, POINTER_ICONS, TABS_IDS } from 'utils/constants';
 
 // TODO: make some of these configurable
 export default {
+  pointerCssIcon: POINTER_ICONS.DEFAULT,
   canvasScale: 1,
   shownImageDimensions: {},
   zoom: {
@@ -11,8 +13,6 @@ export default {
     yPoint: null,
   },
   isLoadingGlobally: true,
-  // Determines mode of the pointer whether to select some shape to modify or to draw on the canvas
-  pointerMode: POINTER_MODES.DEFAULT,
   // --- Start of design states ---
   finetunes: [],
   finetunesProps: {},
@@ -22,7 +22,7 @@ export default {
   // --- End of design states ---
   selectionsIds: [],
   tabId: TABS_IDS.ANNOTATE,
-  toolId: null,
+  toolId: TABS_TOOLS[TABS_IDS.ANNOTATE][0].id,
   /* For UNDO/REDO/RESET,
    * Current/present state => considered properties related to design of the whole 1st order state.
    * `pastDesignStates` => contains the past states of those design properties (undo).

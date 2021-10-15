@@ -3,13 +3,48 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Text } from 'react-konva';
 
+/** Internal Dependencies */
+import nodesCommonPropTypes from '../nodesCommonPropTypes';
+
 const TextNode = ({
-  id, name, text, fontFamily, fontSize, fill, x, y, width, height, scaleX, scaleY, rotation,
-  annotationEvents, stroke, strokeWidth, ...otherProps
+  id,
+  name,
+  text,
+  fontFamily,
+  fontSize,
+  fill,
+  x,
+  y,
+  width,
+  height,
+  scaleX,
+  scaleY,
+  rotation,
+  annotationEvents,
+  stroke,
+  strokeWidth,
+  shadowOffsetX,
+  shadowOffsetY,
+  shadowBlur,
+  shadowColor,
+  shadowOpacity,
+  opacity,
+  ...otherProps
 }) => (
   <Text
     id={id}
     name={name}
+    rotation={rotation}
+    scaleX={scaleX}
+    scaleY={scaleY}
+    stroke={stroke}
+    strokeWidth={strokeWidth}
+    shadowOffsetX={shadowOffsetX}
+    shadowOffsetY={shadowOffsetY}
+    shadowBlur={shadowBlur}
+    shadowColor={shadowColor}
+    shadowOpacity={shadowOpacity}
+    opacity={opacity}
     fill={fill}
     text={text}
     fontFamily={fontFamily}
@@ -18,47 +53,32 @@ const TextNode = ({
     y={y}
     width={width}
     height={height}
-    scaleX={scaleX}
-    scaleY={scaleY}
-    stroke={stroke}
-    strokeWidth={strokeWidth}
-    rotation={rotation}
     {...annotationEvents}
     {...otherProps}
   />
 );
 
 TextNode.defaultProps = {
+  ...nodesCommonPropTypes.defaults,
   text: 'Lorem Ipsum...',
   fontFamily: 'Arial',
   fontSize: 14,
   fill: '#000',
-  rotation: 0,
   width: 0,
   height: 0,
-  scaleX: 1,
-  scaleY: 1,
-  stroke: '#000',
-  strokeWidth: 0,
 };
 
 TextNode.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  ...nodesCommonPropTypes.definitions,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   annotationEvents: PropTypes.instanceOf(Object).isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
-  rotation: PropTypes.number,
-  scaleX: PropTypes.number,
-  scaleY: PropTypes.number,
   text: PropTypes.string,
   fontFamily: PropTypes.string,
   fontSize: PropTypes.number,
   fill: PropTypes.string,
-  stroke: PropTypes.string,
-  strokeWidth: PropTypes.number,
 };
 
 export default TextNode;

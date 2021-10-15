@@ -14,11 +14,11 @@ import { Stage } from 'react-konva';
 /** Internal Dependencies */
 import AppContext from 'context';
 import { CLEAR_ANNOTATIONS_SELECTIONS, ZOOM_CANVAS } from 'actions';
-import { POINTER_ICONS, POINTER_MODES } from 'utils/constants';
 import getRotatedImageSize from 'utils/getRotatedImageSize';
 import getCanvasZoomPointPosition, {
   boundPositionInCanvas,
 } from './getCanvasZoomPointPosition';
+import { POINTER_ICONS, TABS_IDS } from 'utils/constants';
 
 const POINTER_ZOOM_BY_FACTOR = 0.3;
 
@@ -28,11 +28,12 @@ const CanvasNode = ({ children }) => {
 
   const {
     dispatch,
+    pointerCssIcon,
+    tabId,
     canvasWidth,
     canvasHeight,
     canvasScale,
     selectionsIds = [],
-    pointerMode,
     zoom = {},
     // adjustments: {
     //   isFlippedX,
@@ -40,6 +41,16 @@ const CanvasNode = ({ children }) => {
     //   rotation,
     // },
   } = useContext(AppContext);
+
+  const cursorStyle = useMemo(
+    () => ({
+      cursor:
+        pointerCssIcon === POINTER_ICONS.DEFAULT && tabId === TABS_IDS.ANNOTATE
+          ? POINTER_ICONS.DRAW
+          : pointerCssIcon,
+    }),
+    [tabId, pointerCssIcon],
+  );
 
   // const scale = useMemo(() => {
   //   if (!canvasRef.current) {
@@ -56,13 +67,6 @@ const CanvasNode = ({ children }) => {
   //     y: yZoomedFlippedScale,
   //   };
   // }, [isFlippedX, isFlippedY, zoom.factor]);
-
-  const cursorStyle = useMemo(
-    () => ({
-      cursor: POINTER_ICONS[POINTER_MODES[pointerMode]],
-    }),
-    [pointerMode],
-  );
 
   const clearSelections = useCallback(
     (e) => {
