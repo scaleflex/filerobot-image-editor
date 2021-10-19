@@ -78,7 +78,9 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
         points,
         image,
         text,
-        scale,
+        scaleX,
+        scaleY,
+        rotation,
         ...dimensionlessProps
       } = currentAnnotation;
       if (currentAnnotation.name === newAnnotation.name) {
