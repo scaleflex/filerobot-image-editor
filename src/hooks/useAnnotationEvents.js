@@ -10,6 +10,7 @@ import {
   ENABLE_TEXT_CONTENT_EDIT,
 } from 'actions';
 import { ANNOTATIONS_NAMES, POINTER_ICONS, TABS_IDS } from 'utils/constants';
+import { useDebouncedCallback } from 'hooks';
 
 const useAnnotationEvents = () => {
   const { tabId, dispatch } = useContext(AppContext);
@@ -26,19 +27,19 @@ const useAnnotationEvents = () => {
     });
   }, []);
 
-  const changePointerIcon = useCallback((newPointerCssIcon) => {
+  const changePointerIcon = useDebouncedCallback((newPointerCssIcon) => {
     dispatch({
       type: CHANGE_POINTER_ICON,
       payload: {
         pointerCssIcon: newPointerCssIcon,
       },
     });
-  }, []);
+  }, 5);
 
-  const changePointerIconToMove = useCallback((e) => {
-    if (e.target.draggable()) {
-      changePointerIcon(POINTER_ICONS.MOVE);
-    }
+  const changePointerIconToMoveOrSelect = useCallback((e) => {
+    changePointerIcon(
+      e.target.draggable() ? POINTER_ICONS.MOVE : POINTER_ICONS.SELECT,
+    );
   }, []);
 
   const changePointerIconToDraw = useCallback(() => {
@@ -51,27 +52,38 @@ const useAnnotationEvents = () => {
       x: e.target.x(),
       y: e.target.y(),
     });
-    setTimeout(() => {
-      changePointerIconToMove(e);
-    });
+    changePointerIconToMoveOrSelect(e);
   }, []);
 
-  const onTransformStart = useCallback((e) => {
-    e.target.setAttr('isTransformedFromAnchor', true);
-  }, []);
-
-  const updateTransformsOnTransformEnd = useCallback((e) => {
-    updateAnnotation({
+  const getAnnotationTransformProps = useCallback((e) => {
+    const transformProps = {
       id: e.target.id(),
-      scaleX: e.target.scaleX(),
-      scaleY: e.target.scaleY(),
       rotation: e.target.rotation(),
-    });
+      x: e.target.x(),
+      y: e.target.y(),
+    };
+    if (e.target.name() === ANNOTATIONS_NAMES.TEXT) {
+      transformProps.width = e.target.width() * e.target.scaleX();
+      transformProps.height = e.target.height() * e.target.scaleY();
+      transformProps.scaleX = 1;
+      transformProps.scaleY = 1;
+    } else {
+      transformProps.scaleX = e.target.scaleX();
+      transformProps.scaleY = e.target.scaleY();
+    }
 
-    setTimeout(() => {
-      e.target.setAttr('isTransformedFromAnchor', false);
-    }, 0);
+    return transformProps;
   }, []);
+
+  const updateAnnotationTransform = useCallback((e) => {
+    updateAnnotation(getAnnotationTransformProps(e));
+  }, []);
+
+  const updateTextAnnotationOnTransform = useCallback((e) => {
+    if (e.target.name() === ANNOTATIONS_NAMES.TEXT) {
+      e.target.setAttrs(getAnnotationTransformProps(e));
+    }
+  });
 
   const selectAnnotationOnClick = useCallback((e) => {
     dispatch({
@@ -81,7 +93,7 @@ const useAnnotationEvents = () => {
         multiple: e.evt.ctrlKey,
       },
     });
-    changePointerIconToMove(e);
+    changePointerIconToMoveOrSelect(e);
   }, []);
 
   const enableTextContentChangeOnDblClick = useCallback((e) => {
@@ -100,9 +112,9 @@ const useAnnotationEvents = () => {
       isAnnotationEventsDisabled
         ? {}
         : {
-            onTransformStart,
-            onTransformEnd: updateTransformsOnTransformEnd,
-            onMouseOver: changePointerIconToMove,
+            onTransform: updateTextAnnotationOnTransform,
+            onTransformEnd: updateAnnotationTransform,
+            onMouseOver: changePointerIconToMoveOrSelect,
             onMouseLeave: changePointerIconToDraw,
             onDragEnd: updatePositionOnDragEnd,
             onClick: selectAnnotationOnClick,

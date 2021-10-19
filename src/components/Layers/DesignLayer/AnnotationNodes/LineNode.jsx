@@ -42,6 +42,7 @@ const LineNode = ({
     points={points}
     lineCap={lineCap}
     tension={tension}
+    hitStrokeWidth={20}
     x={0}
     y={0}
     opacity={opacity}

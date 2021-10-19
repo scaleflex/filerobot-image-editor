@@ -3,7 +3,7 @@ import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 
 export const RESET = 'RESET';
 
-const reset = (state, payload) => {
+const reset = (state) => {
   const resettedDesignState = extractCurrentDesignState({});
 
   return {

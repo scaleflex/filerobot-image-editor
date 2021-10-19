@@ -37,12 +37,8 @@ const ImageOptions = () => {
       image: loadedImg,
       x: shownImageDimensions.width / 2 - (loadedImg.width * newImgRatio) / 2,
       y: shownImageDimensions.height / 2 - (loadedImg.height * newImgRatio) / 2,
-      width: loadedImg.width,
-      height: loadedImg.height,
-      scale: {
-        x: newImgRatio,
-        y: newImgRatio,
-      },
+      width: loadedImg.width * newImgRatio,
+      height: loadedImg.height * newImgRatio,
     });
   };
 

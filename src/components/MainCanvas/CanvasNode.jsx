@@ -9,8 +9,9 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import Konva from 'konva';
-import { Stage } from 'react-konva';
+import { Stage, useStrictMode } from 'react-konva';
 
+useStrictMode(true);
 /** Internal Dependencies */
 import AppContext from 'context';
 import { CLEAR_ANNOTATIONS_SELECTIONS, ZOOM_CANVAS } from 'actions';
@@ -23,6 +24,7 @@ import { POINTER_ICONS, TABS_IDS } from 'utils/constants';
 const POINTER_ZOOM_BY_FACTOR = 0.3;
 
 const CanvasNode = ({ children }) => {
+  useStrictMode(true);
   const canvasRef = useRef();
   const latestZoomFactor = useRef(1);
 

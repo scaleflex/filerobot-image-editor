@@ -58,7 +58,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
       ...latest,
       id: undefined,
       shouldSave: false,
-      avoidSave: false,
+      neverSave: false,
       ...(typeof updatesObjOrFn === 'function'
         ? updatesObjOrFn(latest)
         : updatesObjOrFn),
@@ -66,24 +66,25 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
   }, 15);
 
   const getAnnotationInitialProps = useCallback(
-    (currentAnnotation, newAnnotation = {}) => {
-      const {
-        x,
-        y,
-        width,
-        height,
-        radius,
-        radiusX,
-        radiusY,
-        points,
-        image,
-        text,
-        scaleX,
-        scaleY,
-        rotation,
-        ...dimensionlessProps
-      } = currentAnnotation;
-      if (currentAnnotation.name === newAnnotation.name) {
+    (currentAnnotation, newAnnotationName) => {
+      if (currentAnnotation.name === newAnnotationName) {
+        const {
+          x,
+          y,
+          width,
+          height,
+          radius,
+          radiusX,
+          radiusY,
+          points,
+          image,
+          text,
+          scaleX,
+          scaleY,
+          rotation,
+          ...dimensionlessProps
+        } = currentAnnotation;
+
         return {
           ...DEFAULTS,
           ...annotation,
@@ -91,51 +92,38 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
         };
       }
 
-      const {
-        cornerRadius,
-        lineCap,
-        tension,
-        sides,
-        fontFamily,
-        fontSize,
-        fontStyle,
-        letterSpacing,
-        lineHeight,
-        align,
-        ...dimensionslessCommonProps
-      } = dimensionlessProps;
-
-      return dimensionslessCommonProps;
+      return {
+        ...DEFAULTS,
+        ...annotation,
+      };
     },
     [],
   );
 
-  const saveAnnotationNoDebounce = useCallback((annotationDataObjOrFn) => {
+  const saveAnnotationNoDebounce = useCallback((newAnnotationData) => {
     setTmpAnnotation((latest) => {
-      const newAnnotationData =
-        typeof annotationDataObjOrFn === 'function'
-          ? annotationDataObjOrFn(latest)
-          : annotationDataObjOrFn;
-      const initialProps = getAnnotationInitialProps(latest, newAnnotationData);
+      const initialProps = getAnnotationInitialProps(
+        latest,
+        newAnnotationData.name || annotation.name,
+      );
 
       return {
-        ...annotation,
         ...initialProps,
         ...newAnnotationData,
         id:
           newAnnotationData.id ||
           randomId(newAnnotationData.name || latest.name),
         shouldSave: true,
-        avoidSave: false,
+        neverSave: false,
       };
     });
   }, []);
 
   useEffect(() => {
-    const { shouldSave, avoidSave, ...savableAnnotation } = tmpAnnotation;
+    const { shouldSave, neverSave, ...savableAnnotation } = tmpAnnotation;
     const selection =
       selectionsIds.length === 1 && annotations[selectionsIds[0]];
-    if (!avoidSave && (shouldSave || selection)) {
+    if (!neverSave && (shouldSave || selection)) {
       saveAnnotation({
         ...savableAnnotation,
         id: shouldSave ? savableAnnotation.id : selection.id,
@@ -146,11 +134,11 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
   useEffect(() => {
     if (selectionsIds.length === 1) {
       annotationBeforeSelection.current = tmpAnnotation;
-      setTmpAnnotation({ ...annotations[selectionsIds[0]], avoidSave: true });
+      setTmpAnnotation({ ...annotations[selectionsIds[0]], neverSave: true });
     } else if (annotationBeforeSelection.current) {
       setTmpAnnotation({
         ...annotationBeforeSelection.current,
-        avoidSave: true,
+        neverSave: true,
       });
       annotationBeforeSelection.current = null;
     }
@@ -162,7 +150,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     if (canvas && enablePreview) {
       const annotationInitialProps = getAnnotationInitialProps(
         tmpAnnotation,
-        annotation,
+        annotation.name,
       );
 
       stopAnnotationEventsListening = previewThenCallAnnotationAdding(

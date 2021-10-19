@@ -1,6 +1,5 @@
 /** External Dependencies */
-import React, { useCallback, useContext, useEffect } from 'react';
-import Konva from 'konva';
+import React, { useCallback, useContext } from 'react';
 
 /** Internal Dependencies */
 import { DesignLayer, TransformersLayer } from 'components/Layers';
@@ -10,7 +9,6 @@ import AppContext, {
 } from 'context';
 import { SET_CANVAS_SIZE } from 'actions';
 import { useResizeObserver } from 'hooks';
-import rotateNodeAroundCenter from './rotateNodeAroundCenter';
 import CanvasNode from './CanvasNode';
 import { CanvasContainer } from './MainCanvas.styled';
 
@@ -33,19 +31,6 @@ const MainCanvas = () => {
 
   const observeCanvasContainerResizing = useCallback((element) => {
     observeResize(element, setNewCanvasSize);
-  }, []);
-
-  useEffect(() => {
-    // Overriding setRotation as it doesn't rotate around center for (0, 0) origin nodes like rect.
-    const originalKonvaRotationFn = Konva.Node.prototype.setRotation;
-    Konva.Node.prototype.setRotation = function setRotation(rotationAngle) {
-      const currentNodeContext = this;
-      // if (currentNodeContext.attrs.isTransformedFromAnchor) {
-      return originalKonvaRotationFn.call(currentNodeContext, rotationAngle);
-      // }
-
-      return rotateNodeAroundCenter(currentNodeContext, rotationAngle);
-    };
   }, []);
 
   return (

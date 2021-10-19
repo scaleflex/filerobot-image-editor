@@ -62,6 +62,7 @@ export const ANNOTATIONS_NAMES = {
 export const POINTER_ICONS = {
   DEFAULT: 'default',
   DRAW: 'crosshair',
+  SELECT: 'pointer',
   MOVE: 'move',
 };
 

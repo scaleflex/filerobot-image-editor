@@ -8,7 +8,7 @@ import AnnotationOptions from 'components/common/AnnotationOptions';
 import AppContext from 'context';
 import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
 import randomId from 'utils/randomId';
-import { SELECT_ANNOTATION } from 'actions';
+import { SELECT_ANNOTATION, SET_ANNOTATION } from 'actions';
 
 const eventsOptions = {
   passive: true,
@@ -25,7 +25,7 @@ const PenOptions = () => {
     false,
   );
   const canvasRef = useRef(null);
-  const startedPen = useRef({
+  const updatedPen = useRef({
     points: [],
     moved: false,
     id: '',
@@ -44,40 +44,45 @@ const PenOptions = () => {
   }, []);
 
   const handlePointerMove = useCallback((e) => {
-    if (!startedPen.current.moved) {
-      startedPen.current = {
+    if (!updatedPen.current.moved) {
+      updatedPen.current = {
         moved: true,
         id: randomId(ANNOTATIONS_NAMES.PEN),
-        points: [...startedPen.current.points, ...getPointerPosition(e)],
+        points: [...updatedPen.current.points, ...getPointerPosition(e)],
       };
 
       savePenNoDebounce({
-        id: startedPen.current.id,
+        id: updatedPen.current.id,
         name: ANNOTATIONS_NAMES.PEN,
-        points: startedPen.current.points,
+        points: updatedPen.current.points,
       });
     } else {
-      savePenNoDebounce(
-        (currentPen) => ({
-          ...currentPen,
-          points: currentPen.points.concat(getPointerPosition(e)),
-        }),
-        true,
+      updatedPen.current.points = updatedPen.current.points.concat(
+        getPointerPosition(e),
       );
+
+      dispatch({
+        type: SET_ANNOTATION,
+        payload: {
+          id: updatedPen.current.id,
+          points: updatedPen.current.points,
+          dismissHistory: true,
+        },
+      });
     }
   }, []);
 
   const handlePointerUp = useCallback(() => {
-    if (startedPen.current.id) {
+    if (updatedPen.current.id) {
       dispatch({
         type: SELECT_ANNOTATION,
         payload: {
-          annotationId: startedPen.current.id,
+          annotationId: updatedPen.current.id,
         },
       });
     }
 
-    startedPen.current = null;
+    updatedPen.current = null;
     canvasRef.current.off('mousemove touchmove', handlePointerMove);
     canvasRef.current.off('mouseleave touchcancel', handlePointerUp);
     document.removeEventListener('mouseup', handlePointerUp, eventsOptions);
@@ -92,7 +97,7 @@ const PenOptions = () => {
     }
     e.evt.preventDefault();
 
-    startedPen.current = { points: getPointerPosition(e) };
+    updatedPen.current = { points: getPointerPosition(e) };
 
     canvasRef.current.on('mousemove touchmove', handlePointerMove);
     canvasRef.current.on('mouseleave touchcancel', handlePointerUp);

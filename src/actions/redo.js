@@ -3,11 +3,15 @@ import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 
 export const REDO = 'REDO';
 
-const redo = (state, payload) => {
+const redo = (state) => {
   if (state.futureDesignStates && state.futureDesignStates.length > 0) {
     const currentDesignState = extractCurrentDesignState(state);
-    const [presentDesignState, ...newFutureDesignStates] = state.futureDesignStates;
-    const newPastDesignStates = [currentDesignState, ...(state.pastDesignStates || [])];
+    const [presentDesignState, ...newFutureDesignStates] =
+      state.futureDesignStates;
+    const newPastDesignStates = [
+      currentDesignState,
+      ...(state.pastDesignStates || []),
+    ];
 
     return {
       ...state,
@@ -19,6 +23,8 @@ const redo = (state, payload) => {
       hasRedo: newFutureDesignStates.length > 0,
     };
   }
+
+  return state;
 };
 
 export default redo;
