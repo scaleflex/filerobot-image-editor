@@ -9,7 +9,7 @@ const selectTab = (state, payload) =>
     : {
         ...state,
         tabId: payload.tabId,
-        toolId: TABS_TOOLS[payload.tabId][0].id,
+        toolId: TABS_TOOLS[payload.tabId][0],
         selectionsIds: [],
         pointerCssIcon:
           payload.tabId === TABS_IDS.ANNOTATE

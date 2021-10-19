@@ -21,8 +21,8 @@ export default {
   annotations: {},
   // --- End of design states ---
   selectionsIds: [],
-  tabId: TABS_IDS.ANNOTATE,
-  toolId: TABS_TOOLS[TABS_IDS.ANNOTATE][0].id,
+  tabId: TABS_IDS.ADJUST,
+  toolId: TABS_TOOLS[TABS_IDS.ADJUST][0],
   /* For UNDO/REDO/RESET,
    * Current/present state => considered properties related to design of the whole 1st order state.
    * `pastDesignStates` => contains the past states of those design properties (undo).

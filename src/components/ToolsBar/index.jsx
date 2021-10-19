@@ -24,14 +24,22 @@ const ToolsBar = () => {
 
   const items = useMemo(
     () =>
-      tabTools.map(({ Item, id }) => (
-        <Item key={id} selectTool={selectTool} isSelected={toolId === id} />
-      )),
+      tabTools.map((id) => {
+        const { Item } = TOOLS_ITEMS[id];
+
+        return (
+          <Item key={id} selectTool={selectTool} isSelected={toolId === id} />
+        );
+      }),
     [tabTools, toolId],
   );
 
   const ToolOptionsComponent = useMemo(
-    () => tabId && toolId && TOOLS_ITEMS[toolId]?.ItemOptions,
+    () =>
+      tabId &&
+      toolId &&
+      TABS_TOOLS[tabId].includes(toolId) &&
+      TOOLS_ITEMS[toolId]?.ItemOptions,
     [tabId, toolId],
   );
 
