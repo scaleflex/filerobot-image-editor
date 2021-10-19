@@ -2,6 +2,7 @@ export const MAX_CANVAS_WIDTH = 800;
 export const MAX_CANVAS_HEIGHT = 800;
 
 export const ROOT_CONTAINER_ID = 'filerobot-image-editor_root-container';
+export const TRANSFORMER_LAYER_ID = 'filerobot-image-editor_transformer-layer';
 
 export const TABS_IDS = {
   FINETUNE: 'FINTUNE',
@@ -56,7 +57,6 @@ export const ANNOTATIONS_NAMES = {
   IMAGE: 'image',
   ARROW: 'arrow',
   PEN: 'pen',
-  PEN_LINE: 'pen-line',
 };
 
 export const POINTER_ICONS = {

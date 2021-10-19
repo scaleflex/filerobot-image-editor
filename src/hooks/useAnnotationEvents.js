@@ -5,10 +5,11 @@ import { useContext, useMemo, useCallback } from 'react';
 import AppContext from 'context';
 import {
   SET_ANNOTATION,
-  SELECT_ADDED_ANNOTATION,
+  SELECT_ANNOTATION,
   CHANGE_POINTER_ICON,
+  ENABLE_TEXT_CONTENT_EDIT,
 } from 'actions';
-import { POINTER_ICONS, TABS_IDS } from 'utils/constants';
+import { ANNOTATIONS_NAMES, POINTER_ICONS, TABS_IDS } from 'utils/constants';
 
 const useAnnotationEvents = () => {
   const { tabId, dispatch } = useContext(AppContext);
@@ -74,13 +75,24 @@ const useAnnotationEvents = () => {
 
   const selectAnnotationOnClick = useCallback((e) => {
     dispatch({
-      type: SELECT_ADDED_ANNOTATION,
+      type: SELECT_ANNOTATION,
       payload: {
         annotationId: e.target.id(),
         multiple: e.evt.ctrlKey,
       },
     });
     changePointerIconToMove(e);
+  }, []);
+
+  const enableTextContentChangeOnDblClick = useCallback((e) => {
+    if (e.target.name() === ANNOTATIONS_NAMES.TEXT) {
+      dispatch({
+        type: ENABLE_TEXT_CONTENT_EDIT,
+        payload: {
+          textIdOfEditableContent: e.target.id(),
+        },
+      });
+    }
   }, []);
 
   return useMemo(
@@ -95,6 +107,8 @@ const useAnnotationEvents = () => {
             onDragEnd: updatePositionOnDragEnd,
             onClick: selectAnnotationOnClick,
             onTap: selectAnnotationOnClick,
+            onDblClick: enableTextContentChangeOnDblClick,
+            onDblTap: enableTextContentChangeOnDblClick,
           },
     [isAnnotationEventsDisabled],
   );

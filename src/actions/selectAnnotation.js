@@ -1,6 +1,6 @@
-export const SELECT_ADDED_ANNOTATION = 'SELECT_ADDED_ANNOTATION';
+export const SELECT_ANNOTATION = 'SELECT_ANNOTATION';
 
-const selectAddedAnnotation = (state, payload) => {
+const selectAnnotation = (state, payload) => {
   if (
     state.selectionsIds.length === 1 &&
     state.selectionsIds[0] === payload.annotationId
@@ -29,4 +29,4 @@ const selectAddedAnnotation = (state, payload) => {
   };
 };
 
-export default selectAddedAnnotation;
+export default selectAnnotation;

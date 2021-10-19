@@ -1,13 +1,16 @@
 /** External Dependencies */
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { MenuItem } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
-import { ANNOTATIONS_NAMES } from 'utils/constants';
+import { ANNOTATIONS_NAMES, TRANSFORMER_LAYER_ID } from 'utils/constants';
 import { Bold, Italic } from 'components/common/icons';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import { StyledIconWrapper } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
+import AppContext from 'context';
+import { ENABLE_TEXT_CONTENT_EDIT } from 'actions';
+import restrictNumber from 'utils/restrictNumber';
 import {
   StyledFontFamilySelect,
   StyledFontSizeInput,
@@ -16,8 +19,14 @@ import {
   textOptionsPopupComponents,
   TEXT_POPPABLE_OPTIONS,
 } from './TextOptions.constants';
+import {
+  activateTextChange,
+  deactivateTextChange,
+} from './handleTextChangeArea';
 
 const TextOptions = () => {
+  const { dispatch, textIdOfEditableContent, designLayer } =
+    useContext(AppContext);
   const [text, saveText] = useAnnotation({
     name: ANNOTATIONS_NAMES.TEXT,
     fontFamily: 'Arial',
@@ -30,9 +39,11 @@ const TextOptions = () => {
 
   const changeTextProps = useCallback(
     (e) => {
-      saveText({
-        [e.target.name]: e.target.value,
-      });
+      const { name, value, type } = e.target;
+      saveText((latestText) => ({
+        id: latestText.id,
+        [name]: type === 'number' ? restrictNumber(value, 1, 500) : value,
+      }));
     },
     [saveText],
   );
@@ -64,6 +75,44 @@ const TextOptions = () => {
     },
     [text],
   );
+
+  const disableTextEdit = useCallback(() => {
+    dispatch({
+      type: ENABLE_TEXT_CONTENT_EDIT,
+      payload: {
+        textIdOfEditableContent: null,
+      },
+    });
+  }, []);
+
+  const changeTextContent = useCallback((newContent) => {
+    changeTextProps({
+      target: {
+        name: 'text',
+        value: newContent,
+      },
+    });
+    disableTextEdit();
+  }, []);
+
+  useEffect(() => {
+    let transformer;
+    if (textIdOfEditableContent && text.id === textIdOfEditableContent) {
+      const canvasStage = designLayer.getStage();
+      [transformer] = canvasStage.findOne(`#${TRANSFORMER_LAYER_ID}`).children;
+      activateTextChange(
+        textIdOfEditableContent,
+        canvasStage,
+        transformer,
+        changeTextContent,
+        disableTextEdit,
+      );
+    }
+
+    return () => {
+      if (transformer && textIdOfEditableContent) deactivateTextChange();
+    };
+  }, [textIdOfEditableContent]);
 
   return (
     <AnnotationOptions

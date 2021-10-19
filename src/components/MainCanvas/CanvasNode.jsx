@@ -70,6 +70,7 @@ const CanvasNode = ({ children }) => {
 
   const clearSelections = useCallback(
     (e) => {
+      e.evt.preventDefault();
       if (e.target instanceof Konva.Stage && selectionsIds.length > 0) {
         dispatch({
           type: CLEAR_ANNOTATIONS_SELECTIONS,
@@ -101,8 +102,8 @@ const CanvasNode = ({ children }) => {
       height={canvasHeight}
       scaleX={canvasScale}
       scaleY={canvasScale}
-      onClick={clearSelections}
       onTap={clearSelections}
+      onClick={clearSelections}
       // dragBoundFunc={dragBoundFunc}
       // draggable
       // rotation={rotation}

@@ -131,7 +131,6 @@ const previewThenCallAnnotationAdding = (
   };
 
   const handlePointerOut = () => {
-    // if (!noDimensionsMapping && !pointerDown.isOutOfCanvas) {
     if (!pointerDown.isOutOfCanvas) {
       document.addEventListener(
         'mousemove',
@@ -155,8 +154,8 @@ const previewThenCallAnnotationAdding = (
         latestAnnotationProps.height >= MIN_PIXELS) ||
         (latestAnnotationProps.radiusX >= MIN_PIXELS &&
           latestAnnotationProps.radiusY >= MIN_PIXELS) ||
-        latestAnnotationProps.points?.[2] !== MIN_PIXELS ||
-        latestAnnotationProps.points?.[3] !== MIN_PIXELS ||
+        latestAnnotationProps.points?.[2] ||
+        latestAnnotationProps.points?.[3] ||
         latestAnnotationProps.radius >= MIN_PIXELS)
     ) {
       const {
@@ -172,7 +171,7 @@ const previewThenCallAnnotationAdding = (
         savableAnnotation.width = width;
         savableAnnotation.height = height;
       }
-      callbkAfterPreview(savableAnnotation);
+      callbkAfterPreview(savableAnnotation, true);
     }
 
     shownAnnotationPreview = null;
@@ -199,6 +198,7 @@ const previewThenCallAnnotationAdding = (
   };
 
   const handlePointerDown = (e) => {
+    e.evt.preventDefault();
     if (e.target.attrs.draggable) {
       return;
     }

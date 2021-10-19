@@ -1,22 +1,39 @@
 /** External Dependencies */
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 /** Internal Dependencies */
 import AppContext from 'context';
-import { SELECT_ADDED_ANNOTATION, SET_ANNOTATION } from 'actions';
+import { SELECT_ANNOTATION, SET_ANNOTATION } from 'actions';
 import randomId from 'utils/randomId';
+import debounce from 'utils/debounce';
+import { ANNOTATIONS_NAMES } from 'utils/constants';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
+import { useDebouncedCallback } from '..';
 
 const DEFAULTS = {
-  fill: '#000',
+  fill: '#000000',
 };
 
+// TODO: Imporve the logic.
 const useAnnotation = (annotation = {}, enablePreview = true) => {
-  const { dispatch, previewGroup, pointerMode } = useContext(AppContext);
+  const {
+    dispatch,
+    previewGroup,
+    annotations,
+    selectionsIds = [],
+  } = useContext(AppContext);
   const [tmpAnnotation, setTmpAnnotation] = useState(() => ({
     ...DEFAULTS,
     ...annotation,
   }));
+  const annotationBeforeSelection = useRef();
   const canvas = previewGroup?.getStage();
 
   const saveAnnotation = useCallback((annotationData) => {
@@ -24,58 +41,133 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
       type: SET_ANNOTATION,
       payload: annotationData,
     });
-    if (annotationData.id) {
-      dispatch({
-        type: SELECT_ADDED_ANNOTATION,
-        payload: {
-          annotationId: annotationData.id,
-        },
-      });
+    if (annotationData.id && annotation.name !== ANNOTATIONS_NAMES.PEN) {
+      debounce(() => {
+        dispatch({
+          type: SELECT_ANNOTATION,
+          payload: {
+            annotationId: annotationData.id,
+          },
+        });
+      }, 30)();
     }
   }, []);
 
-  const updateAnnotationProps = useCallback(
-    (updatesObjOrFn, updateDrawnAnnotation = false) => {
-      // We used to this solution for not adding deps. in the useCallback for avoiding changing the function's ref.
-      let annotationUpdated;
-      setTmpAnnotation((latest) => {
-        annotationUpdated = {
-          ...latest,
-          ...(typeof updatesObjOrFn === 'function'
-            ? updatesObjOrFn(latest)
-            : updatesObjOrFn),
-        };
-        return annotationUpdated;
-      });
+  const updateTmpAnnotation = useDebouncedCallback((updatesObjOrFn) => {
+    setTmpAnnotation((latest) => ({
+      ...latest,
+      id: undefined,
+      shouldSave: false,
+      avoidSave: false,
+      ...(typeof updatesObjOrFn === 'function'
+        ? updatesObjOrFn(latest)
+        : updatesObjOrFn),
+    }));
+  }, 15);
 
-      if (updateDrawnAnnotation && annotationUpdated.id) {
-        saveAnnotation(annotationUpdated);
+  const getAnnotationInitialProps = useCallback(
+    (currentAnnotation, newAnnotation = {}) => {
+      const {
+        x,
+        y,
+        width,
+        height,
+        radius,
+        radiusX,
+        radiusY,
+        points,
+        image,
+        text,
+        scale,
+        ...dimensionlessProps
+      } = currentAnnotation;
+      if (currentAnnotation.name === newAnnotation.name) {
+        return {
+          ...DEFAULTS,
+          ...annotation,
+          ...dimensionlessProps,
+        };
       }
+
+      const {
+        cornerRadius,
+        lineCap,
+        tension,
+        sides,
+        fontFamily,
+        fontSize,
+        fontStyle,
+        letterSpacing,
+        lineHeight,
+        align,
+        ...dimensionslessCommonProps
+      } = dimensionlessProps;
+
+      return dimensionslessCommonProps;
     },
     [],
   );
 
-  const addNewAnnotation = useCallback((newAnnotationObjOrFn) => {
-    updateAnnotationProps(
-      (latestAnnotation) => ({
-        ...(typeof newAnnotationObjOrFn === 'function'
-          ? newAnnotationObjOrFn(latestAnnotation)
-          : newAnnotationObjOrFn),
-        id: randomId(annotation.name), // new id would be the reason for adding as new annotation.
-      }),
-      true,
-    );
+  const saveAnnotationNoDebounce = useCallback((annotationDataObjOrFn) => {
+    setTmpAnnotation((latest) => {
+      const newAnnotationData =
+        typeof annotationDataObjOrFn === 'function'
+          ? annotationDataObjOrFn(latest)
+          : annotationDataObjOrFn;
+      const initialProps = getAnnotationInitialProps(latest, newAnnotationData);
+
+      return {
+        ...annotation,
+        ...initialProps,
+        ...newAnnotationData,
+        id:
+          newAnnotationData.id ||
+          randomId(newAnnotationData.name || latest.name),
+        shouldSave: true,
+        avoidSave: false,
+      };
+    });
   }, []);
+
+  useEffect(() => {
+    const { shouldSave, avoidSave, ...savableAnnotation } = tmpAnnotation;
+    const selection =
+      selectionsIds.length === 1 && annotations[selectionsIds[0]];
+    if (!avoidSave && (shouldSave || selection)) {
+      saveAnnotation({
+        ...savableAnnotation,
+        id: shouldSave ? savableAnnotation.id : selection.id,
+      });
+    }
+  }, [tmpAnnotation]);
+
+  useEffect(() => {
+    if (selectionsIds.length === 1) {
+      annotationBeforeSelection.current = tmpAnnotation;
+      setTmpAnnotation({ ...annotations[selectionsIds[0]], avoidSave: true });
+    } else if (annotationBeforeSelection.current) {
+      setTmpAnnotation({
+        ...annotationBeforeSelection.current,
+        avoidSave: true,
+      });
+      annotationBeforeSelection.current = null;
+    }
+  }, [selectionsIds, annotations]);
 
   useEffect(() => {
     let stopAnnotationEventsListening = null;
 
     if (canvas && enablePreview) {
+      const annotationInitialProps = getAnnotationInitialProps(
+        tmpAnnotation,
+        annotation,
+      );
+
       stopAnnotationEventsListening = previewThenCallAnnotationAdding(
         canvas,
-        tmpAnnotation,
+        { ...annotationInitialProps, name: annotation.name },
         previewGroup,
-        addNewAnnotation,
+        saveAnnotationNoDebounce,
       );
     }
 
@@ -84,11 +176,11 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
         stopAnnotationEventsListening();
       }
     };
-  }, [canvas, tmpAnnotation, pointerMode, previewGroup]);
+  }, [canvas, tmpAnnotation, previewGroup]);
 
   return useMemo(
-    () => [tmpAnnotation, updateAnnotationProps, addNewAnnotation],
-    [tmpAnnotation, updateAnnotationProps, addNewAnnotation],
+    () => [tmpAnnotation, updateTmpAnnotation, saveAnnotationNoDebounce],
+    [tmpAnnotation, updateTmpAnnotation, saveAnnotationNoDebounce],
   );
 };
 

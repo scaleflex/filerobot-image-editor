@@ -8,20 +8,28 @@ import AnnotationOptions from 'components/common/AnnotationOptions';
 import AppContext from 'context';
 import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
 import randomId from 'utils/randomId';
+import { SELECT_ANNOTATION } from 'actions';
 
 const eventsOptions = {
   passive: true,
 };
 
 const PenOptions = () => {
-  const { designLayer } = useContext(AppContext);
-  const [pen, savePen, startNewPen] = useAnnotation(
+  const { dispatch, designLayer } = useContext(AppContext);
+  const [pen, savePenDebounced, savePenNoDebounce] = useAnnotation(
     {
       name: ANNOTATIONS_NAMES.PEN,
+      tension: 0.5,
+      lineCap: 'round',
     },
     false,
   );
   const canvasRef = useRef(null);
+  const startedPen = useRef({
+    points: [],
+    moved: false,
+    id: '',
+  });
 
   const getPointerPosition = useCallback((e) => {
     const canvasBoundingRect =
@@ -35,20 +43,41 @@ const PenOptions = () => {
     ];
   }, []);
 
-  const saveLine = useCallback((e) => {
-    savePen((currentPen) => {
-      const linesLength = currentPen.lines.length;
-      const lastLine = currentPen.lines[linesLength - 1];
-      lastLine.points = lastLine.points.concat(getPointerPosition(e));
-      currentPen.lines.splice(linesLength - 1, 1, lastLine);
+  const handlePointerMove = useCallback((e) => {
+    if (!startedPen.current.moved) {
+      startedPen.current = {
+        moved: true,
+        id: randomId(ANNOTATIONS_NAMES.PEN),
+        points: [...startedPen.current.points, ...getPointerPosition(e)],
+      };
 
-      return { lines: currentPen.lines.concat() };
-    }, true);
+      savePenNoDebounce({
+        id: startedPen.current.id,
+        name: ANNOTATIONS_NAMES.PEN,
+        points: startedPen.current.points,
+      });
+    } else {
+      savePenNoDebounce(
+        (currentPen) => ({
+          ...currentPen,
+          points: currentPen.points.concat(getPointerPosition(e)),
+        }),
+        true,
+      );
+    }
   }, []);
 
-  const handlePointerMove = useCallback(saveLine, [saveLine]);
-
   const handlePointerUp = useCallback(() => {
+    if (startedPen.current.id) {
+      dispatch({
+        type: SELECT_ANNOTATION,
+        payload: {
+          annotationId: startedPen.current.id,
+        },
+      });
+    }
+
+    startedPen.current = null;
     canvasRef.current.off('mousemove touchmove', handlePointerMove);
     canvasRef.current.off('mouseleave touchcancel', handlePointerUp);
     document.removeEventListener('mouseup', handlePointerUp, eventsOptions);
@@ -58,16 +87,12 @@ const PenOptions = () => {
   }, []);
 
   const handlePointerDown = useCallback((e) => {
-    startNewPen((latestPen) => ({
-      ...latestPen,
-      lines: [
-        {
-          id: randomId(ANNOTATIONS_NAMES.PEN_LINE),
-          name: ANNOTATIONS_NAMES.PEN_LINE,
-          points: getPointerPosition(e),
-        },
-      ],
-    }));
+    if (e.target.attrs.draggable) {
+      return;
+    }
+    e.evt.preventDefault();
+
+    startedPen.current = { points: getPointerPosition(e) };
 
     canvasRef.current.on('mousemove touchmove', handlePointerMove);
     canvasRef.current.on('mouseleave touchcancel', handlePointerUp);
@@ -93,7 +118,7 @@ const PenOptions = () => {
   return (
     <AnnotationOptions
       annotation={pen}
-      updateAnnotation={savePen}
+      updateAnnotation={savePenDebounced}
       hideFillOption
     />
   );

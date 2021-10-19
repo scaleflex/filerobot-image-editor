@@ -1,17 +1,16 @@
 /** External Dependencies */
-import { useContext, useEffect, useMemo } from 'react';
+import { useCallback, useContext, useEffect, useMemo } from 'react';
 
 /** Internal Dependencies */
 import AppContext from 'context';
 import { SET_FINETUNE } from 'actions';
-import { useDebouncedCallback } from 'hooks';
 
 const CHANGE_DEBOUNCE_MS = 35;
 
 const useFinetune = (finetune, initialProps) => {
   const { dispatch, finetunes, finetunesProps } = useContext(AppContext);
 
-  const setFinetuneWithProps = useDebouncedCallback(
+  const setFinetuneWithProps = useCallback(
     (newFinetuneProps) => {
       dispatch({
         type: SET_FINETUNE,
@@ -36,10 +35,7 @@ const useFinetune = (finetune, initialProps) => {
   }, []);
 
   return useMemo(
-    () => [
-      finetunesProps,
-      setFinetuneWithProps,
-    ],
+    () => [finetunesProps, setFinetuneWithProps],
     [finetunesProps],
   );
 };

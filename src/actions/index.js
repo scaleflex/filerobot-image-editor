@@ -12,9 +12,7 @@ import undo, { UNDO } from './undo';
 import setFinetune, { SET_FINETUNE } from './setFinetune';
 import setAnnotation, { SET_ANNOTATION } from './setAnnotation';
 import changePointerIcon, { CHANGE_POINTER_ICON } from './changePointerIcon';
-import selectAddedAnnotation, {
-  SELECT_ADDED_ANNOTATION,
-} from './selectAddedAnnotation';
+import selectAnnotation, { SELECT_ANNOTATION } from './selectAnnotation';
 import clearAnnotationsSelections, {
   CLEAR_ANNOTATIONS_SELECTIONS,
 } from './clearAnnotationsSelections';
@@ -31,6 +29,10 @@ import setOriginalImage, { SET_ORIGINAL_IMAGE } from './setOriginalImage';
 import setShownImageDimensions, {
   SET_SHOWN_IMAGE_DIMENSIONS,
 } from './setShownImageDimensions';
+import deleteAnnotations, { DELETE_ANNOTATIONS } from './deleteAnnotations';
+import enableTextContentEdit, {
+  ENABLE_TEXT_CONTENT_EDIT,
+} from './enableTextContentEdit';
 
 export default {
   [SET_ORIGINAL_IMAGE]: setOriginalImage,
@@ -39,7 +41,7 @@ export default {
   [HIDE_LOADER]: hideLoader,
   [TOGGLE_SUB_TAB_SELECTION]: toggleSubTabSelection,
   [CHANGE_POINTER_ICON]: changePointerIcon,
-  [SELECT_ADDED_ANNOTATION]: selectAddedAnnotation,
+  [SELECT_ANNOTATION]: selectAnnotation,
   [CLEAR_ANNOTATIONS_SELECTIONS]: clearAnnotationsSelections,
   [TOGGLE_ORIGINAL_IMAGE_DISPLAY]: toggleOriginalImageDisplay,
   [SELECT_TAB]: selectTab,
@@ -47,6 +49,7 @@ export default {
   [ZOOM_CANVAS]: zoomCanvas,
   [SET_CANVAS_SIZE]: setCanvasSize,
   [SET_SHOWN_IMAGE_DIMENSIONS]: setShownImageDimensions,
+  [ENABLE_TEXT_CONTENT_EDIT]: enableTextContentEdit,
   // Start of Design actions...
   [ADD_FILTER]: addFilter,
   [SET_FINETUNE]: setFinetune,
@@ -54,6 +57,7 @@ export default {
   [SET_CROP]: setCrop,
   [CHANGE_ROTATION]: changeRotation,
   [TOGGLE_FLIP]: toggleFlip,
+  [DELETE_ANNOTATIONS]: deleteAnnotations,
   // End of Design actions.
   [UNDO]: undo,
   [REDO]: redo,
@@ -67,7 +71,7 @@ export {
   HIDE_LOADER,
   TOGGLE_SUB_TAB_SELECTION,
   CHANGE_POINTER_ICON,
-  SELECT_ADDED_ANNOTATION,
+  SELECT_ANNOTATION,
   CLEAR_ANNOTATIONS_SELECTIONS,
   TOGGLE_ORIGINAL_IMAGE_DISPLAY,
   SELECT_TAB,
@@ -75,6 +79,7 @@ export {
   ZOOM_CANVAS,
   SET_CANVAS_SIZE,
   SET_SHOWN_IMAGE_DIMENSIONS,
+  ENABLE_TEXT_CONTENT_EDIT,
   // Start of Design actions...
   ADD_FILTER,
   SET_FINETUNE,
@@ -82,6 +87,7 @@ export {
   SET_CROP,
   CHANGE_ROTATION,
   TOGGLE_FLIP,
+  DELETE_ANNOTATIONS,
   // End of Design actions.
   UNDO,
   REDO,

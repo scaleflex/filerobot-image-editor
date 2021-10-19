@@ -36,7 +36,6 @@ const NodesTransformer = () => {
       borderStroke={theme.palette['accent-primary']}
       borderStrokeWidth={2}
       borderDash={[4]}
-      shouldOverdrawWholeArea
       flipEnabled
     />
   );

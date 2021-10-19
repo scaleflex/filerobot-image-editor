@@ -1,12 +1,12 @@
 export const SELECT_TOOL = 'SELECT_TOOL';
 
-const selectTool = (state, payload) => (
+const selectTool = (state, payload) =>
   state.toolId === payload.toolId
     ? state
     : {
-      ...state,
-      toolId: payload.toolId,
-    }
-);
+        ...state,
+        toolId: payload.toolId,
+        selectionsIds: [],
+      };
 
 export default selectTool;
