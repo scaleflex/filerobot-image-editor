@@ -33,7 +33,6 @@ const TextOptions = () => {
     letterSpacing: 0,
     lineHeight: 1,
     opacity: 1,
-    text: 'Testing...',
     align: 'left',
   });
 

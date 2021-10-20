@@ -158,23 +158,23 @@ const DesignLayer = () => {
   return (
     <Layer
       ref={designLayerRef}
-      rotation={rotation}
       xPadding={xOffsetToCenterImgInCanvas}
       yPadding={yOffsetToCenterImgInCanvas}
-      x={xOffsetToCenterImgInCanvas + originalImgScaled.width / 2}
-      y={yOffsetToCenterImgInCanvas + originalImgScaled.height / 2}
+      x={xOffsetToCenterImgInCanvas}
+      y={yOffsetToCenterImgInCanvas}
       clip={clipBox}
-      offsetX={originalImgScaled.width / 2}
-      offsetY={originalImgScaled.height / 2}
-      scaleX={scaleAfterRotation}
-      scaleY={scaleAfterRotation}
     >
       <Image
         image={originalImage}
         width={originalImgSpacedWidth}
         height={originalImgSpacedHeight}
-        scaleX={originalImgInitialScale}
-        scaleY={originalImgInitialScale}
+        scaleX={originalImgInitialScale * scaleAfterRotation}
+        scaleY={originalImgInitialScale * scaleAfterRotation}
+        offsetX={originalImgSpacedWidth / 2}
+        offsetY={originalImgSpacedHeight / 2}
+        x={originalImgScaled.width / 2}
+        y={originalImgScaled.height / 2}
+        rotation={rotation}
         listening={false}
         filters={finetunesAndFilter}
         ref={imageNodeRef}

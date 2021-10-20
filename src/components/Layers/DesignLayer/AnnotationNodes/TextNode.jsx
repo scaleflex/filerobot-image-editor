@@ -60,7 +60,7 @@ const TextNode = ({
 
 TextNode.defaultProps = {
   ...nodesCommonPropTypes.defaults,
-  text: 'Lorem Ipsum...',
+  text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet tortor quis odio facilisis, id aliquet nulla facilisis. Etiam tincidunt tempor odio nec placerat.',
   fontFamily: 'Arial',
   fontSize: 14,
   fill: '#000',
