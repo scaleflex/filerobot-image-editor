@@ -60,3 +60,11 @@ export { default as CornerRadius } from './CornerRadius';
 export { default as Polygon } from './Polygon';
 
 export { default as SidesAmount } from './SidesAmount';
+
+export { default as Social } from './Social';
+
+export { default as Custom } from './Custom';
+
+export { default as Landscape } from './Landscape';
+
+export { default as Portrait } from './Portrait';

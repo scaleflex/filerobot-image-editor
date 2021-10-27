@@ -1,5 +1,5 @@
 /** External Dependencies */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Label } from '@scaleflex/ui/core';
 
 const StyledTabs = styled.div`
@@ -7,7 +7,7 @@ const StyledTabs = styled.div`
 `;
 
 const StyledTabItem = styled.div(
-  ({ theme }) => css`
+  ({ theme }) => `
     width: 67px;
     height: 62px;
     border-radius: 4px;

@@ -90,7 +90,7 @@ const useAnnotationEvents = () => {
       type: SELECT_ANNOTATION,
       payload: {
         annotationId: e.target.id(),
-        multiple: e.evt.ctrlKey,
+        multiple: e.evt.ctrlKey || e.evt.shiftKey || e.evt.metaKey,
       },
     });
     changePointerIconToMoveOrSelect(e);

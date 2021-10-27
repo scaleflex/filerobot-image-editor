@@ -3,6 +3,7 @@ export const MAX_CANVAS_HEIGHT = 800;
 
 export const ROOT_CONTAINER_ID = 'filerobot-image-editor_root-container';
 export const TRANSFORMER_LAYER_ID = 'filerobot-image-editor_transformer-layer';
+export const IMAGE_NODE_ID = 'filerobot-image-editor_original-image';
 
 export const TABS_IDS = {
   FINETUNE: 'FINTUNE',
@@ -87,22 +88,9 @@ export const DEFAULT_FONTS = [
   'Lato',
 ];
 
-export const ORIGINAL_CROP_RATIO = 'original';
-export const CUSTOM_CROP_RATIO = 'custom';
-export const CROP_RATIOS = [
-  { label: 'Original', value: ORIGINAL_CROP_RATIO },
-  { label: '1:1', value: 1 / 1 },
-  { label: '3:2', value: 3 / 2 },
-  { label: '2:3', value: 2 / 3 },
-  { label: '4:3', value: 4 / 3 },
-  { label: '5:4', value: 5 / 4 },
-  { label: '7:5', value: 7 / 5 },
-  { label: '16:9', value: 16 / 9 },
-  { label: '9:16', value: 9 / 16 },
-  { label: '21:9', value: 21 / 9 },
-  { label: '9:21', value: 9 / 21 },
-  { label: 'Custom', value: CUSTOM_CROP_RATIO },
-];
+export const ORIGINAL_CROP = 'original';
+export const CUSTOM_CROP = 'custom';
+export const ELLIPSE_CROP = 'ellipse';
 
 export const MAIN_CANVAS_ID = 'filerobot-image-editor_main-canvas';
 

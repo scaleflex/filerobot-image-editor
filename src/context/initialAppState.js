@@ -17,7 +17,15 @@ export default {
   finetunes: [],
   finetunesProps: {},
   filter: null,
-  adjustments: {},
+  adjustments: {
+    crop: {
+      x: 0,
+      y: 0,
+      ratio: 'original',
+      width: 0,
+      height: 0,
+    },
+  },
   annotations: {},
   // --- End of design states ---
   selectionsIds: [],

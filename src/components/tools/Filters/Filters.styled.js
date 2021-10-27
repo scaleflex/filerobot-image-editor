@@ -1,6 +1,6 @@
 /** External Dependencies */
 import { Stage } from 'react-konva';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledFiltersWrapper = styled.div`
   white-space: nowrap;
@@ -9,7 +9,7 @@ const StyledFiltersWrapper = styled.div`
 `;
 
 const StyledFilterItem = styled.div(
-  ({ theme }) => css`
+  ({ theme }) => `
     display: inline-flex;
     flex-direction: column;
     align-items: center;

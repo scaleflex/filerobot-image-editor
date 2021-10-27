@@ -1,7 +1,7 @@
 /** Internal Dependencies */
 import { TABS_IDS, TOOLS_IDS } from 'utils/constants';
 import { Brightness, BrightnessOptions } from './Brightness';
-import { Crop, CropOptions } from './Crop';
+import { Crop } from './Crop';
 import { FlipX, FlipY } from './Flip';
 import { Rotate, RotateOptions } from './Rotate';
 import { Contrast, ContrastOptions } from './Contrast';
@@ -22,7 +22,6 @@ export const TOOLS_ITEMS = {
   [TOOLS_IDS.CROP]: {
     id: TOOLS_IDS.CROP,
     Item: Crop,
-    ItemOptions: CropOptions,
   },
   [TOOLS_IDS.ROTATE]: {
     id: TOOLS_IDS.ROTATE,

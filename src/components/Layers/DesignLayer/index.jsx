@@ -11,13 +11,14 @@ import { Image, Layer } from 'react-konva';
 /** Internal Dependencies */
 import AppContext from 'context';
 import getDimensionsMinimalRatio from 'utils/getDimensionsMinimalRatio';
+import { IMAGE_NODE_ID, TOOLS_IDS } from 'utils/constants';
 import { SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import getProperImageToCanvasSpacing from 'utils/getProperImageToCanvasSpacing';
 import getRotatedImageSize from 'utils/getRotatedImageSize';
 import AnnotationNodes from './AnnotationNodes';
 import PreviewGroup from './PreviewGroup';
 
-const CANVAS_TO_IMG_BOTH_SIDES_SPACING = getProperImageToCanvasSpacing() * 2;
+const CANVAS_TO_IMG_SPACING = getProperImageToCanvasSpacing() * 2;
 
 const DesignLayer = () => {
   const designLayerRef = useRef();
@@ -27,12 +28,13 @@ const DesignLayer = () => {
     canvasWidth,
     canvasHeight,
     dispatch,
+    toolId,
     canvasScale,
     originalImage = {},
     finetunes = [],
     finetunesProps = {},
     filter = null,
-    adjustments: { rotation = 0 },
+    adjustments: { rotation = 0, crop = {} },
   } = useContext(AppContext);
   const imageNodeRef = useRef();
   const previewGroupRef = useRef();
@@ -42,15 +44,15 @@ const DesignLayer = () => {
     [finetunes, filter],
   );
 
-  const { originalImgSpacedWidth, originalImgSpacedHeight } = useMemo(
-    () => ({
-      originalImgSpacedWidth:
-        originalImage.width - CANVAS_TO_IMG_BOTH_SIDES_SPACING,
-      originalImgSpacedHeight:
-        originalImage.height - CANVAS_TO_IMG_BOTH_SIDES_SPACING,
-    }),
-    [originalImage],
-  );
+  const { originalImgSpacedWidth, originalImgSpacedHeight } = useMemo(() => {
+    const spacedWidth = originalImage.width - CANVAS_TO_IMG_SPACING;
+    const imgRatio = originalImage.width / originalImage.height;
+
+    return {
+      originalImgSpacedWidth: spacedWidth,
+      originalImgSpacedHeight: spacedWidth / imgRatio,
+    };
+  }, [originalImage]);
 
   const originalImgInitialScale = useMemo(
     () =>
@@ -108,12 +110,20 @@ const DesignLayer = () => {
   );
 
   const clipBox = useMemo(
-    () => ({
-      ...imageDimensions,
-      x: 0,
-      y: 0,
-    }),
-    [imageDimensions],
+    () =>
+      toolId === TOOLS_IDS.CROP
+        ? {
+            ...imageDimensions,
+            x: 0,
+            y: 0,
+          }
+        : {
+            width: crop.width || imageDimensions.width,
+            height: crop.height || imageDimensions.height,
+            x: crop.x ? crop.x - xOffsetToCenterImgInCanvas : 0,
+            y: crop.y ? crop.y - yOffsetToCenterImgInCanvas : 0,
+          },
+    [toolId, imageDimensions, crop],
   );
 
   const cacheImageNode = useCallback(() => {
@@ -165,6 +175,7 @@ const DesignLayer = () => {
       clip={clipBox}
     >
       <Image
+        id={IMAGE_NODE_ID}
         image={originalImage}
         width={originalImgSpacedWidth}
         height={originalImgSpacedHeight}

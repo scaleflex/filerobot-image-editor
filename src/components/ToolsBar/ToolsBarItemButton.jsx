@@ -8,7 +8,14 @@ import {
   StyledToolsBarItemButtonLabel,
 } from './ToolsBar.styled';
 
-const ToolsBarItemButton = ({ id, label, onClick, Icon, isSelected }) => {
+const ToolsBarItemButton = ({
+  id,
+  label,
+  onClick,
+  Icon,
+  isSelected,
+  children,
+}) => {
   const handleClick = useCallback(() => {
     onClick(id);
   }, []);
@@ -19,6 +26,7 @@ const ToolsBarItemButton = ({ id, label, onClick, Icon, isSelected }) => {
       {label && (
         <StyledToolsBarItemButtonLabel>{label}</StyledToolsBarItemButtonLabel>
       )}
+      {children}
     </StyledToolsBarItemButton>
   );
 };
@@ -26,9 +34,11 @@ const ToolsBarItemButton = ({ id, label, onClick, Icon, isSelected }) => {
 ToolsBarItemButton.defaultProps = {
   isSelected: false,
   id: undefined,
+  children: null,
 };
 
 ToolsBarItemButton.propTypes = {
+  children: PropTypes.node,
   id: PropTypes.string,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,

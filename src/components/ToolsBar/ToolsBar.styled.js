@@ -1,5 +1,5 @@
 /** External Dependencies */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Label } from '@scaleflex/ui/core';
 
 const StyledToolsBar = styled.div`
@@ -17,7 +17,7 @@ const StyledToolsBarItems = styled.div`
 `;
 
 const StyledToolsBarItemButton = styled.div(
-  ({ theme }) => css`
+  ({ theme }) => `
     display: flex;
     border-radius: 2px;
     align-items: center;
