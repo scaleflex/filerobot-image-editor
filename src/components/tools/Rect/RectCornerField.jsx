@@ -11,7 +11,7 @@ import {
 import restrictNumber from 'utils/restrictNumber';
 
 const MIN_VALUE = 0;
-const MAX_VALUE = 100;
+const MAX_VALUE = 200;
 
 const RectCornerField = ({
   annotation: rect,
@@ -21,7 +21,7 @@ const RectCornerField = ({
 
   const updateCornerRadius = (newCornerRadius) => {
     updateRect({
-      cornerRadius: restrictNumber(newCornerRadius, MIN_VALUE, MAX_VALUE),
+      cornerRadius: restrictNumber(newCornerRadius.from, MIN_VALUE, MAX_VALUE),
     });
   };
 
