@@ -11,7 +11,7 @@ import {
 } from './AnnotationOptions.styled';
 
 const MIN_PERCENTANGE = 0;
-const MAX_PERCENTANGE = 100;
+const MAX_PERCENTANGE = 1;
 
 const TransparencyField = ({ annotation, updateAnnotation }) => {
   const { opacity } = annotation;
@@ -19,7 +19,7 @@ const TransparencyField = ({ annotation, updateAnnotation }) => {
   const changeOpacity = (slidedNewOpacity) => {
     updateAnnotation({
       opacity: restrictNumber(
-        slidedNewOpacity.from / MAX_PERCENTANGE,
+        slidedNewOpacity.from / 100,
         MIN_PERCENTANGE,
         MAX_PERCENTANGE,
       ),
@@ -31,9 +31,9 @@ const TransparencyField = ({ annotation, updateAnnotation }) => {
       <Label>Transparency</Label>
       <StyledSliderField
         annotation="%"
-        isActive={Boolean(opacity)}
+        isActive={opacity >= 0}
         onChange={changeOpacity}
-        value={{ from: opacity }}
+        value={{ from: opacity * 100 }}
       />
     </StyledSpacedOptionFields>
   );

@@ -17,20 +17,21 @@ import { TOOLS_IDS } from 'utils/constants';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
 import { useDebouncedCallback } from '..';
 
-const DEFAULTS = {
-  fill: '#000000',
-};
-
 // TODO: Imporve the logic and separate the selected annotation options from handling preview and options before draw.
 const useAnnotation = (annotation = {}, enablePreview = true) => {
   const {
     dispatch,
     previewGroup,
+    defaultOptions,
     annotations,
     selectionsIds = [],
   } = useContext(AppContext);
+  const annotationDefaults = {
+    ...defaultOptions.common,
+    ...defaultOptions[annotations[selectionsIds[0]]?.name || annotation.name],
+  };
   const [tmpAnnotation, setTmpAnnotation] = useState(() => ({
-    ...DEFAULTS,
+    ...annotationDefaults,
     ...annotation,
     ...annotations[selectionsIds[0]],
   }));
@@ -87,14 +88,14 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
         } = currentAnnotation;
 
         return {
-          ...DEFAULTS,
+          ...annotationDefaults,
           ...annotation,
           ...dimensionlessProps,
         };
       }
 
       return {
-        ...DEFAULTS,
+        ...annotationDefaults,
         ...annotation,
       };
     },

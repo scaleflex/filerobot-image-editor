@@ -29,6 +29,9 @@ const TextNode = ({
   shadowColor,
   shadowOpacity,
   opacity,
+  letterSpacing,
+  lineHeight,
+  align,
   ...otherProps
 }) => (
   <Text
@@ -49,6 +52,9 @@ const TextNode = ({
     text={text}
     fontFamily={fontFamily}
     fontSize={fontSize}
+    letterSpacing={letterSpacing}
+    lineHeight={lineHeight}
+    align={align}
     x={x}
     y={y}
     width={width}
@@ -66,6 +72,9 @@ TextNode.defaultProps = {
   fill: '#000',
   width: 0,
   height: 0,
+  letterSpacing: undefined,
+  lineHeight: undefined,
+  align: 'left',
 };
 
 TextNode.propTypes = {
@@ -79,6 +88,9 @@ TextNode.propTypes = {
   fontFamily: PropTypes.string,
   fontSize: PropTypes.number,
   fill: PropTypes.string,
+  letterSpacing: PropTypes.number,
+  lineHeight: PropTypes.number,
+  align: PropTypes.string,
 };
 
 export default TextNode;

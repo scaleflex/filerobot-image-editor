@@ -30,7 +30,7 @@ const RectCornerField = ({
       <Label>Corner Radius</Label>
       <StyledSliderField
         annotation="px"
-        isActive={Boolean(cornerRadius)}
+        isActive={cornerRadius >= 0}
         onChange={updateCornerRadius}
         value={{ from: cornerRadius }}
         min={MIN_VALUE}

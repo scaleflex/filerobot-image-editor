@@ -26,6 +26,7 @@ const RectNode = ({
   shadowColor,
   shadowOpacity,
   opacity,
+  cornerRadius,
   ...otherProps
 }) => (
   <Rect
@@ -47,6 +48,7 @@ const RectNode = ({
     width={width}
     height={height}
     opacity={opacity}
+    cornerRadius={cornerRadius}
     {...annotationEvents}
     {...otherProps}
   />
@@ -55,6 +57,7 @@ const RectNode = ({
 RectNode.defaultProps = {
   ...nodesCommonPropTypes.defaults,
   fill: '#000',
+  cornerRadius: 0,
   width: 0,
   height: 0,
 };
@@ -67,6 +70,7 @@ RectNode.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   fill: PropTypes.string,
+  cornerRadius: PropTypes.number,
 };
 
 export default RectNode;

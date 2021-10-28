@@ -15,13 +15,11 @@ import {
 
 const PositionFields = ({ annotation, updateAnnotation }) => {
   const { designLayer } = useContext(AppContext);
-  const { position } = annotation;
 
   const changePosition = (newPositionStr) => {
-    updateAnnotation({
-      position: newPositionStr,
-      ...mapPositionStringToPoint(annotation, designLayer, newPositionStr),
-    });
+    updateAnnotation(
+      mapPositionStringToPoint(annotation, designLayer, newPositionStr),
+    );
   };
 
   const positionsLength = AVAILABLE_POSITIONS.length;
@@ -30,7 +28,6 @@ const PositionFields = ({ annotation, updateAnnotation }) => {
     <Fragment key={pos}>
       <StyledIconWrapper
         onClick={() => changePosition(pos)}
-        aria-selected={pos === position}
         secondaryIconColor
         addThinBorder
         noMargin

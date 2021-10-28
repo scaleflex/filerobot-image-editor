@@ -13,7 +13,8 @@ const setAnnotation = (state, payload = {}) => {
     existedAnnotation &&
     !Object.keys(newAnnotation).some(
       (key) =>
-        newAnnotation[key] && newAnnotation[key] !== existedAnnotation[key],
+        (newAnnotation[key] || newAnnotation[key] === 0) &&
+        newAnnotation[key] !== existedAnnotation[key],
     )
   ) {
     return state;

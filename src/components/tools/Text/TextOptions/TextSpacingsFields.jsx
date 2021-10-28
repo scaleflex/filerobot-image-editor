@@ -28,7 +28,7 @@ const TextSpacingsFields = ({
     <StyledSpacedOptionFields>
       <Label>Letter Spacing</Label>
       <StyledSliderField
-        annotation="%"
+        annotation="px"
         isActive={Boolean(letterSpacing)}
         onChange={(val) => updateValue('letterSpacing', val.from)}
         value={{ from: letterSpacing }}
@@ -36,7 +36,7 @@ const TextSpacingsFields = ({
       />
       <Label>Line height</Label>
       <StyledSliderField
-        annotation="%"
+        annotation="px"
         isActive={Boolean(lineHeight)}
         onChange={(val) => updateValue('lineHeight', val.from)}
         value={{ from: lineHeight }}
