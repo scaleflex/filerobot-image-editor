@@ -27,6 +27,7 @@ export default {
     },
   },
   annotations: {},
+  resize: {},
   // --- End of design states ---
   selectionsIds: [],
   tabId: TABS_IDS.ADJUST,

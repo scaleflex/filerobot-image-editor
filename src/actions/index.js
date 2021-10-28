@@ -33,6 +33,7 @@ import deleteAnnotations, { DELETE_ANNOTATIONS } from './deleteAnnotations';
 import enableTextContentEdit, {
   ENABLE_TEXT_CONTENT_EDIT,
 } from './enableTextContentEdit';
+import setResize, { SET_RESIZE } from './setResize';
 
 export default {
   [SET_ORIGINAL_IMAGE]: setOriginalImage,
@@ -57,6 +58,7 @@ export default {
   [SET_CROP]: setCrop,
   [CHANGE_ROTATION]: changeRotation,
   [TOGGLE_FLIP]: toggleFlip,
+  [SET_RESIZE]: setResize,
   [DELETE_ANNOTATIONS]: deleteAnnotations,
   // End of Design actions.
   [UNDO]: undo,
@@ -87,6 +89,7 @@ export {
   SET_CROP,
   CHANGE_ROTATION,
   TOGGLE_FLIP,
+  SET_RESIZE,
   DELETE_ANNOTATIONS,
   // End of Design actions.
   UNDO,

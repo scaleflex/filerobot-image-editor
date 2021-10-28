@@ -20,6 +20,7 @@ import PreviewGroup from './PreviewGroup';
 
 const CANVAS_TO_IMG_SPACING = getProperImageToCanvasSpacing() * 2;
 
+// TODO: Refactor scaling here as different operations depend on it.
 const DesignLayer = () => {
   const designLayerRef = useRef();
   const {
@@ -34,7 +35,8 @@ const DesignLayer = () => {
     finetunes = [],
     finetunesProps = {},
     filter = null,
-    adjustments: { rotation = 0, crop = {} },
+    adjustments: { rotation = 0, crop = {}, isFlippedX, isFlippedY } = {},
+    resize,
   } = useContext(AppContext);
   const imageNodeRef = useRef();
   const previewGroupRef = useRef();
@@ -88,11 +90,15 @@ const DesignLayer = () => {
     );
   }, [originalImgScaled, rotation, initialCanvasWidth, initialCanvasHeight]);
 
+  const resizedX = resize.width ? resize.width / originalImage.width : 1;
+  const resizedY = resize.height ? resize.height / originalImage.height : 1;
+
   const xOffsetToCenterImgInCanvas =
-    canvasWidth / (2 * canvasScale) - originalImgScaled.width / 2;
+    canvasWidth / (2 * canvasScale) - (originalImgScaled.width * resizedX) / 2;
 
   const yOffsetToCenterImgInCanvas =
-    canvasHeight / (2 * canvasScale) - originalImgScaled.height / 2;
+    canvasHeight / (2 * canvasScale) -
+    (originalImgScaled.height * resizedY) / 2;
 
   const imageDimensions = useMemo(
     () => ({
@@ -165,13 +171,20 @@ const DesignLayer = () => {
     return null;
   }
 
+  const centeredFlippedX =
+    (isFlippedX ? originalImgScaled.width : 0) + xOffsetToCenterImgInCanvas;
+  const centeredFlippedY =
+    (isFlippedY ? originalImgScaled.height : 0) + yOffsetToCenterImgInCanvas;
+
   return (
     <Layer
       ref={designLayerRef}
       xPadding={xOffsetToCenterImgInCanvas}
       yPadding={yOffsetToCenterImgInCanvas}
-      x={xOffsetToCenterImgInCanvas}
-      y={yOffsetToCenterImgInCanvas}
+      x={centeredFlippedX}
+      y={centeredFlippedY}
+      scaleX={isFlippedX ? -resizedX : resizedX}
+      scaleY={isFlippedY ? -resizedY : resizedY}
       clip={clipBox}
     >
       <Image

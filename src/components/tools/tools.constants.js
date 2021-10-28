@@ -3,7 +3,7 @@ import { TABS_IDS, TOOLS_IDS } from 'utils/constants';
 import { Brightness, BrightnessOptions } from './Brightness';
 import { Crop } from './Crop';
 import { FlipX, FlipY } from './Flip';
-import { Rotate, RotateOptions } from './Rotate';
+import { RotateButton, RotateOptions } from './Rotate';
 import { Contrast, ContrastOptions } from './Contrast';
 import { HSV, HSVOptions } from './HSV';
 import { Blur, BlurOptions } from './Blur';
@@ -17,6 +17,7 @@ import { PenButton, PenOptions } from './Pen';
 import { LineButton, LineOptions } from './Line';
 import { ArrowButton, ArrowOptions } from './Arrow';
 import { PolygonButton, PolygonOptions } from './Polygon';
+import { Resize } from './Resize';
 
 export const TOOLS_ITEMS = {
   [TOOLS_IDS.CROP]: {
@@ -25,7 +26,7 @@ export const TOOLS_ITEMS = {
   },
   [TOOLS_IDS.ROTATE]: {
     id: TOOLS_IDS.ROTATE,
-    Item: Rotate,
+    Item: RotateButton,
     ItemOptions: RotateOptions,
   },
   [TOOLS_IDS.FLIP_X]: {
@@ -105,6 +106,10 @@ export const TOOLS_ITEMS = {
     Item: ArrowButton,
     ItemOptions: ArrowOptions,
   },
+  [TOOLS_IDS.RESIZE]: {
+    id: TOOLS_IDS.RESIZE,
+    Item: Resize,
+  },
 };
 
 export const TABS_TOOLS = {
@@ -132,4 +137,5 @@ export const TABS_TOOLS = {
     TOOLS_IDS.LINE,
     TOOLS_IDS.ARROW,
   ],
+  [TABS_IDS.RESIZE]: [TOOLS_IDS.RESIZE],
 };

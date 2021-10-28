@@ -39,6 +39,7 @@ export const TOOLS_IDS = {
   ARROW: 'Arrow',
   WATERMARK: 'Watermark',
   PEN: 'Pen',
+  RESIZE: 'Resize',
 };
 
 export const FLIP_DIRECTIONS = {

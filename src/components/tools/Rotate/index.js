@@ -1,3 +1,3 @@
-export { default as Rotate } from './Rotate';
+export { default as RotateButton } from './RotateButton';
 
 export { default as RotateOptions } from './RotateOptions';

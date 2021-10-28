@@ -14,6 +14,7 @@ const extractCurrentDesignState = (state) => ({
   filter: state.filter || initialAppState.filter,
   adjustments: state.adjustments || initialAppState.adjustments,
   annotations: state.annotations || initialAppState.annotations,
+  resize: state.resize || initialAppState.resize,
 });
 
 export default extractCurrentDesignState;
