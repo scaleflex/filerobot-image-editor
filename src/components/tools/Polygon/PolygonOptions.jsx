@@ -3,7 +3,7 @@ import React from 'react';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
-import { ANNOTATIONS_NAMES } from 'utils/constants';
+import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import {
   polygonOptionsPopupComponents,
@@ -12,7 +12,7 @@ import {
 
 const PolygonOptions = () => {
   const [polygon, savePolygon] = useAnnotation({
-    name: ANNOTATIONS_NAMES.POLYGON,
+    name: TOOLS_IDS.POLYGON,
     sides: 3,
   });
 

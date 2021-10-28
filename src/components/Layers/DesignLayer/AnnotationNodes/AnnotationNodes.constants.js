@@ -1,5 +1,5 @@
 /** Internal Dependencies */
-import { ANNOTATIONS_NAMES } from 'utils/constants';
+import { TOOLS_IDS } from 'utils/constants';
 import RectNode from './RectNode';
 import EllipseNode from './EllipseNode';
 import PolygonNode from './PolygonNode';
@@ -9,12 +9,12 @@ import LineNode from './LineNode';
 import ArrowNode from './ArrowNode';
 
 export const ANNOTATION_NAMES_TO_COMPONENT = {
-  [ANNOTATIONS_NAMES.RECT]: RectNode,
-  [ANNOTATIONS_NAMES.ELLIPSE]: EllipseNode,
-  [ANNOTATIONS_NAMES.POLYGON]: PolygonNode,
-  [ANNOTATIONS_NAMES.TEXT]: TextNode,
-  [ANNOTATIONS_NAMES.IMAGE]: ImageNode,
-  [ANNOTATIONS_NAMES.LINE]: LineNode,
-  [ANNOTATIONS_NAMES.ARROW]: ArrowNode,
-  [ANNOTATIONS_NAMES.PEN]: LineNode,
+  [TOOLS_IDS.RECT]: RectNode,
+  [TOOLS_IDS.ELLIPSE]: EllipseNode,
+  [TOOLS_IDS.POLYGON]: PolygonNode,
+  [TOOLS_IDS.TEXT]: TextNode,
+  [TOOLS_IDS.IMAGE]: ImageNode,
+  [TOOLS_IDS.LINE]: LineNode,
+  [TOOLS_IDS.ARROW]: ArrowNode,
+  [TOOLS_IDS.PEN]: LineNode,
 };

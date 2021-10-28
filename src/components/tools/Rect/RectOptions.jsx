@@ -3,7 +3,7 @@ import React from 'react';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
-import { ANNOTATIONS_NAMES } from 'utils/constants';
+import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import {
   rectOptionsPopupComponents,
@@ -12,7 +12,7 @@ import {
 
 const RectOptions = () => {
   const [rect, saveRect] = useAnnotation({
-    name: ANNOTATIONS_NAMES.RECT,
+    name: TOOLS_IDS.RECT,
   });
 
   return (

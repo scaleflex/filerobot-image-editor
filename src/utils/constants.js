@@ -49,18 +49,6 @@ export const FLIP_DIRECTIONS = {
 
 export const DEFAULT_ZOOM_FACTOR = 1;
 
-// TODO: We might remove it.
-export const ANNOTATIONS_NAMES = {
-  RECT: 'rect',
-  ELLIPSE: 'ellipse',
-  POLYGON: 'polygon',
-  TEXT: 'text',
-  LINE: 'line',
-  IMAGE: 'image',
-  ARROW: 'arrow',
-  PEN: 'pen',
-};
-
 export const POINTER_ICONS = {
   DEFAULT: 'default',
   DRAW: 'crosshair',

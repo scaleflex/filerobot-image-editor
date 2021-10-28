@@ -13,7 +13,7 @@ import AppContext from 'context';
 import { SELECT_ANNOTATION, SET_ANNOTATION } from 'actions';
 import randomId from 'utils/randomId';
 import debounce from 'utils/debounce';
-import { ANNOTATIONS_NAMES } from 'utils/constants';
+import { TOOLS_IDS } from 'utils/constants';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
 import { useDebouncedCallback } from '..';
 
@@ -21,7 +21,7 @@ const DEFAULTS = {
   fill: '#000000',
 };
 
-// TODO: Imporve the logic.
+// TODO: Imporve the logic and separate the selected annotation options from handling preview and options before draw.
 const useAnnotation = (annotation = {}, enablePreview = true) => {
   const {
     dispatch,
@@ -32,6 +32,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
   const [tmpAnnotation, setTmpAnnotation] = useState(() => ({
     ...DEFAULTS,
     ...annotation,
+    ...annotations[selectionsIds[0]],
   }));
   const annotationBeforeSelection = useRef();
   const canvas = previewGroup?.getStage();
@@ -41,7 +42,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
       type: SET_ANNOTATION,
       payload: annotationData,
     });
-    if (annotationData.id && annotation.name !== ANNOTATIONS_NAMES.PEN) {
+    if (annotationData.id && annotation.name !== TOOLS_IDS.PEN) {
       debounce(() => {
         dispatch({
           type: SELECT_ANNOTATION,

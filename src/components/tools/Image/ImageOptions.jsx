@@ -4,7 +4,7 @@ import { UploadInput } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
-import { ANNOTATIONS_NAMES } from 'utils/constants';
+import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import AppContext from 'context';
 import { SET_ERROR } from 'actions';
@@ -16,7 +16,7 @@ const ImageOptions = () => {
   const { shownImageDimensions, dispatch } = useContext(AppContext);
   const [image, saveImage, addNewImage] = useAnnotation(
     {
-      name: ANNOTATIONS_NAMES.IMAGE,
+      name: TOOLS_IDS.IMAGE,
       opacity: 1,
     },
     false,

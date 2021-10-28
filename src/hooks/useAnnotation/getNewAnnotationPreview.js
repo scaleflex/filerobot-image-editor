@@ -2,27 +2,24 @@
 import Konva from 'konva';
 
 /** Internal Dependencies */
-import { ANNOTATIONS_NAMES } from 'utils/constants';
+import { TOOLS_IDS } from 'utils/constants';
 
 const annotationsNamesToKonvaClasses = {
-  [ANNOTATIONS_NAMES.RECT]: Konva.Rect,
-  [ANNOTATIONS_NAMES.ELLIPSE]: Konva.Ellipse,
-  [ANNOTATIONS_NAMES.POLYGON]: Konva.RegularPolygon,
-  [ANNOTATIONS_NAMES.LINE]: Konva.Line,
-  [ANNOTATIONS_NAMES.IMAGE]: Konva.Image,
-  [ANNOTATIONS_NAMES.TEXT]: Konva.Text,
-  [ANNOTATIONS_NAMES.ARROW]: Konva.Arrow,
+  [TOOLS_IDS.RECT]: Konva.Rect,
+  [TOOLS_IDS.ELLIPSE]: Konva.Ellipse,
+  [TOOLS_IDS.POLYGON]: Konva.RegularPolygon,
+  [TOOLS_IDS.LINE]: Konva.Line,
+  [TOOLS_IDS.IMAGE]: Konva.Image,
+  [TOOLS_IDS.TEXT]: Konva.Text,
+  [TOOLS_IDS.ARROW]: Konva.Arrow,
 };
 
-const ANNOTATIONS_WITH_POINTS = [
-  ANNOTATIONS_NAMES.LINE,
-  ANNOTATIONS_NAMES.ARROW,
-];
+const ANNOTATIONS_WITH_POINTS = [TOOLS_IDS.LINE, TOOLS_IDS.ARROW];
 
 export const NO_WIDTH_HEIGHT_ANNOTATIONS = [
   ...ANNOTATIONS_WITH_POINTS,
-  ANNOTATIONS_NAMES.ELLIPSE,
-  ANNOTATIONS_NAMES.POLYGON,
+  TOOLS_IDS.ELLIPSE,
+  TOOLS_IDS.POLYGON,
 ];
 
 const getNewAnnotationPreview = (annotation) =>
@@ -52,7 +49,7 @@ export const dimensToProperAnnotationDimens = (
   const isReversedY = height < 0;
 
   switch (annotationName) {
-    case ANNOTATIONS_NAMES.RECT:
+    case TOOLS_IDS.RECT:
       if (isShiftKeyPressed) {
         newAnnotationDimens.width = Math.sqrt(
           absWidth * absWidth + absHeight * absHeight,
@@ -69,7 +66,7 @@ export const dimensToProperAnnotationDimens = (
         newAnnotationDimens.height = absHeight;
       }
       break;
-    case ANNOTATIONS_NAMES.ELLIPSE:
+    case TOOLS_IDS.ELLIPSE:
       if (isShiftKeyPressed) {
         newAnnotationDimens.radiusX =
           Math.sqrt(absWidth * absWidth + absHeight * absHeight) / 2;
@@ -88,7 +85,7 @@ export const dimensToProperAnnotationDimens = (
       newAnnotationDimens.offsetX = -newAnnotationDimens.radiusX;
       newAnnotationDimens.offsetY = -newAnnotationDimens.radiusY;
       break;
-    case ANNOTATIONS_NAMES.POLYGON:
+    case TOOLS_IDS.POLYGON:
       newAnnotationDimens.radius = (absWidth + absHeight) / 2;
       newAnnotationDimens.x -= isReversedX
         ? newAnnotationDimens.radius * 2 - absWidth
@@ -99,8 +96,8 @@ export const dimensToProperAnnotationDimens = (
       newAnnotationDimens.offsetX = -newAnnotationDimens.radius;
       newAnnotationDimens.offsetY = -newAnnotationDimens.radius;
       break;
-    case ANNOTATIONS_NAMES.LINE:
-    case ANNOTATIONS_NAMES.ARROW:
+    case TOOLS_IDS.LINE:
+    case TOOLS_IDS.ARROW:
       newAnnotationDimens.x = startedX;
       newAnnotationDimens.y = startedY;
       newAnnotationDimens.points = [0, 0];

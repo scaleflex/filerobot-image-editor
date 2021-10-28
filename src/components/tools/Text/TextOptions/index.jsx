@@ -4,7 +4,7 @@ import { MenuItem } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
-import { ANNOTATIONS_NAMES, TRANSFORMER_LAYER_ID } from 'utils/constants';
+import { TOOLS_IDS, TRANSFORMER_LAYER_ID } from 'utils/constants';
 import { Bold, Italic } from 'components/common/icons';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import { StyledIconWrapper } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
@@ -28,7 +28,7 @@ const TextOptions = () => {
   const { dispatch, textIdOfEditableContent, designLayer } =
     useContext(AppContext);
   const [text, saveText] = useAnnotation({
-    name: ANNOTATIONS_NAMES.TEXT,
+    name: TOOLS_IDS.TEXT,
     fontFamily: 'Arial',
     letterSpacing: 0,
     lineHeight: 1,

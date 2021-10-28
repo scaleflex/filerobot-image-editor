@@ -1,5 +1,5 @@
 /** Internal Dependencies */
-import { ANNOTATIONS_NAMES } from 'utils/constants';
+import { TOOLS_IDS } from 'utils/constants';
 import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
 import getBoundingRectUnScaled from './getBoundingRectUnScaled';
 import getNewAnnotationPreview, {
@@ -34,7 +34,7 @@ const previewThenCallAnnotationAdding = (
   const wrapTextBoundsPreviewByRect = (textAnnotation) => {
     textAnnotationWrappedRect = getNewAnnotationPreview({
       ...textAnnotation,
-      name: ANNOTATIONS_NAMES.RECT,
+      name: TOOLS_IDS.RECT,
       fill: '',
       stroke: '#000000',
       strokeWidth: 2,
@@ -48,7 +48,7 @@ const previewThenCallAnnotationAdding = (
   const previewAnnotation = (preparedAnnotation) => {
     shownAnnotationPreview = getNewAnnotationPreview(preparedAnnotation);
     previewGroup.add(shownAnnotationPreview);
-    if (preparedAnnotation.name === ANNOTATIONS_NAMES.TEXT) {
+    if (preparedAnnotation.name === TOOLS_IDS.TEXT) {
       wrapTextBoundsPreviewByRect(preparedAnnotation);
     }
     latestAnnotationProps = preparedAnnotation;

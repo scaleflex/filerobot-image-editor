@@ -3,12 +3,12 @@ import React from 'react';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
-import { ANNOTATIONS_NAMES } from 'utils/constants';
+import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 
 const LineOptions = () => {
   const [line, saveLine] = useAnnotation({
-    name: ANNOTATIONS_NAMES.LINE,
+    name: TOOLS_IDS.LINE,
   });
 
   return (

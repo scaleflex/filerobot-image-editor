@@ -8,8 +8,9 @@ import {
   SELECT_ANNOTATION,
   CHANGE_POINTER_ICON,
   ENABLE_TEXT_CONTENT_EDIT,
+  SELECT_TOOL,
 } from 'actions';
-import { ANNOTATIONS_NAMES, POINTER_ICONS, TABS_IDS } from 'utils/constants';
+import { TOOLS_IDS, POINTER_ICONS, TABS_IDS } from 'utils/constants';
 import { useDebouncedCallback } from 'hooks';
 
 const useAnnotationEvents = () => {
@@ -62,7 +63,8 @@ const useAnnotationEvents = () => {
       x: e.target.x(),
       y: e.target.y(),
     };
-    if (e.target.name() === ANNOTATIONS_NAMES.TEXT) {
+
+    if (e.target.name() === TOOLS_IDS.TEXT) {
       transformProps.width = e.target.width() * e.target.scaleX();
       transformProps.height = e.target.height() * e.target.scaleY();
       transformProps.scaleX = 1;
@@ -80,7 +82,7 @@ const useAnnotationEvents = () => {
   }, []);
 
   const updateTextAnnotationOnTransform = useCallback((e) => {
-    if (e.target.name() === ANNOTATIONS_NAMES.TEXT) {
+    if (e.target.name() === TOOLS_IDS.TEXT) {
       e.target.setAttrs(getAnnotationTransformProps(e));
     }
   });
@@ -93,11 +95,19 @@ const useAnnotationEvents = () => {
         multiple: e.evt.ctrlKey || e.evt.shiftKey || e.evt.metaKey,
       },
     });
+    // TODO: Remove this once we implement the possibility to select annotation
+    // while any tool is opened without changing the tool.
+    dispatch({
+      type: SELECT_TOOL,
+      payload: {
+        toolId: e.target.name(),
+      },
+    });
     changePointerIconToMoveOrSelect(e);
   }, []);
 
   const enableTextContentChangeOnDblClick = useCallback((e) => {
-    if (e.target.name() === ANNOTATIONS_NAMES.TEXT) {
+    if (e.target.name() === TOOLS_IDS.TEXT) {
       dispatch({
         type: ENABLE_TEXT_CONTENT_EDIT,
         payload: {

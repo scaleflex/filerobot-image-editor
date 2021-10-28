@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useEffect, useRef } from 'react';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
-import { ANNOTATIONS_NAMES } from 'utils/constants';
+import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import AppContext from 'context';
 import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
@@ -18,7 +18,7 @@ const PenOptions = () => {
   const { dispatch, designLayer } = useContext(AppContext);
   const [pen, savePenDebounced, savePenNoDebounce] = useAnnotation(
     {
-      name: ANNOTATIONS_NAMES.PEN,
+      name: TOOLS_IDS.PEN,
       tension: 0.5,
       lineCap: 'round',
     },
@@ -47,13 +47,13 @@ const PenOptions = () => {
     if (!updatedPen.current.moved) {
       updatedPen.current = {
         moved: true,
-        id: randomId(ANNOTATIONS_NAMES.PEN),
+        id: randomId(TOOLS_IDS.PEN),
         points: [...updatedPen.current.points, ...getPointerPosition(e)],
       };
 
       savePenNoDebounce({
         id: updatedPen.current.id,
-        name: ANNOTATIONS_NAMES.PEN,
+        name: TOOLS_IDS.PEN,
         points: updatedPen.current.points,
       });
     } else {

@@ -1,12 +1,12 @@
-const { ANNOTATIONS_NAMES } = require('./constants');
+const { TOOLS_IDS } = require('./constants');
 
 const getAnnotationOffsetToTopLeft = (annotation) => {
   switch (annotation.name) {
-    case ANNOTATIONS_NAMES.ELLIPSE:
-    case ANNOTATIONS_NAMES.POLYGON:
+    case TOOLS_IDS.ELLIPSE:
+    case TOOLS_IDS.POLYGON:
       return annotation.width / 2;
-    case ANNOTATIONS_NAMES.ARROW:
-    case ANNOTATIONS_NAMES.LINE:
+    case TOOLS_IDS.ARROW:
+    case TOOLS_IDS.LINE:
       return -Math.min(annotation.points[0], annotation.points[2]);
     default:
       return 0;
