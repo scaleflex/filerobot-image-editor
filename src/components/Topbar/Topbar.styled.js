@@ -1,6 +1,6 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import { Button, IconButton } from '@scaleflex/ui/core';
+import { Button, IconButton, Label } from '@scaleflex/ui/core';
 import iconButton from '@scaleflex/ui/core/icon-button';
 
 const StyledTopbar = styled.div`
@@ -63,6 +63,10 @@ const StyledSaveAsButton = styled(IconButton)`
   }
 `;
 
+const StyledZoomPercentageLabel = styled(Label)`
+  cursor: pointer;
+`;
+
 export {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
@@ -71,4 +75,5 @@ export {
   StyledSaveButton,
   StyledSaveAsButton,
   StyledSaveButtonWrapper,
+  StyledZoomPercentageLabel,
 };

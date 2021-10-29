@@ -54,8 +54,8 @@ export default {
   shownImageDimensions: {},
   zoom: {
     factor: DEFAULT_ZOOM_FACTOR,
-    xPoint: null,
-    yPoint: null,
+    x: null,
+    y: null,
   },
   isLoadingGlobally: true,
   // --- Start of design states ---

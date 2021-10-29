@@ -1,41 +1,67 @@
 /** External Dependencies */
-import React, { useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Minus, Plus } from '@scaleflex/icons';
-import { Label } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
 import AppContext from 'context';
 import { ZOOM_CANVAS } from 'actions';
-import { StyledSmallButton } from './Topbar.styled';
+import { DEFAULT_ZOOM_FACTOR, TABS_IDS, TOOLS_IDS } from 'utils/constants';
+import { StyledSmallButton, StyledZoomPercentageLabel } from './Topbar.styled';
+
+const MULTIPLY_ZOOM_FACTOR = 1.1;
 
 const CanvasZooming = () => {
-  const { dispatch, zoom = {} } = useContext(AppContext);
+  const { dispatch, zoom = {}, tabId, toolId } = useContext(AppContext);
 
-  const zoomIn = useCallback(() => {
+  const saveZoom = (zoomFactor) => {
     dispatch({
       type: ZOOM_CANVAS,
       payload: {
-        zoomBy: 0.2,
+        factor: zoomFactor,
+        x: 'center',
+        y: 'center',
       },
     });
-  }, []);
+  };
 
-  const zoomOut = useCallback(() => {
-    dispatch({
-      type: ZOOM_CANVAS,
-      payload: {
-        zoomBy: -0.1,
-      },
-    });
-  }, []);
+  const zoomIn = () => {
+    saveZoom(zoom.factor * MULTIPLY_ZOOM_FACTOR);
+  };
+
+  const resetZoomToDefault = () => {
+    saveZoom(DEFAULT_ZOOM_FACTOR);
+  };
+
+  const zoomOut = () => {
+    saveZoom(zoom.factor / MULTIPLY_ZOOM_FACTOR);
+  };
+
+  // TODO: Remove this once support annotations drawing while zoomed and crop movement while zoomed.
+  const isZoomDisabled =
+    tabId === TABS_IDS.ANNOTATE || toolId === TOOLS_IDS.CROP;
 
   return (
     <>
-      <StyledSmallButton onClick={zoomOut} color="link">
+      <StyledSmallButton
+        onClick={zoomOut}
+        color="link"
+        title="Zoom out"
+        disabled={isZoomDisabled}
+      >
         <Minus />
       </StyledSmallButton>
-      <Label>{`${parseInt(zoom.factor * 100, 10)}%`}</Label>
-      <StyledSmallButton onClick={zoomIn} color="link">
+      <StyledZoomPercentageLabel
+        title="Zoom percentage (Click to reset)"
+        onClick={resetZoomToDefault}
+      >
+        {`${parseInt(zoom.factor * 100, 10)}%`}
+      </StyledZoomPercentageLabel>
+      <StyledSmallButton
+        onClick={zoomIn}
+        color="link"
+        title="Zoom in"
+        disabled={isZoomDisabled}
+      >
         <Plus />
       </StyledSmallButton>
     </>
