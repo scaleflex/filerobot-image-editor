@@ -18,6 +18,7 @@ const UndoButton = ({ dispatch, hasUndo }) => {
       color="link"
       onClick={hasUndo ? dispatchUndo : undefined}
       disabled={!hasUndo}
+      title="Undo last operation"
     >
       <Undo size={12} />
     </StyledHistoryButton>

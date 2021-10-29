@@ -18,6 +18,7 @@ const RedoButton = ({ dispatch, hasRedo }) => {
       color="link"
       onClick={hasRedo ? dispatchRedo : undefined}
       disabled={!hasRedo}
+      title="Redo last operation"
     >
       <Redo size={12} />
     </StyledHistoryButton>

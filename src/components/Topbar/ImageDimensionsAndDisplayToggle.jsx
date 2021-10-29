@@ -25,6 +25,9 @@ const ImageDimensionsAndDisplayToggle = () => {
     });
 
     document.removeEventListener('mouseup', hideOriginalImage);
+    document.removeEventListener('mouseleave', hideOriginalImage);
+    document.removeEventListener('touchcancel', hideOriginalImage);
+    document.removeEventListener('touchend', hideOriginalImage);
   };
 
   const showOriginalImage = () => {
@@ -36,6 +39,9 @@ const ImageDimensionsAndDisplayToggle = () => {
     });
 
     document.addEventListener('mouseup', hideOriginalImage);
+    document.addEventListener('mouseleave', hideOriginalImage);
+    document.addEventListener('touchcancel', hideOriginalImage);
+    document.addEventListener('touchend', hideOriginalImage);
   };
 
   if (!originalImage) {
@@ -53,6 +59,7 @@ const ImageDimensionsAndDisplayToggle = () => {
         color="link"
         horizontalMargin="8px"
         onMouseDown={isResetted ? undefined : showOriginalImage}
+        onTouchStart={isResetted ? undefined : showOriginalImage}
         disabled={isResetted}
         title="Show original image"
       >

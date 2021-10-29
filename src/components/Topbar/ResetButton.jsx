@@ -18,6 +18,7 @@ const ResetButton = ({ dispatch, isResetted }) => {
       color="link"
       onClick={isResetted ? undefined : dispatchReset}
       disabled={isResetted}
+      title="Reset/delete all operations"
     >
       <Reset size={12} />
     </StyledHistoryButton>
