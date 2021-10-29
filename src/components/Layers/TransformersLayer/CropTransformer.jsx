@@ -35,6 +35,14 @@ const CropTransformer = () => {
       y: e.currentTarget.y(),
       width: e.currentTarget.width(),
       height: e.currentTarget.height(),
+      ...(isEllipse
+        ? {
+            offset: {
+              x: -e.currentTarget.width() / 2,
+              y: -e.currentTarget.height() / 2,
+            },
+          }
+        : {}),
     };
 
     cropRef.current.cropShape.setAttrs({
@@ -123,7 +131,7 @@ const CropTransformer = () => {
           tmpImgNode.cache();
           tmpImgNode.filters([Konva.Filters.Blur, Konva.Filters.Brighten]);
           tmpImgNode.blurRadius(10);
-          tmpImgNode.brightness(-0.1);
+          tmpImgNode.brightness(-0.3);
           cropTransformerRef.current.parent.add(tmpImgNode);
           cropRef.current.tmpPreviewableImgNode.moveToBottom();
         });

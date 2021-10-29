@@ -11,7 +11,7 @@ import { Image, Layer } from 'react-konva';
 /** Internal Dependencies */
 import AppContext from 'context';
 import getDimensionsMinimalRatio from 'utils/getDimensionsMinimalRatio';
-import { IMAGE_NODE_ID, TOOLS_IDS } from 'utils/constants';
+import { ELLIPSE_CROP, IMAGE_NODE_ID, TOOLS_IDS } from 'utils/constants';
 import { SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import getProperImageToCanvasSpacing from 'utils/getProperImageToCanvasSpacing';
 import getRotatedImageSize from 'utils/getRotatedImageSize';
@@ -115,22 +115,42 @@ const DesignLayer = () => {
     ],
   );
 
-  const clipBox = useMemo(
-    () =>
-      toolId === TOOLS_IDS.CROP
-        ? {
-            ...imageDimensions,
-            x: 0,
-            y: 0,
-          }
-        : {
-            width: crop.width || imageDimensions.width,
-            height: crop.height || imageDimensions.height,
-            x: crop.x ? crop.x - xOffsetToCenterImgInCanvas : 0,
-            y: crop.y ? crop.y - yOffsetToCenterImgInCanvas : 0,
-          },
-    [toolId, imageDimensions, crop],
-  );
+  const clipFunc = (ctx) => {
+    const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
+    const clipBox = isCurrentlyCropping
+      ? {
+          ...imageDimensions,
+          x: 0,
+          y: 0,
+        }
+      : {
+          width: crop.width || imageDimensions.width,
+          height: crop.height || imageDimensions.height,
+          x: crop.x ? crop.x - xOffsetToCenterImgInCanvas : 0,
+          y: crop.y ? crop.y - yOffsetToCenterImgInCanvas : 0,
+        };
+    if (crop.ratio === ELLIPSE_CROP && !isCurrentlyCropping) {
+      ctx.ellipse(
+        clipBox.x + clipBox.width / 2,
+        clipBox.y + clipBox.height / 2,
+        clipBox.width / 2,
+        clipBox.height / 2,
+        0,
+        0,
+        2 * Math.PI,
+      );
+    } else {
+      ctx.rect(clipBox.x, clipBox.y, clipBox.width, clipBox.height);
+    }
+    if (designLayerRef.current) {
+      designLayerRef.current.setAttrs({
+        clipX: clipBox.x,
+        clipY: clipBox.y,
+        clipWidth: clipBox.width,
+        clipHeight: clipBox.height,
+      });
+    }
+  };
 
   const cacheImageNode = useCallback(() => {
     if (imageNodeRef.current) {
@@ -185,7 +205,7 @@ const DesignLayer = () => {
       y={centeredFlippedY}
       scaleX={isFlippedX ? -resizedX : resizedX}
       scaleY={isFlippedY ? -resizedY : resizedY}
-      clip={clipBox}
+      clipFunc={clipFunc}
     >
       <Image
         id={IMAGE_NODE_ID}
