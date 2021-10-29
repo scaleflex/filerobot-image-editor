@@ -1,33 +1,42 @@
 /** External Dependencies */
-import React, { useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Label } from '@scaleflex/ui/core';
 
-/** External Dependencies */
+/** Internal Dependencies */
 import AppContext from 'context';
 import { TOGGLE_ORIGINAL_IMAGE_DISPLAY } from 'actions';
 import { Union } from 'components/common/icons';
 import { StyledSmallButton } from './Topbar.styled';
 
 const ImageDimensionsAndDisplayToggle = () => {
-  const { dispatch, isResetted = true, originalImage } = useContext(AppContext);
+  const {
+    dispatch,
+    isResetted = true,
+    originalImage,
+    resize = {},
+  } = useContext(AppContext);
 
-  const showOriginalImage = useCallback(() => {
+  const hideOriginalImage = () => {
+    dispatch({
+      type: TOGGLE_ORIGINAL_IMAGE_DISPLAY,
+      payload: {
+        isShow: false,
+      },
+    });
+
+    document.removeEventListener('mouseup', hideOriginalImage);
+  };
+
+  const showOriginalImage = () => {
     dispatch({
       type: TOGGLE_ORIGINAL_IMAGE_DISPLAY,
       payload: {
         isShow: true,
       },
     });
-  }, []);
 
-  const hideOriginalImage = useCallback(() => {
-    dispatch({
-      typoe: TOGGLE_ORIGINAL_IMAGE_DISPLAY,
-      payload: {
-        isShow: false,
-      },
-    });
-  }, []);
+    document.addEventListener('mouseup', hideOriginalImage);
+  };
 
   if (!originalImage) {
     return null;
@@ -35,13 +44,17 @@ const ImageDimensionsAndDisplayToggle = () => {
 
   return (
     <>
-      <Label>{`${originalImage.width} x ${originalImage.height} px`}</Label>
+      <Label title="Saved image size">
+        {`${resize.width || originalImage.width} x ${
+          resize.height || originalImage.height
+        } px`}
+      </Label>
       <StyledSmallButton
         color="link"
         horizontalMargin="8px"
         onMouseDown={isResetted ? undefined : showOriginalImage}
-        onMouseUp={isResetted ? undefined : hideOriginalImage}
         disabled={isResetted}
+        title="Show original image"
       >
         <Union />
       </StyledSmallButton>

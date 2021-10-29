@@ -10,7 +10,7 @@ import AppContext, {
 import { SET_CANVAS_SIZE } from 'actions';
 import { useResizeObserver } from 'hooks';
 import CanvasNode from './CanvasNode';
-import { CanvasContainer } from './MainCanvas.styled';
+import { CanvasContainer, StyledOrignalImage } from './MainCanvas.styled';
 
 const MainCanvas = () => {
   const [observeResize] = useResizeObserver();
@@ -35,6 +35,9 @@ const MainCanvas = () => {
 
   return (
     <CanvasContainer ref={observeCanvasContainerResizing}>
+      {providedAppContext.isShowOriginalImage && (
+        <StyledOrignalImage src={providedAppContext.originalImage.src} />
+      )}
       <CanvasNode>
         <AppProviderOverridenValue overridingValue={providedAppContext}>
           <DesignLayer />
