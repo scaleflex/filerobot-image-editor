@@ -2,7 +2,9 @@ export const MAX_CANVAS_WIDTH = 800;
 export const MAX_CANVAS_HEIGHT = 800;
 
 export const ROOT_CONTAINER_ID = 'filerobot-image-editor_root-container';
-export const TRANSFORMER_LAYER_ID = 'filerobot-image-editor_transformer-layer';
+export const DESIGN_LAYER_ID = 'filerobot-image-editor_design-layer';
+export const TRANSFORMERS_LAYER_ID =
+  'filerobot-image-editor_transformers-layer';
 export const IMAGE_NODE_ID = 'filerobot-image-editor_original-image';
 
 export const TABS_IDS = {
@@ -48,6 +50,10 @@ export const FLIP_DIRECTIONS = {
 };
 
 export const DEFAULT_ZOOM_FACTOR = 1;
+
+export const SUPPORTED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp'];
+
+export const DEFAULT_EXTENSION = SUPPORTED_EXTENSIONS[0];
 
 export const POINTER_ICONS = {
   DEFAULT: 'default',

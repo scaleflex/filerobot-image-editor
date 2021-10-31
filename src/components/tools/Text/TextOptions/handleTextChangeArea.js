@@ -44,7 +44,7 @@ const activateTextChange = (
 ) => {
   editFinishCallback = finishingCallback;
   disableTextEditCallback = dismissingTextEditing;
-  const cavnasContainer = canvasStage.container();
+  const { top, left } = canvasStage.container().getBoundingClientRect();
   transformer = currentTransformer;
   textNode = canvasStage.findOne(`#${textNodeId}`);
   // hide text node and transformer:
@@ -53,11 +53,10 @@ const activateTextChange = (
 
   // at first lets find position of text node relative to the stage:
   const textPosition = textNode.absolutePosition();
-
   // so position of textarea will be the sum of positions above:
   const areaPosition = {
-    x: cavnasContainer.offsetLeft + textPosition.x,
-    y: cavnasContainer.offsetTop + textPosition.y,
+    x: left + textPosition.x,
+    y: top + textPosition.y,
   };
 
   // create textarea and style it
@@ -73,8 +72,12 @@ const activateTextChange = (
   textarea.style.left = `${areaPosition.x}px`;
   textarea.style.width = `${textNode.width() - textNode.padding() * 2}px`;
   textarea.style.height = `${textNode.height() - textNode.padding() * 2 + 5}px`;
+  textarea.style.maxWidth = `${textNode.width() - textNode.padding() * 2}px`;
+  textarea.style.maxHeight = `${
+    textNode.height() - textNode.padding() * 2 + 5
+  }px`;
   textarea.style.fontSize = `${textNode.fontSize()}px`;
-  textarea.style.border = 'none';
+  textarea.style.border = '1px solid rgba(0, 0, 0, 0.5)';
   textarea.style.padding = '0px';
   textarea.style.margin = '0px';
   textarea.style.overflow = 'hidden';

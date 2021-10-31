@@ -11,14 +11,15 @@ import { Image, Layer } from 'react-konva';
 /** Internal Dependencies */
 import AppContext from 'context';
 import getDimensionsMinimalRatio from 'utils/getDimensionsMinimalRatio';
-import { ELLIPSE_CROP, IMAGE_NODE_ID, TOOLS_IDS } from 'utils/constants';
+import cropImage from 'utils/cropImage';
+import { DESIGN_LAYER_ID, IMAGE_NODE_ID, TOOLS_IDS } from 'utils/constants';
 import { SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import getProperImageToCanvasSpacing from 'utils/getProperImageToCanvasSpacing';
 import getRotatedImageSize from 'utils/getRotatedImageSize';
 import AnnotationNodes from './AnnotationNodes';
 import PreviewGroup from './PreviewGroup';
 
-const CANVAS_TO_IMG_SPACING = getProperImageToCanvasSpacing() * 2;
+const CANVAS_TO_IMG_SPACING = getProperImageToCanvasSpacing();
 
 // TODO: Refactor scaling here as different operations depend on it.
 const DesignLayer = () => {
@@ -46,13 +47,13 @@ const DesignLayer = () => {
     [finetunes, filter],
   );
 
-  const { originalImgSpacedWidth, originalImgSpacedHeight } = useMemo(() => {
+  const spacedOriginalImg = useMemo(() => {
     const spacedWidth = originalImage.width - CANVAS_TO_IMG_SPACING;
     const imgRatio = originalImage.width / originalImage.height;
 
     return {
-      originalImgSpacedWidth: spacedWidth,
-      originalImgSpacedHeight: spacedWidth / imgRatio,
+      width: spacedWidth,
+      height: spacedWidth / imgRatio,
     };
   }, [originalImage]);
 
@@ -67,56 +68,62 @@ const DesignLayer = () => {
     [originalImage, initialCanvasWidth, initialCanvasHeight],
   );
 
-  const originalImgScaled = useMemo(
+  const scaledSpacedOriginalImg = useMemo(
     () => ({
-      width: originalImgSpacedWidth * originalImgInitialScale,
-      height: originalImgSpacedHeight * originalImgInitialScale,
+      width: spacedOriginalImg.width * originalImgInitialScale,
+      height: spacedOriginalImg.height * originalImgInitialScale,
     }),
-    [initialCanvasWidth, initialCanvasHeight, originalImgInitialScale],
+    [spacedOriginalImg, originalImgInitialScale],
   );
 
   const scaleAfterRotation = useMemo(() => {
     const rotatedImgSize = getRotatedImageSize(
-      originalImgScaled.width,
-      originalImgScaled.height,
+      scaledSpacedOriginalImg.width,
+      scaledSpacedOriginalImg.height,
       rotation,
     );
 
     return getDimensionsMinimalRatio(
-      originalImgScaled.width,
-      originalImgScaled.height,
+      scaledSpacedOriginalImg.width,
+      scaledSpacedOriginalImg.height,
       rotatedImgSize.width,
       rotatedImgSize.height,
     );
-  }, [originalImgScaled, rotation, initialCanvasWidth, initialCanvasHeight]);
+  }, [
+    scaledSpacedOriginalImg,
+    rotation,
+    initialCanvasWidth,
+    initialCanvasHeight,
+  ]);
 
   const resizedX = resize.width ? resize.width / originalImage.width : 1;
   const resizedY = resize.height ? resize.height / originalImage.height : 1;
 
   const xOffsetToCenterImgInCanvas =
-    canvasWidth / (2 * canvasScale) - (originalImgScaled.width * resizedX) / 2;
+    canvasWidth / (2 * canvasScale) -
+    (scaledSpacedOriginalImg.width * resizedX) / 2;
 
   const yOffsetToCenterImgInCanvas =
     canvasHeight / (2 * canvasScale) -
-    (originalImgScaled.height * resizedY) / 2;
+    (scaledSpacedOriginalImg.height * resizedY) / 2;
 
   const imageDimensions = useMemo(
     () => ({
       x: xOffsetToCenterImgInCanvas,
       y: yOffsetToCenterImgInCanvas,
-      width: originalImgScaled.width,
-      height: originalImgScaled.height,
+      width: scaledSpacedOriginalImg.width,
+      height: scaledSpacedOriginalImg.height,
     }),
     [
       xOffsetToCenterImgInCanvas,
       yOffsetToCenterImgInCanvas,
       originalImage,
-      originalImgScaled,
+      scaledSpacedOriginalImg,
     ],
   );
 
+  const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
   const clipFunc = (ctx) => {
-    const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
     const clipBox = isCurrentlyCropping
       ? {
           ...imageDimensions,
@@ -126,22 +133,10 @@ const DesignLayer = () => {
       : {
           width: crop.width || imageDimensions.width,
           height: crop.height || imageDimensions.height,
-          x: crop.x ? crop.x - xOffsetToCenterImgInCanvas : 0,
-          y: crop.y ? crop.y - yOffsetToCenterImgInCanvas : 0,
+          x: crop.relativeX || 0,
+          y: crop.relativeY || 0,
         };
-    if (crop.ratio === ELLIPSE_CROP && !isCurrentlyCropping) {
-      ctx.ellipse(
-        clipBox.x + clipBox.width / 2,
-        clipBox.y + clipBox.height / 2,
-        clipBox.width / 2,
-        clipBox.height / 2,
-        0,
-        0,
-        2 * Math.PI,
-      );
-    } else {
-      ctx.rect(clipBox.x, clipBox.y, clipBox.width, clipBox.height);
-    }
+    cropImage(ctx, { ratio: crop.ratio, ...clipBox }, isCurrentlyCropping);
     if (designLayerRef.current) {
       designLayerRef.current.setAttrs({
         clipX: clipBox.x,
@@ -191,16 +186,30 @@ const DesignLayer = () => {
     return null;
   }
 
+  const xOffsetAfterCrop =
+    xOffsetToCenterImgInCanvas +
+    (!isCurrentlyCropping && crop.width
+      ? imageDimensions.width / 2 - crop.relativeX - crop.width / 2
+      : 0);
+
+  const yOffsetAfterCrop =
+    yOffsetToCenterImgInCanvas +
+    (!isCurrentlyCropping && crop.height
+      ? imageDimensions.height / 2 - crop.relativeY - crop.height / 2
+      : 0);
+
   const centeredFlippedX =
-    (isFlippedX ? originalImgScaled.width : 0) + xOffsetToCenterImgInCanvas;
+    (isFlippedX ? scaledSpacedOriginalImg.width : 0) + xOffsetAfterCrop;
+
   const centeredFlippedY =
-    (isFlippedY ? originalImgScaled.height : 0) + yOffsetToCenterImgInCanvas;
+    (isFlippedY ? scaledSpacedOriginalImg.height : 0) + yOffsetAfterCrop;
 
   return (
     <Layer
+      id={DESIGN_LAYER_ID}
       ref={designLayerRef}
-      xPadding={xOffsetToCenterImgInCanvas}
-      yPadding={yOffsetToCenterImgInCanvas}
+      xPadding={xOffsetAfterCrop}
+      yPadding={yOffsetAfterCrop}
       x={centeredFlippedX}
       y={centeredFlippedY}
       scaleX={isFlippedX ? -resizedX : resizedX}
@@ -210,15 +219,15 @@ const DesignLayer = () => {
       <Image
         id={IMAGE_NODE_ID}
         image={originalImage}
-        width={originalImgSpacedWidth}
-        height={originalImgSpacedHeight}
-        scaleX={originalImgInitialScale * scaleAfterRotation}
-        scaleY={originalImgInitialScale * scaleAfterRotation}
-        offsetX={originalImgSpacedWidth / 2}
-        offsetY={originalImgSpacedHeight / 2}
-        x={originalImgScaled.width / 2}
-        y={originalImgScaled.height / 2}
-        rotation={rotation}
+        width={scaledSpacedOriginalImg.width}
+        height={scaledSpacedOriginalImg.height}
+        // scaleX={scaleAfterRotation}
+        // scaleY={scaleAfterRotation}
+        // rotation={rotation}
+        offsetX={scaledSpacedOriginalImg.width / 2}
+        offsetY={scaledSpacedOriginalImg.height / 2}
+        x={scaledSpacedOriginalImg.width / 2}
+        y={scaledSpacedOriginalImg.height / 2}
         listening={false}
         filters={finetunesAndFilter}
         ref={imageNodeRef}

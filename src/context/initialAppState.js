@@ -64,11 +64,13 @@ export default {
   filter: null,
   adjustments: {
     crop: {
-      x: 0,
-      y: 0,
+      absoluteX: 0,
+      absoluteY: 0,
+      relativeX: 0,
+      relativeY: 0,
       ratio: 'original',
-      width: 0,
-      height: 0,
+      width: null,
+      height: null,
     },
   },
   annotations: {},

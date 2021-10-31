@@ -31,8 +31,10 @@ const CropTransformer = () => {
 
   const saveCrop = (e) => {
     const newCrop = {
-      x: e.currentTarget.x(),
-      y: e.currentTarget.y(),
+      absoluteX: e.currentTarget.x(),
+      absoluteY: e.currentTarget.y(),
+      relativeX: e.currentTarget.x() - designLayer.attrs.xPadding,
+      relativeY: e.currentTarget.y() - designLayer.attrs.yPadding,
       width: e.currentTarget.width(),
       height: e.currentTarget.height(),
       ...(isEllipse
@@ -64,8 +66,8 @@ const CropTransformer = () => {
       fill: '#FFFFFF',
       name: 'crop-shape',
       globalCompositeOperation: 'destination-out',
-      x: shapeAttrs.x || crop.x || designLayer.attrs.xPadding || 0,
-      y: shapeAttrs.y || crop.y || designLayer.attrs.yPadding || 0,
+      x: shapeAttrs.x || crop.absoluteX || designLayer.attrs.xPadding || 0,
+      y: shapeAttrs.y || crop.absoluteY || designLayer.attrs.yPadding || 0,
       width: shapeAttrs.width || crop.width || shownImageDimensions.width,
       height: shapeAttrs.height || crop.height || shownImageDimensions.height,
       dragBoundFunc: (pos) =>

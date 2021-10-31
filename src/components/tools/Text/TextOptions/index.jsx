@@ -4,7 +4,7 @@ import { MenuItem } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
-import { TOOLS_IDS, TRANSFORMER_LAYER_ID } from 'utils/constants';
+import { TOOLS_IDS, TRANSFORMERS_LAYER_ID } from 'utils/constants';
 import { Bold, Italic } from 'components/common/icons';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import { StyledIconWrapper } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
@@ -98,7 +98,7 @@ const TextOptions = () => {
     let transformer;
     if (textIdOfEditableContent && text.id === textIdOfEditableContent) {
       const canvasStage = designLayer.getStage();
-      [transformer] = canvasStage.findOne(`#${TRANSFORMER_LAYER_ID}`).children;
+      [transformer] = canvasStage.findOne(`#${TRANSFORMERS_LAYER_ID}`).children;
       activateTextChange(
         textIdOfEditableContent,
         canvasStage,

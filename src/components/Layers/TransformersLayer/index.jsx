@@ -2,7 +2,7 @@
 import AppContext from 'context';
 import React, { useContext } from 'react';
 import { Layer } from 'react-konva';
-import { TOOLS_IDS, TRANSFORMER_LAYER_ID } from 'utils/constants';
+import { TOOLS_IDS, TRANSFORMERS_LAYER_ID } from 'utils/constants';
 import CropTransformer from './CropTransformer';
 
 /** Internal Dependencies */
@@ -12,7 +12,7 @@ const TransformersLayer = () => {
   const { toolId } = useContext(AppContext);
 
   return (
-    <Layer id={TRANSFORMER_LAYER_ID}>
+    <Layer id={TRANSFORMERS_LAYER_ID}>
       <NodesTransformer />
       {toolId === TOOLS_IDS.CROP && <CropTransformer />}
     </Layer>
