@@ -15,7 +15,7 @@ import cropImage from 'utils/cropImage';
 import { DESIGN_LAYER_ID, IMAGE_NODE_ID, TOOLS_IDS } from 'utils/constants';
 import { SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import getProperImageToCanvasSpacing from 'utils/getProperImageToCanvasSpacing';
-import getRotatedImageSize from 'utils/getRotatedImageSize';
+import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import AnnotationNodes from './AnnotationNodes';
 import PreviewGroup from './PreviewGroup';
 
@@ -77,7 +77,7 @@ const DesignLayer = () => {
   );
 
   const scaleAfterRotation = useMemo(() => {
-    const rotatedImgSize = getRotatedImageSize(
+    const rotatedImgSize = getSizeAfterRotation(
       scaledSpacedOriginalImg.width,
       scaledSpacedOriginalImg.height,
       rotation,

@@ -43,12 +43,16 @@ const SaveButton = () => {
     });
     const [preparedDesignLayer] = preparedCanvas.children; // children[0] = Design layer
     preparedCanvas.children[1].destroy(); // children[1] = Transformers layer, which is not needed anymore
-    const mappedCropBox = mapCropBox({
-      x: crop.relativeX || clipX,
-      y: crop.relativeY || clipY,
-      width: crop.width || clipWidth,
-      height: crop.height || clipHeight,
-    });
+    const mappedCropBox = mapCropBox(
+      {
+        x: crop.relativeX || clipX,
+        y: crop.relativeY || clipY,
+        width: crop.width || clipWidth,
+        height: crop.height || clipHeight,
+      },
+      shownImageDimensions,
+      preparedCanvas,
+    );
 
     const preparedDesignLayerScale = {
       x: preparedCanvas.width() / shownImageDimensions.width,

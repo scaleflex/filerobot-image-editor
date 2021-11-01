@@ -1,25 +1,47 @@
 /** Internal Dependencies */
 import { POSITIONS } from './constants';
 import getAnnotationOffsetToTopLeft from './getAnnotationOffsetToTopLeft';
+import getSizeAfterRotation from './getSizeAfterRotation';
 
 const mapPositionStringToPoint = (annotation, designLayer, position) => {
-  const { width, height } = annotation;
+  const { width, height, scaleX = 1, scaleY = 1, rotation = 0 } = annotation;
+  const scaledRotatedAnnotationSize = getSizeAfterRotation(
+    width * scaleX,
+    height * scaleY,
+    rotation,
+  );
   const { clipWidth: designLayerWidth, clipHeight: designLayerHeight } =
     designLayer.attrs;
   const annotationOffsetFromItsTopLeft =
     getAnnotationOffsetToTopLeft(annotation);
 
   const xAxisMapping = {
-    left: annotationOffsetFromItsTopLeft,
-    center: designLayerWidth / 2 - (width / 2 - annotationOffsetFromItsTopLeft),
-    right: designLayerWidth - width - annotationOffsetFromItsTopLeft,
+    left:
+      annotationOffsetFromItsTopLeft + scaledRotatedAnnotationSize.offsetLeft,
+    center:
+      designLayerWidth / 2 -
+      (scaledRotatedAnnotationSize.width / 2 -
+        annotationOffsetFromItsTopLeft -
+        scaledRotatedAnnotationSize.offsetLeft),
+    right:
+      designLayerWidth -
+      scaledRotatedAnnotationSize.width -
+      annotationOffsetFromItsTopLeft +
+      scaledRotatedAnnotationSize.offsetLeft,
   };
 
   const yAxisMapping = {
-    top: annotationOffsetFromItsTopLeft,
+    top: annotationOffsetFromItsTopLeft + scaledRotatedAnnotationSize.offsetTop,
     middle:
-      designLayerHeight / 2 - (height / 2 - annotationOffsetFromItsTopLeft),
-    bottom: designLayerHeight - height - annotationOffsetFromItsTopLeft,
+      designLayerHeight / 2 -
+      (scaledRotatedAnnotationSize.height / 2 -
+        annotationOffsetFromItsTopLeft -
+        scaledRotatedAnnotationSize.offsetTop),
+    bottom:
+      designLayerHeight -
+      scaledRotatedAnnotationSize.height -
+      annotationOffsetFromItsTopLeft +
+      scaledRotatedAnnotationSize.offsetTop,
   };
 
   const mapStringToPoint = {

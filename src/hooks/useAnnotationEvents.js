@@ -37,10 +37,10 @@ const useAnnotationEvents = () => {
     });
   }, 5);
 
-  const changePointerIconToMoveOrSelect = useCallback((e) => {
-    changePointerIcon(
-      e.target.draggable() ? POINTER_ICONS.MOVE : POINTER_ICONS.SELECT,
-    );
+  const changePointerIconToMove = useCallback((e) => {
+    if (e.target.draggable()) {
+      changePointerIcon(POINTER_ICONS.MOVE);
+    }
   }, []);
 
   const changePointerIconToDraw = useCallback(() => {
@@ -53,7 +53,7 @@ const useAnnotationEvents = () => {
       x: e.target.x(),
       y: e.target.y(),
     });
-    changePointerIconToMoveOrSelect(e);
+    changePointerIconToMove(e);
   }, []);
 
   const getAnnotationTransformProps = useCallback((e) => {
@@ -103,7 +103,7 @@ const useAnnotationEvents = () => {
         toolId: e.target.name(),
       },
     });
-    changePointerIconToMoveOrSelect(e);
+    changePointerIconToMove(e);
   }, []);
 
   const enableTextContentChangeOnDblClick = useCallback((e) => {
@@ -124,7 +124,7 @@ const useAnnotationEvents = () => {
         : {
             onTransform: updateTextAnnotationOnTransform,
             onTransformEnd: updateAnnotationTransform,
-            onMouseOver: changePointerIconToMoveOrSelect,
+            onMouseOver: changePointerIconToMove,
             onMouseLeave: changePointerIconToDraw,
             onDragEnd: updatePositionOnDragEnd,
             onClick: selectAnnotationOnClick,

@@ -11,7 +11,13 @@ const ArrowOptions = () => {
     name: TOOLS_IDS.ARROW,
   });
 
-  return <AnnotationOptions annotation={arrow} updateAnnotation={saveArrow} />;
+  return (
+    <AnnotationOptions
+      annotation={arrow}
+      updateAnnotation={saveArrow}
+      hideFillOption
+    />
+  );
 };
 
 export default ArrowOptions;

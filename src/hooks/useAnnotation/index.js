@@ -134,16 +134,19 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
   }, [tmpAnnotation]);
 
   useEffect(() => {
-    if (selectionsIds.length === 1) {
-      annotationBeforeSelection.current = tmpAnnotation;
-      setTmpAnnotation({ ...annotations[selectionsIds[0]], neverSave: true });
-    } else if (annotationBeforeSelection.current) {
-      setTmpAnnotation({
-        ...annotationBeforeSelection.current,
-        neverSave: true,
-      });
-      annotationBeforeSelection.current = null;
-    }
+    // setTimeout to make the state changes after the annotation is drawn not before.
+    setTimeout(() => {
+      if (selectionsIds.length === 1) {
+        annotationBeforeSelection.current = tmpAnnotation;
+        setTmpAnnotation({ ...annotations[selectionsIds[0]], neverSave: true });
+      } else if (annotationBeforeSelection.current) {
+        setTmpAnnotation({
+          ...annotationBeforeSelection.current,
+          neverSave: true,
+        });
+        annotationBeforeSelection.current = null;
+      }
+    });
   }, [selectionsIds, annotations]);
 
   useEffect(() => {

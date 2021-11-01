@@ -53,7 +53,8 @@ const LineNode = ({
 
 LineNode.defaultProps = {
   ...nodesCommonPropTypes.defaults,
-  stroke: '#000',
+  stroke: '#000000',
+  strokeWidth: 1,
   lineCap: 'butt', // butt/round/square
   annotationEvents: {},
   tension: undefined,

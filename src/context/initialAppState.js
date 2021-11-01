@@ -38,9 +38,12 @@ export default {
     [TOOLS_IDS.POLYGON]: {
       sides: 3,
     },
-    [TOOLS_IDS.PEN]: {},
+    [TOOLS_IDS.PEN]: {
+      strokeWidth: 1,
+    },
     [TOOLS_IDS.LINE]: {
       lineCap: 'butt', // butt/round/square
+      strokeWidth: 1,
     },
     [TOOLS_IDS.ARROW]: {
       strokeWidth: 6,

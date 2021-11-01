@@ -3,15 +3,19 @@ export const DELETE_ANNOTATIONS = 'DELETE_ANNOTATIONS';
 const deleteAnnotations = (state, payload) => {
   const { annotations } = state;
   payload.annotationsIds.forEach((id) => {
-    if (annotations[id]) {
-      state.designLayer.findOne(`#${id}`)?.destroy();
+    if (state.designLayer && annotations[id]) {
+      const annotationNode = state.designLayer.findOne(`#${id}`);
+      if (annotationNode) {
+        annotationNode.destroy();
+      }
       delete annotations[id];
     }
   });
 
   return {
     ...state,
-    isDesignState: payload.isDesignState || true, // not stored in state, used in reducer to consider in undo/redo stacks
+    // not stored in state, used in reducer to consider in undo/redo stacks
+    isDesignState: payload.isDesignState || true,
     annotations,
   };
 };

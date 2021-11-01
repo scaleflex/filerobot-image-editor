@@ -6,7 +6,7 @@ import AppContext from 'context';
 import { useDebouncedCallback } from 'hooks';
 import { CHANGE_ROTATION, SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
-import getRotatedImageSize from 'utils/getRotatedImageSize';
+import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 
 const RotateOptions = () => {
   const {
@@ -23,7 +23,7 @@ const RotateOptions = () => {
         rotation: rotationAngle,
       },
     });
-    const newImageSize = getRotatedImageSize(
+    const newImageSize = getSizeAfterRotation(
       shownImageDimensions.width,
       shownImageDimensions.height,
       rotationAngle,
