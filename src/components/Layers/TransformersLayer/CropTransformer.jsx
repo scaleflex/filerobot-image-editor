@@ -9,12 +9,11 @@ import { SET_CROP } from 'actions';
 import { CUSTOM_CROP, ELLIPSE_CROP, ORIGINAL_CROP } from 'utils/constants';
 import { boundDragging, boundResizing } from './cropAreaBounding';
 
-// TODO: Improve bounding for crop resizing, and applying changing ratio bounding.
-
 const CropTransformer = () => {
   const {
     dispatch,
     theme,
+    canvasScale,
     designLayer,
     originalImage,
     shownImageDimensions,
@@ -31,17 +30,17 @@ const CropTransformer = () => {
 
   const saveCrop = (e) => {
     const newCrop = {
-      absoluteX: e.currentTarget.x(),
-      absoluteY: e.currentTarget.y(),
-      relativeX: e.currentTarget.x() - designLayer.attrs.xPadding,
-      relativeY: e.currentTarget.y() - designLayer.attrs.yPadding,
-      width: e.currentTarget.width(),
-      height: e.currentTarget.height(),
+      absoluteX: e.currentTarget.x() / canvasScale,
+      absoluteY: e.currentTarget.y() / canvasScale,
+      relativeX: e.currentTarget.x() / canvasScale - designLayer.attrs.xPadding,
+      relativeY: e.currentTarget.y() / canvasScale - designLayer.attrs.yPadding,
+      width: e.currentTarget.width() / canvasScale, // for removing the scaling from the width
+      height: e.currentTarget.height() / canvasScale,
       ...(isEllipse
         ? {
             offset: {
-              x: -e.currentTarget.width() / 2,
-              y: -e.currentTarget.height() / 2,
+              x: -e.currentTarget.width() / 2 / canvasScale,
+              y: -e.currentTarget.height() / 2 / canvasScale,
             },
           }
         : {}),
@@ -96,7 +95,9 @@ const CropTransformer = () => {
     cropTransformerRef.current.parent.add(cropRef.current.cropShape);
     cropTransformerRef.current.nodes([cropRef.current.cropShape]);
     cropRef.current.cropShape.moveDown();
+    saveCrop({ currentTarget: cropTransformerRef.current });
   };
+
   useEffect(() => {
     if (cropTransformerRef.current && cropRef.current.cropShape) {
       cropTransformerRef.current.parent.add(cropRef.current.cropShape);
@@ -124,8 +125,6 @@ const CropTransformer = () => {
       shownImageDimensions.y &&
       cropTransformerRef.current
     ) {
-      cropRef.current.canvasImgDimensions = shownImageDimensions;
-
       if (!cropRef.current.tmpPreviewableImgNode) {
         Konva.Image.fromURL(originalImage.src, (tmpImgNode) => {
           cropRef.current.tmpPreviewableImgNode = tmpImgNode;
@@ -139,7 +138,17 @@ const CropTransformer = () => {
         });
       } else {
         cropRef.current.tmpPreviewableImgNode.setAttrs(shownImageDimensions);
+        cropRef.current.cropShape.setAttrs({
+          x:
+            cropRef.current.cropShape.x() +
+            (shownImageDimensions.x - cropRef.current.canvasImgDimensions.x),
+          y:
+            cropRef.current.cropShape.y() +
+            (shownImageDimensions.y - cropRef.current.canvasImgDimensions.y),
+        });
       }
+
+      cropRef.current.canvasImgDimensions = shownImageDimensions;
     }
   }, [shownImageDimensions]);
 
@@ -169,19 +178,17 @@ const CropTransformer = () => {
 
       updateCropShapeInTransformer(ellipseCropShape);
     } else {
-      const newDimens = {};
-
       if (newRatio === ORIGINAL_CROP) {
         newRatio = originalImage.width / originalImage.height;
       }
 
-      if (attrs.width <= attrs.height) {
-        newDimens.width = attrs.width;
-        newDimens.height = attrs.width / newRatio;
-      } else {
-        newDimens.height = attrs.height;
-        newDimens.width = attrs.height * newRatio;
-      }
+      const newDimens = boundResizing(
+        attrs,
+        attrs,
+        cropRef.current.canvasImgDimensions,
+        newRatio,
+      );
+
       const currentCropShapeAttrs = cropRef.current?.cropShape?.attrs;
       if (
         !currentCropShapeAttrs ||
@@ -190,11 +197,13 @@ const CropTransformer = () => {
       ) {
         const rectCropShape = new Konva.Rect({
           ...attrs,
-          ...newDimens,
+          x: attrs.x,
+          y: attrs.y,
         });
         updateCropShapeInTransformer(rectCropShape);
       } else {
         cropRef.current?.cropShape.setAttrs(newDimens);
+        saveCrop({ currentTarget: cropTransformerRef.current });
       }
     }
   }, [designLayer, crop.ratio]);

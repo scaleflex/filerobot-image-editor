@@ -100,3 +100,8 @@ export const POSITIONS = {
   BOTTOM_CENTER: 'bottom-center',
   BOTTOM_RIGHT: 'bottom-right',
 };
+
+export const MIN_CROP = {
+  WIDTH: 14,
+  HEIGHT: 14,
+};

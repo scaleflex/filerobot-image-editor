@@ -14,16 +14,16 @@ export const CROP_PRESETS = [
     Icon: Custom,
   },
   {
+    title: 'Square',
+    ratio: 1,
+    ratioLabel: '1:1',
+    Icon: Square,
+  },
+  {
     title: 'Landscape',
     ratio: 16 / 9,
     ratioLabel: '16:9',
     Icon: Landscape,
-  },
-  {
-    title: 'Square',
-    ratio: 1,
-    ratioLabel: '16:9',
-    Icon: Square,
   },
   {
     title: 'Portrait',

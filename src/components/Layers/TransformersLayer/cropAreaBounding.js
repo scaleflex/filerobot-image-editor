@@ -1,75 +1,35 @@
-// const boundCropArea = (currentArea = {}, allowedArea = {}, keepRatio) => {
-//   const { old: previousArea = {}, new: latestArea } = currentArea;
-//   const newArea = latestArea || currentArea;
-
-//   const boundedArea = {};
-//   if (newArea.x && allowedArea.x) {
-//     boundedArea.x = Math.max(newArea.x, allowedArea.x);
-//     if (previousArea.width && newArea.x < allowedArea.x) {
-//       boundedArea.width = previousArea.width;
-//       if (keepRatio) {
-//         boundedArea.height = previousArea.height;
-//       }
-//     }
-//   }
-
-//   if (newArea.y && allowedArea.y) {
-//     boundedArea.y = Math.max(newArea.y, allowedArea.y);
-//     if (previousArea.height && newArea.y < allowedArea.y) {
-//       boundedArea.height = previousArea.height;
-//       if (keepRatio) {
-//         boundedArea.width = previousArea.width;
-//       }
-//     }
-//   }
-
-//   if (newArea.x + newArea.width > allowedArea.x + allowedArea.width) {
-//     boundedArea.x =
-//       previousArea.x || allowedArea.x + allowedArea.width - newArea.width;
-//     boundedArea.width = allowedArea.x + allowedArea.width - boundedArea.x;
-//   }
-
-//   if (newArea.y + newArea.height > allowedArea.y + allowedArea.height) {
-//     boundedArea.y =
-//       previousArea.y || allowedArea.y + allowedArea.height - newArea.height;
-//     boundedArea.height = allowedArea.y + allowedArea.height - boundedArea.y;
-//   }
-
-//   const boundedAreaKeysCount = Object.keys(boundedArea).length;
-//   const finalBoundedArea =
-//     boundedAreaKeysCount !== Object.keys(newArea).length
-//       ? {
-//           ...newArea,
-//           ...boundedArea,
-//         }
-//       : boundedArea;
-//   // console.log(finalBoundedArea);
-//   return boundedAreaKeysCount > 0 ? finalBoundedArea : null;
-// };
-
-// export default boundCropArea;
-
-// const boundCropArea = () => {
-//   x = Math.max(MIN_ALLOWED_X, CURRENT_X)
-//   y = Math.max(MIN_ALLOWED_Y, CURRENT_Y)
-//   (MIN_ALLOWED_X + WIDTH) - (CURRENT_X)
-//   width = Math.min(MIN_ALLOWED_X + WIDTH, CURRENT_X + CURRENT_)
-// };
+import compareRatios from 'utils/compareRatios';
+import { MIN_CROP } from 'utils/constants';
+import toPrecisedFloat from 'utils/toPrecisedFloat';
 
 export const boundDragging = (newDimensions, allowedArea) => {
-  const maxAllowedX = allowedArea.x + allowedArea.width;
-  const maxAllowedY = allowedArea.y + allowedArea.height;
-  const boundedDimensions = {
-    x: Math.max(allowedArea.x, newDimensions.x),
-    y: Math.max(allowedArea.y, newDimensions.y),
+  const scaledAllowedArea = {
+    x: allowedArea.x * allowedArea.scaledBy,
+    y: allowedArea.y * allowedArea.scaledBy,
+    width: allowedArea.width * allowedArea.scaledBy,
+    height: allowedArea.height * allowedArea.scaledBy,
+  };
+  // As in dragging we are receiving width and height without parent's scaling so we should apply scaling here
+  // the scaledBy of allowedArea is the same as the scaledBy for the width and height as it refers to the canvas's scale
+  // Which scales both the crop transformer and allowed area.
+  const scaledNewDimensions = {
+    width: newDimensions.width * allowedArea.scaledBy,
+    height: newDimensions.height * allowedArea.scaledBy,
   };
 
-  if (newDimensions.x + newDimensions.width > maxAllowedX) {
-    boundedDimensions.x = maxAllowedX - newDimensions.width;
+  const maxAllowedX = scaledAllowedArea.x + scaledAllowedArea.width;
+  const maxAllowedY = scaledAllowedArea.y + scaledAllowedArea.height;
+  const boundedDimensions = {
+    x: Math.max(scaledAllowedArea.x, newDimensions.x),
+    y: Math.max(scaledAllowedArea.y, newDimensions.y),
+  };
+
+  if (boundedDimensions.x + scaledNewDimensions.width > maxAllowedX) {
+    boundedDimensions.x = maxAllowedX - scaledNewDimensions.width;
   }
 
-  if (newDimensions.y + newDimensions.height > maxAllowedY) {
-    boundedDimensions.y = maxAllowedY - newDimensions.height;
+  if (boundedDimensions.y + scaledNewDimensions.height > maxAllowedY) {
+    boundedDimensions.y = maxAllowedY - scaledNewDimensions.height;
   }
 
   return boundedDimensions;
@@ -81,50 +41,64 @@ export const boundResizing = (
   allowedArea,
   ratio,
 ) => {
-  const maxAllowedX = allowedArea.x + allowedArea.width;
-  const maxAllowedY = allowedArea.y + allowedArea.height;
+  const scaledAllowedArea = {
+    x: toPrecisedFloat(allowedArea.x * allowedArea.scaledBy),
+    y: toPrecisedFloat(allowedArea.y * allowedArea.scaledBy),
+    width: toPrecisedFloat(allowedArea.width * allowedArea.scaledBy),
+    height: toPrecisedFloat(allowedArea.height * allowedArea.scaledBy),
+  };
+  if (
+    newDimensions.width < MIN_CROP.WIDTH &&
+    newDimensions.height < MIN_CROP.HEIGHT
+  ) {
+    return oldDimensions;
+  }
+
+  const maxAllowedX = scaledAllowedArea.x + scaledAllowedArea.width;
+  const maxAllowedY = scaledAllowedArea.y + scaledAllowedArea.height;
 
   const boundedDimensions = { ...newDimensions };
-
-  if (newDimensions.x < allowedArea.x) {
-    boundedDimensions.x = allowedArea.x;
+  if (toPrecisedFloat(boundedDimensions.x) < scaledAllowedArea.x) {
+    boundedDimensions.x = scaledAllowedArea.x;
     boundedDimensions.width =
-      oldDimensions.x - boundedDimensions.x + oldDimensions.width;
-    if (ratio) {
-      boundedDimensions.height = boundedDimensions.width / ratio;
-      boundedDimensions.y = oldDimensions.y;
-    }
+      oldDimensions.x - scaledAllowedArea.x + oldDimensions.width;
   }
 
-  if (newDimensions.y < allowedArea.y) {
-    boundedDimensions.y = allowedArea.y;
+  if (toPrecisedFloat(boundedDimensions.y) < scaledAllowedArea.y) {
+    boundedDimensions.y = scaledAllowedArea.y;
     boundedDimensions.height =
-      oldDimensions.y - boundedDimensions.y + oldDimensions.height;
-    if (ratio) {
-      boundedDimensions.width = boundedDimensions.height * ratio;
-      boundedDimensions.x = oldDimensions.x;
-    }
+      oldDimensions.y - scaledAllowedArea.y + oldDimensions.height;
   }
 
   if (
-    newDimensions.x + newDimensions.width > maxAllowedX &&
-    boundedDimensions.y + boundedDimensions.height !== maxAllowedY
+    toPrecisedFloat(boundedDimensions.x) +
+      toPrecisedFloat(boundedDimensions.width) >
+    maxAllowedX
   ) {
-    boundedDimensions.width = maxAllowedX - newDimensions.x;
-    if (ratio) {
-      boundedDimensions.height = boundedDimensions.width / ratio;
-      boundedDimensions.y = oldDimensions.y;
-    }
+    boundedDimensions.width = maxAllowedX - boundedDimensions.x;
   }
 
   if (
-    newDimensions.y + newDimensions.height > maxAllowedY &&
-    boundedDimensions.x + boundedDimensions.width !== maxAllowedX
+    toPrecisedFloat(boundedDimensions.y) +
+      toPrecisedFloat(boundedDimensions.height) >
+    maxAllowedY
   ) {
-    boundedDimensions.height = maxAllowedY - newDimensions.y;
-    if (ratio) {
-      boundedDimensions.width = boundedDimensions.height * ratio;
-      boundedDimensions.x = oldDimensions.x;
+    boundedDimensions.height = maxAllowedY - boundedDimensions.y;
+  }
+
+  if (
+    ratio &&
+    !compareRatios(boundedDimensions.width / boundedDimensions.height, ratio)
+  ) {
+    const ratioedBoundedWidth = boundedDimensions.height * ratio;
+    const ratioedBoundedHeight = boundedDimensions.width / ratio;
+
+    if (
+      toPrecisedFloat(boundedDimensions.y + ratioedBoundedHeight) <= maxAllowedY
+    ) {
+      boundedDimensions.height = ratioedBoundedHeight;
+    } else {
+      boundedDimensions.width = ratioedBoundedWidth;
     }
   }
 

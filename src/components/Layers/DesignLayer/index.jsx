@@ -113,8 +113,10 @@ const DesignLayer = () => {
       y: yOffsetToCenterImgInCanvas,
       width: scaledSpacedOriginalImg.width,
       height: scaledSpacedOriginalImg.height,
+      scaledBy: canvasScale,
     }),
     [
+      canvasScale,
       xOffsetToCenterImgInCanvas,
       yOffsetToCenterImgInCanvas,
       originalImage,
