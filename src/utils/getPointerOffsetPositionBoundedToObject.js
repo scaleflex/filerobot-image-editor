@@ -2,32 +2,35 @@
 import restrictNumber from './restrictNumber';
 
 /**
- * Gets the touch/mouse position relative to the passed object to be considred as offset X/Y
- * as offset isn't supported in touch events.
+ * Gets the touch/mouse position relative to the passed object to be considred as offset X/Y.
  *
- * @param {Object} e - The pointer (mouse/touch) event contains pageX & pageY.
+ * @param {Object} previewGroup - The preview group that is a direct child of the design layer
  * @param {Object} relativeToObject - The object to be considered as parent element
  *                                    contains left, top, width & height relative to the document.
  * @returns {Object} both X & Y offset values.
  */
 const getPointerOffsetPositionBoundedToObject = (
-  e = {},
+  previewGroup = {},
   relativeToObject = {},
 ) => {
-  const pointerPositionEvent =
-    e.evt?.touches?.[0] || e.touches?.[0] || e.evt || e;
+  const designLayer = previewGroup.parent;
+  const canvas = designLayer.getStage();
+  const canvasZoomFactor = canvas.attrs.zoomFactor;
+  const pos = designLayer.getRelativePointerPosition();
 
   return {
-    offsetX: restrictNumber(
-      pointerPositionEvent.pageX - relativeToObject.left,
-      0,
-      relativeToObject.width,
-    ),
-    offsetY: restrictNumber(
-      pointerPositionEvent.pageY - relativeToObject.top,
-      0,
-      relativeToObject.height,
-    ),
+    offsetX:
+      restrictNumber(
+        pos.x,
+        0,
+        relativeToObject.width / (canvas.scaleX() / canvasZoomFactor),
+      ) + designLayer.attrs.xPadding,
+    offsetY:
+      restrictNumber(
+        pos.y,
+        0,
+        relativeToObject.height / (canvas.scaleY() / canvasZoomFactor),
+      ) + designLayer.attrs.yPadding,
   };
 };
 

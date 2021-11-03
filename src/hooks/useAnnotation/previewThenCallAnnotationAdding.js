@@ -72,7 +72,7 @@ const previewThenCallAnnotationAdding = (
 
   const updatePreviewWithBoundedDimens = (e) => {
     const pointerOffsets = getPointerOffsetPositionBoundedToObject(
-      e,
+      previewGroup,
       getCanvasBoundingRect(),
     );
 
@@ -95,7 +95,7 @@ const previewThenCallAnnotationAdding = (
 
   const handlePointerMove = (e) => {
     const pointerOffsets = getPointerOffsetPositionBoundedToObject(
-      e,
+      previewGroup,
       getCanvasBoundingRect(),
     );
 
@@ -204,9 +204,10 @@ const previewThenCallAnnotationAdding = (
     }
     destroyShownPreview();
     const pointerOffsets = getPointerOffsetPositionBoundedToObject(
-      e,
+      previewGroup,
       getCanvasBoundingRect(),
     );
+
     // The dimensions are relative to the canvas.
     pointerDown.startedX = pointerOffsets.offsetX;
     pointerDown.startedY = pointerOffsets.offsetY;

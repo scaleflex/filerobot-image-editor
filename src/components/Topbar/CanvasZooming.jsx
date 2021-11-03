@@ -36,9 +36,7 @@ const CanvasZooming = () => {
     saveZoom(zoom.factor / MULTIPLY_ZOOM_FACTOR);
   };
 
-  // TODO: Remove this once support annotations drawing while zoomed and crop movement while zoomed.
-  const isZoomDisabled =
-    tabId === TABS_IDS.ANNOTATE || toolId === TOOLS_IDS.CROP;
+  const isZoomDisabled = toolId === TOOLS_IDS.CROP;
 
   return (
     <>

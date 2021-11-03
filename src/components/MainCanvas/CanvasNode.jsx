@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import Konva from 'konva';
@@ -13,12 +14,7 @@ import { Stage, useStrictMode } from 'react-konva';
 /** Internal Dependencies */
 import AppContext from 'context';
 import { CLEAR_ANNOTATIONS_SELECTIONS, ZOOM_CANVAS } from 'actions';
-import {
-  DEFAULT_ZOOM_FACTOR,
-  POINTER_ICONS,
-  TABS_IDS,
-  TOOLS_IDS,
-} from 'utils/constants';
+import { POINTER_ICONS, TABS_IDS, TOOLS_IDS } from 'utils/constants';
 import { endTouchesZooming, zoomOnTouchesMove } from './touchZoomingEvents';
 
 const ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR = 0.01;
@@ -37,6 +33,10 @@ const CanvasNode = ({ children }) => {
     zoom = {},
   } = useContext(AppContext);
   const canvasRef = useRef();
+  const isZoomEnabled = toolId !== TOOLS_IDS.CROP;
+  const [isPanningEnabled, setIsPanningEnabled] = useState(
+    tabId !== TABS_IDS.ANNOTATE,
+  );
 
   const cursorStyle = useMemo(
     () => ({
@@ -112,21 +112,19 @@ const CanvasNode = ({ children }) => {
     });
   };
 
-  // TODO: Once make annotation drawable while we are zoomed let's remove this and others related to prohibt zooming
-  // while in annotation and crop
-  useEffect(() => {
-    if (tabId === TABS_IDS.ANNOTATE || toolId === TOOLS_IDS.CROP) {
-      saveZoom({
-        factor: DEFAULT_ZOOM_FACTOR,
-        x: 'center',
-        y: 'center',
-      });
+  const togglePanningOnRightClick = () => {
+    if (tabId === TABS_IDS.ANNOTATE) {
+      setIsPanningEnabled((val) => !val);
     }
-  }, [tabId, toolId]);
+  };
 
+  useEffect(() => {
+    setIsPanningEnabled(tabId !== TABS_IDS.ANNOTATE);
+  }, [tabId]);
+
+  // Zoom panning is done by dragging mouse except in annotate tab,
+  // it's done by toggling panning through mouse right click (enable/disable) then drag mouse.
   const zoomedResponsiveCanvasScale = canvasScale * (zoom.factor || 1);
-  const isZoomEnabled =
-    tabId !== TABS_IDS.ANNOTATE && toolId !== TOOLS_IDS.CROP;
   return (
     <Stage
       width={canvasWidth}
@@ -135,15 +133,17 @@ const CanvasNode = ({ children }) => {
       scaleY={zoomedResponsiveCanvasScale}
       x={zoom.x || null}
       y={zoom.y || null}
+      zoomFactor={zoom.factor || 1}
       onWheel={isZoomEnabled ? handleZoom : undefined}
       onTap={clearSelections}
       onClick={clearSelections}
+      onContextMenu={togglePanningOnRightClick}
       onTouchMove={
         isZoomEnabled ? (e) => zoomOnTouchesMove(e, saveZoom) : undefined
       }
       onTouchEnd={isZoomEnabled ? endTouchesZooming : undefined}
       dragBoundFunc={dragBoundFunc}
-      draggable={isZoomEnabled}
+      draggable={isZoomEnabled && isPanningEnabled}
       onDragEnd={handleCanvasDragEnd}
       style={cursorStyle}
       ref={canvasRef}
