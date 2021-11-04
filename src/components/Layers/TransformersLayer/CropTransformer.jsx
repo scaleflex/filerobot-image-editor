@@ -9,15 +9,24 @@ import { SET_CROP } from 'actions';
 import { CUSTOM_CROP, ELLIPSE_CROP, ORIGINAL_CROP } from 'utils/constants';
 import { boundDragging, boundResizing } from './cropAreaBounding';
 
+// Used in determining if the current & previous crops are positioned in different (current & previous) flip cases.
+const exIsFlipped = {
+  x: false,
+  y: false,
+};
+
+// TODO: Improve this and convert to react-konva.
 const CropTransformer = () => {
   const {
     dispatch,
     theme,
     canvasScale,
     designLayer,
+    canvasWidth,
+    canvasHeight,
     originalImage,
     shownImageDimensions,
-    adjustments: { crop = {} } = {},
+    adjustments: { crop = {}, isFlippedX, isFlippedY } = {},
   } = useContext(AppContext);
   const cropRef = useRef({
     canvasImgDimensions: null,
@@ -29,22 +38,38 @@ const CropTransformer = () => {
   const isEllipse = crop.ratio === ELLIPSE_CROP;
 
   const saveCrop = (e) => {
+    const width = e.currentTarget.width() / canvasScale; // for removing the scaling from the width;
+    const height = e.currentTarget.height() / canvasScale;
+    const x = e.currentTarget.x() / canvasScale;
+    const y = e.currentTarget.y() / canvasScale;
+
     const newCrop = {
-      absoluteX: e.currentTarget.x() / canvasScale,
-      absoluteY: e.currentTarget.y() / canvasScale,
-      relativeX: e.currentTarget.x() / canvasScale - designLayer.attrs.xPadding,
-      relativeY: e.currentTarget.y() / canvasScale - designLayer.attrs.yPadding,
-      width: e.currentTarget.width() / canvasScale, // for removing the scaling from the width
-      height: e.currentTarget.height() / canvasScale,
+      absoluteX: isFlippedX && x === crop.x ? canvasWidth - x - width : x,
+      absoluteY: isFlippedY && y === crop.y ? canvasHeight - y - height : y,
+      relativeX:
+        (isFlippedX ? canvasWidth / canvasScale - x - width : x) -
+        designLayer.attrs.xPadding,
+      relativeY:
+        (isFlippedY ? canvasHeight - y - height : y) -
+        designLayer.attrs.yPadding,
+      width,
+      height,
       ...(isEllipse
         ? {
             offset: {
-              x: -e.currentTarget.width() / 2 / canvasScale,
-              y: -e.currentTarget.height() / 2 / canvasScale,
+              x: -width / 2 / canvasScale,
+              y: -height / 2 / canvasScale,
             },
           }
         : {}),
     };
+
+    if (isFlippedX !== exIsFlipped.x) {
+      exIsFlipped.x = isFlippedX;
+    }
+    if (isFlippedY !== exIsFlipped.y) {
+      exIsFlipped.y = isFlippedY;
+    }
 
     cropRef.current.cropShape.setAttrs({
       ...newCrop,
@@ -59,16 +84,21 @@ const CropTransformer = () => {
 
   const getCropShapeProps = () => {
     const shapeAttrs = cropRef.current?.cropShape?.attrs || {};
+    const x = shapeAttrs.x || crop.absoluteX || designLayer.attrs.xPadding || 0;
+    const y = shapeAttrs.y || crop.absoluteY || designLayer.attrs.yPadding || 0;
+    const width = shapeAttrs.width || crop.width || shownImageDimensions.width;
+    const height =
+      shapeAttrs.height || crop.height || shownImageDimensions.height;
 
     return {
       draggable: true,
       fill: '#FFFFFF',
       name: 'crop-shape',
       globalCompositeOperation: 'destination-out',
-      x: shapeAttrs.x || crop.absoluteX || designLayer.attrs.xPadding || 0,
-      y: shapeAttrs.y || crop.absoluteY || designLayer.attrs.yPadding || 0,
-      width: shapeAttrs.width || crop.width || shownImageDimensions.width,
-      height: shapeAttrs.height || crop.height || shownImageDimensions.height,
+      x: isFlippedX !== exIsFlipped.x ? canvasWidth - x - width : x,
+      y: isFlippedY !== exIsFlipped.y ? canvasHeight - y - height : y,
+      width,
+      height,
       dragBoundFunc: (pos) =>
         boundDragging(
           {
@@ -96,6 +126,18 @@ const CropTransformer = () => {
     cropTransformerRef.current.nodes([cropRef.current.cropShape]);
     cropRef.current.cropShape.moveDown();
     saveCrop({ currentTarget: cropTransformerRef.current });
+  };
+
+  const flipPreviewImgNodeIfNeeded = () => {
+    const tmpImgNode = cropRef.current.tmpPreviewableImgNode;
+    if (isFlippedX) {
+      cropRef.current.tmpPreviewableImgNode.scaleX(-1);
+      tmpImgNode.x(tmpImgNode.x() + tmpImgNode.width());
+    }
+    if (isFlippedY) {
+      tmpImgNode.scaleY(-1);
+      tmpImgNode.y(tmpImgNode.height());
+    }
   };
 
   useEffect(() => {
@@ -133,6 +175,7 @@ const CropTransformer = () => {
           tmpImgNode.filters([Konva.Filters.Blur, Konva.Filters.Brighten]);
           tmpImgNode.blurRadius(10);
           tmpImgNode.brightness(-0.3);
+          flipPreviewImgNodeIfNeeded();
           cropTransformerRef.current.parent.add(tmpImgNode);
           cropRef.current.tmpPreviewableImgNode.moveToBottom();
         });
@@ -146,6 +189,7 @@ const CropTransformer = () => {
             cropRef.current.cropShape.y() +
             (shownImageDimensions.y - cropRef.current.canvasImgDimensions.y),
         });
+        flipPreviewImgNodeIfNeeded();
       }
 
       cropRef.current.canvasImgDimensions = shownImageDimensions;

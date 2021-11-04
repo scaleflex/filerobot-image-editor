@@ -191,13 +191,15 @@ const DesignLayer = () => {
   const xOffsetAfterCrop =
     xOffsetToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.width
-      ? imageDimensions.width / 2 - crop.relativeX - crop.width / 2
+      ? (isFlippedX ? -1 : 1) *
+        (imageDimensions.width / 2 - crop.relativeX - crop.width / 2)
       : 0);
 
   const yOffsetAfterCrop =
     yOffsetToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.height
-      ? imageDimensions.height / 2 - crop.relativeY - crop.height / 2
+      ? (isFlippedY ? -1 : 1) *
+        (imageDimensions.height / 2 - crop.relativeY - crop.height / 2)
       : 0);
 
   const centeredFlippedX =
