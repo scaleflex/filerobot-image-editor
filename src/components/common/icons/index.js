@@ -68,3 +68,9 @@ export { default as Custom } from './Custom';
 export { default as Landscape } from './Landscape';
 
 export { default as Portrait } from './Portrait';
+
+export { default as Remove } from './Remove';
+
+export { default as Duplicate } from './Duplicate';
+
+export { default as LayerOrder } from './LayerOrder';

@@ -29,7 +29,10 @@ import setOriginalImage, { SET_ORIGINAL_IMAGE } from './setOriginalImage';
 import setShownImageDimensions, {
   SET_SHOWN_IMAGE_DIMENSIONS,
 } from './setShownImageDimensions';
-import deleteAnnotations, { DELETE_ANNOTATIONS } from './deleteAnnotations';
+import removeAnnotations, { REMOVE_ANNOTATIONS } from './removeAnnotations';
+import duplicateAnnotations, {
+  DUPLICATE_ANNOTATIONS,
+} from './duplicateAnnotations';
 import enableTextContentEdit, {
   ENABLE_TEXT_CONTENT_EDIT,
 } from './enableTextContentEdit';
@@ -59,7 +62,8 @@ export default {
   [CHANGE_ROTATION]: changeRotation,
   [TOGGLE_FLIP]: toggleFlip,
   [SET_RESIZE]: setResize,
-  [DELETE_ANNOTATIONS]: deleteAnnotations,
+  [REMOVE_ANNOTATIONS]: removeAnnotations,
+  [DUPLICATE_ANNOTATIONS]: duplicateAnnotations,
   // End of Design actions.
   [UNDO]: undo,
   [REDO]: redo,
@@ -90,7 +94,8 @@ export {
   CHANGE_ROTATION,
   TOGGLE_FLIP,
   SET_RESIZE,
-  DELETE_ANNOTATIONS,
+  REMOVE_ANNOTATIONS,
+  DUPLICATE_ANNOTATIONS,
   // End of Design actions.
   UNDO,
   REDO,

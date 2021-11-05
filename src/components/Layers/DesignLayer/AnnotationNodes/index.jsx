@@ -4,27 +4,22 @@ import React, { useContext, useMemo } from 'react';
 /** Internal Dependencies */
 import AppContext from 'context';
 import { useAnnotationEvents } from 'hooks';
-import { ANNOTATION_NAMES_TO_COMPONENT } from './AnnotationNodes.constants';
+import MemoizedAnnotation from './MemoizedAnnotation';
 
 const AnnotationNodes = () => {
   const { annotations = {}, selectionsIds = [] } = useContext(AppContext);
   const annotationEvents = useAnnotationEvents();
 
-  const renderAnnotation = (annotation) => {
-    const AnnotationComponent = ANNOTATION_NAMES_TO_COMPONENT[annotation.name];
-
-    return (
-      <AnnotationComponent
-        key={annotation.id}
-        annotationEvents={annotationEvents}
-        draggable={selectionsIds.includes(annotation.id)}
-        {...annotation}
-      />
-    );
-  };
-
   return useMemo(
-    () => Object.values(annotations).map(renderAnnotation),
+    () =>
+      Object.values(annotations).map((annotation) => (
+        <MemoizedAnnotation
+          key={annotation.id}
+          annotation={annotation}
+          annotationEvents={annotationEvents}
+          selectionsIds={selectionsIds}
+        />
+      )),
     [annotations, annotationEvents, selectionsIds],
   );
 };

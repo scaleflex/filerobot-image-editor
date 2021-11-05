@@ -4,6 +4,7 @@ import { Transformer } from 'react-konva';
 
 /** Internal Dependencies */
 import AppContext from 'context';
+import { NODES_TRANSFORMER_ID } from 'utils/constants';
 
 const NodesTransformer = () => {
   const { selectionsIds = [], theme, designLayer } = useContext(AppContext);
@@ -22,6 +23,7 @@ const NodesTransformer = () => {
   // SHIFT is used to scaling with keeping ratio
   return (
     <Transformer
+      id={NODES_TRANSFORMER_ID}
       centeredScaling={false}
       rotationSnaps={[0, 45, 90, 135, 180, 225, 270, 315]}
       nodes={selections}

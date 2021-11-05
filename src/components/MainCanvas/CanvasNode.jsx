@@ -4,7 +4,6 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -32,7 +31,6 @@ const CanvasNode = ({ children }) => {
     selectionsIds = [],
     zoom = {},
   } = useContext(AppContext);
-  const canvasRef = useRef();
   const isZoomEnabled = toolId !== TOOLS_IDS.CROP;
   const [isPanningEnabled, setIsPanningEnabled] = useState(
     tabId !== TABS_IDS.ANNOTATE,
@@ -146,7 +144,6 @@ const CanvasNode = ({ children }) => {
       draggable={isZoomEnabled && isPanningEnabled}
       onDragEnd={handleCanvasDragEnd}
       style={cursorStyle}
-      ref={canvasRef}
     >
       {children}
     </Stage>

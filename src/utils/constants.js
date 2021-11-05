@@ -6,6 +6,7 @@ export const DESIGN_LAYER_ID = 'filerobot-image-editor_design-layer';
 export const TRANSFORMERS_LAYER_ID =
   'filerobot-image-editor_transformers-layer';
 export const IMAGE_NODE_ID = 'filerobot-image-editor_original-image';
+export const NODES_TRANSFORMER_ID = 'filerobot-image-editor_nodes-transformer';
 
 export const TABS_IDS = {
   FINETUNE: 'FINTUNE',
