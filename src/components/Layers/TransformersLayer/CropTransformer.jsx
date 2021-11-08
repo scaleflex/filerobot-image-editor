@@ -37,7 +37,7 @@ const CropTransformer = () => {
   const isCustom = crop.ratio === CUSTOM_CROP;
   const isEllipse = crop.ratio === ELLIPSE_CROP;
 
-  const saveCrop = (e) => {
+  const saveCrop = (e, noHistory = false) => {
     const width = e.currentTarget.width() / canvasScale; // for removing the scaling from the width;
     const height = e.currentTarget.height() / canvasScale;
     const x = e.currentTarget.x() / canvasScale;
@@ -78,7 +78,10 @@ const CropTransformer = () => {
     });
     dispatch({
       type: SET_CROP,
-      payload: newCrop,
+      payload: {
+        ...newCrop,
+        dismissHistory: noHistory,
+      },
     });
   };
 
@@ -121,11 +124,12 @@ const CropTransformer = () => {
       cropRef.current.cropShape.destroy();
     }
 
+    const isFirstRender = !cropRef.current.cropShape;
     cropRef.current.cropShape = newCropShape;
     cropTransformerRef.current.parent.add(cropRef.current.cropShape);
     cropTransformerRef.current.nodes([cropRef.current.cropShape]);
     cropRef.current.cropShape.moveDown();
-    saveCrop({ currentTarget: cropTransformerRef.current });
+    saveCrop({ currentTarget: cropTransformerRef.current }, isFirstRender);
   };
 
   const flipPreviewImgNodeIfNeeded = () => {

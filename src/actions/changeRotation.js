@@ -4,7 +4,7 @@ const changeRotation = (state, payload) =>
   state.adjustments.rotation !== payload.rotation
     ? {
         ...state,
-        isDesignState: true,
+        isDesignState: !payload.dismissHistory,
         adjustments: {
           ...state.adjustments,
           rotation: payload.rotation,

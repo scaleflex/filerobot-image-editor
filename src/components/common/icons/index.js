@@ -74,3 +74,5 @@ export { default as Remove } from './Remove';
 export { default as Duplicate } from './Duplicate';
 
 export { default as LayerOrder } from './LayerOrder';
+
+export { default as Refresh } from './Refresh';

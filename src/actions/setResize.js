@@ -2,7 +2,7 @@ export const SET_RESIZE = 'SET_RESIZE';
 
 const setResize = (state, payload) => ({
   ...state,
-  isDesignState: true,
+  isDesignState: !payload.dismissHistory,
   resize: {
     ...state.resize,
     // width, height, ratioUnlocked (locked by default).

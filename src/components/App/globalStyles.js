@@ -136,6 +136,10 @@ const FontsFaces = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
   }
+
+  .SfxModal-Wrapper * {
+    font-family: 'Roboto', sans-serif;
+  }
 `;
 
 export { FontsFaces };

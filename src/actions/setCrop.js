@@ -5,7 +5,7 @@ const setCrop = (state, payload) => {
 
   return {
     ...state,
-    isDesignState: true,
+    isDesignState: !payload.dismissHistory,
     adjustments: {
       ...state.adjustments,
       crop: {

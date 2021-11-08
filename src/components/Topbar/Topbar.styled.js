@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 import { Button, IconButton, Label } from '@scaleflex/ui/core';
 import iconButton from '@scaleflex/ui/core/icon-button';
+import { Warning } from '@scaleflex/icons';
 
 const StyledTopbar = styled.div`
   position: relative;
@@ -14,10 +15,18 @@ const StyledTopbar = styled.div`
 `;
 
 const StyledHistoryButton = styled(IconButton)`
-  margin: 0 8px;
+  margin: 0 4px;
+
+  :first-of-type {
+    margin: 0 4px 0 8px;
+  }
   width: 23px;
   height: 23px;
   padding: 4px;
+
+  :disabled {
+    cursor: not-allowed;
+  }
 `;
 
 const StyledSmallButton = styled(iconButton)`
@@ -57,6 +66,7 @@ const StyledSaveAsButton = styled(IconButton)`
   margin-left: 1px;
   height: 100%;
   padding: 4px 8px;
+  margin-right: 4px;
 
   svg {
     transform: rotate(90deg);
@@ -65,6 +75,10 @@ const StyledSaveAsButton = styled(IconButton)`
 
 const StyledZoomPercentageLabel = styled(Label)`
   cursor: pointer;
+`;
+
+const StyledWarningIcon = styled(Warning)`
+  color: ${({ theme }) => theme.palette.warning};
 `;
 
 export {
@@ -76,4 +90,5 @@ export {
   StyledSaveAsButton,
   StyledSaveButtonWrapper,
   StyledZoomPercentageLabel,
+  StyledWarningIcon,
 };

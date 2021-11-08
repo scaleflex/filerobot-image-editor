@@ -21,7 +21,6 @@ import PreviewGroup from './PreviewGroup';
 
 const CANVAS_TO_IMG_SPACING = getProperImageToCanvasSpacing();
 
-// TODO: Refactor scaling here as different operations depend on it.
 const DesignLayer = () => {
   const designLayerRef = useRef();
   const {

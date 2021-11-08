@@ -1,37 +1,52 @@
 /** External Dependencies */
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { Reset } from '@scaleflex/icons';
+import React, { useCallback, useState } from 'react';
 
 /** Internal Dependencies */
-import { memoAndMapContextToProps } from 'context';
+import { useStore } from 'hooks';
+import Modal from 'components/common/Modal';
+import { Refresh } from 'components/common/icons';
 import { RESET } from 'actions';
-import { StyledHistoryButton } from './Topbar.styled';
+import { StyledHistoryButton, StyledWarningIcon } from './Topbar.styled';
 
-const ResetButton = ({ dispatch, isResetted }) => {
+const ResetButton = () => {
+  const { dispatch, isResetted = true } = useStore();
+  const [isModalOpened, setIsModalOpened] = useState(false);
+
+  const cancelModal = () => {
+    setIsModalOpened(false);
+  };
+
+  const openModal = () => {
+    setIsModalOpened(true);
+  };
+
   const dispatchReset = useCallback(() => {
     dispatch({ type: RESET });
+    cancelModal();
   }, []);
 
   return (
-    <StyledHistoryButton
-      color="link"
-      onClick={isResetted ? undefined : dispatchReset}
-      disabled={isResetted}
-      title="Reset/delete all operations"
-    >
-      <Reset size={12} />
-    </StyledHistoryButton>
+    <>
+      <StyledHistoryButton
+        color="link"
+        onClick={isResetted ? undefined : openModal}
+        disabled={isResetted}
+        title="Reset/delete all operations"
+      >
+        <Refresh size={12} />
+      </StyledHistoryButton>
+      {isModalOpened && (
+        <Modal
+          title="All changes will be lost"
+          hint="Do you want to continue?"
+          isOpened={isModalOpened}
+          onCancel={cancelModal}
+          onDone={dispatchReset}
+          Icon={StyledWarningIcon}
+        />
+      )}
+    </>
   );
 };
 
-ResetButton.defaultProps = {
-  isResetted: true,
-};
-
-ResetButton.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  isResetted: PropTypes.bool,
-};
-
-export default memoAndMapContextToProps(ResetButton);
+export default ResetButton;

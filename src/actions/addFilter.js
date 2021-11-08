@@ -2,7 +2,7 @@ export const ADD_FILTER = 'ADD_FILTER';
 
 const addFilter = (state, payload) => ({
   ...state,
-  isDesignState: true, // not stored in state, used in reducer to consider in undo/redo stacks
+  isDesignState: !payload.dismissHistory, // not stored in state, used in reducer to consider in undo/redo stacks
   filter: payload.filter || null,
 });
 
