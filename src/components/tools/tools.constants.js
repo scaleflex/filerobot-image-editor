@@ -18,6 +18,7 @@ import { LineButton, LineOptions } from './Line';
 import { ArrowButton, ArrowOptions } from './Arrow';
 import { PolygonButton, PolygonOptions } from './Polygon';
 import { Resize } from './Resize';
+import { Watermark } from './Watermark';
 
 export const TOOLS_ITEMS = {
   [TOOLS_IDS.CROP]: {
@@ -65,6 +66,10 @@ export const TOOLS_ITEMS = {
   [TOOLS_IDS.FILTERS]: {
     id: TOOLS_IDS.FILTERS,
     Item: Filters,
+  },
+  [TOOLS_IDS.WATERMARK]: {
+    id: TOOLS_IDS.WATERMARK,
+    Item: Watermark,
   },
   [TOOLS_IDS.TEXT]: {
     id: TOOLS_IDS.TEXT,
@@ -127,6 +132,7 @@ export const TABS_TOOLS = {
     TOOLS_IDS.WARMTH,
   ],
   [TABS_IDS.FILTERS]: [TOOLS_IDS.FILTERS],
+  [TABS_IDS.WATERMARK]: [TOOLS_IDS.WATERMARK],
   [TABS_IDS.ANNOTATE]: [
     TOOLS_IDS.TEXT,
     TOOLS_IDS.IMAGE,
