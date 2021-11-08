@@ -13,7 +13,12 @@ import { Stage, useStrictMode } from 'react-konva';
 /** Internal Dependencies */
 import AppContext from 'context';
 import { CLEAR_ANNOTATIONS_SELECTIONS, ZOOM_CANVAS } from 'actions';
-import { POINTER_ICONS, TABS_IDS, TOOLS_IDS } from 'utils/constants';
+import {
+  DEFAULT_ZOOM_FACTOR,
+  POINTER_ICONS,
+  TABS_IDS,
+  TOOLS_IDS,
+} from 'utils/constants';
 import { endTouchesZooming, zoomOnTouchesMove } from './touchZoomingEvents';
 
 const ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR = 0.01;
@@ -122,16 +127,17 @@ const CanvasNode = ({ children }) => {
 
   // Zoom panning is done by dragging mouse except in annotate tab,
   // it's done by toggling panning through mouse right click (enable/disable) then drag mouse.
-  const zoomedResponsiveCanvasScale = canvasScale * (zoom.factor || 1);
+  const zoomedResponsiveCanvasScale =
+    canvasScale * ((isZoomEnabled && zoom.factor) || DEFAULT_ZOOM_FACTOR);
   return (
     <Stage
       width={canvasWidth}
       height={canvasHeight}
       scaleX={zoomedResponsiveCanvasScale}
       scaleY={zoomedResponsiveCanvasScale}
-      x={zoom.x || null}
-      y={zoom.y || null}
-      zoomFactor={zoom.factor || 1}
+      x={(isZoomEnabled && zoom.x) || null}
+      y={(isZoomEnabled && zoom.y) || null}
+      zoomFactor={(isZoomEnabled && zoom.factor) || DEFAULT_ZOOM_FACTOR}
       onWheel={isZoomEnabled ? handleZoom : undefined}
       onTap={clearSelections}
       onClick={clearSelections}

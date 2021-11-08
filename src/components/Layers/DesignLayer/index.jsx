@@ -41,6 +41,7 @@ const DesignLayer = () => {
   } = useContext(AppContext);
   const imageNodeRef = useRef();
   const previewGroupRef = useRef();
+  const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
 
   const finetunesAndFilter = useMemo(
     () => (filter ? [...finetunes, filter] : finetunes),
@@ -99,32 +100,39 @@ const DesignLayer = () => {
   const resizedX = resize.width ? resize.width / originalImage.width : 1;
   const resizedY = resize.height ? resize.height / originalImage.height : 1;
 
-  const xOffsetToCenterImgInCanvas =
+  const xPointToCenterImgInCanvas =
     canvasWidth / (2 * canvasScale) -
     (scaledSpacedOriginalImg.width * resizedX) / 2;
 
-  const yOffsetToCenterImgInCanvas =
+  const yPointToCenterImgInCanvas =
     canvasHeight / (2 * canvasScale) -
     (scaledSpacedOriginalImg.height * resizedY) / 2;
 
+  const xPointNoResizeNoCrop =
+    canvasWidth / (2 * canvasScale) - scaledSpacedOriginalImg.width / 2;
+  const yPointNoResizeNoCrop =
+    canvasHeight / (2 * canvasScale) - scaledSpacedOriginalImg.height / 2;
+
   const imageDimensions = useMemo(
     () => ({
-      x: xOffsetToCenterImgInCanvas,
-      y: yOffsetToCenterImgInCanvas,
+      x: xPointToCenterImgInCanvas,
+      y: yPointToCenterImgInCanvas,
+      abstractX: xPointNoResizeNoCrop,
+      abstractY: yPointNoResizeNoCrop,
       width: scaledSpacedOriginalImg.width,
       height: scaledSpacedOriginalImg.height,
       scaledBy: canvasScale,
     }),
     [
       canvasScale,
-      xOffsetToCenterImgInCanvas,
-      yOffsetToCenterImgInCanvas,
-      originalImage,
+      xPointToCenterImgInCanvas,
+      yPointToCenterImgInCanvas,
+      xPointNoResizeNoCrop,
+      yPointNoResizeNoCrop,
       scaledSpacedOriginalImg,
     ],
   );
 
-  const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
   const clipFunc = (ctx) => {
     const clipBox = isCurrentlyCropping
       ? {
@@ -181,43 +189,56 @@ const DesignLayer = () => {
   }, [imageDimensions]);
 
   if (
-    !xOffsetToCenterImgInCanvas ||
-    !yOffsetToCenterImgInCanvas ||
+    !xPointToCenterImgInCanvas ||
+    !yPointToCenterImgInCanvas ||
     !imageDimensions
   ) {
     return null;
   }
 
-  const xOffsetAfterCrop =
-    xOffsetToCenterImgInCanvas +
+  const xPointAfterCrop =
+    xPointToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.width
       ? (isFlippedX ? -1 : 1) *
-        (imageDimensions.width / 2 - crop.relativeX - crop.width / 2)
+        (imageDimensions.width / 2 - crop.relativeX - crop.width / 2) *
+        resizedX
       : 0);
 
-  const yOffsetAfterCrop =
-    yOffsetToCenterImgInCanvas +
+  const yPointAfterCrop =
+    yPointToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.height
       ? (isFlippedY ? -1 : 1) *
-        (imageDimensions.height / 2 - crop.relativeY - crop.height / 2)
+        (imageDimensions.height / 2 - crop.relativeY - crop.height / 2) *
+        resizedY
       : 0);
 
-  const centeredFlippedX =
-    (isFlippedX ? scaledSpacedOriginalImg.width : 0) + xOffsetAfterCrop;
+  const xPoint = isCurrentlyCropping ? xPointNoResizeNoCrop : xPointAfterCrop;
 
-  const centeredFlippedY =
-    (isFlippedY ? scaledSpacedOriginalImg.height : 0) + yOffsetAfterCrop;
+  const yPoint = isCurrentlyCropping ? yPointNoResizeNoCrop : yPointAfterCrop;
+
+  const finalScaleX = isFlippedX ? -resizedX : resizedX;
+  const finalScaleY = isFlippedY ? -resizedY : resizedY;
+  const defaultScaleX = isFlippedX ? -1 : 1;
+  const defaultScaleY = isFlippedY ? -1 : 1;
 
   return (
     <Layer
       id={DESIGN_LAYER_ID}
       ref={designLayerRef}
-      xPadding={xOffsetAfterCrop}
-      yPadding={yOffsetAfterCrop}
-      x={centeredFlippedX}
-      y={centeredFlippedY}
-      scaleX={isFlippedX ? -resizedX : resizedX}
-      scaleY={isFlippedY ? -resizedY : resizedY}
+      xPadding={xPoint}
+      yPadding={yPoint}
+      x={
+        (isFlippedX ? scaledSpacedOriginalImg.width : 0) *
+          (isCurrentlyCropping ? 1 : resizedX) +
+        xPoint
+      }
+      y={
+        (isFlippedY ? scaledSpacedOriginalImg.height : 0) *
+          (isCurrentlyCropping ? 1 : resizedY) +
+        yPoint
+      }
+      scaleX={isCurrentlyCropping ? defaultScaleX : finalScaleX}
+      scaleY={isCurrentlyCropping ? defaultScaleY : finalScaleY}
       clipFunc={clipFunc}
     >
       <Image

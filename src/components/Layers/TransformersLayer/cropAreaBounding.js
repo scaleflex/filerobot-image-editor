@@ -4,8 +4,8 @@ import toPrecisedFloat from 'utils/toPrecisedFloat';
 
 export const boundDragging = (newDimensions, allowedArea) => {
   const scaledAllowedArea = {
-    x: allowedArea.x * allowedArea.scaledBy,
-    y: allowedArea.y * allowedArea.scaledBy,
+    x: allowedArea.abstractX * allowedArea.scaledBy,
+    y: allowedArea.abstractY * allowedArea.scaledBy,
     width: allowedArea.width * allowedArea.scaledBy,
     height: allowedArea.height * allowedArea.scaledBy,
   };
@@ -42,8 +42,8 @@ export const boundResizing = (
   ratio,
 ) => {
   const scaledAllowedArea = {
-    x: toPrecisedFloat(allowedArea.x * allowedArea.scaledBy),
-    y: toPrecisedFloat(allowedArea.y * allowedArea.scaledBy),
+    x: toPrecisedFloat(allowedArea.abstractX * allowedArea.scaledBy),
+    y: toPrecisedFloat(allowedArea.abstractY * allowedArea.scaledBy),
     width: toPrecisedFloat(allowedArea.width * allowedArea.scaledBy),
     height: toPrecisedFloat(allowedArea.height * allowedArea.scaledBy),
   };

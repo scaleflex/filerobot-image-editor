@@ -50,7 +50,7 @@ const CropTransformer = () => {
         (isFlippedX ? canvasWidth / canvasScale - x - width : x) -
         designLayer.attrs.xPadding,
       relativeY:
-        (isFlippedY ? canvasHeight - y - height : y) -
+        (isFlippedY ? canvasHeight / canvasScale - y - height : y) -
         designLayer.attrs.yPadding,
       width,
       height,
@@ -136,7 +136,7 @@ const CropTransformer = () => {
     }
     if (isFlippedY) {
       tmpImgNode.scaleY(-1);
-      tmpImgNode.y(tmpImgNode.height());
+      tmpImgNode.y(tmpImgNode.y() + tmpImgNode.height());
     }
   };
 
@@ -170,7 +170,12 @@ const CropTransformer = () => {
       if (!cropRef.current.tmpPreviewableImgNode) {
         Konva.Image.fromURL(originalImage.src, (tmpImgNode) => {
           cropRef.current.tmpPreviewableImgNode = tmpImgNode;
-          tmpImgNode.setAttrs(shownImageDimensions);
+          tmpImgNode.setAttrs({
+            x: shownImageDimensions.abstractX,
+            y: shownImageDimensions.abstractY,
+            width: shownImageDimensions.width,
+            height: shownImageDimensions.height,
+          });
           tmpImgNode.cache();
           tmpImgNode.filters([Konva.Filters.Blur, Konva.Filters.Brighten]);
           tmpImgNode.blurRadius(10);
@@ -180,7 +185,12 @@ const CropTransformer = () => {
           cropRef.current.tmpPreviewableImgNode.moveToBottom();
         });
       } else {
-        cropRef.current.tmpPreviewableImgNode.setAttrs(shownImageDimensions);
+        cropRef.current.tmpPreviewableImgNode.setAttrs({
+          x: shownImageDimensions.abstractX,
+          y: shownImageDimensions.abstractY,
+          width: shownImageDimensions.width,
+          height: shownImageDimensions.height,
+        });
         cropRef.current.cropShape.setAttrs({
           x:
             cropRef.current.cropShape.x() +

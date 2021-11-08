@@ -34,13 +34,14 @@ const SaveButton = () => {
     );
     const { clipWidth, clipHeight, clipX, clipY } = designLayer.attrs;
     const preparedCanvas = designLayer.getStage().clone({
-      x: isFlippedX ? resize.width || originalImage.width : 0,
-      y: isFlippedY ? resize.height || originalImage.height : 0,
-      width: resize.width || originalImage.width,
-      height: resize.height || originalImage.height,
       scaleX: isFlippedX ? -1 : 1,
       scaleY: isFlippedY ? -1 : 1,
+      width: resize.width || originalImage.width,
+      height: resize.height || originalImage.height,
+      x: isFlippedX ? resize.width || originalImage.width : 0,
+      y: isFlippedY ? resize.height || originalImage.height : 0,
     });
+
     const [preparedDesignLayer] = preparedCanvas.children; // children[0] = Design layer
     preparedCanvas.children[1].destroy(); // children[1] = Transformers layer, which is not needed anymore
     const mappedCropBox = mapCropBox(
@@ -68,6 +69,12 @@ const SaveButton = () => {
     uriDownload(
       preparedCanvas.toDataURL({
         ...mappedCropBox,
+        x: isFlippedX
+          ? preparedCanvas.width() - mappedCropBox.x - mappedCropBox.width
+          : mappedCropBox.x,
+        y: isFlippedY
+          ? preparedCanvas.height() - mappedCropBox.y - mappedCropBox.height
+          : mappedCropBox.y,
         mimeType: `image/${extension}`,
         // pixelRatio: window ? window.devicePixelRatio : 1, // Do we need this?
       }),
