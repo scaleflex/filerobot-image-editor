@@ -1,5 +1,6 @@
 /** External Dependencies */
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { Menu, MenuItem } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
@@ -14,16 +15,12 @@ import { CROP_PRESETS } from './Crop.constants';
 
 const PREFIX_ICONS_DIMENS = { height: 16, width: 16 };
 
-const CropPresetsOption = () => {
+const CropPresetsOption = ({ anchorEl, onClose }) => {
   const { dispatch, adjustments: { crop: { ratio: currentRatio } = {} } = {} } =
     useContext(AppContext);
-  const [anchorEl, setAnchorEl] = useState(null);
 
-  const closeMenu = () => {
-    setAnchorEl(null);
-  };
-
-  const changeCropRatio = (newCropRatio) => {
+  const changeCropRatio = (e, newCropRatio) => {
+    e.stopPropagation();
     if (newCropRatio === currentRatio) {
       return;
     }
@@ -34,23 +31,19 @@ const CropPresetsOption = () => {
         ratio: newCropRatio,
       },
     });
-    closeMenu();
+    onClose();
   };
 
   return (
     <>
-      <StyledOpenMenuButton
-        color="link"
-        onClick={(e) => setAnchorEl(e.currentTarget)}
-        size="lg"
-      >
+      <StyledOpenMenuButton color="link" size="lg">
         {/* BOTTOM ARROW HTML CODE : TOP ARROW HTML CODE */}
         {anchorEl ? <>&#9652;</> : <>&#9662;</>}
       </StyledOpenMenuButton>
       <Menu
         anchorEl={anchorEl}
         enableOverlay
-        onClose={closeMenu}
+        onClose={onClose}
         open={Boolean(anchorEl)}
         position="top"
       >
@@ -58,7 +51,7 @@ const CropPresetsOption = () => {
           <MenuItem
             key={ratio}
             active={ratio === currentRatio}
-            onClick={() => changeCropRatio(ratio)}
+            onClick={(e) => changeCropRatio(e, ratio)}
             size="sm"
           >
             {Icon && (
@@ -73,6 +66,15 @@ const CropPresetsOption = () => {
       </Menu>
     </>
   );
+};
+
+CropPresetsOption.defaultProps = {
+  anchorEl: null,
+};
+
+CropPresetsOption.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  anchorEl: PropTypes.instanceOf(HTMLElement),
 };
 
 export default CropPresetsOption;

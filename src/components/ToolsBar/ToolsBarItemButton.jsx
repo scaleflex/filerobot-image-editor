@@ -16,8 +16,8 @@ const ToolsBarItemButton = ({
   isSelected,
   children,
 }) => {
-  const handleClick = useCallback(() => {
-    onClick(id);
+  const handleClick = useCallback((e) => {
+    onClick(id, e);
   }, []);
 
   return (
