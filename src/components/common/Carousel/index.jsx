@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Arrow } from '@scaleflex/icons';
 
 /** Internal Dependencies */
+import { useResizeObserver } from 'hooks';
 import debounce from 'utils/debounce';
 import {
   StyledCarouselWrapper,
@@ -16,6 +17,7 @@ import {
 const Carousel = ({ children, style }) => {
   const scrollingByDraggingLatestX = useRef(false);
   const carouselRef = useRef();
+  const [observeResize] = useResizeObserver();
   const [isPrevArrowShown, setIsPrevArrowShown] = useState(false);
   const [isNextArrowShown, setIsNextArrowShown] = useState(false);
   const childrenArray = Children.toArray(children);
@@ -74,7 +76,7 @@ const Carousel = ({ children, style }) => {
     }
   };
 
-  const stopScrollByDragging = (e) => {
+  const stopScrollByDragging = () => {
     scrollingByDraggingLatestX.current = null;
 
     document.removeEventListener('mousemove', scrollByDragging);
@@ -94,7 +96,11 @@ const Carousel = ({ children, style }) => {
     document.addEventListener('touchend', stopScrollByDragging);
   };
 
-  useEffect(updateArrowsVisibility, []);
+  useEffect(() => {
+    if (carouselRef.current) {
+      observeResize(carouselRef.current, updateArrowsVisibility);
+    }
+  }, []);
 
   return (
     <StyledCarouselWrapper

@@ -1,91 +1,68 @@
 /** External Dependencies */
-import {
-  useCallback, useEffect, useMemo, useRef,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 const useResizeObserver = (onResize = () => {}) => {
   const onResizeCallback = useRef(onResize);
   const resizeObserver = useRef();
 
-  const observerCallback = useCallback(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.contentRect) {
-          const { width, height } = entry.contentRect;
+  const observerCallback = useCallback((entries) => {
+    entries.forEach((entry) => {
+      if (entry.contentRect) {
+        const { width, height } = entry.contentRect;
 
-          onResizeCallback.current({
-            entry,
-            width,
-            height,
-          });
-        }
-      });
-    },
-    [],
-  );
+        onResizeCallback.current({
+          entry,
+          width,
+          height,
+        });
+      }
+    });
+  }, []);
 
-  const updateOnResizeCallback = useCallback(
-    (newOnResizeCallback) => {
-      onResizeCallback.current = newOnResizeCallback;
-    },
-    [],
-  );
+  const updateOnResizeCallback = useCallback((newOnResizeCallback) => {
+    onResizeCallback.current = newOnResizeCallback;
+  }, []);
 
-  const initObserver = useCallback(
-    () => {
+  const initObserver = useCallback(() => {
+    if (!resizeObserver.current) {
+      resizeObserver.current = new ResizeObserver(observerCallback);
+    }
+  }, []);
+
+  const observeElement = useCallback((element, newOnResizeCallback) => {
+    if (element) {
       if (!resizeObserver.current) {
-        resizeObserver.current = new ResizeObserver(observerCallback);
+        initObserver();
       }
-    },
-    [],
-  );
 
-  const observeElement = useCallback(
-    (element, newOnResizeCallback) => {
-      if (element) {
-        if (!resizeObserver.current) {
-          initObserver();
-        }
+      resizeObserver.current.observe(element);
 
-        resizeObserver.current.observe(element);
-
-        if (newOnResizeCallback) {
-          onResizeCallback.current = newOnResizeCallback;
-        }
+      if (newOnResizeCallback) {
+        onResizeCallback.current = newOnResizeCallback;
       }
-    },
-    [],
-  );
+    }
+  }, []);
 
-  const unobserveElement = useCallback(
-    (element, newOnResizeCallback) => {
-      if (resizeObserver.current && element) {
-        resizeObserver.current.unobserve(element);
+  const unobserveElement = useCallback((element, newOnResizeCallback) => {
+    if (resizeObserver.current && element) {
+      resizeObserver.current.unobserve(element);
 
-        if (newOnResizeCallback) {
-          onResizeCallback.current = newOnResizeCallback;
-        }
+      if (newOnResizeCallback) {
+        onResizeCallback.current = newOnResizeCallback;
       }
-    },
-    [],
-  );
+    }
+  }, []);
 
-  const removeObserver = useCallback(
-    () => {
-      if (resizeObserver.current) {
-        resizeObserver.current.disconnect();
-      }
-    },
-    [],
-  );
+  const removeObserver = useCallback(() => {
+    if (resizeObserver.current) {
+      resizeObserver.current.disconnect();
+    }
+  }, []);
 
-  useEffect(
-    () => {
-      initObserver();
-      return removeObserver;
-    },
-    [],
-  );
+  useEffect(() => {
+    initObserver();
+    return removeObserver;
+  }, []);
 
   return useMemo(
     () => [observeElement, unobserveElement, updateOnResizeCallback],

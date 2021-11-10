@@ -2,12 +2,6 @@
 import { Stage } from 'react-konva';
 import styled from 'styled-components';
 
-const StyledFiltersWrapper = styled.div`
-  white-space: nowrap;
-  width: 100%;
-  overflow: auto;
-`;
-
 const StyledFilterItem = styled.div(
   ({ theme }) => `
     display: inline-flex;
@@ -37,9 +31,4 @@ const FilterItemLabel = styled.div`
   line-height: 12px;
 `;
 
-export {
-  StyledFiltersWrapper,
-  StyledFilterItem,
-  FilterItemPreview,
-  FilterItemLabel,
-};
+export { StyledFilterItem, FilterItemPreview, FilterItemLabel };

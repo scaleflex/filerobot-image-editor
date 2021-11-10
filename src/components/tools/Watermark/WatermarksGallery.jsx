@@ -28,7 +28,12 @@ const WatermarksGallery = ({ selectWatermark }) => {
           key={watermarkUrl}
           aria-selected={watermarkUrl === currentWatermarkUrl}
         >
-          <img src={watermarkUrl} alt={watermarkUrl} crossOrigin="Anonymous" />
+          <img
+            src={watermarkUrl}
+            alt={watermarkUrl}
+            crossOrigin="Anonymous"
+            draggable={false}
+          />
         </StyledWatermarkGalleryItem>
       ))}
     </Carousel>
