@@ -4,7 +4,14 @@ import getAnnotationOffsetToTopLeft from './getAnnotationOffsetToTopLeft';
 import getSizeAfterRotation from './getSizeAfterRotation';
 
 const mapPositionStringToPoint = (annotation, designLayer, position) => {
-  const { width, height, scaleX = 1, scaleY = 1, rotation = 0 } = annotation;
+  const {
+    width,
+    height,
+    scaleX = 1,
+    scaleY = 1,
+    rotation = 0,
+    padding = 0,
+  } = annotation;
   const scaledRotatedAnnotationSize = getSizeAfterRotation(
     width * scaleX,
     height * scaleY,
@@ -17,29 +24,38 @@ const mapPositionStringToPoint = (annotation, designLayer, position) => {
 
   const xAxisMapping = {
     left:
-      annotationOffsetFromItsTopLeft + scaledRotatedAnnotationSize.offsetLeft,
+      annotationOffsetFromItsTopLeft +
+      scaledRotatedAnnotationSize.offsetLeft +
+      padding,
     center:
       designLayerWidth / 2 -
       (scaledRotatedAnnotationSize.width / 2 -
         annotationOffsetFromItsTopLeft -
-        scaledRotatedAnnotationSize.offsetLeft),
+        scaledRotatedAnnotationSize.offsetLeft) +
+      padding,
     right:
       designLayerWidth -
       scaledRotatedAnnotationSize.width -
+      padding -
       annotationOffsetFromItsTopLeft +
       scaledRotatedAnnotationSize.offsetLeft,
   };
 
   const yAxisMapping = {
-    top: annotationOffsetFromItsTopLeft + scaledRotatedAnnotationSize.offsetTop,
+    top:
+      annotationOffsetFromItsTopLeft +
+      scaledRotatedAnnotationSize.offsetTop +
+      padding,
     middle:
       designLayerHeight / 2 -
       (scaledRotatedAnnotationSize.height / 2 -
         annotationOffsetFromItsTopLeft -
-        scaledRotatedAnnotationSize.offsetTop),
+        scaledRotatedAnnotationSize.offsetTop) +
+      padding,
     bottom:
       designLayerHeight -
       scaledRotatedAnnotationSize.height -
+      padding -
       annotationOffsetFromItsTopLeft +
       scaledRotatedAnnotationSize.offsetTop,
   };

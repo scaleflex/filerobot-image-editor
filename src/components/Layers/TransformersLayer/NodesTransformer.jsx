@@ -30,7 +30,7 @@ const NodesTransformer = () => {
       rotateAnchorOffset={30}
       anchorSize={14}
       anchorCornerRadius={7}
-      padding={1}
+      padding={selections.length === 1 ? selections[0].attrs.padding ?? 1 : 1}
       ignoreStroke={false}
       anchorStroke={theme.palette['accent-primary']}
       anchorFill={theme.palette['access-primary']}

@@ -1,18 +1,12 @@
 /** External Dependencies */
-import React, { useContext, useState } from 'react';
-import { Menu, MenuItem } from '@scaleflex/ui/core';
-import { Arrow } from '@scaleflex/icons';
+import React, { useContext } from 'react';
 
 /** Internal Dependencies */
 import AppContext from 'context';
 import appendExtensionIfNone from 'utils/getFileFullName';
 import mapCropBox from 'utils/mapCropBox';
 import uriDownload from 'utils/uriDownload';
-import {
-  StyledSaveAsButton,
-  StyledSaveButton,
-  StyledSaveButtonWrapper,
-} from './Topbar.styled';
+import ButtonWithMenu from 'components/common/ButtonWithMenu';
 
 const SaveButton = () => {
   const {
@@ -22,11 +16,6 @@ const SaveButton = () => {
     resize,
     adjustments: { crop, isFlippedX, isFlippedY } = {},
   } = useContext(AppContext);
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleOpen = (e) => setAnchorEl(e.currentTarget);
-
-  const handleClose = () => setAnchorEl(null);
 
   const handleSave = () => {
     const { fullName: fileFullName, extension } = appendExtensionIfNone(
@@ -82,25 +71,22 @@ const SaveButton = () => {
     );
   };
 
+  const menuItems = [
+    {
+      key: 'Save-as',
+      label: 'Save as [WIP]',
+      onClick: () => console.log('called'),
+      isActive: false,
+    },
+  ];
+
   return (
-    <StyledSaveButtonWrapper>
-      <StyledSaveButton
-        color="primary"
-        size="sm"
-        title="Save with same extension"
-        onClick={handleSave}
-      >
-        Save
-      </StyledSaveButton>
-      <StyledSaveAsButton color="primary" size="sm" onClick={handleOpen}>
-        <Arrow />
-      </StyledSaveAsButton>
-      <Menu anchorEl={anchorEl} onClose={handleClose} open position="bottom">
-        <MenuItem active={false} onClick={handleClose} size="sm">
-          Save as [WIP]
-        </MenuItem>
-      </Menu>
-    </StyledSaveButtonWrapper>
+    <ButtonWithMenu
+      label="Save"
+      title="Save with same extension"
+      onClick={handleSave}
+      menuItems={menuItems}
+    />
   );
 };
 

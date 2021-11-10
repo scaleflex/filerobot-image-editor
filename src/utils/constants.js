@@ -8,6 +8,8 @@ export const TRANSFORMERS_LAYER_ID =
 export const IMAGE_NODE_ID = 'filerobot-image-editor_original-image';
 export const NODES_TRANSFORMER_ID = 'filerobot-image-editor_nodes-transformer';
 
+export const WATERMARK_ANNOTATION_ID = 'watermark';
+
 export const TABS_IDS = {
   FINETUNE: 'FINTUNE',
   FILTERS: 'FILTERS',

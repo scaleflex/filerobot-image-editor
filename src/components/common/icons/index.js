@@ -76,3 +76,7 @@ export { default as Duplicate } from './Duplicate';
 export { default as LayerOrder } from './LayerOrder';
 
 export { default as Refresh } from './Refresh';
+
+export { default as Upload } from './Upload';
+
+export { default as Padding } from './Padding';

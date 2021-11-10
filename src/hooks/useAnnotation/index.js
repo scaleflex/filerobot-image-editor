@@ -22,13 +22,13 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
   const {
     dispatch,
     previewGroup,
-    defaultOptions,
+    options,
     annotations,
     selectionsIds = [],
   } = useContext(AppContext);
   const annotationDefaults = {
-    ...defaultOptions.common,
-    ...defaultOptions[annotations[selectionsIds[0]]?.name || annotation.name],
+    ...options.common,
+    ...options[annotations[selectionsIds[0]]?.name || annotation.name],
   };
   const [tmpAnnotation, setTmpAnnotation] = useState(() => ({
     ...annotationDefaults,

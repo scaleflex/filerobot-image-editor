@@ -25,11 +25,11 @@ export const AVAILABLE_TABS = [
     label: 'Filters',
     icon: Filters,
   },
-  // {
-  //   id: TABS_IDS.WATERMARK,
-  //   label: 'Watermark',
-  //   icon: Watermark,
-  // },
+  {
+    id: TABS_IDS.WATERMARK,
+    label: 'Watermark',
+    icon: Watermark,
+  },
   {
     id: TABS_IDS.ANNOTATE,
     label: 'Annotate',

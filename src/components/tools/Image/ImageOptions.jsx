@@ -5,9 +5,9 @@ import { UploadInput } from '@scaleflex/ui/core';
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
-import AnnotationOptions from 'components/common/AnnotationOptions';
 import AppContext from 'context';
 import { SET_ERROR } from 'actions';
+import ImageControls from './ImageControls';
 
 const ADDED_IMG_SPACING_PERCENT = 0.15;
 
@@ -95,11 +95,7 @@ const ImageOptions = () => {
   };
 
   return (
-    <AnnotationOptions
-      annotation={image}
-      updateAnnotation={saveImage}
-      hideFillOption
-    >
+    <ImageControls image={image} saveImage={saveImage}>
       <UploadInput
         background="primary"
         buttonLabel="Add image(s)"
@@ -109,7 +105,7 @@ const ImageOptions = () => {
         size="sm"
         disabled={isLoading}
       />
-    </AnnotationOptions>
+    </ImageControls>
   );
 };
 

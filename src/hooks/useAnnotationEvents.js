@@ -17,7 +17,7 @@ const useAnnotationEvents = () => {
   const { tabId, dispatch } = useContext(AppContext);
 
   const isAnnotationEventsDisabled = useMemo(
-    () => tabId !== TABS_IDS.ANNOTATE,
+    () => tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK,
     [tabId],
   );
 

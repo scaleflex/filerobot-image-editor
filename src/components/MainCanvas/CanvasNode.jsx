@@ -38,7 +38,7 @@ const CanvasNode = ({ children }) => {
   } = useContext(AppContext);
   const isZoomEnabled = toolId !== TOOLS_IDS.CROP;
   const [isPanningEnabled, setIsPanningEnabled] = useState(
-    tabId !== TABS_IDS.ANNOTATE,
+    tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK,
   );
 
   const cursorStyle = useMemo(
@@ -116,13 +116,15 @@ const CanvasNode = ({ children }) => {
   };
 
   const togglePanningOnRightClick = () => {
-    if (tabId === TABS_IDS.ANNOTATE) {
+    if (tabId === TABS_IDS.ANNOTATE || tabId === TABS_IDS.WATERMARK) {
       setIsPanningEnabled((val) => !val);
     }
   };
 
   useEffect(() => {
-    setIsPanningEnabled(tabId !== TABS_IDS.ANNOTATE);
+    setIsPanningEnabled(
+      tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK,
+    );
   }, [tabId]);
 
   // Zoom panning is done by dragging mouse except in annotate tab,

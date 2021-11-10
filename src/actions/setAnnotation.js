@@ -4,7 +4,11 @@ export const SET_ANNOTATION = 'SET_ANNOTATION';
 
 const setAnnotation = (state, payload = {}) => {
   // dismissHistory is used to prevent considering this change in history (undo/redo).
-  const { dismissHistory = false, ...newAnnotation } = payload;
+  const {
+    dismissHistory = false,
+    replaceCurrent = false,
+    ...newAnnotation
+  } = payload;
   const annotationId = newAnnotation.id ?? randomId(newAnnotation.name);
 
   const existedAnnotation = state.annotations[annotationId];
@@ -26,7 +30,7 @@ const setAnnotation = (state, payload = {}) => {
     annotations: {
       ...state.annotations,
       [annotationId]: {
-        ...existedAnnotation,
+        ...(replaceCurrent ? {} : existedAnnotation),
         ...newAnnotation,
       },
     },

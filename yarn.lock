@@ -1584,12 +1584,12 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@scaleflex/icons@^1.0.0-beta.45", "@scaleflex/icons@^1.0.0-beta.46":
+"@scaleflex/icons@^1.0.0-beta.46":
   version "1.0.0-beta.46"
   resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.46.tgz#f1ff11588a6a1805c48397e598c55c10e5c1573d"
   integrity sha512-oHqbS7wbuuCL1U5bE0j6pddntJwI10jWJtz3rSvVXTGstRbRmeLIfHL8hl8raksOOn+d5JPJfdJoLoEqF18UoQ==
 
-"@scaleflex/ui@^1.0.0-beta.45":
+"@scaleflex/ui@^1.0.0-beta.51":
   version "1.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.51.tgz#0c160c6e2a635497048047ce3f914b82cafc2912"
   integrity sha512-3OLukfW/DXYUw7gCYHN4JR+eynlLn4YmQ4PZs8D59nBwH83IWd5Mdk/az+OZHdfWvw89IdIBxNZjYIfoQlwMTg==

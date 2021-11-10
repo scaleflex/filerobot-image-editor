@@ -9,7 +9,7 @@ import {
 
 // TODO: make some of these configurable
 export default {
-  defaultOptions: {
+  options: {
     common: {
       fill: '#000000', // or should be no color? === undefined
       stroke: '#000000', // or should be no color? === undefined
@@ -30,7 +30,9 @@ export default {
       align: 'left', // left, center, right
       fontStyle: '', // 'bold', 'italic', 'bold italic'
     },
-    [TOOLS_IDS.IMAGE]: {},
+    [TOOLS_IDS.IMAGE]: {
+      fill: undefined,
+    },
     [TOOLS_IDS.RECT]: {
       cornerRadius: 0,
     },
@@ -50,6 +52,13 @@ export default {
       lineCap: 'butt',
       pointerLength: undefined,
       pointerWidth: undefined,
+    },
+    [TABS_IDS.WATERMARK]: {
+      gallery: [
+        'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
+        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
+        'https://images.unsplash.com/photo-1627852847676-78102b6514ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
+      ],
     },
   },
   pointerCssIcon: POINTER_ICONS.DEFAULT,

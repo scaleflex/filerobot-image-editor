@@ -7,7 +7,7 @@ import { useStore } from 'hooks';
 import { DUPLICATE_ANNOTATIONS, REMOVE_ANNOTATIONS } from 'actions';
 // import { Duplicate, LayerOrder, Remove } from 'components/common/icons';
 import { Duplicate, Remove } from 'components/common/icons';
-import { NODES_TRANSFORMER_ID } from 'utils/constants';
+import { NODES_TRANSFORMER_ID, WATERMARK_ANNOTATION_ID } from 'utils/constants';
 import { StyledNodeControls } from './NodeControls.styled';
 
 const NodeControls = () => {
@@ -57,9 +57,11 @@ const NodeControls = () => {
           <LayerOrder />
         </IconButton>
       )} */}
-      <IconButton color="link" size="sm" onClick={duplicateSelectedNodes}>
-        <Duplicate />
-      </IconButton>
+      {selectionsIds[0] !== WATERMARK_ANNOTATION_ID && (
+        <IconButton color="link" size="sm" onClick={duplicateSelectedNodes}>
+          <Duplicate />
+        </IconButton>
+      )}
       <IconButton color="link" size="sm" onClick={removeSelectedNodes}>
         <Remove />
       </IconButton>
