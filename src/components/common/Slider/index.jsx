@@ -12,7 +12,7 @@ const Slider = (props) => {
   };
 
   const disableIsSliding = () => {
-    setIsSliding(true);
+    setIsSliding(false);
   };
 
   return (
