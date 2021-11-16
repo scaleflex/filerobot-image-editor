@@ -3,10 +3,7 @@ import React, { useCallback, useContext } from 'react';
 
 /** Internal Dependencies */
 import { DesignLayer, TransformersLayer } from 'components/Layers';
-import AppContext, {
-  AppProviderOverridenValue,
-  memoAndMapContextToProps,
-} from 'context';
+import AppContext, { AppProviderOverridenValue } from 'context';
 import { SET_CANVAS_SIZE } from 'actions';
 import { useResizeObserver } from 'hooks';
 import NodeControls from 'components/NodeControls';
@@ -50,4 +47,4 @@ const MainCanvas = () => {
   );
 };
 
-export default memoAndMapContextToProps(MainCanvas);
+export default MainCanvas;

@@ -1,11 +1,11 @@
 /** External Dependencies */
 import React, { useContext } from 'react';
 import { Label } from '@scaleflex/ui/core';
+import { Compare } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import AppContext from 'context';
 import { TOGGLE_ORIGINAL_IMAGE_DISPLAY } from 'actions';
-import { Union } from 'components/common/icons';
 import { StyledSmallButton } from './Topbar.styled';
 
 const ImageDimensionsAndDisplayToggle = () => {
@@ -63,7 +63,7 @@ const ImageDimensionsAndDisplayToggle = () => {
         disabled={isResetted}
         title="Show original image"
       >
-        <Union />
+        <Compare />
       </StyledSmallButton>
     </>
   );

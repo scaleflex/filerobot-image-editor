@@ -15,7 +15,7 @@ import cropImage from 'utils/cropImage';
 import { DESIGN_LAYER_ID, IMAGE_NODE_ID, TOOLS_IDS } from 'utils/constants';
 import { SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import getProperImageToCanvasSpacing from 'utils/getProperImageToCanvasSpacing';
-import getSizeAfterRotation from 'utils/getSizeAfterRotation';
+// import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import AnnotationNodes from './AnnotationNodes';
 import PreviewGroup from './PreviewGroup';
 
@@ -35,7 +35,8 @@ const DesignLayer = () => {
     finetunes = [],
     finetunesProps = {},
     filter = null,
-    adjustments: { rotation = 0, crop = {}, isFlippedX, isFlippedY } = {},
+    // adjustments: { rotation = 0, crop = {}, isFlippedX, isFlippedY } = {},
+    adjustments: { crop = {}, isFlippedX, isFlippedY } = {},
     resize,
   } = useContext(AppContext);
   const imageNodeRef = useRef();
@@ -76,25 +77,25 @@ const DesignLayer = () => {
     [spacedOriginalImg, originalImgInitialScale],
   );
 
-  const scaleAfterRotation = useMemo(() => {
-    const rotatedImgSize = getSizeAfterRotation(
-      scaledSpacedOriginalImg.width,
-      scaledSpacedOriginalImg.height,
-      rotation,
-    );
+  // const scaleAfterRotation = useMemo(() => {
+  //   const rotatedImgSize = getSizeAfterRotation(
+  //     scaledSpacedOriginalImg.width,
+  //     scaledSpacedOriginalImg.height,
+  //     rotation,
+  //   );
 
-    return getDimensionsMinimalRatio(
-      scaledSpacedOriginalImg.width,
-      scaledSpacedOriginalImg.height,
-      rotatedImgSize.width,
-      rotatedImgSize.height,
-    );
-  }, [
-    scaledSpacedOriginalImg,
-    rotation,
-    initialCanvasWidth,
-    initialCanvasHeight,
-  ]);
+  //   return getDimensionsMinimalRatio(
+  //     scaledSpacedOriginalImg.width,
+  //     scaledSpacedOriginalImg.height,
+  //     rotatedImgSize.width,
+  //     rotatedImgSize.height,
+  //   );
+  // }, [
+  //   scaledSpacedOriginalImg,
+  //   rotation,
+  //   initialCanvasWidth,
+  //   initialCanvasHeight,
+  // ]);
 
   const resizedX = resize.width ? resize.width / originalImage.width : 1;
   const resizedY = resize.height ? resize.height / originalImage.height : 1;

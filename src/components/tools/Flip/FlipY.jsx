@@ -1,11 +1,11 @@
 /** External Dependencies */
 import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { FlipY as FlipYIcon } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import AppContext from 'context';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
-import { FlipY as FlipYIcon } from 'components/common/icons';
 import { FLIP_DIRECTIONS, TOOLS_IDS } from 'utils/constants';
 import { TOGGLE_FLIP } from 'actions';
 
@@ -16,15 +16,10 @@ const xFlipReverseSideStyle = {
 const FlipY = ({ selectTool, isSelected }) => {
   const {
     dispatch,
-    adjustments: {
-      isFlippedY,
-    },
+    adjustments: { isFlippedY },
   } = useContext(AppContext);
 
-  const {
-    reverseLabelOfCurrXFlipDir,
-    reverseIconOfCurrXFlipDir,
-  } = useMemo(
+  const { reverseLabelOfCurrXFlipDir, reverseIconOfCurrXFlipDir } = useMemo(
     () => ({
       reverseLabelOfCurrXFlipDir: isFlippedY ? 'Un-Flip Y' : 'Flip Y',
       reverseIconOfCurrXFlipDir: () => (
@@ -43,13 +38,10 @@ const FlipY = ({ selectTool, isSelected }) => {
     });
   }, []);
 
-  const handleButtonClick = useCallback(
-    (flipYToolId) => {
-      selectTool(flipYToolId);
-      toggleFlipY();
-    },
-    [],
-  );
+  const handleButtonClick = useCallback((flipYToolId) => {
+    selectTool(flipYToolId);
+    toggleFlipY();
+  }, []);
 
   return (
     <ToolsBarItemButton

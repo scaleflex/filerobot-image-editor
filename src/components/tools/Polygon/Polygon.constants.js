@@ -1,5 +1,7 @@
+/** External Dependencies */
+import { PolygonSides } from '@scaleflex/icons';
+
 /** Internal Dependencies */
-import { SidesAmount } from 'components/common/icons';
 import PolygonSidesField from './PolygonSidesField';
 
 export const SIDES_NUMBER = 'sides-number';
@@ -8,7 +10,7 @@ export const POLYGON_POPPABLE_OPTIONS = [
   {
     title: 'Corner radius',
     name: SIDES_NUMBER,
-    Icon: SidesAmount,
+    Icon: PolygonSides,
   },
 ];
 

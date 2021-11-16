@@ -1,10 +1,10 @@
 /** External Dependencies */
 import React, { useCallback, useState } from 'react';
+import { Revert } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import Modal from 'components/common/Modal';
-import { Refresh } from 'components/common/icons';
 import { RESET } from 'actions';
 import { StyledHistoryButton, StyledWarningIcon } from './Topbar.styled';
 
@@ -33,7 +33,7 @@ const ResetButton = () => {
         disabled={isResetted}
         title="Reset/delete all operations"
       >
-        <Refresh size={12} />
+        <Revert size={12} />
       </StyledHistoryButton>
       {isModalOpened && (
         <Modal

@@ -5,7 +5,7 @@ import ThemeProvider from '@scaleflex/ui/theme';
 /** Internal Dependencies */
 import Wrapper from 'components/Wrapper';
 import { AppProvider } from 'context';
-import { FontsFaces } from './globalStyles';
+import { FontsFaces, IconsColor } from './globalStyles';
 
 const demoProps = {
   // string or image html element
@@ -16,8 +16,9 @@ const demoProps = {
 const App = () => (
   <>
     <React.StrictMode>
-      <FontsFaces />
       <ThemeProvider>
+        <FontsFaces />
+        <IconsColor />
         <AppProvider>
           <Wrapper {...demoProps} />
         </AppProvider>

@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import { Label } from '@scaleflex/ui/core';
 
 /** InternalDependencies */
-import {
-  StyledSliderField,
-  StyledSpacedOptionFields,
-} from 'components/common/AnnotationOptions/AnnotationOptions.styled';
+import { StyledSpacedOptionFields } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
 import restrictNumber from 'utils/restrictNumber';
+import Slider from 'components/common/Slider';
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 200;
@@ -21,18 +19,17 @@ const RectCornerField = ({
 
   const updateCornerRadius = (newCornerRadius) => {
     updateRect({
-      cornerRadius: restrictNumber(newCornerRadius.from, MIN_VALUE, MAX_VALUE),
+      cornerRadius: restrictNumber(newCornerRadius, MIN_VALUE, MAX_VALUE),
     });
   };
 
   return (
     <StyledSpacedOptionFields>
       <Label>Corner Radius</Label>
-      <StyledSliderField
+      <Slider
         annotation="px"
-        isActive={cornerRadius >= 0}
         onChange={updateCornerRadius}
-        value={{ from: cornerRadius }}
+        value={cornerRadius}
         min={MIN_VALUE}
         max={MAX_VALUE}
       />

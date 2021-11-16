@@ -1,17 +1,20 @@
 const BaseFilters = {
   brightness: (pixelRGB, value) => {
-    value = value > 1 ? 1 : value;
-    value = value < -1 ? -1 : value;
-    value = ~~(255 * value);
+    let currentValue = value;
+    currentValue = currentValue > 1 ? 1 : currentValue;
+    currentValue = currentValue < -1 ? -1 : currentValue;
+    // eslint-disable-next-line no-bitwise
+    currentValue = ~~(255 * currentValue);
     return [
-      pixelRGB[0] + value,
-      pixelRGB[1] + value,
-      pixelRGB[2] + value,
+      pixelRGB[0] + currentValue,
+      pixelRGB[1] + currentValue,
+      pixelRGB[2] + currentValue,
     ];
   },
   contrast: (pixelRGB, value) => {
-    value *= 255;
-    const factor = 259 * (value + 255) / (255 * (259 - value));
+    let currentValue = value;
+    currentValue *= 255;
+    const factor = (259 * (currentValue + 255)) / (255 * (259 - currentValue));
     return [
       factor * (pixelRGB[0] - 128) + 128,
       factor * (pixelRGB[1] - 128) + 128,
@@ -19,16 +22,17 @@ const BaseFilters = {
     ];
   },
   saturation: (pixelRGB, value) => {
-    value = value < -1 ? -1 : value;
+    let currentValue = value;
+    currentValue = currentValue < -1 ? -1 : currentValue;
     const r = pixelRGB[0];
     const g = pixelRGB[1];
     const b = pixelRGB[2];
 
-    const gray = 0.2989 * r + 0.5870 * g + 0.1140 * b; // weights from CCIR 601 spec
+    const gray = 0.2989 * r + 0.587 * g + 0.114 * b; // weights from CCIR 601 spec
     return [
-      -gray * value + r * (1 + value),
-      -gray * value + g * (1 + value),
-      -gray * value + b * (1 + value),
+      -gray * currentValue + r * (1 + currentValue),
+      -gray * currentValue + g * (1 + currentValue),
+      -gray * currentValue + b * (1 + currentValue),
     ];
   },
   grayscale: (pixelRGB) => {
@@ -63,15 +67,9 @@ const BaseFilters = {
     const value = colorRGBV[3];
 
     return [
-      r - (
-        (r - colorRGBV[0]) * value
-      ),
-      g - (
-        (g - colorRGBV[1]) * value
-      ),
-      b - (
-        (b - colorRGBV[2]) * value
-      ),
+      r - (r - colorRGBV[0]) * value,
+      g - (g - colorRGBV[1]) * value,
+      b - (b - colorRGBV[2]) * value,
     ];
   },
 };

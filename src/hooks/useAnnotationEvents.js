@@ -11,7 +11,7 @@ import {
   SELECT_TOOL,
 } from 'actions';
 import { TOOLS_IDS, POINTER_ICONS, TABS_IDS } from 'utils/constants';
-import { useDebouncedCallback } from 'hooks';
+import useDebouncedCallback from './useDebouncedCallback';
 
 const useAnnotationEvents = () => {
   const { tabId, dispatch } = useContext(AppContext);

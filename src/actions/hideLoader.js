@@ -1,6 +1,6 @@
 export const HIDE_LOADER = 'HIDE_LOADER';
 
-const hideLoader = (state, payload) => ({
+const hideLoader = (state) => ({
   ...state,
   isLoadingGlobally: false,
 });

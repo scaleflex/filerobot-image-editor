@@ -4,7 +4,6 @@ const getBoundingRectUnScaled = (
   canvas,
   previewGroup,
 ) => {
-  const scale = canvas.scale();
   const boundingRect = {};
   const parentAttrs = previewGroup.parent.attrs;
   boundingRect.x =

@@ -2,6 +2,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Menu } from '@scaleflex/ui/core';
+import { Transparency, Shadow, Stroke, Position } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import TransparencyField from './TransparencyField';
@@ -13,9 +14,8 @@ import {
   StyledOptions,
   StyledIconWrapper,
 } from './AnnotationOptions.styled';
-import { Transparency, Shadow, Stroke, Position } from '../icons';
 import { POPPABLE_OPTIONS } from './AnnotationOptions.constants';
-import ColorPicker from '../ColorPicker';
+import ColorInput from '../ColorInput';
 
 const AnnotationOptions = ({
   children,
@@ -76,7 +76,7 @@ const AnnotationOptions = ({
   return (
     <StyledOptions>
       {!hideFillOption && (
-        <ColorPicker value={annotation.fill} onChange={changeAnnotationFill} />
+        <ColorInput color={annotation.fill} onChange={changeAnnotationFill} />
       )}
       {children}
       {options.map(({ title, name, Icon }) => (

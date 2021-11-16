@@ -1,9 +1,9 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Temprature as WarmthIcon } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { Warmth as WarmthIcon } from 'components/common/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 

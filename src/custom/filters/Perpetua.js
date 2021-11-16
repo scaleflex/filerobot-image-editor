@@ -15,9 +15,10 @@ function Perpetua(imageData) {
   const len = pixels.length;
 
   for (let i = 0; i < len; i += 4) {
-    [
-      pixels[i], pixels[i + 1], pixels[i + 2],
-    ] = BaseFilters.adjustRGB([pixels[i], pixels[i + 1], pixels[i + 2]], ADJUST_RGB_CONST);
+    [pixels[i], pixels[i + 1], pixels[i + 2]] = BaseFilters.adjustRGB(
+      [pixels[i], pixels[i + 1], pixels[i + 2]],
+      ADJUST_RGB_CONST,
+    );
   }
 }
 

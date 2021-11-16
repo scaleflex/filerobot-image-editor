@@ -2,16 +2,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Label } from '@scaleflex/ui/core';
+import { Padding } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { Padding } from 'components/common/icons';
 import restrictNumber from 'utils/restrictNumber';
 import {
   StyledSpacedOptionFields,
-  StyledSliderField,
   StyledIconWrapper,
   StyledOptionPopupContent,
 } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
+import Slider from 'components/common/Slider';
 
 const WatermarkPadding = ({ watermark, saveWatermark }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -23,8 +23,8 @@ const WatermarkPadding = ({ watermark, saveWatermark }) => {
     setAnchorEl(null);
   };
 
-  const updatePadding = (newPaddingObj) => {
-    saveWatermark({ padding: restrictNumber(newPaddingObj.from, 0, 100) });
+  const updatePadding = (newPadding) => {
+    saveWatermark({ padding: restrictNumber(newPadding, 0, 100) });
   };
 
   const currentPadding = watermark.padding;
@@ -43,12 +43,10 @@ const WatermarkPadding = ({ watermark, saveWatermark }) => {
         <StyledOptionPopupContent>
           <StyledSpacedOptionFields>
             <Label>Padding</Label>
-            <StyledSliderField
+            <Slider
               annotation="px"
-              isActive={Boolean(currentPadding)}
               onChange={updatePadding}
-              value={{ from: currentPadding }}
-              step={1}
+              value={currentPadding}
             />
           </StyledSpacedOptionFields>
         </StyledOptionPopupContent>

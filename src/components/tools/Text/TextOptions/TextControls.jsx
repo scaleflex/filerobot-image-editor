@@ -2,10 +2,10 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem } from '@scaleflex/ui/core';
+import { FontBold, FontItalic } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { TRANSFORMERS_LAYER_ID } from 'utils/constants';
-import { Bold, Italic } from 'components/common/icons';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import { StyledIconWrapper } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
 import AppContext from 'context';
@@ -140,13 +140,13 @@ const TextControls = ({ text, saveText, children }) => {
         aria-selected={(text.fontStyle || '').includes('bold')}
         onClick={() => changeFontStyle('bold')}
       >
-        <Bold />
+        <FontBold />
       </StyledIconWrapper>
       <StyledIconWrapper
         aria-selected={(text.fontStyle || '').includes('italic')}
         onClick={() => changeFontStyle('italic')}
       >
-        <Italic />
+        <FontItalic />
       </StyledIconWrapper>
       {children}
     </AnnotationOptions>

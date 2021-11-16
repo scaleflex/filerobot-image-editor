@@ -1,12 +1,12 @@
 /** External Dependencies */
 import React, { useMemo } from 'react';
 import { IconButton } from '@scaleflex/ui/core';
+// import { DeleteOutline, Duplicate, LayerOrder } from '@scaleflex/icons';
+import { DeleteOutline, Duplicate } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import { DUPLICATE_ANNOTATIONS, REMOVE_ANNOTATIONS } from 'actions';
-// import { Duplicate, LayerOrder, Remove } from 'components/common/icons';
-import { Duplicate, Remove } from 'components/common/icons';
 import { NODES_TRANSFORMER_ID, WATERMARK_ANNOTATION_ID } from 'utils/constants';
 import { StyledNodeControls } from './NodeControls.styled';
 
@@ -63,7 +63,7 @@ const NodeControls = () => {
         </IconButton>
       )}
       <IconButton color="link" size="sm" onClick={removeSelectedNodes}>
-        <Remove />
+        <DeleteOutline />
       </IconButton>
     </StyledNodeControls>
   );

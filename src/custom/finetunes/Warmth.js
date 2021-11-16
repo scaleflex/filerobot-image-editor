@@ -12,7 +12,7 @@ import { getNumberValidator as konvaGetNumberValidator } from 'konva/lib/Validat
  * node.filters([Warmth]);
  * node.warmth(100);
  *  Red (r) > Blue (b) means warmer effect
-  * Red (r) < Blue (b) means cooler effect
+ * Red (r) < Blue (b) means cooler effect
  */
 function Warmth(imageData) {
   const warmthValue = this.warmth();

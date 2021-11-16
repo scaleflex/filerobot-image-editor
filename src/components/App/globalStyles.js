@@ -142,4 +142,10 @@ const FontsFaces = createGlobalStyle`
   }
 `;
 
-export { FontsFaces };
+const IconsColor = createGlobalStyle`
+  svg {
+    color: ${({ theme }) => theme.palette['icons-primary']}
+  }
+`;
+
+export { FontsFaces, IconsColor };

@@ -17,7 +17,9 @@ module.exports = {
   },
   plugins: ['react', 'prettier'],
   rules: {
+    'import/no-cycle': 'off',
     'import/prefer-default-export': 'off',
+    'react/prop-types': 'warn',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-filename-extension': 'error',
     'react/no-array-index-key': 'error',

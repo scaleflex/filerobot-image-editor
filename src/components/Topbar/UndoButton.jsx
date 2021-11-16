@@ -1,14 +1,14 @@
 /** External Dependencies */
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { Undo } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { memoAndMapContextToProps } from 'context';
 import { UNDO } from 'actions';
+import { useStore } from 'hooks';
 import { StyledHistoryButton } from './Topbar.styled';
 
-const UndoButton = ({ dispatch, hasUndo }) => {
+const UndoButton = () => {
+  const { dispatch, hasUndo = false } = useStore();
   const dispatchUndo = useCallback(() => {
     dispatch({ type: UNDO });
   }, []);
@@ -25,13 +25,4 @@ const UndoButton = ({ dispatch, hasUndo }) => {
   );
 };
 
-UndoButton.defaultProps = {
-  hasUndo: false,
-};
-
-UndoButton.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  hasUndo: PropTypes.bool,
-};
-
-export default memoAndMapContextToProps(UndoButton);
+export default UndoButton;

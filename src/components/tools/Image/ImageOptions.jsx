@@ -1,18 +1,20 @@
 /** External Dependencies */
 import React, { useContext, useRef, useState } from 'react';
-import { UploadInput } from '@scaleflex/ui/core';
+import { Button } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
 import AppContext from 'context';
 import { SET_ERROR } from 'actions';
+import HiddenUploadInput from 'components/common/HiddenUploadInput';
 import ImageControls from './ImageControls';
 
 const ADDED_IMG_SPACING_PERCENT = 0.15;
 
 const ImageOptions = () => {
   const [isLoading, setIsLoading] = useState();
+  const uploadImgsInput = useRef();
   const { shownImageDimensions, dispatch } = useContext(AppContext);
   const [image, saveImage, addNewImage] = useAnnotation(
     {
@@ -94,16 +96,26 @@ const ImageOptions = () => {
     e.target.value = '';
   };
 
+  const triggerUploadInput = () => {
+    if (uploadImgsInput.current) {
+      uploadImgsInput.current.click();
+    }
+  };
+
   return (
     <ImageControls image={image} saveImage={saveImage}>
-      <UploadInput
-        background="primary"
-        buttonLabel="Add image(s)"
-        multiple
-        onChange={isLoading ? undefined : importImages}
-        placeholder={isLoading ? 'Adding...' : 'Only images supported.'}
-        size="sm"
+      <Button
+        color="secondary"
+        onClick={isLoading ? undefined : triggerUploadInput}
         disabled={isLoading}
+      >
+        {isLoading ? 'Importing...' : '+ Add image'}
+      </Button>
+      <HiddenUploadInput
+        ref={uploadImgsInput}
+        onChange={isLoading ? undefined : importImages}
+        disabled={isLoading}
+        multiple
       />
     </ImageControls>
   );

@@ -15,7 +15,7 @@ import randomId from 'utils/randomId';
 import debounce from 'utils/debounce';
 import { TOOLS_IDS } from 'utils/constants';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
-import { useDebouncedCallback } from '..';
+import useDebouncedCallback from '../useDebouncedCallback';
 
 // TODO: Imporve the logic and separate the selected annotation options from handling preview and options before draw.
 const useAnnotation = (annotation = {}, enablePreview = true) => {

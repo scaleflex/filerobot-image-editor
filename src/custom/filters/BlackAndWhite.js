@@ -12,8 +12,12 @@ function BlackAndWhite(imageData) {
   const thresholdValue = 100;
 
   for (let i = 0; i < len; i += 4) {
-    const isWhite = ((pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3) > thresholdValue;
-    pixels[i] = pixels[i + 1] = pixels[i + 2] = isWhite ? 255 : 0;
+    const isWhite =
+      (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3 > thresholdValue;
+    const val = isWhite ? 255 : 0;
+    pixels[i] = val;
+    pixels[i + 1] = val;
+    pixels[i + 2] = val;
   }
 }
 

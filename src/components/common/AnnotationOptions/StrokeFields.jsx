@@ -5,11 +5,9 @@ import { Label } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
 import restrictNumber from 'utils/restrictNumber';
-import ColorPicker from 'components/common/ColorPicker';
-import {
-  StyledSpacedOptionFields,
-  StyledSliderField,
-} from './AnnotationOptions.styled';
+import ColorInput from 'components/common/ColorInput';
+import { StyledSpacedOptionFields } from './AnnotationOptions.styled';
+import Slider from '../Slider';
 
 const MIN_PERCENTANGE = 0;
 const MAX_PERCENTANGE = 100;
@@ -17,10 +15,10 @@ const MAX_PERCENTANGE = 100;
 const StrokeFields = ({ annotation, updateAnnotation }) => {
   const { stroke, strokeWidth } = annotation;
 
-  const changeStrokeWidth = (slidedNewStrokeWidth) => {
+  const changeStrokeWidth = (newStrokeWidth) => {
     updateAnnotation({
       strokeWidth: restrictNumber(
-        slidedNewStrokeWidth.from,
+        newStrokeWidth,
         MIN_PERCENTANGE,
         MAX_PERCENTANGE,
       ),
@@ -34,13 +32,12 @@ const StrokeFields = ({ annotation, updateAnnotation }) => {
   return (
     <StyledSpacedOptionFields>
       <Label>Stroke</Label>
-      <StyledSliderField
+      <Slider
         annotation="px"
-        isActive={Boolean(strokeWidth)}
         onChange={changeStrokeWidth}
-        value={{ from: strokeWidth }}
+        value={strokeWidth}
       />
-      <ColorPicker value={stroke} onChange={changeStrokeColor} />
+      <ColorInput color={stroke} onChange={changeStrokeColor} />
     </StyledSpacedOptionFields>
   );
 };

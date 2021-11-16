@@ -2,9 +2,9 @@
   "name": "filerobot-image-editor",
   "version": "4.0.0-beta.0",
   "dependencies": {
-    "@scaleflex/icons": "^1.0.0-beta.46",
-    "@scaleflex/ui": "^1.0.0-beta.51",
-    "konva": "^8.0.2",
+    "@scaleflex/icons": "^1.0.0-beta.54",
+    "@scaleflex/ui": "^1.0.0-beta.55",
+    "konva": "^8.3.0",
     "react-konva": "^17.0.2-5"
   },
   "peerDependencies": {
@@ -31,8 +31,8 @@
   },
   "scripts": {
     "fix": "eslint . --fix",
-    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "browserslist": {
     "production": [

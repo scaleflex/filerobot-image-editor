@@ -1,7 +1,5 @@
 /** External Dependencies */
-import {
-  useCallback, useContext, useMemo,
-} from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 
 /** Internal Dependencies */
 import AppContext from 'context';
@@ -19,13 +17,7 @@ const useFilter = () => {
     });
   }, []);
 
-  return useMemo(
-    () => [
-      filter,
-      setFilter,
-    ],
-    [filter],
-  );
+  return useMemo(() => [filter, setFilter], [filter]);
 };
 
 export default useFilter;

@@ -1,9 +1,9 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { AlignCenter, AlignLeft } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { CenterAlignment, LeftAlignment } from 'components/common/icons';
 import {
   StyledSpacedOptionFields,
   StyledIconWrapper,
@@ -27,19 +27,19 @@ const TextAlignmentFields = ({
         onClick={() => changeHorizontalAlignment('left')}
         aria-selected={align === 'left'}
       >
-        <LeftAlignment />
+        <AlignLeft />
       </StyledIconWrapper>
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('center')}
         aria-selected={align === 'center'}
       >
-        <CenterAlignment />
+        <AlignCenter />
       </StyledIconWrapper>
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('right')}
         aria-selected={align === 'right'}
       >
-        <LeftAlignment style={rightAlignmentCssTransform} />
+        <AlignLeft style={rightAlignmentCssTransform} />
       </StyledIconWrapper>
     </StyledSpacedOptionFields>
   );

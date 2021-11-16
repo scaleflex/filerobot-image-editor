@@ -1,15 +1,11 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ArrowRightAlt } from '@scaleflex/icons';
+import { ArrowTool as ArrowIcon } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
-
-const ArrowIcon = () => (
-  <ArrowRightAlt style={{ transform: 'rotate(-45deg)' }} />
-);
 
 const ArrowButton = ({ selectTool, isSelected }) => (
   <ToolsBarItemButton

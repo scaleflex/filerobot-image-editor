@@ -5,10 +5,8 @@ import { Label } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
 import restrictNumber from 'utils/restrictNumber';
-import {
-  StyledSpacedOptionFields,
-  StyledSliderField,
-} from 'components/common/AnnotationOptions/AnnotationOptions.styled';
+import { StyledSpacedOptionFields } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
+import Slider from 'components/common/Slider';
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 100;
@@ -27,19 +25,19 @@ const TextSpacingsFields = ({
   return (
     <StyledSpacedOptionFields>
       <Label>Letter Spacing</Label>
-      <StyledSliderField
+      <Slider
         annotation="px"
         isActive={Boolean(letterSpacing)}
-        onChange={(val) => updateValue('letterSpacing', val.from)}
-        value={{ from: letterSpacing }}
+        onChange={(val) => updateValue('letterSpacing', val)}
+        value={letterSpacing}
         step={SLIDER_STEP}
       />
       <Label>Line height</Label>
-      <StyledSliderField
+      <Slider
         annotation="px"
         isActive={Boolean(lineHeight)}
-        onChange={(val) => updateValue('lineHeight', val.from)}
-        value={{ from: lineHeight }}
+        onChange={(val) => updateValue('lineHeight', val)}
+        value={lineHeight}
         step={SLIDER_STEP}
       />
     </StyledSpacedOptionFields>

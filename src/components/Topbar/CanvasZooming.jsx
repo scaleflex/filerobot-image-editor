@@ -5,13 +5,13 @@ import { Minus, Plus } from '@scaleflex/icons';
 /** Internal Dependencies */
 import AppContext from 'context';
 import { ZOOM_CANVAS } from 'actions';
-import { DEFAULT_ZOOM_FACTOR, TABS_IDS, TOOLS_IDS } from 'utils/constants';
+import { DEFAULT_ZOOM_FACTOR, TOOLS_IDS } from 'utils/constants';
 import { StyledSmallButton, StyledZoomPercentageLabel } from './Topbar.styled';
 
 const MULTIPLY_ZOOM_FACTOR = 1.1;
 
 const CanvasZooming = () => {
-  const { dispatch, zoom = {}, tabId, toolId } = useContext(AppContext);
+  const { dispatch, zoom = {}, toolId } = useContext(AppContext);
 
   const saveZoom = (zoomFactor) => {
     dispatch({

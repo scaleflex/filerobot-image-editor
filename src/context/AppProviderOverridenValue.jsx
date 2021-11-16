@@ -8,9 +8,7 @@ import AppContext from './AppContext';
 // This component is used in repassing the state to react-konva's modules
 // As it has issue in context bridging.
 const AppProviderOverridenValue = ({ children, overridingValue }) => (
-  <AppContext.Provider value={overridingValue}>
-    {children}
-  </AppContext.Provider>
+  <AppContext.Provider value={overridingValue}>{children}</AppContext.Provider>
 );
 
 AppProviderOverridenValue.propTypes = {

@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import { Label } from '@scaleflex/ui/core';
 
 /** InternalDependencies */
-import {
-  StyledSliderField,
-  StyledSpacedOptionFields,
-} from 'components/common/AnnotationOptions/AnnotationOptions.styled';
+import { StyledSpacedOptionFields } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
 import restrictNumber from 'utils/restrictNumber';
+import Slider from 'components/common/Slider';
 
 const MIN_VALUE = 3;
 const MAX_VALUE = 25;
@@ -21,18 +19,17 @@ const PolygonSidesField = ({
 
   const updateSidesNumber = (newSidesNumber) => {
     updatePolygon({
-      sides: restrictNumber(newSidesNumber.from, MIN_VALUE, MAX_VALUE),
+      sides: restrictNumber(newSidesNumber, MIN_VALUE, MAX_VALUE),
     });
   };
 
   return (
     <StyledSpacedOptionFields>
       <Label>Sides</Label>
-      <StyledSliderField
+      <Slider
         annotation=""
-        isActive={Boolean(sides)}
         onChange={updateSidesNumber}
-        value={{ from: sides }}
+        value={sides}
         min={MIN_VALUE}
         max={MAX_VALUE}
       />

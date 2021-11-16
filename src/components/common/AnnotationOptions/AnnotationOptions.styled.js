@@ -1,6 +1,6 @@
 /** External Dependencies */
-import { Label, Slider } from '@scaleflex/ui/core';
 import styled from 'styled-components';
+import { Label } from '@scaleflex/ui/core';
 
 const StyledOptions = styled.div`
   display: flex;
@@ -23,11 +23,6 @@ const StyledOptionPopupContent = styled.div`
 
 const StyledSpacedOptionFields = styled.div`
   padding: 8px 12px;
-`;
-
-const StyledSliderField = styled(Slider)`
-  width: 100px;
-  margin-bottom: 8px;
 `;
 
 const StyledBoldLabel = styled(Label)`
@@ -77,7 +72,6 @@ const StyledIconWrapper = styled.div(
 );
 
 export {
-  StyledSliderField,
   StyledBoldLabel,
   StyledTwoColumnsContainer,
   StyledColumn,

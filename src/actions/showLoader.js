@@ -1,6 +1,6 @@
 export const SHOW_LOADER = 'SHOW_LOADER';
 
-const showLoader = (state, payload) => ({
+const showLoader = (state) => ({
   ...state,
   isLoadingGlobally: true,
 });

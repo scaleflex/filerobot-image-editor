@@ -1,6 +1,7 @@
+/** External Dependencies */
+import { Custom, Ellipse, Square, Landscape, Portrait } from '@scaleflex/icons';
+
 /** Internal Dependencies */
-import { Square } from '@scaleflex/icons';
-import { Custom, Ellipse, Landscape, Portrait } from 'components/common/icons';
 import { CUSTOM_CROP, ELLIPSE_CROP, ORIGINAL_CROP } from 'utils/constants';
 
 export const CROP_PRESETS = [
@@ -40,10 +41,12 @@ export const CROP_PRESETS = [
     title: 'Classic TV',
     ratio: 4 / 3,
     ratioLabel: '4:3',
+    // Icon: CropCinemascope
   },
   {
     title: 'Cinemascope',
     ratio: 21 / 9,
     ratioLabel: '21:9',
+    // Icon: CropCinemascope
   },
 ];

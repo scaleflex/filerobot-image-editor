@@ -9,14 +9,6 @@ const StyledWatermarkWrapper = styled.div`
   overflow: hidden;
 `;
 
-const StyledHiddenUploadImgInput = styled.input`
-  display: none;
-  width: 1px;
-  height: 1px;
-  position: absolute;
-  z-index: -1;
-`;
-
 const StyledWatermarkGalleryItem = styled.div(
   ({ theme }) => `
     padding: 4px;
@@ -43,8 +35,4 @@ const StyledWatermarkGalleryItem = styled.div(
   `,
 );
 
-export {
-  StyledWatermarkWrapper,
-  StyledHiddenUploadImgInput,
-  StyledWatermarkGalleryItem,
-};
+export { StyledWatermarkWrapper, StyledWatermarkGalleryItem };

@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Text, UploadOutline } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import {
@@ -11,13 +12,10 @@ import {
 import ButtonWithMenu from 'components/common/ButtonWithMenu';
 import TextControls from 'components/tools/Text/TextOptions/TextControls';
 import ImageControls from 'components/tools/Image/ImageControls';
-import { Text, Upload } from 'components/common/icons';
 import { useStore } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
-import {
-  StyledHiddenUploadImgInput,
-  StyledWatermarkWrapper,
-} from './Watermark.styled';
+import HiddenUploadInput from 'components/common/HiddenUploadInput';
+import { StyledWatermarkWrapper } from './Watermark.styled';
 import WatermarksGallery from './WatermarksGallery';
 import WatermarkPadding from './WatermarkPadding';
 
@@ -118,7 +116,7 @@ const Watermark = () => {
     {
       key: 'upload-watermark',
       label: 'Upload watermark',
-      icon: Upload,
+      icon: UploadOutline,
       onClick: () => {
         if (uploadImgInput.current) {
           uploadImgInput.current.click();
@@ -218,8 +216,7 @@ const Watermark = () => {
           menuFromBtn
         />
         <WatermarksGallery selectWatermark={addImgWatermark} />
-        <StyledHiddenUploadImgInput
-          type="file"
+        <HiddenUploadInput
           onChange={isLoading ? undefined : importWatermarkImg}
           disabled={isLoading}
           ref={uploadImgInput}
