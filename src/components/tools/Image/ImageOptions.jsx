@@ -111,6 +111,8 @@ const ImageOptions = () => {
         color="secondary"
         onClick={isLoading ? undefined : triggerUploadInput}
         disabled={isLoading}
+        size="sm"
+        style={{ maxHeight: 24 }}
       >
         {isLoading ? 'Importing...' : '+ Add image'}
       </Button>

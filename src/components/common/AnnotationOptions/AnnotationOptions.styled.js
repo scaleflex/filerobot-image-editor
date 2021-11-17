@@ -25,8 +25,9 @@ const StyledSpacedOptionFields = styled.div`
   padding: 8px 12px;
 `;
 
-const StyledBoldLabel = styled(Label)`
-  font-weight: bold;
+const StyledHeadline = styled(Label)`
+  font-weight: 500;
+  margin-bottom: 12px;
 `;
 
 const StyledTwoColumnsContainer = styled.div`
@@ -36,7 +37,7 @@ const StyledTwoColumnsContainer = styled.div`
 `;
 
 const StyledColumn = styled.div`
-  &:not(first-child) {
+  &:not(:first-child) {
     margin-left: 12px;
   }
 `;
@@ -44,11 +45,15 @@ const StyledColumn = styled.div`
 const StyledIconWrapper = styled.div(
   ({ theme, addThinBorder, noMargin, secondaryIconColor }) => `
     cursor: pointer;
-    padding: 5px 6px;
+    padding: 3px 6px;
     margin: ${noMargin ? 0 : '0 4px'};
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
+
+    svg {
+      vertical-align: middle;
+      margin: 0 auto;
+    }
+
     ${
       addThinBorder
         ? `border: 0.5px solid ${theme.palette['borders-secondary']}`
@@ -72,7 +77,7 @@ const StyledIconWrapper = styled.div(
 );
 
 export {
-  StyledBoldLabel,
+  StyledHeadline,
   StyledTwoColumnsContainer,
   StyledColumn,
   StyledIconWrapper,

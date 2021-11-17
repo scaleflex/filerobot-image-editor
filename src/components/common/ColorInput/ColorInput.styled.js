@@ -9,6 +9,7 @@ const StyledPickerTrigger = styled.div`
   height: 24px;
   border: 2px solid ${({ theme }) => theme.palette['borders-strong']};
   cursor: pointer;
+  box-sizing: border-box;
 `;
 
 const StyledPickerWrapper = styled.div`

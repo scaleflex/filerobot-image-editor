@@ -15,7 +15,6 @@ const StyledButtonWithMenu = styled(Button)`
   padding: 4px 8px;
 
   span {
-    font-weight: bold !important;
     font-size: 12px !important;
     line-height: 14px !important;
   }

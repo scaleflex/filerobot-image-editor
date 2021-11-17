@@ -15,7 +15,10 @@ import ImageControls from 'components/tools/Image/ImageControls';
 import { useStore } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
 import HiddenUploadInput from 'components/common/HiddenUploadInput';
-import { StyledWatermarkWrapper } from './Watermark.styled';
+import {
+  StyledControlsWrapper,
+  StyledWatermarkWrapper,
+} from './Watermark.styled';
 import WatermarksGallery from './WatermarksGallery';
 import WatermarkPadding from './WatermarkPadding';
 
@@ -200,14 +203,18 @@ const Watermark = () => {
   return (
     <div>
       {watermark?.name === TOOLS_IDS.TEXT && (
-        <TextControls text={watermark} saveText={updateWatermarkOptions}>
-          {renderWatermarkPadding()}
-        </TextControls>
+        <StyledControlsWrapper>
+          <TextControls text={watermark} saveText={updateWatermarkOptions}>
+            {renderWatermarkPadding()}
+          </TextControls>
+        </StyledControlsWrapper>
       )}
       {watermark?.name === TOOLS_IDS.IMAGE && (
-        <ImageControls image={watermark} saveImage={updateWatermarkOptions}>
-          {renderWatermarkPadding()}
-        </ImageControls>
+        <StyledControlsWrapper>
+          <ImageControls image={watermark} saveImage={updateWatermarkOptions}>
+            {renderWatermarkPadding()}
+          </ImageControls>
+        </StyledControlsWrapper>
       )}
       <StyledWatermarkWrapper>
         <ButtonWithMenu

@@ -5,6 +5,7 @@ import { ContinuousSlider } from '@scaleflex/ui/core';
 const StyledSlider = styled(ContinuousSlider)`
   width: ${({ width }) => width || '100px'};
   margin-bottom: 8px;
+  padding: 0;
 `;
 
 export { StyledSlider };

@@ -8,7 +8,7 @@ const CanvasContainer = styled.div`
     100% - 82px - 12px
   ); // 82px, 12px = toolsbar's maxheight, app container padding.
   background: ${({ theme }) => theme.palette['bg-primary']};
-  // background: ${({ theme }) => theme.palette['bg-primary-active']};
+  overflow: hidden;
 `;
 
 const StyledOrignalImage = styled.img`

@@ -32,7 +32,7 @@ const WatermarkPadding = ({ watermark, saveWatermark }) => {
   return (
     <>
       <StyledIconWrapper title="Padding" onClick={openOptionPopup}>
-        <Padding />
+        <Padding size={18} />
       </StyledIconWrapper>
       <Menu
         anchorEl={anchorEl}

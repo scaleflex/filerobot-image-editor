@@ -9,6 +9,10 @@ const StyledWatermarkWrapper = styled.div`
   overflow: hidden;
 `;
 
+const StyledControlsWrapper = styled.div`
+  margin-bottom: 8px;
+`;
+
 const StyledWatermarkGalleryItem = styled.div(
   ({ theme }) => `
     padding: 4px;
@@ -35,4 +39,8 @@ const StyledWatermarkGalleryItem = styled.div(
   `,
 );
 
-export { StyledWatermarkWrapper, StyledWatermarkGalleryItem };
+export {
+  StyledWatermarkWrapper,
+  StyledControlsWrapper,
+  StyledWatermarkGalleryItem,
+};

@@ -85,7 +85,7 @@ const AnnotationOptions = ({
           title={title}
           onClick={(e) => toggleOptionPopup(e, name)}
         >
-          <Icon />
+          <Icon size={18} />
         </StyledIconWrapper>
       ))}
       {OptionPopupComponent && (
