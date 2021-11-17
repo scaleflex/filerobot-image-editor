@@ -10,8 +10,8 @@ import {
   FilterItemLabel,
 } from './Filters.styled';
 
-const FILTER_PREVIEW_WIDTH = 40;
-const FILTER_PREVIEW_HEIGHT = 40;
+const FILTER_PREVIEW_WIDTH = 60;
+const FILTER_PREVIEW_HEIGHT = 45;
 
 const FilterItem = ({
   filterLabel,
@@ -44,7 +44,7 @@ const FilterItem = ({
   }, [image]);
 
   return (
-    <StyledFilterItem onClick={handleFilterApplying} active={isActive}>
+    <StyledFilterItem onClick={handleFilterApplying} aria-selected={isActive}>
       <FilterItemPreview
         width={FILTER_PREVIEW_WIDTH}
         height={FILTER_PREVIEW_HEIGHT}

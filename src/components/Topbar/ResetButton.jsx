@@ -1,15 +1,16 @@
 /** External Dependencies */
 import React, { useCallback, useState } from 'react';
-import { Revert } from '@scaleflex/icons';
+import { Revert, Warning } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import Modal from 'components/common/Modal';
 import { RESET } from 'actions';
-import { StyledHistoryButton, StyledWarningIcon } from './Topbar.styled';
+import { StyledHistoryButton } from './Topbar.styled';
 
 const ResetButton = () => {
-  const { dispatch, isResetted = true } = useStore();
+  const { dispatch, isResetted = true, theme } = useStore();
+
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   const cancelModal = () => {
@@ -25,6 +26,8 @@ const ResetButton = () => {
     cancelModal();
   }, []);
 
+  const WarningIcon = () => <Warning color={theme.palette.warning} size={25} />;
+
   return (
     <>
       <StyledHistoryButton
@@ -38,11 +41,15 @@ const ResetButton = () => {
       {isModalOpened && (
         <Modal
           title="All changes will be lost"
-          hint="Do you want to continue?"
+          hint="Are you sure you want to continue?"
           isOpened={isModalOpened}
           onCancel={cancelModal}
           onDone={dispatchReset}
-          Icon={StyledWarningIcon}
+          Icon={WarningIcon}
+          doneLabel="Continue"
+          cancelLabel="Cancel"
+          doneButtonColor="error"
+          doneButtonStyle={{ background: theme.palette.warning }}
         />
       )}
     </>

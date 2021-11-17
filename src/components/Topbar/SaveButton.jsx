@@ -86,6 +86,7 @@ const SaveButton = () => {
       title="Save with same extension"
       onClick={handleSave}
       menuItems={menuItems}
+      arrowColor="#FFFFFF"
     />
   );
 };

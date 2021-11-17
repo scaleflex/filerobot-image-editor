@@ -7,6 +7,9 @@ import { useDebouncedCallback } from 'hooks';
 import { CHANGE_ROTATION, SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
+import Slider from 'components/common/Slider';
+
+const sliderStyle = { width: 150, padding: 0 };
 
 const RotateOptions = () => {
   const {
@@ -37,16 +40,14 @@ const RotateOptions = () => {
   }, 20);
 
   return (
-    <div>
-      <input
-        type="range"
-        min="-180"
-        step="1"
-        value={rotation}
-        onChange={changeRotation}
-        max="180"
-      />
-    </div>
+    <Slider
+      start="-180"
+      step="1"
+      end="180"
+      value={rotation}
+      onChange={changeRotation}
+      sliderStyle={sliderStyle}
+    />
   );
 };
 

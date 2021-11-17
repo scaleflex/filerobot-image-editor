@@ -30,11 +30,14 @@ const Wrapper = ({ image }) => {
     });
   }, []);
 
-  const setError = useCallback((newError) => {
+  const setError = useCallback((error) => {
     dispatch({
       type: SET_ERROR,
       payload: {
-        error: newError,
+        error: {
+          message: error.message,
+          duration: 0,
+        },
       },
     });
   }, []);

@@ -11,4 +11,12 @@ const StyledPickerTrigger = styled.div`
   cursor: pointer;
 `;
 
-export { StyledPickerTrigger };
+const StyledPickerWrapper = styled.div`
+  background-color: ${({ theme }) => theme.palette['bg-secondary']};
+  box-shadow: 0px 1px 2px rgba(78, 77, 77, 0.15);
+  border-radius: 2px;
+  padding: 12px;
+  max-width: 300px;
+`;
+
+export { StyledPickerTrigger, StyledPickerWrapper };

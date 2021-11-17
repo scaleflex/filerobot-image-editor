@@ -185,8 +185,12 @@ const CropTransformer = () => {
           tmpImgNode.blurRadius(10);
           tmpImgNode.brightness(-0.3);
           flipPreviewImgNodeIfNeeded();
-          cropTransformerRef.current.parent.add(tmpImgNode);
-          cropRef.current.tmpPreviewableImgNode.moveToBottom();
+          if (cropTransformerRef.current) {
+            cropTransformerRef.current.parent.add(tmpImgNode);
+          }
+          if (cropRef.current) {
+            cropRef.current.tmpPreviewableImgNode.moveToBottom();
+          }
         });
       } else {
         cropRef.current.tmpPreviewableImgNode.setAttrs({

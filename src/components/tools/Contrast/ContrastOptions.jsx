@@ -5,12 +5,14 @@ import Konva from 'konva';
 /** Internal Depdencies */
 import { useFinetune } from 'hooks';
 import restrictNumber from 'utils/restrictNumber';
+import Slider from 'components/common/Slider';
 
 const MIN_VALUE = -100;
 const DEFAULT_VALUE = {
   contrast: 0,
 };
 const MAX_VALUE = 100;
+const sliderStyle = { width: 150, padding: 0 };
 
 const ContrastOptions = () => {
   const [finetuneProps, setFinetuneProps] = useFinetune(
@@ -18,20 +20,19 @@ const ContrastOptions = () => {
     DEFAULT_VALUE,
   );
 
-  const changeValue = (e) => {
+  const changeValue = (value) => {
     setFinetuneProps({
-      contrast: restrictNumber(e.target.value, MIN_VALUE, MAX_VALUE),
+      contrast: restrictNumber(value, MIN_VALUE, MAX_VALUE),
     });
   };
 
   return (
-    <input
-      type="range"
-      min={MIN_VALUE}
-      step="1"
-      max={MAX_VALUE}
+    <Slider
+      start={MIN_VALUE}
+      end={MAX_VALUE}
       value={finetuneProps.contrast ?? DEFAULT_VALUE.contrast}
       onChange={changeValue}
+      style={sliderStyle}
     />
   );
 };

@@ -55,7 +55,10 @@ const ImageOptions = () => {
   const setError = (error) => {
     dispatch({
       type: SET_ERROR,
-      payload: { error },
+      payload: {
+        message: error.message,
+        status: 'warning',
+      },
     });
   };
 

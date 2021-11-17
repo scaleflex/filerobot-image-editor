@@ -1,28 +1,11 @@
 /** External Dependencies */
-import React, { useState } from 'react';
+import React from 'react';
 
 /** Internal Dependencies */
 import { StyledSlider } from './Slider.styled';
 
 const Slider = (props) => {
-  const [isSliding, setIsSliding] = useState(false);
-
-  const enableIsSliding = () => {
-    setIsSliding(true);
-  };
-
-  const disableIsSliding = () => {
-    setIsSliding(false);
-  };
-
-  return (
-    <StyledSlider
-      showAnntotaionTooltip={isSliding}
-      onDragStart={enableIsSliding}
-      onDragEnd={disableIsSliding}
-      {...props}
-    />
-  );
+  return <StyledSlider annotation="" {...props} />;
 };
 
 export default Slider;

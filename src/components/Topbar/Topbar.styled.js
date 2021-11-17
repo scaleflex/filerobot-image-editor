@@ -2,7 +2,6 @@
 import styled from 'styled-components';
 import { IconButton, Label } from '@scaleflex/ui/core';
 import iconButton from '@scaleflex/ui/core/icon-button';
-import { Warning } from '@scaleflex/icons';
 
 const StyledTopbar = styled.div`
   position: relative;
@@ -45,15 +44,10 @@ const StyledZoomPercentageLabel = styled(Label)`
   cursor: pointer;
 `;
 
-const StyledWarningIcon = styled(Warning)`
-  color: ${({ theme }) => theme.palette.warning};
-`;
-
 export {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
   StyledHistoryButton,
   StyledSmallButton,
   StyledZoomPercentageLabel,
-  StyledWarningIcon,
 };

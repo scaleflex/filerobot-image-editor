@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ['react', 'prettier'],
   rules: {
+    'no-unused-vars': 'warn',
     'import/no-cycle': 'off',
     'import/prefer-default-export': 'off',
     'react/prop-types': 'warn',

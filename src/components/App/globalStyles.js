@@ -143,7 +143,7 @@ const FontsFaces = createGlobalStyle`
 `;
 
 const IconsColor = createGlobalStyle`
-  svg {
+  :not(button) > svg:not([color]) {
     color: ${({ theme }) => theme.palette['icons-primary']}
   }
 `;

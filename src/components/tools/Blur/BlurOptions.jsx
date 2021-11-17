@@ -5,12 +5,14 @@ import Konva from 'konva';
 /** Internal Dependencies */
 import { useFinetune } from 'hooks';
 import restrictNumber from 'utils/restrictNumber';
+import Slider from 'components/common/Slider';
 
 const MIN_VALUE = 0;
 const DEFAULT_VALUE = {
   blurRadius: MIN_VALUE,
 };
 const MAX_VALUE = 40;
+const sliderStyle = { width: 150, padding: 0 };
 
 const BlurOptions = () => {
   const [finetuneProps, setFinetuneProps] = useFinetune(
@@ -18,20 +20,19 @@ const BlurOptions = () => {
     DEFAULT_VALUE,
   );
 
-  const changeValue = (e) => {
+  const changeValue = (value) => {
     setFinetuneProps({
-      blurRadius: restrictNumber(e.target.value, MIN_VALUE, MAX_VALUE),
+      blurRadius: restrictNumber(value, MIN_VALUE, MAX_VALUE),
     });
   };
 
   return (
-    <input
-      type="range"
-      min={MIN_VALUE}
-      step="1"
-      max={MAX_VALUE}
+    <Slider
+      start={MIN_VALUE}
+      end={MAX_VALUE}
       value={finetuneProps.blurRadius ?? DEFAULT_VALUE.blurRadius}
       onChange={changeValue}
+      style={sliderStyle}
     />
   );
 };

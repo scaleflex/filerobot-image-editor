@@ -25,6 +25,7 @@ const ButtonWithMenu = ({
   menuFromBtn,
   menuItems,
   menuPosition = 'bottom',
+  arrowColor,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -66,7 +67,7 @@ const ButtonWithMenu = ({
           size={size}
           onClick={menuFromBtn ? undefined : openMenu}
         >
-          <Arrow />
+          <Arrow color={arrowColor} />
         </StyledMenuButton>
       </StyledButtonWrapper>
       <Menu
@@ -82,7 +83,11 @@ const ButtonWithMenu = ({
             onClick={() => handleMenuItemClick(item.onClick)}
             size={size}
           >
-            {item.icon && <MenuItemIcon size={size}>{item.icon}</MenuItemIcon>}
+            {item.icon && (
+              <MenuItemIcon size={size}>
+                <item.icon />
+              </MenuItemIcon>
+            )}
             <MenuItemLabel>{item.label}</MenuItemLabel>
           </MenuItem>
         ))}

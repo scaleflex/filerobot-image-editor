@@ -19,6 +19,9 @@ const Modal = ({
   doneLabel,
   cancelLabel,
   isOpened,
+  doneButtonStyle,
+  doneButtonColor = 'link',
+  cancelButtonColor = 'link',
 }) => {
   return (
     <LibModal open={isOpened} onClose={onCancel} style={style}>
@@ -30,11 +33,16 @@ const Modal = ({
         variant="with-icon"
       />
       <ModalActions align="center">
-        <Button color="link" onClick={onDone} size="md">
-          {doneLabel}
-        </Button>
-        <Button color="primary" onClick={onCancel} size="md">
+        <Button color={cancelButtonColor} onClick={onCancel} size="md">
           {cancelLabel}
+        </Button>
+        <Button
+          color={doneButtonColor}
+          onClick={onDone}
+          size="md"
+          style={doneButtonStyle}
+        >
+          {doneLabel}
         </Button>
       </ModalActions>
     </LibModal>

@@ -5,12 +5,14 @@ import React from 'react';
 import { useFinetune } from 'hooks';
 import restrictNumber from 'utils/restrictNumber';
 import { Warmth as CustomWarmth } from 'custom/finetunes';
+import Slider from 'components/common/Slider';
 
 const MIN_VALUE = 0;
 const DEFAULT_VALUE = {
   warmth: MIN_VALUE,
 };
 const MAX_VALUE = 200;
+const sliderStyle = { width: 150, padding: 0 };
 
 const WarmthOptions = () => {
   const [finetuneProps, setFinetuneProps] = useFinetune(
@@ -18,20 +20,19 @@ const WarmthOptions = () => {
     DEFAULT_VALUE,
   );
 
-  const changeValue = (e) => {
+  const changeValue = (value) => {
     setFinetuneProps({
-      warmth: restrictNumber(e.target.value, MIN_VALUE, MAX_VALUE),
+      warmth: restrictNumber(value, MIN_VALUE, MAX_VALUE),
     });
   };
 
   return (
-    <input
-      type="range"
-      min={MIN_VALUE}
-      step="0.01"
-      max={MAX_VALUE}
+    <Slider
+      start={MIN_VALUE}
+      end={MAX_VALUE}
       value={finetuneProps.warmth ?? DEFAULT_VALUE.warmth}
       onChange={changeValue}
+      style={sliderStyle}
     />
   );
 };
