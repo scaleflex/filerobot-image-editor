@@ -1,6 +1,7 @@
+/** External Dependencies */
 import styled from 'styled-components';
 
-const StyledWrapper = styled.div`
+const StyledAppWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,4 +24,4 @@ const StyledCanvasAndTools = styled.div`
   width: calc(100% - 80px); // 80px = tabsbar's width.
 `;
 
-export { StyledWrapper, StyledMainContent, StyledCanvasAndTools };
+export { StyledAppWrapper, StyledMainContent, StyledCanvasAndTools };

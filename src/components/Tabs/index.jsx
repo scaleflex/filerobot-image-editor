@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 
 /** Internal Dependencies */
 import AppContext from 'context';
@@ -9,10 +9,22 @@ import { AVAILABLE_TABS } from './Tabs.constants';
 import { StyledTabs } from './Tabs.styled';
 
 const Tabs = () => {
-  const { dispatch, tabId = null } = useContext(AppContext);
+  const {
+    dispatch,
+    tabId = null,
+    config: { tabsIds, defaultTabId },
+  } = useContext(AppContext);
 
-  // TODO: make it configurable throguh props.
-  const tabs = AVAILABLE_TABS;
+  const currentTabId = tabId || defaultTabId;
+
+  const chosenTabs = useMemo(() => {
+    const tabs =
+      Object.keys(tabsIds).length > 0
+        ? AVAILABLE_TABS.filter((tab) => tabsIds.includes(tab.id))
+        : AVAILABLE_TABS;
+
+    return tabs.length > 0 ? tabs : AVAILABLE_TABS;
+  }, [tabsIds]);
 
   const selectTab = useCallback((newTabId) => {
     dispatch({
@@ -25,13 +37,13 @@ const Tabs = () => {
 
   return (
     <StyledTabs>
-      {tabs.map(({ id, label, icon }) => (
+      {chosenTabs.map(({ id, label, icon }) => (
         <TabItem
           key={id}
           id={id}
           label={label}
           Icon={icon}
-          isSelected={tabId === id}
+          isSelected={currentTabId === id}
           onClick={selectTab}
         />
       ))}

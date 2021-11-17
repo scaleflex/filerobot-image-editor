@@ -50,8 +50,8 @@ const TextControls = ({ text, saveText, children }) => {
 
   const changeFontStyle = useCallback(
     (newStyle) => {
-      let fontStyle = text.fontStyle?.split(' ') || [];
-      if (fontStyle && fontStyle.includes(newStyle)) {
+      let fontStyle = text.fontStyle?.replace('normal', '').split(' ') || [];
+      if (Object.keys(fontStyle).length > 0 && fontStyle.includes(newStyle)) {
         fontStyle = fontStyle.filter((style) => style !== newStyle);
       } else {
         fontStyle.push(newStyle);
@@ -60,7 +60,7 @@ const TextControls = ({ text, saveText, children }) => {
       changeTextProps({
         target: {
           name: 'fontStyle',
-          value: fontStyle.join(' '),
+          value: fontStyle.join(' ').trim() || 'normal',
         },
       });
     },

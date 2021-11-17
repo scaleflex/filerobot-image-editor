@@ -1,30 +1,76 @@
 /** External Dependencies */
-import React from 'react';
-import ThemeProvider from '@scaleflex/ui/theme';
+import React, { useCallback, useContext, useEffect } from 'react';
 
 /** Internal Dependencies */
-import Wrapper from 'components/Wrapper';
-import { AppProvider } from 'context';
-import { FontsFaces, IconsColor } from './globalStyles';
+import MainCanvas from 'components/MainCanvas';
+import { ROOT_CONTAINER_ID } from 'utils/constants';
+import Topbar from 'components/Topbar';
+import Tabs from 'components/Tabs';
+import AppContext from 'context';
+import ToolsBar from 'components/ToolsBar';
+import { SET_ERROR, SET_ORIGINAL_IMAGE, SHOW_LOADER } from 'actions';
+import ErrorPopup from 'components/ErrorPopup';
+import loadImage from 'utils/loadImage';
+import {
+  StyledAppWrapper,
+  StyledMainContent,
+  StyledCanvasAndTools,
+} from './App.styled';
 
-const demoProps = {
-  // string or image html element
-  image:
-    'https://images.unsplash.com/photo-1553451166-232112bda6f6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920',
+const App = () => {
+  const { config, isLoadingGlobally, dispatch, originalImage } =
+    useContext(AppContext);
+  const { image } = config;
+
+  const setNewOriginalImage = useCallback((newOriginalImage) => {
+    dispatch({
+      type: SET_ORIGINAL_IMAGE,
+      payload: {
+        originalImage: newOriginalImage,
+      },
+    });
+  }, []);
+
+  const setError = useCallback((error) => {
+    dispatch({
+      type: SET_ERROR,
+      payload: {
+        error: {
+          message: error.message,
+          duration: 0,
+        },
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch({ type: SHOW_LOADER });
+
+    if (typeof image === 'string') {
+      loadImage(image).then(setNewOriginalImage).catch(setError);
+    } else if (image instanceof HTMLImageElement) {
+      setNewOriginalImage(image);
+    } else {
+      setError('Invalid image provided');
+    }
+  }, [image]);
+
+  return (
+    <StyledAppWrapper id={ROOT_CONTAINER_ID}>
+      {isLoadingGlobally && 'Loading globally from wrapper...'}
+      <Topbar />
+      {originalImage && (
+        <StyledMainContent>
+          <Tabs />
+          <StyledCanvasAndTools>
+            <MainCanvas />
+            <ToolsBar />
+          </StyledCanvasAndTools>
+        </StyledMainContent>
+      )}
+      <ErrorPopup />
+    </StyledAppWrapper>
+  );
 };
-
-const App = () => (
-  <>
-    <React.StrictMode>
-      <ThemeProvider>
-        <FontsFaces />
-        <IconsColor />
-        <AppProvider>
-          <Wrapper {...demoProps} />
-        </AppProvider>
-      </ThemeProvider>
-    </React.StrictMode>
-  </>
-);
 
 export default App;

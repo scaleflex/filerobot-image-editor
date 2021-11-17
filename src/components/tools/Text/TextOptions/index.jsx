@@ -7,14 +7,7 @@ import { TOOLS_IDS } from 'utils/constants';
 import TextControls from './TextControls';
 
 const TextOptions = () => {
-  const [text, saveText] = useAnnotation({
-    name: TOOLS_IDS.TEXT,
-    fontFamily: 'Arial',
-    letterSpacing: 0,
-    lineHeight: 1,
-    opacity: 1,
-    align: 'left',
-  });
+  const [text, saveText] = useAnnotation({ name: TOOLS_IDS.TEXT });
 
   return <TextControls text={text} saveText={saveText} />;
 };

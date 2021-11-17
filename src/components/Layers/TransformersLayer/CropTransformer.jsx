@@ -38,6 +38,9 @@ const CropTransformer = () => {
   const isEllipse = crop.ratio === ELLIPSE_CROP;
 
   const saveCrop = (e, noHistory = false) => {
+    if (!e.currentTarget) {
+      return;
+    }
     const width = e.currentTarget.width() / canvasScale; // for removing the scaling from the width;
     const height = e.currentTarget.height() / canvasScale;
     const x = e.currentTarget.x() / canvasScale;
@@ -126,8 +129,10 @@ const CropTransformer = () => {
 
     const isFirstRender = !cropRef.current.cropShape;
     cropRef.current.cropShape = newCropShape;
-    cropTransformerRef.current.parent.add(cropRef.current.cropShape);
-    cropTransformerRef.current.nodes([cropRef.current.cropShape]);
+    if (cropTransformerRef.current) {
+      cropTransformerRef.current.parent.add(cropRef.current.cropShape);
+      cropTransformerRef.current.nodes([cropRef.current.cropShape]);
+    }
     cropRef.current.cropShape.moveDown();
     saveCrop({ currentTarget: cropTransformerRef.current }, isFirstRender);
   };

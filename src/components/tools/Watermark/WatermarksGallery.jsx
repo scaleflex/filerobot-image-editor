@@ -9,7 +9,7 @@ import Carousel from 'components/common/Carousel';
 import { StyledWatermarkGalleryItem } from './Watermark.styled';
 
 const WatermarksGallery = ({ selectWatermark }) => {
-  const { options = {}, annotations } = useStore();
+  const { config, annotations } = useStore();
 
   const currentWatermarkUrl = useMemo(
     () => (annotations[WATERMARK_ANNOTATION_ID] || {}).image?.src,
@@ -22,7 +22,7 @@ const WatermarksGallery = ({ selectWatermark }) => {
 
   return (
     <Carousel>
-      {options[TABS_IDS.WATERMARK].gallery.map((watermarkUrl) => (
+      {config[TABS_IDS.WATERMARK].gallery.map((watermarkUrl) => (
         <StyledWatermarkGalleryItem
           onClick={getWatermarkImgAndSelect}
           key={watermarkUrl}

@@ -15,6 +15,7 @@ const SaveButton = () => {
     originalImage,
     resize,
     adjustments: { crop, isFlippedX, isFlippedY } = {},
+    config: { onClose, closeAfterSave },
   } = useContext(AppContext);
 
   const handleSave = () => {
@@ -69,6 +70,10 @@ const SaveButton = () => {
       }),
       fileFullName,
     );
+
+    if (closeAfterSave && onClose) {
+      onClose();
+    }
   };
 
   const menuItems = [

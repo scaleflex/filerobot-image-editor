@@ -9,17 +9,18 @@ import appReducer from './appReducer';
 import initialAppState from './initialAppState';
 import AppContext from './AppContext';
 
-const AppProvider = ({ children }) => {
+const AppProvider = ({ children, config = {} }) => {
   const [state, dispatch] = useAppReducer(appReducer, initialAppState);
   const theme = useTheme();
 
   const providedValue = useMemo(
     () => ({
       ...state,
+      config,
       theme,
       dispatch,
     }),
-    [state],
+    [config, state],
   );
 
   return (

@@ -1,5 +1,5 @@
 /** External Depepdencneis */
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 
 /** Internal Depepdencneis */
 import AppContext from 'context';
@@ -16,9 +16,16 @@ const ToolsBar = () => {
     toolId,
     annotations,
     selectionsIds = [],
+    config: { defaultTabId, defaultToolId },
   } = useContext(AppContext);
+  const currentTabId = tabId || defaultTabId;
+  const currentToolId =
+    toolId || defaultToolId || TABS_TOOLS[currentTabId]?.[0];
 
-  const tabTools = useMemo(() => TABS_TOOLS[tabId], [tabId]);
+  const tabTools = useMemo(
+    () => TABS_TOOLS[currentTabId] || [],
+    [currentTabId],
+  );
 
   const selectTool = useCallback((newToolId) => {
     dispatch({
@@ -35,14 +42,24 @@ const ToolsBar = () => {
         const { Item } = TOOLS_ITEMS[id];
 
         return (
-          <Item key={id} selectTool={selectTool} isSelected={toolId === id} />
+          Item && (
+            <Item
+              key={id}
+              selectTool={selectTool}
+              isSelected={currentToolId === id}
+            />
+          )
         );
       }),
-    [tabTools, toolId],
+    [tabTools, currentToolId],
   );
 
   const ToolOptionsComponent = useMemo(() => {
-    if (tabId === TABS_IDS.ANNOTATE) {
+    if (!currentToolId) {
+      return false;
+    }
+
+    if (currentTabId === TABS_IDS.ANNOTATE) {
       const selectionsLength = selectionsIds.length;
       if (selectionsLength === 1) {
         const selectedAnnotation = annotations[selectionsIds[0]];
@@ -54,19 +71,28 @@ const ToolsBar = () => {
     }
 
     return (
-      tabId &&
-      toolId &&
-      TABS_TOOLS[tabId].includes(toolId) &&
+      currentTabId &&
+      currentToolId &&
+      TABS_TOOLS[currentTabId].includes(currentToolId) &&
       TOOLS_ITEMS[toolId]?.ItemOptions
     );
-  }, [tabId, toolId, annotations, selectionsIds]);
+  }, [currentTabId, currentToolId, annotations, selectionsIds]);
+
+  useEffect(() => {
+    if (!toolId && currentToolId) {
+      dispatch({
+        type: SELECT_TOOL,
+        payload: { toolId: currentToolId },
+      });
+    }
+  }, []);
 
   return (
     <StyledToolsBar>
       <ToolsBarItemOptionsWrapper>
         {ToolOptionsComponent && <ToolOptionsComponent />}
       </ToolsBarItemOptionsWrapper>
-      <StyledToolsBarItems>{items}</StyledToolsBarItems>
+      {items && <StyledToolsBarItems>{items}</StyledToolsBarItems>}
     </StyledToolsBar>
   );
 };

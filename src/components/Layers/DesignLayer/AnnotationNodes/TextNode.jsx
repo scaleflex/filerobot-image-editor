@@ -12,6 +12,7 @@ const TextNode = ({
   text,
   fontFamily,
   fontSize,
+  fontStyle,
   fill,
   x,
   y,
@@ -51,6 +52,7 @@ const TextNode = ({
     fill={fill}
     text={text}
     fontFamily={fontFamily}
+    fontStyle={fontStyle}
     fontSize={fontSize}
     letterSpacing={letterSpacing}
     lineHeight={lineHeight}

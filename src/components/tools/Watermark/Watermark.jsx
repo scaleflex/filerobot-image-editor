@@ -26,13 +26,8 @@ const WATERMARK_IMG_RATIO_FROM_ORIGINAL = 0.33;
 const WATERMARK_ANNOTATION_ID = 'watermark';
 
 const Watermark = () => {
-  const {
-    annotations,
-    shownImageDimensions,
-    selectionsIds,
-    options,
-    dispatch,
-  } = useStore();
+  const { annotations, shownImageDimensions, selectionsIds, config, dispatch } =
+    useStore();
   const [isLoading, setIsLoading] = useState(false);
   const uploadImgInput = useRef();
 
@@ -49,8 +44,8 @@ const Watermark = () => {
       shownImageDimensions.width * WATERMARK_IMG_RATIO_FROM_ORIGINAL;
 
     const textWatermark = {
-      ...options.common,
-      ...options[TOOLS_IDS.TEXT],
+      ...config.annotationsCommon,
+      ...config[TOOLS_IDS.TEXT],
       ...dimensions,
       padding: 1,
       x: shownImageDimensions.width / 2 - dimensions.width / 2,
@@ -85,8 +80,8 @@ const Watermark = () => {
     }
 
     const scaledWatermarkImg = {
-      ...options.common,
-      ...options[TOOLS_IDS.IMAGE],
+      ...config.annotationsCommon,
+      ...config[TOOLS_IDS.IMAGE],
       ...newImgDimensions,
       padding: 1,
       image: loadedImg,
