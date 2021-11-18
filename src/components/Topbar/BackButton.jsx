@@ -1,15 +1,18 @@
 /** External Dependencies */
 import React from 'react';
-import { CrossOutline } from '@scaleflex/icons';
+import { ArrowLeftOutline } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import { CLOSING_REASONS } from 'utils/constants';
-import { StyledCloseOrBackButton } from './Topbar.styled';
+import {
+  StyledBackButtonLabel,
+  StyledCloseOrBackButton,
+} from './Topbar.styled';
 
-const CloseButton = () => {
+const BackButton = () => {
   const {
-    config: { onClose },
+    config: { onClose, backButtonLabel = 'Back' },
   } = useStore();
 
   // Hacky solution for avoiding (zoom & image info) components go to right if we have no close button.
@@ -23,9 +26,14 @@ const CloseButton = () => {
 
   return (
     <StyledCloseOrBackButton color="link" size="sm" onClick={closeWithReason}>
-      {onClose && <CrossOutline />}
+      {onClose && (
+        <>
+          <ArrowLeftOutline size={9} />
+          <StyledBackButtonLabel>{backButtonLabel}</StyledBackButtonLabel>
+        </>
+      )}
     </StyledCloseOrBackButton>
   );
 };
 
-export default CloseButton;
+export default BackButton;

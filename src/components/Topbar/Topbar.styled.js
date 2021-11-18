@@ -11,6 +11,8 @@ const StyledTopbar = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
+  ${({ reverseDirection }) =>
+    reverseDirection ? 'flex-direction: row-reverse' : ''};
 `;
 
 const StyledHistoryButton = styled(IconButton)`
@@ -38,10 +40,22 @@ const StyledSmallButton = styled(iconButton)`
 const StyledFlexCenterAlignedContainer = styled.div`
   display: flex;
   align-items: center;
+  ${({ reverseDirection }) =>
+    reverseDirection ? 'flex-direction: row-reverse' : ''};
 `;
 
 const StyledZoomPercentageLabel = styled(Label)`
   cursor: pointer;
+`;
+
+const StyledBackButtonLabel = styled.span`
+  font-size: 11px;
+  line-height: 12px;
+`;
+
+const StyledCloseOrBackButton = styled(iconButton)`
+  padding: 0;
+  z-index: 111;
 `;
 
 export {
@@ -50,4 +64,6 @@ export {
   StyledHistoryButton,
   StyledSmallButton,
   StyledZoomPercentageLabel,
+  StyledBackButtonLabel,
+  StyledCloseOrBackButton,
 };

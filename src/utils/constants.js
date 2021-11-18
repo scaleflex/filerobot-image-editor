@@ -54,9 +54,9 @@ export const FLIP_DIRECTIONS = {
 
 export const DEFAULT_ZOOM_FACTOR = 1;
 
-export const SUPPORTED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp'];
+export const SUPPORTED_IMAGE_TYPES = ['png', 'jpg', 'jpeg', 'webp'];
 
-export const DEFAULT_EXTENSION = SUPPORTED_EXTENSIONS[0];
+export const DEFAULT_IMAGE_TYPE = SUPPORTED_IMAGE_TYPES[0];
 
 export const POINTER_ICONS = {
   DEFAULT: 'default',
@@ -107,4 +107,10 @@ export const POSITIONS = {
 export const MIN_CROP = {
   WIDTH: 14,
   HEIGHT: 14,
+};
+
+export const CLOSING_REASONS = {
+  AFTER_SAVE: 'after-saving',
+  CLOSE_BUTTON: 'close-button-clicked',
+  BACK_BUTTON: 'back-button-clicked',
 };

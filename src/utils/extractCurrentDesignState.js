@@ -1,5 +1,6 @@
 /** Internal Dependencies */
-import initialAppState from 'context/initialAppState';
+import defaultConfig from 'context/defaultConfig';
+import getInitialAppState from 'context/getInitialAppState';
 
 /**
  * Extracts the needed properties/state that are used in canvas's design from the global state.
@@ -8,13 +9,18 @@ import initialAppState from 'context/initialAppState';
  * @param {Object} defaultValue Value assigned to any undefined/null property in returned object.
  * @returns {Object} The extracted design state.
  */
-const extractCurrentDesignState = (state) => ({
-  finetunes: state.finetunes || initialAppState.finetunes,
-  finetunesProps: state.finetunesProps || initialAppState.finetunesProps,
-  filter: state.filter || initialAppState.filter,
-  adjustments: state.adjustments || initialAppState.adjustments,
-  annotations: state.annotations || initialAppState.annotations,
-  resize: state.resize || initialAppState.resize,
-});
+const extractCurrentDesignState = (state) => {
+  const initialAppState = getInitialAppState(defaultConfig);
+
+  return {
+    imageSrc: state.imageSrc || initialAppState.imageSrc,
+    finetunes: state.finetunes || initialAppState.finetunes,
+    finetunesProps: state.finetunesProps || initialAppState.finetunesProps,
+    filter: state.filter || initialAppState.filter,
+    adjustments: state.adjustments || initialAppState.adjustments,
+    annotations: state.annotations || initialAppState.annotations,
+    resize: state.resize || initialAppState.resize,
+  };
+};
 
 export default extractCurrentDesignState;

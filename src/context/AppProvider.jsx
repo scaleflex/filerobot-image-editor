@@ -6,11 +6,14 @@ import { useTheme } from '@scaleflex/ui/theme/hooks';
 /** Internal Dependencies */
 import { useAppReducer } from 'hooks';
 import appReducer from './appReducer';
-import initialAppState from './initialAppState';
 import AppContext from './AppContext';
+import getInitialAppState from './getInitialAppState';
 
 const AppProvider = ({ children, config = {} }) => {
-  const [state, dispatch] = useAppReducer(appReducer, initialAppState);
+  const [state, dispatch] = useAppReducer(
+    appReducer,
+    getInitialAppState(config),
+  );
   const theme = useTheme();
 
   const providedValue = useMemo(

@@ -1,5 +1,5 @@
 import compareRatios from 'utils/compareRatios';
-import { MIN_CROP } from 'utils/constants';
+import restrictNumber from 'utils/restrictNumber';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
 
 export const boundDragging = (newDimensions, allowedArea) => {
@@ -40,6 +40,7 @@ export const boundResizing = (
   newDimensions,
   allowedArea,
   ratio,
+  cropRestrictions = {},
 ) => {
   const scaledAllowedArea = {
     x: toPrecisedFloat(allowedArea.abstractX * allowedArea.scaledBy),
@@ -47,12 +48,6 @@ export const boundResizing = (
     width: toPrecisedFloat(allowedArea.width * allowedArea.scaledBy),
     height: toPrecisedFloat(allowedArea.height * allowedArea.scaledBy),
   };
-  if (
-    newDimensions.width < MIN_CROP.WIDTH &&
-    newDimensions.height < MIN_CROP.HEIGHT
-  ) {
-    return oldDimensions;
-  }
 
   const maxAllowedX = scaledAllowedArea.x + scaledAllowedArea.width;
   const maxAllowedY = scaledAllowedArea.y + scaledAllowedArea.height;
@@ -99,6 +94,44 @@ export const boundResizing = (
       boundedDimensions.height = ratioedBoundedHeight;
     } else {
       boundedDimensions.width = ratioedBoundedWidth;
+    }
+  }
+
+  if (
+    (cropRestrictions.minWidth &&
+      boundedDimensions.width <= cropRestrictions.minWidth) ||
+    (cropRestrictions.maxWidth &&
+      boundedDimensions.width >= cropRestrictions.maxWidth)
+  ) {
+    boundedDimensions.width = restrictNumber(
+      boundedDimensions.width,
+      cropRestrictions.minWidth,
+      cropRestrictions.maxWidth,
+    );
+    boundedDimensions.x = oldDimensions.x;
+    boundedDimensions.y = oldDimensions.y;
+
+    if (ratio) {
+      boundedDimensions.height = boundedDimensions.width / ratio;
+    }
+  }
+  if (
+    (cropRestrictions.minHeight &&
+      newDimensions.height <= cropRestrictions.minHeight) ||
+    (cropRestrictions.maxHeight &&
+      newDimensions.height >= cropRestrictions.maxHeight)
+  ) {
+    boundedDimensions.height = restrictNumber(
+      boundedDimensions.height,
+      cropRestrictions.minHeight,
+      cropRestrictions.maxHeight,
+    );
+
+    boundedDimensions.x = oldDimensions.x;
+    boundedDimensions.y = oldDimensions.y;
+
+    if (ratio) {
+      boundedDimensions.width = boundedDimensions.height * ratio;
     }
   }
 

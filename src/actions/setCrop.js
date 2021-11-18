@@ -9,6 +9,7 @@ const setCrop = (state, payload) => {
     adjustments: {
       ...state.adjustments,
       crop: {
+        ...oldCrop,
         absoluteX: payload.absoluteX ?? oldCrop.absoluteX,
         absoluteY: payload.absoluteY ?? oldCrop.absoluteY,
         relativeX: payload.relativeX ?? oldCrop.relativeX,

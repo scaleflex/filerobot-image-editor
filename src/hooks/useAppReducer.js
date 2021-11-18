@@ -47,6 +47,7 @@ const useAppReducer = (reducer, initialState) => {
         hasRedo: false,
         futureDesignStates: [],
         isResetted: false,
+        haveNotSavedChanges: true,
       };
     }
 

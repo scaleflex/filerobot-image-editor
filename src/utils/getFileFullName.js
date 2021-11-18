@@ -1,24 +1,26 @@
-import { DEFAULT_EXTENSION, SUPPORTED_EXTENSIONS } from './constants';
+import { DEFAULT_IMAGE_TYPE, SUPPORTED_IMAGE_TYPES } from './constants';
 
-const getFileFullName = (fileName) => {
+const getFileFullName = (fileName = '', appendedExtension) => {
+  let finalExtension = appendedExtension;
+  let finalFileName = fileName;
   if (
-    SUPPORTED_EXTENSIONS.some(
+    !finalExtension &&
+    SUPPORTED_IMAGE_TYPES.some(
       (extension) =>
         fileName.lastIndexOf(`.${extension}`) ===
         fileName.length - `.${extension}`.length,
     )
   ) {
-    return {
-      fullName: fileName,
-      name: fileName.slice(0, fileName.lastIndexOf('.')),
-      extension: fileName.slice(fileName.lastIndexOf('.') + 1),
-    };
+    finalExtension = fileName.slice(fileName.lastIndexOf('.') + 1);
+    finalFileName = fileName.slice(0, fileName.lastIndexOf('.'));
   }
 
+  finalExtension = finalExtension || DEFAULT_IMAGE_TYPE;
+
   return {
-    fullName: `${fileName}.${DEFAULT_EXTENSION}`,
-    name: fileName,
-    extension: DEFAULT_EXTENSION,
+    fullName: `${finalFileName}.${finalExtension}`,
+    name: finalFileName,
+    extension: finalExtension,
   };
 };
 

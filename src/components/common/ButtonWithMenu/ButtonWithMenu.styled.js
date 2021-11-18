@@ -9,10 +9,12 @@ const StyledButtonWrapper = styled.div`
 `;
 
 const StyledButtonWithMenu = styled(Button)`
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
   height: 100%;
   padding: 4px 8px;
+  ${({ keepBorderRadius }) =>
+    keepBorderRadius
+      ? ''
+      : 'border-top-right-radius: 0; border-bottom-right-radius: 0'};
 
   span {
     font-size: 12px !important;
@@ -29,7 +31,9 @@ const StyledMenuButton = styled(IconButton)`
   margin-right: 4px;
 
   svg {
-    transform: rotate(90deg);
+    transform: rotate(-90deg);
+    width: 10px;
+    margin-top: -4px;
   }
 `;
 

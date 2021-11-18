@@ -21,6 +21,7 @@ const redo = (state) => {
       futureDesignStates: newFutureDesignStates,
       hasUndo: true,
       hasRedo: newFutureDesignStates.length > 0,
+      haveNotSavedChanges: true,
     };
   }
 

@@ -1,28 +1,65 @@
 /** External Dependencies */
-import React, { useContext } from 'react';
+import React from 'react';
 
 /** Internal Dependencies */
-import AppContext from 'context';
-import appendExtensionIfNone from 'utils/getFileFullName';
+import { useStore } from 'hooks';
+import getFileFullName from 'utils/getFileFullName';
 import mapCropBox from 'utils/mapCropBox';
-import uriDownload from 'utils/uriDownload';
 import ButtonWithMenu from 'components/common/ButtonWithMenu';
+import extractCurrentDesignState from 'utils/extractCurrentDesignState';
+import {
+  CLOSING_REASONS,
+  ELLIPSE_CROP,
+  SUPPORTED_IMAGE_TYPES,
+} from 'utils/constants';
+import { SET_SAVED } from 'actions';
 
 const SaveButton = () => {
+  const state = useStore();
   const {
+    dispatch,
     shownImageDimensions,
+    haveNotSavedChanges,
     designLayer,
     originalImage,
     resize,
     adjustments: { crop, isFlippedX, isFlippedY } = {},
-    config: { onClose, closeAfterSave },
-  } = useContext(AppContext);
+    config: {
+      onClose,
+      closeAfterSave,
+      onSave,
+      onSaveAs,
+      forceToPngInEllipticalCrop,
+      saveButtonLabel = 'Save',
+      saveAsButtonLabel = 'Save as',
+      hideSaveAsMenu,
+      savedImageType,
+    },
+  } = state;
 
   const handleSave = () => {
-    const { fullName: fileFullName, extension } = appendExtensionIfNone(
+    if (typeof onSave !== 'function') {
+      // eslint-disable-next-line no-console
+      console.error('Please provide onSave function handler to the plugin.');
+      return;
+    }
+    const {
+      fullName: fileFullName,
+      name,
+      extension,
+    } = getFileFullName(
       originalImage.name,
+      forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
+        ? 'png'
+        : SUPPORTED_IMAGE_TYPES.includes(savedImageType?.toLowerCase()) &&
+            savedImageType,
     );
     const { clipWidth, clipHeight, clipX, clipY } = designLayer.attrs;
+
+    // We're using this for letting the designLayer's clipFunc know that we are in saving mode
+    // so it should apply elliptical crop if it is not applied and user is chosing ellitpical ratio.
+    designLayer.setAttr('isSaving', true);
+
     const preparedCanvas = designLayer.getStage().clone({
       scaleX: isFlippedX ? -1 : 1,
       scaleY: isFlippedY ? -1 : 1,
@@ -56,42 +93,65 @@ const SaveButton = () => {
       scaleY: preparedDesignLayerScale.y,
     });
 
-    uriDownload(
-      preparedCanvas.toDataURL({
-        ...mappedCropBox,
-        x: isFlippedX
-          ? preparedCanvas.width() - mappedCropBox.x - mappedCropBox.width
-          : mappedCropBox.x,
-        y: isFlippedY
-          ? preparedCanvas.height() - mappedCropBox.y - mappedCropBox.height
-          : mappedCropBox.y,
-        mimeType: `image/${extension}`,
-        // pixelRatio: window ? window.devicePixelRatio : 1, // Do we need this?
-      }),
-      fileFullName,
-    );
+    const finalImgBase64 = preparedCanvas.toDataURL({
+      ...mappedCropBox,
+      x: isFlippedX
+        ? preparedCanvas.width() - mappedCropBox.x - mappedCropBox.width
+        : mappedCropBox.x,
+      y: isFlippedY
+        ? preparedCanvas.height() - mappedCropBox.y - mappedCropBox.height
+        : mappedCropBox.y,
+      mimeType: `image/${extension}`,
+      // pixelRatio: window ? window.devicePixelRatio : 1, // Do we need this?
+    });
+
+    const finalImgDesignState = extractCurrentDesignState(state);
+    const finalImgPassedObject = {
+      fullName: fileFullName,
+      name,
+      extension,
+      mimeType: `image/${extension}`,
+      imageBase64: finalImgBase64,
+      width: mappedCropBox.width,
+      height: mappedCropBox.height,
+    };
+
+    onSave(finalImgPassedObject, finalImgDesignState);
+
+    // Reseting isSaving to false so we get everything back to normal if user wants to continue editing after saving.
+    designLayer.setAttr('isSaving', false);
+    dispatch({ type: SET_SAVED });
 
     if (closeAfterSave && onClose) {
-      onClose();
+      onClose(CLOSING_REASONS.AFTER_SAVE);
     }
+  };
+
+  const handleSaveAsClick = () => {
+    if (typeof onSaveAs === 'function') {
+      onSaveAs();
+    }
+
+    // TODO: Apply modal to let user choose file name and extension , then call onSave again.
+    handleSave();
   };
 
   const menuItems = [
     {
       key: 'Save-as',
-      label: 'Save as [WIP]',
-      onClick: () => console.log('called'),
+      label: saveAsButtonLabel,
+      onClick: handleSaveAsClick,
       isActive: false,
     },
   ];
 
   return (
     <ButtonWithMenu
-      label="Save"
-      title="Save with same extension"
+      label={saveButtonLabel}
       onClick={handleSave}
-      menuItems={menuItems}
+      menuItems={hideSaveAsMenu ? [] : menuItems}
       arrowColor="#FFFFFF"
+      disabled={!haveNotSavedChanges}
     />
   );
 };

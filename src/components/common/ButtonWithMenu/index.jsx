@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Arrow } from '@scaleflex/icons';
+import { ArrowLeftOutline } from '@scaleflex/icons';
 import {
   Menu,
   MenuItem,
@@ -26,6 +26,7 @@ const ButtonWithMenu = ({
   menuItems,
   menuPosition = 'bottom',
   arrowColor,
+  disabled = false,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -56,42 +57,55 @@ const ButtonWithMenu = ({
     }
   };
 
+  const hasMenuItems = menuItems.length > 0;
+
   return (
     <>
-      <StyledButtonWrapper onClick={handleButtonClick}>
-        <StyledButtonWithMenu color={color} size={size} title={title}>
-          {label}
-        </StyledButtonWithMenu>
-        <StyledMenuButton
+      <StyledButtonWrapper onClick={disabled ? undefined : handleButtonClick}>
+        <StyledButtonWithMenu
           color={color}
           size={size}
-          onClick={menuFromBtn ? undefined : openMenu}
+          title={title}
+          keepBorderRadius={!hasMenuItems}
+          disabled={disabled}
         >
-          <Arrow color={arrowColor} />
-        </StyledMenuButton>
-      </StyledButtonWrapper>
-      <Menu
-        anchorEl={anchorEl}
-        onClose={closeMenu}
-        open
-        position={menuPosition}
-      >
-        {menuItems.map((item) => (
-          <MenuItem
-            key={item.key}
-            active={item.isActive}
-            onClick={() => handleMenuItemClick(item.onClick)}
+          {label}
+        </StyledButtonWithMenu>
+        {hasMenuItems && (
+          <StyledMenuButton
+            color={color}
             size={size}
+            onClick={menuFromBtn || disabled ? undefined : openMenu}
+            disabled={disabled}
           >
-            {item.icon && (
-              <MenuItemIcon size={size}>
-                <item.icon />
-              </MenuItemIcon>
-            )}
-            <MenuItemLabel>{item.label}</MenuItemLabel>
-          </MenuItem>
-        ))}
-      </Menu>
+            <ArrowLeftOutline color={arrowColor} />
+          </StyledMenuButton>
+        )}
+      </StyledButtonWrapper>
+      {hasMenuItems && (
+        <Menu
+          anchorEl={anchorEl}
+          onClose={closeMenu}
+          open
+          position={menuPosition}
+        >
+          {menuItems.map((item) => (
+            <MenuItem
+              key={item.key}
+              active={item.isActive}
+              onClick={() => handleMenuItemClick(item.onClick)}
+              size={size}
+            >
+              {item.icon && (
+                <MenuItemIcon size={size}>
+                  <item.icon />
+                </MenuItemIcon>
+              )}
+              <MenuItemLabel>{item.label}</MenuItemLabel>
+            </MenuItem>
+          ))}
+        </Menu>
+      )}
     </>
   );
 };

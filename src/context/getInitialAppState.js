@@ -1,9 +1,28 @@
 /** Internal Dependencies */
-import { TABS_TOOLS } from 'components/tools/tools.constants';
-import { DEFAULT_ZOOM_FACTOR, POINTER_ICONS, TABS_IDS } from 'utils/constants';
+import { DEFAULT_ZOOM_FACTOR, POINTER_ICONS, TOOLS_IDS } from 'utils/constants';
 
-// TODO: make some of these configurable
-export default {
+const getInitialAppState = (config = {}) => ({
+  // --- Start of design states ---
+  imageSrc:
+    typeof config.image === 'string' ? config.image : config.image?.src || '',
+  finetunes: [],
+  finetunesProps: {},
+  filter: null,
+  adjustments: {
+    crop: {
+      ratio: config[TOOLS_IDS.CROP].ratio,
+      width: null,
+      height: null,
+      absoluteX: 0,
+      absoluteY: 0,
+      relativeX: 0,
+      relativeY: 0,
+    },
+  },
+  annotations: {},
+  resize: {},
+  // --- End of design states ---
+  ...config.loadableDesignState, // if provided it would override the above design states
   pointerCssIcon: POINTER_ICONS.DEFAULT,
   canvasScale: 1,
   shownImageDimensions: {},
@@ -13,24 +32,6 @@ export default {
     y: null,
   },
   isLoadingGlobally: true,
-  // --- Start of design states ---
-  finetunes: [],
-  finetunesProps: {},
-  filter: null,
-  adjustments: {
-    crop: {
-      absoluteX: 0,
-      absoluteY: 0,
-      relativeX: 0,
-      relativeY: 0,
-      ratio: 'original',
-      width: null,
-      height: null,
-    },
-  },
-  annotations: {},
-  resize: {},
-  // --- End of design states ---
   selectionsIds: [],
   tabId: null,
   toolId: null,
@@ -42,4 +43,8 @@ export default {
    */
   pastDesignStates: [],
   futureDesignStates: [],
-};
+  isResetted: true,
+  haveNotSavedChanges: false,
+});
+
+export default getInitialAppState;

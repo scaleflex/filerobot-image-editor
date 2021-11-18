@@ -134,7 +134,11 @@ const DesignLayer = () => {
   );
 
   const clipFunc = (ctx) => {
-    const clipBox = isCurrentlyCropping
+    // We are using isSaving to apply ellitpical crop if we're saving the image while in crop tool and it's elliptical crop ratio,
+    // As elliptical crop isn't applied while in crop tool.
+    const isCroppingAndNotSaving =
+      isCurrentlyCropping && !designLayerRef.current?.attrs?.isSaving;
+    const clipBox = isCroppingAndNotSaving
       ? {
           ...imageDimensions,
           x: 0,
@@ -146,7 +150,7 @@ const DesignLayer = () => {
           x: crop.relativeX || 0,
           y: crop.relativeY || 0,
         };
-    cropImage(ctx, { ratio: crop.ratio, ...clipBox }, isCurrentlyCropping);
+    cropImage(ctx, { ratio: crop.ratio, ...clipBox }, isCroppingAndNotSaving);
     if (designLayerRef.current) {
       designLayerRef.current.setAttrs({
         clipX: clipBox.x,

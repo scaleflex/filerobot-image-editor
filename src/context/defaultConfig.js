@@ -1,4 +1,5 @@
-import { TABS_IDS, TOOLS_IDS } from 'utils/constants';
+/** Internal Dependencies */
+import { MIN_CROP, TABS_IDS, TOOLS_IDS } from 'utils/constants';
 
 export default {
   annotationsCommon: {
@@ -44,22 +45,24 @@ export default {
     pointerLength: undefined,
     pointerWidth: undefined,
   },
-  [TABS_IDS.WATERMARK]: {
-    gallery: [
-      'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/PNG/SCALEFLEX+LOGO+-+Color+Dark+text.png?vh=45cac1',
-      'https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGOTYPE+WITH+SCALEFLEX-01-01.png?vh=76c5a7',
-      'https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX-01.png?vh=467711',
-      'https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+WHITE+BG.png?vh=7ae33c',
-      'https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+BLACK+BG.png?vh=619469',
-      'https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+Icon/FILEROBOT+ICON.png?vh=a4578e',
-      'https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+Icon/FILEROBOT+ICON+ON+WHITE+BG.png?vh=fa44f7',
-      'https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+Vertical/FILEROBOT+LOGO+VERTICAL.png?vh=05c4c3',
-      'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/PNG/SCALEFLEX+LOGO+-+Grayscale+Dark+text.png?vh=313898',
-      'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/Logo+Vertical/SCALEFLEX+LOGO+VERTICAL+WHITE+TEXT.png?vh=fca07b',
-      'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/Logo+Vertical/SCALEFLEX+LOGO+VERTICAL.PNG?vh=9a6fa1',
-    ],
+  [TOOLS_IDS.WATERMARK]: {
+    gallery: [],
+  },
+  [TOOLS_IDS.CROP]: {
+    minWidth: MIN_CROP.WIDTH,
+    minHeight: MIN_CROP.HEIGHT,
+    width: null,
+    height: null,
+    maxWidth: null,
+    maxHeight: null,
+    ratio: 'original',
+    noPresets: false,
   },
   tabsIds: [],
+  defaultTabId: TABS_IDS.ADJUST,
+  defaultToolId: TOOLS_IDS.CROP,
   onClose: null,
   closeAfterSaving: false,
+  savedImageType: null,
+  forceToPngInEllipticalCrop: false,
 };

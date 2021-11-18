@@ -33,7 +33,7 @@ const Watermark = () => {
 
   const watermark = useMemo(
     () => annotations[WATERMARK_ANNOTATION_ID],
-    [annotations],
+    [annotations[WATERMARK_ANNOTATION_ID]],
   );
 
   const addTextWatermark = () => {

@@ -15,6 +15,7 @@ const reset = (state) => {
     futureDesignStates: [],
     hasUndo: false,
     hasRedo: false,
+    haveNotSavedChanges: false,
   };
 };
 

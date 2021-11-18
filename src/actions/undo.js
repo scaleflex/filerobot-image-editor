@@ -20,6 +20,7 @@ const undo = (state) => {
       futureDesignStates: newFutureDesignStates,
       hasUndo: newPastDesignStates.length > 0,
       hasRedo: true,
+      haveNotSavedChanges: newPastDesignStates.length > 0,
     };
   }
 
