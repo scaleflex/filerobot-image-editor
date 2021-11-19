@@ -95,7 +95,7 @@ export const getBackendTranslations = (language = 'en') =>
 
     xhr.open(
       'GET',
-      `https://i18n.it/api/expcort?grid=${TRANSLATIONS_GRID_UUID}`,
+      `https://i18n.it/api/export?grid=${TRANSLATIONS_GRID_UUID}`,
     );
     xhr.send();
   });

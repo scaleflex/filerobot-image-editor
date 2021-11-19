@@ -41,8 +41,8 @@ const ShadowFields = ({ annotation, updateAnnotation, t }) => {
           <Label>{t('horizontal')}</Label>
           <Slider
             annotation="px"
-            min={-100}
-            max={100}
+            start={-100}
+            end={100}
             onChange={(val) =>
               changeSliderValue('shadowOffsetX', val, -100, 100)
             }
@@ -54,8 +54,8 @@ const ShadowFields = ({ annotation, updateAnnotation, t }) => {
           <Label>{t('vertical')}</Label>
           <Slider
             annotation="px"
-            min={-100}
-            max={100}
+            start={-100}
+            end={100}
             onChange={(val) =>
               changeSliderValue('shadowOffsetY', val, -100, 100)
             }

@@ -31,8 +31,8 @@ const RectCornerField = ({
         annotation="px"
         onChange={updateCornerRadius}
         value={cornerRadius}
-        min={MIN_VALUE}
-        max={MAX_VALUE}
+        start={MIN_VALUE}
+        end={MAX_VALUE}
       />
     </StyledSpacedOptionFields>
   );

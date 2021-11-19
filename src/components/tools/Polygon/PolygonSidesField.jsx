@@ -31,8 +31,8 @@ const PolygonSidesField = ({
         annotation=""
         onChange={updateSidesNumber}
         value={sides}
-        min={MIN_VALUE}
-        max={MAX_VALUE}
+        start={MIN_VALUE}
+        end={MAX_VALUE}
       />
     </StyledSpacedOptionFields>
   );
