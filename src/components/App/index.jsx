@@ -38,6 +38,7 @@ const App = () => {
     image,
     noChangesNotSavedAlertOnLeave,
     useBackendTranslations,
+    language,
   } = config;
   const isFirstRender = useRef(true);
   // Hacky solution, For being used in beforeunload event
@@ -123,7 +124,7 @@ const App = () => {
     ];
 
     if (useBackendTranslations) {
-      initialRequestsPromises.push(getBackendTranslations());
+      initialRequestsPromises.push(getBackendTranslations(language));
     }
 
     handleLoading(initialRequestsPromises);

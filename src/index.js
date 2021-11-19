@@ -61,7 +61,7 @@ const config = {
   },
   // useBackendTranslations: true, // if false, translations object will be used if not provided default translations will be there.
   // translations: null,
-  // language: 'en',
+  // language: 'en', // available same as on backend ('en', 'fr', 'de', 'it', 'pt', 'es', 'nl', 'pl', 'ro)
   // noChangesNotSavedAlertOnLeave: false, // true => user tries to close the tab and the it is not
   // loadableDesignState: null, // if provided, it will be used in loading the design state, [TODO: NEEDS TO BE IMPROVED]
   // savedImageType: null, // 'png','jpg', 'jpeg' & 'webp' => 'png' must be provided you want the image to be transparent and use elliptical crop || null (defaualt) means use the same provided image extension (extracted from the image's src url), if it was unknwon PNG will be used
