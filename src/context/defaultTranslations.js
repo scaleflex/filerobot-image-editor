@@ -1,4 +1,5 @@
 export default {
+  name: 'Name',
   save: 'Save',
   saveAs: 'Save as',
   back: 'Back',
@@ -79,4 +80,7 @@ export default {
   blur: 'Blur',
   transparency: 'Transparency',
   stroke: 'Stroke',
+  saveAsModalLabel: 'Save the image as',
+  extension: 'Extension',
+  nameIsRequired: 'Name is required.',
 };

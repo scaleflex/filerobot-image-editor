@@ -1,15 +1,21 @@
 /** External Dependencies */
-import { FineTune, Annotate } from '@scaleflex/icons';
+import {
+  FineTune,
+  Annotate,
+  CropFrame,
+  ImageFilters,
+  Watermark,
+  Resize,
+} from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { Filters, Resize, Watermark, Adjust } from 'components/common/icons';
 import { TABS_IDS } from 'utils/constants';
 
 export const AVAILABLE_TABS = [
   {
     id: TABS_IDS.ADJUST,
     labelKey: 'adjustTab',
-    icon: Adjust,
+    icon: CropFrame,
   },
   {
     id: TABS_IDS.FINETUNE,
@@ -19,7 +25,7 @@ export const AVAILABLE_TABS = [
   {
     id: TABS_IDS.FILTERS,
     labelKey: 'filtersTab',
-    icon: Filters,
+    icon: ImageFilters,
   },
   {
     id: TABS_IDS.WATERMARK,

@@ -6,6 +6,7 @@ import {
   ModalTitle,
   ModalActions,
   Button,
+  ModalContent,
 } from '@scaleflex/ui/core';
 
 const style = { width: 300 };
@@ -22,6 +23,7 @@ const Modal = ({
   doneButtonStyle,
   doneButtonColor = 'link',
   cancelButtonColor = 'link',
+  children,
 }) => {
   return (
     <LibModal open={isOpened} onClose={onCancel} style={style}>
@@ -32,6 +34,7 @@ const Modal = ({
         secondary={hint}
         variant="with-icon"
       />
+      {children && <ModalContent>{children}</ModalContent>}
       <ModalActions align="center">
         <Button color={cancelButtonColor} onClick={onCancel} size="md">
           {cancelLabel}

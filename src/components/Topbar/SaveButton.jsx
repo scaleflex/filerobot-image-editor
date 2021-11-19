@@ -1,5 +1,7 @@
 /** External Dependencies */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { MenuItem } from '@scaleflex/ui/core';
+import { Rename } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
@@ -10,13 +12,20 @@ import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 import {
   CLOSING_REASONS,
   ELLIPSE_CROP,
+  IMAGE_NODE_ID,
   SUPPORTED_IMAGE_TYPES,
 } from 'utils/constants';
 import { SET_SAVED } from 'actions';
+import Modal from 'components/common/Modal';
+import {
+  StyledFileExtensionSelect,
+  StyledFileNameInput,
+} from './Topbar.styled';
 
 const SaveButton = () => {
   const state = useStore();
   const {
+    theme,
     dispatch,
     shownImageDimensions,
     haveNotSavedChanges,
@@ -35,6 +44,8 @@ const SaveButton = () => {
       savedImageType,
     },
   } = state;
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [imageFileInfo, setImageFileInfo] = useState({});
 
   const handleSave = () => {
     if (typeof onSave !== 'function') {
@@ -42,17 +53,7 @@ const SaveButton = () => {
       console.error('Please provide onSave function handler to the plugin.');
       return;
     }
-    const {
-      fullName: fileFullName,
-      name,
-      extension,
-    } = getFileFullName(
-      originalImage.name,
-      forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
-        ? 'png'
-        : SUPPORTED_IMAGE_TYPES.includes(savedImageType?.toLowerCase()) &&
-            savedImageType,
-    );
+
     const { clipWidth, clipHeight, clipX, clipY } = designLayer.attrs;
 
     // We're using this for letting the designLayer's clipFunc know that we are in saving mode
@@ -70,6 +71,7 @@ const SaveButton = () => {
 
     const [preparedDesignLayer] = preparedCanvas.children; // children[0] = Design layer
     preparedCanvas.children[1].destroy(); // children[1] = Transformers layer, which is not needed anymore
+    preparedCanvas.findOne(`#${IMAGE_NODE_ID}`).cache();
     const mappedCropBox = mapCropBox(
       {
         x: crop.relativeX || clipX,
@@ -92,6 +94,8 @@ const SaveButton = () => {
       scaleY: preparedDesignLayerScale.y,
     });
 
+    const { name, extension } = imageFileInfo;
+
     const finalImgBase64 = preparedCanvas.toDataURL({
       ...mappedCropBox,
       x: isFlippedX
@@ -101,12 +105,11 @@ const SaveButton = () => {
         ? preparedCanvas.height() - mappedCropBox.y - mappedCropBox.height
         : mappedCropBox.y,
       mimeType: `image/${extension}`,
-      // pixelRatio: window ? window.devicePixelRatio : 1, // Do we need this?
     });
 
     const finalImgDesignState = extractCurrentDesignState(state);
     const finalImgPassedObject = {
-      fullName: fileFullName,
+      fullName: `${name}.${extension}`,
       name,
       extension,
       mimeType: `image/${extension}`,
@@ -126,32 +129,107 @@ const SaveButton = () => {
     }
   };
 
-  const handleSaveAsClick = () => {
+  const cancelModal = () => {
+    setIsModalOpened(false);
+  };
+
+  const changeFileName = (e) => {
+    const name = e.target.value;
+    setImageFileInfo({
+      ...imageFileInfo,
+      name,
+    });
+  };
+
+  const onSaveAsClick = () => {
     if (typeof onSaveAs === 'function') {
-      onSaveAs();
+      if (onSaveAs() === false) {
+        return;
+      }
     }
 
-    // TODO: Apply modal to let user choose file name and extension , then call onSave again.
-    handleSave();
+    setIsModalOpened(true);
   };
+
+  const handleSaveAs = () => {
+    if (!imageFileInfo.name || !imageFileInfo.extension) {
+      return;
+    }
+
+    handleSave();
+    setIsModalOpened(false);
+  };
+
+  useEffect(() => {
+    if (originalImage && (!imageFileInfo.name || !imageFileInfo.extension)) {
+      const { name, extension } = getFileFullName(
+        originalImage.name,
+        forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
+          ? 'png'
+          : SUPPORTED_IMAGE_TYPES.includes(savedImageType?.toLowerCase()) &&
+              savedImageType,
+      );
+
+      setImageFileInfo({ ...imageFileInfo, name, extension });
+    }
+  }, [originalImage, isModalOpened]);
 
   const menuItems = [
     {
       key: 'Save-as',
       label: t('saveAs'),
-      onClick: handleSaveAsClick,
+      onClick: onSaveAsClick,
       isActive: false,
     },
   ];
 
   return (
-    <ButtonWithMenu
-      label={t('save')}
-      onClick={handleSave}
-      menuItems={hideSaveAsMenu ? [] : menuItems}
-      arrowColor="#FFFFFF"
-      disabled={!haveNotSavedChanges}
-    />
+    <>
+      <ButtonWithMenu
+        label={t('save')}
+        onClick={handleSave}
+        menuItems={hideSaveAsMenu ? [] : menuItems}
+        arrowColor="#FFFFFF"
+        disabled={!haveNotSavedChanges}
+      />
+      {isModalOpened && (
+        <Modal
+          title={t('saveAsModalLabel')}
+          Icon={(props) => (
+            <Rename color={theme.palette['accent-primary']} {...props} />
+          )}
+          isOpened={isModalOpened}
+          onCancel={cancelModal}
+          onDone={handleSaveAs}
+          doneLabel={t('save')}
+          cancelLabel={t('cancel')}
+          doneButtonColor="primary"
+        >
+          <StyledFileNameInput
+            value={imageFileInfo.name}
+            onChange={changeFileName}
+            size="sm"
+            placeholder={t('name')}
+            error={Boolean(imageFileInfo.name)}
+            focusOnMount
+          />
+          <StyledFileExtensionSelect
+            onChange={(ext) =>
+              setImageFileInfo({ ...imageFileInfo, extension: ext })
+            }
+            value={imageFileInfo.extension}
+            placeholder={t('extension')}
+            size="sm"
+          >
+            {SUPPORTED_IMAGE_TYPES.map((ext) => (
+              <MenuItem key={ext} value={ext}>
+                {ext}
+              </MenuItem>
+            ))}
+          </StyledFileExtensionSelect>
+        </Modal>
+      )}
+    </>
   );
 };
 
