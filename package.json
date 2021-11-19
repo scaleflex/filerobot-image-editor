@@ -2,8 +2,8 @@
   "name": "filerobot-image-editor",
   "version": "4.0.0-beta.0",
   "dependencies": {
-    "@scaleflex/icons": "^1.0.0-beta.54",
-    "@scaleflex/ui": "^1.0.0-beta.55",
+    "@scaleflex/icons": "^1.0.0-beta.56",
+    "@scaleflex/ui": "^1.0.0-beta.56",
     "konva": "^8.3.0",
     "lodash-es": "^4.17.21",
     "react-konva": "^17.0.2-5"

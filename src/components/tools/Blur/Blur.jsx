@@ -7,10 +7,10 @@ import { Blur as BlurIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const Blur = ({ selectTool, isSelected }) => (
+const Blur = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.BLUR}
-    label="Blur"
+    label={t('blurTool')}
     Icon={BlurIcon}
     onClick={selectTool}
     isSelected={isSelected}

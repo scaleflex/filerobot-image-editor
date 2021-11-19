@@ -14,6 +14,7 @@ const MAX_VALUE = 25;
 const PolygonSidesField = ({
   annotation: polygon,
   updateAnnotation: updatePolygon,
+  t,
 }) => {
   const { sides } = polygon;
 
@@ -25,7 +26,7 @@ const PolygonSidesField = ({
 
   return (
     <StyledSpacedOptionFields>
-      <Label>Sides</Label>
+      <Label>{t('sides')}</Label>
       <Slider
         annotation=""
         onChange={updateSidesNumber}

@@ -7,10 +7,10 @@ import { Square as RectIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const RectButton = ({ selectTool, isSelected }) => (
+const RectButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.RECT}
-    label="Rectangle"
+    label={t('rectangleTool')}
     Icon={RectIcon}
     onClick={selectTool}
     isSelected={isSelected}

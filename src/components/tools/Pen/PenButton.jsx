@@ -7,10 +7,10 @@ import { Annotation as PenIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const PenButton = ({ selectTool, isSelected }) => (
+const PenButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.PEN}
-    label="Pen"
+    label={t('penTool')}
     Icon={PenIcon}
     onClick={selectTool}
     isSelected={isSelected}

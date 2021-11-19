@@ -15,6 +15,7 @@ const SLIDER_STEP = 1;
 const TextSpacingsFields = ({
   annotation: text,
   updateAnnotation: updateText,
+  t,
 }) => {
   const { letterSpacing, lineHeight } = text;
 
@@ -24,7 +25,7 @@ const TextSpacingsFields = ({
 
   return (
     <StyledSpacedOptionFields>
-      <Label>Letter Spacing</Label>
+      <Label>{t('letterSpacing')}</Label>
       <Slider
         annotation="px"
         isActive={Boolean(letterSpacing)}
@@ -32,7 +33,7 @@ const TextSpacingsFields = ({
         value={letterSpacing}
         step={SLIDER_STEP}
       />
-      <Label>Line height</Label>
+      <Label>{t('lineHeight')}</Label>
       <Slider
         annotation="px"
         isActive={Boolean(lineHeight)}

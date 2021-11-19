@@ -1,27 +1,27 @@
 /** External Dependencies */
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FlipX as FlipXIcon } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { FLIP_DIRECTIONS, TOOLS_IDS } from 'utils/constants';
 import { TOGGLE_FLIP } from 'actions';
+import { useStore } from 'hooks';
 
 const xFlipReverseSideStyle = {
   transform: 'scaleX(-1)',
 };
 
-const FlipX = ({ selectTool, isSelected }) => {
+const FlipX = ({ selectTool, isSelected, t }) => {
   const {
     dispatch,
     adjustments: { isFlippedX },
-  } = useContext(AppContext);
+  } = useStore();
 
   const { reverseLabelOfCurrXFlipDir, reverseIconOfCurrXFlipDir } = useMemo(
     () => ({
-      reverseLabelOfCurrXFlipDir: isFlippedX ? 'Un-Flip X' : 'Flip X',
+      reverseLabelOfCurrXFlipDir: isFlippedX ? t('unFlipX') : t('flipX'),
       reverseIconOfCurrXFlipDir: () => (
         <FlipXIcon style={isFlippedX ? xFlipReverseSideStyle : undefined} />
       ),

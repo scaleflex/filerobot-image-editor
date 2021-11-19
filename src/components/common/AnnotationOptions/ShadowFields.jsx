@@ -14,7 +14,7 @@ import {
 } from './AnnotationOptions.styled';
 import Slider from '../Slider';
 
-const ShadowFields = ({ annotation, updateAnnotation }) => {
+const ShadowFields = ({ annotation, updateAnnotation, t }) => {
   const {
     shadowOffsetX,
     shadowOffsetY,
@@ -35,10 +35,10 @@ const ShadowFields = ({ annotation, updateAnnotation }) => {
 
   return (
     <StyledSpacedOptionFields>
-      <StyledHeadline>Shadow</StyledHeadline>
+      <StyledHeadline>{t('shadow')}</StyledHeadline>
       <StyledTwoColumnsContainer>
         <StyledColumn>
-          <Label>Horizontal</Label>
+          <Label>{t('horizontal')}</Label>
           <Slider
             annotation="px"
             min={-100}
@@ -51,7 +51,7 @@ const ShadowFields = ({ annotation, updateAnnotation }) => {
           />
         </StyledColumn>
         <StyledColumn>
-          <Label>Vertical</Label>
+          <Label>{t('vertical')}</Label>
           <Slider
             annotation="px"
             min={-100}
@@ -66,7 +66,7 @@ const ShadowFields = ({ annotation, updateAnnotation }) => {
       </StyledTwoColumnsContainer>
       <StyledTwoColumnsContainer>
         <StyledColumn>
-          <Label>Blur</Label>
+          <Label>{t('blur')}</Label>
           <Slider
             annotation="%"
             onChange={(val) => changeSliderValue('shadowBlur', val)}
@@ -74,7 +74,7 @@ const ShadowFields = ({ annotation, updateAnnotation }) => {
           />
         </StyledColumn>
         <StyledColumn>
-          <Label>Transparency</Label>
+          <Label>{t('transparency')}</Label>
           <Slider
             annotation="%"
             onChange={(val) =>

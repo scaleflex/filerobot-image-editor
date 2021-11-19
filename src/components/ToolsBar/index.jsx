@@ -11,6 +11,7 @@ import ToolsBarItemOptionsWrapper from './ToolsBarItemOptionsWrapper';
 
 const ToolsBar = () => {
   const {
+    t,
     dispatch,
     tabId,
     toolId,
@@ -46,6 +47,7 @@ const ToolsBar = () => {
             <Item
               key={id}
               selectTool={selectTool}
+              t={t}
               isSelected={currentToolId === id}
             />
           )
@@ -90,7 +92,7 @@ const ToolsBar = () => {
   return (
     <StyledToolsBar>
       <ToolsBarItemOptionsWrapper>
-        {ToolOptionsComponent && <ToolOptionsComponent />}
+        {ToolOptionsComponent && <ToolOptionsComponent t={t} />}
       </ToolsBarItemOptionsWrapper>
       {items && <StyledToolsBarItems>{items}</StyledToolsBarItems>}
     </StyledToolsBar>

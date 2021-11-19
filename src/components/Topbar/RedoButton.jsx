@@ -8,7 +8,7 @@ import { useStore } from 'hooks';
 import { StyledHistoryButton } from './Topbar.styled';
 
 const RedoButton = () => {
-  const { dispatch, hasRedo = false } = useStore();
+  const { dispatch, hasRedo = false, t } = useStore();
   const dispatchRedo = useCallback(() => {
     dispatch({ type: REDO });
   }, []);
@@ -18,7 +18,7 @@ const RedoButton = () => {
       color="link"
       onClick={hasRedo ? dispatchRedo : undefined}
       disabled={!hasRedo}
-      title="Redo last operation"
+      title={t('redoTitle')}
     >
       <Redo size={12} />
     </StyledHistoryButton>

@@ -10,7 +10,7 @@ import {
   RECT_POPPABLE_OPTIONS,
 } from './Rect.constants';
 
-const RectOptions = () => {
+const RectOptions = ({ t }) => {
   const [rect, saveRect] = useAnnotation({
     name: TOOLS_IDS.RECT,
   });
@@ -21,6 +21,7 @@ const RectOptions = () => {
       morePoppableOptionsPrepended={RECT_POPPABLE_OPTIONS}
       annotation={rect}
       updateAnnotation={saveRect}
+      t={t}
     />
   );
 };

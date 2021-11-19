@@ -1,12 +1,12 @@
 /** External Dependencies */
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button, Label } from '@scaleflex/ui/core';
 import { LockOutline, UnlockOutline } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { SET_RESIZE } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
+import { useStore } from 'hooks';
 import {
   StyledResizeWrapper,
   StyledResizeInput,
@@ -14,7 +14,7 @@ import {
 } from './Resize.styled';
 
 const Resize = () => {
-  const { dispatch, originalImage, resize, theme } = useContext(AppContext);
+  const { dispatch, originalImage, resize, theme, t } = useStore();
 
   const changeResize = (e) => {
     const { name, value } = e.target;
@@ -76,7 +76,7 @@ const Resize = () => {
         name="width"
         onChange={changeResize}
         inputMode="numeric"
-        title="Width in Pixels"
+        title={t('resizeWidthTitle')}
         type="number"
         size="sm"
         placeholder="Width"
@@ -87,13 +87,13 @@ const Resize = () => {
         name="height"
         onChange={changeResize}
         inputMode="numeric"
-        title="Height in Pixels"
+        title={t('resizeHeightTitle')}
         type="number"
         size="sm"
         placeholder="Height"
       />
       <StyledRatioLockIcon
-        title="Toggle ratio lock"
+        title={t('toggleRatioLockTitle')}
         onClick={toggleRatioLock}
         color="link"
       >
@@ -107,9 +107,9 @@ const Resize = () => {
         size="sm"
         onClick={isOriginalSize ? undefined : resetResize}
         disabled={isOriginalSize}
-        title="Reset to original image size"
+        title={t('resetSize')}
       >
-        Reset
+        {t('reset')}
       </Button>
     </StyledResizeWrapper>
   );

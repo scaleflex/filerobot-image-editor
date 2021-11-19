@@ -1,17 +1,17 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { RotationLeft } from '@scaleflex/icons';
+import { RotationLeftOutline } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const RotateButton = ({ selectTool, isSelected }) => (
+const RotateButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.ROTATE}
-    label="Rotate"
-    Icon={RotationLeft}
+    label={t('rotateTool')}
+    Icon={RotationLeftOutline}
     onClick={selectTool}
     isSelected={isSelected}
   />

@@ -1,9 +1,8 @@
 /** External Dependencies */
-import React, { useContext } from 'react';
+import React from 'react';
 
 /** Internal Dependencies */
-import AppContext from 'context';
-import { useDebouncedCallback } from 'hooks';
+import { useDebouncedCallback, useStore } from 'hooks';
 import { CHANGE_ROTATION, SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
@@ -16,7 +15,7 @@ const RotateOptions = () => {
     dispatch,
     shownImageDimensions,
     adjustments: { rotation = 0 },
-  } = useContext(AppContext);
+  } = useStore();
 
   const changeRotation = useDebouncedCallback((newRotation) => {
     const rotationAngle = restrictNumber(newRotation, -180, 180);

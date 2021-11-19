@@ -7,10 +7,10 @@ import { Line } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const LineButton = ({ selectTool, isSelected }) => (
+const LineButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.LINE}
-    label="Line"
+    label={t('lineTool')}
     Icon={Line}
     onClick={selectTool}
     isSelected={isSelected}

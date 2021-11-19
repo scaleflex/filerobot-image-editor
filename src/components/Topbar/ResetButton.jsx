@@ -9,7 +9,7 @@ import { RESET } from 'actions';
 import { StyledHistoryButton } from './Topbar.styled';
 
 const ResetButton = () => {
-  const { dispatch, isResetted = true, theme } = useStore();
+  const { dispatch, isResetted = true, theme, t } = useStore();
 
   const [isModalOpened, setIsModalOpened] = useState(false);
 
@@ -34,20 +34,20 @@ const ResetButton = () => {
         color="link"
         onClick={isResetted ? undefined : openModal}
         disabled={isResetted}
-        title="Reset/delete all operations"
+        title={t('resetOperations')}
       >
         <Revert size={12} />
       </StyledHistoryButton>
       {isModalOpened && (
         <Modal
-          title="All changes will be lost"
-          hint="Are you sure you want to continue?"
+          title={t('changesLoseConfirmation')}
+          hint={t('changesLoseConfirmationHint')}
           isOpened={isModalOpened}
           onCancel={cancelModal}
           onDone={dispatchReset}
           Icon={WarningIcon}
-          doneLabel="Continue"
-          cancelLabel="Cancel"
+          doneLabel={t('continue')}
+          cancelLabel={t('cancel')}
           doneButtonColor="error"
           doneButtonStyle={{ background: theme.palette.warning }}
         />

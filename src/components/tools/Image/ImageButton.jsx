@@ -7,10 +7,10 @@ import { ImageOutline as ImageIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const ImageButton = ({ selectTool, isSelected }) => (
+const ImageButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.IMAGE}
-    label="Image"
+    label={t('imageTool')}
     Icon={ImageIcon}
     onClick={selectTool}
     isSelected={isSelected}

@@ -1,11 +1,11 @@
 /** External Dependencies */
-import React, { useContext } from 'react';
+import React from 'react';
 import { Label } from '@scaleflex/ui/core';
 import { Compare } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { TOGGLE_ORIGINAL_IMAGE_DISPLAY } from 'actions';
+import { useStore } from 'hooks';
 import { StyledSmallButton } from './Topbar.styled';
 
 const ImageDimensionsAndDisplayToggle = () => {
@@ -14,7 +14,8 @@ const ImageDimensionsAndDisplayToggle = () => {
     isResetted = true,
     originalImage,
     resize = {},
-  } = useContext(AppContext);
+    t,
+  } = useStore();
 
   const hideOriginalImage = () => {
     dispatch({
@@ -61,7 +62,7 @@ const ImageDimensionsAndDisplayToggle = () => {
         onMouseDown={isResetted ? undefined : showOriginalImage}
         onTouchStart={isResetted ? undefined : showOriginalImage}
         disabled={isResetted}
-        title="Show original image"
+        title={t('showImageTitle')}
       >
         <Compare />
       </StyledSmallButton>

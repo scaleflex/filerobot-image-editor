@@ -16,7 +16,7 @@ const DEFAULT_VALUE = {
 
 const sliderStyle = { padding: 0 };
 
-const HSVOptions = () => {
+const HSVOptions = ({ t }) => {
   const [finetuneProps, setFinetuneProps] = useFinetune(
     Konva.Filters.HSV,
     DEFAULT_VALUE,
@@ -31,7 +31,7 @@ const HSVOptions = () => {
   return (
     <>
       <StyledSliderContainer>
-        <Label>Hue</Label>
+        <Label>{t('hue')}</Label>
         <Slider
           start={0}
           step={1}
@@ -42,7 +42,7 @@ const HSVOptions = () => {
         />
       </StyledSliderContainer>
       <StyledSliderContainer>
-        <Label>Saturation</Label>
+        <Label>{t('saturation')}</Label>
         <Slider
           start={-2}
           step={0.5}
@@ -53,7 +53,7 @@ const HSVOptions = () => {
         />
       </StyledSliderContainer>
       <StyledSliderContainer>
-        <Label>Value</Label>
+        <Label>{t('value')}</Label>
         <Slider
           start={-2}
           step={0.1}

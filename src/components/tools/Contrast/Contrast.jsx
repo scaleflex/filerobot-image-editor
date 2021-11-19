@@ -7,10 +7,10 @@ import { Contrast as ContrastIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const Contrast = ({ selectTool, isSelected }) => (
+const Contrast = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.CONTRAST}
-    label="Contrast"
+    label={t('contrastTool')}
     Icon={ContrastIcon}
     onClick={selectTool}
     isSelected={isSelected}

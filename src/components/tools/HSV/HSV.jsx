@@ -7,10 +7,10 @@ import { Saturation as SaturationIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const HSV = ({ selectTool, isSelected }) => (
+const HSV = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.HSV}
-    label="HSV"
+    label={t('hsvTool')}
     Icon={SaturationIcon}
     onClick={selectTool}
     isSelected={isSelected}

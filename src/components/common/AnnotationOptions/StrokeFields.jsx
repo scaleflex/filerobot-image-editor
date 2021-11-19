@@ -12,7 +12,7 @@ import Slider from '../Slider';
 const MIN_PERCENTANGE = 0;
 const MAX_PERCENTANGE = 100;
 
-const StrokeFields = ({ annotation, updateAnnotation }) => {
+const StrokeFields = ({ annotation, updateAnnotation, t }) => {
   const { stroke, strokeWidth } = annotation;
 
   const changeStrokeWidth = (newStrokeWidth) => {
@@ -31,7 +31,7 @@ const StrokeFields = ({ annotation, updateAnnotation }) => {
 
   return (
     <StyledSpacedOptionFields>
-      <Label>Stroke</Label>
+      <Label>{t('stroke')}</Label>
       <Slider
         annotation="px"
         onChange={changeStrokeWidth}

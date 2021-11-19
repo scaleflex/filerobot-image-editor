@@ -13,7 +13,7 @@ import {
 } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
 import Slider from 'components/common/Slider';
 
-const WatermarkPadding = ({ watermark, saveWatermark }) => {
+const WatermarkPadding = ({ watermark, saveWatermark, t }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const openOptionPopup = (e) => {
     setAnchorEl(e.currentTarget);
@@ -31,7 +31,7 @@ const WatermarkPadding = ({ watermark, saveWatermark }) => {
 
   return (
     <>
-      <StyledIconWrapper title="Padding" onClick={openOptionPopup}>
+      <StyledIconWrapper title={t('padding')} onClick={openOptionPopup}>
         <Padding size={18} />
       </StyledIconWrapper>
       <Menu
@@ -42,7 +42,7 @@ const WatermarkPadding = ({ watermark, saveWatermark }) => {
       >
         <StyledOptionPopupContent>
           <StyledSpacedOptionFields>
-            <Label>Padding</Label>
+            <Label>{t('padding')}</Label>
             <Slider
               annotation="px"
               onChange={updatePadding}

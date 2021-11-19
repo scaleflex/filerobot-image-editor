@@ -11,7 +11,7 @@ import { StyledSmallButton, StyledZoomPercentageLabel } from './Topbar.styled';
 const MULTIPLY_ZOOM_FACTOR = 1.1;
 
 const CanvasZooming = () => {
-  const { dispatch, zoom = {}, toolId } = useContext(AppContext);
+  const { dispatch, zoom = {}, toolId, t } = useContext(AppContext);
 
   const saveZoom = (zoomFactor) => {
     dispatch({
@@ -43,13 +43,13 @@ const CanvasZooming = () => {
       <StyledSmallButton
         onClick={zoomOut}
         color="link"
-        title="Zoom out"
+        title={t('zoomOutTitle')}
         disabled={isZoomDisabled}
       >
         <Minus />
       </StyledSmallButton>
       <StyledZoomPercentageLabel
-        title="Zoom percentage (Click to reset)"
+        title={t('resetZoomTitle')}
         onClick={resetZoomToDefault}
       >
         {`${parseInt(zoom.factor * 100, 10)}%`}
@@ -57,7 +57,7 @@ const CanvasZooming = () => {
       <StyledSmallButton
         onClick={zoomIn}
         color="link"
-        title="Zoom in"
+        title={t('zoomInTitle')}
         disabled={isZoomDisabled}
       >
         <Plus />

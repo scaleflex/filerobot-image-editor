@@ -8,32 +8,32 @@ import { TABS_IDS } from 'utils/constants';
 export const AVAILABLE_TABS = [
   {
     id: TABS_IDS.ADJUST,
-    label: 'Adjust',
+    labelKey: 'adjustTab',
     icon: Adjust,
   },
   {
     id: TABS_IDS.FINETUNE,
-    label: 'Finetune',
+    labelKey: 'finetuneTab',
     icon: FineTune,
   },
   {
     id: TABS_IDS.FILTERS,
-    label: 'Filters',
+    labelKey: 'filtersTab',
     icon: Filters,
   },
   {
     id: TABS_IDS.WATERMARK,
-    label: 'Watermark',
+    labelKey: 'watermarkTab',
     icon: Watermark,
   },
   {
     id: TABS_IDS.ANNOTATE,
-    label: 'Annotate',
+    labelKey: 'annotateTab',
     icon: Annotate,
   },
   {
     id: TABS_IDS.RESIZE,
-    label: 'Resize',
+    labelKey: 'resizeTab',
     icon: Resize,
   },
 ];

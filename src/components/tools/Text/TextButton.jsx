@@ -7,10 +7,10 @@ import { Text as TextIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const TextButton = ({ selectTool, isSelected }) => (
+const TextButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.TEXT}
-    label="Text"
+    label={t('textTool')}
     Icon={TextIcon}
     onClick={selectTool}
     isSelected={isSelected}

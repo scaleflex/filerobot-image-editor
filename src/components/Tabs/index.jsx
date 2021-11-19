@@ -1,19 +1,20 @@
 /** External Dependencies */
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { SELECT_TAB } from 'actions';
+import { useStore } from 'hooks';
 import TabItem from './TabItem';
 import { AVAILABLE_TABS } from './Tabs.constants';
 import { StyledTabs } from './Tabs.styled';
 
 const Tabs = () => {
   const {
+    t,
     dispatch,
     tabId = null,
     config: { tabsIds, defaultTabId },
-  } = useContext(AppContext);
+  } = useStore();
 
   const currentTabId = tabId || defaultTabId;
 
@@ -37,11 +38,11 @@ const Tabs = () => {
 
   return (
     <StyledTabs>
-      {chosenTabs.map(({ id, label, icon }) => (
+      {chosenTabs.map(({ id, labelKey, icon }) => (
         <TabItem
           key={id}
           id={id}
-          label={label}
+          label={t(labelKey)}
           Icon={icon}
           isSelected={currentTabId === id}
           onClick={selectTab}

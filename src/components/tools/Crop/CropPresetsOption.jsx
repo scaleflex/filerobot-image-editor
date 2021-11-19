@@ -1,11 +1,11 @@
 /** External Dependencies */
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu, MenuItem } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { SET_CROP } from 'actions';
+import { useStore } from 'hooks';
 import {
   StyledMenuItemIcon,
   StyledOpenMenuButton,
@@ -16,8 +16,11 @@ import { CROP_PRESETS } from './Crop.constants';
 const PREFIX_ICONS_DIMENS = { height: 16, width: 16 };
 
 const CropPresetsOption = ({ anchorEl, onClose }) => {
-  const { dispatch, adjustments: { crop: { ratio: currentRatio } = {} } = {} } =
-    useContext(AppContext);
+  const {
+    dispatch,
+    t,
+    adjustments: { crop: { ratio: currentRatio } = {} } = {},
+  } = useStore();
 
   const changeCropRatio = (e, newCropRatio) => {
     e.stopPropagation();
@@ -47,7 +50,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
         open={Boolean(anchorEl)}
         position="top"
       >
-        {CROP_PRESETS.map(({ title, ratio, ratioLabel, Icon }) => (
+        {CROP_PRESETS.map(({ titleKey, ratio, ratioLabel, Icon }) => (
           <MenuItem
             key={ratio}
             active={ratio === currentRatio}
@@ -59,7 +62,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
                 <Icon {...PREFIX_ICONS_DIMENS} />
               </StyledMenuItemIcon>
             )}
-            {title}
+            {t(titleKey)}
             {ratioLabel && <StyledRatioLabel>{ratioLabel}</StyledRatioLabel>}
           </MenuItem>
         ))}

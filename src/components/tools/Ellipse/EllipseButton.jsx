@@ -7,10 +7,10 @@ import { Ellipse as EllipseIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const EllipseButton = ({ selectTool, isSelected }) => (
+const EllipseButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.ELLIPSE}
-    label="Ellipse"
+    label={t('ellipseTool')}
     Icon={EllipseIcon}
     onClick={selectTool}
     isSelected={isSelected}

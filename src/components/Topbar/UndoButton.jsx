@@ -8,7 +8,7 @@ import { useStore } from 'hooks';
 import { StyledHistoryButton } from './Topbar.styled';
 
 const UndoButton = () => {
-  const { dispatch, hasUndo = false } = useStore();
+  const { dispatch, hasUndo = false, t } = useStore();
   const dispatchUndo = useCallback(() => {
     dispatch({ type: UNDO });
   }, []);
@@ -18,7 +18,7 @@ const UndoButton = () => {
       color="link"
       onClick={hasUndo ? dispatchUndo : undefined}
       disabled={!hasUndo}
-      title="Undo last operation"
+      title={t('undoTitle')}
     >
       <Undo size={12} />
     </StyledHistoryButton>

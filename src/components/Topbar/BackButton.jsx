@@ -12,7 +12,8 @@ import {
 
 const BackButton = () => {
   const {
-    config: { onClose, backButtonLabel = 'Back' },
+    t,
+    config: { onClose },
   } = useStore();
 
   // Hacky solution for avoiding (zoom & image info) components go to right if we have no close button.
@@ -29,7 +30,7 @@ const BackButton = () => {
       {onClose && (
         <>
           <ArrowLeftOutline size={9} />
-          <StyledBackButtonLabel>{backButtonLabel}</StyledBackButtonLabel>
+          <StyledBackButtonLabel>{t('back')}</StyledBackButtonLabel>
         </>
       )}
     </StyledCloseOrBackButton>

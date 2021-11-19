@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem } from '@scaleflex/ui/core';
 import { FontBold, FontItalic } from '@scaleflex/icons';
@@ -8,9 +8,9 @@ import { FontBold, FontItalic } from '@scaleflex/icons';
 import { TRANSFORMERS_LAYER_ID } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import { StyledIconWrapper } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
-import AppContext from 'context';
 import { ENABLE_TEXT_CONTENT_EDIT } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
+import { useStore } from 'hooks';
 import {
   StyledFontFamilySelect,
   StyledFontSizeInput,
@@ -25,8 +25,7 @@ import {
 } from './handleTextChangeArea';
 
 const TextControls = ({ text, saveText, children }) => {
-  const { dispatch, textIdOfEditableContent, designLayer } =
-    useContext(AppContext);
+  const { dispatch, textIdOfEditableContent, designLayer, t } = useStore();
 
   const changeTextProps = useCallback(
     (e) => {
@@ -111,11 +110,12 @@ const TextControls = ({ text, saveText, children }) => {
       updateAnnotation={saveText}
       morePoppableOptionsPrepended={TEXT_POPPABLE_OPTIONS}
       moreOptionsPopupComponentsObj={textOptionsPopupComponents}
+      t={t}
     >
       <StyledFontFamilySelect
         onChange={changeFontFamily}
         value={text.fontFamily}
-        placeholder="Font family"
+        placeholder={t('fontFamily')}
         size="sm"
       >
         {/* TODO: Make this customizable from config/props */}
@@ -134,7 +134,7 @@ const TextControls = ({ text, saveText, children }) => {
         inputMode="numeric"
         type="number"
         size="sm"
-        placeholder="size"
+        placeholder={t('size')}
       />
       <StyledIconWrapper
         aria-selected={(text.fontStyle || '').includes('bold')}

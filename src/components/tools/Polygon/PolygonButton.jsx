@@ -7,10 +7,10 @@ import { Polygon as PolygonIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const PolygonButton = ({ selectTool, isSelected }) => (
+const PolygonButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.POLYGON}
-    label="Polygon"
+    label={t('polygonTool')}
     Icon={PolygonIcon}
     onClick={selectTool}
     isSelected={isSelected}

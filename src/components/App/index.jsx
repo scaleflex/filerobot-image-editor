@@ -17,6 +17,7 @@ import ErrorPopup from 'components/ErrorPopup';
 import loadImage from 'utils/loadImage';
 import { useStore } from 'hooks';
 import Spinner from 'components/common/Spinner';
+import { getBackendTranslations } from 'utils/translator';
 import {
   StyledAppWrapper,
   StyledMainContent,
@@ -30,8 +31,14 @@ const App = () => {
     haveNotSavedChanges,
     dispatch,
     originalImage,
+    t,
   } = useStore();
-  const { loadableDesignState, image, noChangesNotSavedAlertOnLeave } = config;
+  const {
+    loadableDesignState,
+    image,
+    noChangesNotSavedAlertOnLeave,
+    useBackendTranslations,
+  } = config;
   const isFirstRender = useRef(true);
   // Hacky solution, For being used in beforeunload event
   // as it won't be possible to have the latest value of the state variable in js event handler.
@@ -58,21 +65,26 @@ const App = () => {
     });
   }, []);
 
-  const loadAndSetOriginalImage = (imgToLoad) => {
-    if (!imgToLoad && originalImage) {
-      return;
-    }
-    dispatch({ type: SHOW_LOADER });
+  // We are promisifying the image loading for mixing it with other promises
+  const loadAndSetOriginalImage = (imgToLoad) =>
+    new Promise((resolve) => {
+      if (!imgToLoad && originalImage) {
+        resolve();
+      }
 
-    if (typeof imgToLoad === 'string') {
-      loadImage(imgToLoad).then(setNewOriginalImage).catch(setError);
-    } else if (imgToLoad instanceof HTMLImageElement) {
-      setNewOriginalImage(imgToLoad);
-    } else {
-      setError('Invalid image provided');
-      dispatch({ type: HIDE_LOADER });
-    }
-  };
+      if (typeof imgToLoad === 'string') {
+        loadImage(imgToLoad)
+          .then(setNewOriginalImage)
+          .catch(setError)
+          .finally(resolve);
+      } else if (imgToLoad instanceof HTMLImageElement) {
+        setNewOriginalImage(imgToLoad);
+      } else {
+        setError(t('invalidImageError'));
+      }
+
+      resolve();
+    });
 
   const promptDialogIfHasChangeNotSaved = (e) => {
     if (haveNotSavedChangesRef.current) {
@@ -81,9 +93,17 @@ const App = () => {
     }
   };
 
+  const handleLoading = (loadingPromises = []) => {
+    dispatch({ type: SHOW_LOADER });
+
+    return Promise.all(loadingPromises).finally(() => {
+      dispatch({ type: HIDE_LOADER });
+    });
+  };
+
   useEffect(() => {
     if (!isFirstRender.current && image) {
-      loadAndSetOriginalImage(image);
+      handleLoading([loadAndSetOriginalImage(image)]);
     }
   }, [image]);
 
@@ -93,12 +113,20 @@ const App = () => {
       typeof loadableDesignState === 'object' &&
       loadableDesignState.imageSrc
     ) {
-      loadAndSetOriginalImage(loadableDesignState.imageSrc);
+      handleLoading([loadAndSetOriginalImage(loadableDesignState.imageSrc)]);
     }
   }, [loadableDesignState]);
 
   useEffect(() => {
-    loadAndSetOriginalImage(loadableDesignState?.imageSrc || image);
+    const initialRequestsPromises = [
+      loadAndSetOriginalImage(loadableDesignState?.imageSrc || image),
+    ];
+
+    if (useBackendTranslations) {
+      initialRequestsPromises.push(getBackendTranslations());
+    }
+
+    handleLoading(initialRequestsPromises);
     isFirstRender.current = false;
 
     if (window && !noChangesNotSavedAlertOnLeave) {
@@ -121,7 +149,7 @@ const App = () => {
 
   return (
     <StyledAppWrapper id={ROOT_CONTAINER_ID}>
-      {isLoadingGlobally && <Spinner label="Loading image..." />}
+      {isLoadingGlobally && <Spinner label={t('loading')} />}
       <Topbar />
       {originalImage && (
         <StyledMainContent>

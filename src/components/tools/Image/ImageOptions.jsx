@@ -1,11 +1,10 @@
 /** External Dependencies */
-import React, { useContext, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
-import { useAnnotation } from 'hooks';
+import { useAnnotation, useStore } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
-import AppContext from 'context';
 import { SET_ERROR } from 'actions';
 import HiddenUploadInput from 'components/common/HiddenUploadInput';
 import ImageControls from './ImageControls';
@@ -15,7 +14,7 @@ const ADDED_IMG_SPACING_PERCENT = 0.15;
 const ImageOptions = () => {
   const [isLoading, setIsLoading] = useState();
   const uploadImgsInput = useRef();
-  const { shownImageDimensions, dispatch } = useContext(AppContext);
+  const { shownImageDimensions, dispatch, t } = useStore();
   const [image, saveImage, addNewImage] = useAnnotation(
     {
       name: TOOLS_IDS.IMAGE,
@@ -79,7 +78,7 @@ const ImageOptions = () => {
             hideLoaderAfterDone(filesLength);
           };
           img.onerror = () => {
-            setError('Error while uploading the image.');
+            setError(t('uploadImageError'));
             hideLoaderAfterDone(filesLength);
           };
           img.src = URL.createObjectURL(file);
@@ -91,8 +90,10 @@ const ImageOptions = () => {
 
       if (wrongFilesNames.length > 0) {
         const errorLabel =
-          wrongFilesNames.length > 1 ? "aren't images" : "isn't an image";
-        setError(`${wrongFilesNames.join(', ')} ${errorLabel} to be uploaded.`);
+          wrongFilesNames.length > 1 ? t('areNotImages') : t('isNotImage');
+        setError(
+          `${wrongFilesNames.join(', ')} ${errorLabel} ${t('toBeUploaded')}.`,
+        );
       }
     }
 
@@ -114,7 +115,7 @@ const ImageOptions = () => {
         size="sm"
         style={{ maxHeight: 24 }}
       >
-        {isLoading ? 'Importing...' : '+ Add image'}
+        {isLoading ? t('importing') : t('addImage')}
       </Button>
       <HiddenUploadInput
         ref={uploadImgsInput}

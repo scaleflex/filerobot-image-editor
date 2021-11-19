@@ -14,6 +14,7 @@ const MAX_VALUE = 200;
 const RectCornerField = ({
   annotation: rect,
   updateAnnotation: updateRect,
+  t,
 }) => {
   const { cornerRadius } = rect;
 
@@ -25,7 +26,7 @@ const RectCornerField = ({
 
   return (
     <StyledSpacedOptionFields>
-      <Label>Corner Radius</Label>
+      <Label>{t('cornerRadius')}</Label>
       <Slider
         annotation="px"
         onChange={updateCornerRadius}

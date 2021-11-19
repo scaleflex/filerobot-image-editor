@@ -7,10 +7,10 @@ import { Temprature as WarmthIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const Warmth = ({ selectTool, isSelected }) => (
+const Warmth = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.WARMTH}
-    label="Warmth"
+    label={t('warmthTool')}
     Icon={WarmthIcon}
     onClick={selectTool}
     isSelected={isSelected}

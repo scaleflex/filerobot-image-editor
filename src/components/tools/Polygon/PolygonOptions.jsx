@@ -10,7 +10,7 @@ import {
   POLYGON_POPPABLE_OPTIONS,
 } from './Polygon.constants';
 
-const PolygonOptions = () => {
+const PolygonOptions = ({ t }) => {
   const [polygon, savePolygon] = useAnnotation({
     name: TOOLS_IDS.POLYGON,
     sides: 3,
@@ -22,6 +22,7 @@ const PolygonOptions = () => {
       moreOptionsPopupComponentsObj={polygonOptionsPopupComponents}
       annotation={polygon}
       updateAnnotation={savePolygon}
+      t={t}
     />
   );
 };

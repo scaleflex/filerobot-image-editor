@@ -65,4 +65,7 @@ export default {
   closeAfterSaving: false,
   savedImageType: null,
   forceToPngInEllipticalCrop: false,
+  useBackendTranslations: true,
+  translations: null,
+  language: 'en',
 };

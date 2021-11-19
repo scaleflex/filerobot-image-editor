@@ -7,10 +7,10 @@ import { Brightness as BrightnessIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const Brightness = ({ selectTool, isSelected }) => (
+const Brightness = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.BRIGHTNESS}
-    label="Brightness"
+    label={t('brightnessTool')}
     Icon={BrightnessIcon}
     onClick={selectTool}
     isSelected={isSelected}

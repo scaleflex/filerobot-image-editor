@@ -23,6 +23,7 @@ const SaveButton = () => {
     designLayer,
     originalImage,
     resize,
+    t,
     adjustments: { crop, isFlippedX, isFlippedY } = {},
     config: {
       onClose,
@@ -30,8 +31,6 @@ const SaveButton = () => {
       onSave,
       onSaveAs,
       forceToPngInEllipticalCrop,
-      saveButtonLabel = 'Save',
-      saveAsButtonLabel = 'Save as',
       hideSaveAsMenu,
       savedImageType,
     },
@@ -139,7 +138,7 @@ const SaveButton = () => {
   const menuItems = [
     {
       key: 'Save-as',
-      label: saveAsButtonLabel,
+      label: t('saveAs'),
       onClick: handleSaveAsClick,
       isActive: false,
     },
@@ -147,7 +146,7 @@ const SaveButton = () => {
 
   return (
     <ButtonWithMenu
-      label={saveButtonLabel}
+      label={t('save')}
       onClick={handleSave}
       menuItems={hideSaveAsMenu ? [] : menuItems}
       arrowColor="#FFFFFF"

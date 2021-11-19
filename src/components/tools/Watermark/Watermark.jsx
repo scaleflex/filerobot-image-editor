@@ -26,8 +26,14 @@ const WATERMARK_IMG_RATIO_FROM_ORIGINAL = 0.33;
 const WATERMARK_ANNOTATION_ID = 'watermark';
 
 const Watermark = () => {
-  const { annotations, shownImageDimensions, selectionsIds, config, dispatch } =
-    useStore();
+  const {
+    annotations,
+    shownImageDimensions,
+    selectionsIds,
+    config,
+    dispatch,
+    t,
+  } = useStore();
   const [isLoading, setIsLoading] = useState(false);
   const uploadImgInput = useRef();
 
@@ -113,7 +119,7 @@ const Watermark = () => {
   const menuItems = [
     {
       key: 'upload-watermark',
-      label: 'Upload watermark',
+      label: t('uploadWatermark'),
       icon: UploadOutline,
       onClick: () => {
         if (uploadImgInput.current) {
@@ -123,7 +129,7 @@ const Watermark = () => {
     },
     {
       key: 'add-text-watermark',
-      label: 'Add as text',
+      label: t('addWatermarkAsText'),
       icon: Text,
       onClick: addTextWatermark,
     },
@@ -152,7 +158,7 @@ const Watermark = () => {
           setIsLoading(false);
         };
         img.onerror = () => {
-          setError('Error while uploading the image.');
+          setError(t('uploadImageError'));
           setIsLoading(false);
         };
         img.src = URL.createObjectURL(imgFile);
@@ -192,6 +198,7 @@ const Watermark = () => {
     <WatermarkPadding
       watermark={watermark}
       saveWatermark={updateWatermarkOptions}
+      t={t}
     />
   );
 
@@ -214,8 +221,8 @@ const Watermark = () => {
       <StyledWatermarkWrapper>
         <ButtonWithMenu
           color="secondary"
-          label="+ Add watermark"
-          title="Choose the watermark type"
+          label={t('addWatermark')}
+          title={t('addWatermarkTitle')}
           menuPosition="top"
           menuItems={menuItems}
           menuFromBtn

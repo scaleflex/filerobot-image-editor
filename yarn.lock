@@ -1591,18 +1591,18 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@scaleflex/icons@^1.0.0-beta.54":
-  version "1.0.0-beta.54"
-  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.54.tgz#fc10bbbc24febf56be37932d9c29195b30d78c11"
-  integrity sha512-6d52MUgKvUkE7HJg7GMWdP7gcM+RvrufnBdA4R9roym3Cfvi8ytbDBfd67fB2ffDQDjE/Jg3qJyZ1AmzUPlUrw==
+"@scaleflex/icons@^1.0.0-beta.56":
+  version "1.0.0-beta.56"
+  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.56.tgz#b12b3bffff543f05c58a96f725dcc9bbf0bc5516"
+  integrity sha512-u2tpDdQ9fxlatOsICa48JSZQ2z4roUrXDD3QDWcrgh9Uvo6iWpb3U9TpumrT8FpOl5LIW7aoMeI7OU/S1K/Nbg==
 
-"@scaleflex/ui@^1.0.0-beta.55":
-  version "1.0.0-beta.55"
-  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.55.tgz#fc432f39452cc13ff184bd317ef8eaf35f931bfe"
-  integrity sha512-zG1imb45Av800Jhq5VCPc2B/e9Ez/C2N6arEljQGmJZLw3xlNtBNepMLi4vrMG3rLO6Rm8JJ3yNnFAmlKzh1hw==
+"@scaleflex/ui@^1.0.0-beta.56":
+  version "1.0.0-beta.56"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.56.tgz#f1d07d8c322071d0cd652b7f3b7e2c7cbb6cacaf"
+  integrity sha512-2NPseJGZqkDTFrRHtl9T1PPoU22wSph3JHEODd9T9IK5rrBAmzzyXEC3wrh8HxF1tafAta2aVzgE8xL9a4ChvQ==
   dependencies:
     "@popperjs/core" "^2.6.0"
-    "@scaleflex/icons" "^1.0.0-beta.54"
+    "@scaleflex/icons" "^1.0.0-beta.56"
     lodash.merge "^4.6.2"
     lodash.throttle "^4.1.1"
     polished "^3.6.6"

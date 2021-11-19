@@ -7,10 +7,10 @@ import { ArrowTool as ArrowIcon } from '@scaleflex/icons';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const ArrowButton = ({ selectTool, isSelected }) => (
+const ArrowButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
     id={TOOLS_IDS.ARROW}
-    label="Arrow"
+    label={t('arrowTool')}
     Icon={ArrowIcon}
     onClick={selectTool}
     isSelected={isSelected}

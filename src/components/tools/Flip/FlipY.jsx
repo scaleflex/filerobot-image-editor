@@ -1,27 +1,27 @@
 /** External Dependencies */
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FlipY as FlipYIcon } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { FLIP_DIRECTIONS, TOOLS_IDS } from 'utils/constants';
 import { TOGGLE_FLIP } from 'actions';
+import { useStore } from 'hooks';
 
 const xFlipReverseSideStyle = {
   transform: 'scaleY(-1)',
 };
 
-const FlipY = ({ selectTool, isSelected }) => {
+const FlipY = ({ selectTool, isSelected, t }) => {
   const {
     dispatch,
     adjustments: { isFlippedY },
-  } = useContext(AppContext);
+  } = useStore();
 
   const { reverseLabelOfCurrXFlipDir, reverseIconOfCurrXFlipDir } = useMemo(
     () => ({
-      reverseLabelOfCurrXFlipDir: isFlippedY ? 'Un-Flip Y' : 'Flip Y',
+      reverseLabelOfCurrXFlipDir: isFlippedY ? t('unFlipY') : t('flipY'),
       reverseIconOfCurrXFlipDir: () => (
         <FlipYIcon style={isFlippedY ? xFlipReverseSideStyle : undefined} />
       ),
