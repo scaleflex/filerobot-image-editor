@@ -17,7 +17,6 @@ const AppProvider = ({ children, config = {} }) => {
   );
 
   useEffect(() => {
-    console.log(config.language);
     updateTranslations(config.translations, config.language);
   }, [config.useBackendTranslations, config.language, config.translations]);
 
