@@ -13,3 +13,5 @@ export { default as useResizeObserver } from './useResizeObserver';
 export { default as useDebouncedCallback } from './useDebouncedCallback';
 
 export { default as useStore } from './useStore';
+
+export { default as useDrag } from './useDrag';

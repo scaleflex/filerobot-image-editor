@@ -1,17 +1,19 @@
 /** External Dependencies */
-import { ColorPicker, Popper } from '@scaleflex/ui/core';
+import { Popper } from '@scaleflex/ui/core';
 import React, { useState } from 'react';
 
 /** Internal Dependencies */
-import { StyledPickerTrigger, StyledPickerWrapper } from './ColorInput.styled';
+import { StyledPickerTrigger } from './ColorInput.styled';
+import ColorPicker from './ColorPicker';
 
 const ColorInput = ({
   position = 'top',
-  color,
-  pinnedColors = [],
-  onChange,
+  // pinnedColors = [],
+  // onChange,
+  defaultColor = 'rgb(255, 255, 0)', // in hex --#fff000-- or rgb --rgb(255, 255, 0)--
 }) => {
   const [anchorEl, setAnchorEl] = useState();
+  const [color, setColor] = useState(() => defaultColor);
 
   const togglePicker = (e) => {
     setAnchorEl(anchorEl ? null : e.currentTarget);
@@ -27,13 +29,7 @@ const ColorInput = ({
         onClick={togglePicker}
         overlay
       >
-        <StyledPickerWrapper>
-          <ColorPicker
-            color={color}
-            pinnedColors={pinnedColors}
-            setColor={onChange}
-          />
-        </StyledPickerWrapper>
+        <ColorPicker onChange={setColor} defaultColor={color} />
       </Popper>
     </>
   );
