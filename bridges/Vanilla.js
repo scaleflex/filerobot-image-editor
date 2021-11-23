@@ -21,18 +21,20 @@ class FilerobotImageEditor {
       );
     }
 
-    this.mount = render;
+    this.render = render;
     this.unmount = unmountComponentAtNode;
   }
 
   init() {
     // eslint-disable-next-line react/jsx-filename-extension
-    this.mount(<AssemblyPoint {...this.config} />, this.container);
+    this.render(<AssemblyPoint {...this.config} />, this.container);
   }
 
   // TODO: check if this works fine with no issues and re-renders the affected functionalities on change.
   updateConfig(config = {}) {
     this.config = merge(this.config || {}, config);
+    const update = this.init;
+    update();
   }
 
   terminate() {
