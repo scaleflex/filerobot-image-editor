@@ -148,9 +148,9 @@ const ColorInput = ({
 
   const changeBarColorByPosition = (pointerLeft) => {
     const barElem = barRef.current;
-    const { left, width } = barElem.getBoundingClientRect();
+    const { width } = barElem.getBoundingClientRect();
     const mappedPointerLeft = restrictNumber(
-      Math.round(mapNumber(pointerLeft, 0, left, 0, colorsHuesCount)),
+      Math.round(mapNumber(pointerLeft, 0, width, 0, colorsHuesCount)),
       0,
       colorsHuesCount,
     );
