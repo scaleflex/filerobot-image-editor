@@ -16,6 +16,11 @@ const ColorInput = ({ position = 'top', onChange, defaultColor }) => {
     () => defaultColor || annotationsCommon.fill,
   );
 
+  const changeColor = (newColor) => {
+    setColor(newColor);
+    onChange(newColor);
+  };
+
   const togglePicker = (e) => {
     setAnchorEl(anchorEl ? null : e.currentTarget);
   };
@@ -34,7 +39,7 @@ const ColorInput = ({ position = 'top', onChange, defaultColor }) => {
         onClick={togglePicker}
         overlay
       >
-        <ColorPicker onChange={setColor} defaultColor={color} />
+        <ColorPicker onChange={changeColor} defaultColor={color} />
       </Popper>
     </>
   );

@@ -25,7 +25,7 @@ import {
 
 const colorsHuesCount = 360;
 
-const ColorInput = ({
+const ColorPicker = ({
   onChange,
   defaultColor, // in hex --#fff000-- or rgb --rgb(255, 255, 0)--
 }) => {
@@ -60,8 +60,8 @@ const ColorInput = ({
   const changeRangePickerColorByPosition = (left, top) => {
     const { width, height } = rangePickerRef.current.getBoundingClientRect();
     const [barColorHue] = colorToHsl(bar.color);
-    const restrictedLeft = restrictNumber(left, 0, width);
-    const restrictedTop = restrictNumber(top, 0, height);
+    const restrictedLeft = restrictNumber(left, 0, width) || 0;
+    const restrictedTop = restrictNumber(top, 0, height) || 0;
     const hsl = hsvToHsl(
       barColorHue,
       restrictedLeft / width,
@@ -78,7 +78,6 @@ const ColorInput = ({
     });
 
     if (typeof onChange === 'function') {
-      console.log(colorToHsl(hexColor));
       onChange(hexColor, `rgb(${hexToRgb(hexColor).join(', ')})`);
     }
   };
@@ -230,4 +229,4 @@ const ColorInput = ({
   );
 };
 
-export default ColorInput;
+export default ColorPicker;
