@@ -35,7 +35,6 @@ export const TOOLS_IDS = {
   POSTERIZE: 'Posterize',
   PIXELATE: 'Pixelate',
   NOISE: 'Noise',
-  // Vignette: 'Vignette',
   FILTERS: 'Filters',
   RECT: 'Rect',
   ELLIPSE: 'Ellipse',
