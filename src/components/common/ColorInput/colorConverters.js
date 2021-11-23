@@ -1,3 +1,9 @@
+const rgbStringToArray = (rgbColorString) =>
+  rgbColorString
+    .replaceAll(/[^\d,]/gi, '')
+    .split(',')
+    .map((n) => +n);
+
 export const hexToRgb = (hexColor) => {
   if (!hexColor) return { r: 0, g: 0, b: 0 };
 
@@ -62,7 +68,7 @@ export const colorToHsl = (color) => {
   }
 
   if (color.startsWith('rgb')) {
-    const colorInRgb = color.replaceAll(/[^\d,]/gi, '').split(',');
+    const colorInRgb = rgbStringToArray(color);
     return rgbToHsl(...colorInRgb);
   }
 
@@ -81,14 +87,31 @@ export const colorToRgb = (color) => {
   }
 
   if (color.startsWith('rgb')) {
-    return color
-      .replaceAll(/[^\d,]/gi, '')
-      .split(',')
-      .map((n) => +n);
+    return rgbStringToArray(color);
   }
 
   if (typeof color === 'string') {
     return [0, 0, 0];
+  }
+
+  return color;
+};
+
+export const colorToHex = (color) => {
+  if (color.startsWith('#')) {
+    if (color.length === 7) {
+      return color;
+    }
+
+    return `#${color[0]}${color[0]}${color[1]}${color[1]}${color[2]}${color[2]}`;
+  }
+
+  if (color.startsWith('rgb')) {
+    return rgbToHex(...rgbStringToArray(color));
+  }
+
+  if (typeof color === 'string') {
+    return '#000000';
   }
 
   return color;

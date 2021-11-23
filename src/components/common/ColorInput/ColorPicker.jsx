@@ -3,7 +3,7 @@ import { useDrag } from 'hooks';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import mapNumber from 'utils/mapNumber';
 import restrictNumber from 'utils/restrictNumber';
-import { colorToHsl, colorToRgb, rgbToHex, rgbToHsl } from './colorConverters';
+import { colorToHsl, colorToRgb, rgbToHex } from './colorConverters';
 
 /** Internal Dependencies */
 import {
@@ -16,6 +16,8 @@ import {
   StyledColorStop,
 } from './ColorInput.styled';
 
+const colorsHuesCount = 360;
+
 const ColorInput = ({
   onChange,
   // pinnedColors = [],
@@ -24,7 +26,7 @@ const ColorInput = ({
   const barRef = useRef();
   const rangePickerRef = useRef();
   const [bar, setBar] = useState({
-    color: null,
+    color: '#ff0000',
     pointerLeft: 0,
   });
   const [rangePicker, setRangePicker] = useState({
@@ -77,7 +79,6 @@ const ColorInput = ({
       )
       .data.slice(0, 3);
     const colorRgbString = `rgb(${rgbColor.join(', ')})`;
-    // console.log('c:', colorToHsl(colorRgbString), colorRgbString);
     setRangePicker({
       color: colorRgbString,
       pointer: {
@@ -87,7 +88,6 @@ const ColorInput = ({
     });
 
     if (typeof onChange === 'function') {
-      console.log(rgbColor);
       onChange(rgbToHex(...rgbColor), colorRgbString);
     }
   };
@@ -136,13 +136,12 @@ const ColorInput = ({
     const { left } = barRef.current.getBoundingClientRect();
     const [h] = colorToHsl(rangePicker.color);
     const targetColorElem = barRef.current.querySelector(`[data-hue='${h}']`);
-    if (!targetColorElem) {
-      return;
-    }
-    const targetColorRgb = targetColorElem.style.backgroundColor;
+    const targetColorRgb = targetColorElem?.style?.backgroundColor || bar.color;
     setBar({
       color: targetColorRgb,
-      pointerLeft: targetColorElem.getBoundingClientRect().left - left,
+      pointerLeft:
+        targetColorElem?.getBoundingClientRect?.()?.left - left ||
+        bar.pointerLeft,
     });
     changeRangePicker(targetColorRgb, rangePicker.color);
   };
@@ -150,15 +149,14 @@ const ColorInput = ({
   const changeBarColorByPosition = (pointerLeft) => {
     const barElem = barRef.current;
     const { left, width } = barElem.getBoundingClientRect();
-    const mappedPointerLeft = Math.round(
-      mapNumber(pointerLeft, 0, left, 0, 360),
+    const mappedPointerLeft = restrictNumber(
+      Math.round(mapNumber(pointerLeft, 0, left, 0, colorsHuesCount)),
+      0,
+      colorsHuesCount,
     );
     const targetColorElem = barElem.querySelector(
       `[data-hue='${mappedPointerLeft}']`,
     );
-    if (!targetColorElem) {
-      return;
-    }
     const targetColorRgb = targetColorElem.style.backgroundColor;
     setBar({
       color: targetColorRgb,
@@ -217,8 +215,8 @@ const ColorInput = ({
 
   const barColors = useMemo(
     () =>
-      Array.from(Array(361), (_, h) => (
-        <StyledColorStop key={h} color={`hsl(${h}, 100%, 50%)`} data-hue={h} />
+      Array.from(Array(colorsHuesCount + 1), (_, h) => (
+        <StyledColorStop key={h} $color={`hsl(${h}, 100%, 50%)`} data-hue={h} />
       )),
     [],
   );

@@ -50,15 +50,23 @@ const StyledColorsBar = styled.table`
   border-collapse: collapse;
 `;
 
-const StyledColorStop = styled.td.attrs(({ color }) => ({
+const StyledColorStop = styled.td.attrs(({ $color }) => ({
   style: {
-    backgroundColor: color,
+    backgroundColor: $color,
   },
 }))`
   padding: 0;
-  &:first-child,
+  user-select: none;
+  pointer-events: none;
+  &:first-child {
+    width: 4px; // for having the border radius shown clearly
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
   &:last-child {
-    border-radius: 4px;
+    width: 4px; // for having the border radius shown clearly
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 `;
 
