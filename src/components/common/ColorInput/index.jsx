@@ -1,19 +1,20 @@
 /** External Dependencies */
 import { Popper } from '@scaleflex/ui/core';
+import { useStore } from 'hooks';
 import React, { useState } from 'react';
 
 /** Internal Dependencies */
 import { StyledPickerTrigger } from './ColorInput.styled';
 import ColorPicker from './ColorPicker';
 
-const ColorInput = ({
-  position = 'top',
-  // pinnedColors = [],
-  // onChange,
-  defaultColor = 'rgb(255, 255, 0)', // in hex --#fff000-- or rgb --rgb(255, 255, 0)--
-}) => {
+const ColorInput = ({ position = 'top', onChange, defaultColor }) => {
+  const {
+    config: { annotationsCommon = {} },
+  } = useStore();
   const [anchorEl, setAnchorEl] = useState();
-  const [color, setColor] = useState(() => defaultColor);
+  const [color, setColor] = useState(
+    () => defaultColor || annotationsCommon.fill,
+  );
 
   const togglePicker = (e) => {
     setAnchorEl(anchorEl ? null : e.currentTarget);
@@ -21,7 +22,11 @@ const ColorInput = ({
 
   return (
     <>
-      <StyledPickerTrigger onClick={togglePicker} color={color} />
+      <StyledPickerTrigger
+        onClick={togglePicker}
+        $color={color}
+        onChange={onChange}
+      />
       <Popper
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

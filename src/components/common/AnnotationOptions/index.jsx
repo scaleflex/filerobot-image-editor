@@ -63,8 +63,7 @@ const AnnotationOptions = ({
   }, []);
 
   const changeAnnotationFill = useCallback(
-    (e) => {
-      const newFill = e.target.value;
+    (newFill) => {
       updateAnnotation({ fill: newFill });
     },
     [updateAnnotation],

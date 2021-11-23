@@ -14,13 +14,22 @@ export const hexToRgb = (hexColor) => {
   ];
 };
 
-const rgbChannelToHex = (channel) => {
-  const channelHex = channel.toString(16);
-  return channelHex.length === 1 ? `0${channelHex}` : channelHex;
-};
+const rgbChannelToHex = (channel) => channel.toString(16).padStart(2, '0');
 
 export const rgbToHex = (...rgbColor) =>
   `#${rgbColor.map(rgbChannelToHex).join('')}`;
+
+export const hslToHex = (h, s, l) => {
+  const dividedL = l / 100;
+  const a = (s * Math.min(dividedL, 1 - dividedL)) / 100;
+  const f = (n) => {
+    const k = (n + h / 30) % 12;
+    const color = dividedL - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return rgbChannelToHex(Math.round(255 * color));
+  };
+
+  return `#${f(0)}${f(8)}${f(4)}`;
+};
 
 export const rgbToHsl = (...rgbColor) => {
   let [r, g, b] = rgbColor;
@@ -55,7 +64,7 @@ export const rgbToHsl = (...rgbColor) => {
   }
 
   // * 360 for having the hue in degrees
-  return [Math.round(h * 360), s, l];
+  return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
 };
 
 export const colorToHsl = (color) => {
@@ -115,4 +124,48 @@ export const colorToHex = (color) => {
   }
 
   return color;
+};
+
+const checkIsBlack = (s, l) => l === 0 && (s === 0 || s === 1);
+const checkIsWhite = (s, l) => s === 0 && l === 1;
+
+// both hsv and hsl values are in [0, 1] except h is in [0, 360]
+export const hsvToHsl = (h, s, v) => {
+  let newS = s;
+  const l = ((2 - s) * v) / 2;
+
+  if (l !== 0) {
+    if (l === 1) {
+      newS = 0;
+    } else if (l < 0.5) {
+      newS = (newS * v) / (l * 2);
+    } else {
+      newS = (newS * v) / (2 - l * 2);
+    }
+  }
+
+  const isBlack = checkIsBlack(newS, l);
+  return [
+    isBlack || checkIsWhite(newS, l) ? 0 : h,
+    isBlack ? 0 : Math.round(newS * 100),
+    Math.round(l * 100),
+  ];
+};
+
+// both hsv and hsl values are in [0, 1] except h is in [0, 360]
+export const hslToHsv = (h, s, l) => {
+  let newS = s;
+
+  const newL = l * 2;
+  newS *= newL <= 1 ? newL : 2 - newL;
+  const v = (newL + newS) / 2;
+  newS = (2 * newS) / (newL + newS);
+
+  // return [h, newS, v];
+  const isBlack = checkIsBlack(newS, l);
+  return [
+    isBlack || checkIsWhite(newS, l) ? 0 : h,
+    isBlack ? 0 : Math.round(newS * 100),
+    Math.round(v * 100),
+  ];
 };

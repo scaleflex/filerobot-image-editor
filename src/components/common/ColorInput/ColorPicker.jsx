@@ -1,27 +1,33 @@
 /** External Dependencies */
 import { useDrag } from 'hooks';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import mapNumber from 'utils/mapNumber';
-import restrictNumber from 'utils/restrictNumber';
-import { colorToHsl, colorToRgb, rgbToHex } from './colorConverters';
 
 /** Internal Dependencies */
+import mapNumber from 'utils/mapNumber';
+import restrictNumber from 'utils/restrictNumber';
 import {
-  StyledColorRangePicker,
+  colorToHsl,
+  hexToRgb,
+  hslToHex,
+  hslToHsv,
+  hsvToHsl,
+} from './colorConverters';
+import {
   StyledColorsBar,
   StyledColorPointer,
-  StyledColorsSliderWrapper,
+  StyledColorsBarWrapper,
   StyledPickerWrapper,
-  StyledColorRangePickerWrapper,
-  StyledColorStop,
+  StyledBarColorStop,
+  StyledRangePickerWrapper,
+  StyledRangePickerWhiteGradient,
+  StyledRangePickerBlackGradient,
 } from './ColorInput.styled';
 
 const colorsHuesCount = 360;
 
 const ColorInput = ({
   onChange,
-  // pinnedColors = [],
-  defaultColor = '#ffeded', // in hex --#fff000-- or rgb --rgb(255, 255, 0)--
+  defaultColor, // in hex --#fff000-- or rgb --rgb(255, 255, 0)--
 }) => {
   const barRef = useRef();
   const rangePickerRef = useRef();
@@ -31,56 +37,40 @@ const ColorInput = ({
   });
   const [rangePicker, setRangePicker] = useState({
     color: defaultColor || '#000000',
-    pointer: { left: 0, top: 0 },
+    pointer: { left: null, top: null },
   });
 
   const changeRangePickerPointerPosByColor = (color) => {
-    const canvas = rangePickerRef.current;
-    const { width, height } = canvas.getBoundingClientRect();
-    const ctx = canvas.getContext('2d');
-    const imagePixelsInRgb = ctx.getImageData(
-      0,
-      0,
-      canvas.width,
-      canvas.height,
-    ).data;
+    const { width, height } = rangePickerRef.current.getBoundingClientRect();
+    const colorHsl = colorToHsl(color);
+    const colorHsv = hslToHsv(
+      colorHsl[0],
+      colorHsl[1] / 100,
+      colorHsl[2] / 100,
+    );
+    const left = mapNumber(colorHsv[1], 0, 100, 0, width);
+    const top = height - mapNumber(colorHsv[2], 0, 100, 0, height);
 
-    const [r, g, b] = colorToRgb(color);
-    for (let i = 0; i < imagePixelsInRgb.length; i += 4) {
-      const pixelRgb = imagePixelsInRgb.slice(i, i + 3);
-      if (pixelRgb[0] === r && pixelRgb[1] === g && pixelRgb[2] === b) {
-        const leftPos = (i / 4) % canvas.width;
-        const topPos = Math.floor(i / 4 / canvas.width);
-
-        setRangePicker({
-          color: `rgb(${pixelRgb.join(', ')})`,
-          pointer: {
-            left: mapNumber(leftPos, 0, canvas.width - 1, 0, width),
-            top: mapNumber(topPos, 0, canvas.height - 1, 0, height),
-          },
-        });
-        return;
-      }
-    }
+    setRangePicker({
+      color,
+      pointer: { left, top },
+    });
   };
 
   const changeRangePickerColorByPosition = (left, top) => {
-    const canvas = rangePickerRef.current;
-    const { width, height } = canvas.getBoundingClientRect();
-    const restrictedLeft = restrictNumber(left, 0, width - 1);
-    const restrictedTop = restrictNumber(top, 0, height - 1);
-    const rgbColor = canvas
-      .getContext('2d')
-      .getImageData(
-        mapNumber(restrictedLeft, 0, width - 1, 0, canvas.width - 1),
-        mapNumber(restrictedTop, 0, height - 1, 0, canvas.height - 1),
-        1,
-        1,
-      )
-      .data.slice(0, 3);
-    const colorRgbString = `rgb(${rgbColor.join(', ')})`;
+    const { width, height } = rangePickerRef.current.getBoundingClientRect();
+    const [barColorHue] = colorToHsl(bar.color);
+    const restrictedLeft = restrictNumber(left, 0, width);
+    const restrictedTop = restrictNumber(top, 0, height);
+    const hsl = hsvToHsl(
+      barColorHue,
+      restrictedLeft / width,
+      (height - restrictedTop) / height,
+    );
+
+    const hexColor = hslToHex(...hsl);
     setRangePicker({
-      color: colorRgbString,
+      color: hexColor,
       pointer: {
         left: restrictedLeft,
         top: restrictedTop,
@@ -88,48 +78,22 @@ const ColorInput = ({
     });
 
     if (typeof onChange === 'function') {
-      onChange(rgbToHex(...rgbColor), colorRgbString);
+      console.log(colorToHsl(hexColor));
+      onChange(hexColor, `rgb(${hexToRgb(hexColor).join(', ')})`);
     }
   };
 
   const updateRangePickerColor = (e) => {
-    const canvas = rangePickerRef.current;
-    const { left, top, height, width } = canvas.getBoundingClientRect();
+    const rangePickerElem = rangePickerRef.current;
+    const { left, top, height, width } =
+      rangePickerElem.getBoundingClientRect();
     const pointerLeft = e
       ? restrictNumber(e.pageX - left, 0, width)
-      : rangePicker.pointer.left;
+      : rangePicker.pointer.left || 0;
     const pointerTop = e
       ? restrictNumber(e.pageY - top, 0, height)
-      : rangePicker.pointer.left;
+      : rangePicker.pointer.left || 0;
     changeRangePickerColorByPosition(pointerLeft, pointerTop);
-  };
-
-  const changeRangePicker = (currentBarColor, moveToColor) => {
-    const canvas = rangePickerRef.current;
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // We're starting & ending gradients by (+/-)ve 0.1 for containing all colors.
-    const colorGradH = ctx.createLinearGradient(0, 0, canvas.width, 0);
-    colorGradH.addColorStop(0.1, '#ffffff');
-    colorGradH.addColorStop(0.99, currentBarColor);
-    const blackGradV = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    blackGradV.addColorStop(0.1, 'rgba(0, 0, 0, 0)');
-    blackGradV.addColorStop(0.99, '#000000');
-
-    ctx.fillStyle = colorGradH;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = blackGradV;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    if (moveToColor) {
-      changeRangePickerPointerPosByColor(moveToColor);
-    } else {
-      changeRangePickerColorByPosition(
-        rangePicker.pointer.left,
-        rangePicker.pointer.top,
-      );
-    }
   };
 
   const initColorsBarPointer = () => {
@@ -143,7 +107,7 @@ const ColorInput = ({
         targetColorElem?.getBoundingClientRect?.()?.left - left ||
         bar.pointerLeft,
     });
-    changeRangePicker(targetColorRgb, rangePicker.color);
+    changeRangePickerPointerPosByColor(rangePicker.color);
   };
 
   const changeBarColorByPosition = (pointerLeft) => {
@@ -162,8 +126,6 @@ const ColorInput = ({
       color: targetColorRgb,
       pointerLeft: restrictNumber(pointerLeft, 0, width),
     });
-    // on changing the color of colors bar then change the color of range picker but without moving the pointer position.
-    changeRangePicker(targetColorRgb);
   };
 
   const updateBarColor = (e) => {
@@ -193,13 +155,22 @@ const ColorInput = ({
     const currentDirection = directions[e.key];
     if (currentDirection) {
       changeRangePickerColorByPosition(
-        rangePicker.pointer.left +
+        (rangePicker.pointer.left || 0) +
           (['ArrowLeft', 'ArrowRight'].includes(e.key) ? currentDirection : 0),
-        rangePicker.pointer.top +
+        (rangePicker.pointer.top || 0) +
           (['ArrowUp', 'ArrowDown'].includes(e.key) ? currentDirection : 0),
       );
     }
   };
+
+  useEffect(() => {
+    if (rangePicker.pointer.left !== null && rangePicker.pointer.top !== null) {
+      changeRangePickerColorByPosition(
+        rangePicker.pointer.left,
+        rangePicker.pointer.top,
+      );
+    }
+  }, [bar.color]);
 
   useEffect(() => {
     if (barRef.current) {
@@ -216,24 +187,33 @@ const ColorInput = ({
   const barColors = useMemo(
     () =>
       Array.from(Array(colorsHuesCount + 1), (_, h) => (
-        <StyledColorStop key={h} $color={`hsl(${h}, 100%, 50%)`} data-hue={h} />
+        <StyledBarColorStop
+          key={h}
+          $color={`hsl(${h}, 100%, 50%)`}
+          data-hue={h}
+        />
       )),
     [],
   );
 
   return (
     <StyledPickerWrapper>
-      <StyledColorRangePickerWrapper {...rangePickerPointSliding}>
-        <StyledColorRangePicker width="100" height="100" ref={rangePickerRef} />
+      <StyledRangePickerWrapper
+        ref={rangePickerRef}
+        $color={bar.color}
+        {...rangePickerPointSliding}
+      >
+        <StyledRangePickerWhiteGradient />
+        <StyledRangePickerBlackGradient />
         <StyledColorPointer
           tabIndex="-1"
-          left={rangePicker.pointer.left}
-          top={rangePicker.pointer.top}
+          left={rangePicker.pointer.left || 0}
+          top={rangePicker.pointer.top || 0}
           onKeyDown={moveRangePickerPointerByArrows}
           considerTopWidth
         />
-      </StyledColorRangePickerWrapper>
-      <StyledColorsSliderWrapper {...barPointSliding}>
+      </StyledRangePickerWrapper>
+      <StyledColorsBarWrapper {...barPointSliding}>
         <StyledColorsBar ref={barRef}>
           <tbody>
             <tr>{barColors}</tr>
@@ -245,7 +225,7 @@ const ColorInput = ({
           onKeyDown={moveBarPointerByArrows}
           style={{ top: -3 }}
         />
-      </StyledColorsSliderWrapper>
+      </StyledColorsBarWrapper>
     </StyledPickerWrapper>
   );
 };

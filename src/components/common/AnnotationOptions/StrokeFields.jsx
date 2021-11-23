@@ -25,8 +25,8 @@ const StrokeFields = ({ annotation, updateAnnotation, t }) => {
     });
   };
 
-  const changeStrokeColor = (e) => {
-    updateAnnotation({ stroke: e.target.value });
+  const changeStrokeColor = (newStrokeColor) => {
+    updateAnnotation({ stroke: newStrokeColor });
   };
 
   return (

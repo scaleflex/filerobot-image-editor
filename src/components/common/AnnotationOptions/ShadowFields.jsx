@@ -29,8 +29,8 @@ const ShadowFields = ({ annotation, updateAnnotation, t }) => {
     });
   };
 
-  const changeShadowColor = (e) => {
-    updateAnnotation({ shadowColor: e.target.value });
+  const changeShadowColor = (newShadowColor) => {
+    updateAnnotation({ shadowColor: newShadowColor });
   };
 
   return (

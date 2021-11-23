@@ -1,9 +1,9 @@
 /** External Dependencies */
 import styled from 'styled-components';
 
-const StyledPickerTrigger = styled.div.attrs(({ color }) => ({
+const StyledPickerTrigger = styled.div.attrs(({ $color }) => ({
   style: {
-    backgroundColor: color,
+    backgroundColor: $color,
   },
 }))`
   background-color: ${({ theme }) => theme.palette['icons-primary']};
@@ -23,20 +23,7 @@ const StyledPickerWrapper = styled.div`
   max-width: 300px;
 `;
 
-const StyledColorRangePickerWrapper = styled.div`
-  position: relative;
-  width: 186px;
-  height: 180px;
-`;
-
-const StyledColorRangePicker = styled.canvas`
-  display: block;
-  border-radius: 2px;
-  width: 100%;
-  height: 100%;
-`;
-
-const StyledColorsSliderWrapper = styled.div`
+const StyledColorsBarWrapper = styled.div`
   margin-top: 8px;
   position: relative;
   width: 186px;
@@ -50,7 +37,7 @@ const StyledColorsBar = styled.table`
   border-collapse: collapse;
 `;
 
-const StyledColorStop = styled.td.attrs(({ $color }) => ({
+const StyledBarColorStop = styled.td.attrs(({ $color }) => ({
   style: {
     backgroundColor: $color,
   },
@@ -95,13 +82,50 @@ const StyledColorPointer = styled.span.attrs(
 `,
 );
 
+const StyledRangePickerWrapper = styled.div.attrs(({ $color }) => ({
+  style: {
+    background: $color,
+  },
+}))`
+  position: relative;
+  border-radius: 2px;
+  width: 186px;
+  height: 180px;
+  user-select: none;
+  cursor: crosshair;
+`;
+
+const StyledRangePickerWhiteGradient = styled.div`
+  background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
+  z-index: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  user-select: none;
+  pointer-events: none;
+  top: -1px;
+`;
+
+const StyledRangePickerBlackGradient = styled.div`
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, black 100%);
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  user-select: none;
+  pointer-events: none;
+`;
+
 export {
   StyledPickerTrigger,
   StyledPickerWrapper,
-  StyledColorRangePickerWrapper,
-  StyledColorRangePicker,
-  StyledColorsSliderWrapper,
+  StyledColorsBarWrapper,
   StyledColorsBar,
   StyledColorPointer,
-  StyledColorStop,
+  StyledBarColorStop,
+  StyledRangePickerWrapper,
+  StyledRangePickerWhiteGradient,
+  StyledRangePickerBlackGradient,
 };
