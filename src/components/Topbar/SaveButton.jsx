@@ -71,7 +71,8 @@ const SaveButton = () => {
 
     const [preparedDesignLayer] = preparedCanvas.children; // children[0] = Design layer
     preparedCanvas.children[1].destroy(); // children[1] = Transformers layer, which is not needed anymore
-    preparedCanvas.findOne(`#${IMAGE_NODE_ID}`).cache();
+    const imgNode = preparedCanvas.findOne(`#${IMAGE_NODE_ID}`);
+    imgNode.cache();
     const mappedCropBox = mapCropBox(
       {
         x: crop.relativeX || clipX,
@@ -123,7 +124,7 @@ const SaveButton = () => {
     // Reseting isSaving to false so we get everything back to normal if user wants to continue editing after saving.
     designLayer.setAttr('isSaving', false);
     dispatch({ type: SET_SAVED });
-
+    imgNode.clearCache();
     if (closeAfterSave && onClose) {
       onClose(CLOSING_REASONS.AFTER_SAVE);
     }
