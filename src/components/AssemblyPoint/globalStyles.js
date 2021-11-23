@@ -16,7 +16,7 @@ import RobotoMediumGreek from 'custom/fonts/Roboto/Medium-greek.woff2';
 import RobotoMediumVietnamese from 'custom/fonts/Roboto/Medium-vietnamese.woff2';
 import RobotoMediumLatinExt from 'custom/fonts/Roboto/Medium-latin-ext.woff2';
 import RobotoMediumLatin from 'custom/fonts/Roboto/Medium-latin.woff2';
-import { ROOT_CONTAINER_ID } from 'utils/constants';
+import { ROOT_CONTAINER_CLASS_NAME } from 'utils/constants';
 
 const FontsFaces = createGlobalStyle`
   /* cyrillic-ext */
@@ -132,7 +132,7 @@ const FontsFaces = createGlobalStyle`
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
 
-  #${ROOT_CONTAINER_ID} {
+  .${ROOT_CONTAINER_CLASS_NAME} {
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
   }

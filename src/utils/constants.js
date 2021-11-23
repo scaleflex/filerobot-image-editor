@@ -1,7 +1,8 @@
 export const MAX_CANVAS_WIDTH = 800;
 export const MAX_CANVAS_HEIGHT = 800;
 
-export const ROOT_CONTAINER_ID = 'filerobot-image-editor_root-container';
+export const ROOT_CONTAINER_CLASS_NAME =
+  'filerobot-image-editor_root-container';
 export const DESIGN_LAYER_ID = 'filerobot-image-editor_design-layer';
 export const TRANSFORMERS_LAYER_ID =
   'filerobot-image-editor_transformers-layer';

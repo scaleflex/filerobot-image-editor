@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 
 /** Internal Dependencies */
 import MainCanvas from 'components/MainCanvas';
-import { ROOT_CONTAINER_ID } from 'utils/constants';
+import { ROOT_CONTAINER_CLASS_NAME } from 'utils/constants';
 import Topbar from 'components/Topbar';
 import Tabs from 'components/Tabs';
 import ToolsBar from 'components/ToolsBar';
@@ -149,7 +149,7 @@ const App = () => {
   }, [haveNotSavedChanges]);
 
   return (
-    <StyledAppWrapper id={ROOT_CONTAINER_ID}>
+    <StyledAppWrapper className={ROOT_CONTAINER_CLASS_NAME}>
       {isLoadingGlobally && <Spinner label={t('loading')} />}
       <Topbar />
       {originalImage && (
