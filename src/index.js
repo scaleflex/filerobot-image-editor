@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from 'react-dom';
 
 /** Internal Dependencies */
-import { TOOLS_IDS } from 'utils/constants';
+import { TABS_IDS, TOOLS_IDS } from 'utils/constants';
 import uriDownload from 'utils/uriDownload';
 import AssemblyPoint from './components/AssemblyPoint';
 
@@ -68,7 +68,7 @@ const config = {
   // forceToPngInEllipticalCrop: false, // in case the develop wants to force the saved image to be PNG if there is elliptical crop is done otherwise the provided savedImageType would be used.
   // onSaveAs: () => console.log('saving as') // called on clickng save as button and after finishing save as functionality onSave is called.... if onSaveAs function returned false then the default behavior (opening saveAs modal) won't be opened
   onClose: () => console.log('Act closing 👅'), // if we have value then close button will be shown unless showBackButton is true then if onClose has value the back button will be shown otherwise nothing will be shown.
-  // tabsIds: ['ADJUST', 'ANNOTATE', 'WATERMARK'],
+  // tabsIds: [TABS_IDS.ADJUST, TABS_IDS.WATERMARK],
   // defaultTabId: TABS_IDS.ADJUST,
   // defaultToolId: TOOLS_IDS.CROP,
   // showBackButton: true,

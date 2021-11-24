@@ -22,6 +22,7 @@ const StyledMainContent = styled.div`
 const StyledCanvasAndTools = styled.div`
   height: 100%;
   width: calc(100% - 80px); // 80px = tabsbar's width.
+  flex-grow: 1;
 `;
 
 export { StyledAppWrapper, StyledMainContent, StyledCanvasAndTools };

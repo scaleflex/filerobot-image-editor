@@ -36,6 +36,11 @@ const Tabs = () => {
     });
   }, []);
 
+  // If only 1 tab is needed then no need to have the tabs sidebar.
+  if (chosenTabs.length === 1) {
+    return null;
+  }
+
   return (
     <StyledTabs>
       {chosenTabs.map(({ id, labelKey, icon }) => (

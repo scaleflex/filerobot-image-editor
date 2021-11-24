@@ -1596,10 +1596,10 @@
   resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.56.tgz#b12b3bffff543f05c58a96f725dcc9bbf0bc5516"
   integrity sha512-u2tpDdQ9fxlatOsICa48JSZQ2z4roUrXDD3QDWcrgh9Uvo6iWpb3U9TpumrT8FpOl5LIW7aoMeI7OU/S1K/Nbg==
 
-"@scaleflex/ui@^1.0.0-beta.56":
-  version "1.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.56.tgz#f1d07d8c322071d0cd652b7f3b7e2c7cbb6cacaf"
-  integrity sha512-2NPseJGZqkDTFrRHtl9T1PPoU22wSph3JHEODd9T9IK5rrBAmzzyXEC3wrh8HxF1tafAta2aVzgE8xL9a4ChvQ==
+"@scaleflex/ui@^1.0.0-beta.57":
+  version "1.0.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.57.tgz#aed8f5cc02908bd05f2486aa0e4e9a0181c2a38e"
+  integrity sha512-jWYQ1rzR1zYoIX25aWynjq4SVveFNltj2s3vycPZtk4JkYxG/XEbmZnox4DVSk3e/PI/7HbfAd00bTlgZ2vCpw==
   dependencies:
     "@popperjs/core" "^2.6.0"
     "@scaleflex/icons" "^1.0.0-beta.56"
