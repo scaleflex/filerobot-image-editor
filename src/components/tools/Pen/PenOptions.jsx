@@ -14,7 +14,7 @@ const eventsOptions = {
   passive: true,
 };
 
-const PenOptions = () => {
+const PenOptions = ({ t }) => {
   const { dispatch, designLayer } = useContext(AppContext);
   const [pen, savePenDebounced, savePenNoDebounce] = useAnnotation(
     {
@@ -124,6 +124,7 @@ const PenOptions = () => {
     <AnnotationOptions
       annotation={pen}
       updateAnnotation={savePenDebounced}
+      t={t}
       hideFillOption
     />
   );

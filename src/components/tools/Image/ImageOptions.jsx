@@ -107,7 +107,7 @@ const ImageOptions = () => {
   };
 
   return (
-    <ImageControls image={image} saveImage={saveImage}>
+    <ImageControls image={image} saveImage={saveImage} t={t}>
       <Button
         color="secondary"
         onClick={isLoading ? undefined : triggerUploadInput}

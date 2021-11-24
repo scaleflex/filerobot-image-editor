@@ -7,6 +7,9 @@ const StyledSlider = styled(ContinuousSlider)`
   padding: 0;
 
   /* TODO: Till fixed on @sfx/ui */
+  .SfxSlider-annotation {
+    width: 50px;
+  }
   input {
     max-width: ${({ width }) => width || '100px'};
   }

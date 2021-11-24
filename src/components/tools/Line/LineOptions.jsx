@@ -6,7 +6,7 @@ import { useAnnotation } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 
-const LineOptions = () => {
+const LineOptions = ({ t }) => {
   const [line, saveLine] = useAnnotation({
     name: TOOLS_IDS.LINE,
   });
@@ -15,6 +15,7 @@ const LineOptions = () => {
     <AnnotationOptions
       annotation={line}
       updateAnnotation={saveLine}
+      t={t}
       hideFillOption
     />
   );

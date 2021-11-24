@@ -6,7 +6,7 @@ import { useAnnotation } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 
-const ArrowOptions = () => {
+const ArrowOptions = ({ t }) => {
   const [arrow, saveArrow] = useAnnotation({
     name: TOOLS_IDS.ARROW,
   });
@@ -15,6 +15,7 @@ const ArrowOptions = () => {
     <AnnotationOptions
       annotation={arrow}
       updateAnnotation={saveArrow}
+      t={t}
       hideFillOption
     />
   );
