@@ -1,9 +1,7 @@
+/** Internal Dependencies */
 import getDimensionsMinimalRatio from 'utils/getDimensionsMinimalRatio';
-import restrictNumber from 'utils/restrictNumber';
 
 export const SET_CANVAS_SIZE = 'SET_CANVAS_SIZE';
-
-const MIN_CANVAS_DIMENSION_PX = 80;
 
 const setCanvasSize = (state, payload) => {
   if (
@@ -13,21 +11,26 @@ const setCanvasSize = (state, payload) => {
     return state;
   }
 
-  const restrictedWidth = restrictNumber(
-    payload.canvasWidth,
-    MIN_CANVAS_DIMENSION_PX,
-    state.originalImage.width,
-  );
+  /** if enabled, it wouldn't increase the image size in the container to be more clear for the user to edit the image....
+   * which means if the image is small it would be hard to edit after having this enabled...
+   * is should replace payload.canvasWidth & payload.canvasHeight in the code afterwards..
+   * also it might cause some improper behavior that needs to be debugged if generated.
+   */
+  // const restrictedWidth = restrictNumber(
+  //   payload.canvasWidth,
+  //   0,
+  //   state.originalImage.width
+  // );
 
-  const restrictedHeight = restrictNumber(
-    payload.canvasHeight,
-    MIN_CANVAS_DIMENSION_PX,
-    state.originalImage.height,
-  );
+  // const restrictedHeight = restrictNumber(
+  //   payload.canvasHeight,
+  //   0,
+  //   state.originalImage.height
+  // );
 
   const {
-    initialCanvasWidth = restrictedWidth,
-    initialCanvasHeight = restrictedHeight,
+    initialCanvasWidth = payload.canvasWidth,
+    initialCanvasHeight = payload.canvasHeight,
   } = state;
 
   const originalImageInitialScale = getDimensionsMinimalRatio(
@@ -56,8 +59,8 @@ const setCanvasSize = (state, payload) => {
     ...state,
     initialCanvasWidth,
     initialCanvasHeight,
-    canvasWidth: restrictedWidth,
-    canvasHeight: restrictedHeight,
+    canvasWidth: payload.canvasWidth,
+    canvasHeight: payload.canvasHeight,
     canvasScale: scale,
   };
 };
