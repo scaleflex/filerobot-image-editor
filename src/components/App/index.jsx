@@ -15,13 +15,14 @@ import {
 } from 'actions';
 import ErrorPopup from 'components/ErrorPopup';
 import loadImage from 'utils/loadImage';
-import { useStore } from 'hooks';
+import { usePhoneScreen, useStore } from 'hooks';
 import Spinner from 'components/common/Spinner';
 import { getBackendTranslations } from 'utils/translator';
 import {
   StyledAppWrapper,
   StyledMainContent,
   StyledCanvasAndTools,
+  StyledPhoneToolsAndTabs,
 } from './App.styled';
 
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
     useBackendTranslations,
     language,
   } = config;
+  const isPhoneScreen = usePhoneScreen();
   const isFirstRender = useRef(true);
   // Hacky solution, For being used in beforeunload event
   // as it won't be possible to have the latest value of the state variable in js event handler.
@@ -149,15 +151,25 @@ const App = () => {
   }, [haveNotSavedChanges]);
 
   return (
-    <StyledAppWrapper className={ROOT_CONTAINER_CLASS_NAME}>
+    <StyledAppWrapper
+      className={ROOT_CONTAINER_CLASS_NAME}
+      data-phone={isPhoneScreen}
+    >
       {isLoadingGlobally && <Spinner label={t('loading')} />}
       <Topbar />
       {originalImage && (
         <StyledMainContent>
-          <Tabs />
+          {!isPhoneScreen && <Tabs />}
           <StyledCanvasAndTools>
             <MainCanvas />
-            <ToolsBar />
+            {isPhoneScreen ? (
+              <StyledPhoneToolsAndTabs>
+                <ToolsBar />
+                <Tabs />
+              </StyledPhoneToolsAndTabs>
+            ) : (
+              <ToolsBar />
+            )}
           </StyledCanvasAndTools>
         </StyledMainContent>
       )}

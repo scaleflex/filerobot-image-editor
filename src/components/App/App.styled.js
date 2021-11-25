@@ -25,4 +25,16 @@ const StyledCanvasAndTools = styled.div`
   flex-grow: 1;
 `;
 
-export { StyledAppWrapper, StyledMainContent, StyledCanvasAndTools };
+const StyledPhoneToolsAndTabs = styled.div`
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  margin: 0 -12px;
+`;
+
+export {
+  StyledAppWrapper,
+  StyledMainContent,
+  StyledCanvasAndTools,
+  StyledPhoneToolsAndTabs,
+};

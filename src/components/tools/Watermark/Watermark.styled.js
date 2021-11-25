@@ -7,6 +7,8 @@ const StyledWatermarkWrapper = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   overflow: hidden;
+
+  ${({ noWrap }) => (noWrap ? 'margin-left: 4px; flex-wrap: nowrap;' : '')};
 `;
 
 const StyledControlsWrapper = styled.div`

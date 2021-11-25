@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Revert, Warning } from '@scaleflex/icons';
 
 /** Internal Dependencies */
@@ -8,7 +9,7 @@ import Modal from 'components/common/Modal';
 import { RESET } from 'actions';
 import { StyledHistoryButton } from './Topbar.styled';
 
-const ResetButton = () => {
+const ResetButton = ({ margin }) => {
   const { dispatch, isResetted = true, theme, t } = useStore();
 
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -35,6 +36,7 @@ const ResetButton = () => {
         onClick={isResetted ? undefined : openModal}
         disabled={isResetted}
         title={t('resetOperations')}
+        margin={margin}
       >
         <Revert size={12} />
       </StyledHistoryButton>
@@ -54,6 +56,14 @@ const ResetButton = () => {
       )}
     </>
   );
+};
+
+ResetButton.defaultProps = {
+  margin: undefined,
+};
+
+ResetButton.propTypes = {
+  margin: PropTypes.string,
 };
 
 export default ResetButton;

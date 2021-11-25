@@ -16,10 +16,10 @@ const StyledTopbar = styled.div`
 `;
 
 const StyledHistoryButton = styled(IconButton)`
-  margin: 0 4px;
+  margin: ${({ margin }) => margin ?? '0 4px'};
 
   :first-of-type {
-    margin: 0 4px 0 8px;
+    margin: ${({ margin }) => margin ?? '0 4px 0 8px'};
   }
   width: 23px;
   height: 23px;
@@ -33,7 +33,7 @@ const StyledHistoryButton = styled(IconButton)`
 const StyledSmallButton = styled(iconButton)`
   width: 20px;
   height: 20px;
-  margin: 0 ${(props) => props.horizontalMargin || '4px'};
+  margin: 0 ${(props) => props.horizontalMargin ?? '4px'};
   padding: 4px;
 `;
 

@@ -15,7 +15,7 @@ const TabItem = ({ id, label, Icon, isSelected, onClick }) => {
   return (
     <StyledTabItem aria-selected={isSelected} onClick={handleClick}>
       <Icon />
-      <StyledTabItemLabel>{label}</StyledTabItemLabel>
+      {label && <StyledTabItemLabel>{label}</StyledTabItemLabel>}
     </StyledTabItem>
   );
 };
@@ -23,11 +23,12 @@ const TabItem = ({ id, label, Icon, isSelected, onClick }) => {
 TabItem.defaultProps = {
   isSelected: false,
   onClick: undefined,
+  label: undefined,
 };
 
 TabItem.propTypes = {
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   Icon: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.func,

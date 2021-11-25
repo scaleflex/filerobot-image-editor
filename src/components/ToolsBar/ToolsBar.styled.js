@@ -7,13 +7,22 @@ const StyledToolsBar = styled.div`
   width: fit-content;
   margin: 0 auto;
   max-width: 100%;
-  max-height: 82px;
+  max-height: 92px;
+
+  [data-phone='true'] & {
+    padding: 0;
+    margin-top: 8px;
+    max-height: initial;
+  }
 `;
 
 const StyledToolsBarItems = styled.div`
   display: flex;
   align-items: center;
   overflow-x: auto;
+  [data-phone='true'] & {
+    background-color: ${({ theme }) => theme.palette['bg-primary']};
+  }
 `;
 
 const StyledToolsBarItemButton = styled.div(

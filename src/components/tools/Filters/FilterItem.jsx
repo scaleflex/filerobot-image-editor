@@ -49,7 +49,7 @@ const FilterItem = ({
         width={FILTER_PREVIEW_WIDTH}
         height={FILTER_PREVIEW_HEIGHT}
       >
-        <Layer listening={false}>
+        <Layer onTap={handleFilterApplying}>
           <Image
             image={image}
             filters={filterFn ? [filterFn] : []}

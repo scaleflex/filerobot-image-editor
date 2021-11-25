@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { IconButton } from '@scaleflex/ui/core';
 // import { DeleteOutline, Duplicate, LayerOrder } from '@scaleflex/icons';
 import { DeleteOutline, Duplicate } from '@scaleflex/icons';
@@ -8,15 +8,35 @@ import { DeleteOutline, Duplicate } from '@scaleflex/icons';
 import { useStore } from 'hooks';
 import { DUPLICATE_ANNOTATIONS, REMOVE_ANNOTATIONS } from 'actions';
 import { NODES_TRANSFORMER_ID, WATERMARK_ANNOTATION_ID } from 'utils/constants';
+import debounce from 'utils/debounce';
 import { StyledNodeControls } from './NodeControls.styled';
 
 const NodeControls = () => {
-  const { selectionsIds = [], designLayer, dispatch } = useStore();
+  const { selectionsIds = [], designLayer, annotations, dispatch } = useStore();
+  const [position, setPosition] = useState({ left: 0, top: 0 });
   const nodesTransformer = useMemo(
     () => designLayer?.getStage()?.findOne(`#${NODES_TRANSFORMER_ID}`),
     [designLayer],
   );
   const selectionsLength = selectionsIds.length;
+
+  const updatePosition = debounce(() => {
+    if (!nodesTransformer) {
+      return;
+    }
+    setPosition({
+      left:
+        (nodesTransformer.x() + nodesTransformer.width() / 2) *
+        nodesTransformer.scaleX(),
+      top:
+        (nodesTransformer.y() + nodesTransformer.height()) *
+        nodesTransformer.scaleY(),
+    });
+  }, 0);
+
+  useEffect(() => {
+    updatePosition();
+  }, [selectionsIds, nodesTransformer, annotations]);
 
   if (selectionsLength === 0 || !nodesTransformer) return null;
 
@@ -42,16 +62,7 @@ const NodeControls = () => {
   };
 
   return (
-    <StyledNodeControls
-      left={
-        (nodesTransformer.x() + nodesTransformer.width() / 2) *
-        nodesTransformer.scaleX()
-      }
-      top={
-        (nodesTransformer.y() + nodesTransformer.height()) *
-        nodesTransformer.scaleY()
-      }
-    >
+    <StyledNodeControls left={position.left} top={position.top}>
       {/* {selectionsLength === 1 && (
         <IconButton color="link" size="sm" onClick={changeAnnotationOrder}>
           <LayerOrder />

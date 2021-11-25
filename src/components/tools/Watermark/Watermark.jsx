@@ -12,7 +12,7 @@ import {
 import ButtonWithMenu from 'components/common/ButtonWithMenu';
 import TextControls from 'components/tools/Text/TextOptions/TextControls';
 import ImageControls from 'components/tools/Image/ImageControls';
-import { useStore } from 'hooks';
+import { usePhoneScreen, useStore } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
 import HiddenUploadInput from 'components/common/HiddenUploadInput';
 import {
@@ -34,6 +34,7 @@ const Watermark = () => {
     dispatch,
     t,
   } = useStore();
+  const isPhoneScreen = usePhoneScreen();
   const [isLoading, setIsLoading] = useState(false);
   const uploadImgInput = useRef();
 
@@ -206,19 +207,27 @@ const Watermark = () => {
     <div>
       {watermark?.name === TOOLS_IDS.TEXT && (
         <StyledControlsWrapper>
-          <TextControls text={watermark} saveText={updateWatermarkOptions}>
+          <TextControls
+            text={watermark}
+            saveText={updateWatermarkOptions}
+            t={t}
+          >
             {renderWatermarkPadding()}
           </TextControls>
         </StyledControlsWrapper>
       )}
       {watermark?.name === TOOLS_IDS.IMAGE && (
         <StyledControlsWrapper>
-          <ImageControls image={watermark} saveImage={updateWatermarkOptions}>
+          <ImageControls
+            image={watermark}
+            saveImage={updateWatermarkOptions}
+            t={t}
+          >
             {renderWatermarkPadding()}
           </ImageControls>
         </StyledControlsWrapper>
       )}
-      <StyledWatermarkWrapper>
+      <StyledWatermarkWrapper noWrap={Boolean(watermark?.name)}>
         <ButtonWithMenu
           color="secondary"
           label={t('addWatermark')}
@@ -227,7 +236,14 @@ const Watermark = () => {
           menuItems={menuItems}
           menuFromBtn
         />
-        <WatermarksGallery selectWatermark={addImgWatermark} />
+        <WatermarksGallery
+          selectWatermark={addImgWatermark}
+          style={
+            isPhoneScreen && Boolean(watermark?.name)
+              ? { width: '55%' }
+              : undefined
+          }
+        />
         <HiddenUploadInput
           onChange={isLoading ? undefined : importWatermarkImg}
           disabled={isLoading}

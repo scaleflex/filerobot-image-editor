@@ -4,6 +4,11 @@ import { Label } from '@scaleflex/ui/core';
 
 const StyledTabs = styled.div`
   padding: 12px 12px 12px 0;
+
+  [data-phone='true'] & {
+    display: flex;
+    padding: 0;
+  }
 `;
 
 const StyledTabItem = styled.div(
@@ -17,6 +22,12 @@ const StyledTabItem = styled.div(
     align-items: center;
     justify-content: center;
     margin-bottom: 8px;
+
+    [data-phone='true'] & {
+      margin-bottom: 0;
+      height: 50px;
+      border-radius: 0;
+    }
 
     &,
     * {
@@ -41,6 +52,10 @@ const StyledTabItemLabel = styled(Label)`
   margin-top: 6px;
   font-size: 11px;
   line-height: 12px;
+
+  [data-phone='true'] & {
+    font-size: 10px;
+  }
 `;
 
 export { StyledTabs, StyledTabItem, StyledTabItemLabel };

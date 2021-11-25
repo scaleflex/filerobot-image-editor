@@ -8,7 +8,7 @@ import { TOOLS_IDS, WATERMARK_ANNOTATION_ID } from 'utils/constants';
 import Carousel from 'components/common/Carousel';
 import { StyledWatermarkGalleryItem } from './Watermark.styled';
 
-const WatermarksGallery = ({ selectWatermark }) => {
+const WatermarksGallery = ({ selectWatermark, style }) => {
   const { config, annotations } = useStore();
 
   const currentWatermarkUrl = useMemo(
@@ -27,7 +27,7 @@ const WatermarksGallery = ({ selectWatermark }) => {
   }
 
   return (
-    <Carousel>
+    <Carousel style={style}>
       {gallery.map((watermarkUrl) => (
         <StyledWatermarkGalleryItem
           onClick={getWatermarkImgAndSelect}
@@ -46,8 +46,13 @@ const WatermarksGallery = ({ selectWatermark }) => {
   );
 };
 
+WatermarksGallery.defaultProps = {
+  style: undefined,
+};
+
 WatermarksGallery.propTypes = {
   selectWatermark: PropTypes.func.isRequired,
+  style: PropTypes.instanceOf(Object),
 };
 
 export default WatermarksGallery;
