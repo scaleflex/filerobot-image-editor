@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React from 'react';
+import PropTypes from 'prop-types';
 import Konva from 'konva';
 
 /** Internal Dependencies */
@@ -65,6 +66,10 @@ const HSVOptions = ({ t }) => {
       </StyledSliderContainer>
     </>
   );
+};
+
+HSVOptions.propTypes = {
+  t: PropTypes.func.isRequired,
 };
 
 export default HSVOptions;

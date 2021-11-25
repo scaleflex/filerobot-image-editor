@@ -1,3 +1,4 @@
+/* eslint-disable */
 /** External Dependencies */
 import React from 'react';
 import { render } from 'react-dom';
@@ -48,6 +49,10 @@ const config = {
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/Logo+Vertical/SCALEFLEX+LOGO+VERTICAL.PNG?vh=9a6fa1',
     ],
   },
+  // [TOOLS_IDS.TEXT]: {
+  //   fonts: ['Arial', 'another', { label: 'Tahoma', value: 'Tahoma' }, 'hey-there'], // must be loaded in the website or the user have them on his system
+  //   fontFamily: 'test',
+  // },
   onSave: (imageObject, imageDesignState) => {
     console.log('🕺🏼 Well, my onSave handler function is fired.');
     console.log('🎇Image file is downloading.....');
@@ -73,6 +78,7 @@ const config = {
   // defaultToolId: TOOLS_IDS.CROP,
   // showBackButton: true,
   // hideSaveAsMenu: false,
+  // dontFitContainerIfSmallerImg: false // By default the image fits the container whether it's smaller or bigger than the container if false, it won't fit if smaller but it'll fit if bigger
 };
 
 render(

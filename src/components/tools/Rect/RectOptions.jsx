@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
@@ -24,6 +25,10 @@ const RectOptions = ({ t }) => {
       t={t}
     />
   );
+};
+
+RectOptions.propTypes = {
+  t: PropTypes.func.isRequired,
 };
 
 export default RectOptions;

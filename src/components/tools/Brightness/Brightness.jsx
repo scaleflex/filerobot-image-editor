@@ -24,6 +24,7 @@ Brightness.defaultProps = {
 Brightness.propTypes = {
   selectTool: PropTypes.func.isRequired,
   isSelected: PropTypes.bool,
+  t: PropTypes.func.isRequired,
 };
 
 export default Brightness;

@@ -57,6 +57,10 @@ Modal.defaultProps = {
   isOpened: false,
   doneLabel: 'Yes',
   cancelLabel: 'No',
+  doneButtonStyle: undefined,
+  doneButtonColor: 'link',
+  cancelButtonColor: 'link',
+  children: undefined,
 };
 
 Modal.propTypes = {
@@ -68,6 +72,10 @@ Modal.propTypes = {
   isOpened: PropTypes.bool,
   doneLabel: PropTypes.string,
   cancelLabel: PropTypes.string,
+  doneButtonStyle: PropTypes.instanceOf(Object),
+  doneButtonColor: PropTypes.string,
+  cancelButtonColor: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default Modal;

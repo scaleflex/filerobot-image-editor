@@ -24,6 +24,7 @@ ArrowButton.defaultProps = {
 ArrowButton.propTypes = {
   selectTool: PropTypes.func.isRequired,
   isSelected: PropTypes.bool,
+  t: PropTypes.func.isRequired,
 };
 
 export default ArrowButton;

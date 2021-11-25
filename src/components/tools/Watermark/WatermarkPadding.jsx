@@ -58,6 +58,7 @@ const WatermarkPadding = ({ watermark, saveWatermark, t }) => {
 WatermarkPadding.propTypes = {
   watermark: PropTypes.instanceOf(Object).isRequired,
   saveWatermark: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 export default WatermarkPadding;

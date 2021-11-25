@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
@@ -25,6 +26,10 @@ const PolygonOptions = ({ t }) => {
       t={t}
     />
   );
+};
+
+PolygonOptions.propTypes = {
+  t: PropTypes.func.isRequired,
 };
 
 export default PolygonOptions;

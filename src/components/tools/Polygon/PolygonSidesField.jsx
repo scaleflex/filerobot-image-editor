@@ -41,6 +41,7 @@ const PolygonSidesField = ({
 PolygonSidesField.propTypes = {
   annotation: PropTypes.instanceOf(Object).isRequired,
   updateAnnotation: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 export default PolygonSidesField;

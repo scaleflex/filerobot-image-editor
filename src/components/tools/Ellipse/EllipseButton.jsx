@@ -24,6 +24,7 @@ EllipseButton.defaultProps = {
 EllipseButton.propTypes = {
   selectTool: PropTypes.func.isRequired,
   isSelected: PropTypes.bool,
+  t: PropTypes.func.isRequired,
 };
 
 export default EllipseButton;

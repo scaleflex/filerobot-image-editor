@@ -24,6 +24,7 @@ PolygonButton.defaultProps = {
 PolygonButton.propTypes = {
   selectTool: PropTypes.func.isRequired,
   isSelected: PropTypes.bool,
+  t: PropTypes.func.isRequired,
 };
 
 export default PolygonButton;

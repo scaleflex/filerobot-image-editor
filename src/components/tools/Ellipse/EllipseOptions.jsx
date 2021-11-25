@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
@@ -20,4 +21,7 @@ const EllipseOptions = ({ t }) => {
   );
 };
 
+EllipseOptions.propTypes = {
+  t: PropTypes.func.isRequired,
+};
 export default EllipseOptions;

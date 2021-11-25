@@ -117,6 +117,8 @@ ButtonWithMenu.defaultProps = {
   menuFromBtn: false,
   menuPosition: 'bottom',
   onClick: undefined,
+  disabled: false,
+  arrowColor: undefined,
 };
 
 ButtonWithMenu.propTypes = {
@@ -128,6 +130,8 @@ ButtonWithMenu.propTypes = {
   size: PropTypes.string,
   menuFromBtn: PropTypes.bool,
   menuPosition: PropTypes.string,
+  disabled: PropTypes.bool,
+  arrowColor: PropTypes.string,
 };
 
 export default ButtonWithMenu;

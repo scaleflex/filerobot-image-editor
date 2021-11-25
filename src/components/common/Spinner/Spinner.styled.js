@@ -27,6 +27,10 @@ const StyledSpinnerWrapper = styled.div`
   right: 0;
   left: 0;
   flex-direction: column;
+
+  label {
+    color: #ffffff;
+  }
 `;
 
 const StyledSpinner = styled.div`

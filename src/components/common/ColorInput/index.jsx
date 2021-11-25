@@ -1,9 +1,10 @@
 /** External Dependencies */
-import { Popper } from '@scaleflex/ui/core';
-import { useStore } from 'hooks';
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Popper } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
+import { useStore } from 'hooks';
 import { StyledPickerTrigger } from './ColorInput.styled';
 import ColorPicker from './ColorPicker';
 
@@ -43,6 +44,17 @@ const ColorInput = ({ position = 'top', onChange, defaultColor }) => {
       </Popper>
     </>
   );
+};
+
+ColorInput.defaultProps = {
+  position: 'top',
+  defaultColor: undefined,
+};
+
+ColorInput.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  position: PropTypes.string,
+  defaultColor: PropTypes.string,
 };
 
 export default ColorInput;

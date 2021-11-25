@@ -61,6 +61,7 @@ FlipX.defaultProps = {
 FlipX.propTypes = {
   selectTool: PropTypes.func.isRequired,
   isSelected: PropTypes.bool,
+  t: PropTypes.func.isRequired,
 };
 
 export default FlipX;

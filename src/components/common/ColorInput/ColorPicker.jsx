@@ -1,8 +1,9 @@
 /** External Dependencies */
-import { useDrag } from 'hooks';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
+import { useDrag } from 'hooks';
 import mapNumber from 'utils/mapNumber';
 import restrictNumber from 'utils/restrictNumber';
 import {
@@ -227,6 +228,15 @@ const ColorPicker = ({
       </StyledColorsBarWrapper>
     </StyledPickerWrapper>
   );
+};
+
+ColorPicker.defaultProps = {
+  defaultColor: undefined,
+};
+
+ColorPicker.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  defaultColor: PropTypes.string,
 };
 
 export default ColorPicker;

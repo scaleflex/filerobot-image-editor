@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
@@ -19,6 +20,10 @@ const LineOptions = ({ t }) => {
       hideFillOption
     />
   );
+};
+
+LineOptions.propTypes = {
+  t: PropTypes.func.isRequired,
 };
 
 export default LineOptions;

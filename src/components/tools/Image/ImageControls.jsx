@@ -24,6 +24,7 @@ ImageControls.propTypes = {
   image: PropTypes.instanceOf(Object).isRequired,
   saveImage: PropTypes.func.isRequired,
   children: PropTypes.node,
+  t: PropTypes.func.isRequired,
 };
 
 export default ImageControls;

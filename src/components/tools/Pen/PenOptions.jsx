@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { useAnnotation } from 'hooks';
@@ -128,6 +129,10 @@ const PenOptions = ({ t }) => {
       hideFillOption
     />
   );
+};
+
+PenOptions.propTypes = {
+  t: PropTypes.func.isRequired,
 };
 
 export default PenOptions;
