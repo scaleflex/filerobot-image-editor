@@ -14,8 +14,17 @@ export default {
     opacity: 1,
   },
   [TOOLS_IDS.TEXT]: {
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet tortor quis odio facilisis, id aliquet nulla facilisis. Etiam tincidunt tempor odio nec placerat.',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     fontFamily: 'Arial',
+    fonts: [
+      { label: 'Arial', value: 'Arial' },
+      'Tahoma',
+      'Sans-serif',
+      'Roboto',
+      { label: 'Comic Sans', value: 'Comic-sans' },
+      'Times New Roman',
+      'Lato',
+    ],
     fontSize: 14,
     letterSpacing: 0,
     lineHeight: 1,

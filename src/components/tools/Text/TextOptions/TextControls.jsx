@@ -5,7 +5,7 @@ import { MenuItem } from '@scaleflex/ui/core';
 import { FontBold, FontItalic } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { TRANSFORMERS_LAYER_ID } from 'utils/constants';
+import { TOOLS_IDS, TRANSFORMERS_LAYER_ID } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import { StyledIconWrapper } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
 import { ENABLE_TEXT_CONTENT_EDIT } from 'actions';
@@ -25,7 +25,9 @@ import {
 } from './handleTextChangeArea';
 
 const TextControls = ({ text, saveText, children }) => {
-  const { dispatch, textIdOfEditableContent, designLayer, t } = useStore();
+  const { dispatch, textIdOfEditableContent, designLayer, t, config } =
+    useStore();
+  const { fonts = [] } = config[TOOLS_IDS.TEXT];
 
   const changeTextProps = useCallback(
     (e) => {
@@ -118,14 +120,15 @@ const TextControls = ({ text, saveText, children }) => {
         placeholder={t('fontFamily')}
         size="sm"
       >
-        {/* TODO: Make this customizable from config/props */}
-        {['Arial', 'Times New Roman', 'Courier New', 'Comic Sans MS'].map(
-          (fontFamily) => (
-            <MenuItem key={fontFamily} value={fontFamily}>
-              {fontFamily}
-            </MenuItem>
-          ),
-        )}
+        {/* fontFamily is string or object */}
+        {fonts.map((fontFamily = '') => (
+          <MenuItem
+            key={fontFamily.value ?? fontFamily}
+            value={fontFamily.value ?? fontFamily}
+          >
+            {fontFamily.label ?? fontFamily}
+          </MenuItem>
+        ))}
       </StyledFontFamilySelect>
       <StyledFontSizeInput
         value={text.fontSize || ''}

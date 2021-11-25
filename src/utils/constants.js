@@ -1,6 +1,3 @@
-export const MAX_CANVAS_WIDTH = 800;
-export const MAX_CANVAS_HEIGHT = 800;
-
 export const ROOT_CONTAINER_CLASS_NAME =
   'filerobot-image-editor_root-container';
 export const DESIGN_LAYER_ID = 'filerobot-image-editor_design-layer';
@@ -76,16 +73,6 @@ export const DEFAULT_ENABLED_ANCHORS = [
   'bottom-left',
   'bottom-center',
   'bottom-right',
-];
-
-export const DEFAULT_FONTS = [
-  'Arial',
-  'Tahoma',
-  'Sans-serif',
-  'Roboto',
-  'Comic-sans',
-  'Times New Roman',
-  'Lato',
 ];
 
 export const ORIGINAL_CROP = 'original';
