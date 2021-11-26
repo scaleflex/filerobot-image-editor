@@ -20,11 +20,11 @@
     "cropperjs": "^1.5.5",
     "image-type": "^4.1.0",
     "js-sha1": "^0.6.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "styled-components": "5.1.1",
     "throttle-debounce": "^2.1.0",
-    "uuid": "^3.4.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.17",

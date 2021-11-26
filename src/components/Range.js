@@ -1,18 +1,17 @@
-import { Component } from 'react';
-import styled from 'styled-components';
-import { debounce } from 'throttle-debounce';
-
+import { Component } from "react";
+import styled from "styled-components";
+import { debounce } from "throttle-debounce";
 
 class Range extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      range: props.range
+      range: props.range,
     };
   }
 
-  updateWithDebounce = debounce(100, value => {
+  updateWithDebounce = debounce(100, (value) => {
     this.props.updateRange(value);
   });
 
@@ -22,7 +21,7 @@ class Range extends Component {
     this.setState({ range: nextValue }, () => {
       this.updateWithDebounce(nextValue);
     });
-  }
+  };
 
   componentDidUpdate({ range: prevRange }) {
     const { range } = this.props;
@@ -37,7 +36,11 @@ class Range extends Component {
     const { label, min = -100, max = 100, step = 1, labelBefore } = this.props;
 
     return (
-      <Wrapper className="image-editor-range-wrapper" labelBefore={labelBefore} label={label}>
+      <Wrapper
+        className="image-editor-range-wrapper"
+        labelBefore={labelBefore}
+        label={label}
+      >
         {label && labelBefore && <label>{label}</label>}
         <input
           id="range"
@@ -50,32 +53,31 @@ class Range extends Component {
         />
         {label && !labelBefore && <label>{label}</label>}
       </Wrapper>
-    )
+    );
   }
 }
 
 export default Range;
 
-
-const Wrapper = styled('div').attrs(() => ({
-  className: 'image-editor-range'
+const Wrapper = styled("div").attrs(() => ({
+  className: "image-editor-range",
 }))`
   position: relative;
   padding: 25px 5px 20px 5px;
-  
+
   label {
     display: inline-block;
     width: 100%;
     text-align: center;
-    padding-top: ${p => p.labelBefore ? 0 : '20px'};
-    color: ${p => p.theme.colors.text || '#ffffff'};
+    padding-top: ${(p) => (p.labelBefore ? 0 : "20px")};
+    color: ${(p) => p.theme.colors.text || "#ffffff"};
   }
-  
+
   :after {
-    content: ${p => p.label ? '' : 'unset'};
+    content: ${(p) => (p.label ? "" : "unset")};
     display: inline-block;
     position: absolute;
-    background: ${p => p.theme.colors.text};
+    background: ${(p) => p.theme.colors.text};
     height: 5px;
     width: 2px;
     top: 45px;
@@ -87,36 +89,36 @@ const Wrapper = styled('div').attrs(() => ({
     -webkit-appearance: none;
     display: block;
     outline: none;
-    background: ${p => p.theme.colors.accent || p.theme.colors.primaryBg};
+    background: ${(p) => p.theme.colors.accent || p.theme.colors.primaryBg};
     height: 6px;
     width: 180px;
     border-radius: 5px;
     margin-bottom: 5px;
-    
+
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: ${p => p.theme.colors.text};
+      background: ${(p) => p.theme.colors.text};
     }
   }
-  
+
   /* FIREFOX */
   #range::-moz-range-thumb {
     border: none;
     height: 14px;
     width: 14px;
     border-radius: 50%;
-    background: ${p => p.theme.colors.text};
+    background: ${(p) => p.theme.colors.text};
     cursor: pointer;
   }
-  
+
   #range::-moz-range-track {
     width: 100%;
     height: 3px;
     cursor: pointer;
-    background: ${p => p.theme.colors.text};
+    background: ${(p) => p.theme.colors.text};
     border-radius: 5px;
   }
 `;

@@ -1,8 +1,7 @@
-import { Component } from 'react';
-import { FILTERS } from '../../config';
-import { EffectsWrapper } from '../../styledComponents';
-import Filter from './Filter';
-
+import { Component } from "react";
+import { FILTERS } from "../../config";
+import { EffectsWrapper } from "../../styledComponents";
+import Filter from "./Filter";
 
 export default class extends Component {
   render() {
@@ -10,8 +9,15 @@ export default class extends Component {
 
     return (
       <EffectsWrapper>
-        {FILTERS.map(name => <Filter active={filter} key={name} name={name} onApplyFilters={onApplyFilters}/>)}
+        {FILTERS.map((name) => (
+          <Filter
+            active={filter}
+            key={name}
+            name={name}
+            onApplyFilters={onApplyFilters}
+          />
+        ))}
       </EffectsWrapper>
-    )
+    );
   }
 }

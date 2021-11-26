@@ -1,11 +1,10 @@
-import { Component } from 'react';
-import { PreviewWrapper, Spinner, Wrapper } from './styledComponents/index';
-import { Footer, Header, PreResize, Preview } from './components/index';
-import imageType from 'image-type';
-import './lib/caman';
-import { DEFAULT_WATERMARK, ON_CLOSE_STATUSES, SAVE_MODES } from './config';
-import { getCanvasNode } from './utils';
-
+import { Component } from "react";
+import { PreviewWrapper, Spinner, Wrapper } from "./styledComponents/index";
+import { Footer, Header, PreResize, Preview } from "./components/index";
+import imageType from "image-type";
+import "./lib/caman";
+import { DEFAULT_WATERMARK, ON_CLOSE_STATUSES, SAVE_MODES } from "./config";
+import { getCanvasNode } from "./utils";
 
 const INITIAL_PARAMS = {
   effect: null,
@@ -17,12 +16,13 @@ const INITIAL_PARAMS = {
   flipX: false,
   flipY: false,
   adjust: {
+    sharpness: 0,
     brightness: 0,
     contrast: 0,
     saturation: 0,
-    exposure: 0
+    exposure: 0,
   },
-  canvasDimensions: { width: 300, height: 200, ratio: 1.5 }
+  canvasDimensions: { width: 300, height: 200, ratio: 1.5 },
 };
 
 export default class extends Component {
@@ -39,7 +39,7 @@ export default class extends Component {
       reduceBeforeEdit,
       cropBeforeEdit,
       watermark,
-      imageSealing
+      imageSealing,
     } = props.config;
 
     this.state = {
@@ -58,7 +58,13 @@ export default class extends Component {
       reduceBeforeEdit,
       cropBeforeEdit,
       roundCrop: false,
-      imageSealing: { enabled: false, salt: '', char_count: 10, include_params: null/* include all by default */, ...imageSealing },
+      imageSealing: {
+        enabled: false,
+        salt: "",
+        char_count: 10,
+        include_params: null /* include all by default */,
+        ...imageSealing,
+      },
 
       operationsOriginal: [],
       operationsZoomed: [],
@@ -72,11 +78,11 @@ export default class extends Component {
 
       ...INITIAL_PARAMS,
       watermark: watermark || DEFAULT_WATERMARK,
-      focusPoint: {x: null, y: null},
+      focusPoint: { x: null, y: null },
       shapes: [],
       selectedShape: {},
-      availableShapes: []
-    }
+      availableShapes: [],
+    };
   }
 
   componentDidMount() {
@@ -91,65 +97,97 @@ export default class extends Component {
 
   loadImage = () => {
     let { src } = this.props;
-    const { reduceBeforeEdit: { mode, widthLimit, heightLimit } = {}, watermark } = this.state;
+    const {
+      reduceBeforeEdit: { mode, widthLimit, heightLimit } = {},
+      watermark,
+    } = this.state;
 
-    if (src instanceof Blob) { src = URL.createObjectURL(src); }
+    if (src instanceof Blob) {
+      src = URL.createObjectURL(src);
+    }
 
-    const splittedSrc = src.split('/');
+    const splittedSrc = src.split("/");
     const imageName = splittedSrc[splittedSrc.length - 1];
     const img = new Image();
     let logoImage = null;
 
     if (watermark && watermark.url) {
       logoImage = new Image();
-      logoImage.setAttribute('crossOrigin', 'Anonymous');
-      logoImage.src = watermark.url + (watermark.url.indexOf('?') > -1 ? '&' : '?') + new Date().getTime();
+      logoImage.setAttribute("crossOrigin", "Anonymous");
+      logoImage.src =
+        watermark.url +
+        (watermark.url.indexOf("?") > -1 ? "&" : "?") +
+        new Date().getTime();
     }
 
-    img.setAttribute('crossOrigin', 'Anonymous');
+    img.setAttribute("crossOrigin", "Anonymous");
     img.src = src;
-    if (!src.startsWith('data:image/') && !src.startsWith('blob:')) {
+    if (!src.startsWith("data:image/") && !src.startsWith("blob:")) {
       // Image is not a blob, insert query param to avoid caching
-      img.src = img.src + (img.src.indexOf('?') > -1 ? '&version='  : '?version=') + new Date().getTime();
+      img.src =
+        img.src +
+        (img.src.indexOf("?") > -1 ? "&version=" : "?version=") +
+        new Date().getTime();
     }
 
     img.onload = () => {
-      const canvasDimensions = { width: img.width, height: img.height, ratio: img.width / img.height };
+      const canvasDimensions = {
+        width: img.width,
+        height: img.height,
+        ratio: img.width / img.height,
+      };
       const propsOnApply = {
-        activeBody: 'preResize',
+        activeBody: "preResize",
         isShowSpinner: false,
         img,
         logoImage,
-        imageName: imageName.indexOf('?') > -1 ? imageName.slice(0, imageName.indexOf('?')) : imageName,
+        imageName:
+          imageName.indexOf("?") > -1
+            ? imageName.slice(0, imageName.indexOf("?"))
+            : imageName,
       };
 
-      if (mode === 'manual' && (widthLimit < img.width || heightLimit < img.height)) {
+      if (
+        mode === "manual" &&
+        (widthLimit < img.width || heightLimit < img.height)
+      ) {
         this.setState({
           canvasDimensions,
-          ...propsOnApply
+          ...propsOnApply,
         });
-      } else if (mode === 'auto' && (widthLimit < img.width || heightLimit < img.height)) {
+      } else if (
+        mode === "auto" &&
+        (widthLimit < img.width || heightLimit < img.height)
+      ) {
         if (img.width >= img.height) {
           const ratio = img.width / img.height;
-          const dimensions = { ratio, width: widthLimit, height: widthLimit / ratio };
+          const dimensions = {
+            ratio,
+            width: widthLimit,
+            height: widthLimit / ratio,
+          };
 
           this.setState({
             preCanvasDimensions: { ...dimensions },
             canvasDimensions: { ...dimensions },
             ...propsOnApply,
-            activeBody: 'preview',
-            isPreResize: true
+            activeBody: "preview",
+            isPreResize: true,
           });
         } else {
           const ratio = img.height / img.width;
-          const dimensions = { ratio, width: heightLimit / ratio, height: heightLimit };
+          const dimensions = {
+            ratio,
+            width: heightLimit / ratio,
+            height: heightLimit,
+          };
 
           this.setState({
             preCanvasDimensions: { ...dimensions },
             canvasDimensions: { ...dimensions },
             ...propsOnApply,
-            activeBody: 'preview',
-            isPreResize: true
+            activeBody: "preview",
+            isPreResize: true,
           });
         }
       } else {
@@ -162,29 +200,38 @@ export default class extends Component {
           activeTab = tools[0];
         }
 
-        this.setState({ ...propsOnApply, activeBody: 'preview', isPreResize: false }, () => {
-          this.setState({ activeTab });
-        });
+        this.setState(
+          { ...propsOnApply, activeBody: "preview", isPreResize: false },
+          () => {
+            this.setState({ activeTab });
+          }
+        );
       }
-    }
-  }
+    };
+  };
 
   determineImageType = () => {
     const { src } = this.props;
-    if (src instanceof Blob) { this.setState({ imageMime: src.type }); return; }
+    if (src instanceof Blob) {
+      this.setState({ imageMime: src.type });
+      return;
+    }
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open('GET', src);
-    xhr.responseType = 'arraybuffer';
+    xhr.open("GET", src);
+    xhr.responseType = "arraybuffer";
 
     xhr.onload = ({ target }) => {
       // TODO: GOOD HACK FOR A TEMP SOLUTION IMAGES & SVG BUT NEED ANOTHER WAY TO MAKE SURE THAT WE COVER MOST OF POSSIBLE IMGS
-      this.setState({ imageMime: imageType(new Uint8Array(target.response))?.mime || 'image/svg+xml' });
+      this.setState({
+        imageMime:
+          imageType(new Uint8Array(target.response))?.mime || "image/svg+xml",
+      });
     };
 
     xhr.send();
-  }
+  };
 
   updateState = (props, callback = () => {}) => {
     if (this._isMounted) {
@@ -194,13 +241,13 @@ export default class extends Component {
       if (canvas) {
         props.latestCanvasSize = {
           width: canvas.width,
-          height: canvas.height
-        }
+          height: canvas.height,
+        };
       }
 
       this.setState(props, callback);
     }
-  }
+  };
 
   onRevert = () => {
     const { cancelLastOperation, activeTab } = this.state;
@@ -208,27 +255,31 @@ export default class extends Component {
     this.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
 
     cancelLastOperation(activeTab, () => {
-      this.setState({ isHideCanvas: false, isShowSpinner: false, ...INITIAL_PARAMS });
+      this.setState({
+        isHideCanvas: false,
+        isShowSpinner: false,
+        ...INITIAL_PARAMS,
+      });
     });
-  }
+  };
 
   onAdjust = (handler, value) => {
     const { onAdjust } = this.state;
 
     onAdjust(handler, value);
-  }
+  };
 
   onRotate = (value, correctionDegree, flipX, flipY) => {
     const { onRotate } = this.state;
 
     onRotate(value, correctionDegree, flipX, flipY);
-  }
+  };
 
   onFlip = (axis) => {
     const { flip } = this.state;
 
     flip(axis);
-  }
+  };
 
   onSave = (isSaveAs = false) => {
     const { saveImage } = this.state;
@@ -237,59 +288,49 @@ export default class extends Component {
       this.setState({ isShowSpinner: true });
     }
     saveImage(isSaveAs);
-  }
+  };
 
   onDownloadImage = () => {
     const { onBeforeComplete } = this.props;
     const { downloadImage, getResultCanvas, imageMime, imageName } = this.state;
     const canvas = getResultCanvas();
-    const returnedImgObject = { imageMime, imageName, canvas }
+    const returnedImgObject = { imageMime, imageName, canvas };
     const isDownload = onBeforeComplete
-      ? onBeforeComplete({ status: 'before-complete', ...returnedImgObject })
+      ? onBeforeComplete({ status: "before-complete", ...returnedImgObject })
       : true;
 
     if (isDownload) {
       downloadImage(() => {
-        this.props.onComplete({ status: 'success', ...returnedImgObject });
+        this.props.onComplete({ status: "success", ...returnedImgObject });
         this.props.onClose(ON_CLOSE_STATUSES.IMAGE_DOWNLOADED);
       });
     } else {
-      this.props.onComplete({ status: 'success', ...returnedImgObject });
+      this.props.onComplete({ status: "success", ...returnedImgObject });
       this.props.onClose(ON_CLOSE_STATUSES.IMAGE_EDITS_COMPLETED);
     }
-  }
+  };
 
-  onApplyEffects = name => {
+  onApplyEffects = (name) => {
     const { applyCorrections, effect } = this.state;
     const nextEffect = effect === name ? null : name;
 
-    this.setState(
-      { isShowSpinner: true, effect: nextEffect },
-      () => {
-        applyCorrections(
-          () => {
-            this.setState({ isShowSpinner: false })
-          }
-        );
-      }
-    );
-  }
+    this.setState({ isShowSpinner: true, effect: nextEffect }, () => {
+      applyCorrections(() => {
+        this.setState({ isShowSpinner: false });
+      });
+    });
+  };
 
-  onApplyFilters = name => {
+  onApplyFilters = (name) => {
     const { applyCorrections, filter } = this.state;
     const nextFilter = filter === name ? null : name;
 
-    this.setState(
-      { isShowSpinner: true, filter: nextFilter },
-      () => {
-        applyCorrections(
-          () => {
-            this.setState({ isShowSpinner: false })
-          }
-        );
-      }
-    );
-  }
+    this.setState({ isShowSpinner: true, filter: nextFilter }, () => {
+      applyCorrections(() => {
+        this.setState({ isShowSpinner: false });
+      });
+    });
+  };
 
   handleSave = (isSaveAs = false) => {
     const { processWithFilerobot, processWithCloudService } = this.state;
@@ -299,20 +340,29 @@ export default class extends Component {
     } else {
       this.onSave(isSaveAs);
     }
-  }
+  };
 
   apply = (callback) => {
     const { activeTab, applyChanges } = this.state;
 
     applyChanges(activeTab, callback);
     this.setState({ activeTab: null });
-  }
+  };
 
-  redoOperation = ({ operationIndex, callback = () => {}, resetActiveTab = true, operationObject = {} }) => {
+  redoOperation = ({
+    operationIndex,
+    callback = () => {},
+    resetActiveTab = true,
+    operationObject = {},
+  }) => {
     const { applyOperations } = this.state;
 
     if (resetActiveTab) {
-      this.setState({ activeTab: null, isHideCanvas: true, isShowSpinner: true });
+      this.setState({
+        activeTab: null,
+        isHideCanvas: true,
+        isShowSpinner: true,
+      });
     } else {
       this.setState({ isHideCanvas: true, isShowSpinner: true });
     }
@@ -324,7 +374,7 @@ export default class extends Component {
       },
       operationObject
     );
-  }
+  };
 
   resetOperations = () => {
     const { resetAll } = this.state;
@@ -335,10 +385,10 @@ export default class extends Component {
       this.setState({
         isHideCanvas: false,
         isShowSpinner: false,
-        ...INITIAL_PARAMS
+        ...INITIAL_PARAMS,
       });
     });
-  }
+  };
 
   onPreResize = (value) => {
     const { config } = this.props;
@@ -351,26 +401,60 @@ export default class extends Component {
     }
 
     switch (value) {
-      case 'keep':
-        this.setState({ canvasDimensions: {}, isPreResize: false, activeBody: 'preview' }, () => {
-          this.setState({ activeTab });
-        });
+      case "keep":
+        this.setState(
+          { canvasDimensions: {}, isPreResize: false, activeBody: "preview" },
+          () => {
+            this.setState({ activeTab });
+          }
+        );
         break;
-      case 'resize':
+      case "resize":
         const { canvasDimensions } = this.state;
-        this.setState({ preCanvasDimensions: canvasDimensions, isPreResize: true, activeBody: 'preview' }, () => {
-          this.setState({ activeTab });
-        });
+        this.setState(
+          {
+            preCanvasDimensions: canvasDimensions,
+            isPreResize: true,
+            activeBody: "preview",
+          },
+          () => {
+            this.setState({ activeTab });
+          }
+        );
         break;
     }
-  }
+  };
 
   render() {
     const {
-      isShowSpinner, activeTab, operations, operationsOriginal, operationsZoomed, currentOperation, isHideCanvas,
-      cropDetails, original, canvasDimensions, processWithCloudimage, processWithFilerobot, processWithCloudService,
-      uploadCloudimageImage, imageMime, lastOperation, operationList, initialZoom, canvasZoomed, canvasOriginal,
-      reduceBeforeEdit, cropBeforeEdit, img, imageName, activeBody, isPreResize, preCanvasDimensions, logoImage,
+      isShowSpinner,
+      activeTab,
+      operations,
+      operationsOriginal,
+      operationsZoomed,
+      currentOperation,
+      isHideCanvas,
+      cropDetails,
+      original,
+      canvasDimensions,
+      processWithCloudimage,
+      processWithFilerobot,
+      processWithCloudService,
+      uploadCloudimageImage,
+      imageMime,
+      lastOperation,
+      operationList,
+      initialZoom,
+      canvasZoomed,
+      canvasOriginal,
+      reduceBeforeEdit,
+      cropBeforeEdit,
+      img,
+      imageName,
+      activeBody,
+      isPreResize,
+      preCanvasDimensions,
+      logoImage,
       imageSealing,
 
       effect,
@@ -389,10 +473,29 @@ export default class extends Component {
       shapeOperations,
       selectedShape,
       availableShapes,
-      latestCanvasSize
+      latestCanvasSize,
     } = this.state;
-    const { src, config, onClose, onComplete, onError, closeOnLoad = true, t = {}, theme } = this.props;
-    const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
+    const {
+      src,
+      config,
+      onClose,
+      onComplete,
+      onError,
+      closeOnLoad = true,
+      t = {},
+      theme,
+    } = this.props;
+    const imageParams = {
+      effect,
+      filter,
+      crop,
+      resize,
+      rotate,
+      flipX,
+      flipY,
+      adjust,
+      correctionDegree,
+    };
     const headerProps = {
       t,
       theme,
@@ -434,7 +537,7 @@ export default class extends Component {
       shapes,
       shapeOperations,
       selectedShape,
-      availableShapes
+      availableShapes,
     };
     const previewProps = {
       t,
@@ -485,7 +588,7 @@ export default class extends Component {
       shapes,
       shapeOperations,
       selectedShape,
-      latestCanvasSize
+      latestCanvasSize,
     };
     const footerProps = {
       logoImage,
@@ -503,23 +606,21 @@ export default class extends Component {
       redoOperation: this.redoOperation,
       resetOperations: this.resetOperations,
       config,
-      watermark
+      watermark,
     };
 
     return (
       <Wrapper roundCrop={roundCrop} isLoading={isShowSpinner}>
-
-        <Header {...headerProps}/>
+        <Header {...headerProps} />
 
         <PreviewWrapper>
-          {activeBody === 'preview' && <Preview {...previewProps}/>}
-          {activeBody === 'preResize' && <PreResize {...previewProps}/>}
+          {activeBody === "preview" && <Preview {...previewProps} />}
+          {activeBody === "preResize" && <PreResize {...previewProps} />}
 
-          <Spinner overlay show={isShowSpinner} label={t['spinner.label']}/>
+          <Spinner overlay show={isShowSpinner} label={t["spinner.label"]} />
         </PreviewWrapper>
-        <Footer {...footerProps}/>
-
+        <Footer {...footerProps} />
       </Wrapper>
-    )
+    );
   }
 }
