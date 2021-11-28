@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React, {
+  memo,
   useCallback,
   useContext,
   useEffect,
@@ -162,4 +163,4 @@ CanvasNode.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default CanvasNode;
+export default memo(CanvasNode);

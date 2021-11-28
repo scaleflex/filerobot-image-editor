@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { memo, useCallback, useEffect, useRef } from 'react';
 
 /** Internal Dependencies */
 import MainCanvas from 'components/MainCanvas';
@@ -178,4 +178,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default memo(App);
