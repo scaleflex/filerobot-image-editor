@@ -1,19 +1,9 @@
-/* eslint-disable */
-/** External Dependencies */
-import React from 'react';
-import { render } from 'react-dom';
+import FilerobotImageEditor from '../bridges/Vanilla';
 
-/** Internal Dependencies */
-import { TABS_IDS, TOOLS_IDS } from 'utils/constants';
-import uriDownload from 'utils/uriDownload';
-import AssemblyPoint from './components/AssemblyPoint';
-
-// ==========> DEMO PAGE.
-
+const container = document.getElementById('root');
 const config = {
-  // string or image html element
   image:
-    'https://images.unsplash.com/photo-1553451166-232112bda6f6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920',
+    'https://images.unsplash.com/photo-1526512340740-9217d0159da9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=80',
   annotationsCommon: {
     // fill: '#000000', // or should be no color? === undefined
     // stroke: '#000000', // or should be no color? === undefined
@@ -80,9 +70,5 @@ const config = {
   // hideSaveAsMenu: false,
   // dontFitContainerIfSmallerImg: false // By default the image fits the container whether it's smaller or bigger than the container if false, it won't fit if smaller but it'll fit if bigger
 };
-
-render(
-  // eslint-disable-next-line react/jsx-filename-extension
-  <AssemblyPoint {...config} />,
-  document.getElementById('root'),
-);
+const filerobotImageEditor = new FilerobotImageEditor(container, config);
+filerobotImageEditor.init();

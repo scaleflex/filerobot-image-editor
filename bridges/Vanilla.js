@@ -1,21 +1,17 @@
 /** External Dependencies */
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
-import { merge } from 'lodash-es';
 
 /** Internal Dependencies */
-import { TABS_IDS, TOOLS_IDS } from '../src/utils/constants';
 import AssemblyPoint from '../src/components/AssemblyPoint';
+import deepMerge from '../src/utils/deepMerge';
 
 class FilerobotImageEditor {
-  static TABS = TABS_IDS;
-  static TOOLS = TOOLS_IDS;
-
   constructor(container, config = {}) {
     this.container = container;
     this.config = config;
 
-    if (!container || !(container instanceof container)) {
+    if (!container || !(container instanceof HTMLElement)) {
       throw new Error(
         '`container` (argument 0) is required to initialize the image editor plugin.',
       );
@@ -32,7 +28,7 @@ class FilerobotImageEditor {
 
   // TODO: check if this works fine with no issues and re-renders the affected functionalities on change.
   updateConfig(config = {}) {
-    this.config = merge(this.config || {}, config);
+    this.config = deepMerge(this.config || {}, config);
     const update = this.init;
     update();
   }

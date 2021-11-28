@@ -1,6 +1,24 @@
 {
   "name": "filerobot-image-editor",
   "version": "4.0.0-beta.0",
+  "license": "MIT",
+  "author": "Scaleflex",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scaleflex/filerobot-image-editor"
+  },
+  "keywords": [
+    "image editor",
+    "filerobot image editor",
+    "edit image",
+    "modify image",
+    "update image",
+    "finetune",
+    "filters",
+    "weatermark",
+    "resize",
+    "annotate"
+  ],
   "dependencies": {
     "@scaleflex/icons": "^1.0.0-beta.56",
     "@scaleflex/ui": "^1.0.0-beta.57",
@@ -14,6 +32,10 @@
     "styled-components": "^5.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "babel-loader": "^8.2.3",
     "eslint": "^7.28.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -22,28 +44,21 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4",
+    "html-webpack-plugin": "^5.5.0",
     "prettier": "^2.4.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-scripts": "4.0.3",
     "source-map-explorer": "^2.5.2",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.1.1",
+    "terser-webpack-plugin": "^5.2.5",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0"
   },
   "scripts": {
     "fix": "eslint . --fix",
-    "start": "react-scripts start",
-    "build": "react-scripts build"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "analyze": "source-map-explorer dist/**/filerobot-image-editor.min.js",
+    "dev": "webpack serve --config webpack.dev.js",
+    "build:dist": "webpack  --config webpack.prod.js"
   }
 }

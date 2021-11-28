@@ -19,6 +19,13 @@ module.exports = {
   rules: {
     'no-unused-vars': 'warn',
     'import/no-cycle': 'off',
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true,
+        peerDependencies: true,
+      },
+    ],
     'import/prefer-default-export': 'off',
     'react/prop-types': 'warn',
     'react/jsx-props-no-spreading': 'off',
