@@ -122,6 +122,21 @@ const CanvasNode = ({ children }) => {
     }
   };
 
+  const preventDraggingIfMultiTouches = (e) => {
+    if (e.evt.touches?.length > 1) {
+      setIsPanningEnabled(false);
+    }
+  };
+
+  const resetPanningAbility = () =>
+    setIsPanningEnabled(
+      tabId !== TABS_IDS.ANNOTATE || tabId === TABS_IDS.WATERMARK,
+    );
+
+  const endTouchesZoomingEnablePanning = () => {
+    endTouchesZooming(resetPanningAbility);
+  };
+
   useEffect(() => {
     setIsPanningEnabled(
       tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK,
@@ -148,7 +163,8 @@ const CanvasNode = ({ children }) => {
       onTouchMove={
         isZoomEnabled ? (e) => zoomOnTouchesMove(e, saveZoom) : undefined
       }
-      onTouchEnd={isZoomEnabled ? endTouchesZooming : undefined}
+      onDragStart={preventDraggingIfMultiTouches}
+      onTouchEnd={isZoomEnabled ? endTouchesZoomingEnablePanning : undefined}
       dragBoundFunc={dragBoundFunc}
       draggable={isZoomEnabled && isPanningEnabled}
       onDragEnd={handleCanvasDragEnd}

@@ -94,6 +94,9 @@ const previewThenCallAnnotationAdding = (
   };
 
   const handlePointerMove = (e) => {
+    if (e.evt.touches?.length > 1) {
+      return;
+    }
     const pointerOffsets = getPointerOffsetPositionBoundedToObject(
       previewGroup,
       getCanvasBoundingRect(),
@@ -199,7 +202,8 @@ const previewThenCallAnnotationAdding = (
 
   const handlePointerDown = (e) => {
     e.evt.preventDefault();
-    if (e.target.attrs.draggable) {
+    // if the canvas is in panning/dragging mode avoid drawing or if in zooming mode by touches avoid drawing.
+    if (e.target.attrs.draggable || e.evt.touches?.length > 1) {
       return;
     }
     destroyShownPreview();

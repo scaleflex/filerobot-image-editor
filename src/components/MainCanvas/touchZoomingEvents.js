@@ -74,7 +74,10 @@ export const zoomOnTouchesMove = (e, saveZoomFn) => {
   });
 };
 
-export const endTouchesZooming = () => {
+export const endTouchesZooming = (cb) => {
   lastDist = 0;
   lastCenter = null;
+  if (typeof cb === 'function') {
+    cb();
+  }
 };
