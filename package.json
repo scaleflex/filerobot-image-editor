@@ -3,6 +3,7 @@
   "version": "4.0.0-beta.0",
   "license": "MIT",
   "author": "Scaleflex",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/scaleflex/filerobot-image-editor"
@@ -32,10 +33,15 @@
     "styled-components": "^5.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-react": "^7.16.0",
     "babel-loader": "^8.2.3",
+    "babel-plugin-styled-components": "^2.0.2",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "babel-preset-minify": "^0.5.1",
+    "cross-env": "^7.0.3",
     "eslint": "^7.28.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -57,8 +63,10 @@
   },
   "scripts": {
     "fix": "eslint . --fix",
-    "analyze": "source-map-explorer dist/**/filerobot-image-editor.min.js",
+    "analyze": "source-map-explorer dist/filerobot-image-editor.min.js",
     "dev": "webpack serve --config webpack.dev.js",
-    "build:dist": "webpack  --config webpack.prod.js"
+    "set-prod-env": "cross-env BABEL_ENV=production NODE_ENV=production",
+    "build:dist": "yarn set-prod-env webpack  --config webpack.prod.js",
+    "build:lib": "yarn set-prod-env babel src --out-dir lib --copy-files"
   }
 }

@@ -34,7 +34,7 @@ const Carousel = ({ children, style }) => {
 
   const scrollCarouselToElement = (e, foundElements, direction) => {
     const liIndex = foundElements.findIndex((element) =>
-      element.classList.contains('filerobot-image-editor_carousel-item'),
+      element.classList.contains('fie_carousel-item'),
     );
     if (liIndex !== -1) {
       foundElements[liIndex].scrollIntoView({
@@ -115,10 +115,7 @@ const Carousel = ({ children, style }) => {
       )}
       <StyledCarousel ref={carouselRef}>
         {childrenArray.map((child) => (
-          <StyledCarouselItem
-            className="filerobot-image-editor_carousel-item"
-            key={child.key}
-          >
+          <StyledCarouselItem className="fie_carousel-item" key={child.key}>
             {child}
           </StyledCarouselItem>
         ))}

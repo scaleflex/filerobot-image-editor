@@ -1,10 +1,8 @@
-export const ROOT_CONTAINER_CLASS_NAME =
-  'filerobot-image-editor_root-container';
-export const DESIGN_LAYER_ID = 'filerobot-image-editor_design-layer';
-export const TRANSFORMERS_LAYER_ID =
-  'filerobot-image-editor_transformers-layer';
-export const IMAGE_NODE_ID = 'filerobot-image-editor_original-image';
-export const NODES_TRANSFORMER_ID = 'filerobot-image-editor_nodes-transformer';
+export const ROOT_CONTAINER_CLASS_NAME = 'fie_root-container';
+export const DESIGN_LAYER_ID = 'fie_design-layer';
+export const TRANSFORMERS_LAYER_ID = 'fie_transformers-layer';
+export const IMAGE_NODE_ID = 'fie_original-image';
+export const NODES_TRANSFORMER_ID = 'fie_nodes-transformer';
 
 export const WATERMARK_ANNOTATION_ID = 'watermark';
 
@@ -79,7 +77,7 @@ export const ORIGINAL_CROP = 'original';
 export const CUSTOM_CROP = 'custom';
 export const ELLIPSE_CROP = 'ellipse';
 
-export const MAIN_CANVAS_ID = 'filerobot-image-editor_main-canvas';
+export const MAIN_CANVAS_ID = 'fie_main-canvas';
 
 export const POSITIONS = {
   TOP_LEFT: 'top-left',

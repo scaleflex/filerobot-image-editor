@@ -15,7 +15,7 @@ const config = {
     // shadowOpacity: 1,
     // opacity: 1,
   },
-  [TOOLS_IDS.CROP]: {
+  [FilerobotImageEditor.TOOLS.CROP]: {
     // maxWidth: 700,
     // maxHeight: 300,
     // width: 600,
@@ -24,7 +24,7 @@ const config = {
     // minWidth: 200,
     // minHeight: 300,
   },
-  [TOOLS_IDS.WATERMARK]: {
+  [FilerobotImageEditor.TOOLS.WATERMARK]: {
     gallery: [
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/PNG/SCALEFLEX+LOGO+-+Color+Dark+text.png?vh=45cac1',
       'https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGOTYPE+WITH+SCALEFLEX-01-01.png?vh=76c5a7',
@@ -39,7 +39,7 @@ const config = {
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/Logo+Vertical/SCALEFLEX+LOGO+VERTICAL.PNG?vh=9a6fa1',
     ],
   },
-  // [TOOLS_IDS.TEXT]: {
+  // [FilerobotImageEditor.TOOLS.TEXT]: {
   //   fonts: ['Arial', 'another', { label: 'Tahoma', value: 'Tahoma' }, 'hey-there'], // must be loaded in the website or the user have them on his system
   //   fontFamily: 'test',
   // },
@@ -63,12 +63,13 @@ const config = {
   // forceToPngInEllipticalCrop: false, // in case the develop wants to force the saved image to be PNG if there is elliptical crop is done otherwise the provided savedImageType would be used.
   // onSaveAs: () => console.log('saving as') // called on clickng save as button and after finishing save as functionality onSave is called.... if onSaveAs function returned false then the default behavior (opening saveAs modal) won't be opened
   onClose: () => console.log('Act closing 👅'), // if we have value then close button will be shown unless showBackButton is true then if onClose has value the back button will be shown otherwise nothing will be shown.
-  // tabsIds: [TABS_IDS.ADJUST, TABS_IDS.WATERMARK],
-  // defaultTabId: TABS_IDS.ADJUST,
+  // tabsIds: [FilerobotImageEditor.TABS.ADJUST, FilerobotImageEditor.TABS.WATERMARK],
+  // defaultTabId: FilerobotImageEditor.TABS.ADJUST,
   // defaultToolId: TOOLS_IDS.CROP,
   // showBackButton: true,
   // hideSaveAsMenu: false,
   // dontFitContainerIfSmallerImg: false // By default the image fits the container whether it's smaller or bigger than the container if false, it won't fit if smaller but it'll fit if bigger
 };
+
 const filerobotImageEditor = new FilerobotImageEditor(container, config);
 filerobotImageEditor.init();

@@ -14,7 +14,7 @@ const banner = `
 
 module.exports = {
   entry: path.resolve(__dirname, 'bridges/Vanilla.js'),
-  mode: 'development',
+  mode: 'production',
   devtool: 'source-map',
   module: {
     rules: [
@@ -39,6 +39,12 @@ module.exports = {
     minimizer: [
       new TerserPlugin({
         extractComments: false,
+        // iF UN-COMMENTED BANNER'S PLUGIN OUTPUT WON'T APPLIED AND LICENSES OF OTHER LIBS WILL BE REMOVED
+        // terserOptions: {
+        //   format: {
+        //     comments: false,
+        //   },
+        // },
       }),
     ],
   },
@@ -46,11 +52,11 @@ module.exports = {
   output: {
     clean: true,
     filename: 'filerobot-image-editor.min.js',
-    chunkFilename: `[name].min.js`,
-    path: path.resolve(__dirname, `dist/${pkg.version}`),
+    path: path.resolve(__dirname, 'dist'),
     library: {
       name: 'FilerobotImageEditor',
       type: 'umd',
+      export: 'default',
     },
   },
 };

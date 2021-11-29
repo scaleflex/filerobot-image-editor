@@ -3,10 +3,13 @@ import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
 /** Internal Dependencies */
-import AssemblyPoint from '../src/components/AssemblyPoint';
+import AssemblyPoint, { TOOLS, TABS } from '../src';
 import deepMerge from '../src/utils/deepMerge';
 
 class FilerobotImageEditor {
+  static TABS = TABS;
+  static TOOLS = TOOLS;
+
   constructor(container, config = {}) {
     this.container = container;
     this.config = config;
