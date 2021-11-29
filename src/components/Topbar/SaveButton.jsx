@@ -7,7 +7,6 @@ import { Rename } from '@scaleflex/icons';
 import { useStore } from 'hooks';
 import getFileFullName from 'utils/getFileFullName';
 import mapCropBox from 'utils/mapCropBox';
-import ButtonWithMenu from 'components/common/ButtonWithMenu';
 import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 import {
   CLOSING_REASONS,
@@ -15,9 +14,10 @@ import {
   IMAGE_NODE_ID,
   SUPPORTED_IMAGE_TYPES,
 } from 'utils/constants';
-import { SET_SAVED } from 'actions';
+import { SET_SAVED, SET_ERROR } from 'actions';
 import Modal from 'components/common/Modal';
 import {
+  StyledSaveButton,
   StyledFileExtensionSelect,
   StyledFileNameInput,
 } from './Topbar.styled';
@@ -37,20 +37,30 @@ const SaveButton = () => {
     config: {
       onClose,
       closeAfterSave,
+      onBeforeSave,
       onSave,
-      onSaveAs,
       forceToPngInEllipticalCrop,
-      hideSaveAsMenu,
       savedImageType,
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [imageFileInfo, setImageFileInfo] = useState({});
 
+  const cancelModal = () => {
+    setIsModalOpened(false);
+  };
+
   const handleSave = () => {
     if (typeof onSave !== 'function') {
-      // eslint-disable-next-line no-console
-      console.error('Please provide onSave function handler to the plugin.');
+      throw new Error('Please provide onSave function handler to the plugin.');
+    }
+    if (!imageFileInfo.name || !imageFileInfo.extension) {
+      dispatch({
+        type: SET_ERROR,
+        payload: {
+          message: t('nameIsRequired'),
+        },
+      });
       return;
     }
 
@@ -125,13 +135,11 @@ const SaveButton = () => {
     designLayer.setAttr('isSaving', false);
     dispatch({ type: SET_SAVED });
     imgNode.clearCache();
+
+    cancelModal();
     if (closeAfterSave && onClose) {
       onClose(CLOSING_REASONS.AFTER_SAVE);
     }
-  };
-
-  const cancelModal = () => {
-    setIsModalOpened(false);
   };
 
   const changeFileName = (e) => {
@@ -139,26 +147,20 @@ const SaveButton = () => {
     setImageFileInfo({
       ...imageFileInfo,
       name,
+      nameChanged: true,
     });
   };
 
-  const onSaveAsClick = () => {
-    if (typeof onSaveAs === 'function') {
-      if (onSaveAs() === false) {
-        return;
-      }
-    }
-
-    setIsModalOpened(true);
-  };
-
-  const handleSaveAs = () => {
-    if (!imageFileInfo.name || !imageFileInfo.extension) {
+  const triggerSave = () => {
+    if (
+      typeof onBeforeSave === 'function' &&
+      onBeforeSave(imageFileInfo) === false
+    ) {
+      handleSave();
       return;
     }
 
-    handleSave();
-    setIsModalOpened(false);
+    setIsModalOpened(true);
   };
 
   useEffect(() => {
@@ -175,24 +177,16 @@ const SaveButton = () => {
     }
   }, [originalImage, isModalOpened]);
 
-  const menuItems = [
-    {
-      key: 'Save-as',
-      label: t('saveAs'),
-      onClick: onSaveAsClick,
-      isActive: false,
-    },
-  ];
-
   return (
     <>
-      <ButtonWithMenu
-        label={t('save')}
-        onClick={handleSave}
-        menuItems={hideSaveAsMenu ? [] : menuItems}
-        arrowColor="#FFFFFF"
+      <StyledSaveButton
+        onClick={triggerSave}
+        color="primary"
+        size="md"
         disabled={!haveNotSavedChanges}
-      />
+      >
+        {t('save')}
+      </StyledSaveButton>
       {isModalOpened && (
         <Modal
           title={t('saveAsModalLabel')}
@@ -201,7 +195,7 @@ const SaveButton = () => {
           )}
           isOpened={isModalOpened}
           onCancel={cancelModal}
-          onDone={handleSaveAs}
+          onDone={handleSave}
           doneLabel={t('save')}
           cancelLabel={t('cancel')}
           doneButtonColor="primary"

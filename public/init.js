@@ -1,4 +1,6 @@
+/* eslint-disable  */
 import FilerobotImageEditor from '../bridges/Vanilla';
+import uriDownload from '../src/utils/uriDownload';
 
 const container = document.getElementById('root');
 const config = {
@@ -43,6 +45,10 @@ const config = {
   //   fonts: ['Arial', 'another', { label: 'Tahoma', value: 'Tahoma' }, 'hey-there'], // must be loaded in the website or the user have them on his system
   //   fontFamily: 'test',
   // },
+  // onBeforeSave: (imageFileInfo) => {
+  //   console.log('info', imageFileInfo);
+  //   return false;
+  // }, //  if function returned `false` then the default behavior (opening modal) won't be called,
   onSave: (imageObject, imageDesignState) => {
     console.log('🕺🏼 Well, my onSave handler function is fired.');
     console.log('🎇Image file is downloading.....');
@@ -61,13 +67,11 @@ const config = {
   // loadableDesignState: null, // if provided, it will be used in loading the design state, [TODO: NEEDS TO BE IMPROVED]
   // savedImageType: null, // 'png','jpg', 'jpeg' & 'webp' => 'png' must be provided you want the image to be transparent and use elliptical crop || null (defaualt) means use the same provided image extension (extracted from the image's src url), if it was unknwon PNG will be used
   // forceToPngInEllipticalCrop: false, // in case the develop wants to force the saved image to be PNG if there is elliptical crop is done otherwise the provided savedImageType would be used.
-  // onSaveAs: () => console.log('saving as') // called on clickng save as button and after finishing save as functionality onSave is called.... if onSaveAs function returned false then the default behavior (opening saveAs modal) won't be opened
   onClose: () => console.log('Act closing 👅'), // if we have value then close button will be shown unless showBackButton is true then if onClose has value the back button will be shown otherwise nothing will be shown.
   // tabsIds: [FilerobotImageEditor.TABS.ADJUST, FilerobotImageEditor.TABS.WATERMARK],
   // defaultTabId: FilerobotImageEditor.TABS.ADJUST,
   // defaultToolId: TOOLS_IDS.CROP,
   // showBackButton: true,
-  // hideSaveAsMenu: false,
   // dontFitContainerIfSmallerImg: false // By default the image fits the container whether it's smaller or bigger than the container if false, it won't fit if smaller but it'll fit if bigger
 };
 

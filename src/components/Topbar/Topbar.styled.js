@@ -1,6 +1,6 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import { IconButton, Input, Label, Select } from '@scaleflex/ui/core';
+import { Button, IconButton, Input, Label, Select } from '@scaleflex/ui/core';
 import iconButton from '@scaleflex/ui/core/icon-button';
 
 const StyledTopbar = styled.div`
@@ -58,6 +58,10 @@ const StyledCloseOrBackButton = styled(iconButton)`
   z-index: 111;
 `;
 
+const StyledSaveButton = styled(Button)`
+  padding: 4px 12px;
+`;
+
 const StyledFileNameInput = styled(Input)`
   width: 200px;
 `;
@@ -75,6 +79,7 @@ export {
   StyledZoomPercentageLabel,
   StyledBackButtonLabel,
   StyledCloseOrBackButton,
+  StyledSaveButton,
   StyledFileNameInput,
   StyledFileExtensionSelect,
 };
