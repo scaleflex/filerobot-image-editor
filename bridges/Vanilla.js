@@ -9,6 +9,8 @@ import deepMerge from '../src/utils/deepMerge';
 class FilerobotImageEditor {
   static TABS = TABS;
   static TOOLS = TOOLS;
+  #render;
+  #unmount;
 
   constructor(container, config = {}) {
     this.container = container;
@@ -20,24 +22,25 @@ class FilerobotImageEditor {
       );
     }
 
-    this.render = render;
-    this.unmount = unmountComponentAtNode;
+    this.#render = render;
+    this.#unmount = unmountComponentAtNode;
   }
 
-  init() {
+  // TODO: check if this works fine with no issues and re-renders the affected functionalities on changing additionalConfig
+  render(additionalConfig) {
+    if (typeof additionalConfig === 'object') {
+      this.config = this.config = deepMerge(
+        this.config || {},
+        additionalConfig,
+      );
+    }
+
     // eslint-disable-next-line react/jsx-filename-extension
-    this.render(<AssemblyPoint {...this.config} />, this.container);
-  }
-
-  // TODO: check if this works fine with no issues and re-renders the affected functionalities on change.
-  updateConfig(config = {}) {
-    this.config = deepMerge(this.config || {}, config);
-    const update = this.init;
-    update();
+    this.#render(<AssemblyPoint {...this.config} />, this.container);
   }
 
   terminate() {
-    this.unmount(this.container);
+    this.#unmount(this.container);
   }
 }
 

@@ -72,4 +72,4 @@ const config = {
 };
 
 const filerobotImageEditor = new FilerobotImageEditor(container, config);
-filerobotImageEditor.init();
+filerobotImageEditor.render();
