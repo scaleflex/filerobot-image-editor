@@ -62,17 +62,16 @@ const config = {
   },
   // useBackendTranslations: true, // if false, translations object will be used if not provided default translations will be there.
   // translations: null,
-  // language: 'en', // available same as on backend ('en', 'fr', 'de', 'it', 'pt', 'es', 'nl', 'pl', 'ro)
-  // noChangesNotSavedAlertOnLeave: false, // true => user tries to close the tab and the it is not
+  // language: 'en', // available same as on backend ('en', 'fr', 'de', 'it', 'pt', 'es', 'nl', 'pl', 'ro')
+  // avoidChangesNotSavedAlertOnLeave: false, // true => user tries to close the tab and the it is not
   // loadableDesignState: null, // if provided, it will be used in loading the design state, [TODO: NEEDS TO BE IMPROVED]
-  // savedImageType: null, // 'png','jpg', 'jpeg' & 'webp' => 'png' must be provided you want the image to be transparent and use elliptical crop || null (defaualt) means use the same provided image extension (extracted from the image's src url), if it was unknwon PNG will be used
+  // defaultSavedImageType: null, // 'png','jpg', 'jpeg' & 'webp' => 'png' must be provided you want the image to be transparent and use elliptical crop || null (defaualt) means use the same provided image extension (extracted from the image's src url), if it was unknwon PNG will be used
   // forceToPngInEllipticalCrop: false, // in case the develop wants to force the saved image to be PNG if there is elliptical crop is done otherwise the provided savedImageType would be used.
   onClose: () => console.log('Act closing 👅'), // if we have value then close button will be shown unless showBackButton is true then if onClose has value the back button will be shown otherwise nothing will be shown.
   // tabsIds: [FilerobotImageEditor.TABS.ADJUST, FilerobotImageEditor.TABS.WATERMARK],
   // defaultTabId: FilerobotImageEditor.TABS.ADJUST,
   // defaultToolId: TOOLS_IDS.CROP,
   // showBackButton: true,
-  // dontFitContainerIfSmallerImg: false // By default the image fits the container whether it's smaller or bigger than the container if false, it won't fit if smaller but it'll fit if bigger
 };
 
 const filerobotImageEditor = new FilerobotImageEditor(container, config);

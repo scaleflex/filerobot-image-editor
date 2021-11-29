@@ -40,7 +40,7 @@ const SaveButton = () => {
       onBeforeSave,
       onSave,
       forceToPngInEllipticalCrop,
-      savedImageType,
+      defaultSavedImageType,
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -169,8 +169,9 @@ const SaveButton = () => {
         originalImage.name,
         forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
           ? 'png'
-          : SUPPORTED_IMAGE_TYPES.includes(savedImageType?.toLowerCase()) &&
-              savedImageType,
+          : SUPPORTED_IMAGE_TYPES.includes(
+              defaultSavedImageType?.toLowerCase(),
+            ) && defaultSavedImageType,
       );
 
       setImageFileInfo({ ...imageFileInfo, name, extension });

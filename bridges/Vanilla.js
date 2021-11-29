@@ -12,6 +12,11 @@ class FilerobotImageEditor {
   #render;
   #unmount;
 
+  /**
+   * @constructor
+   * @param {HTMLElement} container
+   * @param {import("../src/context/config").ConfigProps} config
+   */
   constructor(container, config = {}) {
     this.container = container;
     this.config = config;
@@ -26,6 +31,10 @@ class FilerobotImageEditor {
     this.#unmount = unmountComponentAtNode;
   }
 
+  /**
+   * @param {import("../src/context/config").ConfigProps} additionalConfig
+   * @returns {void}
+   */
   // TODO: check if this works fine with no issues and re-renders the affected functionalities on changing additionalConfig
   render(additionalConfig) {
     if (typeof additionalConfig === 'object') {
@@ -39,6 +48,9 @@ class FilerobotImageEditor {
     this.#render(<AssemblyPoint {...this.config} />, this.container);
   }
 
+  /**
+   * @returns {void}
+   */
   terminate() {
     this.#unmount(this.container);
   }

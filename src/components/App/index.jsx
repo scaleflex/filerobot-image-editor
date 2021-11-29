@@ -37,7 +37,7 @@ const App = () => {
   const {
     loadableDesignState,
     image,
-    noChangesNotSavedAlertOnLeave,
+    avoidChangesNotSavedAlertOnLeave,
     useBackendTranslations,
     language,
   } = config;
@@ -132,12 +132,12 @@ const App = () => {
     handleLoading(initialRequestsPromises);
     isFirstRender.current = false;
 
-    if (window && !noChangesNotSavedAlertOnLeave) {
+    if (window && !avoidChangesNotSavedAlertOnLeave) {
       window.addEventListener('beforeunload', promptDialogIfHasChangeNotSaved);
     }
 
     return () => {
-      if (window && !noChangesNotSavedAlertOnLeave) {
+      if (window && !avoidChangesNotSavedAlertOnLeave) {
         window.removeEventListener(
           'beforeunload',
           promptDialogIfHasChangeNotSaved,
