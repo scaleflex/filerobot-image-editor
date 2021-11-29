@@ -1,12 +1,11 @@
 /** External Dependencies */
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
-import { useAnnotation } from 'hooks';
+import { useAnnotation, useStore } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
-import AppContext from 'context';
 import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
 import randomId from 'utils/randomId';
 import { SELECT_ANNOTATION, SET_ANNOTATION } from 'actions';
@@ -16,7 +15,7 @@ const eventsOptions = {
 };
 
 const PenOptions = ({ t }) => {
-  const { dispatch, designLayer } = useContext(AppContext);
+  const { dispatch, designLayer, previewGroup } = useStore();
   const [pen, savePenDebounced, savePenNoDebounce] = useAnnotation(
     {
       name: TOOLS_IDS.PEN,
@@ -36,7 +35,10 @@ const PenOptions = ({ t }) => {
     const canvasBoundingRect =
       canvasRef.current.content.getBoundingClientRect();
     const canvasScale = canvasRef.current.scale();
-    const pos = getPointerOffsetPositionBoundedToObject(e, canvasBoundingRect);
+    const pos = getPointerOffsetPositionBoundedToObject(
+      previewGroup,
+      canvasBoundingRect,
+    );
 
     return [
       pos.offsetX / canvasScale.x - (designLayer.attrs.xPadding || 0),
