@@ -1,6 +1,6 @@
+// TODO: Make sure the types are linked with no issues.
 /** External Dependencies */
 import { Filter } from "konva/lib/Node";
-
 
 type lineCap = 'butt' | 'round' | 'square';
 
@@ -46,77 +46,80 @@ type annotationsCommon = {
   opacity?: number,
 }
 
-export type ConfigProps = {
-  image: string | HTMLImageElement,
-  annotationsCommon?: annotationsCommon,
+export interface FilerobotImageEditorConfig {
+  image: string | HTMLImageElement;
+  annotationsCommon?: annotationsCommon;
   // [TOOLS_IDS.TEXT]
   Text?: annotationsCommon & {
-    text?: string,
-    fontFamily?: string,
-    fonts?: (string | { label: string, value: string })[],
-    fontSize?: number,
-    letterSpacing?: number,
-    lineHeight?: number,
-    align?: 'left' | 'center' | 'right', // left, center, right
-    fontStyle?: 'normal' | 'bold' | 'italic' | 'bold italic',
-  },
+    text?: string;
+    fontFamily?: string;
+    fonts?: (string | { label: string; value: string })[];
+    fontSize?: number;
+    letterSpacing?: number;
+    lineHeight?: number;
+    align?: 'left' | 'center' | 'right';
+    fontStyle?: 'normal' | 'bold' | 'italic' | 'bold italic';
+  };
   // [TOOLS_IDS.IMAGE]
-  Image?: annotationsCommon,
+  Image?: annotationsCommon;
   // [TOOLS_IDS.ELLIPSE]
-  Ellipse?: annotationsCommon,
+  Ellipse?: annotationsCommon;
   // [TOOLS_IDS.RECT]
   Rect?: annotationsCommon & {
-    cornerRadius?: number,
-  },
+    cornerRadius?: number;
+  };
   // [TOOLS_IDS.POLYGON]
   Polygon?: annotationsCommon & {
-    sides: 3,
-  },
+    sides: 3;
+  };
   // [TOOLS_IDS.PEN]
   Pen?: annotationsCommon & {
-    strokeWidth: 1,
-  },
+    strokeWidth: 1;
+  };
   // [TOOLS_IDS.LINE]: {
   Line?: annotationsCommon & {
-    lineCap?: lineCap,
-    strokeWidth?: number,
-  },
+    lineCap?: lineCap;
+    strokeWidth?: number;
+  };
   // [TOOLS_IDS.ARROW]: {
   Arrow?: annotationsCommon & {
-      strokeWidth?: number,
-      lineCap?: lineCap,
-      pointerLength?: number,
-      pointerWidth?: number,
-    },
+      strokeWidth?: number;
+      lineCap?: lineCap;
+      pointerLength?: number;
+      pointerWidth?: number;
+    };
   // [TOOLS_IDS.WATERMARK]
   Watermark: {
-    gallery?: string[] | [],
-  },
+    gallery?: string[] | [];
+  };
   // [TOOLS_IDS.CROP]
   Crop?: {
-    minWidth?: number,
-    minHeight?: number,
-    width?: null,
-    height?: null,
-    maxWidth?: null,
-    maxHeight?: null,
-    ratio?: 'original' | 'custom' | 'ellipse' | number,
-    noPresets?: boolean,
-  },
+    minWidth?: number;
+    minHeight?: number;
+    width?: null;
+    height?: null;
+    maxWidth?: null;
+    maxHeight?: null;
+    ratio?: 'original' | 'custom' | 'ellipse' | number;
+    noPresets?: boolean;
+  };
   // TABS_IDS
-  tabsIds?: (availableTabs)[] | [],
-  defaultTabId?: availableTabs,
-  defaultToolId?: availableTools,
-  onBeforeSave?: (imageInfo: imageInfo) => void | boolean,
-  onSave?: (imageInfo: imageInfo, imageDesignState: imageDesignState) => void,
-  onClose?: (closeReason: closingReasons) => void,
-  closeAfterSaving?: boolean,
-  defaultSavedImageType?: 'png' | 'jpg' | 'jpeg' | 'webp',
-  forceToPngInEllipticalCrop?: boolean,
-  useBackendTranslations?: boolean,
-  translations?: object,
-  language?: 'en' | 'fr' | 'de' | 'it' | 'pt' | 'es' | 'nl' | 'pl' | 'ro' | string,
-  avoidChangesNotSavedAlertOnLeave?: boolean,
-  loadableDesignState?: object,
-  showBackButton?: boolean,
-};
+  tabsIds?: (availableTabs)[] | [];
+  defaultTabId?: availableTabs;
+  defaultToolId?: availableTools;
+  onBeforeSave?: (imageInfo: imageInfo) => void | boolean;
+  onSave?: (imageInfo: imageInfo, imageDesignState: imageDesignState) => void;
+  onClose?: (closeReason: closingReasons) => void;
+  closeAfterSaving?: boolean;
+  defaultSavedImageType?: 'png' | 'jpg' | 'jpeg' | 'webp';
+  forceToPngInEllipticalCrop?: boolean;
+  useBackendTranslations?: boolean;
+  translations?: object;
+  language?: 'en' | 'fr' | 'de' | 'it' | 'pt' | 'es' | 'nl' | 'pl' | 'ro' | string;
+  avoidChangesNotSavedAlertOnLeave?: boolean;
+  loadableDesignState?: object;
+  showBackButton?: boolean;
+}
+
+declare const FilerobotImageEditor: React.FC<FilerobotImageEditorConfig>;
+export default FilerobotImageEditor;

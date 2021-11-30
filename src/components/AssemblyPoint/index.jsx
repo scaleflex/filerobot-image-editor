@@ -10,10 +10,6 @@ import defaultConfig from 'context/defaultConfig';
 import deepMerge from 'utils/deepMerge';
 import { FontsFaces, IconsColor } from './globalStyles';
 
-/**
- * @param { import("../../context/config").ConfigProps} props
- * @returns {any}
- */
 const AssemblyPoint = (props) => {
   const { image } = props;
   if (
