@@ -195,6 +195,18 @@ Default:
 
 The common options existed in all the annotations tools and used as default values.
 
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| fill | string | '#000000' | The filled color for any added annotation |
+| stroke | string | '#000000' | The stroke color for any added annotation |
+| strokeWidth | number | 0 | The stroke width for any added annotation |
+| shadowOffsetX | number | 0 | The horizontal/X shadow offset from its base annotation |
+| shadowOffsetY | number | 0 | The vertical/Y shadow offset from its base annotation |
+| shadowBlur | number | 0 | Blur value of the shadow added to the annotation |
+shadowColor | string | '#000000' | The color of the shadow added to the annotation |
+shadowOpacity | number | 1 | Transparency/Opacity value for the shadow of annotation |
+opacity | number (0 - 1) | 1 | Transparency/Opacity value for the whole annotation |
+
 #### TOOLS.TEXT
 
 Type: `object`
@@ -209,10 +221,7 @@ Default:
       { label: 'Arial', value: 'Arial' },
       'Tahoma',
       'Sans-serif',
-      'Roboto',
       { label: 'Comic Sans', value: 'Comic-sans' },
-      'Times New Roman',
-      'Lato',
     ],
     fontSize: 14,
     letterSpacing: 0,
@@ -222,9 +231,20 @@ Default:
 }
 ```
 
-The options available for the text annotation tool in additon to the annotationsCommon property.
+The options available for the text annotation tool in additon to the annotationsCommon property,
 
-> Fonts should be loaded from your side to take effect.
+| Property | Type | Default (possible values) | Description |
+| --- | --- | --- | --- |
+| text | string | 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' | The placeholder text added on adding a new text annotation |
+| fontFamily | string | 'Arial' | The font family used for the text |
+| fonts | (strings \| objects)[] | mentioned above | The fonts available to the user to choose from while adding text  |
+| fontSize | number | 14 | The default size of the text added |
+| letterSpacing | number | 0 | The spaces/paddings between letters of the text |
+| lineHeight | number | 1 | Height of each line of the added text |
+| align | string | 'left' ('left' \| 'center' \| 'right') | The horizontal alignment of the added text |
+| fontStyle | string | '' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added |
+
+> Fonts must be loaded from your side in implementation to take effect as it is not guaranteed that the user has the font on his system.
 
 #### TOOLS.IMAGE
 
@@ -238,7 +258,7 @@ Default:
 }
 ```
 
-The options available for image annotation tool in additon to the annotationsCommon property.
+The options available for image annotation tool in additon to the annotationsCommon property,
 
 #### TOOLS.RECT
 
@@ -251,7 +271,7 @@ Default:
     cornerRadius: 0,
 }
 ```
-The options available for Rect annotation tool in additon to the annotationsCommon property.
+The options available for Rect annotation tool in additon to the annotationsCommon property,
 
 #### TOOLS_IDS.ELLIPSE
 
@@ -273,7 +293,7 @@ Default:
 }
 ```
 
-The available options for polygon annotation tool in additon to the annotationsCommon property.
+The available options for polygon annotation tool in additon to the annotationsCommon property,
 
 #### TOOLS_IDS.PEN
 
@@ -302,7 +322,7 @@ Default:
 }
 ```
 
-The available options for line annotation tool in additon to the annotationsCommon property.
+The available options for line annotation tool in additon to the annotationsCommon property,
 
 #### TOOLS_IDS.ARROW
 
@@ -319,7 +339,7 @@ Default:
 }
 ```
 
-The available options for arrow annotation tool in additon to the annotationsCommon property.
+The available options for arrow annotation tool in additon to the annotationsCommon property,
     
 #### TOOLS_IDS.WATERMARK
 
