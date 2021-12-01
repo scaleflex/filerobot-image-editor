@@ -49,7 +49,8 @@ class Range extends Component {
           min={min}
           max={max}
           step={step}
-          onChange={this.updateRange}
+          onInput={this.updateRange}
+          // onChange={this.updateRange}
         />
         {label && !labelBefore && <label>{label}</label>}
       </Wrapper>
