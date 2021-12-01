@@ -70,9 +70,9 @@ export default {
   tabsIds: [],
   defaultTabId: TABS_IDS.ADJUST,
   defaultToolId: TOOLS_IDS.CROP,
-  onClose: null,
-  onSave: null,
-  onBeforeSave: null,
+  onClose: undefined,
+  onSave: undefined,
+  onBeforeSave: undefined,
   closeAfterSaving: false,
   defaultSavedImageType: null,
   forceToPngInEllipticalCrop: false,
@@ -81,5 +81,5 @@ export default {
   language: 'en',
   avoidChangesNotSavedAlertOnLeave: false,
   loadableDesignState: null,
-  showBackButton: false,
+  showBackButton: false, // TODO: For its label, Make sure it won't override backend's translation if provided from translations object and give possibility to user to change
 };

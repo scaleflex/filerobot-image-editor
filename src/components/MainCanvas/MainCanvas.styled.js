@@ -5,8 +5,8 @@ const CanvasContainer = styled.div`
   width: 100%;
   position: relative;
   height: calc(
-    100% - 92px - 12px
-  ); // 92px, 12px = toolsbar's maxheight, app container padding.
+    100% - 112px - 12px
+  ); // 112px, 12px = toolsbar's maxheight, app container padding.
   background: ${({ theme }) => theme.palette['bg-primary']};
   overflow: hidden;
 
