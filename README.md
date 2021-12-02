@@ -104,15 +104,15 @@ function App() {
       <button onClick={openImgEditor}>Open Filerobot image editor</button>
       {isImgEditorShown && (
         <FilerobotImageEditor
-					image="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
-          onClose={closeImgEditor}
-					annotationsCommon={{
-						fill: '#ff0000'
-					}}
-					Text={{ text: 'Filerobot...' }}
-					tabs={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
-					defaultTabId={TABS.ANNOTATE} // or 'Annotate'
-					defaultToolId={TOOLS.TEXT} // or 'Text'
+		image="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+		onClose={closeImgEditor}
+		annotationsCommon={{
+			fill: '#ff0000'
+		}}
+		Text={{ text: 'Filerobot...' }}
+		tabs={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
+		defaultTabId={TABS.ANNOTATE} // or 'Annotate'
+		defaultToolId={TOOLS.TEXT} // or 'Text'
         />
       )}
     </div>
@@ -449,7 +449,7 @@ Default:
 
 ```js
 {
-    ...([TOOLS.TEXT || [TOOLS.IMAGE), // depends on the ]added watermark type
+    ...(config[TOOLS.TEXT || TOOLS.IMAGE]), // depends on the added watermark type the config will be used
     gallery: [],
 }
 ```
@@ -533,7 +533,7 @@ Unmounts the plugin's container from the page to be removed.
 
 This project is used by the following companies:
 
-- [Company name](#link)
+- [Scaleflex](https://scaleflex.com/)
 
 > Fork the repoistory, Append your company's name with the url in above format inside the README.md file and make a PR.
 
