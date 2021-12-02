@@ -9,7 +9,8 @@
 	<br />
 	<img src="https://img.shields.io/npm/l/filerobot-image-editor?style=for-the-badge" alt="License (MIT)" />
 	<img src="https://img.shields.io/npm/v/filerobot-image-editor?label=Version&style=for-the-badge" alt="Version" />
-	<img src="https://img.shields.io/npm/dt/filerobot-image-editor?style=for-the-badge" alt="Downloads">
+	<img src="https://img.shields.io/npm/dt/filerobot-image-editor?style=for-the-badge" alt="Downloads"/>
+	<br />
 	<br />
 	<a href="https://www.filerobot.com/en/home">Learn more about Filerobot</a>
 </p>
