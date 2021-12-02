@@ -43,6 +43,8 @@ GIF Link
 - 🚀 Image file on save customization.
 - 🤹🏼 And more to discover by yourself...
 
+<hr />
+
 ## Contents
 
 - [Requirements](#requirements)
@@ -62,6 +64,9 @@ GIF Link
   - [VanillaJS](#vanilla-javascript)
 - [Used by](#used-by)
 - [Feedback](#feedback)
+
+<hr />
+  
 ## Requirements
 	> Following requirements required only in NPM installation, but they're included in CDN bundle installation.
 
@@ -74,6 +79,8 @@ GIF Link
   - react, react-dom: `npm install --save react react-dom` or use their CDN.
   - styled-components: `npm install --save styled-components` or use their CDN.
 </details>
+
+<hr />
 
 ## Installation
 
@@ -98,6 +105,8 @@ VanillaJS only
 ```js
 <script src=""></script>
 ```
+
+<hr />
 
 ## Usage/Examples
 
@@ -170,6 +179,8 @@ filerobotImageEditor.render({
 ```
 
 > Important Note: if you are importing the library from CDN then you could access it using `window.FilerobotImageEditor` and access both `TABS & TOOLS` from `window.FilerobotImageEditor.TABS`  & `window.FilerobotImageEditor.TOOLS`.
+
+<hr />
 
 ## Config
 
@@ -536,6 +547,8 @@ Default: `undefined`
 
 Triggered once the user clicks either close/cancel button or back button, if not provided then the closing button won't shown at all.
 
+<hr />
+
 ## Bridges appendix
 
 ### Vanilla Javascript
@@ -547,6 +560,8 @@ Initializes/rerenders the plugin with the possibility to provide an additional c
 #### `terminate()`
 
 Unmounts the plugin's container from the page to be removed.
+
+<hr />
 
 ## Used By
 
