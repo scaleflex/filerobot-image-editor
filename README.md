@@ -1,6 +1,6 @@
 <p align="center">
 	<a href="https://www.filerobot.com/en/home">
-		<img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+WHITE+BG.png?vh=7ae33c#gh-dark-mode-only" alt="Filerobot dark mode Logo" width="264px"><img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+BLACK+BG.png?vh=619469#gh-light-mode-only" alt="Filerobot white mode Logo" width="264px">
+		<img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+BLACK+BG.png?vh=619469#gh-dark-mode-only" alt="Filerobot dark mode Logo" width="264px"><img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+WHITE+BG.png?vh=7ae33c#gh-light-mode-only" alt="Filerobot white mode Logo" width="264px">
 	</a>
 	<br />
 	<br />
