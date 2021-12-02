@@ -5,7 +5,7 @@ import { Filter } from "konva/lib/Node";
 type lineCap = 'butt' | 'round' | 'square';
 
 // TABS_IDS
-type availableTabs = 'FINETUNE' | 'FILTERS' | 'ADJUST' | 'WATERMARK' | 'ANNOTATE' | 'RESIZE';
+type availableTabs = 'Finetune' | 'Filters' | 'Adjust' | 'Watermark' | 'Annotate' | 'Resize';
 
 // TOOLS_IDS
 // type availableTools = 'Crop' | 'Rotate' | 'Flip_X' | 'Flip_Y' | 'Brightness' | 'Contrast' | 'HueSaturationValue' | 'Warmth' | 'Blur' | 'Threshold' | 'Posterize' | 'Pixelate' | 'Noise' | 'Filters' | 'Rect' | 'Ellipse' | 'Polygon' | 'Text' | 'Line' | 'Image' | 'Arrow' | 'Watermark' | 'Pen' | 'Resize';
@@ -26,7 +26,7 @@ type imageInfo = {
 
 type imageDesignState = {
   imageSrc?: string,
-  finetunes?: Filter,
+  finetunes?: Filter[],
   finetunesProps?: object,
   filter: object,
   adjustments: object,
@@ -96,8 +96,6 @@ export interface FilerobotImageEditorConfig {
   Crop?: {
     minWidth?: number;
     minHeight?: number;
-    width?: null;
-    height?: null;
     maxWidth?: null;
     maxHeight?: null;
     ratio?: 'original' | 'custom' | 'ellipse' | number;

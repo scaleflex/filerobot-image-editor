@@ -335,7 +335,7 @@ Default:
     letterSpacing: 0,
     lineHeight: 1,
     align: 'left',
-    fontStyle: '',
+    fontStyle: 'normal',
 }
 ```
 
@@ -350,7 +350,7 @@ The options available for the text annotation tool in additon to the annotations
 | **letterSpacing** | number | 0 | The spaces/paddings between letters of the text |
 | **lineHeight** | number | 1 | Height of each line of the added text |
 | **align** | string | 'left' ('left' \| 'center' \| 'right') | The horizontal alignment of the added text |
-| **fontStyle** | string | '' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added |
+| **fontStyle** | string | 'normal' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added |
 
 > Fonts must be loaded from your side in implementation to take effect as it is not guaranteed that the user has the font on his system.
 

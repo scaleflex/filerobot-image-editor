@@ -3,11 +3,12 @@
   "version": "4.0.0-beta.0",
   "license": "MIT",
   "author": "Scaleflex",
+  "homepage": "https://github.com/scaleflex/filerobot-image-editor/tree/v4-dev#readme",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/scaleflex/filerobot-image-editor"
+    "url": "https://github.com/scaleflex/filerobot-image-editor/tree/v4-dev"
   },
   "keywords": [
     "image editor",
@@ -59,6 +60,7 @@
     "prettier": "^2.4.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
+    "rimraf": "^3.0.2",
     "source-map-explorer": "^2.5.2",
     "styled-components": "^5.1.1",
     "terser-webpack-plugin": "^5.2.5",
@@ -72,7 +74,8 @@
     "analyze": "source-map-explorer dist/filerobot-image-editor.min.js",
     "dev": "webpack serve --config webpack.dev.js",
     "set-prod-env": "cross-env BABEL_ENV=production NODE_ENV=production",
+    "clean:lib": "rimraf lib",
     "build:dist": "yarn set-prod-env webpack  --config webpack.prod.js",
-    "build:lib": "yarn set-prod-env babel src --out-dir lib --copy-files"
+    "build:lib": "yarn clean:lib && yarn set-prod-env babel src --out-dir lib --copy-files"
   }
 }

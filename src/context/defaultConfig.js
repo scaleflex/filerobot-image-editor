@@ -26,7 +26,7 @@ export default {
     letterSpacing: 0,
     lineHeight: 1,
     align: 'left', // left, center, right
-    fontStyle: '', // 'bold', 'italic', 'bold italic'
+    fontStyle: 'normal', // 'bold', 'italic', 'bold italic'
   },
   [TOOLS_IDS.IMAGE]: {
     fill: undefined,
