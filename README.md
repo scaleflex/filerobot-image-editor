@@ -1,7 +1,10 @@
 <p align="center">
-	<a href="https://www.filerobot.com/en/home">
-		<img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX-01.png?vh=467711" alt="Filerobot By Scaleflex Logo" width="400px" />
-	</a>
+	<a href="https://www.filerobot.com/en/home#gh-dark-mode-only">
+		<img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+BLACK+BG.png?vh=619469#gh-dark-mode-only" alt="Filerobot dark mode Logo" width="264px">
+  </a>
+  <a href="https://www.filerobot.com/en/home#gh-light-mode-only">
+    <img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+WHITE+BG.png?vh=7ae33c#gh-light-mode-only" alt="Filerobot white mode Logo" width="264px">
+  </a>
 	<br />
 	<br />
 	<img src="https://img.shields.io/npm/l/filerobot-image-editor?style=for-the-badge" alt="License (MIT)" />
