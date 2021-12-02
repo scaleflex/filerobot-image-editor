@@ -92,27 +92,27 @@ function App() {
   const [isImgEditorShown, setIsImgEditorShown] = useState(false);
 
   const openImgEditor = () => {
-	setIsImgEditorShown(true);
-};
+    setIsImgEditorShown(true);
+  };
 
   const closeImgEditor = () => {
-		setIsImgEditorShown(false);
-	};
+    setIsImgEditorShown(false);
+  };
 
   return (
     <div>
       <button onClick={openImgEditor}>Open Filerobot image editor</button>
       {isImgEditorShown && (
         <FilerobotImageEditor
-			image="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
-			onClose={closeImgEditor}
-			annotationsCommon={{
-				fill: '#ff0000'
-			}}
-			Text={{ text: 'Filerobot...' }}
-			tabs={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
-			defaultTabId={TABS.ANNOTATE} // or 'Annotate'
-			defaultToolId={TOOLS.TEXT} // or 'Text'
+	  image="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+	  onClose={closeImgEditor}
+	  annotationsCommon={{
+	    fill: '#ff0000'
+	  }}
+	  Text={{ text: 'Filerobot...' }}
+	  tabs={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
+	  defaultTabId={TABS.ANNOTATE} // or 'Annotate'
+	  defaultToolId={TOOLS.TEXT} // or 'Text'
         />
       )}
     </div>
@@ -126,26 +126,26 @@ function App() {
 import FilerobotImageEditor, { TABS, TOOLS } from 'filerobot-image-editor';
 
 const config = {
-	image: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
-	annotationsCommon: {
+  image: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+  annotationsCommon: {
     fill: '#ff0000'
   },
-	Text: { text: 'Filerobot...' },
-	tabs: [TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK] // or ['Adjust', 'Annotate', 'Watermark']
-	defaultTabId: TABS.ANNOTATE, // or 'Annotate'
-	defaultToolId: TOOLS.TEXT, // or 'Text'
+  Text: { text: 'Filerobot...' },
+  tabs: [TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK] // or ['Adjust', 'Annotate', 'Watermark']
+  defaultTabId: TABS.ANNOTATE, // or 'Annotate'
+  defaultToolId: TOOLS.TEXT, // or 'Text'
 };
 
 // Assuming we have a div with id="editor_container"
 const filerobotImageEditor = new FilerobotImageEditor(
-	document.querySelector('#editor_container'),
-	config
+  document.querySelector('#editor_container'),
+  config
 );
 
 filerobotImageEditor.render({
-	onClose: (closingReason) => {
-		console.log('Closing reason', closingReason);
-		filerobotImageEdtior.terminate();
+  onClose: (closingReason) => {
+    console.log('Closing reason', closingReason);
+    filerobotImageEdtior.terminate();
   }
 });
 ```
