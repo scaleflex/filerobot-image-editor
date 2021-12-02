@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Popup } from '@scaleflex/ui/core';
+import Popup from '@scaleflex/ui/core/popup';
 
 /** Internal Dependencies */
 import AppContext from 'context';

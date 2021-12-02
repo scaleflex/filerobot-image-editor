@@ -1,7 +1,10 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import { Button, IconButton, Input, Label, Select } from '@scaleflex/ui/core';
-import iconButton from '@scaleflex/ui/core/icon-button';
+import Button from '@scaleflex/ui/core/button';
+import IconButton from '@scaleflex/ui/core/icon-button';
+import Input from '@scaleflex/ui/core/input';
+import Label from '@scaleflex/ui/core/label';
+import Select from '@scaleflex/ui/core/select';
 
 const StyledTopbar = styled.div`
   position: relative;
@@ -30,7 +33,7 @@ const StyledHistoryButton = styled(IconButton)`
   }
 `;
 
-const StyledSmallButton = styled(iconButton)`
+const StyledSmallButton = styled(IconButton)`
   width: 20px;
   height: 20px;
   margin: 0 ${(props) => props.horizontalMargin ?? '4px'};
@@ -53,7 +56,7 @@ const StyledBackButtonLabel = styled.span`
   line-height: 12px;
 `;
 
-const StyledCloseOrBackButton = styled(iconButton)`
+const StyledCloseOrBackButton = styled(IconButton)`
   padding: 0;
   z-index: 111;
 `;

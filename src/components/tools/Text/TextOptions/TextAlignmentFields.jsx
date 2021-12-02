@@ -1,7 +1,8 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AlignCenter, AlignLeft } from '@scaleflex/icons';
+import AlignCenter from '@scaleflex/icons/align-center';
+import AlignLeft from '@scaleflex/icons/align-left';
 
 /** Internal Dependencies */
 import {

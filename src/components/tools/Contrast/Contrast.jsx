@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Contrast as ContrastIcon } from '@scaleflex/icons';
+import { Contrast as ContrastIcon } from '@scaleflex/icons/contrast';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

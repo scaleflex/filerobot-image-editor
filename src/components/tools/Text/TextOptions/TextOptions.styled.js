@@ -1,6 +1,7 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import { Input, Select } from '@scaleflex/ui/core';
+import Input from '@scaleflex/ui/core/input';
+import Select from '@scaleflex/ui/core/select';
 
 const StyledFontFamilySelect = styled(Select)`
   width: 88px;

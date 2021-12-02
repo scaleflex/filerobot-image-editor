@@ -1,6 +1,7 @@
 /** External Dependencies */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Text, UploadOutline } from '@scaleflex/icons';
+import Text from '@scaleflex/icons/text';
+import UploadOutline from '@scaleflex/icons/upload-outline';
 
 /** Internal Dependencies */
 import {

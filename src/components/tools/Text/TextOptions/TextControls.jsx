@@ -1,8 +1,9 @@
 /** External Dependencies */
 import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem } from '@scaleflex/ui/core';
-import { FontBold, FontItalic } from '@scaleflex/icons';
+import MenuItem from '@scaleflex/ui/core/menu-item';
+import FontBold from '@scaleflex/icons/font-bold';
+import FontItalic from '@scaleflex/icons/font-italic';
 
 /** Internal Dependencies */
 import { TOOLS_IDS, TRANSFORMERS_LAYER_ID } from 'utils/constants';

@@ -1,6 +1,6 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import { Label } from '@scaleflex/ui/core';
+import Label from '@scaleflex/ui/core/label';
 
 const StyledToolsBar = styled.div`
   padding: 8px 1px 0;

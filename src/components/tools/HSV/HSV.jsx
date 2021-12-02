@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Saturation as SaturationIcon } from '@scaleflex/icons';
+import { Saturation as SaturationIcon } from '@scaleflex/icons/saturation';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

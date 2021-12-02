@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React from 'react';
-import { ArrowLeftOutline } from '@scaleflex/icons';
+import ArrowLeftOutline from '@scaleflex/icons/arrow-left-outline';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';

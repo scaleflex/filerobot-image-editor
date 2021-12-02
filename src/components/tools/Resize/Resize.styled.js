@@ -1,6 +1,7 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import { IconButton, Input } from '@scaleflex/ui/core';
+import IconButton from '@scaleflex/ui/core/icon-button';
+import Input from '@scaleflex/ui/core/input';
 
 const StyledResizeWrapper = styled.div`
   display: flex;

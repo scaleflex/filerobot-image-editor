@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React, { useRef, useState } from 'react';
-import { Button } from '@scaleflex/ui/core';
+import Button from '@scaleflex/ui/core/button';
 
 /** Internal Dependencies */
 import { useAnnotation, useStore } from 'hooks';

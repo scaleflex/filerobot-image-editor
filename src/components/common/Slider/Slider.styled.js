@@ -1,6 +1,6 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import { ContinuousSlider } from '@scaleflex/ui/core';
+import ContinuousSlider from '@scaleflex/ui/core/continuous-slider';
 
 const StyledSlider = styled(ContinuousSlider)`
   margin-bottom: 8px;

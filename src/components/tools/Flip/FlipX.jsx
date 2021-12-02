@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { FlipX as FlipXIcon } from '@scaleflex/icons';
+import { FlipX as FlipXIcon } from '@scaleflex/icons/flip-x';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

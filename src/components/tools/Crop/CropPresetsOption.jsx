@@ -1,7 +1,8 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Menu, MenuItem } from '@scaleflex/ui/core';
+import Menu from '@scaleflex/ui/core/menu';
+import MenuItem from '@scaleflex/ui/core/menu-item';
 
 /** Internal Dependencies */
 import { SET_CROP } from 'actions';

@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { RadiusCorner } from '@scaleflex/icons';
+import RadiusCorner from '@scaleflex/icons/radius-corner';
 
 /** Internal Dependencies */
 import RectCornerField from './RectCornerField';

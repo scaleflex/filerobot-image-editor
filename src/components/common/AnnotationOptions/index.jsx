@@ -1,8 +1,11 @@
 /** External Dependencies */
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Menu } from '@scaleflex/ui/core';
-import { Transparency, Shadow, Stroke, Position } from '@scaleflex/icons';
+import Menu from '@scaleflex/ui/core/menu';
+import Transparency from '@scaleflex/icons/transparency';
+import Shadow from '@scaleflex/icons/shadow';
+import Stroke from '@scaleflex/icons/stroke';
+import Position from '@scaleflex/icons/position';
 
 /** Internal Dependencies */
 import TransparencyField from './TransparencyField';

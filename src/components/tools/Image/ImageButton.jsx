@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ImageOutline as ImageIcon } from '@scaleflex/icons';
+import { ImageOutline as ImageIcon } from '@scaleflex/icons/image-outline';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

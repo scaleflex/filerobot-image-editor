@@ -1,6 +1,7 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import { Button, IconButton } from '@scaleflex/ui/core';
+import Button from '@scaleflex/ui/core/button';
+import IconButton from '@scaleflex/ui/core/icon-button';
 
 const StyledButtonWrapper = styled.div`
   height: 22px;

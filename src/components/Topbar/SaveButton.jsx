@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { useEffect, useState } from 'react';
-import { MenuItem } from '@scaleflex/ui/core';
-import { Rename } from '@scaleflex/icons';
+import MenuItem from '@scaleflex/ui/core/menu-item';
+import Rename from '@scaleflex/icons/rename';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';

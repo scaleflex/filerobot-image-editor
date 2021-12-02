@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Brightness as BrightnessIcon } from '@scaleflex/icons';
+import { Brightness as BrightnessIcon } from '@scaleflex/icons/brightness';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

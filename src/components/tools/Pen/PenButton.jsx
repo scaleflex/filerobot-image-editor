@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Annotation as PenIcon } from '@scaleflex/icons';
+import { Annotation as PenIcon } from '@scaleflex/icons/annotation';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Blur as BlurIcon } from '@scaleflex/icons';
+import { Blur as BlurIcon } from '@scaleflex/icons/blur';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

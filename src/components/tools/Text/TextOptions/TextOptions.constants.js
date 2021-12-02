@@ -1,5 +1,6 @@
 /** External Dependencies */
-import { AlignCenter, Spacing } from '@scaleflex/icons';
+import AlignCenter from '@scaleflex/icons/align-center';
+import Spacing from '@scaleflex/icons/spacing';
 
 /** Internal Dependencies */
 import TextSpacingsFields from './TextSpacingsFields';

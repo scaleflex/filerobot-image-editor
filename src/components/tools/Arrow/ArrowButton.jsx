@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ArrowTool as ArrowIcon } from '@scaleflex/icons';
+import { ArrowTool as ArrowIcon } from '@scaleflex/icons/arrow-tool';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

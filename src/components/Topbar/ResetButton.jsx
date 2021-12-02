@@ -1,7 +1,8 @@
 /** External Dependencies */
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Revert, Warning } from '@scaleflex/icons';
+import Revert from '@scaleflex/icons/revert';
+import Warning from '@scaleflex/icons/warning';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';

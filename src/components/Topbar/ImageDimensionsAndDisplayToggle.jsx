@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
-import { Label } from '@scaleflex/ui/core';
-import { Compare } from '@scaleflex/icons';
+import Label from '@scaleflex/ui/core/label';
+import Compare from '@scaleflex/icons/compare';
 
 /** Internal Dependencies */
 import { TOGGLE_ORIGINAL_IMAGE_DISPLAY } from 'actions';

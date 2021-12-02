@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Polygon as PolygonIcon } from '@scaleflex/icons';
+import { Polygon as PolygonIcon } from '@scaleflex/icons/polygon';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

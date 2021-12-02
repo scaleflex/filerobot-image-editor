@@ -1,13 +1,12 @@
 /** External Dependencies */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { ArrowLeftOutline } from '@scaleflex/icons';
-import {
-  Menu,
-  MenuItem,
+import ArrowLeftOutline from '@scaleflex/icons/arrow-left-outline';
+import Menu from '@scaleflex/ui/core/menu';
+import MenuItem, {
   MenuItemIcon,
   MenuItemLabel,
-} from '@scaleflex/ui/core';
+} from '@scaleflex/ui/core/menu-item';
 
 /** Internal Dependencies */
 import {

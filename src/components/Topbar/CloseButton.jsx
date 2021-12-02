@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React from 'react';
-import { CrossOutline } from '@scaleflex/icons';
+import CrossOutline from '@scaleflex/icons/cross-outline';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';

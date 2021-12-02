@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Ellipse as EllipseIcon } from '@scaleflex/icons';
+import { Ellipse as EllipseIcon } from '@scaleflex/icons/ellipse';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

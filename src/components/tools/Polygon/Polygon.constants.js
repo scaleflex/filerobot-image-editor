@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { PolygonSides } from '@scaleflex/icons';
+import PolygonSides from '@scaleflex/icons/polygon-sides';
 
 /** Internal Dependencies */
 import PolygonSidesField from './PolygonSidesField';

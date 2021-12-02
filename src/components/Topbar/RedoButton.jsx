@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Redo } from '@scaleflex/icons';
+import Redo from '@scaleflex/icons/redo';
 
 /** Internal Dependencies */
 import { REDO } from 'actions';

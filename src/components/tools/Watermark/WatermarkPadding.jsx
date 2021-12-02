@@ -1,8 +1,9 @@
 /** External Dependencies */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Menu, Label } from '@scaleflex/ui/core';
-import { Padding } from '@scaleflex/icons';
+import Menu from '@scaleflex/ui/core/menu';
+import Label from '@scaleflex/ui/core/label';
+import Padding from '@scaleflex/icons/padding';
 
 /** Internal Dependencies */
 import restrictNumber from 'utils/restrictNumber';

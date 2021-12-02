@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { Children, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Arrow } from '@scaleflex/icons';
+import Arrow from '@scaleflex/icons/arrow';
 
 /** Internal Dependencies */
 import { useResizeObserver } from 'hooks';

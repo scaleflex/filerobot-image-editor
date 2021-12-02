@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Popper } from '@scaleflex/ui/core';
+import Popper from '@scaleflex/ui/core/popper';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';

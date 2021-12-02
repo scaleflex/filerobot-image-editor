@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Label } from '@scaleflex/ui/core';
+import Label from '@scaleflex/ui/core/label';
 
 /** Internal Dependencies */
 import { StyledSpinnerWrapper, StyledSpinner } from './Spinner.styled';

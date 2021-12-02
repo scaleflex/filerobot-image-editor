@@ -6,7 +6,7 @@ import Konva from 'konva';
 /** Internal Dependencies */
 import { useFinetune } from 'hooks';
 import Slider from 'components/common/Slider';
-import { Label } from '@scaleflex/ui/core';
+import Label from '@scaleflex/ui/core/label';
 import { StyledSliderContainer } from './HSV.styled';
 
 const DEFAULT_VALUE = {

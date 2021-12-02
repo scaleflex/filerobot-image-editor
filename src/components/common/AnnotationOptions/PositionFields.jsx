@@ -1,7 +1,8 @@
 /** External Dependencies */
 import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { ArrowRightAlt, Point } from '@scaleflex/icons';
+import ArrowRightAlt from '@scaleflex/icons/arrow-right-alt';
+import Point from '@scaleflex/icons/point';
 
 /** Internal Dependencies */
 import { POSITIONS } from 'utils/constants';

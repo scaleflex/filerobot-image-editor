@@ -1,7 +1,9 @@
 /** External Dependencies */
 import React from 'react';
-import { Button, Label } from '@scaleflex/ui/core';
-import { LockOutline, UnlockOutline } from '@scaleflex/icons';
+import Button from '@scaleflex/ui/core/button';
+import Label from '@scaleflex/ui/core/label';
+import LockOutline from '@scaleflex/icons/lock-outline';
+import UnlockOutline from '@scaleflex/icons/unlock-outline';
 
 /** Internal Dependencies */
 import { SET_RESIZE } from 'actions';

@@ -1,6 +1,7 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import { Button, Label } from '@scaleflex/ui/core';
+import Button from '@scaleflex/ui/core/button';
+import Label from '@scaleflex/ui/core/label';
 
 const StyledOpenMenuButton = styled(Button)`
   margin: 0 0 0 6px;

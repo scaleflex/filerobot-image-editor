@@ -1,6 +1,7 @@
 /** External Dependencies */
 import React, { useContext } from 'react';
-import { Minus, Plus } from '@scaleflex/icons';
+import Minus from '@scaleflex/icons/minus';
+import Plus from '@scaleflex/icons/plus';
 
 /** Internal Dependencies */
 import AppContext from 'context';
