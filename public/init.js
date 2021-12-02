@@ -20,7 +20,6 @@ const config = {
   [FilerobotImageEditor.TOOLS.CROP]: {
     // maxWidth: 700,
     // maxHeight: 300,
-    // width: 600,
     // noPresets: false, // Hiding crop presets
     // ratio: 4 / 100, // ORIGINAL_CROP, ELLIPSE_CROP, CUSTOM_CROP, ratio's number (10 / 4, 5 / 10...etc.)
     // minWidth: 200,

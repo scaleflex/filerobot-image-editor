@@ -1,54 +1,156 @@
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
-[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
-
-
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+<p align="center">
+	<a href="https://www.filerobot.com/en/home">
+		<img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+WHITE+BG.png?vh=7ae33c#gh-dark-mode-only" alt="Filerobot dark mode Logo" width="264px"><img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+BLACK+BG.png?vh=619469#gh-light-mode-only" alt="Filerobot white mode Logo" width="264px">
+	</a>
+	<br />
+	<br />
+	<img src="https://img.shields.io/npm/l/filerobot-image-editor?style=for-the-badge" alt="License (MIT)" />
+	<img src="https://img.shields.io/npm/v/filerobot-image-editor?label=Version&style=for-the-badge" alt="Version" />
+	<img src="https://img.shields.io/npm/dt/filerobot-image-editor?style=for-the-badge" alt="Downloads">
+	<br />
+	<a href="https://www.filerobot.com/en/home">Learn more about Filerobot</a>
+</p>
 
 # Filerobot Image Editor (FIE)
 
 The Filerobot Image Editor is the easiest way to integrate an easy-to-use image editor in your web application. Integrated with few lines of code, your users will be able to apply basic transformations like resize, crop, flip, finetune, annotate, watermark and various filters to any image.
 
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Edit,%20resize,%20and%20filter%20any%20image&url=https://scaleflex.github.io/filerobot-image-editor/&via=filerobot&hashtags=uploader,image_resizing,image_editor,image_cropping)
+![GitHub Repo stars](https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?style=social)
 
 ## Demo
 
-Insert gif or link to demo
-
+GIF Link
 
 ## Features
 
-- Light/dark mode toggle
-- Live previews
-- Fullscreen mode
-- Cross platform
+- 📱 Touch, Mobile & Desktop Friendly (Cross platform).<!-- - ⌨️ Keyboard keys mapped. -->
+- ⏭️ Live Comparison (Applied Operations & original).
+- ⏳ History management (Undo/Redo/Reset).
+- ✂️ Image Adjustment.
+- 🔂 Export current design state & load it whenever you want to continue past edits *Experimental*
+- 🎨 Image Annotating & Drawing.
+- 🖼️ Watermarking & positioning.
+- 🪟 Resizing.
+- 🧊 A lot of Image Filters.
+- 🌉 VanillaJS + Bridged to frameworks (React & More to support...).
+- 🏗️ Easy, Focused & Simple UI for better UX.
+- ➕ Ability to customize.
+- 🚀 Image file on save customization.
+- 🤹🏼 And more to discover by yourself...
 
+## Requirements
+	> Following requirements required only in NPM installation, but they're included in CDN bundle installation.
 
-## Screenshots
+- react, react-dom: >= v16.8.0
+- styled-components: >= v5.0.0
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+<details>
+  <summary>Requirements Installation (Click to show)</summary>
 
+  - react, react-dom: `npm install --save react react-dom` or use their CDN.
+  - styled-components: `npm install --save styled-components` or use their CDN.
+</details>
 
 ## Installation
 
-Install my-project with npm
+### NPM
+
+#### React Component
 
 ```bash
-  npm install my-project
-  cd my-project
+npm install --save react-filerobot-image-editor
+```
+
+#### VanillaJS
+
+```bash
+npm install --save filerobot-image-editor
+```
+
+### CDN
+
+VanillaJS
+
+```js
+<script src=""></script>
 ```
 
 ## Usage/Examples
 
-```javascript
-import Component from 'my-project'
+### React Example
+
+```js
+import React, { useState } from 'react';
+import FilerobotImageEditor, { TABS, TOOLS } from 'react-filerobot-image-editor';
 
 function App() {
-  return <Component />
+  const [isImgEditorShown, setIsImgEditorShown] = useState(false);
+
+  const openImgEditor = () => {
+		setIsImgEditorShown(true);
+		};
+
+  const closeImgEditor = () => {
+		setIsImgEditorShown(false);
+		};
+
+  return (
+    <div>
+      <button onClick={openImgEditor}>Open Filerobot image editor</button>
+      {isImgEditorShown && (
+        <FilerobotImageEditor
+					image="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+          onClose={closeImgEditor}
+					annotationsCommon={{
+						fill: '#ff0000'
+					}}
+					Text={{ text: 'Filerobot...' }}
+					tabs={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
+					defaultTabId={TABS.ANNOTATE} // or 'Annotate'
+					defaultToolId={TOOLS.TEXT} // or 'Text'
+        />
+      )}
+    </div>
+  );
 }
 ```
 
+### VanillaJS Example
+
+```js
+import FilerobotImageEditor, { TABS, TOOLS } from 'filerobot-image-editor';
+
+const config = {
+	image: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+	annotationsCommon: {
+    fill: '#ff0000'
+  },
+	Text: { text: 'Filerobot...' },
+	tabs: [TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK] // or ['Adjust', 'Annotate', 'Watermark']
+	defaultTabId: TABS.ANNOTATE, // or 'Annotate'
+	defaultToolId: TOOLS.TEXT, // or 'Text'
+};
+
+// Assuming we have a div with id="editor_container"
+const filerobotImageEditor = new FilerobotImageEditor(
+	document.querySelector('#editor_container'),
+	config
+);
+
+filerobotImageEditor.render({
+	onClose: (closingReason) => {
+		console.log('Closing reason', closingReason);
+		filerobotImageEdtior.terminate();
+  }
+});
+```
+
+> Important Note: if you are importing the library from CDN then you could access it using `window.FilerobotImageEditor` and access both `TABS & TOOLS` from `window.FilerobotImageEditor.TABS`  & `window.FilerobotImageEditor.TOOLS`.
 
 ## Config
+
+### Properties
 
 #### image
 
@@ -70,7 +172,7 @@ the tabs will be shown to the user, if empty array provided or left by default a
 
 Type: `string`
 
-Default: `TABS_IDS.ADJUST`
+Default: `Adjust`
 
 The default opened tab once the user opens the plugin.
 
@@ -146,34 +248,6 @@ Default: `null`
 
 If provided the plugin will load this design state at the initial load to give the possibility to get back to that design in another time and continue editing it.
 
-/////////////////////
-
-#### onBeforeSave
-
-Type: `function(imageFileInfo) {}`
-
-Default: `undefined`
-
-This function will be fired once the user clicks save button and before triggering the default saving behavior...
-
-> If the function returned `false` then the default saving behavior implemented in the plugin won't be triggered.
-
-#### onSave
-
-Type: `function(imageObject, imageDesignState) {}` ***Required***
-
-Default: `undefined`
-
-Must be provided for avoiding plugin's error, it's used for handling the save functionality which is triggered once the user clicks on save button of the saving modal or once clicking the save button if the default behavior is prevented from --LINK--`onBeforeSave` function.
-
-#### onClose
-
-Type: `function(closingReasons) {}`
-
-Default: `undefined`
-
-Triggered once the user clicks either close/cancel button or back button, if not provided then the closing button won't shown at all.
-
 #### annotationsCommon
 
 Type: `object`
@@ -197,17 +271,17 @@ The common options existed in all the annotations tools and used as default valu
 
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
-| fill | string | '#000000' | The filled color for any added annotation |
-| stroke | string | '#000000' | The stroke color for any added annotation |
-| strokeWidth | number | 0 | The stroke width for any added annotation |
-| shadowOffsetX | number | 0 | The horizontal/X shadow offset from its base annotation |
-| shadowOffsetY | number | 0 | The vertical/Y shadow offset from its base annotation |
-| shadowBlur | number | 0 | Blur value of the shadow added to the annotation |
-shadowColor | string | '#000000' | The color of the shadow added to the annotation |
-shadowOpacity | number | 1 | Transparency/Opacity value for the shadow of annotation |
-opacity | number (0 - 1) | 1 | Transparency/Opacity value for the whole annotation |
+| **fill** | string | '#000000' | The filled color for any added annotation |
+| **stroke** | string | '#000000' | The stroke color for any added annotation |
+| **strokeWidth** | number | 0 | The stroke width for any added annotation |
+| **shadowOffsetX** | number | 0 | The horizontal/X shadow offset from its base annotation |
+| **shadowOffsetY** | number | 0 | The vertical/Y shadow offset from its base annotation |
+| **shadowBlur** | number | 0 | Blur value of the shadow added to the annotation |
+| **shadowColor** | string | '#000000' | The color of the shadow added to the annotation |
+| **shadowOpacity** | number | 1 | Transparency/Opacity value for the shadow of annotation |
+| **opacity** | number (0 - 1) | 1 | Transparency/Opacity value for the whole annotation |
 
-#### TOOLS.TEXT
+#### Text
 
 Type: `object`
 
@@ -235,18 +309,18 @@ The options available for the text annotation tool in additon to the annotations
 
 | Property | Type | Default (possible values) | Description |
 | --- | --- | --- | --- |
-| text | string | 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' | The placeholder text added on adding a new text annotation |
-| fontFamily | string | 'Arial' | The font family used for the text |
-| fonts | (strings \| objects)[] | mentioned above | The fonts available to the user to choose from while adding text  |
-| fontSize | number | 14 | The default size of the text added |
-| letterSpacing | number | 0 | The spaces/paddings between letters of the text |
-| lineHeight | number | 1 | Height of each line of the added text |
-| align | string | 'left' ('left' \| 'center' \| 'right') | The horizontal alignment of the added text |
-| fontStyle | string | '' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added |
+| **text** | string | 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' | The placeholder text added on adding a new text annotation |
+| **fontFamily** | string | 'Arial' | The font family used for the text |
+| **fonts** | (strings \| objects)[] | mentioned above | The fonts available to the user to choose from while adding text  |
+| **fontSize** | number | 14 | The default size of the text added |
+| **letterSpacing** | number | 0 | The spaces/paddings between letters of the text |
+| **lineHeight** | number | 1 | Height of each line of the added text |
+| **align** | string | 'left' ('left' \| 'center' \| 'right') | The horizontal alignment of the added text |
+| **fontStyle** | string | '' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added |
 
 > Fonts must be loaded from your side in implementation to take effect as it is not guaranteed that the user has the font on his system.
 
-#### TOOLS.IMAGE
+#### Image
 
 Type: `object`
 
@@ -260,7 +334,11 @@ Default:
 
 The options available for image annotation tool in additon to the annotationsCommon property,
 
-#### TOOLS.RECT
+| Property | Type | Default (possible values) | Description |
+| --- | --- | --- | --- |
+| **fill** | string | undefined | The color fills the image's transparent parts |
+
+#### Rect
 
 Type: `object`
 
@@ -273,7 +351,11 @@ Default:
 ```
 The options available for Rect annotation tool in additon to the annotationsCommon property,
 
-#### TOOLS_IDS.ELLIPSE
+| Property | Type | Default (possible values) | Description |
+| --- | --- | --- | --- |
+| **cornerRadius** | number | 0 | The radius of the rectangle's corners |
+
+#### Ellipse
 
 Type: `object`
 
@@ -281,7 +363,7 @@ Default: `annotationsCommon`
 
 No specific options available for ellipse only the annotationsCommon are used for ellipse and you could override any of them for ellipse only by passing them here.
 
-#### TOOLS_IDS.POLYGON
+#### Polygon
 
 Type: `object`
 
@@ -295,7 +377,11 @@ Default:
 
 The available options for polygon annotation tool in additon to the annotationsCommon property,
 
-#### TOOLS_IDS.PEN
+| Property | Type | Default (possible values) | Description |
+| --- | --- | --- | --- |
+| **sides** | number | 3 | Number of sides considered by default for the added polygon |
+
+#### Pen
 
 Type: `object`
 
@@ -309,7 +395,7 @@ Default:
 
 No specific options available for pen tool only the annotationsCommon are used and you could override any of them for pen only by passing them here.
 
-#### TOOLS_IDS.LINE]
+#### Line
 
 Type: `object`
 
@@ -324,7 +410,11 @@ Default:
 
 The available options for line annotation tool in additon to the annotationsCommon property,
 
-#### TOOLS_IDS.ARROW
+| Property | Type | Default (possible values) | Description |
+| --- | --- | --- | --- |
+| **lineCap** | string | 'butt' ('butt' \| 'round' \| 'square') | The start & end borders line cap |
+
+#### Arrow
 
 Type: `object`
 
@@ -340,8 +430,14 @@ Default:
 ```
 
 The available options for arrow annotation tool in additon to the annotationsCommon property,
-    
-#### TOOLS_IDS.WATERMARK
+
+| Property | Type | Default (possible values) | Description |
+| --- | --- | --- | --- |
+| **lineCap** | string | 'butt' ('butt' \| 'round' \| 'square') | The border line cap |
+| **pointerLength** | number | undefined | Length of the arrow's pointer in px |
+| **pointerWidth** | number | undefined | Width of the arrow's pointer in px |
+
+#### Watermark
 
 Type: `object`
 
@@ -349,14 +445,18 @@ Default:
 
 ```js
 {
-    ...(TOOLS.TEXT || TOOLS.IMAGE), // depends on the added watermark type
+    ...([TOOLS.TEXT || [TOOLS.IMAGE), // depends on the ]added watermark type
     gallery: [],
 }
 ```
 
-The available options for watermark tool, the watermark is using the options of text and image annotation tools mentioned above depending on the watermark chosen.
+The available options for watermark tool, the watermark is using the options of text and image annotation tools mentioned above depending on the watermark chosen,
 
-#### TOOLS_IDS.CROP
+| Property | Type | Default (possible values) | Description |
+| --- | --- | --- | --- |
+| **gallery** | string[] | [] | Watermark images urls which are considered to show a list of available watermarks to be used by the user directly from watermark tab |
+
+#### Crop
 
 Type: `object`
 
@@ -365,29 +465,78 @@ Default:
 {
     minWidth: 14,
     minHeight: 14,
-    width: null,
-    height: null,
     maxWidth: null,
     maxHeight: null,
     ratio: 'original',
     noPresets: false,
 }
 ```
-The available options for crop tool.
 
+The available options for crop tool,
+
+| Property | Type | Default (possible values) | Description |
+| --- | --- | --- | --- |
+| **minWidth** | number | 14 | Minimum width (in px) of the possible crop area |
+| **minHeight** | number | 14 | Minimum height (in px) of the possible crop area |
+| **maxWidth** | number | null | Maximum width (in px) of the possible crop area |
+| **maxHeight** | number | null | Maximum height (in px) of the possible crop area |
+| **ratio** | string \| number | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area |
+| **noPresets** | boolean | false | hides the crop presets if `true` |
+
+> Please note the letters-case of the above properties.
+
+### Callbacks
+
+#### onBeforeSave
+
+Type: `function(imageFileInfo) {}`
+
+Default: `undefined`
+
+This function will be fired once the user clicks save button and before triggering the default saving behavior...
+
+> If the function returned `false` then the default saving behavior implemented in the plugin won't be triggered.
+
+#### onSave
+
+Type: `function(imageObject, imageDesignState) {}` ***Required***
+
+Default: `undefined`
+
+Must be provided for avoiding plugin's error, it's used for handling the save functionality which is triggered once the user clicks on save button of the saving modal or once clicking the save button if the default behavior is prevented from --LINK--`onBeforeSave` function.
+
+#### onClose
+
+Type: `function(closingReasons) {}`
+
+Default: `undefined`
+
+Triggered once the user clicks either close/cancel button or back button, if not provided then the closing button won't shown at all.
+
+## Bridges methods
+
+### Vanilla Javascript
+
+#### render(additionalConfig)
+
+Initializes/rerenders the plugin with the possibility to provide an additional config properties to the previously provided properties to the same plugin's instance.
+
+#### terminate()
+
+Unmounts the plugin's container from the page to be removed.
 
 ## Used By
 
 This project is used by the following companies:
 
-- Company 1
-- Company 2
+- [Company name](#link)
+
+> Fork the repoistory, Append your company's name with the url in above format inside the README.md file and make a PR.
 
 ## Feedback
 
-Send us on PR.
+Create an issue on github repo. and mention the details there.
 
 ## License
 
-[MIT](./LICENSE)
-
+Filerobot Image Editor is provided under [MIT License](https://opensource.org/licenses/MIT)

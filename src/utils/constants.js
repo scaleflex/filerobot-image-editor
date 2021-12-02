@@ -9,12 +9,12 @@ export const WATERMARK_ANNOTATION_ID = 'watermark';
 export const TRANSLATIONS_GRID_UUID = '353297d2-40b4-4684-a875-45a2178a8157';
 
 export const TABS_IDS = {
-  FINETUNE: 'FINTUNE',
-  FILTERS: 'FILTERS',
-  ADJUST: 'ADJUST',
-  WATERMARK: 'WATERMARK',
-  ANNOTATE: 'ANNOTATE',
-  RESIZE: 'RESIZE',
+  FINETUNE: 'Finetune',
+  FILTERS: 'Filters',
+  ADJUST: 'Adjust',
+  WATERMARK: 'Watermark',
+  ANNOTATE: 'Annotate',
+  RESIZE: 'Resize',
 };
 
 export const TOOLS_IDS = {
