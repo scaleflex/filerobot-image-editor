@@ -93,26 +93,26 @@ function App() {
 
   const openImgEditor = () => {
 		setIsImgEditorShown(true);
-		};
+	};
 
   const closeImgEditor = () => {
 		setIsImgEditorShown(false);
-		};
+	};
 
   return (
     <div>
       <button onClick={openImgEditor}>Open Filerobot image editor</button>
       {isImgEditorShown && (
         <FilerobotImageEditor
-		image="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
-		onClose={closeImgEditor}
-		annotationsCommon={{
-			fill: '#ff0000'
-		}}
-		Text={{ text: 'Filerobot...' }}
-		tabs={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
-		defaultTabId={TABS.ANNOTATE} // or 'Annotate'
-		defaultToolId={TOOLS.TEXT} // or 'Text'
+			image="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+			onClose={closeImgEditor}
+			annotationsCommon={{
+				fill: '#ff0000'
+			}}
+			Text={{ text: 'Filerobot...' }}
+			tabs={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
+			defaultTabId={TABS.ANNOTATE} // or 'Annotate'
+			defaultToolId={TOOLS.TEXT} // or 'Text'
         />
       )}
     </div>
