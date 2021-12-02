@@ -1,6 +1,7 @@
 const path = require('path');
 const { BannerPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const pkg = require('./package.json');
 
 const now = new Date();
@@ -48,7 +49,10 @@ module.exports = {
       }),
     ],
   },
-  plugins: [new BannerPlugin({ banner, entryOnly: true, raw: false })],
+  plugins: [
+    new BannerPlugin({ banner, entryOnly: true, raw: false }),
+    new BundleAnalyzerPlugin(),
+  ],
   output: {
     clean: true,
     filename: 'filerobot-image-editor.min.js',
