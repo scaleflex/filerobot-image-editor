@@ -28,14 +28,14 @@ GIF Link
 
 ## Features
 
-- 📱 Touch, Mobile & Desktop Friendly (Cross platform).<!-- - ⌨️ Keyboard keys mapped. -->
+- 📱 Touch, Mobile & Desktop Friendly.<!-- - ⌨️ Keyboard keys mapped. -->
 - ⏭️ Live Comparison (Applied Operations & original).
 - ⏳ History management (Undo/Redo/Reset).
 - ✂️ Image Adjustment.
 - 🔂 Export current design state & load it whenever you want to continue past edits *Experimental*
 - 🎨 Image Annotating & Drawing.
 - 🖼️ Watermarking & positioning.
-- 🪟 Resizing.
+- 🪟 Image Resizing.
 - 🧊 A lot of Image Filters.
 - 🌉 VanillaJS + Bridged to frameworks (React & More to support...).
 - 🏗️ Easy, Focused & Simple UI for better UX.
@@ -43,6 +43,25 @@ GIF Link
 - 🚀 Image file on save customization.
 - 🤹🏼 And more to discover by yourself...
 
+## Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - React
+    - [NPM](#react-component)
+  - VanillaJS
+    - [NPM](#vanillajs)
+    - [CDN](#cdn)
+- [Usage/Examples](#usageexamples)
+  - [React Example](#react-example)
+  - [VanillaJS Example](#vanillajs-example)
+- [Config](#config)
+  - [Properties](#properties)
+  - [Callbacks](#callbacks)
+- [Bridges appendix](#bridges-appendix)
+  - [VanillaJS](#vanilla-javascript)
+- [Used by](#used-by)
+- [Feedback](#feedback)
 ## Requirements
 	> Following requirements required only in NPM installation, but they're included in CDN bundle installation.
 
@@ -74,7 +93,7 @@ npm install --save filerobot-image-editor
 
 ### CDN
 
-VanillaJS
+VanillaJS only
 
 ```js
 <script src=""></script>
@@ -156,7 +175,7 @@ filerobotImageEditor.render({
 
 ### Properties
 
-#### image
+#### `image`
 
 Type: `string` | `HTMLImageElement` ***Required***.
 
@@ -164,7 +183,7 @@ Default: `undefined`.
 
 The image url or an `HTMLImageElement` which the operations will be applied on.
 
-#### tabsIds
+#### `tabsIds`
 
 Type: `string[]`
 
@@ -172,7 +191,7 @@ Default: `[]`
 
 the tabs will be shown to the user, if empty array provided or left by default all tabs will be used otherwise the provided tabs ids would be shown.
 
-#### defaultTabId
+#### `defaultTabId`
 
 Type: `string`
 
@@ -180,7 +199,7 @@ Default: `Adjust`
 
 The default opened tab once the user opens the plugin.
 
-#### defaultToolId
+#### `defaultToolId`
 
 Type: `string`
 
@@ -188,31 +207,31 @@ Default: first tool of the default opened tab.
 
 The default opened tool once the user opens the plugin, and must be one of the tools related to the opened tab.
 
-#### useBackendTranslations
+#### `useBackendTranslations`
 
 Type: `boolean`
 
 Default: `true`
 
-A backend service that hosts the translations of the plugin to be able to change the translations without making a new build once the translations changed, and gives the change to support more languages too, if `true` the service would be used and the next --LINK--`language` property used in determining which language to show, `false` means avoid using this service in that case default translations and provided --LINK--`translations` property will be used.
+A backend service that hosts the translations of the plugin to be able to change the translations without making a new build once the translations changed, and gives the change to support more languages too, if `true` the service would be used and the next [`language`](#language) property used in determining which language to show, `false` means avoid using this service in that case default translations and provided [`translations`](#translations) property will be used.
 
-#### language
+#### `language`
 
 Type: `string`
 
 Default: `en`
 
-The 2 letters shorthand used for the language/translations, would be used in case --LINK--`useBackendTranslations` is `true`.
+The 2 letters shorthand used for the language/translations, would be used in case [`useBackendTranslations`](#usebackendtranslations) is `true`.
 
-#### translations
+#### `translations`
 
 Type: `object`
 
 Default: `null`
 
-If provided will be used in overriding the default translations arrived locally with the plugin but it will **NOT** override the backend's translations if --LINK--`useBackendTranslations`.
+If provided will be used in overriding the default translations arrived locally with the plugin but it will **NOT** override the backend's translations if [`useBackendTranslations`](#usebackendtranslations).
 
-#### avoidChangesNotSavedAlertOnLeave
+#### `avoidChangesNotSavedAlertOnLeave`
 
 Type: `boolean`
 
@@ -220,7 +239,7 @@ Default: `false`
 
 By default once the user makes any change/edit on the image and hasn't saved the image yet and tried to leave the page before saving then a browser's confirmation would be shown asking him if he really wants to leave before saving, `true` means it won't be shown.
 
-#### showBackButton
+#### `showBackButton`
 
 Type: `boolean`
 
@@ -228,7 +247,7 @@ Default: `false`
 
 If `true` Close button on the top right will be hidden and back button will be shown on the top left (with replacing positions of save & history buttons).
 
-#### defaultSavedImageType
+#### `defaultSavedImageType`
 
 Type: `string`
 
@@ -236,7 +255,7 @@ Default: `png`
 
 The default type used and selected in saving the image (the user has the possibility to change it from the saving modal).
 
-#### forceToPngInEllipticalCrop
+#### `forceToPngInEllipticalCrop`
 
 Type: `boolean`
 
@@ -244,7 +263,7 @@ Default: `false`
 
 If `true` then the saved image's type will always be `png` type if the user made an elliptical crop for preserving the transparency even if the user chose another extension in the saving modal, otherwise the familiar behavior (defaultSavedImageType or user's selected types) wins.
 
-#### loadableDesignState *Experimental*
+#### `loadableDesignState` *Experimental*
 
 Type: `object`
 
@@ -252,7 +271,7 @@ Default: `null`
 
 If provided the plugin will load this design state at the initial load to give the possibility to get back to that design in another time and continue editing it.
 
-#### annotationsCommon
+#### `annotationsCommon`
 
 Type: `object`
 
@@ -285,7 +304,7 @@ The common options existed in all the annotations tools and used as default valu
 | **shadowOpacity** | number | 1 | Transparency/Opacity value for the shadow of annotation |
 | **opacity** | number (0 - 1) | 1 | Transparency/Opacity value for the whole annotation |
 
-#### Text
+#### `Text`
 
 Type: `object`
 
@@ -324,7 +343,7 @@ The options available for the text annotation tool in additon to the annotations
 
 > Fonts must be loaded from your side in implementation to take effect as it is not guaranteed that the user has the font on his system.
 
-#### Image
+#### `Image`
 
 Type: `object`
 
@@ -342,7 +361,7 @@ The options available for image annotation tool in additon to the annotationsCom
 | --- | --- | --- | --- |
 | **fill** | string | undefined | The color fills the image's transparent parts |
 
-#### Rect
+#### `Rect`
 
 Type: `object`
 
@@ -359,7 +378,7 @@ The options available for Rect annotation tool in additon to the annotationsComm
 | --- | --- | --- | --- |
 | **cornerRadius** | number | 0 | The radius of the rectangle's corners |
 
-#### Ellipse
+#### `Ellipse`
 
 Type: `object`
 
@@ -367,7 +386,7 @@ Default: `annotationsCommon`
 
 No specific options available for ellipse only the annotationsCommon are used for ellipse and you could override any of them for ellipse only by passing them here.
 
-#### Polygon
+#### `Polygon`
 
 Type: `object`
 
@@ -385,7 +404,7 @@ The available options for polygon annotation tool in additon to the annotationsC
 | --- | --- | --- | --- |
 | **sides** | number | 3 | Number of sides considered by default for the added polygon |
 
-#### Pen
+#### `Pen`
 
 Type: `object`
 
@@ -399,7 +418,7 @@ Default:
 
 No specific options available for pen tool only the annotationsCommon are used and you could override any of them for pen only by passing them here.
 
-#### Line
+#### `Line`
 
 Type: `object`
 
@@ -418,7 +437,7 @@ The available options for line annotation tool in additon to the annotationsComm
 | --- | --- | --- | --- |
 | **lineCap** | string | 'butt' ('butt' \| 'round' \| 'square') | The start & end borders line cap |
 
-#### Arrow
+#### `Arrow`
 
 Type: `object`
 
@@ -441,7 +460,7 @@ The available options for arrow annotation tool in additon to the annotationsCom
 | **pointerLength** | number | undefined | Length of the arrow's pointer in px |
 | **pointerWidth** | number | undefined | Width of the arrow's pointer in px |
 
-#### Watermark
+#### `Watermark`
 
 Type: `object`
 
@@ -460,7 +479,7 @@ The available options for watermark tool, the watermark is using the options of 
 | --- | --- | --- | --- |
 | **gallery** | string[] | [] | Watermark images urls which are considered to show a list of available watermarks to be used by the user directly from watermark tab |
 
-#### Crop
+#### `Crop`
 
 Type: `object`
 
@@ -491,7 +510,7 @@ The available options for crop tool,
 
 ### Callbacks
 
-#### onBeforeSave
+#### `onBeforeSave`
 
 Type: `function(imageFileInfo) {}`
 
@@ -501,15 +520,15 @@ This function will be fired once the user clicks save button and before triggeri
 
 > If the function returned `false` then the default saving behavior implemented in the plugin won't be triggered.
 
-#### onSave
+#### `onSave`
 
 Type: `function(imageObject, imageDesignState) {}` ***Required***
 
 Default: `undefined`
 
-Must be provided for avoiding plugin's error, it's used for handling the save functionality which is triggered once the user clicks on save button of the saving modal or once clicking the save button if the default behavior is prevented from --LINK--`onBeforeSave` function.
+Must be provided for avoiding plugin's error, it's used for handling the save functionality which is triggered once the user clicks on save button of the saving modal or once clicking the save button if the default behavior is prevented from [`onBeforeSave`](#onbeforesave) function.
 
-#### onClose
+#### `onClose`
 
 Type: `function(closingReasons) {}`
 
@@ -517,15 +536,15 @@ Default: `undefined`
 
 Triggered once the user clicks either close/cancel button or back button, if not provided then the closing button won't shown at all.
 
-## Bridges methods
+## Bridges appendix
 
 ### Vanilla Javascript
 
-#### render(additionalConfig)
+#### `render(additionalConfig)`
 
 Initializes/rerenders the plugin with the possibility to provide an additional config properties to the previously provided properties to the same plugin's instance.
 
-#### terminate()
+#### `terminate()`
 
 Unmounts the plugin's container from the page to be removed.
 
