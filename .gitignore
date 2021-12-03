@@ -3,6 +3,7 @@ node_modules
 .cache
 .eslintCache
 .vscode
+.idea
 
 # production
 dist/
