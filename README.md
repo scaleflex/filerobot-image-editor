@@ -103,7 +103,7 @@ npm install --save filerobot-image-editor
 VanillaJS only
 
 ```js
-<script src=""></script>
+<script src="https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/4.0.0-beta-0/filerobot-image-editor.min.js"></script>
 ```
 
 > In all installation cases you must import the font family that will be used from your side as it is not included in the library by default, the default font family used is [**Roboto**](https://fonts.google.com/share?selection.family=Roboto:wght@400;500) in 2 font-weight (normal === 400 & medium === 500) which falls-back to **Arial** if not found.
