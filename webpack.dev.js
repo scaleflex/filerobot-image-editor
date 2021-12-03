@@ -21,7 +21,10 @@ module.exports = {
   devtool: 'inline-source-map',
   resolve: {
     extensions: ['*', '.jsx', '.js'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    modules: [
+      path.resolve(__dirname, 'packages/react-filerobot-image-editor/src'),
+      'node_modules',
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -71,7 +71,7 @@ GIF Link
 	> Following requirements required only in NPM installation, but they're included in CDN bundle installation.
 
 - react, react-dom: >= v16.8.0
-- styled-components: >= v5.0.0
+- styled-components: >= v5.1.0
 
 <details>
   <summary>Requirements Installation (Click to show)</summary>

@@ -3,8 +3,8 @@ import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
 /** Internal Dependencies */
-import AssemblyPoint, { TOOLS, TABS } from '../src';
-import deepMerge from '../src/utils/deepMerge';
+import AssemblyPoint, { TOOLS, TABS } from 'react-filerobot-image-editor';
+import deepMerge from 'react-filerobot-image-editor/utils/deepMerge';
 
 class FilerobotImageEditor {
   static TABS = TABS;

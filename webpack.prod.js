@@ -14,7 +14,7 @@ const banner = `
 `;
 
 module.exports = {
-  entry: path.resolve(__dirname, 'bridges/Vanilla.js'),
+  entry: path.resolve(__dirname, 'packages/filerobot-image-editor/src'),
   mode: 'production',
   devtool: 'source-map',
   module: {
@@ -33,7 +33,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['*', '.jsx', '.js'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    modules: [
+      path.resolve(__dirname, 'packages/react-filerobot-image-editor/src'),
+      'node_modules',
+    ],
   },
   optimization: {
     minimize: true,

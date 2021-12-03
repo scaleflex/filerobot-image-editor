@@ -1,8 +1,12 @@
 /* eslint-disable  */
-import FilerobotImageEditor from '../bridges/Vanilla';
-import uriDownload from '../src/utils/uriDownload';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import FilerobotImageEditor, {
+  TOOLS,
+  TABS,
+} from '../packages/react-filerobot-image-editor/src';
+import uriDownload from '../packages/react-filerobot-image-editor/src/utils/uriDownload';
 
-const container = document.getElementById('root');
 const config = {
   image:
     'https://images.unsplash.com/photo-1526512340740-9217d0159da9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=80',
@@ -17,7 +21,7 @@ const config = {
     // shadowOpacity: 1,
     // opacity: 1,
   },
-  [FilerobotImageEditor.TOOLS.CROP]: {
+  [TOOLS.CROP]: {
     // maxWidth: 700,
     // maxHeight: 300,
     // noPresets: false, // Hiding crop presets
@@ -25,7 +29,7 @@ const config = {
     // minWidth: 200,
     // minHeight: 300,
   },
-  [FilerobotImageEditor.TOOLS.WATERMARK]: {
+  [TOOLS.WATERMARK]: {
     gallery: [
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/PNG/SCALEFLEX+LOGO+-+Color+Dark+text.png?vh=45cac1',
       'https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGOTYPE+WITH+SCALEFLEX-01-01.png?vh=76c5a7',
@@ -40,7 +44,7 @@ const config = {
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/Logo+Vertical/SCALEFLEX+LOGO+VERTICAL.PNG?vh=9a6fa1',
     ],
   },
-  // [FilerobotImageEditor.TOOLS.TEXT]: {
+  // [TOOLS.TEXT]: {
   //   fonts: ['Arial', 'another', { label: 'Tahoma', value: 'Tahoma' }, 'hey-there'], // must be loaded in the website or the user have them on his system
   //   fontFamily: 'test',
   // },
@@ -67,11 +71,17 @@ const config = {
   // defaultSavedImageType: null, // 'png','jpg', 'jpeg' & 'webp' => 'png' must be provided you want the image to be transparent and use elliptical crop || null (defaualt) means use the same provided image extension (extracted from the image's src url), if it was unknwon PNG will be used
   // forceToPngInEllipticalCrop: false, // in case the develop wants to force the saved image to be PNG if there is elliptical crop is done otherwise the provided savedImageType would be used.
   onClose: () => console.log('Act closing 👅'), // if we have value then close button will be shown unless showBackButton is true then if onClose has value the back button will be shown otherwise nothing will be shown.
-  // tabsIds: [FilerobotImageEditor.TABS.ADJUST, FilerobotImageEditor.TABS.WATERMARK],
-  // defaultTabId: FilerobotImageEditor.TABS.ADJUST,
+  // tabsIds: [TABS.ADJUST, TABS.WATERMARK],
+  // defaultTabId: TABS.ADJUST,
   // defaultToolId: TOOLS_IDS.CROP,
   // showBackButton: true,
 };
 
-const filerobotImageEditor = new FilerobotImageEditor(container, config);
-filerobotImageEditor.render();
+// JS Calling
+// const filerobotImageEditor = new FilerobotImageEditor(container, config);
+// filerobotImageEditor.render();
+
+ReactDOM.render(
+  <FilerobotImageEditor {...config} />,
+  document.getElementById('root'),
+);

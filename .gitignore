@@ -1,9 +1,13 @@
 # dependencies
-/node_modules
+node_modules
+.cache
+.eslintCache
+.vscode
 
 # production
-/dist
-/lib
+dist/
+lib/
+build/
 
 # misc
 .DS_Store

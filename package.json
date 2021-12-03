@@ -2,6 +2,10 @@
   "name": "react-filerobot-image-editor",
   "version": "4.0.0-beta.0",
   "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "author": "Scaleflex",
   "homepage": "https://github.com/scaleflex/filerobot-image-editor/tree/v4-dev#readme",
   "main": "lib/index.js",
@@ -25,18 +29,6 @@
   "files": [
     "lib"
   ],
-  "dependencies": {
-    "@scaleflex/icons": "^1.0.0-beta.56",
-    "@scaleflex/ui": "^1.0.0-beta.57",
-    "konva": "^8.3.0",
-    "prop-types": "^15.7.2",
-    "react-konva": "^17.0.2-5"
-  },
-  "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "styled-components": "^5.0.0"
-  },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
@@ -57,12 +49,13 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4",
     "html-webpack-plugin": "^5.5.0",
+    "lerna": "^4.0.0",
     "prettier": "^2.4.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "rimraf": "^3.0.2",
     "source-map-explorer": "^2.5.2",
-    "styled-components": "^5.1.1",
+    "styled-components": "^5.1.0",
     "terser-webpack-plugin": "^5.2.5",
     "webpack": "^5.64.4",
     "webpack-bundle-analyzer": "^4.5.0",
@@ -74,8 +67,7 @@
     "analyze": "source-map-explorer dist/filerobot-image-editor.min.js",
     "dev": "webpack serve --config webpack.dev.js",
     "set-prod-env": "cross-env BABEL_ENV=production NODE_ENV=production",
-    "clean:lib": "rimraf lib",
     "build:dist": "yarn set-prod-env webpack  --config webpack.prod.js",
-    "build:lib": "yarn clean:lib && yarn set-prod-env babel src --out-dir lib --copy-files"
+    "build:lib": "lerna run build:lib"
   }
 }
