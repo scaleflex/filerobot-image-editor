@@ -9,7 +9,7 @@ import uriDownload from '../packages/react-filerobot-image-editor/src/utils/uriD
 
 const config = {
   image:
-    'https://images.unsplash.com/photo-1526512340740-9217d0159da9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=80',
+    'https://api.filerobot.com/scaleflex-tests-v5a/v3/get/d8880a7c-94fc-5524-b1de-a61de6650000?version=1638547407275',
   annotationsCommon: {
     // fill: '#000000', // or should be no color? === undefined
     // stroke: '#000000', // or should be no color? === undefined

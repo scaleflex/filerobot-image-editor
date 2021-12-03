@@ -22,7 +22,7 @@ import {
 } from 'utils/constants';
 import { endTouchesZooming, zoomOnTouchesMove } from './touchZoomingEvents';
 
-const ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR = 0.01;
+const ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR = 0.005;
 
 const CanvasNode = ({ children }) => {
   useStrictMode(true);
@@ -95,7 +95,9 @@ const CanvasNode = ({ children }) => {
   const handleZoom = (e) => {
     e.evt.preventDefault();
 
-    const scaleBy = e.evt.deltaY * ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR || 1;
+    const scaleBy =
+      (e.evt.deltaY * ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR || 1) +
+      DEFAULT_ZOOM_FACTOR;
     const stageCanvas = e.currentTarget;
     const oldZoomScaleFactor = zoom.factor || 1;
 
