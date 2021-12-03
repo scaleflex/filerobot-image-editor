@@ -62,7 +62,7 @@ const StyledIconWrapper = styled.div(
     color: ${secondaryIconColor ? '#959DA8' : ''};
 
     &[aria-selected='true'] {
-      background: #ecf3ff;
+      background: ${theme.palette['bg-primary-active']};
 
       * {
         color: ${theme.palette['accent-primary-active']};
@@ -70,8 +70,7 @@ const StyledIconWrapper = styled.div(
     }
 
     :hover {
-      // TODO(Styles): Add this color to the theme and consider dark color for it.
-      background: #ecf3ff;
+      background: ${theme.palette['bg-primary-active']};
     }
   `,
 );

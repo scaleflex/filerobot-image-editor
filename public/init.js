@@ -63,6 +63,7 @@ const config = {
     console.log('CYA👋🏼👋🏼👋🏼');
     uriDownload(imageObject.imageBase64, imageObject.fullName);
   },
+  // theme: {},
   // useBackendTranslations: true, // if false, translations object will be used if not provided default translations will be there.
   // translations: null,
   // language: 'en', // available same as on backend ('en', 'fr', 'de', 'it', 'pt', 'es', 'nl', 'pl', 'ro')

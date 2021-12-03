@@ -18,7 +18,7 @@ const StyledTabItem = styled.div(
     border-radius: 4px;
     display: flex;
     flex-direction: column;
-    background-color: ${theme.palette['bg-primary']};
+    background: ${theme.palette['bg-primary']};
     align-items: center;
     justify-content: center;
     margin-bottom: 8px;
@@ -35,11 +35,11 @@ const StyledTabItem = styled.div(
     }
 
     &:hover {
-      background-color: #ecf3ff; // TODO(Styles): Add this color to the theme and consider dark color for it.
+      background: ${theme.palette['bg-primary-active']};
     }
 
     &[aria-selected='true'] {
-      background-color: #ecf3ff; // TODO(Styles): Add this color to the theme and consider dark color for it.
+      background: ${theme.palette['bg-primary-active']};
 
       * {
         color: ${theme.palette['accent-primary-active']};

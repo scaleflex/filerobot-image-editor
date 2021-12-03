@@ -2,6 +2,14 @@
 import { MIN_CROP, TABS_IDS, TOOLS_IDS } from 'utils/constants';
 
 export default {
+  theme: {
+    palette: {
+      'bg-primary-active': '#ECF3FF',
+    },
+    typography: {
+      fontFamily: 'Roboto, Arial',
+    },
+  },
   annotationsCommon: {
     fill: '#000000', // or should be no color? === undefined
     stroke: '#000000', // or should be no color? === undefined

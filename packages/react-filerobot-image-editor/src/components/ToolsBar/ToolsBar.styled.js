@@ -21,7 +21,7 @@ const StyledToolsBarItems = styled.div`
   align-items: center;
   overflow-x: auto;
   [data-phone='true'] & {
-    background-color: ${({ theme }) => theme.palette['bg-primary']};
+    background: ${({ theme }) => theme.palette['bg-primary']};
   }
 `;
 
@@ -43,11 +43,11 @@ const StyledToolsBarItemButton = styled.div(
     }
 
     &:hover {
-      background-color: #ecf3ff; // TODO(Styles): Add this color to the theme and consider dark color for it.
+      background: ${theme.palette['bg-primary-active']};
     }
 
     &[aria-selected='true'] {
-      background-color: #ecf3ff; // TODO(Styles): Add this color to the theme and consider dark color for it.
+      background: ${theme.palette['bg-primary-active']};
 
       * {
         color: ${theme.palette['accent-primary-active']};

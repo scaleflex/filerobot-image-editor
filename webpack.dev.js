@@ -11,11 +11,6 @@ module.exports = {
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
-      {
-        test: /\.(woff2)$/,
-        exclude: /node_modules/,
-        type: 'asset',
-      },
     ],
   },
   devtool: 'inline-source-map',

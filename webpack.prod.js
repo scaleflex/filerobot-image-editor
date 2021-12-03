@@ -24,11 +24,6 @@ module.exports = {
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
-      {
-        test: /\.(woff2)$/,
-        exclude: /node_modules/,
-        type: 'asset/inline', // if asset/resource it would be exported as files and less size in bundle
-      },
     ],
   },
   resolve: {

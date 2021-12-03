@@ -16,7 +16,7 @@ const spin = keyframes`
 `;
 
 const StyledSpinnerWrapper = styled.div`
-  background-color: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;

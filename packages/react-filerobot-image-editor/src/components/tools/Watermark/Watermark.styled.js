@@ -26,11 +26,11 @@ const StyledWatermarkGalleryItem = styled.div(
     cursor: pointer;
 
     :hover {
-      background-color: #ecf3ff; // TODO(Styles): Add this color to the theme and consider dark color for it.
+      background: ${theme.palette['bg-primary-active']};
     }
 
     &[aria-selected='true'] {
-      background-color: #ecf3ff; // TODO(Styles): Add this color to the theme and consider dark color for it.
+      background: ${theme.palette['bg-primary-active']};
       border-color: ${theme.palette['accent-primary-active']};
     }
 

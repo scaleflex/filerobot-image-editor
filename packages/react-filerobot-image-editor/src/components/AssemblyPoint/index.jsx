@@ -25,7 +25,7 @@ const AssemblyPoint = (props) => {
 
   return (
     <React.StrictMode>
-      <ThemeProvider>
+      <ThemeProvider theme={defaultAndProvidedConfigMerged.theme}>
         <FontsFaces />
         <IconsColor />
         <AppProvider config={defaultAndProvidedConfigMerged}>

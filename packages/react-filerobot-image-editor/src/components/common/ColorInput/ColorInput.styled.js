@@ -6,7 +6,7 @@ const StyledPickerTrigger = styled.div.attrs(({ $color }) => ({
     backgroundColor: $color,
   },
 }))`
-  background-color: ${({ theme }) => theme.palette['icons-primary']};
+  background: ${({ theme }) => theme.palette['icons-primary']};
   border-radius: 2px;
   width: 24px;
   height: 24px;
@@ -16,7 +16,7 @@ const StyledPickerTrigger = styled.div.attrs(({ $color }) => ({
 `;
 
 const StyledPickerWrapper = styled.div`
-  background-color: ${({ theme }) => theme.palette['bg-secondary']};
+  background: ${({ theme }) => theme.palette['bg-secondary']};
   box-shadow: 0px 1px 2px rgba(78, 77, 77, 0.15);
   border-radius: 2px;
   padding: 12px;
@@ -73,7 +73,7 @@ const StyledColorPointer = styled.span.attrs(
   border-radius: 20px;
   box-shadow: 0px 1px 2px rgba(78, 77, 77, 0.15);
   border: 2px solid ${theme.palette['bg-secondary']};
-  background-color: ${theme.palette['accent-primary']};
+  background: ${theme.palette['accent-primary']};
   position: absolute;
   cursor: pointer;
   z-index: 11;

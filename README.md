@@ -106,6 +106,10 @@ VanillaJS only
 <script src=""></script>
 ```
 
+> In all installation cases you must import the font family that will be used from your side as it is not included in the library by default, the default font family used is [**Roboto**](https://fonts.google.com/share?selection.family=Roboto:wght@400;500) in 2 font-weight (normal === 400 & medium === 500) which falls-back to **Arial** if not found.
+
+> Just import the font in your HTML/JS file before loading the plugin whether it's Roboto or you have provided another fontFamily from [`theme`](#theme) property and that's all!
+
 <hr />
 
 ## Usage/Examples
@@ -193,6 +197,29 @@ Type: `string` | `HTMLImageElement` ***Required***.
 Default: `undefined`.
 
 The image url or an `HTMLImageElement` which the operations will be applied on.
+
+#### `theme`
+
+Type: `object`
+
+Default:
+
+Theme from [@scaleflex/ui](https://github.com/scaleflex/ui/blob/1617f8b19ade7199110df6e2ceff77dacefd75bd/packages/ui/src/theme/entity/default-theme.ts#L43) deep merged with following overrides
+
+```
+{
+  palette: {
+    'bg-primary-active': '#ECF3FF',
+  },
+  typography: {
+    fontFamily: 'Roboto, Arial',
+  },
+}
+```
+
+As the colors of the plugin are retrieved dynamically from the theme object, it gives you the possibility to customize the colors and font-family to yours.
+
+> Note: You must import the font family from your side in 2 weights (Normal === 400, Medium === 500) to have fonts work properly and show text as expected, which means `Roboto` is not included in the plugin by default so you must import it from your side too if you have provided another font family value through theme don't forget to import it from your side too.
 
 #### `tabsIds`
 

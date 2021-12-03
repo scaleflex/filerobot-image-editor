@@ -5,7 +5,7 @@ const StyledSeparator = styled.div`
   height: ${(props) => props.height};
   width: ${(props) => props.width};
   border-radius: 1px;
-  background-color: #dfe7ed;
+  background: #dfe7ed;
 `;
 
 export { StyledSeparator };
