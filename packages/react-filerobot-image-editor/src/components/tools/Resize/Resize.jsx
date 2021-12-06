@@ -59,8 +59,8 @@ const Resize = () => {
     dispatch({
       type: SET_RESIZE,
       payload: {
-        width: originalImage.width,
-        height: originalImage.height,
+        width: null,
+        height: null,
         ratioUnlocked: false,
       },
     });

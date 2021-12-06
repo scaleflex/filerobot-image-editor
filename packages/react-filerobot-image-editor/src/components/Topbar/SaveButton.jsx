@@ -71,28 +71,16 @@ const SaveButton = () => {
     designLayer.setAttr('isSaving', true);
 
     const preparedCanvas = designLayer.getStage().clone({
+      width: originalImage.width,
+      height: originalImage.height,
       scaleX: isFlippedX ? -1 : 1,
       scaleY: isFlippedY ? -1 : 1,
-      width: resize.width || originalImage.width,
-      height: resize.height || originalImage.height,
-      x: isFlippedX ? resize.width || originalImage.width : 0,
-      y: isFlippedY ? resize.height || originalImage.height : 0,
     });
 
     const [preparedDesignLayer] = preparedCanvas.children; // children[0] = Design layer
     preparedCanvas.children[1].destroy(); // children[1] = Transformers layer, which is not needed anymore
     const imgNode = preparedCanvas.findOne(`#${IMAGE_NODE_ID}`);
     imgNode.cache();
-    const mappedCropBox = mapCropBox(
-      {
-        x: crop.relativeX || clipX,
-        y: crop.relativeY || clipY,
-        width: crop.width || clipWidth,
-        height: crop.height || clipHeight,
-      },
-      shownImageDimensions,
-      preparedCanvas,
-    );
 
     const preparedDesignLayerScale = {
       x: preparedCanvas.width() / shownImageDimensions.width,
@@ -107,14 +95,48 @@ const SaveButton = () => {
 
     const { name, extension } = imageFileInfo;
 
-    const finalImgBase64 = preparedCanvas.toDataURL({
+    const mappedCropBox = mapCropBox(
+      {
+        x: crop.relativeX || clipX,
+        y: crop.relativeY || clipY,
+        width: crop.width || clipWidth,
+        height: crop.height || clipHeight,
+      },
+      shownImageDimensions,
+      preparedCanvas.attrs,
+    );
+    preparedCanvas.setAttrs({
       ...mappedCropBox,
+      x: -mappedCropBox.x,
+      y: -mappedCropBox.y,
+    });
+
+    if (resize.width) {
+      const newScaleX =
+        (isFlippedX ? -1 : 1) * (resize.width / preparedCanvas.width());
+      preparedCanvas.setAttrs({
+        scaleX: newScaleX,
+        width: resize.width,
+        x: preparedCanvas.x() * Math.abs(newScaleX),
+      });
+    }
+    if (resize.height) {
+      const newScaleY =
+        (isFlippedY ? -1 : 1) * (resize.height / preparedCanvas.height());
+      preparedCanvas.setAttrs({
+        scaleY: newScaleY,
+        height: resize.height,
+        y: preparedCanvas.y() * Math.abs(newScaleY),
+      });
+    }
+
+    const finalImgBase64 = preparedCanvas.toDataURL({
       x: isFlippedX
-        ? preparedCanvas.width() - mappedCropBox.x - mappedCropBox.width
-        : mappedCropBox.x,
+        ? -preparedCanvas.width() - Math.abs(preparedCanvas.x() * 2)
+        : 0,
       y: isFlippedY
-        ? preparedCanvas.height() - mappedCropBox.y - mappedCropBox.height
-        : mappedCropBox.y,
+        ? -preparedCanvas.height() - Math.abs(preparedCanvas.y() * 2)
+        : 0,
       mimeType: `image/${extension}`,
     });
 
