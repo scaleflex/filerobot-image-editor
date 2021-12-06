@@ -58,7 +58,7 @@ export default {
   rectangleTool: 'Rectangle',
   cornerRadius: 'Corner Radius',
   resizeWidthTitle: 'Width in pixels',
-  resizeHeightTitle: 'Width in pixels',
+  resizeHeightTitle: 'Height in pixels',
   toggleRatioLockTitle: 'Toggle ratio lock',
   reset: 'Reset',
   resetSize: 'Reset to original image size',
