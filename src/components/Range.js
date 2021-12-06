@@ -42,6 +42,7 @@ class Range extends Component {
         label={label}
       >
         {label && labelBefore && <label>{label}</label>}
+        <div className="rangervalue"> {(range / 100).toFixed(1)} </div>
         <input
           id="range"
           type="range"
@@ -49,7 +50,9 @@ class Range extends Component {
           min={min}
           max={max}
           step={step}
-          onInput={this.updateRange}
+          onInput={(_) => {
+            this.updateRange(_);
+          }}
           // onChange={this.updateRange}
         />
         {label && !labelBefore && <label>{label}</label>}

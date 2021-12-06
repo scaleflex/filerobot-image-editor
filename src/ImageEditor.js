@@ -610,10 +610,14 @@ export default class extends Component {
     };
 
     return (
-      <Wrapper roundCrop={roundCrop} isLoading={isShowSpinner}>
+      <Wrapper
+        className="spzmaincanvaseditorwrapper"
+        roundCrop={roundCrop}
+        isLoading={isShowSpinner}
+      >
         <Header {...headerProps} />
 
-        <PreviewWrapper>
+        <PreviewWrapper className="spzmaincanvaseditorinner">
           {activeBody === "preview" && <Preview {...previewProps} />}
           {activeBody === "preResize" && <PreResize {...previewProps} />}
 
