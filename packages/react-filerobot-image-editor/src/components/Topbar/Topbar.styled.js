@@ -74,6 +74,15 @@ const StyledFileExtensionSelect = styled(Select)`
   margin-left: 4px;
 `;
 
+const StyledQualityWrapper = styled.div`
+  width: 100%;
+  margin-top: 16px;
+
+  input {
+    max-width: 100%;
+  }
+`;
+
 export {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
@@ -85,4 +94,5 @@ export {
   StyledSaveButton,
   StyledFileNameInput,
   StyledFileExtensionSelect,
+  StyledQualityWrapper,
 };

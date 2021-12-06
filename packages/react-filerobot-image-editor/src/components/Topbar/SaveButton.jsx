@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import MenuItem from '@scaleflex/ui/core/menu-item';
 import Rename from '@scaleflex/icons/rename';
+import Label from '@scaleflex/ui/core/label';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
@@ -20,7 +21,10 @@ import {
   StyledSaveButton,
   StyledFileExtensionSelect,
   StyledFileNameInput,
+  StyledQualityWrapper,
 } from './Topbar.styled';
+import Slider from '../common/Slider';
+import restrictNumber from '../../utils/restrictNumber';
 
 const SaveButton = () => {
   const state = useStore();
@@ -44,7 +48,9 @@ const SaveButton = () => {
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [imageFileInfo, setImageFileInfo] = useState({});
+  const [imageFileInfo, setImageFileInfo] = useState({ quality: 0.92 });
+  const isQualityAcceptable =
+    imageFileInfo.extension === 'jpeg' || imageFileInfo.extension === 'webp';
 
   const cancelModal = () => {
     setIsModalOpened(false);
@@ -93,7 +99,7 @@ const SaveButton = () => {
       scaleY: preparedDesignLayerScale.y,
     });
 
-    const { name, extension } = imageFileInfo;
+    const { name, extension, quality } = imageFileInfo;
 
     const mappedCropBox = mapCropBox(
       {
@@ -138,6 +144,7 @@ const SaveButton = () => {
         ? -preparedCanvas.height() - Math.abs(preparedCanvas.y() * 2)
         : 0,
       mimeType: `image/${extension}`,
+      ...(isQualityAcceptable ? { quality } : {}),
     });
 
     const finalImgDesignState = extractCurrentDesignState(state);
@@ -149,6 +156,7 @@ const SaveButton = () => {
       imageBase64: finalImgBase64,
       width: mappedCropBox.width,
       height: mappedCropBox.height,
+      ...(isQualityAcceptable ? { quality } : {}),
     };
 
     onSave(finalImgPassedObject, finalImgDesignState);
@@ -170,6 +178,13 @@ const SaveButton = () => {
       ...imageFileInfo,
       name,
       nameChanged: true,
+    });
+  };
+
+  const changeQuality = (newQuality) => {
+    setImageFileInfo({
+      ...imageFileInfo,
+      quality: restrictNumber(newQuality / 100, 0.01, 1),
     });
   };
 
@@ -245,6 +260,19 @@ const SaveButton = () => {
               </MenuItem>
             ))}
           </StyledFileExtensionSelect>
+          {isQualityAcceptable && (
+            <StyledQualityWrapper>
+              <Label>{t('quality')}</Label>
+              <Slider
+                annotation="%"
+                start={1}
+                end={100}
+                onChange={changeQuality}
+                value={parseInt(imageFileInfo.quality * 100, 10)}
+                hideOverlay
+              />
+            </StyledQualityWrapper>
+          )}
         </Modal>
       )}
     </>

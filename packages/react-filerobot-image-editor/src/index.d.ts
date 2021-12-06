@@ -17,11 +17,12 @@ type closingReasons = 'after-saving' | 'close-button-clicked' | 'back-button-cli
 type imageInfo = {
   name: string,
   extension: string,
+  mimeType: string,
   fullName?: string,
   height?: number,
   width?: number,
   imageBase64?: string,
-  mimeType: string,
+  quality?: number;
 }
 
 type imageDesignState = {
@@ -109,7 +110,7 @@ export interface FilerobotImageEditorConfig {
   onSave?: (imageInfo: imageInfo, imageDesignState: imageDesignState) => void;
   onClose?: (closeReason: closingReasons) => void;
   closeAfterSaving?: boolean;
-  defaultSavedImageType?: 'png' | 'jpg' | 'jpeg' | 'webp';
+  defaultSavedImageType?: 'png' | 'jpeg' | 'webp';
   forceToPngInEllipticalCrop?: boolean;
   useBackendTranslations?: boolean;
   translations?: object;

@@ -83,4 +83,5 @@ export default {
   saveAsModalLabel: 'Save the image as',
   extension: 'Extension',
   nameIsRequired: 'Name is required.',
+  quality: 'Quality',
 };
