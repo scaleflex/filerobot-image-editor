@@ -20,6 +20,7 @@ export default {
   filtersTab: 'Filters',
   watermarkTab: 'Watermark',
   annotateTab: 'Annotate',
+  resize: 'Resize',
   resizeTab: 'Resize',
   invalidImageError: 'Invalid image provided.',
   uploadImageError: 'Error while uploading the image.',

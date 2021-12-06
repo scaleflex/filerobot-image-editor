@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React from 'react';
+import React, { useCallback } from 'react';
 import Label from '@scaleflex/ui/core/label';
 import Compare from '@scaleflex/icons/compare';
 
@@ -7,6 +7,7 @@ import Compare from '@scaleflex/icons/compare';
 import { TOGGLE_ORIGINAL_IMAGE_DISPLAY } from 'actions';
 import { useStore } from 'hooks';
 import { StyledSmallButton } from './Topbar.styled';
+import mapCropBox from '../../utils/mapCropBox';
 
 const ImageDimensionsAndDisplayToggle = () => {
   const {
@@ -14,6 +15,8 @@ const ImageDimensionsAndDisplayToggle = () => {
     isResetted = true,
     originalImage,
     resize = {},
+    adjustments: { crop },
+    shownImageDimensions,
     t,
   } = useStore();
 
@@ -30,6 +33,14 @@ const ImageDimensionsAndDisplayToggle = () => {
     document.removeEventListener('touchcancel', hideOriginalImage);
     document.removeEventListener('touchend', hideOriginalImage);
   };
+
+  const getCurrentCropDimensions = useCallback(
+    () =>
+      originalImage
+        ? mapCropBox(crop, shownImageDimensions, originalImage)
+        : {},
+    [crop],
+  );
 
   const showOriginalImage = () => {
     dispatch({
@@ -49,11 +60,12 @@ const ImageDimensionsAndDisplayToggle = () => {
     return null;
   }
 
+  const cropDimensions = getCurrentCropDimensions();
   return (
     <>
       <Label title="Saved image size">
-        {`${resize.width || originalImage.width} x ${
-          resize.height || originalImage.height
+        {`${resize.width || cropDimensions.width || originalImage.width} x ${
+          resize.height || cropDimensions.height || originalImage.height
         } px`}
       </Label>
       <StyledSmallButton

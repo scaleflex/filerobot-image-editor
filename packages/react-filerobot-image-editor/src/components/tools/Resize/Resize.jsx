@@ -1,5 +1,6 @@
 /** External Dependencies */
-import React from 'react';
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import Button from '@scaleflex/ui/core/button';
 import Label from '@scaleflex/ui/core/label';
 import LockOutline from '@scaleflex/icons/lock-outline';
@@ -9,14 +10,23 @@ import UnlockOutline from '@scaleflex/icons/unlock-outline';
 import { SET_RESIZE } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import { useStore } from 'hooks';
+import mapCropBox from 'utils/mapCropBox';
 import {
   StyledResizeWrapper,
   StyledResizeInput,
   StyledRatioLockIcon,
 } from './Resize.styled';
 
-const Resize = () => {
-  const { dispatch, originalImage, resize, theme, t } = useStore();
+const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
+  const {
+    dispatch,
+    originalImage,
+    resize,
+    shownImageDimensions,
+    adjustments: { crop },
+    theme,
+    t,
+  } = useStore();
 
   const changeResize = (e) => {
     const { name, value } = e.target;
@@ -26,7 +36,8 @@ const Resize = () => {
     };
     const isHeight = name === 'height';
     const secondDimensionName = isHeight ? 'width' : 'height';
-    if (!resize.ratioUnlocked) {
+    const isRatioUnlocked = currentSize.ratioUnlocked ?? resize.ratioUnlocked;
+    if (!isRatioUnlocked) {
       const originalImgRatio = originalImage.width / originalImage.height;
       newResize[secondDimensionName] = isHeight
         ? Math.round(newResize[name] * originalImgRatio)
@@ -40,6 +51,11 @@ const Resize = () => {
       return;
     }
 
+    if (typeof onChange === 'function') {
+      onChange(newResize);
+      return;
+    }
+
     dispatch({
       type: SET_RESIZE,
       payload: newResize,
@@ -47,6 +63,11 @@ const Resize = () => {
   };
 
   const toggleRatioLock = () => {
+    if (typeof onChange === 'function') {
+      onChange(!currentSize.ratioUnlocked);
+      return;
+    }
+
     dispatch({
       type: SET_RESIZE,
       payload: {
@@ -66,15 +87,21 @@ const Resize = () => {
     });
   };
 
+  const getCurrentCropDimensions = useCallback(
+    () => mapCropBox(crop, shownImageDimensions, originalImage),
+    [crop],
+  );
+
   const isOriginalSize =
     (!resize.width && !resize.height) ||
     (originalImage.width === resize.width &&
       originalImage.height === resize.height);
 
+  const cropDimensions = getCurrentCropDimensions();
   return (
-    <StyledResizeWrapper>
+    <StyledResizeWrapper alignLeft={alignLeft}>
       <StyledResizeInput
-        value={resize.width || originalImage.width}
+        value={currentSize.width || resize.width || cropDimensions.width}
         name="width"
         onChange={changeResize}
         inputMode="numeric"
@@ -82,10 +109,11 @@ const Resize = () => {
         type="number"
         size="sm"
         placeholder="Width"
+        noLeftMargin={alignLeft}
       />
       <Label>x</Label>
       <StyledResizeInput
-        value={resize.height || originalImage.height}
+        value={currentSize.height || resize.height || cropDimensions.height}
         name="height"
         onChange={changeResize}
         inputMode="numeric"
@@ -98,22 +126,44 @@ const Resize = () => {
         title={t('toggleRatioLockTitle')}
         onClick={toggleRatioLock}
         color="link"
+        size="sm"
       >
-        {resize.ratioUnlocked ? (
+        {currentSize.ratioUnlocked || resize.ratioUnlocked ? (
           <UnlockOutline color={theme.palette['icons-secondary']} />
         ) : (
           <LockOutline color={theme.palette['icons-secondary']} />
         )}
       </StyledRatioLockIcon>
-      <Button
-        size="sm"
-        onClick={isOriginalSize ? undefined : resetResize}
-        disabled={isOriginalSize}
-        title={t('resetSize')}
-      >
-        {t('reset')}
-      </Button>
+      {!hideResetButton && (
+        <Button
+          size="sm"
+          onClick={isOriginalSize ? undefined : resetResize}
+          disabled={isOriginalSize}
+          title={t('resetSize')}
+        >
+          {t('reset')}
+        </Button>
+      )}
     </StyledResizeWrapper>
   );
 };
+
+Resize.defaultProps = {
+  onChange: undefined,
+  currentSize: {},
+  hideResetButton: false,
+  alignLeft: false,
+};
+
+Resize.propTypes = {
+  alignLeft: PropTypes.bool,
+  hideResetButton: PropTypes.bool,
+  onChange: PropTypes.func,
+  currentSize: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number,
+    ratioUnlocked: false,
+  }),
+};
+
 export default Resize;

@@ -83,6 +83,11 @@ const StyledQualityWrapper = styled.div`
   }
 `;
 
+const StyledResizeOnSave = styled.div`
+  margin-top: 16px;
+  width: 100%;
+`;
+
 export {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
@@ -95,4 +100,5 @@ export {
   StyledFileNameInput,
   StyledFileExtensionSelect,
   StyledQualityWrapper,
+  StyledResizeOnSave,
 };

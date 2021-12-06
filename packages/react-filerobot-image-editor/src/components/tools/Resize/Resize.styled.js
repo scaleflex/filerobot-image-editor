@@ -5,7 +5,7 @@ import Input from '@scaleflex/ui/core/input';
 
 const StyledResizeWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: ${({ alignLeft }) => (alignLeft ? 'left' : 'center')};
   align-items: center;
   flex-wrap: wrap;
 `;
@@ -13,7 +13,7 @@ const StyledResizeWrapper = styled.div`
 const StyledResizeInput = styled(Input)`
   width: 70px;
   height: 24px;
-  margin: 8px;
+  margin: ${({ noLeftMargin }) => (noLeftMargin ? '8px 8px 8px 0' : '8px')};
 `;
 
 const StyledRatioLockIcon = styled(IconButton)`

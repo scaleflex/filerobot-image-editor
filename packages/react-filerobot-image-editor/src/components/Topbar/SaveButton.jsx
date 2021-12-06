@@ -17,14 +17,16 @@ import {
 } from 'utils/constants';
 import { SET_SAVED, SET_ERROR } from 'actions';
 import Modal from 'components/common/Modal';
+import Slider from 'components/common/Slider';
+import restrictNumber from 'utils/restrictNumber';
+import { Resize } from 'components/tools/Resize';
 import {
   StyledSaveButton,
   StyledFileExtensionSelect,
   StyledFileNameInput,
   StyledQualityWrapper,
+  StyledResizeOnSave,
 } from './Topbar.styled';
-import Slider from '../common/Slider';
-import restrictNumber from '../../utils/restrictNumber';
 
 const SaveButton = () => {
   const state = useStore();
@@ -99,7 +101,7 @@ const SaveButton = () => {
       scaleY: preparedDesignLayerScale.y,
     });
 
-    const { name, extension, quality } = imageFileInfo;
+    const { name, extension, quality, size = {} } = imageFileInfo;
 
     const mappedCropBox = mapCropBox(
       {
@@ -117,21 +119,21 @@ const SaveButton = () => {
       y: -mappedCropBox.y,
     });
 
-    if (resize.width) {
+    if (size.width) {
       const newScaleX =
-        (isFlippedX ? -1 : 1) * (resize.width / preparedCanvas.width());
+        (isFlippedX ? -1 : 1) * (size.width / preparedCanvas.width());
       preparedCanvas.setAttrs({
         scaleX: newScaleX,
-        width: resize.width,
+        width: size.width,
         x: preparedCanvas.x() * Math.abs(newScaleX),
       });
     }
-    if (resize.height) {
+    if (size.height) {
       const newScaleY =
-        (isFlippedY ? -1 : 1) * (resize.height / preparedCanvas.height());
+        (isFlippedY ? -1 : 1) * (size.height / preparedCanvas.height());
       preparedCanvas.setAttrs({
         scaleY: newScaleY,
-        height: resize.height,
+        height: size.height,
         y: preparedCanvas.y() * Math.abs(newScaleY),
       });
     }
@@ -200,6 +202,13 @@ const SaveButton = () => {
     setIsModalOpened(true);
   };
 
+  const finalResize = (newSize) => {
+    setImageFileInfo({
+      ...imageFileInfo,
+      size: newSize,
+    });
+  };
+
   useEffect(() => {
     if (originalImage && (!imageFileInfo.name || !imageFileInfo.extension)) {
       const { name, extension } = getFileFullName(
@@ -214,6 +223,18 @@ const SaveButton = () => {
       setImageFileInfo({ ...imageFileInfo, name, extension });
     }
   }, [originalImage, isModalOpened]);
+
+  useEffect(() => {
+    if (originalImage && resize) {
+      setImageFileInfo({
+        ...imageFileInfo,
+        size: {
+          width: resize.width,
+          height: resize.height,
+        },
+      });
+    }
+  }, [resize]);
 
   return (
     <>
@@ -273,6 +294,15 @@ const SaveButton = () => {
               />
             </StyledQualityWrapper>
           )}
+          <StyledResizeOnSave>
+            <Label>{t('resize')}</Label>
+            <Resize
+              onChange={finalResize}
+              currentSize={imageFileInfo?.size || {}}
+              hideResetButton
+              alignLeft
+            />
+          </StyledResizeOnSave>
         </Modal>
       )}
     </>
