@@ -25,8 +25,19 @@ const Modal = ({
   cancelButtonColor = 'link',
   children,
 }) => {
+  const onKeyUp = (e) => {
+    if (e.key === 'Enter') {
+      onDone(e);
+    }
+  };
+
   return (
-    <LibModal open={isOpened} onClose={onCancel} style={style}>
+    <LibModal
+      open={isOpened}
+      onClose={onCancel}
+      style={style}
+      onKeyUp={onKeyUp}
+    >
       <ModalTitle
         icon={<Icon size={25} />}
         iconShadow
