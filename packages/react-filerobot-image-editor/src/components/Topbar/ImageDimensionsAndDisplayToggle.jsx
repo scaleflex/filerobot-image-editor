@@ -1,13 +1,13 @@
 /** External Dependencies */
-import React, { useCallback } from 'react';
+import React from 'react';
 import Label from '@scaleflex/ui/core/label';
 import Compare from '@scaleflex/icons/compare';
 
 /** Internal Dependencies */
 import { TOGGLE_ORIGINAL_IMAGE_DISPLAY } from 'actions';
 import { useStore } from 'hooks';
+import getProperDimensiosns from 'utils/getProperDimensions';
 import { StyledSmallButton } from './Topbar.styled';
-import mapCropBox from '../../utils/mapCropBox';
 
 const ImageDimensionsAndDisplayToggle = () => {
   const {
@@ -34,14 +34,6 @@ const ImageDimensionsAndDisplayToggle = () => {
     document.removeEventListener('touchend', hideOriginalImage);
   };
 
-  const getCurrentCropDimensions = useCallback(
-    () =>
-      originalImage
-        ? mapCropBox(crop, shownImageDimensions, originalImage)
-        : {},
-    [crop],
-  );
-
   const showOriginalImage = () => {
     dispatch({
       type: TOGGLE_ORIGINAL_IMAGE_DISPLAY,
@@ -60,13 +52,17 @@ const ImageDimensionsAndDisplayToggle = () => {
     return null;
   }
 
-  const cropDimensions = getCurrentCropDimensions();
+  const dimensions = getProperDimensiosns(
+    resize,
+    crop,
+    shownImageDimensions,
+    originalImage,
+  );
+
   return (
     <>
-      <Label title="Saved image size">
-        {`${resize.width || cropDimensions.width || originalImage.width} x ${
-          resize.height || cropDimensions.height || originalImage.height
-        } px`}
+      <Label title={t('imageDimensionsHoverTitle')}>
+        {`${dimensions.width} x ${dimensions.height} px`}
       </Label>
       <StyledSmallButton
         color="link"

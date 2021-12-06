@@ -85,4 +85,5 @@ export default {
   extension: 'Extension',
   nameIsRequired: 'Name is required.',
   quality: 'Quality',
+  imageDimensionsHoverTitle: 'Saved image size (width x height)',
 };

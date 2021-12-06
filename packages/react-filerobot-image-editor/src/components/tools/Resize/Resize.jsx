@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@scaleflex/ui/core/button';
 import Label from '@scaleflex/ui/core/label';
@@ -10,7 +10,7 @@ import UnlockOutline from '@scaleflex/icons/unlock-outline';
 import { SET_RESIZE } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import { useStore } from 'hooks';
-import mapCropBox from 'utils/mapCropBox';
+import getProperDimensiosns from 'utils/getProperDimensions';
 import {
   StyledResizeWrapper,
   StyledResizeInput,
@@ -64,7 +64,7 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
 
   const toggleRatioLock = () => {
     if (typeof onChange === 'function') {
-      onChange(!currentSize.ratioUnlocked);
+      onChange({ ratioUnlocked: !currentSize.ratioUnlocked });
       return;
     }
 
@@ -87,21 +87,21 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
     });
   };
 
-  const getCurrentCropDimensions = useCallback(
-    () => mapCropBox(crop, shownImageDimensions, originalImage),
-    [crop],
-  );
-
   const isOriginalSize =
     (!resize.width && !resize.height) ||
     (originalImage.width === resize.width &&
       originalImage.height === resize.height);
 
-  const cropDimensions = getCurrentCropDimensions();
+  const dimensions = getProperDimensiosns(
+    ((currentSize.width || currentSize.height) && currentSize) || resize,
+    crop,
+    shownImageDimensions,
+    originalImage,
+  );
   return (
     <StyledResizeWrapper alignLeft={alignLeft}>
       <StyledResizeInput
-        value={currentSize.width || resize.width || cropDimensions.width}
+        value={dimensions.width}
         name="width"
         onChange={changeResize}
         inputMode="numeric"
@@ -113,7 +113,7 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
       />
       <Label>x</Label>
       <StyledResizeInput
-        value={currentSize.height || resize.height || cropDimensions.height}
+        value={dimensions.height}
         name="height"
         onChange={changeResize}
         inputMode="numeric"

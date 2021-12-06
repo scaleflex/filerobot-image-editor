@@ -202,10 +202,13 @@ const SaveButton = () => {
     setIsModalOpened(true);
   };
 
-  const finalResize = (newSize) => {
+  const resizeImageFile = (newSize) => {
     setImageFileInfo({
       ...imageFileInfo,
-      size: newSize,
+      size: {
+        ...imageFileInfo.size,
+        ...newSize,
+      },
     });
   };
 
@@ -297,7 +300,7 @@ const SaveButton = () => {
           <StyledResizeOnSave>
             <Label>{t('resize')}</Label>
             <Resize
-              onChange={finalResize}
+              onChange={resizeImageFile}
               currentSize={imageFileInfo?.size || {}}
               hideResetButton
               alignLeft
