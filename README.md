@@ -108,7 +108,7 @@ npm install --save filerobot-image-editor@beta
 VanillaJS only
 
 ```js
-<script src="https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/4.0.0-beta/filerobot-image-editor.min.js"></script>
+<script src="https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/4.0.0-beta/filerobot-image-editor.min.js?vh=37f61e&func=proxy"></script>
 ```
 
 > In all installation cases you must import the font family that will be used from your side as it is not included in the library by default, the default font family used is [**Roboto**](https://fonts.google.com/share?selection.family=Roboto:wght@400;500) in 2 font-weight (normal === 400 & medium === 500) which falls-back to **Arial** if not found.
@@ -339,17 +339,17 @@ Default:
 
 The common options existed in all the annotations tools and used as default values.
 
-| Property | Type | Default | Description |
-| --- | --- | --- | --- |
-| **`fill`** | string | '#000000' | The filled color for any added annotation |
-| **`stroke`** | string | '#000000' | The stroke color for any added annotation |
-| **`strokeWidth`** | number | 0 | The stroke width for any added annotation |
-| **`shadowOffsetX`** | number | 0 | The horizontal/X shadow offset from its base annotation |
-| **`shadowOffsetY`** | number | 0 | The vertical/Y shadow offset from its base annotation |
-| **`shadowBlur`** | number | 0 | Blur value of the shadow added to the annotation |
-| **`shadowColor`** | string | '#000000' | The color of the shadow added to the annotation |
-| **`shadowOpacity`** | number | 1 | Transparency/Opacity value for the shadow of annotation |
-| **`opacity`** | number (0 - 1) | 1 | Transparency/Opacity value for the whole annotation |
+| Property            | Type           | Default   | Description                                             |
+| ------------------- | -------------- | --------- | ------------------------------------------------------- |
+| **`fill`**          | string         | '#000000' | The filled color for any added annotation               |
+| **`stroke`**        | string         | '#000000' | The stroke color for any added annotation               |
+| **`strokeWidth`**   | number         | 0         | The stroke width for any added annotation               |
+| **`shadowOffsetX`** | number         | 0         | The horizontal/X shadow offset from its base annotation |
+| **`shadowOffsetY`** | number         | 0         | The vertical/Y shadow offset from its base annotation   |
+| **`shadowBlur`**    | number         | 0         | Blur value of the shadow added to the annotation        |
+| **`shadowColor`**   | string         | '#000000' | The color of the shadow added to the annotation         |
+| **`shadowOpacity`** | number         | 1         | Transparency/Opacity value for the shadow of annotation |
+| **`opacity`**       | number (0 - 1) | 1         | Transparency/Opacity value for the whole annotation     |
 
 #### `Text`
 
@@ -377,16 +377,16 @@ Default:
 
 The options available for the text annotation tool in additon to the annotationsCommon property,
 
-| Property | Type | Default (possible values) | Description |
-| --- | --- | --- | --- |
-| **`text`** | string | 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' | The placeholder text added on adding a new text annotation |
-| **`fontFamily`** | string | 'Arial' | The font family used for the text |
-| **`fonts`** | (strings \| objects)[] | mentioned above | The fonts available to the user to choose from while adding text  |
-| **`fontSize`** | number | 14 | The default size of the text added |
-| **`letterSpacing`** | number | 0 | The spaces/paddings between letters of the text |
-| **`lineHeight`** | number | 1 | Height of each line of the added text |
-| **`align`** | string | 'left' ('left' \| 'center' \| 'right') | The horizontal alignment of the added text |
-| **`fontStyle`** | string | 'normal' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added |
+| Property            | Type                   | Default (possible values)                                  | Description                                                      |
+| ------------------- | ---------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------- |
+| **`text`**          | string                 | 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' | The placeholder text added on adding a new text annotation       |
+| **`fontFamily`**    | string                 | 'Arial'                                                    | The font family used for the text                                |
+| **`fonts`**         | (strings \| objects)[] | mentioned above                                            | The fonts available to the user to choose from while adding text |
+| **`fontSize`**      | number                 | 14                                                         | The default size of the text added                               |
+| **`letterSpacing`** | number                 | 0                                                          | The spaces/paddings between letters of the text                  |
+| **`lineHeight`**    | number                 | 1                                                          | Height of each line of the added text                            |
+| **`align`**         | string                 | 'left' ('left' \| 'center' \| 'right')                     | The horizontal alignment of the added text                       |
+| **`fontStyle`**     | string                 | 'normal' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added                            |
 
 > Fonts must be loaded from your side in implementation to take effect as it is not guaranteed that the user has the font on his system.
 
@@ -404,9 +404,9 @@ Default:
 
 The options available for image annotation tool in additon to the annotationsCommon property,
 
-| Property | Type | Default (possible values) | Description |
-| --- | --- | --- | --- |
-| **`fill`** | string | undefined | The color fills the image's transparent parts |
+| Property   | Type   | Default (possible values) | Description                                   |
+| ---------- | ------ | ------------------------- | --------------------------------------------- |
+| **`fill`** | string | undefined                 | The color fills the image's transparent parts |
 
 #### `Rect`
 
@@ -421,9 +421,9 @@ Default:
 ```
 The options available for Rect annotation tool in additon to the annotationsCommon property,
 
-| Property | Type | Default (possible values) | Description |
-| --- | --- | --- | --- |
-| **`cornerRadius`** | number | 0 | The radius of the rectangle's corners |
+| Property           | Type   | Default (possible values) | Description                           |
+| ------------------ | ------ | ------------------------- | ------------------------------------- |
+| **`cornerRadius`** | number | 0                         | The radius of the rectangle's corners |
 
 #### `Ellipse`
 
@@ -447,9 +447,9 @@ Default:
 
 The available options for polygon annotation tool in additon to the annotationsCommon property,
 
-| Property | Type | Default (possible values) | Description |
-| --- | --- | --- | --- |
-| **`sides`** | number | 3 | Number of sides considered by default for the added polygon |
+| Property    | Type   | Default (possible values) | Description                                                 |
+| ----------- | ------ | ------------------------- | ----------------------------------------------------------- |
+| **`sides`** | number | 3                         | Number of sides considered by default for the added polygon |
 
 #### `Pen`
 
@@ -480,8 +480,8 @@ Default:
 
 The available options for line annotation tool in additon to the annotationsCommon property,
 
-| Property | Type | Default (possible values) | Description |
-| --- | --- | --- | --- |
+| Property      | Type   | Default (possible values)              | Description                      |
+| ------------- | ------ | -------------------------------------- | -------------------------------- |
 | **`lineCap`** | string | 'butt' ('butt' \| 'round' \| 'square') | The start & end borders line cap |
 
 #### `Arrow`
@@ -501,11 +501,11 @@ Default:
 
 The available options for arrow annotation tool in additon to the annotationsCommon property,
 
-| Property | Type | Default (possible values) | Description |
-| --- | --- | --- | --- |
-| **`lineCap`** | string | 'butt' ('butt' \| 'round' \| 'square') | The border line cap |
-| **`pointerLength`** | number | undefined | Length of the arrow's pointer in px |
-| **`pointerWidth`** | number | undefined | Width of the arrow's pointer in px |
+| Property            | Type   | Default (possible values)              | Description                         |
+| ------------------- | ------ | -------------------------------------- | ----------------------------------- |
+| **`lineCap`**       | string | 'butt' ('butt' \| 'round' \| 'square') | The border line cap                 |
+| **`pointerLength`** | number | undefined                              | Length of the arrow's pointer in px |
+| **`pointerWidth`**  | number | undefined                              | Width of the arrow's pointer in px  |
 
 #### `Watermark`
 
@@ -522,9 +522,9 @@ Default:
 
 The available options for watermark tool, the watermark is using the options of text and image annotation tools mentioned above depending on the watermark chosen,
 
-| Property | Type | Default (possible values) | Description |
-| --- | --- | --- | --- |
-| **`gallery`** | string[] | [] | Watermark images urls which are considered to show a list of available watermarks to be used by the user directly from watermark tab |
+| Property      | Type     | Default (possible values) | Description                                                                                                                          |
+| ------------- | -------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **`gallery`** | string[] | []                        | Watermark images urls which are considered to show a list of available watermarks to be used by the user directly from watermark tab |
 
 > Text watermark width/multi-lines are not supported in the [cloudimage](#usecloudimage) mode even if the transformation/resize frame is shown while selecting which means text watermark will always be 1 line in generated cloudimage's URL from the plugin
 >
@@ -548,14 +548,14 @@ Default:
 
 The available options for crop tool,
 
-| Property | Type | Default (possible values) | Description |
-| --- | --- | --- | --- |
-| **`minWidth`** | number | 14 | Minimum width (in px) of the possible crop area |
-| **`minHeight`** | number | 14 | Minimum height (in px) of the possible crop area |
-| **`maxWidth`** | number | null | Maximum width (in px) of the possible crop area |
-| **`maxHeight`** | number | null | Maximum height (in px) of the possible crop area |
-| **`ratio`** | string \| number | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area |
-| **`noPresets`** | boolean | false | hides the crop presets if `true` |
+| Property        | Type             | Default (possible values)                                  | Description                                      |
+| --------------- | ---------------- | ---------------------------------------------------------- | ------------------------------------------------ |
+| **`minWidth`**  | number           | 14                                                         | Minimum width (in px) of the possible crop area  |
+| **`minHeight`** | number           | 14                                                         | Minimum height (in px) of the possible crop area |
+| **`maxWidth`**  | number           | null                                                       | Maximum width (in px) of the possible crop area  |
+| **`maxHeight`** | number           | null                                                       | Maximum height (in px) of the possible crop area |
+| **`ratio`**     | string \| number | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area                   |
+| **`noPresets`** | boolean          | false                                                      | hides the crop presets if `true`                 |
 
 > Please note the letters-case of the above properties..
 
@@ -589,16 +589,16 @@ Default:
 ```
 The options available for cloudimage mode,
 
-| Property | Type | Default (possible values) | Description |
-| --- | --- | --- | --- |
-| **`token`** | string ***Required if [useCloudimage](#usecloudimage) `true`*** | '' | The [cloudimage](https://cloudimage.io/) token |
-| **`version`** | string | '' | The version of cloudimage service used |
-| **`secureProtocol`** | boolean | true | `true` means using (`https`) in the URL, `false` means using (`http`) |
-| **`imageSealing`** | object | mentioned above | Assigns the options for image sealing feature (your cloudimage account must support it) |
-| imageSealing.**`enable`** | boolean | true | `true` means using (`https`) in the URL, `false` means using (`http`) |
-| imageSealing.**`salt`** | string ***Required if imageSealing enabled***| '' | The salt string is set upon configuration and is used for the encryption |
-| imageSealing.**`charCount`** | number | 10 | Calculated hash (URL ci_seal parameter) length |
-| imageSealing.**`includeParams`** | string[] | [] | URL query parameters to be sealed. By default, all parameters will be sealed. you can set a list of query parameters, ex, ['wat_url'] which enables you to freely append additional transformations to the URL (the sealed parameters cannot be overwritten). |
+| Property                         | Type                                                            | Default (possible values) | Description                                                                                                                                                                                                                                                   |
+| -------------------------------- | --------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`token`**                      | string ***Required if [useCloudimage](#usecloudimage) `true`*** | ''                        | The [cloudimage](https://cloudimage.io/) token                                                                                                                                                                                                                |
+| **`version`**                    | string                                                          | ''                        | The version of cloudimage service used                                                                                                                                                                                                                        |
+| **`secureProtocol`**             | boolean                                                         | true                      | `true` means using (`https`) in the URL, `false` means using (`http`)                                                                                                                                                                                         |
+| **`imageSealing`**               | object                                                          | mentioned above           | Assigns the options for image sealing feature (your cloudimage account must support it)                                                                                                                                                                       |
+| imageSealing.**`enable`**        | boolean                                                         | true                      | `true` means using (`https`) in the URL, `false` means using (`http`)                                                                                                                                                                                         |
+| imageSealing.**`salt`**          | string ***Required if imageSealing enabled***                   | ''                        | The salt string is set upon configuration and is used for the encryption                                                                                                                                                                                      |
+| imageSealing.**`charCount`**     | number                                                          | 10                        | Calculated hash (URL ci_seal parameter) length                                                                                                                                                                                                                |
+| imageSealing.**`includeParams`** | string[]                                                        | []                        | URL query parameters to be sealed. By default, all parameters will be sealed. you can set a list of query parameters, ex, ['wat_url'] which enables you to freely append additional transformations to the URL (the sealed parameters cannot be overwritten). |
 
 ### Callbacks
 
@@ -634,8 +634,8 @@ Triggered once the user clicks either close/cancel button or back button, if not
 
 ## Bridges
 
-* [<s>Vanilla JS ***(done)***</s>](#vanilla-javascript)
-* [<s>React ***(done)***</s>]()
+* [Vanilla JS <s>***(done)***</s>](#vanilla-javascript)
+* [React <s>***(done)***</s>](#react-component)
 * Angular (no ETA)
 * Vue (no ETA)
 * React-native (no ETA)
