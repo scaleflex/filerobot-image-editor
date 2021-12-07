@@ -13,7 +13,7 @@ const Tabs = () => {
     t,
     dispatch,
     tabId = null,
-    config: { tabsIds, defaultTabId },
+    config: { tabsIds, defaultTabId, useCloudimage },
   } = useStore();
 
   const currentTabId = tabId || defaultTabId;
@@ -24,7 +24,9 @@ const Tabs = () => {
         ? AVAILABLE_TABS.filter((tab) => tabsIds.includes(tab.id))
         : AVAILABLE_TABS;
 
-    return tabs.length > 0 ? tabs : AVAILABLE_TABS;
+    return (tabs.length > 0 ? tabs : AVAILABLE_TABS).filter(
+      ({ hideFn }) => !hideFn || !hideFn({ useCloudimage }),
+    );
   }, [tabsIds]);
 
   const selectTab = useCallback((newTabId) => {

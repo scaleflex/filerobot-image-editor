@@ -11,7 +11,7 @@ const MIN_VALUE = 0;
 const DEFAULT_VALUE = {
   blurRadius: MIN_VALUE,
 };
-const MAX_VALUE = 40;
+const MAX_VALUE = 100;
 const sliderStyle = { width: 150, padding: 0 };
 
 const BlurOptions = () => {

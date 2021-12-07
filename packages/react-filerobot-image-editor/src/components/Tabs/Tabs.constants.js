@@ -26,6 +26,7 @@ export const AVAILABLE_TABS = [
     id: TABS_IDS.FILTERS,
     labelKey: 'filtersTab',
     icon: ImageFilters,
+    hideFn: ({ useCloudimage }) => useCloudimage,
   },
   {
     id: TABS_IDS.WATERMARK,
@@ -36,6 +37,7 @@ export const AVAILABLE_TABS = [
     id: TABS_IDS.ANNOTATE,
     labelKey: 'annotateTab',
     icon: Annotate,
+    hideFn: ({ useCloudimage }) => useCloudimage,
   },
   {
     id: TABS_IDS.RESIZE,

@@ -17,7 +17,7 @@ const ToolsBar = () => {
     toolId,
     annotations,
     selectionsIds = [],
-    config: { defaultTabId, defaultToolId },
+    config: { defaultTabId, defaultToolId, useCloudimage },
   } = useContext(AppContext);
   const currentTabId = tabId || defaultTabId;
   const currentToolId =
@@ -40,10 +40,11 @@ const ToolsBar = () => {
   const items = useMemo(
     () =>
       tabTools.map((id) => {
-        const { Item } = TOOLS_ITEMS[id];
+        const { Item, hideFn } = TOOLS_ITEMS[id];
 
         return (
-          Item && (
+          Item &&
+          (!hideFn || !hideFn({ useCloudimage })) && (
             <Item
               key={id}
               selectTool={selectTool}
@@ -76,6 +77,8 @@ const ToolsBar = () => {
       currentTabId &&
       currentToolId &&
       TABS_TOOLS[currentTabId].includes(currentToolId) &&
+      (!TOOLS_ITEMS[toolId]?.hideFn ||
+        !TOOLS_ITEMS[toolId]?.hideFn({ useCloudimage })) &&
       TOOLS_ITEMS[toolId]?.ItemOptions
     );
   }, [currentTabId, currentToolId, annotations, selectionsIds]);

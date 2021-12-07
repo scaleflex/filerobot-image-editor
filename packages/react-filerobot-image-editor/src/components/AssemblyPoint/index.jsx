@@ -11,7 +11,7 @@ import deepMerge from 'utils/deepMerge';
 import { FontsFaces, IconsColor } from './globalStyles';
 
 const AssemblyPoint = (props) => {
-  const { image } = props;
+  const { image, onSave, useCloudimage, cloudimage } = props;
   if (
     !image ||
     (typeof image !== 'string' && !(image instanceof HTMLImageElement))
@@ -19,6 +19,19 @@ const AssemblyPoint = (props) => {
     throw new Error(
       '`image` property is required either a string of image url or a HTMLImageElement.',
     );
+  }
+  if (!onSave) {
+    throw new Error('`onSave` callback function is required.');
+  }
+  if (useCloudimage) {
+    if (!cloudimage?.token) {
+      throw new Error('`token` property is required in cloudimage mode.');
+    }
+    if (cloudimage?.imageSealing?.enable && !cloudimage?.imageSealing?.salt) {
+      throw new Error(
+        '`salt` property of imageSealing object is required in cloudimage mode as long as `imageSealing` is enabled.',
+      );
+    }
   }
 
   const defaultAndProvidedConfigMerged = deepMerge(defaultConfig, props);
@@ -36,6 +49,11 @@ const AssemblyPoint = (props) => {
   );
 };
 
+AssemblyPoint.defaultProps = {
+  useCloudimage: false,
+  cloudimage: {},
+};
+
 AssemblyPoint.propTypes = {
   image: PropTypes.oneOfType([
     PropTypes.string,
@@ -43,6 +61,9 @@ AssemblyPoint.propTypes = {
     PropTypes.instanceOf(SVGImageElement),
     PropTypes.instanceOf(ImageBitmap),
   ]).isRequired,
+  onSave: PropTypes.func.isRequired,
+  useCloudimage: PropTypes.bool,
+  cloudimage: PropTypes.instanceOf(Object),
 };
 
 export default memo(AssemblyPoint);

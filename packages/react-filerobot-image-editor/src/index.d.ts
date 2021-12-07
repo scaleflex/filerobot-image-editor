@@ -23,6 +23,7 @@ type imageInfo = {
   width?: number,
   imageBase64?: string,
   quality?: number;
+  cloudimageUrl?: string;
 }
 
 type imageDesignState = {
@@ -118,6 +119,18 @@ export interface FilerobotImageEditorConfig {
   avoidChangesNotSavedAlertOnLeave?: boolean;
   loadableDesignState?: object;
   showBackButton?: boolean;
+  useCloudimage?: boolean;
+  cloudimage?: {
+    token: string;
+    version?: string;
+    secureProtocol?: boolean;
+    imageSealing?: {
+      enable?: boolean;
+      salt?: string;
+      charCount?: number;
+      includeParams?: string[];
+    }
+  }
 }
 
 declare const FilerobotImageEditor: React.FC<FilerobotImageEditorConfig>;

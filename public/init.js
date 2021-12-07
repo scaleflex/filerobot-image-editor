@@ -76,6 +76,16 @@ const config = {
   // defaultTabId: TABS.ADJUST,
   // defaultToolId: TOOLS_IDS.CROP,
   // showBackButton: true,
+  // useCloudimage: true,
+  // cloudimage: {
+  // token: 'test',
+  //   imageSealing: {
+  //     enable: true,
+  //     salt: 'qer',
+  //     charCount: 20,
+  //     includeParams: null,
+  //   },
+  // },
 };
 
 // JS Calling

@@ -28,6 +28,7 @@ import {
 const TextControls = ({ text, saveText, children }) => {
   const { dispatch, textIdOfEditableContent, designLayer, t, config } =
     useStore();
+  const { useCloudimage } = config;
   const { fonts = [] } = config[TOOLS_IDS.TEXT];
 
   const changeTextProps = useCallback(
@@ -111,8 +112,10 @@ const TextControls = ({ text, saveText, children }) => {
     <AnnotationOptions
       annotation={text}
       updateAnnotation={saveText}
-      morePoppableOptionsPrepended={TEXT_POPPABLE_OPTIONS}
-      moreOptionsPopupComponentsObj={textOptionsPopupComponents}
+      morePoppableOptionsPrepended={!useCloudimage ? TEXT_POPPABLE_OPTIONS : []}
+      moreOptionsPopupComponentsObj={
+        !useCloudimage ? textOptionsPopupComponents : {}
+      }
       t={t}
     >
       <StyledFontFamilySelect
@@ -140,18 +143,22 @@ const TextControls = ({ text, saveText, children }) => {
         size="sm"
         placeholder={t('size')}
       />
-      <StyledIconWrapper
-        aria-selected={(text.fontStyle || '').includes('bold')}
-        onClick={() => changeFontStyle('bold')}
-      >
-        <FontBold />
-      </StyledIconWrapper>
-      <StyledIconWrapper
-        aria-selected={(text.fontStyle || '').includes('italic')}
-        onClick={() => changeFontStyle('italic')}
-      >
-        <FontItalic />
-      </StyledIconWrapper>
+      {!useCloudimage && (
+        <>
+          <StyledIconWrapper
+            aria-selected={(text.fontStyle || '').includes('bold')}
+            onClick={() => changeFontStyle('bold')}
+          >
+            <FontBold />
+          </StyledIconWrapper>
+          <StyledIconWrapper
+            aria-selected={(text.fontStyle || '').includes('italic')}
+            onClick={() => changeFontStyle('italic')}
+          >
+            <FontItalic />
+          </StyledIconWrapper>
+        </>
+      )}
       {children}
     </AnnotationOptions>
   );

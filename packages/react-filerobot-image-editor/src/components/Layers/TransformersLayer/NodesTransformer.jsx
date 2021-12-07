@@ -1,13 +1,18 @@
 /** External Dependencies */
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Transformer } from 'react-konva';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { NODES_TRANSFORMER_ID } from 'utils/constants';
+import { useStore } from 'hooks';
 
 const NodesTransformer = () => {
-  const { selectionsIds = [], theme, designLayer } = useContext(AppContext);
+  const {
+    selectionsIds = [],
+    theme,
+    designLayer,
+    config: { useCloudimage },
+  } = useStore();
 
   const selections = useMemo(
     () =>
@@ -39,6 +44,7 @@ const NodesTransformer = () => {
       borderStrokeWidth={2}
       borderDash={[4]}
       flipEnabled
+      rotateEnabled={!useCloudimage}
     />
   );
 };

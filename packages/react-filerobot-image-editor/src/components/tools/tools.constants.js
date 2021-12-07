@@ -33,10 +33,12 @@ export const TOOLS_ITEMS = {
   [TOOLS_IDS.FLIP_X]: {
     id: TOOLS_IDS.FLIP_X,
     Item: FlipX,
+    hideFn: ({ useCloudimage }) => useCloudimage,
   },
   [TOOLS_IDS.FLIP_Y]: {
     id: TOOLS_IDS.FLIP_Y,
     Item: FlipY,
+    hideFn: ({ useCloudimage }) => useCloudimage,
   },
   [TOOLS_IDS.BRIGHTNESS]: {
     id: TOOLS_IDS.BRIGHTNESS,
@@ -52,6 +54,7 @@ export const TOOLS_ITEMS = {
     id: TOOLS_IDS.HSV,
     Item: HSV,
     ItemOptions: HSVOptions,
+    hideFn: ({ useCloudimage }) => useCloudimage,
   },
   [TOOLS_IDS.BLUR]: {
     id: TOOLS_IDS.BLUR,
@@ -62,6 +65,7 @@ export const TOOLS_ITEMS = {
     id: TOOLS_IDS.WARMTH,
     Item: Warmth,
     ItemOptions: WarmthOptions,
+    hideFn: ({ useCloudimage }) => useCloudimage,
   },
   [TOOLS_IDS.FILTERS]: {
     id: TOOLS_IDS.FILTERS,

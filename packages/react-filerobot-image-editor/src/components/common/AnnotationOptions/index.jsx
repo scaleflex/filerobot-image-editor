@@ -8,6 +8,7 @@ import Stroke from '@scaleflex/icons/stroke';
 import Position from '@scaleflex/icons/position';
 
 /** Internal Dependencies */
+import { useStore } from 'hooks';
 import TransparencyField from './TransparencyField';
 import StrokeFields from './StrokeFields';
 import ShadowFields from './ShadowFields';
@@ -32,6 +33,9 @@ const AnnotationOptions = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [currentOption, setCurrentOption] = useState(null);
+  const {
+    config: { useCloudimage },
+  } = useStore();
   const options = useMemo(
     () => [
       ...morePoppableOptionsPrepended,
@@ -40,9 +44,17 @@ const AnnotationOptions = ({
         name: POPPABLE_OPTIONS.TRANSPARENCY,
         Icon: Transparency,
       },
-      { title: 'Stroke', name: POPPABLE_OPTIONS.STROKE, Icon: Stroke },
-      { title: 'Shadow', name: POPPABLE_OPTIONS.SHADOW, Icon: Shadow },
-      { title: 'Position', name: POPPABLE_OPTIONS.POSITION, Icon: Position },
+      ...(!useCloudimage
+        ? [
+            { title: 'Stroke', name: POPPABLE_OPTIONS.STROKE, Icon: Stroke },
+            { title: 'Shadow', name: POPPABLE_OPTIONS.SHADOW, Icon: Shadow },
+          ]
+        : []),
+      {
+        title: 'Position',
+        name: POPPABLE_OPTIONS.POSITION,
+        Icon: Position,
+      },
     ],
     [morePoppableOptionsPrepended],
   );

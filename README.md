@@ -60,13 +60,16 @@ GIF Link
 - [Config](#config)
   - [Properties](#properties)
   - [Callbacks](#callbacks)
-- [Bridges appendix](#bridges-appendix)
+- [Bridges](#bridges)
+- [Bridges docs](#bridges-docs)
   - [VanillaJS](#vanilla-javascript)
 - [Used by](#used-by)
 - [Feedback](#feedback)
+- [Contributing](#contributing)
+- [License](#license)
 
 <hr />
-  
+
 ## Requirements
 	> Following requirements required only in NPM installation, but they're included in CDN bundle installation.
 
@@ -336,15 +339,15 @@ The common options existed in all the annotations tools and used as default valu
 
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
-| **fill** | string | '#000000' | The filled color for any added annotation |
-| **stroke** | string | '#000000' | The stroke color for any added annotation |
-| **strokeWidth** | number | 0 | The stroke width for any added annotation |
-| **shadowOffsetX** | number | 0 | The horizontal/X shadow offset from its base annotation |
-| **shadowOffsetY** | number | 0 | The vertical/Y shadow offset from its base annotation |
-| **shadowBlur** | number | 0 | Blur value of the shadow added to the annotation |
-| **shadowColor** | string | '#000000' | The color of the shadow added to the annotation |
-| **shadowOpacity** | number | 1 | Transparency/Opacity value for the shadow of annotation |
-| **opacity** | number (0 - 1) | 1 | Transparency/Opacity value for the whole annotation |
+| **`fill`** | string | '#000000' | The filled color for any added annotation |
+| **`stroke`** | string | '#000000' | The stroke color for any added annotation |
+| **`strokeWidth`** | number | 0 | The stroke width for any added annotation |
+| **`shadowOffsetX`** | number | 0 | The horizontal/X shadow offset from its base annotation |
+| **`shadowOffsetY`** | number | 0 | The vertical/Y shadow offset from its base annotation |
+| **`shadowBlur`** | number | 0 | Blur value of the shadow added to the annotation |
+| **`shadowColor`** | string | '#000000' | The color of the shadow added to the annotation |
+| **`shadowOpacity`** | number | 1 | Transparency/Opacity value for the shadow of annotation |
+| **`opacity`** | number (0 - 1) | 1 | Transparency/Opacity value for the whole annotation |
 
 #### `Text`
 
@@ -374,14 +377,14 @@ The options available for the text annotation tool in additon to the annotations
 
 | Property | Type | Default (possible values) | Description |
 | --- | --- | --- | --- |
-| **text** | string | 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' | The placeholder text added on adding a new text annotation |
-| **fontFamily** | string | 'Arial' | The font family used for the text |
-| **fonts** | (strings \| objects)[] | mentioned above | The fonts available to the user to choose from while adding text  |
-| **fontSize** | number | 14 | The default size of the text added |
-| **letterSpacing** | number | 0 | The spaces/paddings between letters of the text |
-| **lineHeight** | number | 1 | Height of each line of the added text |
-| **align** | string | 'left' ('left' \| 'center' \| 'right') | The horizontal alignment of the added text |
-| **fontStyle** | string | 'normal' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added |
+| **`text`** | string | 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' | The placeholder text added on adding a new text annotation |
+| **`fontFamily`** | string | 'Arial' | The font family used for the text |
+| **`fonts`** | (strings \| objects)[] | mentioned above | The fonts available to the user to choose from while adding text  |
+| **`fontSize`** | number | 14 | The default size of the text added |
+| **`letterSpacing`** | number | 0 | The spaces/paddings between letters of the text |
+| **`lineHeight`** | number | 1 | Height of each line of the added text |
+| **`align`** | string | 'left' ('left' \| 'center' \| 'right') | The horizontal alignment of the added text |
+| **`fontStyle`** | string | 'normal' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added |
 
 > Fonts must be loaded from your side in implementation to take effect as it is not guaranteed that the user has the font on his system.
 
@@ -401,7 +404,7 @@ The options available for image annotation tool in additon to the annotationsCom
 
 | Property | Type | Default (possible values) | Description |
 | --- | --- | --- | --- |
-| **fill** | string | undefined | The color fills the image's transparent parts |
+| **`fill`** | string | undefined | The color fills the image's transparent parts |
 
 #### `Rect`
 
@@ -418,7 +421,7 @@ The options available for Rect annotation tool in additon to the annotationsComm
 
 | Property | Type | Default (possible values) | Description |
 | --- | --- | --- | --- |
-| **cornerRadius** | number | 0 | The radius of the rectangle's corners |
+| **`cornerRadius`** | number | 0 | The radius of the rectangle's corners |
 
 #### `Ellipse`
 
@@ -444,7 +447,7 @@ The available options for polygon annotation tool in additon to the annotationsC
 
 | Property | Type | Default (possible values) | Description |
 | --- | --- | --- | --- |
-| **sides** | number | 3 | Number of sides considered by default for the added polygon |
+| **`sides`** | number | 3 | Number of sides considered by default for the added polygon |
 
 #### `Pen`
 
@@ -477,7 +480,7 @@ The available options for line annotation tool in additon to the annotationsComm
 
 | Property | Type | Default (possible values) | Description |
 | --- | --- | --- | --- |
-| **lineCap** | string | 'butt' ('butt' \| 'round' \| 'square') | The start & end borders line cap |
+| **`lineCap`** | string | 'butt' ('butt' \| 'round' \| 'square') | The start & end borders line cap |
 
 #### `Arrow`
 
@@ -498,9 +501,9 @@ The available options for arrow annotation tool in additon to the annotationsCom
 
 | Property | Type | Default (possible values) | Description |
 | --- | --- | --- | --- |
-| **lineCap** | string | 'butt' ('butt' \| 'round' \| 'square') | The border line cap |
-| **pointerLength** | number | undefined | Length of the arrow's pointer in px |
-| **pointerWidth** | number | undefined | Width of the arrow's pointer in px |
+| **`lineCap`** | string | 'butt' ('butt' \| 'round' \| 'square') | The border line cap |
+| **`pointerLength`** | number | undefined | Length of the arrow's pointer in px |
+| **`pointerWidth`** | number | undefined | Width of the arrow's pointer in px |
 
 #### `Watermark`
 
@@ -519,7 +522,11 @@ The available options for watermark tool, the watermark is using the options of 
 
 | Property | Type | Default (possible values) | Description |
 | --- | --- | --- | --- |
-| **gallery** | string[] | [] | Watermark images urls which are considered to show a list of available watermarks to be used by the user directly from watermark tab |
+| **`gallery`** | string[] | [] | Watermark images urls which are considered to show a list of available watermarks to be used by the user directly from watermark tab |
+
+> Text watermark width/multi-lines are not supported in the [cloudimage](#usecloudimage) mode even if the transformation/resize frame is shown while selecting which means text watermark will always be 1 line in generated cloudimage's URL from the plugin
+>
+> Supported fonts for text watermark in cloudimage mode only are found [here](https://docs.cloudimage.io/go/cloudimage-documentation-v7/en/watermarking/text-watermark/watermark-fonts) you could provide them/any of them through [`Text` property](#text).
 
 #### `Crop`
 
@@ -541,14 +548,55 @@ The available options for crop tool,
 
 | Property | Type | Default (possible values) | Description |
 | --- | --- | --- | --- |
-| **minWidth** | number | 14 | Minimum width (in px) of the possible crop area |
-| **minHeight** | number | 14 | Minimum height (in px) of the possible crop area |
-| **maxWidth** | number | null | Maximum width (in px) of the possible crop area |
-| **maxHeight** | number | null | Maximum height (in px) of the possible crop area |
-| **ratio** | string \| number | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area |
-| **noPresets** | boolean | false | hides the crop presets if `true` |
+| **`minWidth`** | number | 14 | Minimum width (in px) of the possible crop area |
+| **`minHeight`** | number | 14 | Minimum height (in px) of the possible crop area |
+| **`maxWidth`** | number | null | Maximum width (in px) of the possible crop area |
+| **`maxHeight`** | number | null | Maximum height (in px) of the possible crop area |
+| **`ratio`** | string \| number | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area |
+| **`noPresets`** | boolean | false | hides the crop presets if `true` |
 
-> Please note the letters-case of the above properties.
+> Please note the letters-case of the above properties..
+
+#### `useCloudimage`
+
+Type: `boolean`
+
+Default: `false`
+
+If `true` the plugin will work in [`cloudimage`](https://cloudimage.io/) mode means you will receive a cloudimage's URL contains the transformations/operations on saving not the image itself and some of tabs, tools and options are not supported in this mode, otherwise the default mode is used.
+
+> To use the Cloudimage mode, you will need a Cloudimage token to deliver your images over CDN. Don't worry, it only takes seconds to get one by registering [here](https://www.cloudimage.io/en/register_page). Once your token is created, you can configure it as described in [`cloudimage` property](#cloudimage). This token allows you to use 25GB of image cache and 25GB of worldwide CDN traffic per month for free.
+
+#### `cloudimage`
+
+Type: `object`
+
+Default:
+```js
+{
+  token: '',
+  version: '',
+  secureProtocol: true,
+  imageSealing: {
+    enable: false,
+    salt: '',
+    charCount: 10,
+    includeParams: [],
+  }
+}
+```
+The options available for cloudimage mode,
+
+| Property | Type | Default (possible values) | Description |
+| --- | --- | --- | --- |
+| **`token`** | string ***Required if [useCloudimage](#usecloudimage) `true`*** | '' | The [cloudimage](https://cloudimage.io/) token |
+| **`version`** | string | '' | The version of cloudimage service used |
+| **`secureProtocol`** | boolean | true | `true` means using (`https`) in the URL, `false` means using (`http`) |
+| **`imageSealing`** | object | mentioned above | Assigns the options for image sealing feature (your cloudimage account must support it) |
+| imageSealing.**`enable`** | boolean | true | `true` means using (`https`) in the URL, `false` means using (`http`) |
+| imageSealing.**`salt`** | string ***Required if imageSealing enabled***| '' | The salt string is set upon configuration and is used for the encryption |
+| imageSealing.**`charCount`** | number | 10 | Calculated hash (URL ci_seal parameter) length |
+| imageSealing.**`includeParams`** | string[] | [] | URL query parameters to be sealed. By default, all parameters will be sealed. you can set a list of query parameters, ex, ['wat_url'] which enables you to freely append additional transformations to the URL (the sealed parameters cannot be overwritten). |
 
 ### Callbacks
 
@@ -561,6 +609,8 @@ Default: `undefined`
 This function will be fired once the user clicks save button and before triggering the default saving behavior...
 
 > If the function returned `false` then the default saving behavior implemented in the plugin won't be triggered.
+> 
+> This function is doesn't work in [`cloudimage mode`](#usecloudimage) and [`onSave`](#onsave) is fired directly.
 
 #### `onSave`
 
@@ -580,9 +630,24 @@ Triggered once the user clicks either close/cancel button or back button, if not
 
 <hr />
 
-## Bridges appendix
+## Bridges
+
+* [<s>Vanilla JS ***(done)***</s>](#vanilla-javascript)
+* [<s>React ***(done)***</s>]()
+* Angular (no ETA)
+* Vue (no ETA)
+* React-native (no ETA)
+* Flutter (no ETA)
+
+> Note: Currently additional docs of bridges are provided in the current page but on having more bridges docs will be moved to separate files.
+
+<hr />
+
+## Bridges docs
 
 ### Vanilla Javascript
+
+In addition to the main config mentioned above which works for all bridges, the following methods are specific for this bridge only:
 
 #### `render(additionalConfig)`
 
@@ -600,11 +665,15 @@ This project is used by the following companies:
 
 - [Scaleflex](https://scaleflex.com/)
 
-> Fork the repoistory, Append your company's name with the url in above format inside the README.md file and make a PR.
+> Fork the repoistory, append your company's name with the URL in above format inside the README.md file and make a PR!
 
 ## Feedback
 
 Create an issue on github repo. and mention the details there.
+
+## Contributing
+
+All contributions are super welcome!
 
 ## License
 

@@ -87,4 +87,16 @@ export default {
   avoidChangesNotSavedAlertOnLeave: false,
   loadableDesignState: null,
   showBackButton: false, // TODO: For its label, Make sure it won't override backend's translation if provided from translations object and give possibility to user to change
+  useCloudimage: false,
+  cloudimage: {
+    token: '',
+    version: '',
+    secureProtocol: true,
+    imageSealing: {
+      enable: false,
+      salt: '',
+      charCount: 10,
+      includeParams: [],
+    },
+  },
 };

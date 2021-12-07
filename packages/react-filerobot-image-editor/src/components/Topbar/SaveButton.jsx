@@ -20,6 +20,7 @@ import Modal from 'components/common/Modal';
 import Slider from 'components/common/Slider';
 import restrictNumber from 'utils/restrictNumber';
 import { Resize } from 'components/tools/Resize';
+import operationsToCloudimageUrl from 'utils/operationsToCloudimageUrl';
 import {
   StyledSaveButton,
   StyledFileExtensionSelect,
@@ -47,6 +48,8 @@ const SaveButton = () => {
       onSave,
       forceToPngInEllipticalCrop,
       defaultSavedImageType,
+      useCloudimage,
+      cloudimage,
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -191,6 +194,36 @@ const SaveButton = () => {
   };
 
   const triggerSave = () => {
+    if (useCloudimage) {
+      const { filter, ...designState } = extractCurrentDesignState(state);
+      const cloudimageUrl = operationsToCloudimageUrl(
+        cloudimage,
+        designState,
+        shownImageDimensions,
+        originalImage,
+      );
+      const mappedCropBox = mapCropBox(
+        {
+          x: crop.relativeX,
+          y: crop.relativeY,
+          width: crop.width,
+          height: crop.height,
+        },
+        shownImageDimensions,
+        originalImage,
+      );
+      onSave(
+        {
+          // mimeType: `image/${extension}`,
+          cloudimageUrl,
+          width: resize.width || mappedCropBox.width,
+          height: resize.height || mappedCropBox.height,
+        },
+        designState,
+      );
+      return;
+    }
+
     if (
       typeof onBeforeSave === 'function' &&
       onBeforeSave(imageFileInfo) === false
