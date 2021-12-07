@@ -3,10 +3,11 @@ const { BannerPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const pkg = require('./package.json');
+const pkgVersion = require('./lerna.json').version;
 
 const now = new Date();
 const banner = `
- ${pkg.name} v${pkg.version}
+ ${pkg.name} v${pkgVersion}
  ${pkg.repository.url}
  Copyright (c) 2019 ${pkg.author}
  Released under the ${pkg.license} license
