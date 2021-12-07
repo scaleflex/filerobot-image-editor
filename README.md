@@ -318,7 +318,7 @@ Type: `object`
 
 Default: `null`
 
-If provided the plugin will load this design state at the initial load to give the possibility to get back to that design in another time and continue editing it.
+If provided the plugin will load this design state at the initial load to give the possibility to get back to that design in another time and continue editing it, it accepts the same object as provided in the [`onSave`](#onsave) callback's designState parameter.
 
 #### `annotationsCommon`
 
