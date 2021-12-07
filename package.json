@@ -68,6 +68,7 @@
     "dev": "webpack serve --config webpack.dev.js",
     "set-prod-env": "cross-env BABEL_ENV=production NODE_ENV=production",
     "build:dist": "yarn set-prod-env webpack  --config webpack.prod.js",
-    "build:lib": "lerna run build:lib"
+    "build:lib": "lerna run build:lib",
+    "publish:packages": "yarn build:lib && lerna publish"
   }
 }
