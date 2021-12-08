@@ -10,10 +10,6 @@
     "type": "git",
     "url": "https://github.com/scaleflex/filerobot-image-editor/tree/v4"
   },
-  "exports": {
-    ".": "./lib/index.js",
-    "./utils/*": "./lib/utils/*.js"
-  },
   "keywords": [
     "Image editing react component",
     "React Image Editor",
