@@ -1,5 +1,5 @@
 {
-  "name": "react-filerobot-image-editor",
+  "name": "filerobot-image-editor",
   "version": "4.0.0-beta.0",
   "license": "MIT",
   "private": true,
@@ -36,6 +36,7 @@
     "@babel/preset-react": "^7.16.0",
     "@types/react": "^17.0.37",
     "babel-loader": "^8.2.3",
+    "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-styled-components": "^2.0.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-minify": "^0.5.1",
@@ -51,6 +52,7 @@
     "html-webpack-plugin": "^5.5.0",
     "lerna": "^4.0.0",
     "prettier": "^2.4.1",
+    "prettier-eslint-cli": "^5.0.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "rimraf": "^3.0.2",
@@ -63,7 +65,7 @@
     "webpack-dev-server": "^4.6.0"
   },
   "scripts": {
-    "fix": "eslint . --fix",
+    "fix": "prettier-eslint \"packages/**/src/**/*.(js|jsx)\"",
     "analyze": "source-map-explorer dist/filerobot-image-editor.min.js",
     "dev": "webpack serve --config webpack.dev.js",
     "set-prod-env": "cross-env BABEL_ENV=production NODE_ENV=production",

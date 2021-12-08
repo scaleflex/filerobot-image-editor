@@ -12,6 +12,14 @@
   "comments": false,
   "plugins": [
     [
+      "module-resolver",
+      {
+        "root": [
+          "./src"
+        ]
+      }
+    ],
+    [
       "babel-plugin-styled-components",
       {
         "pure": true,

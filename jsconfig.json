@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "packages/react-filerobot-image-editor/src",
     "jsx": "preserve"
   },
   "include": [

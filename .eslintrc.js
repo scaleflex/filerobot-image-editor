@@ -39,7 +39,7 @@ module.exports = {
       node: {
         moduleDirectory: [
           'node_modules',
-          'packages/react-filerobot-image-editor/src/',
+          'packages/react-filerobot-image-editor/src',
         ],
       },
     },
