@@ -1,6 +1,5 @@
 import { FilerobotImageEditorConfig, TABS, TOOLS } from 'react-filerobot-image-editor';
 
-/*~ Write your module's methods and properties in this class */
 declare class FilerobotImageEditor {
   TABS: typeof TABS;
   TOOLS: typeof TOOLS;
@@ -10,3 +9,4 @@ declare class FilerobotImageEditor {
 }
 
 export default FilerobotImageEditor;
+export { TABS, TOOLS };

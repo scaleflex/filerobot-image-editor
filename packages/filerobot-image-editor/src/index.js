@@ -45,3 +45,5 @@ class FilerobotImageEditor {
 }
 
 export default FilerobotImageEditor;
+
+export { TOOLS, TABS };
