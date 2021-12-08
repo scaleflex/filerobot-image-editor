@@ -1,15 +1,48 @@
-// TODO: Make sure the types are linked with no issues.
-/** External Dependencies */
 import { Filter } from "konva/lib/Node";
 
-type lineCap = 'butt' | 'round' | 'square';
+declare const TABS = {
+  FINETUNE: 'Finetune',
+  FILTERS: 'Filters',
+  ADJUST: 'Adjust',
+  WATERMARK: 'Watermark',
+  ANNOTATE: 'Annotate',
+  RESIZE: 'Resize',
+} as const;
+
+declare const TOOLS = {
+  CROP: 'Crop',
+  ROTATE: 'Rotate',
+  FLIP_X: 'Flip_X',
+  FLIP_Y: 'Flip_Y',
+  BRIGHTNESS: 'Brightness',
+  CONTRAST: 'Contrast',
+  HSV: 'HueSaturationValue',
+  WARMTH: 'Warmth',
+  BLUR: 'Blur',
+  THRESHOLD: 'Threshold',
+  POSTERIZE: 'Posterize',
+  PIXELATE: 'Pixelate',
+  NOISE: 'Noise',
+  FILTERS: 'Filters',
+  RECT: 'Rect',
+  ELLIPSE: 'Ellipse',
+  POLYGON: 'Polygon',
+  TEXT: 'Text',
+  LINE: 'Line',
+  IMAGE: 'Image',
+  ARROW: 'Arrow',
+  WATERMARK: 'Watermark',
+  PEN: 'Pen',
+  RESIZE: 'Resize',
+} as const;
 
 // TABS_IDS
-type availableTabs = 'Finetune' | 'Filters' | 'Adjust' | 'Watermark' | 'Annotate' | 'Resize';
+type availableTabs = typeof TABS[keyof typeof TABS];
 
 // TOOLS_IDS
-// type availableTools = 'Crop' | 'Rotate' | 'Flip_X' | 'Flip_Y' | 'Brightness' | 'Contrast' | 'HueSaturationValue' | 'Warmth' | 'Blur' | 'Threshold' | 'Posterize' | 'Pixelate' | 'Noise' | 'Filters' | 'Rect' | 'Ellipse' | 'Polygon' | 'Text' | 'Line' | 'Image' | 'Arrow' | 'Watermark' | 'Pen' | 'Resize';
-type availableTools = 'Crop' | 'Flip_X' | 'Flip_Y' | 'Brightness' | 'Contrast' | 'HueSaturationValue' | 'Warmth' | 'Blur' | 'Threshold' | 'Posterize' | 'Pixelate' | 'Noise' | 'Filters' | 'Rect' | 'Ellipse' | 'Polygon' | 'Text' | 'Line' | 'Image' | 'Arrow' | 'Watermark' | 'Pen' | 'Resize';
+type availableTools = typeof TOOLS[keyof typeof TOOLS];
+
+type lineCap = 'butt' | 'round' | 'square';
 
 // CLOSING_REASONS
 type closingReasons = 'after-saving' | 'close-button-clicked' | 'back-button-clicked' | string;
@@ -186,5 +219,7 @@ export interface FilerobotImageEditorConfig {
   }
 }
 
-declare const FilerobotImageEditor: FilerobotImageEditorConfig;
+declare const FilerobotImageEditor: (props: FilerobotImageEditorConfig) => React.ReactNode;
+
 export default FilerobotImageEditor;
+export { TABS, TOOLS };
