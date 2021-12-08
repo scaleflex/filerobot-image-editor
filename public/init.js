@@ -79,12 +79,12 @@ const config = {
   // cloudimage: {
   //   token: 'test',
   //   version: 'v7',
-  //     imageSealing: {
-  //       enable: true,
-  //       salt: 'qer',
-  //       charCount: 20,
-  //       includeParams: null,
-  //     },
+  //   imageSealing: {
+  //     enable: true,
+  //     salt: 'qer',
+  //     charCount: 20,
+  //     includeParams: null,
+  //   },
   // },
 };
 
