@@ -39,16 +39,17 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
   const canvas = previewGroup?.getStage();
 
   const saveAnnotation = useCallback((annotationData) => {
+    const { fonts, ...savableAnnotationData } = annotationData;
     dispatch({
       type: SET_ANNOTATION,
-      payload: annotationData,
+      payload: savableAnnotationData,
     });
-    if (annotationData.id && annotation.name !== TOOLS_IDS.PEN) {
+    if (savableAnnotationData.id && annotation.name !== TOOLS_IDS.PEN) {
       debounce(() => {
         dispatch({
           type: SELECT_ANNOTATION,
           payload: {
-            annotationId: annotationData.id,
+            annotationId: savableAnnotationData.id,
           },
         });
       }, 30)();

@@ -15,12 +15,12 @@ const eventsOptions = {
 };
 
 const PenOptions = ({ t }) => {
-  const { dispatch, designLayer, previewGroup } = useStore();
+  const { dispatch, designLayer, previewGroup, config } = useStore();
   const [pen, savePenDebounced, savePenNoDebounce] = useAnnotation(
     {
+      ...config.annotationsCommon,
+      ...config[TOOLS_IDS.PEN],
       name: TOOLS_IDS.PEN,
-      tension: 0.5,
-      lineCap: 'round',
     },
     false,
   );

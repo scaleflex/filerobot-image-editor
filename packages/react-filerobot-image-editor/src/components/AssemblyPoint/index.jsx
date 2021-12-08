@@ -11,13 +11,10 @@ import deepMerge from 'utils/deepMerge';
 import { FontsFaces, IconsColor } from './globalStyles';
 
 const AssemblyPoint = (props) => {
-  const { image, onSave, useCloudimage, cloudimage } = props;
-  if (
-    !image ||
-    (typeof image !== 'string' && !(image instanceof HTMLImageElement))
-  ) {
+  const { img, onSave, useCloudimage, cloudimage } = props;
+  if (!img || (typeof img !== 'string' && !(img instanceof HTMLImageElement))) {
     throw new Error(
-      '`image` property is required either a string of image url or a HTMLImageElement.',
+      '`img` property is required either a string of image url or a HTMLImageElement.',
     );
   }
   if (!onSave) {
@@ -55,7 +52,7 @@ AssemblyPoint.defaultProps = {
 };
 
 AssemblyPoint.propTypes = {
-  image: PropTypes.oneOfType([
+  img: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(HTMLImageElement),
     PropTypes.instanceOf(SVGImageElement),

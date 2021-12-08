@@ -1,9 +1,8 @@
 /** External Dependencies */
-import React, { useContext } from 'react';
+import React from 'react';
 
 /** Internal Dependencies */
-import AppContext from 'context';
-import { useFilter } from 'hooks';
+import { useFilter, useStore } from 'hooks';
 import Carousel from 'components/common/Carousel';
 import FilterItem from './FilterItem';
 import { AVAILABLE_FILTERS } from './Filters.constants';
@@ -11,7 +10,7 @@ import { AVAILABLE_FILTERS } from './Filters.constants';
 const style = { maxWidth: '100%', width: '100%' };
 
 const Filters = () => {
-  const { originalImage } = useContext(AppContext);
+  const { originalImage } = useStore();
   const [appliedFilter, applyFilter] = useFilter();
 
   return (

@@ -8,8 +8,7 @@ import FilerobotImageEditor, {
 import uriDownload from '../packages/react-filerobot-image-editor/src/utils/uriDownload';
 
 const config = {
-  image:
-    'https://api.filerobot.com/scaleflex-tests-v5a/v3/get/d8880a7c-94fc-5524-b1de-a61de6650000?version=1638547407275',
+  img: 'https://api.filerobot.com/scaleflex-tests-v5a/v3/get/d8880a7c-94fc-5524-b1de-a61de6650000?version=1638547407275',
   annotationsCommon: {
     // fill: '#000000', // or should be no color? === undefined
     // stroke: '#000000', // or should be no color? === undefined
@@ -78,13 +77,14 @@ const config = {
   // showBackButton: true,
   // useCloudimage: true,
   // cloudimage: {
-  // token: 'test',
-  //   imageSealing: {
-  //     enable: true,
-  //     salt: 'qer',
-  //     charCount: 20,
-  //     includeParams: null,
-  //   },
+  //   token: 'test',
+  //   version: 'v7',
+  //     imageSealing: {
+  //       enable: true,
+  //       salt: 'qer',
+  //       charCount: 20,
+  //       includeParams: null,
+  //     },
   // },
 };
 

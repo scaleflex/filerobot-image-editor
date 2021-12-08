@@ -13,7 +13,7 @@ const extractCurrentDesignState = (state) => {
   const initialAppState = getInitialAppState(defaultConfig);
 
   return {
-    imageSrc: state.imageSrc || initialAppState.imageSrc,
+    imgSrc: state.imgSrc || initialAppState.imgSrc,
     finetunes: state.finetunes || initialAppState.finetunes,
     finetunesProps: state.finetunesProps || initialAppState.finetunesProps,
     filter: state.filter || initialAppState.filter,

@@ -36,7 +36,7 @@ const App = () => {
   } = useStore();
   const {
     loadableDesignState,
-    image,
+    img,
     avoidChangesNotSavedAlertOnLeave,
     useBackendTranslations,
     language,
@@ -105,24 +105,24 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (!isFirstRender.current && image) {
-      handleLoading([loadAndSetOriginalImage(image)]);
+    if (!isFirstRender.current && img) {
+      handleLoading([loadAndSetOriginalImage(img)]);
     }
-  }, [image]);
+  }, [img]);
 
   useEffect(() => {
     if (
       !isFirstRender.current &&
       typeof loadableDesignState === 'object' &&
-      loadableDesignState.imageSrc
+      loadableDesignState.imgSrc
     ) {
-      handleLoading([loadAndSetOriginalImage(loadableDesignState.imageSrc)]);
+      handleLoading([loadAndSetOriginalImage(loadableDesignState.imgSrc)]);
     }
   }, [loadableDesignState]);
 
   useEffect(() => {
     const initialRequestsPromises = [
-      loadAndSetOriginalImage(loadableDesignState?.imageSrc || image),
+      loadAndSetOriginalImage(loadableDesignState?.imgSrc || img),
     ];
 
     if (useBackendTranslations) {

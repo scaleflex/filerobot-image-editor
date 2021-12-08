@@ -26,16 +26,6 @@ type imageInfo = {
   cloudimageUrl?: string;
 }
 
-type imageDesignState = {
-  imageSrc?: string,
-  finetunes?: Filter[],
-  finetunesProps?: object,
-  filter: object,
-  adjustments: object,
-  annotations: object,
-  resize: object
-};
-
 type annotationsCommon = {
   fill?: string,
   stroke?: string,
@@ -48,50 +38,113 @@ type annotationsCommon = {
   opacity?: number,
 }
 
+type textAnnotation = annotationsCommon & {
+  text?: string;
+  fontFamily?: string;
+  fontSize?: number;
+  letterSpacing?: number;
+  lineHeight?: number;
+  align?: 'left' | 'center' | 'right';
+  fontStyle?: 'normal' | 'bold' | 'italic' | 'bold italic';
+}
+
+type rectAnnotation = annotationsCommon & {
+  cornerRadius?: number;
+}
+
+type polygonAnnotation = annotationsCommon & {
+  sides?: number;
+}
+
+type penAnnotation = annotationsCommon & {
+  tension?: number;
+  lineCap?: lineCap;
+}
+
+type lineAnnotation = annotationsCommon & {
+  lineCap?: lineCap;
+}
+
+type arrowAnnotation = annotationsCommon & {
+  lineCap?: lineCap;
+  pointerLength?: number;
+  pointerWidth?: number;
+}
+
+type imageDesignState = {
+  imgSrc?: string,
+  finetunes?: Filter[],
+  finetunesProps?: {
+    brightness?: number;
+    contrast?: number;
+    hue?: number;
+    saturation?: number;
+    value: number;
+    blurRadius?: number;
+    warmth?: number;
+  },
+  filter?: Filter,
+  adjustments?: {
+    crop: {
+      ratio: string;
+      width?: number,
+      height?: number,
+      absoluteX?: number,
+      absoluteY?: number,
+      relativeX?: number,
+      relativeY?: number,
+    },
+    isFlippedX?: boolean;
+    isFlippedY?: boolean;
+  },
+  annotations?: {
+    [key?: string]: annotationsCommon &
+      (textAnnotation | rectAnnotation | polygonAnnotation | penAnnotation | lineAnnotation | arrowAnnotation) &
+      {
+        id: string;
+        name: string;
+        x: number;
+        y: number;
+        scaleX?: number;
+        scaleY?: number;
+        width?: number; //Text/Image/Rect
+        height?: number; //Text/Image/Rect
+        radius?: number; // Polygon
+        radiusX?: number; // Ellipse
+        radiusY?: number; // Ellipse
+        points?: number[]; // Pen/Line/Arrow
+        image?: string | HTMLElement; // Image
+      }
+  },
+  resize?: {
+    width?: number;
+    height?: number;
+  },
+};
+
 export interface FilerobotImageEditorConfig {
-  image: string | HTMLImageElement;
+  img: string | HTMLImageElement;
   annotationsCommon?: annotationsCommon;
   // [TOOLS_IDS.TEXT]
-  Text?: annotationsCommon & {
-    text?: string;
-    fontFamily?: string;
+  Text?: textAnnotation & {
     fonts?: (string | { label: string; value: string })[];
-    fontSize?: number;
-    letterSpacing?: number;
-    lineHeight?: number;
-    align?: 'left' | 'center' | 'right';
-    fontStyle?: 'normal' | 'bold' | 'italic' | 'bold italic';
   };
   // [TOOLS_IDS.IMAGE]
   Image?: annotationsCommon;
   // [TOOLS_IDS.ELLIPSE]
   Ellipse?: annotationsCommon;
   // [TOOLS_IDS.RECT]
-  Rect?: annotationsCommon & {
-    cornerRadius?: number;
-  };
+  Rect?: rectAnnotation;
   // [TOOLS_IDS.POLYGON]
-  Polygon?: annotationsCommon & {
-    sides: 3;
-  };
+  Polygon?: polygonAnnotation;
   // [TOOLS_IDS.PEN]
-  Pen?: annotationsCommon & {
-    strokeWidth: 1;
-  };
+  Pen?: penAnnotation;
   // [TOOLS_IDS.LINE]: {
-  Line?: annotationsCommon & {
-    lineCap?: lineCap;
-    strokeWidth?: number;
-  };
+  Line?: lineAnnotation;
   // [TOOLS_IDS.ARROW]: {
-  Arrow?: annotationsCommon & {
-      strokeWidth?: number;
-      lineCap?: lineCap;
-      pointerLength?: number;
-      pointerWidth?: number;
-    };
+  Arrow?: arrowAnnotation;
   // [TOOLS_IDS.WATERMARK]
-  Watermark: {
+  Watermark?: {
     gallery?: string[] | [];
   };
   // [TOOLS_IDS.CROP]
@@ -110,14 +163,14 @@ export interface FilerobotImageEditorConfig {
   onBeforeSave?: (imageInfo: imageInfo) => void | boolean;
   onSave?: (imageInfo: imageInfo, imageDesignState: imageDesignState) => void;
   onClose?: (closeReason: closingReasons) => void;
-  closeAfterSaving?: boolean;
+  closeAfterSave?: boolean;
   defaultSavedImageType?: 'png' | 'jpeg' | 'webp';
   forceToPngInEllipticalCrop?: boolean;
   useBackendTranslations?: boolean;
   translations?: object;
   language?: 'en' | 'fr' | 'de' | 'it' | 'pt' | 'es' | 'nl' | 'pl' | 'ro' | string;
   avoidChangesNotSavedAlertOnLeave?: boolean;
-  loadableDesignState?: object;
+  loadableDesignState?: imageDesignState;
   showBackButton?: boolean;
   useCloudimage?: boolean;
   cloudimage?: {
@@ -133,5 +186,5 @@ export interface FilerobotImageEditorConfig {
   }
 }
 
-declare const FilerobotImageEditor: React.FC<FilerobotImageEditorConfig>;
+declare const FilerobotImageEditor: FilerobotImageEditorConfig;
 export default FilerobotImageEditor;

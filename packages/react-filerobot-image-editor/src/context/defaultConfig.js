@@ -48,6 +48,8 @@ export default {
   },
   [TOOLS_IDS.PEN]: {
     strokeWidth: 1,
+    tension: 0.5,
+    lineCap: 'round',
   },
   [TOOLS_IDS.LINE]: {
     lineCap: 'butt', // butt/round/square
@@ -78,7 +80,7 @@ export default {
   onClose: undefined,
   onSave: undefined,
   onBeforeSave: undefined,
-  closeAfterSaving: false,
+  closeAfterSave: false,
   defaultSavedImageType: null,
   forceToPngInEllipticalCrop: false,
   useBackendTranslations: true,

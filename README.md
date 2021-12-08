@@ -143,7 +143,7 @@ function App() {
       <button onClick={openImgEditor}>Open Filerobot image editor</button>
       {isImgEditorShown && (
         <FilerobotImageEditor
-	  image="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+	  img="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
 	  onClose={closeImgEditor}
 	  annotationsCommon={{
 	    fill: '#ff0000'
@@ -165,7 +165,7 @@ function App() {
 import FilerobotImageEditor, { TABS, TOOLS } from 'filerobot-image-editor';
 
 const config = {
-  image: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+  img: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
   annotationsCommon: {
     fill: '#ff0000'
   },
@@ -197,13 +197,13 @@ filerobotImageEditor.render({
 
 ### Properties
 
-#### `image`
+#### `img`
 
 Type: `string` | `HTMLImageElement` ***Required***.
 
 Default: `undefined`.
 
-The image url or an `HTMLImageElement` which the operations will be applied on.
+The image url or an `HTMLImageElement` for the image which the operations/edits will be applied on.
 
 #### `theme`
 
@@ -311,6 +311,14 @@ Type: `boolean`
 Default: `false`
 
 If `true` then the saved image's type will always be `png` type if the user made an elliptical crop for preserving the transparency even if the user chose another extension in the saving modal, otherwise the familiar behavior (defaultSavedImageType or user's selected types) wins.
+
+#### `closeAfterSave`
+
+Type: `boolean`
+
+Default: `false`
+
+Fires [`onClose`](#onclose) callback after handling save & triggering [`onSave`](#onsave) if `true`.
 
 #### `loadableDesignState` *Experimental*
 
@@ -462,10 +470,17 @@ Default:
 {
     ...annotationsCommon,
     strokeWidth: 1,
+    tension: 0.5,
+    lineCap: 'round',
 }
 ```
 
-No specific options available for pen tool only the annotationsCommon are used and you could override any of them for pen only by passing them here.
+The available options for pen annotation tool in additon to the annotationsCommon property,
+
+| Property      | Type   | Default (possible values)              | Description                                                                                                 |
+| ------------- | ------ | -------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **`lineCap`** | string | 'butt' ('butt' \| 'round' \| 'square') | The start & end borders line cap                                                                            |
+| **`tension`** | number | 0.5                                    | Tension value of the drawn line higher value makes line more curvy & tensioned (better to leave it default) |
 
 #### `Line`
 

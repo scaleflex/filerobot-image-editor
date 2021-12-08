@@ -5,7 +5,7 @@ export const RESET = 'RESET';
 
 const reset = (state) => {
   const resettedDesignState = extractCurrentDesignState({
-    imageSrc: state.imageSrc,
+    imgSrc: state.imgSrc,
   });
 
   return {

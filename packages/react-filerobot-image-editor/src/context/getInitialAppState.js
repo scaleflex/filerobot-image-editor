@@ -3,8 +3,7 @@ import { DEFAULT_ZOOM_FACTOR, POINTER_ICONS, TOOLS_IDS } from 'utils/constants';
 
 const getInitialAppState = (config = {}) => ({
   // --- Start of design states ---
-  imageSrc:
-    typeof config.image === 'string' ? config.image : config.image?.src || '',
+  imgSrc: typeof config.img === 'string' ? config.img : config.img?.src || '',
   finetunes: [],
   finetunesProps: {},
   filter: null,
@@ -13,11 +12,13 @@ const getInitialAppState = (config = {}) => ({
       ratio: config[TOOLS_IDS.CROP].ratio,
       width: null,
       height: null,
-      absoluteX: 0,
-      absoluteY: 0,
-      relativeX: 0,
-      relativeY: 0,
+      absoluteX: null,
+      absoluteY: null,
+      relativeX: null,
+      relativeY: null,
     },
+    isFlippedX: false,
+    isFlippedY: false,
   },
   annotations: {},
   resize: {},

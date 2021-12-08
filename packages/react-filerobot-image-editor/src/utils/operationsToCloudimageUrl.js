@@ -39,7 +39,7 @@ const generateWatermarkQuery = (
   previewDimensions,
 ) => {
   const { width, height, x, y, opacity, ...watermark } = watermarkAnnotation;
-  const queryParams = `wat=1&wat_gravity=northwest&wat_opacity=${opacity}&wat_pad=${toPrecisedFloat(
+  const queryParams = `wat=1&wat_gravity=absolute&wat_opacity=${opacity}&wat_pos=${toPrecisedFloat(
     (x / previewDimensions.width) * 100,
     2,
   )}p,${toPrecisedFloat((y / previewDimensions.height) * 100, 2)}p`;
@@ -130,7 +130,7 @@ const operationsToCloudimageUrl = (
 ) => {
   const { token, version, imageSealing, secureProtocol } = cloudimage;
   const {
-    imageSrc,
+    imgSrc,
     adjustments: { crop },
     resize = {},
     finetunes = {},
@@ -175,13 +175,13 @@ const operationsToCloudimageUrl = (
   let paramsStr = operationsQueries.join('&');
 
   if (imageSealing.enable) {
-    paramsStr = getImageSealingParams(paramsStr, imageSealing, imageSrc);
+    paramsStr = getImageSealingParams(paramsStr, imageSealing, imgSrc);
   }
   paramsStr = paramsStr.replaceAll(' ', '+');
 
-  const queryPrefixOperator = imageSrc.indexOf('?') === -1 ? '?' : '&';
+  const queryPrefixOperator = imgSrc.indexOf('?') === -1 ? '?' : '&';
 
-  return `${url}${imageSrc}${
+  return `${url}${imgSrc}${
     paramsStr ? `${queryPrefixOperator}${paramsStr.replace(/&$/, '')}` : ''
   }`;
 };
