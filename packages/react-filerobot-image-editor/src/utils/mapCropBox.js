@@ -1,7 +1,7 @@
 import mapNumber from './mapNumber';
 
 const mapCropBox = (crop, shownImageDimensions, toDimensions) => ({
-  ...(crop.x
+  ...(crop.x || crop.x === 0
     ? {
         x: Math.round(
           mapNumber(
@@ -14,7 +14,7 @@ const mapCropBox = (crop, shownImageDimensions, toDimensions) => ({
         ),
       }
     : {}),
-  ...(crop.y
+  ...(crop.y || crop.y === 0
     ? {
         y: Math.round(
           mapNumber(

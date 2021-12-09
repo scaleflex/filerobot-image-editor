@@ -159,8 +159,8 @@ const SaveButton = () => {
       extension,
       mimeType: `image/${extension}`,
       imageBase64: finalImgBase64,
-      width: mappedCropBox.width,
-      height: mappedCropBox.height,
+      width: size.width || mappedCropBox.width,
+      height: size.height || mappedCropBox.height,
       ...(isQualityAcceptable ? { quality } : {}),
     };
 
