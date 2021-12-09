@@ -45,6 +45,7 @@ GIF Link TO BE ADDED...
 - 🏗️ Easy, Focused & Simple UI for better UX.
 - ➕ Ability to customize.
 - 🚀 Image file on save customization.
+- 🧩 ES6 library supports tree-shaking for eliminating dead code.
 - 🤹🏼 And more to discover by yourself...
 
 <hr />

@@ -8,6 +8,7 @@ const CanvasContainer = styled.div`
   height: calc(100% - 124px - 12px);
   background: ${({ theme }) => theme.palette['bg-primary']};
   overflow: hidden;
+  min-height: 250px;
 
   [data-phone='true'] & {
     /* TODO: Remove this fixed height and also the above one and make the container display: flex and use flex-grow here
