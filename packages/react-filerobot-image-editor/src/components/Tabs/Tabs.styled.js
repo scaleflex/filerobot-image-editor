@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Label from '@scaleflex/ui/core/label';
 
 const StyledTabs = styled.div`
-  padding: 12px 12px 12px 0;
+  padding: 0 12px 12px 0;
 
   [data-phone='true'] & {
     display: flex;
