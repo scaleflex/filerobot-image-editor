@@ -29,6 +29,7 @@ const AnnotationOptions = ({
   annotation,
   updateAnnotation,
   hideFillOption,
+  hidePositionField,
   ...rest
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -50,11 +51,13 @@ const AnnotationOptions = ({
             { title: 'Shadow', name: POPPABLE_OPTIONS.SHADOW, Icon: Shadow },
           ]
         : []),
-      {
-        title: 'Position',
-        name: POPPABLE_OPTIONS.POSITION,
-        Icon: Position,
-      },
+      !hidePositionField
+        ? {
+            title: 'Position',
+            name: POPPABLE_OPTIONS.POSITION,
+            Icon: Position,
+          }
+        : undefined,
     ],
     [morePoppableOptionsPrepended],
   );
@@ -93,15 +96,18 @@ const AnnotationOptions = ({
         <ColorInput color={annotation.fill} onChange={changeAnnotationFill} />
       )}
       {children}
-      {options.map(({ title, name, Icon }) => (
-        <StyledIconWrapper
-          key={name}
-          title={title}
-          onClick={(e) => toggleOptionPopup(e, name)}
-        >
-          <Icon size={18} />
-        </StyledIconWrapper>
-      ))}
+      {options.map(
+        (option) =>
+          option && (
+            <StyledIconWrapper
+              key={option.name}
+              title={option.title}
+              onClick={(e) => toggleOptionPopup(e, option.name)}
+            >
+              <option.Icon size={18} />
+            </StyledIconWrapper>
+          ),
+      )}
       {OptionPopupComponent && (
         <Menu
           anchorEl={anchorEl}
@@ -128,16 +134,18 @@ AnnotationOptions.defaultProps = {
   moreOptionsPopupComponentsObj: {},
   morePoppableOptionsAppended: [],
   hideFillOption: false,
+  hidePositionField: false,
 };
 
 AnnotationOptions.propTypes = {
+  annotation: PropTypes.instanceOf(Object).isRequired,
+  updateAnnotation: PropTypes.func.isRequired,
   children: PropTypes.node,
   hideFillOption: PropTypes.bool,
   morePoppableOptionsPrepended: PropTypes.arrayOf(PropTypes.object),
   morePoppableOptionsAppended: PropTypes.arrayOf(PropTypes.object),
   moreOptionsPopupComponentsObj: PropTypes.instanceOf(Object),
-  annotation: PropTypes.instanceOf(Object).isRequired,
-  updateAnnotation: PropTypes.func.isRequired,
+  hidePositionField: PropTypes.bool,
 };
 
 export default AnnotationOptions;

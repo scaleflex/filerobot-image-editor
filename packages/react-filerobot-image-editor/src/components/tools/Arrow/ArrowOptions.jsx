@@ -17,6 +17,7 @@ const ArrowOptions = ({ t }) => {
       annotation={arrow}
       updateAnnotation={saveArrow}
       t={t}
+      hidePositionField
       hideFillOption
     />
   );

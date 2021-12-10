@@ -31,7 +31,7 @@ const PenOptions = ({ t }) => {
     id: '',
   });
 
-  const getPointerPosition = useCallback((e) => {
+  const getPointerPosition = useCallback(() => {
     const canvasBoundingRect =
       canvasRef.current.content.getBoundingClientRect();
     const canvasScale = canvasRef.current.scale();
@@ -128,6 +128,7 @@ const PenOptions = ({ t }) => {
       annotation={pen}
       updateAnnotation={savePenDebounced}
       t={t}
+      hidePositionField
       hideFillOption
     />
   );

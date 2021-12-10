@@ -5,6 +5,7 @@ import ContinuousSlider from '@scaleflex/ui/core/continuous-slider';
 const StyledSlider = styled(ContinuousSlider)`
   margin-bottom: 8px;
   padding: 0;
+  user-select: none;
 
   /* TODO: Till fixed on @sfx/ui */
   .SfxSlider-annotation {

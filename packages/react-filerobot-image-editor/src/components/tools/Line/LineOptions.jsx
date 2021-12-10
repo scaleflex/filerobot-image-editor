@@ -17,6 +17,7 @@ const LineOptions = ({ t }) => {
       annotation={line}
       updateAnnotation={saveLine}
       t={t}
+      hidePositionField
       hideFillOption
     />
   );

@@ -2,6 +2,7 @@
 /** Internal Dependencies */
 import { ELLIPSE_CROP, TOOLS_IDS, WATERMARK_ANNOTATION_ID } from './constants';
 import getImageSealingParams from './getImageSealingParams';
+import imageToBase64 from './imageToBase64';
 import mapCropBox from './mapCropBox';
 import mapNumber from './mapNumber';
 import toPrecisedFloat from './toPrecisedFloat';
@@ -51,12 +52,14 @@ const generateWatermarkQuery = (
     )}&wat_font=${watermark.fontFamily}&wat_color=${watermark.fill.replace(
       '#',
       '',
-    )}&wat_fontsize=${watermark.fontSize}`;
+    )}&wat_fontsize=${watermark.fontSize}max`;
   }
 
-  return `${queryParams}&wat_url=${
-    watermark.image.src
-  }&wat_scale=${toPrecisedFloat(
+  const watermarkUrl = watermark.image.src.startsWith('blob:')
+    ? imageToBase64(watermark.image)
+    : watermark.image.src;
+
+  return `${queryParams}&wat_url=${watermarkUrl}&wat_scale=${toPrecisedFloat(
     (width / previewDimensions.width) * 100,
     2,
   )}p,${toPrecisedFloat(height / previewDimensions.height, 2)}p`;
