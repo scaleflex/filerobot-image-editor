@@ -92,6 +92,7 @@ export default {
   useCloudimage: false,
   cloudimage: {
     token: '',
+    domain: 'cloudimg.io',
     version: '',
     secureProtocol: true,
     imageSealing: {

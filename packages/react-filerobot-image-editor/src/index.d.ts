@@ -208,6 +208,7 @@ export interface FilerobotImageEditorConfig {
   useCloudimage?: boolean;
   cloudimage?: {
     token: string;
+    domain?: string;
     version?: string;
     secureProtocol?: boolean;
     imageSealing?: {

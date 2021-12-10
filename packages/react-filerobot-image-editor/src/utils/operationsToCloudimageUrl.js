@@ -128,7 +128,7 @@ const operationsToCloudimageUrl = (
   previewDimensions,
   originalImage,
 ) => {
-  const { token, version, imageSealing, secureProtocol } = cloudimage;
+  const { token, domain, version, imageSealing, secureProtocol } = cloudimage;
   const {
     imgSrc,
     adjustments: { crop },
@@ -137,9 +137,10 @@ const operationsToCloudimageUrl = (
     finetunesProps,
     annotations = {},
   } = operations;
-  const url = `http${secureProtocol ? 's' : ''}://${token}.cloudimg.io/${
-    version ? `${version}/` : ''
-  }`;
+  const url = `http${secureProtocol ? 's' : ''}://${token}.${domain.replace(
+    /^(https?:\/\/)?(www\.)?|^\.|\/$/g,
+    '',
+  )}/${version ? `${version}/` : ''}`;
 
   const operationsQueries = [];
 

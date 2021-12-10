@@ -595,6 +595,7 @@ Default:
 ```js
 {
   token: '',
+  domain: 'cloudimg.io',
   version: '',
   secureProtocol: true,
   imageSealing: {
@@ -610,6 +611,7 @@ The options available for cloudimage mode,
 | Property                         | Type                                                            | Default (possible values) | Description                                                                                                                                                                                                                                                   |
 | -------------------------------- | --------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`token`**                      | string ***Required if [useCloudimage](#usecloudimage) `true`*** | ''                        | The [cloudimage](https://cloudimage.io/) token                                                                                                                                                                                                                |
+| **`domain`**                     | string                                                          | cloudimg.io               | Domain used in cloudimage service                                                                                                                                                                                                                             |
 | **`version`**                    | string                                                          | ''                        | The version of cloudimage service used                                                                                                                                                                                                                        |
 | **`secureProtocol`**             | boolean                                                         | true                      | `true` means using (`https`) in the URL, `false` means using (`http`)                                                                                                                                                                                         |
 | **`imageSealing`**               | object                                                          | mentioned above           | Assigns the options for image sealing feature (your cloudimage account must support it)                                                                                                                                                                       |
