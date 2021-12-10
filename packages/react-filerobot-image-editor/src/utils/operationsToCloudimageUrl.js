@@ -109,12 +109,15 @@ const generateFinetuneQuery = (finetunes, finetunesProps = {}) => {
     const finetuneParamInfo =
       finetuneFn.name && finetuneNameToParamInfo[finetuneFn.name];
     if (finetuneParamInfo) {
-      const finetuneCloudimageVal = mapNumber(
-        finetunesProps[finetuneParamInfo.internal.propName],
-        finetuneParamInfo.internal.min,
-        finetuneParamInfo.internal.max,
-        finetuneParamInfo.cloudimage.min,
-        finetuneParamInfo.cloudimage.max,
+      const finetuneCloudimageVal = toPrecisedFloat(
+        mapNumber(
+          finetunesProps[finetuneParamInfo.internal.propName],
+          finetuneParamInfo.internal.min,
+          finetuneParamInfo.internal.max,
+          finetuneParamInfo.cloudimage.min,
+          finetuneParamInfo.cloudimage.max,
+        ),
+        2,
       );
       queryParams.push(
         `${finetuneParamInfo.cloudimage.name}=${finetuneCloudimageVal}`,
@@ -131,7 +134,14 @@ const operationsToCloudimageUrl = (
   previewDimensions,
   originalImage,
 ) => {
-  const { token, domain, version, imageSealing, secureProtocol } = cloudimage;
+  const {
+    token,
+    domain,
+    dontPrefixUrl,
+    version,
+    imageSealing,
+    secureProtocol,
+  } = cloudimage;
   const {
     imgSrc,
     adjustments: { crop },
@@ -140,10 +150,12 @@ const operationsToCloudimageUrl = (
     finetunesProps,
     annotations = {},
   } = operations;
-  const url = `http${secureProtocol ? 's' : ''}://${token}.${domain.replace(
-    /^(https?:\/\/)?(www\.)?|^\.|\/$/g,
-    '',
-  )}/${version ? `${version}/` : ''}`;
+  const url = !dontPrefixUrl
+    ? `http${secureProtocol ? 's' : ''}://${token}.${domain.replace(
+        /^(https?:\/\/)?(www\.)?|^\.|\/$/g,
+        '',
+      )}/${version ? `${version}/` : ''}`
+    : '';
 
   const operationsQueries = [];
 

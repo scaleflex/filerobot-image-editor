@@ -40,6 +40,7 @@ const App = () => {
     avoidChangesNotSavedAlertOnLeave,
     useBackendTranslations,
     language,
+    defaultImageFileName,
   } = config;
   const isPhoneScreen = usePhoneScreen();
   const isFirstRender = useRef(true);
@@ -76,7 +77,7 @@ const App = () => {
       }
 
       if (typeof imgToLoad === 'string') {
-        loadImage(imgToLoad)
+        loadImage(imgToLoad, defaultImageFileName)
           .then(setNewOriginalImage)
           .catch(setError)
           .finally(resolve);

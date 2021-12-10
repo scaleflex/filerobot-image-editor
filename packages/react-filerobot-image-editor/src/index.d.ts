@@ -197,6 +197,7 @@ export interface FilerobotImageEditorConfig {
   onSave?: (imageInfo: imageInfo, imageDesignState: imageDesignState) => void;
   onClose?: (closeReason: closingReasons) => void;
   closeAfterSave?: boolean;
+  defaultSavedImageName?: string;
   defaultSavedImageType?: 'png' | 'jpeg' | 'webp';
   forceToPngInEllipticalCrop?: boolean;
   useBackendTranslations?: boolean;
@@ -208,6 +209,7 @@ export interface FilerobotImageEditorConfig {
   useCloudimage?: boolean;
   cloudimage?: {
     token: string;
+    dontPrefixUrl?: boolean;
     domain?: string;
     version?: string;
     secureProtocol?: boolean;

@@ -1,5 +1,10 @@
 /** Internal Dependencies */
-import { MIN_CROP, TABS_IDS, TOOLS_IDS } from 'utils/constants';
+import {
+  DEFAULT_IMAGE_TYPE,
+  MIN_CROP,
+  TABS_IDS,
+  TOOLS_IDS,
+} from 'utils/constants';
 
 export default {
   theme: {
@@ -81,7 +86,8 @@ export default {
   onSave: undefined,
   onBeforeSave: undefined,
   closeAfterSave: false,
-  defaultSavedImageType: null,
+  defaultSavedImageName: undefined,
+  defaultSavedImageType: DEFAULT_IMAGE_TYPE,
   forceToPngInEllipticalCrop: false,
   useBackendTranslations: true,
   translations: null,
@@ -92,6 +98,7 @@ export default {
   useCloudimage: false,
   cloudimage: {
     token: '',
+    dontPrefixUrl: false,
     domain: 'cloudimg.io',
     version: '',
     secureProtocol: true,

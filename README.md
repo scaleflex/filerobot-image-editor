@@ -293,6 +293,14 @@ Default: `false`
 
 If `true` Close button on the top right will be hidden and back button will be shown on the top left (with replacing positions of save & history buttons).
 
+#### `defaultSavedImageName`
+
+Type: `string`
+
+Default: undefined
+
+The image file name used as default name for the image's file that will be saved if not provided the name will be extracted from provided image's src.
+
 #### `defaultSavedImageType`
 
 Type: `string`
@@ -595,6 +603,7 @@ Default:
 ```js
 {
   token: '',
+  dontPrefixUrl: false,
   domain: 'cloudimg.io',
   version: '',
   secureProtocol: true,
@@ -611,6 +620,7 @@ The options available for cloudimage mode,
 | Property                         | Type                                                            | Default (possible values) | Description                                                                                                                                                                                                                                                   |
 | -------------------------------- | --------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`token`**                      | string ***Required if [useCloudimage](#usecloudimage) `true`*** | ''                        | The [cloudimage](https://cloudimage.io/) token                                                                                                                                                                                                                |
+| **`dontPrefixUrl`**              | boolean                                                         | false                     | Don't prefix the whole URL (protocol, token & domain) to the generated cloudimage URL                                                                                                                                                                         |
 | **`domain`**                     | string                                                          | cloudimg.io               | Domain used in cloudimage service                                                                                                                                                                                                                             |
 | **`version`**                    | string                                                          | ''                        | The version of cloudimage service used                                                                                                                                                                                                                        |
 | **`secureProtocol`**             | boolean                                                         | true                      | `true` means using (`https`) in the URL, `false` means using (`http`)                                                                                                                                                                                         |
