@@ -16,6 +16,19 @@ const FontsFaces = createGlobalStyle`
 `;
 
 const IconsColor = createGlobalStyle`
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(203, 211, 218, 0.35);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(203, 211, 218, 1);
+    border-radius: 10px;
+  }
   :not(button) > svg:not([color]) {
     color: ${({ theme }) => theme.palette['icons-primary']}
   }

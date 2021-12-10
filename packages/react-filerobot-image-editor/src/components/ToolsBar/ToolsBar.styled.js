@@ -6,7 +6,7 @@ const StyledToolsBar = styled.div`
   padding: 8px 1px 0;
   width: fit-content;
   margin: 0 auto;
-  max-width: 100%;
+  max-width: 99.5%;
   max-height: 92px;
 
   [data-phone='true'] & {

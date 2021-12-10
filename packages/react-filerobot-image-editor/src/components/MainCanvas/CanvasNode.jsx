@@ -1,18 +1,10 @@
 /** External Dependencies */
-import React, {
-  memo,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Konva from 'konva';
 import { Stage, useStrictMode } from 'react-konva';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { CLEAR_ANNOTATIONS_SELECTIONS, ZOOM_CANVAS } from 'actions';
 import {
   DEFAULT_ZOOM_FACTOR,
@@ -20,6 +12,7 @@ import {
   TABS_IDS,
   TOOLS_IDS,
 } from 'utils/constants';
+import { useStore } from 'hooks';
 import { endTouchesZooming, zoomOnTouchesMove } from './touchZoomingEvents';
 
 const ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR = 0.005;
@@ -36,7 +29,7 @@ const CanvasNode = ({ children }) => {
     canvasScale,
     selectionsIds = [],
     zoom = {},
-  } = useContext(AppContext);
+  } = useStore();
   const isZoomEnabled = toolId !== TOOLS_IDS.CROP;
   const [isPanningEnabled, setIsPanningEnabled] = useState(
     tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK,
