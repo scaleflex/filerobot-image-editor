@@ -15,23 +15,30 @@ const FontsFaces = createGlobalStyle`
   }
 `;
 
+const BrowserScrollbarStyles = createGlobalStyle`
+  .${ROOT_CONTAINER_CLASS_NAME} * {
+    scrollbar-color: rgba(203, 211, 218, 1) rgba(203, 211, 218, 0.35);
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(203, 211, 218, 0.35);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(203, 211, 218, 1);
+      border-radius: 10px;
+    }
+  }
+`;
+
 const IconsColor = createGlobalStyle`
-  &::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: rgba(203, 211, 218, 0.35);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba(203, 211, 218, 1);
-    border-radius: 10px;
-  }
   :not(button) > svg:not([color]) {
     color: ${({ theme }) => theme.palette['icons-primary']}
   }
 `;
 
-export { FontsFaces, IconsColor };
+export { FontsFaces, IconsColor, BrowserScrollbarStyles };
