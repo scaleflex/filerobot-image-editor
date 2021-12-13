@@ -26,7 +26,7 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 ## Demo
 
-[***TEMP. DEMO HERE***](https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/v4_beta-demo/index.html)
+[***TEMP. DEMO HERE***](https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/v4_beta-demo/index.html?vh=d37a98&func=proxy)
 
 GIF Link TO BE ADDED...
 
@@ -110,7 +110,7 @@ npm install --save filerobot-image-editor@beta
 VanillaJS only
 
 ```js
-<script src="https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/4.0.0-beta/filerobot-image-editor.min.js?vh=37f61e&func=proxy"></script>
+<script src="https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/4.0.0-beta/filerobot-image-editor.min.js"></script>
 ```
 
 > In all installation cases you must import the font family that will be used from your side as it is not included in the library by default, the default font family used is [**Roboto**](https://fonts.google.com/share?selection.family=Roboto:wght@400;500) in 2 font-weight (normal === 400 & medium === 500) which falls-back to **Arial** if not found.
