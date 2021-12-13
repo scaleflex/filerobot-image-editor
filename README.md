@@ -51,31 +51,26 @@ GIF Link TO BE ADDED...
 <hr />
 
 ## Contents
-
-<details>
-	 <summary>Click to toggle table of contents</summary>
-
-	- [Prerequisites](#prerequisites)
-	- [Installation](#installation)
-	  - React
-		- [NPM](#react-component)
-	  - VanillaJS
-		- [NPM](#vanillajs)
-		- [CDN](#cdn)
-	- [Usage/Examples](#usageexamples)
-	  - [React Example](#react-example)
-	  - [VanillaJS Example](#vanillajs-example)
-	- [Config](#config)
-	  - [Properties](#properties)
-	  - [Callbacks](#callbacks)
-	- [Bridges](#bridges)
-	- [Bridges docs](#bridges-docs)
-	  - [VanillaJS](#vanilla-javascript)
-	- [Used by](#used-by)
-	- [Feedback](#feedback)
-	- [Contributing](#contributing)
-	- [License](#license)
-</details>
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+  - React
+	- [NPM](#react-component)
+  - VanillaJS
+	- [NPM](#vanillajs)
+	- [CDN](#cdn)
+- [Usage/Examples](#usageexamples)
+  - [React Example](#react-example)
+  - [VanillaJS Example](#vanillajs-example)
+- [Config](#config)
+  - [Properties](#properties)
+  - [Callbacks](#callbacks)
+- [Bridges](#bridges)
+- [Bridges docs](#bridges-docs)
+  - [VanillaJS](#vanilla-javascript)
+- [Used by](#used-by)
+- [Feedback](#feedback)
+- [Contributing](#contributing)
+- [License](#license)
 
 <hr />
 
