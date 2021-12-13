@@ -52,37 +52,41 @@ GIF Link TO BE ADDED...
 
 ## Contents
 
-- [Requirements](#requirements)
-- [Installation](#installation)
-  - React
-    - [NPM](#react-component)
-  - VanillaJS
-    - [NPM](#vanillajs)
-    - [CDN](#cdn)
-- [Usage/Examples](#usageexamples)
-  - [React Example](#react-example)
-  - [VanillaJS Example](#vanillajs-example)
-- [Config](#config)
-  - [Properties](#properties)
-  - [Callbacks](#callbacks)
-- [Bridges](#bridges)
-- [Bridges docs](#bridges-docs)
-  - [VanillaJS](#vanilla-javascript)
-- [Used by](#used-by)
-- [Feedback](#feedback)
-- [Contributing](#contributing)
-- [License](#license)
+<details>
+	 <summary>Click to toggle table of contents</summary>
+
+	- [Prerequisites](#prerequisites)
+	- [Installation](#installation)
+	  - React
+		- [NPM](#react-component)
+	  - VanillaJS
+		- [NPM](#vanillajs)
+		- [CDN](#cdn)
+	- [Usage/Examples](#usageexamples)
+	  - [React Example](#react-example)
+	  - [VanillaJS Example](#vanillajs-example)
+	- [Config](#config)
+	  - [Properties](#properties)
+	  - [Callbacks](#callbacks)
+	- [Bridges](#bridges)
+	- [Bridges docs](#bridges-docs)
+	  - [VanillaJS](#vanilla-javascript)
+	- [Used by](#used-by)
+	- [Feedback](#feedback)
+	- [Contributing](#contributing)
+	- [License](#license)
+</details>
 
 <hr />
 
-## Requirements
-	> Following requirements required only in NPM installation, but they're included in CDN bundle installation.
+## Prerequisites
+	> Following prerequisites are required only in NPM installation, but they're included in CDN bundle installation.
 
 - react, react-dom: >= v16.8.0
 - styled-components: >= v5.1.0
 
 <details>
-  <summary>Requirements Installation (Click to show)</summary>
+  <summary>Prerequisites Installation (Click to show)</summary>
 
   - react, react-dom: `npm install --save react react-dom` or use their CDN.
   - styled-components: `npm install --save styled-components` or use their CDN.
