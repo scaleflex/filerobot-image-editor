@@ -1,5 +1,7 @@
 > Repository includes React version and Vanilla JS adapter for standalone usage
 
+> New Major Version ([V4](https://github.com/scaleflex/filerobot-image-editor/tree/v4)) is released in BETA, check it (here)[https://github.com/scaleflex/filerobot-image-editor/tree/v4]
+
 [![Release](https://img.shields.io/badge/release-v3.12.17-blue.svg)](https://github.com/scaleflex/filerobot-image-editor/releases)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](#contributing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
