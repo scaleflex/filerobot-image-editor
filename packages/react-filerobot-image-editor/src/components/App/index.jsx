@@ -84,11 +84,11 @@ const App = () => {
           .finally(resolve);
       } else if (imgToLoad instanceof HTMLImageElement) {
         setNewOriginalImage(imgToLoad);
+        resolve();
       } else {
         setError(t('invalidImageError'));
+        resolve();
       }
-
-      resolve();
     });
 
   const promptDialogIfHasChangeNotSaved = (e) => {
