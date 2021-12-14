@@ -10,6 +10,8 @@ const StyledSlider = styled(ContinuousSlider)`
   /* TODO: Till fixed on @sfx/ui */
   .SfxSlider-annotation {
     width: 50px;
+    font-size: 13px;
+    line-height: 16px;
   }
   input {
     max-width: ${({ width }) => width || '100px'};

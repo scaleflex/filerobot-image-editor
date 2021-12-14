@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 import IconButton from '@scaleflex/ui/core/icon-button';
 import Input from '@scaleflex/ui/core/input';
+import Label from '@scaleflex/ui/core/label';
 
 const StyledResizeWrapper = styled.div`
   display: flex;
@@ -20,4 +21,14 @@ const StyledRatioLockIcon = styled(IconButton)`
   margin-right: 16px;
 `;
 
-export { StyledResizeWrapper, StyledResizeInput, StyledRatioLockIcon };
+const StyledXLabel = styled(Label)`
+  font-size: 13px;
+  line-height: 15px;
+`;
+
+export {
+  StyledResizeWrapper,
+  StyledResizeInput,
+  StyledRatioLockIcon,
+  StyledXLabel,
+};

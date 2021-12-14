@@ -3,11 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Modal as LibModal,
-  ModalTitle,
   ModalActions,
   Button,
   ModalContent,
 } from '@scaleflex/ui/core';
+
+/** Internal Dependencies */
+import { StyledModalTitle } from './Modal.styled';
 
 const style = { width: 300 };
 
@@ -38,7 +40,7 @@ const Modal = ({
       style={style}
       onKeyUp={onKeyUp}
     >
-      <ModalTitle
+      <StyledModalTitle
         icon={<Icon size={25} />}
         iconShadow
         primary={title}

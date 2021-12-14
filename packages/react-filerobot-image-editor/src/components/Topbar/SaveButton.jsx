@@ -326,7 +326,6 @@ const SaveButton = () => {
                 end={100}
                 onChange={changeQuality}
                 value={parseInt(imageFileInfo.quality * 100, 10)}
-                hideOverlay
               />
             </StyledQualityWrapper>
           )}

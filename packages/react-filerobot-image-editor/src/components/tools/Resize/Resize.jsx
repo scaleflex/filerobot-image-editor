@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@scaleflex/ui/core/button';
-import Label from '@scaleflex/ui/core/label';
 import LockOutline from '@scaleflex/icons/lock-outline';
 import UnlockOutline from '@scaleflex/icons/unlock-outline';
 
@@ -15,6 +14,7 @@ import {
   StyledResizeWrapper,
   StyledResizeInput,
   StyledRatioLockIcon,
+  StyledXLabel,
 } from './Resize.styled';
 
 const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
@@ -111,7 +111,7 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
         placeholder="Width"
         noLeftMargin={alignLeft}
       />
-      <Label>x</Label>
+      <StyledXLabel>x</StyledXLabel>
       <StyledResizeInput
         value={dimensions.height}
         name="height"

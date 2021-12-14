@@ -76,7 +76,7 @@ const StyledFileExtensionSelect = styled(Select)`
 
 const StyledQualityWrapper = styled.div`
   width: 100%;
-  margin-top: 16px;
+  margin-top: 8px;
 
   input {
     max-width: 100%;
@@ -84,7 +84,7 @@ const StyledQualityWrapper = styled.div`
 `;
 
 const StyledResizeOnSave = styled.div`
-  margin-top: 16px;
+  margin-top: 8px;
   width: 100%;
 `;
 
