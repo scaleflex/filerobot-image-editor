@@ -274,7 +274,7 @@ Type: `object`
 
 Default: `null`
 
-If provided will be used in overriding the default translations arrived locally with the plugin but it will **NOT** override the backend's translations if [`useBackendTranslations`](#usebackendtranslations).
+If provided will be used in overriding the default translations arrived locally with the plugin & [backend's](#usebackendtranslations) translations.
 
 #### `avoidChangesNotSavedAlertOnLeave`
 

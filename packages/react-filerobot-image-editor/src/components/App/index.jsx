@@ -39,6 +39,7 @@ const App = () => {
     img,
     avoidChangesNotSavedAlertOnLeave,
     useBackendTranslations,
+    translations,
     language,
     defaultSavedImageName,
   } = config;
@@ -127,7 +128,9 @@ const App = () => {
     ];
 
     if (useBackendTranslations) {
-      initialRequestsPromises.push(getBackendTranslations(language));
+      initialRequestsPromises.push(
+        getBackendTranslations(language, translations),
+      );
     }
 
     handleLoading(initialRequestsPromises);

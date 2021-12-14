@@ -4,9 +4,16 @@ import defaultTranslations from 'context/defaultTranslations';
 import { TRANSLATIONS_GRID_UUID } from './constants';
 
 const backendTranslations = {};
-const activatedTranslations = defaultTranslations;
+const activatedTranslations = { ...defaultTranslations };
 
 const hardcodedErrorMsg = 'Error while loading translations from backend.';
+
+export const updateTranslations = (newTranslations = {}, language = 'en') =>
+  Object.assign(
+    activatedTranslations,
+    backendTranslations?.[language?.toLowerCase()] || {},
+    newTranslations,
+  );
 
 const sendMissingTranslationsToBackend = (missingTranslations = []) =>
   new Promise((resolve, reject) => {
@@ -42,7 +49,10 @@ const sendMissingTranslationsToBackend = (missingTranslations = []) =>
     xhr.send(JSON.stringify(payload));
   });
 
-export const getBackendTranslations = (language = 'en') =>
+export const getBackendTranslations = (
+  language = 'en',
+  additionalTranslations,
+) =>
   new Promise((resolve, reject) => {
     const loweredCaseLanguage = language.toLowerCase();
     const xhr = new XMLHttpRequest();
@@ -71,10 +81,7 @@ export const getBackendTranslations = (language = 'en') =>
           sendMissingTranslationsToBackend(missingTranslations);
         }
 
-        Object.assign(
-          activatedTranslations,
-          backendTranslations[loweredCaseLanguage],
-        );
+        updateTranslations(additionalTranslations, loweredCaseLanguage);
         resolve(activatedTranslations);
       } else {
         console.error(`Status code: ${xhr.status}`);
@@ -99,12 +106,5 @@ export const getBackendTranslations = (language = 'en') =>
     );
     xhr.send();
   });
-
-export const updateTranslations = (newTranslations = {}, language = 'en') =>
-  Object.assign(
-    activatedTranslations,
-    newTranslations,
-    backendTranslations?.[language?.toLowerCase()] || {},
-  );
 
 export const translate = (key) => activatedTranslations[key] || key || '';
