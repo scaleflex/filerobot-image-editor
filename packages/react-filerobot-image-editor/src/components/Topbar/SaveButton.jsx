@@ -15,7 +15,7 @@ import {
   IMAGE_NODE_ID,
   SUPPORTED_IMAGE_TYPES,
 } from 'utils/constants';
-import { SET_SAVED, SET_ERROR } from 'actions';
+import { SET_SAVED, SET_ERROR, SHOW_LOADER, HIDE_LOADER } from 'actions';
 import Modal from 'components/common/Modal';
 import Slider from 'components/common/Slider';
 import restrictNumber from 'utils/restrictNumber';
@@ -39,6 +39,7 @@ const SaveButton = () => {
     designLayer,
     originalImage,
     resize,
+    isLoadingGlobally,
     t,
     adjustments: { crop, isFlippedX, isFlippedY } = {},
     config: {
@@ -62,19 +63,6 @@ const SaveButton = () => {
   };
 
   const handleSave = () => {
-    if (typeof onSave !== 'function') {
-      throw new Error('Please provide onSave function handler to the plugin.');
-    }
-    if (!imageFileInfo.name || !imageFileInfo.extension) {
-      dispatch({
-        type: SET_ERROR,
-        payload: {
-          message: t('nameIsRequired'),
-        },
-      });
-      return;
-    }
-
     const { clipWidth, clipHeight, clipX, clipY } = designLayer.attrs;
 
     // We're using this for letting the designLayer's clipFunc know that we are in saving mode
@@ -171,10 +159,31 @@ const SaveButton = () => {
     dispatch({ type: SET_SAVED });
     imgNode.clearCache();
 
+    dispatch({ type: HIDE_LOADER });
+
     cancelModal();
     if (closeAfterSave && onClose) {
       onClose(CLOSING_REASONS.AFTER_SAVE);
     }
+  };
+
+  const validateInfoThenSave = () => {
+    if (typeof onSave !== 'function') {
+      throw new Error('Please provide onSave function handler to the plugin.');
+    }
+    if (!imageFileInfo.name || !imageFileInfo.extension) {
+      dispatch({
+        type: SET_ERROR,
+        payload: {
+          message: t('nameIsRequired'),
+        },
+      });
+      return;
+    }
+
+    dispatch({ type: SHOW_LOADER });
+
+    setTimeout(handleSave, 0);
   };
 
   const changeFileName = (e) => {
@@ -193,7 +202,7 @@ const SaveButton = () => {
     });
   };
 
-  const triggerSave = () => {
+  const triggerSaveHandler = () => {
     if (useCloudimage) {
       const { filter, ...designState } = extractCurrentDesignState(state);
       const cloudimageUrl = operationsToCloudimageUrl(
@@ -228,7 +237,7 @@ const SaveButton = () => {
       typeof onBeforeSave === 'function' &&
       onBeforeSave(imageFileInfo) === false
     ) {
-      handleSave();
+      validateInfoThenSave();
       return;
     }
 
@@ -275,7 +284,7 @@ const SaveButton = () => {
   return (
     <>
       <StyledSaveButton
-        onClick={triggerSave}
+        onClick={triggerSaveHandler}
         color="primary"
         size="md"
         disabled={!haveNotSavedChanges}
@@ -290,10 +299,11 @@ const SaveButton = () => {
           )}
           isOpened={isModalOpened}
           onCancel={cancelModal}
-          onDone={handleSave}
+          onDone={validateInfoThenSave}
           doneLabel={t('save')}
           cancelLabel={t('cancel')}
           doneButtonColor="primary"
+          areButtonsDisabled={isLoadingGlobally}
         >
           <StyledFileNameInput
             value={imageFileInfo.name}

@@ -276,6 +276,8 @@ Default: `null`
 
 If provided will be used in overriding the default translations arrived locally with the plugin & [backend's](#usebackendtranslations) translations.
 
+> All the translation keys could be found [here](https://github.com/scaleflex/filerobot-image-editor/blob/v4/packages/react-filerobot-image-editor/src/context/defaultTranslations.js#L1).
+
 #### `avoidChangesNotSavedAlertOnLeave`
 
 Type: `boolean`

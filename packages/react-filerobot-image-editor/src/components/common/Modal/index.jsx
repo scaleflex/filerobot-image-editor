@@ -26,6 +26,7 @@ const Modal = ({
   doneButtonColor = 'link',
   cancelButtonColor = 'link',
   children,
+  areButtonsDisabled,
 }) => {
   const onKeyUp = (e) => {
     if (e.key === 'Enter') {
@@ -49,7 +50,12 @@ const Modal = ({
       />
       {children && <ModalContent>{children}</ModalContent>}
       <ModalActions align="center">
-        <Button color={cancelButtonColor} onClick={onCancel} size="md">
+        <Button
+          color={cancelButtonColor}
+          onClick={onCancel}
+          size="md"
+          disabled={areButtonsDisabled}
+        >
           {cancelLabel}
         </Button>
         <Button
@@ -57,6 +63,7 @@ const Modal = ({
           onClick={onDone}
           size="md"
           style={doneButtonStyle}
+          disabled={areButtonsDisabled}
         >
           {doneLabel}
         </Button>
@@ -74,6 +81,7 @@ Modal.defaultProps = {
   doneButtonColor: 'link',
   cancelButtonColor: 'link',
   children: undefined,
+  areButtonsDisabled: false,
 };
 
 Modal.propTypes = {
@@ -89,6 +97,7 @@ Modal.propTypes = {
   doneButtonColor: PropTypes.string,
   cancelButtonColor: PropTypes.string,
   children: PropTypes.node,
+  areButtonsDisabled: PropTypes.bool,
 };
 
 export default Modal;
