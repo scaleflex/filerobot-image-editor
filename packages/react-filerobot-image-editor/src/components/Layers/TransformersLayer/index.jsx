@@ -1,15 +1,15 @@
 /** External Dependencies */
-import AppContext from 'context';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Layer } from 'react-konva';
-import { TOOLS_IDS, TRANSFORMERS_LAYER_ID } from 'utils/constants';
-import CropTransformer from './CropTransformer';
 
 /** Internal Dependencies */
+import { useStore } from 'hooks';
+import { TOOLS_IDS, TRANSFORMERS_LAYER_ID } from 'utils/constants';
+import CropTransformer from './CropTransformer';
 import NodesTransformer from './NodesTransformer';
 
 const TransformersLayer = () => {
-  const { toolId } = useContext(AppContext);
+  const { toolId } = useStore();
 
   return (
     <Layer id={TRANSFORMERS_LAYER_ID}>

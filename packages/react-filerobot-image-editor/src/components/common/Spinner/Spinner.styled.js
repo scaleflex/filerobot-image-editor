@@ -27,6 +27,7 @@ const StyledSpinnerWrapper = styled.div`
   right: 0;
   left: 0;
   flex-direction: column;
+  user-select: none;
 
   label {
     color: #ffffff;

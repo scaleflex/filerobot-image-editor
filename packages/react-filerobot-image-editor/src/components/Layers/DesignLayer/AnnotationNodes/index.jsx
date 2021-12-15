@@ -1,13 +1,12 @@
 /** External Dependencies */
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 /** Internal Dependencies */
-import AppContext from 'context';
-import { useAnnotationEvents } from 'hooks';
+import { useAnnotationEvents, useStore } from 'hooks';
 import MemoizedAnnotation from './MemoizedAnnotation';
 
 const AnnotationNodes = () => {
-  const { annotations = {}, selectionsIds = [] } = useContext(AppContext);
+  const { annotations = {}, selectionsIds = [] } = useStore();
   const annotationEvents = useAnnotationEvents();
 
   return useMemo(
