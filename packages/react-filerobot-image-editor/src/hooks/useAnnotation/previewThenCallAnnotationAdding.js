@@ -77,12 +77,7 @@ const previewThenCallAnnotationAdding = (
     );
 
     updateAnnotationPreview(
-      getBoundingRectUnScaled(
-        pointerOffsets,
-        pointerDown,
-        canvas,
-        previewGroup,
-      ),
+      getBoundingRectUnScaled(pointerOffsets, pointerDown, previewGroup),
       e.shiftKey,
     );
   };
@@ -119,7 +114,6 @@ const previewThenCallAnnotationAdding = (
     const boundingRect = getBoundingRectUnScaled(
       pointerOffsets,
       pointerDown,
-      canvas,
       previewGroup,
     );
     if (shownAnnotationPreview) {

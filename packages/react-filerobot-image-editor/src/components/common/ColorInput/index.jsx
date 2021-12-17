@@ -39,6 +39,7 @@ const ColorInput = ({ position = 'top', onChange, defaultColor }) => {
         position={position}
         onClick={togglePicker}
         overlay
+        zIndex={11111}
       >
         <ColorPicker onChange={changeColor} defaultColor={color} />
       </Popper>

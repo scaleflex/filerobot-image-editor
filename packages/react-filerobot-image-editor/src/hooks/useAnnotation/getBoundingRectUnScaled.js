@@ -1,7 +1,6 @@
 const getBoundingRectUnScaled = (
   pointerOffsets = {},
   pointerDown = {},
-  canvas,
   previewGroup,
 ) => {
   const boundingRect = {};
