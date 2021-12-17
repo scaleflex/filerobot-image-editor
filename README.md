@@ -65,6 +65,7 @@ GIF Link TO BE ADDED...
 - 🌉 VanillaJS + Bridged to frameworks (React & More to support...).
 - 🏗️ Easy, Focused & Simple UI for better UX.
 - ➕ Ability to customize.
+- 🔢 Multiple annotations selections & transformation
 - 🚀 Image file on save customization.
 - 🧩 ES6 library supports tree-shaking for eliminating dead code.
 - 🤹🏼 And more to discover by yourself...
