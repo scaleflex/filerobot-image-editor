@@ -10,7 +10,12 @@ import {
   ENABLE_TEXT_CONTENT_EDIT,
   SELECT_TOOL,
 } from 'actions';
-import { TOOLS_IDS, POINTER_ICONS, TABS_IDS } from 'utils/constants';
+import {
+  TOOLS_IDS,
+  POINTER_ICONS,
+  TABS_IDS,
+  WATERMARK_ANNOTATION_ID,
+} from 'utils/constants';
 import useDebouncedCallback from './useDebouncedCallback';
 
 const useAnnotationEvents = () => {
@@ -88,11 +93,15 @@ const useAnnotationEvents = () => {
   });
 
   const selectAnnotationOnClick = useCallback((e) => {
+    if (e.target.id() === WATERMARK_ANNOTATION_ID) {
+      return;
+    }
+    const multiple = e.evt.ctrlKey || e.evt.shiftKey || e.evt.metaKey;
     dispatch({
       type: SELECT_ANNOTATION,
       payload: {
         annotationId: e.target.id(),
-        multiple: e.evt.ctrlKey || e.evt.shiftKey || e.evt.metaKey,
+        multiple,
       },
     });
     // TODO: Remove this once we implement the possibility to select annotation
@@ -101,6 +110,7 @@ const useAnnotationEvents = () => {
       type: SELECT_TOOL,
       payload: {
         toolId: e.target.name(),
+        keepSelections: multiple,
       },
     });
     changePointerIconToMove(e);
