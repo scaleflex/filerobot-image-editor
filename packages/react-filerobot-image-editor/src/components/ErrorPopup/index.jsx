@@ -12,7 +12,6 @@ const defaultAnchorOrigin = {
   vertical: 'bottom',
 };
 
-// TODO: change error to feedback and support both success & neutral also.
 const ERROR_TO_ROBOT_STATUS = {
   error: 'sad',
   warning: 'worried',

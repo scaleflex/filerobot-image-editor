@@ -11,7 +11,7 @@ import extractCurrentDesignState from 'utils/extractCurrentDesignState';
  * for updating the UNDO/REDO states automatically
  *
  */
-// TODO: make another reducer/context for design state and having the undo/redo to it only.
+// TODO: maybe? make another reducer/context for design state and having the undo/redo to it only.
 const useAppReducer = (reducer, initialState) => {
   const initialStateWithUndoRedo = {
     ...initialState,

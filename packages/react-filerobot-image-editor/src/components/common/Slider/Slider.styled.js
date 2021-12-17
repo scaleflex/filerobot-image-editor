@@ -7,7 +7,6 @@ const StyledSlider = styled(ContinuousSlider)`
   padding: 0;
   user-select: none;
 
-  /* TODO: Till fixed on @sfx/ui */
   .SfxSlider-annotation {
     width: 50px;
     font-size: 13px;
