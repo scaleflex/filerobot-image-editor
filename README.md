@@ -5,9 +5,9 @@
 	<img src="https://img.shields.io/npm/v/filerobot-image-editor/beta?label=Version&style=for-the-badge" alt="Version" />
 	<img src="https://img.shields.io/npm/dt/filerobot-image-editor?style=for-the-badge" alt="Downloads"/>
 	<img alt="Typescript types" src="https://img.shields.io/badge/types-included-blue?style=for-the-badge&logo=typescript">
-	<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?style=for-the-badge">
+	<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?style=for-the-badge&color=navy">
 	<img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed-raw/scaleflex/filerobot-image-editor?style=for-the-badge">
-	<img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/scaleflex/filerobot-image-editor?style=for-the-badge">
+	<img alt="GitHub open issues" src="https://img.shields.io/github/issues-raw/scaleflex/filerobot-image-editor?style=for-the-badge&color=red">
 	<br />
 	<br />
 	<a href="https://www.filerobot.com/en/home#gh-dark-mode-only" />
