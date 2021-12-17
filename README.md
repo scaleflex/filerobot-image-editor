@@ -224,6 +224,8 @@ Theme from [@scaleflex/ui](https://github.com/scaleflex/ui/blob/1617f8b19ade7199
 }
 ```
 
+Almost you would need those 2 objects ([**palette**](https://github.com/scaleflex/ui/blob/master/packages/ui/src/utils/types/palette/color.ts#L1) *values are the possible keys for palette object* & [**typograpghy**](https://github.com/scaleflex/ui/blob/master/packages/ui/src/theme/entity/default-theme.ts#L52)) to have the proper theme you want.
+
 As the colors of the plugin are retrieved dynamically from the theme object, it gives you the possibility to customize the colors and font-family to yours.
 
 > Note: You must import the font family from your side in 2 weights (Normal === 400, Medium === 500) to have fonts work properly and show text as expected, which means `Roboto` is not included in the plugin by default so you must import it from your side too if you have provided another font family value through theme don't forget to import it from your side too.
@@ -312,7 +314,7 @@ Possible values: `'png' | 'jpeg' | 'webp'`
 
 The default type used and selected in saving the image (the user has the possibility to change it from the saving modal).
 
-> Note: Quality modification will be applied to jpeg and webp types only while saving the image by the default behavior.
+> Note: Quality modification will be applied to `jpeg` and `webp` types in returned [`base64`](#onsave) format only while saving the image by the default behavior.
 
 #### `forceToPngInEllipticalCrop`
 
@@ -647,11 +649,13 @@ This function will be fired once the user clicks save button and before triggeri
 
 #### `onSave`
 
-Type: `function(imageObject, imageDesignState) {}` ***Required***
+Type: `function(savedImageData, imageDesignState) {}` ***Required***
 
 Default: `undefined`
 
 Must be provided for avoiding plugin's error, it's used for handling the save functionality which is triggered once the user clicks on save button of the saving modal or once clicking the save button if the default behavior is prevented from [`onBeforeSave`](#onbeforesave) function.
+
+> In `savedImageData` parameter you have 2 formats (Base64 string & Canvas HTML element) of saved image, the Canvas HTML element format doesn't support quality chosen while saving from default behavior.
 
 #### `onClose`
 

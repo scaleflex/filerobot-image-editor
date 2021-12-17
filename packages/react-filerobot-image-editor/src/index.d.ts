@@ -47,7 +47,7 @@ type lineCap = 'butt' | 'round' | 'square';
 // CLOSING_REASONS
 type closingReasons = 'after-saving' | 'close-button-clicked' | 'back-button-clicked' | string;
 
-type imageInfo = {
+type savedImageData = {
   name: string,
   extension: string,
   mimeType: string,
@@ -55,6 +55,7 @@ type imageInfo = {
   height?: number,
   width?: number,
   imageBase64?: string,
+  imageCanvas?: HTMLCanvasElement, // doesn't support quality
   quality?: number;
   cloudimageUrl?: string;
 }
@@ -191,8 +192,8 @@ export interface FilerobotImageEditorConfig {
   tabsIds?: (availableTabs)[] | [];
   defaultTabId?: availableTabs;
   defaultToolId?: availableTools;
-  onBeforeSave?: (imageInfo: imageInfo) => void | boolean;
-  onSave?: (imageInfo: imageInfo, imageDesignState: imageDesignState) => void;
+  onBeforeSave?: (savedImageData: savedImageData) => void | boolean;
+  onSave?: (savedImageData: savedImageData, imageDesignState: imageDesignState) => void;
   onClose?: (closeReason: closingReasons) => void;
   closeAfterSave?: boolean;
   defaultSavedImageName?: string;

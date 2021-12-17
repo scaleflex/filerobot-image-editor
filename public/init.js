@@ -51,16 +51,16 @@ const config = {
   //   console.log('info', imageFileInfo);
   //   return false;
   // }, //  if function returned `false` then the default behavior (opening modal) won't be called,
-  onSave: (imageObject, imageDesignState) => {
+  onSave: (savedImageData, imageDesignState) => {
     console.log('🕺🏼 Well, my onSave handler function is fired.');
     console.log('🎇Image file is downloading.....');
     console.log(
       '🔔 Also for you to know, we have the following params passed in the onSave handler:',
     );
-    console.log('▶️Image object: ', imageObject);
+    console.log('▶️Image object: ', savedImageData);
     console.log('▶️ Image design state:', imageDesignState);
     console.log('CYA👋🏼👋🏼👋🏼');
-    uriDownload(imageObject.imageBase64, imageObject.fullName);
+    uriDownload(savedImageData.imageBase64, savedImageData.fullName);
   },
   // defaultImageFileName: 'Test',
   // theme: {},

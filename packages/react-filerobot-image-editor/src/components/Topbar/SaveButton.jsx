@@ -35,7 +35,6 @@ const SaveButton = () => {
     theme,
     dispatch,
     shownImageDimensions,
-    haveNotSavedChanges,
     designLayer,
     originalImage,
     resize,
@@ -129,7 +128,7 @@ const SaveButton = () => {
       });
     }
 
-    const finalImgBase64 = preparedCanvas.toDataURL({
+    const finalOptions = {
       x: isFlippedX
         ? -preparedCanvas.width() - Math.abs(preparedCanvas.x() * 2)
         : 0,
@@ -138,14 +137,17 @@ const SaveButton = () => {
         : 0,
       mimeType: `image/${extension}`,
       ...(isQualityAcceptable ? { quality } : {}),
-    });
-
+    };
+    const finalCanvas = preparedCanvas.toCanvas(finalOptions);
+    const finalImgBase64 = preparedCanvas.toDataURL(finalOptions);
     const finalImgDesignState = extractCurrentDesignState(state);
+
     const finalImgPassedObject = {
       fullName: `${name}.${extension}`,
       name,
       extension,
       mimeType: `image/${extension}`,
+      imageCanvas: finalCanvas,
       imageBase64: finalImgBase64,
       width: size.width || mappedCropBox.width,
       height: size.height || mappedCropBox.height,
@@ -283,12 +285,7 @@ const SaveButton = () => {
 
   return (
     <>
-      <StyledSaveButton
-        onClick={triggerSaveHandler}
-        color="primary"
-        size="md"
-        disabled={!haveNotSavedChanges}
-      >
+      <StyledSaveButton onClick={triggerSaveHandler} color="primary" size="md">
         {t('save')}
       </StyledSaveButton>
       {isModalOpened && (
