@@ -13,8 +13,9 @@
 	<a href="#installation">
 		<img alt="Typescript types" src="https://img.shields.io/badge/types-included-blue?style=for-the-badge&logo=typescript" />
 	</a>
-	<a href="https://www.scaleflex.com/">
-		<img alt="Built with love by Scaleflex team" src="https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg" />
+	<br />
+	<a href="#">
+		<img alt="GitHub closed issues" src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?style=for-the-badge&logo=github" />
 	</a>
 	<a href="https://github.com/scaleflex/filerobot-image-editor/issues?q=is%3Aissue+is%3Aclosed">
 		<img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed-raw/scaleflex/filerobot-image-editor?style=for-the-badge&logo=github" />
@@ -22,7 +23,9 @@
 	<a href="https://github.com/scaleflex/filerobot-image-editor/issues">
 		<img alt="GitHub open issues" src="https://img.shields.io/github/issues-raw/scaleflex/filerobot-image-editor?style=for-the-badge&color=red&logo=github" />
 	</a>
-	<iframe src="https://ghbtns.com/github-btn.html?user=twbs&repo=bootstrap&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+	<a href="https://www.scaleflex.com/">
+		<img alt="Built with love by Scaleflex team" src="https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg" />
+	</a>
 	<br />
 	<br />
 	<a href="https://www.filerobot.com/en/home#gh-dark-mode-only" />
@@ -41,7 +44,6 @@
 The Filerobot Image Editor is the easiest way to integrate an easy-to-use image editor in your web application. Integrated with few lines of code, your users will be able to apply basic transformations like resize, crop, flip, finetune, annotate, watermark and various filters to any image.
 
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Edit,%20resize,%20and%20filter%20any%20image&url=https://scaleflex.github.io/filerobot-image-editor/&via=filerobot&hashtags=uploader,image_resizing,image_editor,image_cropping)
-![GitHub Repo stars](https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?style=social)
 
 ## Demo
 
