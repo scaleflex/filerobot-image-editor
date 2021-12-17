@@ -659,11 +659,14 @@ Must be provided for avoiding plugin's error, it's used for handling the save fu
 
 #### `onClose`
 
-Type: `function(closingReasons) {}`
+Type: `function(closingReason, haveNotSavedChanges) {}`
 
 Default: `undefined`
 
 Triggered once the user clicks either close/cancel button or back button, if not provided then the closing button won't shown at all.
+
+- *`closingReason`*: A string value showcases the place/reason the plugin closed.
+- *`haveNotSavedChanges`*: A boolean value, true means the user has clicked the close button before saving latest changes otherwise he closed after saving.
 
 <hr />
 

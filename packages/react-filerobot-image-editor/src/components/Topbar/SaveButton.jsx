@@ -39,6 +39,7 @@ const SaveButton = () => {
     originalImage,
     resize,
     isLoadingGlobally,
+    haveNotSavedChanges,
     t,
     adjustments: { crop, isFlippedX, isFlippedY } = {},
     config: {
@@ -165,7 +166,7 @@ const SaveButton = () => {
 
     cancelModal();
     if (closeAfterSave && onClose) {
-      onClose(CLOSING_REASONS.AFTER_SAVE);
+      onClose(CLOSING_REASONS.AFTER_SAVE, haveNotSavedChanges);
     }
   };
 

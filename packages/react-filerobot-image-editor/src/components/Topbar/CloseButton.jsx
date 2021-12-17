@@ -9,6 +9,7 @@ import { StyledCloseOrBackButton } from './Topbar.styled';
 
 const CloseButton = () => {
   const {
+    haveNotSavedChanges,
     config: { onClose },
   } = useStore();
 
@@ -18,7 +19,7 @@ const CloseButton = () => {
   }
 
   const closeWithReason = () => {
-    onClose(CLOSING_REASONS.CLOSE_BUTTON);
+    onClose(CLOSING_REASONS.CLOSE_BUTTON, haveNotSavedChanges);
   };
 
   return (

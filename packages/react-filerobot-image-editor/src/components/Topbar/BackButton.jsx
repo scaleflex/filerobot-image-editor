@@ -13,6 +13,7 @@ import {
 const BackButton = () => {
   const {
     t,
+    haveNotSavedChanges,
     config: { onClose },
   } = useStore();
 
@@ -22,7 +23,7 @@ const BackButton = () => {
   }
 
   const closeWithReason = () => {
-    onClose(CLOSING_REASONS.CLOSE_BUTTON);
+    onClose(CLOSING_REASONS.CLOSE_BUTTON, haveNotSavedChanges);
   };
 
   return (

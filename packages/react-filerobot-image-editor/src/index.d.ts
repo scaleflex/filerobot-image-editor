@@ -194,7 +194,7 @@ export interface FilerobotImageEditorConfig {
   defaultToolId?: availableTools;
   onBeforeSave?: (savedImageData: savedImageData) => void | boolean;
   onSave?: (savedImageData: savedImageData, imageDesignState: imageDesignState) => void;
-  onClose?: (closeReason: closingReasons) => void;
+  onClose?: (closeReason: closingReasons, haveNotSavedChanges: boolean) => void;
   closeAfterSave?: boolean;
   defaultSavedImageName?: string;
   defaultSavedImageType?: 'png' | 'jpeg' | 'webp';
