@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Popper from '@scaleflex/ui/core/popper';
 
@@ -8,17 +8,17 @@ import { useStore } from 'hooks';
 import { StyledPickerTrigger } from './ColorInput.styled';
 import ColorPicker from './ColorPicker';
 
-const ColorInput = ({ position = 'top', onChange, defaultColor }) => {
+const ColorInput = ({ position = 'top', onChange, color }) => {
   const {
     config: { annotationsCommon = {} },
   } = useStore();
   const [anchorEl, setAnchorEl] = useState();
-  const [color, setColor] = useState(
-    () => defaultColor || annotationsCommon.fill,
+  const [currentColor, setCurrentColor] = useState(
+    () => color || annotationsCommon.fill,
   );
 
   const changeColor = (newColor) => {
-    setColor(newColor);
+    setCurrentColor(newColor);
     onChange(newColor);
   };
 
@@ -26,11 +26,15 @@ const ColorInput = ({ position = 'top', onChange, defaultColor }) => {
     setAnchorEl(anchorEl ? null : e.currentTarget);
   };
 
+  useEffect(() => {
+    setCurrentColor(color);
+  }, [color]);
+
   return (
     <>
       <StyledPickerTrigger
         onClick={togglePicker}
-        $color={color}
+        $color={currentColor}
         onChange={onChange}
       />
       <Popper
@@ -41,7 +45,7 @@ const ColorInput = ({ position = 'top', onChange, defaultColor }) => {
         overlay
         zIndex={11111}
       >
-        <ColorPicker onChange={changeColor} defaultColor={color} />
+        <ColorPicker onChange={changeColor} defaultColor={currentColor} />
       </Popper>
     </>
   );
@@ -49,13 +53,13 @@ const ColorInput = ({ position = 'top', onChange, defaultColor }) => {
 
 ColorInput.defaultProps = {
   position: 'top',
-  defaultColor: undefined,
+  color: undefined,
 };
 
 ColorInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   position: PropTypes.string,
-  defaultColor: PropTypes.string,
+  color: PropTypes.string,
 };
 
 export default ColorInput;
