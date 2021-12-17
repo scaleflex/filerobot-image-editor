@@ -7,24 +7,24 @@
 	<a href="#installation">
 		<img src="https://img.shields.io/npm/v/filerobot-image-editor/beta?label=Version&style=for-the-badge&logo=npm" alt="Version" />
 	</a>
+	<a href="#">
+		<img alt="GitHub stars" src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?style=for-the-badge&logo=github" />
+	</a>
 	<a href="#installation">
 		<img src="https://img.shields.io/npm/dt/filerobot-image-editor?style=for-the-badge&logo=npm" alt="Downloads"/>
 	</a>
+	<br />
 	<a href="#installation">
 		<img alt="Typescript types" src="https://img.shields.io/badge/types-included-blue?style=for-the-badge&logo=typescript" />
 	</a>
-	<br />
-	<a href="#">
-		<img alt="GitHub closed issues" src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?style=for-the-badge&logo=github" />
+	<a href="https://www.scaleflex.com/">
+		<img alt="Built with love by Scaleflex team" src="https://img.shields.io/badge/%3C%2F%3E%20w%2F%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg?style=for-the-badge" />
 	</a>
 	<a href="https://github.com/scaleflex/filerobot-image-editor/issues?q=is%3Aissue+is%3Aclosed">
 		<img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed-raw/scaleflex/filerobot-image-editor?style=for-the-badge&logo=github" />
 	</a>
 	<a href="https://github.com/scaleflex/filerobot-image-editor/issues">
 		<img alt="GitHub open issues" src="https://img.shields.io/github/issues-raw/scaleflex/filerobot-image-editor?style=for-the-badge&color=red&logo=github" />
-	</a>
-	<a href="https://www.scaleflex.com/">
-		<img alt="Built with love by Scaleflex team" src="https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg" />
 	</a>
 	<br />
 	<br />
