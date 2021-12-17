@@ -644,7 +644,7 @@ Default: `undefined`
 This function will be fired once the user clicks save button and before triggering the default saving behavior...
 
 > If the function returned `false` then the default saving behavior implemented in the plugin won't be triggered.
-> 
+>
 > This function is doesn't work in [`cloudimage mode`](#usecloudimage) and [`onSave`](#onsave) is fired directly.
 
 #### `onSave`
