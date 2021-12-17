@@ -7,15 +7,19 @@ import Label from '@scaleflex/ui/core/label';
 import Select from '@scaleflex/ui/core/select';
 
 const StyledTopbar = styled.div`
+  padding: 12px 12px 8px 12px;
+  box-sizing: border-box;
   position: relative;
-  height: 38px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
   ${({ reverseDirection }) =>
     reverseDirection ? 'flex-direction: row-reverse' : ''};
+
+  [data-phone='true'] & {
+    padding: 6px 6px 4px 6px;
+  }
 `;
 
 const StyledHistoryButton = styled(IconButton)`

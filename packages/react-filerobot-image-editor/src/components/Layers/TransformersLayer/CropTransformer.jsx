@@ -14,36 +14,46 @@ import {
 } from 'utils/constants';
 import { boundDragging, boundResizing } from './cropAreaBounding';
 
-// Used in determining if the current & previous crops are positioned in different (current & previous) flip cases.
-const exIsFlipped = {
-  x: false,
-  y: false,
-};
-
-// TODO: Make crop dimensions not changable on change screen size
 const CropTransformer = () => {
   const {
     dispatch,
     theme,
-    canvasScale,
     designLayer,
-    canvasWidth,
-    canvasHeight,
     originalImage,
     shownImageDimensions,
     adjustments: { crop = {}, isFlippedX, isFlippedY } = {},
     config,
   } = useStore();
-  // abstractX, abstractY = design layer's xPadding, yPadding
-  const { abstractX = 0, abstractY = 0 } = shownImageDimensions || {};
   const cropShapeRef = useRef();
   const cropTransformerRef = useRef();
   const tmpImgNodeRef = useRef();
-  const shownImageDimensionsRef = useRef(shownImageDimensions);
+  const shownImageDimensionsRef = useRef();
   const cropConfig = config[TOOLS_IDS.CROP];
   const cropRatio = crop.ratio || cropConfig.ratio;
   const isCustom = cropRatio === CUSTOM_CROP;
   const isEllipse = cropRatio === ELLIPSE_CROP;
+
+  const getProperCropRatio = () =>
+    cropRatio === ORIGINAL_CROP
+      ? originalImage.width / originalImage.height
+      : cropRatio;
+
+  const saveCrop = ({ width, height, x, y }, noHistory) => {
+    const newCrop = {
+      x: isFlippedX ? shownImageDimensions.width - x - width : x,
+      y: isFlippedY ? shownImageDimensions.height - y - height : y,
+      width,
+      height,
+    };
+
+    dispatch({
+      type: SET_CROP,
+      payload: {
+        ...newCrop,
+        dismissHistory: noHistory,
+      },
+    });
+  };
 
   useEffect(() => {
     if (designLayer && cropTransformerRef.current && cropShapeRef.current) {
@@ -61,16 +71,37 @@ const CropTransformer = () => {
   }, [designLayer]);
 
   useEffect(() => {
+    if (cropTransformerRef.current && cropShapeRef.current) {
+      cropTransformerRef.current.nodes([cropShapeRef.current]);
+
+      if (shownImageDimensionsRef.current) {
+        const imageDimensions = shownImageDimensionsRef.current;
+
+        const attrs = {
+          width: crop.width || imageDimensions.width || 0,
+          height: crop.height || imageDimensions.height || 0,
+          x: crop.x || imageDimensions.x || 0,
+          y: crop.y || imageDimensions.y || 0,
+        };
+        saveCrop(
+          boundResizing(
+            attrs,
+            attrs,
+            imageDimensions,
+            isCustom || isEllipse ? false : getProperCropRatio(),
+            cropConfig,
+          ),
+          true,
+        );
+      }
+    }
+  }, [cropRatio, cropConfig]);
+
+  useEffect(() => {
     if (shownImageDimensions) {
       shownImageDimensionsRef.current = shownImageDimensions;
     }
   }, [shownImageDimensions]);
-
-  useEffect(() => {
-    if (cropTransformerRef.current && cropShapeRef.current) {
-      cropTransformerRef.current.nodes([cropShapeRef.current]);
-    }
-  }, [cropRatio]);
 
   if (!designLayer) {
     return null;
@@ -81,91 +112,44 @@ const CropTransformer = () => {
       ? undefined
       : ['top-left', 'bottom-left', 'top-right', 'bottom-right'];
 
-  const getProperCropRatio = () =>
-    cropRatio === ORIGINAL_CROP
-      ? originalImage.width / originalImage.height
-      : cropRatio;
-
-  const saveCrop = (e, noHistory = false) => {
-    if (!e.currentTarget) {
+  const saveCropFromEvent = (e, noHistory = false) => {
+    if (!e.target) {
       return;
     }
 
-    const width = e.currentTarget.width() / canvasScale; // for removing the scale from the width;
-    const height = e.currentTarget.height() / canvasScale;
-    const x = e.currentTarget.x() - abstractX / canvasScale;
-    const y = e.currentTarget.y() - abstractY / canvasScale;
-
-    const newCrop = {
-      absoluteX: isFlippedX && x === crop.x ? canvasWidth - x - width : x,
-      absoluteY: isFlippedY && y === crop.y ? canvasHeight - y - height : y,
-      relativeX: isFlippedX ? canvasWidth / canvasScale - x - width : x,
-      relativeY: isFlippedY ? canvasHeight / canvasScale - y - height : y,
-      width,
-      height,
-      ...(isEllipse
-        ? {
-            offset: {
-              x: -width / 2 / canvasScale,
-              y: -height / 2 / canvasScale,
-            },
-          }
-        : {}),
-    };
-
-    if (isFlippedX !== exIsFlipped.x) {
-      exIsFlipped.x = isFlippedX;
-    }
-    if (isFlippedY !== exIsFlipped.y) {
-      exIsFlipped.y = isFlippedY;
-    }
-
-    dispatch({
-      type: SET_CROP,
-      payload: {
-        ...newCrop,
-        dismissHistory: noHistory,
+    saveCrop(
+      {
+        width: e.target.width() * e.target.scaleX(),
+        height: e.target.height() * e.target.scaleY(),
+        x: e.target.x(),
+        y: e.target.y(),
       },
-    });
+      noHistory,
+    );
   };
 
-  const x = (crop.absoluteX || 0) + abstractX;
-  const y = (crop.absoluteY || 0) + abstractY;
+  const limitDragging = (e) => {
+    const currentCropShape = e.target;
+    currentCropShape.setAttrs(
+      boundDragging(currentCropShape.attrs, shownImageDimensionsRef.current),
+    );
+  };
+
+  const { x = 0, y = 0 } = crop;
   const width = crop.width || shownImageDimensions.width;
   const height = crop.height || shownImageDimensions.height;
-  const attrs = {
-    x: isFlippedX !== exIsFlipped.x ? canvasWidth - x - width : x,
-    y: isFlippedY !== exIsFlipped.y ? canvasHeight - y - height : y,
-    width,
-    height,
-  };
-  const {
-    width: boundedWidth,
-    height: boundedHeight,
-    ...boundedDimensions
-  } = boundResizing(
-    cropShapeRef.current?.attrs || attrs,
-    attrs,
-    shownImageDimensionsRef.current,
-    isCustom || isEllipse ? false : getProperCropRatio(),
-    cropConfig,
-  );
   const cropShapeProps = {
-    ...boundedDimensions,
+    x: isFlippedX ? shownImageDimensions.width - x - width : x,
+    y: isFlippedY ? shownImageDimensions.height - y - height : y,
     ref: cropShapeRef,
     fill: '#FFFFFF',
     scaleX: 1,
     scaleY: 1,
     globalCompositeOperation: 'destination-out',
-    dragBoundFunc: (pos) =>
-      boundDragging(
-        {
-          ...pos,
-          width: cropShapeRef.current.width(),
-          height: cropShapeRef.current.height(),
-        },
-        shownImageDimensionsRef.current,
-      ),
+    onDragEnd: saveCropFromEvent,
+    onDragMove: limitDragging,
+    onTransformEnd: saveCropFromEvent,
+    draggable: true,
   };
 
   // ALT is used to center scaling
@@ -173,14 +157,8 @@ const CropTransformer = () => {
     <>
       <Image
         image={originalImage}
-        x={
-          (isFlippedX ? shownImageDimensions.width : 0) +
-          shownImageDimensions.abstractX
-        }
-        y={
-          (isFlippedY ? shownImageDimensions.height : 0) +
-          shownImageDimensions.abstractY
-        }
+        x={isFlippedX ? shownImageDimensions.width : 0}
+        y={isFlippedY ? shownImageDimensions.height : 0}
         width={shownImageDimensions.width}
         height={shownImageDimensions.height}
         filters={[Konva.Filters.Blur, Konva.Filters.Brighten]}
@@ -193,15 +171,15 @@ const CropTransformer = () => {
       {isEllipse ? (
         <Ellipse
           {...cropShapeProps}
-          radiusX={boundedWidth / 2}
-          radiusY={boundedHeight / 2}
+          radiusX={width / 2}
+          radiusY={height / 2}
           offset={{
-            x: -boundedWidth / 2,
-            y: -boundedHeight / 2,
+            x: -width / 2,
+            y: -height / 2,
           }}
         />
       ) : (
-        <Rect {...cropShapeProps} width={boundedWidth} height={boundedHeight} />
+        <Rect {...cropShapeProps} width={width} height={height} />
       )}
       <Transformer
         centeredScaling={false}
@@ -220,13 +198,10 @@ const CropTransformer = () => {
         borderDash={[4]}
         keepRatio={!isCustom || !isEllipse}
         ref={cropTransformerRef}
-        onTransformEnd={saveCrop}
-        onDragEnd={saveCrop}
-        shouldOverdrawWholeArea
-        boundBoxFunc={(oldBox, newBox) =>
+        boundBoxFunc={(absOldBox, absNewBox) =>
           boundResizing(
-            oldBox,
-            newBox,
+            absOldBox,
+            absNewBox,
             shownImageDimensionsRef.current,
             isCustom || isEllipse ? false : getProperCropRatio(),
             cropConfig,

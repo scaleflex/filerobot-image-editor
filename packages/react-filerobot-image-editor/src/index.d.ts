@@ -122,10 +122,8 @@ type imageDesignState = {
       ratio: string;
       width?: number,
       height?: number,
-      absoluteX?: number,
-      absoluteY?: number,
-      relativeX?: number,
-      relativeY?: number,
+      x?: number,
+      y?: number,
     },
     isFlippedX?: boolean;
     isFlippedY?: boolean;

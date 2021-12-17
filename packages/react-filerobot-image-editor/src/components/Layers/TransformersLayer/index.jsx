@@ -9,10 +9,14 @@ import CropTransformer from './CropTransformer';
 import NodesTransformer from './NodesTransformer';
 
 const TransformersLayer = () => {
-  const { toolId } = useStore();
+  const { toolId, shownImageDimensions } = useStore();
 
   return (
-    <Layer id={TRANSFORMERS_LAYER_ID}>
+    <Layer
+      id={TRANSFORMERS_LAYER_ID}
+      x={shownImageDimensions.abstractX || 0}
+      y={shownImageDimensions.abstractY || 0}
+    >
       <NodesTransformer />
       {toolId === TOOLS_IDS.CROP && <CropTransformer />}
     </Layer>

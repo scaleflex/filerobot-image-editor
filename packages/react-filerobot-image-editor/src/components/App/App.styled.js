@@ -5,9 +5,10 @@ const StyledAppWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px;
   height: 100%;
+  max-height: 100%;
   width: 100%;
+  max-width: 100%;
   overflow: auto;
   position: relative;
 `;
@@ -16,7 +17,14 @@ const StyledMainContent = styled.div`
   display: flex;
   align-items: flex-start;
   width: 100%;
-  height: calc(100% - 38px - 8px); // 38px, 8px = topbar's height, margin.
+  padding: 12px;
+  box-sizing: border-box;
+  height: calc(100% - 95px); // 95px = possible max height of topbar w/ spaces
+  flex-grow: 1;
+
+  [data-phone='true'] & {
+    padding: 0;
+  }
 `;
 
 const StyledCanvasAndTools = styled.div`
@@ -24,13 +32,13 @@ const StyledCanvasAndTools = styled.div`
   width: calc(100% - 80px); // 80px = tabsbar's width.
   flex-grow: 1;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledPhoneToolsAndTabs = styled.div`
-  bottom: 0;
-  position: absolute;
   width: 100%;
-  margin: 0 -12px;
+  flex-grow: 1;
 `;
 
 export {

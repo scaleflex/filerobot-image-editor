@@ -53,7 +53,12 @@ const CanvasNode = ({ children }) => {
   };
 
   const handleCanvasDragEnd = (e) => {
-    if (e.currentTarget.draggable()) {
+    if (
+      e.currentTarget.draggable() &&
+      e.target.nodeType.toLowerCase() === 'stage' &&
+      isZoomEnabled &&
+      isPanningEnabled
+    ) {
       saveZoom({
         factor: zoom.factor,
         x: e.target.x(),

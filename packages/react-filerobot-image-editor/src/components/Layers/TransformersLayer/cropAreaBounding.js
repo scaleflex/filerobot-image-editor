@@ -3,36 +3,14 @@ import restrictNumber from 'utils/restrictNumber';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
 
 export const boundDragging = (newDimensions, allowedArea) => {
-  const scaledAllowedArea = {
-    x: allowedArea.abstractX * allowedArea.scaledBy,
-    y: allowedArea.abstractY * allowedArea.scaledBy,
-    width: allowedArea.width * allowedArea.scaledBy,
-    height: allowedArea.height * allowedArea.scaledBy,
+  const maxAllowedX =
+    allowedArea.width - (newDimensions.radiusX * 2 || newDimensions.width);
+  const maxAllowedY =
+    allowedArea.height - (newDimensions.radiusY * 2 || newDimensions.height);
+  return {
+    x: toPrecisedFloat(Math.min(Math.max(newDimensions.x, 0), maxAllowedX)),
+    y: toPrecisedFloat(Math.min(Math.max(newDimensions.y, 0), maxAllowedY)),
   };
-  // As in dragging we are receiving width and height without parent's scaling so we should apply scaling here
-  // the scaledBy of allowedArea is the same as the scaledBy for the width and height as it refers to the canvas's scale
-  // Which scales both the crop transformer and allowed area.
-  const scaledNewDimensions = {
-    width: newDimensions.width * allowedArea.scaledBy,
-    height: newDimensions.height * allowedArea.scaledBy,
-  };
-
-  const maxAllowedX = scaledAllowedArea.x + scaledAllowedArea.width;
-  const maxAllowedY = scaledAllowedArea.y + scaledAllowedArea.height;
-  const boundedDimensions = {
-    x: Math.max(scaledAllowedArea.x, newDimensions.x),
-    y: Math.max(scaledAllowedArea.y, newDimensions.y),
-  };
-
-  if (boundedDimensions.x + scaledNewDimensions.width > maxAllowedX) {
-    boundedDimensions.x = maxAllowedX - scaledNewDimensions.width;
-  }
-
-  if (boundedDimensions.y + scaledNewDimensions.height > maxAllowedY) {
-    boundedDimensions.y = maxAllowedY - scaledNewDimensions.height;
-  }
-
-  return boundedDimensions;
 };
 
 export const boundResizing = (
@@ -48,37 +26,30 @@ export const boundResizing = (
     width: toPrecisedFloat(allowedArea.width * allowedArea.scaledBy),
     height: toPrecisedFloat(allowedArea.height * allowedArea.scaledBy),
   };
-
-  const maxAllowedX = scaledAllowedArea.x + scaledAllowedArea.width;
-  const maxAllowedY = scaledAllowedArea.y + scaledAllowedArea.height;
-
   const boundedDimensions = { ...newDimensions };
-  if (toPrecisedFloat(boundedDimensions.x) < scaledAllowedArea.x) {
+  if (newDimensions.x < scaledAllowedArea.x) {
     boundedDimensions.x = scaledAllowedArea.x;
     boundedDimensions.width =
       oldDimensions.x - scaledAllowedArea.x + oldDimensions.width;
   }
-
-  if (toPrecisedFloat(boundedDimensions.y) < scaledAllowedArea.y) {
+  if (newDimensions.y < scaledAllowedArea.y) {
     boundedDimensions.y = scaledAllowedArea.y;
     boundedDimensions.height =
       oldDimensions.y - scaledAllowedArea.y + oldDimensions.height;
   }
-
   if (
-    toPrecisedFloat(boundedDimensions.x) +
-      toPrecisedFloat(boundedDimensions.width) >
-    maxAllowedX
+    boundedDimensions.x + boundedDimensions.width >
+    scaledAllowedArea.x + scaledAllowedArea.width
   ) {
-    boundedDimensions.width = maxAllowedX - boundedDimensions.x;
+    boundedDimensions.width =
+      scaledAllowedArea.x + scaledAllowedArea.width - boundedDimensions.x;
   }
-
   if (
-    toPrecisedFloat(boundedDimensions.y) +
-      toPrecisedFloat(boundedDimensions.height) >
-    maxAllowedY
+    boundedDimensions.y + boundedDimensions.height >
+    scaledAllowedArea.y + scaledAllowedArea.height
   ) {
-    boundedDimensions.height = maxAllowedY - boundedDimensions.y;
+    boundedDimensions.height =
+      scaledAllowedArea.y + scaledAllowedArea.height - boundedDimensions.y;
   }
 
   if (
@@ -89,7 +60,8 @@ export const boundResizing = (
     const ratioedBoundedHeight = boundedDimensions.width / ratio;
 
     if (
-      toPrecisedFloat(boundedDimensions.y + ratioedBoundedHeight) <= maxAllowedY
+      toPrecisedFloat(boundedDimensions.y + ratioedBoundedHeight) <=
+      scaledAllowedArea.y + scaledAllowedArea.height
     ) {
       boundedDimensions.height = ratioedBoundedHeight;
     } else {

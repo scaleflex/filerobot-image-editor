@@ -147,8 +147,8 @@ const DesignLayer = () => {
       : {
           width: crop.width || imageDimensions.width,
           height: crop.height || imageDimensions.height,
-          x: crop.relativeX || 0,
-          y: crop.relativeY || 0,
+          x: crop.x || 0,
+          y: crop.y || 0,
         };
     cropImage(ctx, { ratio: crop.ratio, ...clipBox }, isCroppingAndNotSaving);
     if (designLayerRef.current) {
@@ -204,7 +204,7 @@ const DesignLayer = () => {
     xPointToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.width
       ? (isFlippedX ? -1 : 1) *
-        (imageDimensions.width / 2 - crop.relativeX - crop.width / 2) *
+        (imageDimensions.width / 2 - crop.x - crop.width / 2) *
         resizedX
       : 0);
 
@@ -212,7 +212,7 @@ const DesignLayer = () => {
     yPointToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.height
       ? (isFlippedY ? -1 : 1) *
-        (imageDimensions.height / 2 - crop.relativeY - crop.height / 2) *
+        (imageDimensions.height / 2 - crop.y - crop.height / 2) *
         resizedY
       : 0);
 

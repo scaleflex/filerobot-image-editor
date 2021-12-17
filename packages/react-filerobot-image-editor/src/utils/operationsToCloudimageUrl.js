@@ -9,7 +9,7 @@ import toPrecisedFloat from './toPrecisedFloat';
 
 const generateCropQuery = (crop, previewDimensions, originalDimensions) => {
   const { x, y, width, height } = mapCropBox(
-    { ...crop, x: crop.relativeX, y: crop.relativeY },
+    crop,
     previewDimensions,
     originalDimensions,
   );
@@ -159,7 +159,12 @@ const operationsToCloudimageUrl = (
 
   const operationsQueries = [];
 
-  if (crop.width && crop.height && crop.relativeX && crop.relativeY) {
+  if (
+    crop.width &&
+    crop.height &&
+    (crop.x || crop.x === 0) &&
+    (crop.y || crop.y === 0)
+  ) {
     operationsQueries.push(
       generateCropQuery(crop, previewDimensions, originalImage),
     );

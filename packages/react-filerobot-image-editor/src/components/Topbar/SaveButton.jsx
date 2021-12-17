@@ -96,8 +96,8 @@ const SaveButton = () => {
 
     const mappedCropBox = mapCropBox(
       {
-        x: crop.relativeX || clipX,
-        y: crop.relativeY || clipY,
+        x: crop.x || clipX,
+        y: crop.y || clipY,
         width: crop.width || clipWidth,
         height: crop.height || clipHeight,
       },
@@ -213,8 +213,8 @@ const SaveButton = () => {
       );
       const mappedCropBox = mapCropBox(
         {
-          x: crop.relativeX,
-          y: crop.relativeY,
+          x: crop.x,
+          y: crop.y,
           width: crop.width,
           height: crop.height,
         },
