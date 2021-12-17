@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { useEffect, useState } from 'react';
 import MenuItem from '@scaleflex/ui/core/menu-item';
-import Rename from '@scaleflex/icons/rename';
+import SaveAs from '@scaleflex/icons/save-as';
 import Label from '@scaleflex/ui/core/label';
 
 /** Internal Dependencies */
@@ -293,7 +293,7 @@ const SaveButton = () => {
         <Modal
           title={t('saveAsModalLabel')}
           Icon={(props) => (
-            <Rename color={theme.palette['accent-primary']} {...props} />
+            <SaveAs color={theme.palette['accent-primary']} {...props} />
           )}
           isOpened={isModalOpened}
           onCancel={cancelModal}

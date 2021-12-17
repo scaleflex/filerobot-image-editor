@@ -1908,6 +1908,11 @@
   resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.60.tgz#db60da49f60afd4136aedf324afe393cc16dd712"
   integrity sha512-63+sfZAejR/KNLkno/IemdEkrzwF926ut9PF82NEkiPeJNamvVSq+N0lJlvZTE1o4H5zy1wabz3bY482EXy3qQ==
 
+"@scaleflex/icons@^1.0.0-beta.61":
+  version "1.0.0-beta.61"
+  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.61.tgz#d140d8ba213aa2cd82f049485cbbd0d6b22fc61c"
+  integrity sha512-bEzNCSSXVDDMyE5S+nCVOVOPAOxhtrrcZZp/z5eZHoRRebFANdzs3p3BOnaEWVo13MOF/t5cop32RbvtppTUFQ==
+
 "@scaleflex/ui@^1.0.0-beta.60":
   version "1.0.0-beta.60"
   resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.60.tgz#345c60067af927ead8211a453baac81ae1364b62"
@@ -1915,6 +1920,21 @@
   dependencies:
     "@popperjs/core" "^2.6.0"
     "@scaleflex/icons" "^1.0.0-beta.60"
+    lodash.merge "^4.6.2"
+    lodash.throttle "^4.1.1"
+    polished "^3.6.6"
+    prop-types "^15.7.2"
+    react-focus-lock "^2.4.1"
+    react-popper "^2.2.4"
+    use-callback-ref "^1.2.4"
+
+"@scaleflex/ui@^1.0.0-beta.61":
+  version "1.0.0-beta.61"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.61.tgz#ff10dbe4a1fdc0cc7659940ecae9b35bb151f6c3"
+  integrity sha512-y4fuAKoEPY7IY4O2nkQcNJHcxStc62eDdWLNvfOnZIal/sYszSzl4LQU74tl9M/N7T2iN2jP1gaQSNl5MWRDcw==
+  dependencies:
+    "@popperjs/core" "^2.6.0"
+    "@scaleflex/icons" "^1.0.0-beta.61"
     lodash.merge "^4.6.2"
     lodash.throttle "^4.1.1"
     polished "^3.6.6"
