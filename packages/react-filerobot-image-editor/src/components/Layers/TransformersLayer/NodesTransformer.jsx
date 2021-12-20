@@ -3,14 +3,16 @@ import React, { useMemo } from 'react';
 import { Transformer } from 'react-konva';
 
 /** Internal Dependencies */
-import { NODES_TRANSFORMER_ID } from 'utils/constants';
+import { NODES_TRANSFORMER_ID, POINTER_ICONS } from 'utils/constants';
 import { useStore } from 'hooks';
+import { CHANGE_POINTER_ICON } from 'actions';
 
 const NodesTransformer = () => {
   const {
     selectionsIds = [],
     theme,
     designLayer,
+    dispatch,
     config: { useCloudimage },
   } = useStore();
 
@@ -23,6 +25,24 @@ const NodesTransformer = () => {
         : [],
     [selectionsIds],
   );
+
+  const changePointerIconToMove = () => {
+    dispatch({
+      type: CHANGE_POINTER_ICON,
+      payload: {
+        pointerCssIcon: POINTER_ICONS.MOVE,
+      },
+    });
+  };
+
+  const changePointerIconToDraw = () => {
+    dispatch({
+      type: CHANGE_POINTER_ICON,
+      payload: {
+        pointerCssIcon: POINTER_ICONS.DRAW,
+      },
+    });
+  };
 
   // ALT is used to center scaling
   // SHIFT is used to scaling with keeping ratio
@@ -43,8 +63,11 @@ const NodesTransformer = () => {
       borderStroke={theme.palette['accent-primary']}
       borderStrokeWidth={2}
       borderDash={[4]}
-      flipEnabled
       rotateEnabled={!useCloudimage}
+      onMouseOver={changePointerIconToMove}
+      onMouseLeave={changePointerIconToDraw}
+      flipEnabled
+      shouldOverdrawWholeArea
     />
   );
 };

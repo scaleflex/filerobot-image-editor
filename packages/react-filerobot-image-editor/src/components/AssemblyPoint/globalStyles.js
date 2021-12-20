@@ -16,6 +16,10 @@ const FontsFaces = createGlobalStyle`
 `;
 
 const BrowserScrollbarStyles = createGlobalStyle`
+  .Menu-open {
+    overflow: visible !important;
+  }
+
   .${ROOT_CONTAINER_CLASS_NAME} * {
     scrollbar-color: rgba(203, 211, 218, 1) rgba(203, 211, 218, 0.35);
 

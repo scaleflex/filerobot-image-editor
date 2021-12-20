@@ -33,7 +33,7 @@ const MainCanvas = () => {
 
   return (
     <CanvasContainer ref={observeCanvasContainerResizing}>
-      <NodeControls />
+      {!providedAppContext.textIdOfEditableContent && <NodeControls />}
       {providedAppContext.isShowOriginalImage && (
         <StyledOrignalImage src={providedAppContext.originalImage.src} />
       )}

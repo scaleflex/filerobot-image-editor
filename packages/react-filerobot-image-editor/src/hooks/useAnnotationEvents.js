@@ -1,25 +1,18 @@
 /** External Dependencies */
-import { useContext, useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import {
   SET_ANNOTATION,
   SELECT_ANNOTATION,
-  CHANGE_POINTER_ICON,
   ENABLE_TEXT_CONTENT_EDIT,
   SELECT_TOOL,
 } from 'actions';
-import {
-  TOOLS_IDS,
-  POINTER_ICONS,
-  TABS_IDS,
-  WATERMARK_ANNOTATION_ID,
-} from 'utils/constants';
-import useDebouncedCallback from './useDebouncedCallback';
+import { TOOLS_IDS, TABS_IDS, WATERMARK_ANNOTATION_ID } from 'utils/constants';
+import useStore from './useStore';
 
 const useAnnotationEvents = () => {
-  const { tabId, dispatch } = useContext(AppContext);
+  const { tabId, dispatch } = useStore();
 
   const isAnnotationEventsDisabled = useMemo(
     () => tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK,
@@ -33,32 +26,12 @@ const useAnnotationEvents = () => {
     });
   }, []);
 
-  const changePointerIcon = useDebouncedCallback((newPointerCssIcon) => {
-    dispatch({
-      type: CHANGE_POINTER_ICON,
-      payload: {
-        pointerCssIcon: newPointerCssIcon,
-      },
-    });
-  }, 5);
-
-  const changePointerIconToMove = useCallback((e) => {
-    if (e.target.draggable()) {
-      changePointerIcon(POINTER_ICONS.MOVE);
-    }
-  }, []);
-
-  const changePointerIconToDraw = useCallback(() => {
-    changePointerIcon(POINTER_ICONS.DRAW);
-  }, []);
-
   const updatePositionOnDragEnd = useCallback((e) => {
     updateAnnotation({
       id: e.target.id(),
       x: e.target.x(),
       y: e.target.y(),
     });
-    changePointerIconToMove(e);
   }, []);
 
   const getAnnotationTransformProps = useCallback((e) => {
@@ -113,7 +86,6 @@ const useAnnotationEvents = () => {
         keepSelections: multiple,
       },
     });
-    changePointerIconToMove(e);
   }, []);
 
   const enableTextContentChangeOnDblClick = useCallback((e) => {
@@ -134,8 +106,6 @@ const useAnnotationEvents = () => {
         : {
             onTransform: updateTextAnnotationOnTransform,
             onTransformEnd: updateAnnotationTransform,
-            onMouseOver: changePointerIconToMove,
-            onMouseLeave: changePointerIconToDraw,
             onDragEnd: updatePositionOnDragEnd,
             onClick: selectAnnotationOnClick,
             onTap: selectAnnotationOnClick,

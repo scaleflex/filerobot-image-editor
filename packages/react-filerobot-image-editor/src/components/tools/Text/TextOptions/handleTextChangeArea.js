@@ -44,7 +44,6 @@ const activateTextChange = (
 ) => {
   editFinishCallback = finishingCallback;
   disableTextEditCallback = dismissingTextEditing;
-  const { top, left } = canvasStage.container().getBoundingClientRect();
   transformer = currentTransformer;
   textNode = canvasStage.findOne(`#${textNodeId}`);
   // hide text node and transformer:
@@ -53,23 +52,18 @@ const activateTextChange = (
 
   // at first lets find position of text node relative to the stage:
   const textPosition = textNode.absolutePosition();
-  // so position of textarea will be the sum of positions above:
-  const areaPosition = {
-    x: left + textPosition.x,
-    y: top + textPosition.y,
-  };
 
   // create textarea and style it
   textarea = document.createElement('textarea');
-  document.body.appendChild(textarea);
+  canvasStage.container().parentNode.appendChild(textarea);
 
   // apply many styles to match text on canvas as close as possible
   // remember that text rendering on canvas and on the textarea can be different
   // and sometimes it is hard to make it 100% the same. But we will try...
   textarea.value = textNode.text();
   textarea.style.position = 'absolute';
-  textarea.style.top = `${areaPosition.y}px`;
-  textarea.style.left = `${areaPosition.x}px`;
+  textarea.style.top = `${textPosition.y}px`;
+  textarea.style.left = `${textPosition.x}px`;
   textarea.style.width = `${textNode.width() - textNode.padding() * 2}px`;
   textarea.style.height = `${textNode.height() - textNode.padding() * 2 + 5}px`;
   textarea.style.maxWidth = `${textNode.width() - textNode.padding() * 2}px`;
