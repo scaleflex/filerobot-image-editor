@@ -14,6 +14,7 @@ import {
   ELLIPSE_CROP,
   IMAGE_NODE_ID,
   SUPPORTED_IMAGE_TYPES,
+  TOOLS_IDS,
 } from 'utils/constants';
 import { SET_SAVED, SET_ERROR, SHOW_LOADER, HIDE_LOADER } from 'actions';
 import Modal from 'components/common/Modal';
@@ -21,6 +22,7 @@ import Slider from 'components/common/Slider';
 import restrictNumber from 'utils/restrictNumber';
 import { Resize } from 'components/tools/Resize';
 import operationsToCloudimageUrl from 'utils/operationsToCloudimageUrl';
+import imageToBase64 from 'utils/imageToBase64';
 import {
   StyledSaveButton,
   StyledFileExtensionSelect,
@@ -141,7 +143,32 @@ const SaveButton = () => {
     };
     const finalCanvas = preparedCanvas.toCanvas(finalOptions);
     const finalImgBase64 = preparedCanvas.toDataURL(finalOptions);
-    const finalImgDesignState = extractCurrentDesignState(state);
+    const finalImgDesignState = {
+      ...extractCurrentDesignState(state),
+      shownImageDimensions: {
+        width: state.shownImageDimensions.width,
+        height: state.shownImageDimensions.height,
+        scaledBy: state.shownImageDimensions.scaledBy,
+      },
+    };
+    if (finalImgDesignState.filter) {
+      finalImgDesignState.filter = finalImgDesignState.filter.name;
+    }
+    finalImgDesignState.finetunes = finalImgDesignState.finetunes.map(
+      (finetuneFn) => finetuneFn.name,
+    );
+    Object.keys(finalImgDesignState.annotations).forEach((k) => {
+      const annotation = finalImgDesignState.annotations[k];
+      const imgSrc =
+        annotation.name === TOOLS_IDS.IMAGE && annotation.image?.src;
+      if (imgSrc && imgSrc.startsWith('blob:')) {
+        finalImgDesignState.annotations[k].image = imageToBase64(
+          annotation.image,
+        );
+      } else if (annotation.image instanceof HTMLImageElement) {
+        finalImgDesignState.annotations[k].image = imgSrc;
+      }
+    });
 
     const finalImgPassedObject = {
       fullName: `${name}.${extension}`,
@@ -273,7 +300,7 @@ const SaveButton = () => {
   }, [originalImage, isModalOpened]);
 
   useEffect(() => {
-    if (originalImage && resize) {
+    if (resize.width && resize.height) {
       setImageFileInfo({
         ...imageFileInfo,
         size: {

@@ -35,6 +35,7 @@ import enableTextContentEdit, {
 } from './enableTextContentEdit';
 import setResize, { SET_RESIZE } from './setResize';
 import setSaved, { SET_SAVED } from './setSaved';
+import updateState, { UPDATE_STATE } from './updateState';
 
 export default {
   [SET_ORIGINAL_IMAGE]: setOriginalImage,
@@ -66,6 +67,7 @@ export default {
   [REDO]: redo,
   [RESET]: reset,
   [SET_SAVED]: setSaved,
+  [UPDATE_STATE]: updateState,
 };
 
 export {
@@ -98,4 +100,5 @@ export {
   REDO,
   RESET,
   SET_SAVED,
+  UPDATE_STATE,
 };

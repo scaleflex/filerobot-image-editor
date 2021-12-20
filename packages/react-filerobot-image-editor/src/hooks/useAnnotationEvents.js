@@ -2,12 +2,7 @@
 import { useMemo, useCallback } from 'react';
 
 /** Internal Dependencies */
-import {
-  SET_ANNOTATION,
-  SELECT_ANNOTATION,
-  ENABLE_TEXT_CONTENT_EDIT,
-  SELECT_TOOL,
-} from 'actions';
+import { SET_ANNOTATION, SELECT_ANNOTATION, SELECT_TOOL } from 'actions';
 import { TOOLS_IDS, TABS_IDS, WATERMARK_ANNOTATION_ID } from 'utils/constants';
 import useStore from './useStore';
 
@@ -88,17 +83,6 @@ const useAnnotationEvents = () => {
     });
   }, []);
 
-  const enableTextContentChangeOnDblClick = useCallback((e) => {
-    if (e.target.name() === TOOLS_IDS.TEXT) {
-      dispatch({
-        type: ENABLE_TEXT_CONTENT_EDIT,
-        payload: {
-          textIdOfEditableContent: e.target.id(),
-        },
-      });
-    }
-  }, []);
-
   return useMemo(
     () =>
       isAnnotationEventsDisabled
@@ -109,8 +93,6 @@ const useAnnotationEvents = () => {
             onDragEnd: updatePositionOnDragEnd,
             onClick: selectAnnotationOnClick,
             onTap: selectAnnotationOnClick,
-            onDblClick: enableTextContentChangeOnDblClick,
-            onDblTap: enableTextContentChangeOnDblClick,
           },
     [isAnnotationEventsDisabled],
   );

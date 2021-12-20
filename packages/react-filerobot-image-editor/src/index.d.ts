@@ -152,6 +152,11 @@ type imageDesignState = {
     width?: number;
     height?: number;
   },
+  shownImageDimensions?: {
+    width: number;
+    height: number;
+    scaledBy: number;
+  }
 };
 
 export interface FilerobotImageEditorConfig {
@@ -212,6 +217,7 @@ export interface FilerobotImageEditorConfig {
     domain?: string;
     version?: string;
     secureProtocol?: boolean;
+    loadableQuery?: string;
     imageSealing?: {
       enable?: boolean;
       salt?: string;

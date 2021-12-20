@@ -12,18 +12,22 @@ import {
   SET_ERROR,
   SET_ORIGINAL_IMAGE,
   SHOW_LOADER,
+  UPDATE_STATE,
 } from 'actions';
 import ErrorPopup from 'components/ErrorPopup';
 import loadImage from 'utils/loadImage';
 import { usePhoneScreen, useStore } from 'hooks';
 import Spinner from 'components/common/Spinner';
 import { getBackendTranslations } from 'utils/translator';
+import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
 import {
   StyledAppWrapper,
   StyledMainContent,
   StyledCanvasAndTools,
   StyledPhoneToolsAndTabs,
 } from './App.styled';
+
+let cloudimageQueryLoaded = false;
 
 const App = () => {
   const {
@@ -32,10 +36,13 @@ const App = () => {
     haveNotSavedChanges,
     dispatch,
     originalImage,
+    shownImageDimensions,
     t,
   } = useStore();
   const {
     loadableDesignState,
+    useCloudimage,
+    cloudimage,
     img,
     avoidChangesNotSavedAlertOnLeave,
     useBackendTranslations,
@@ -108,6 +115,7 @@ const App = () => {
 
   useEffect(() => {
     if (!isFirstRender.current && img) {
+      cloudimageQueryLoaded = false;
       handleLoading([loadAndSetOriginalImage(img)]);
     }
   }, [img]);
@@ -121,6 +129,29 @@ const App = () => {
       handleLoading([loadAndSetOriginalImage(loadableDesignState.imgSrc)]);
     }
   }, [loadableDesignState]);
+
+  useEffect(() => {
+    if (
+      Object.keys(shownImageDimensions || {}).length > 0 &&
+      !Object.keys(shownImageDimensions).some(
+        (k) => !shownImageDimensions[k],
+      ) &&
+      originalImage &&
+      useCloudimage &&
+      cloudimage?.loadableQuery &&
+      !cloudimageQueryLoaded
+    ) {
+      dispatch({
+        type: UPDATE_STATE,
+        payload: cloudimageQueryToDesignState(
+          cloudimage.loadableQuery,
+          shownImageDimensions,
+          originalImage,
+        ),
+      });
+      cloudimageQueryLoaded = true;
+    }
+  }, [shownImageDimensions, originalImage, useCloudimage, cloudimage]);
 
   useEffect(() => {
     const initialRequestsPromises = [

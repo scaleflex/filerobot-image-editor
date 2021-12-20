@@ -1,9 +1,10 @@
 /** External Dependencies */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Image } from 'react-konva';
 
 /** Internal Dependencies */
+import loadImage from 'utils/loadImage';
 import nodesCommonPropTypes from '../nodesCommonPropTypes';
 
 const ImageNode = ({
@@ -27,31 +28,47 @@ const ImageNode = ({
   shadowOpacity,
   opacity,
   ...otherProps
-}) => (
-  <Image
-    id={id}
-    name={name}
-    rotation={rotation}
-    scaleX={scaleX}
-    scaleY={scaleY}
-    stroke={stroke}
-    strokeWidth={strokeWidth}
-    shadowOffsetX={shadowOffsetX}
-    shadowOffsetY={shadowOffsetY}
-    shadowBlur={shadowBlur}
-    shadowColor={shadowColor}
-    shadowOpacity={shadowOpacity}
-    image={image}
-    x={x}
-    y={y}
-    width={width}
-    height={height}
-    opacity={opacity}
-    {...otherProps}
-    {...annotationEvents}
-    {...otherProps}
-  />
-);
+}) => {
+  const [imgElement, setImgElement] = useState(null);
+  useEffect(() => {
+    if (typeof image === 'string') {
+      loadImage(image).then(setImgElement);
+    }
+  }, [image]);
+
+  const isImgElement = image instanceof HTMLImageElement;
+  if (!isImgElement && !imgElement) {
+    return null;
+  }
+
+  const finalImg = isImgElement ? image : imgElement;
+
+  return (
+    <Image
+      id={id}
+      name={name}
+      rotation={rotation}
+      scaleX={scaleX}
+      scaleY={scaleY}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
+      shadowOffsetX={shadowOffsetX}
+      shadowOffsetY={shadowOffsetY}
+      shadowBlur={shadowBlur}
+      shadowColor={shadowColor}
+      shadowOpacity={shadowOpacity}
+      image={finalImg}
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      opacity={opacity}
+      {...otherProps}
+      {...annotationEvents}
+      {...otherProps}
+    />
+  );
+};
 
 ImageNode.defaultProps = {
   ...nodesCommonPropTypes.defaults,
@@ -66,6 +83,7 @@ ImageNode.propTypes = {
     PropTypes.instanceOf(SVGImageElement),
     // PropTypes.instanceOf(HTMLVideoElement),
     PropTypes.instanceOf(ImageBitmap),
+    PropTypes.string,
   ]).isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,

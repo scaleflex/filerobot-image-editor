@@ -55,17 +55,18 @@ const generateWatermarkQuery = (
     )}&wat_fontsize=${watermark.fontSize}max`;
   }
 
-  const watermarkUrl = watermark.image.src.startsWith('blob:')
-    ? imageToBase64(watermark.image)
-    : watermark.image.src;
+  const imgSrc = watermark.image?.src || watermark.image;
+  const watermarkUrl = imgSrc.startsWith('blob:')
+    ? imageToBase64(imgSrc)
+    : imgSrc;
 
   return `${queryParams}&wat_url=${watermarkUrl}&wat_scale=${toPrecisedFloat(
     (width / previewDimensions.width) * 100,
     2,
-  )}p,${toPrecisedFloat(height / previewDimensions.height, 2)}p`;
+  )}p,${toPrecisedFloat((height / previewDimensions.height) * 100, 2)}p`;
 };
 
-const finetuneNameToParamInfo = {
+export const finetuneNameToParamInfo = {
   Brighten: {
     cloudimage: {
       name: 'bright',

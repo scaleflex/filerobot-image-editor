@@ -1,4 +1,4 @@
-const deepMerge = (source, object = {}) => {
+const deepMerge = (source, object = {}, considerArray = false) => {
   const mergedObject = { ...source };
   const keys = Object.keys(object);
   keys.forEach((k) => {
@@ -13,7 +13,10 @@ const deepMerge = (source, object = {}) => {
         !source[k] ||
         typeof source[k] !== 'object'
       ) {
-        mergedObject[k] = val;
+        mergedObject[k] =
+          considerArray && Array.isArray(mergedObject[k]) && Array.isArray(val)
+            ? [...mergedObject[k], ...val]
+            : val;
         return;
       }
 

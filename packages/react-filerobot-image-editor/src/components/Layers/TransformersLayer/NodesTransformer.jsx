@@ -3,9 +3,13 @@ import React, { useMemo } from 'react';
 import { Transformer } from 'react-konva';
 
 /** Internal Dependencies */
-import { NODES_TRANSFORMER_ID, POINTER_ICONS } from 'utils/constants';
+import {
+  NODES_TRANSFORMER_ID,
+  POINTER_ICONS,
+  TOOLS_IDS,
+} from 'utils/constants';
 import { useStore } from 'hooks';
-import { CHANGE_POINTER_ICON } from 'actions';
+import { CHANGE_POINTER_ICON, ENABLE_TEXT_CONTENT_EDIT } from 'actions';
 
 const NodesTransformer = () => {
   const {
@@ -44,6 +48,17 @@ const NodesTransformer = () => {
     });
   };
 
+  const enableTextContentChangeOnDblClick = () => {
+    if (selections.length === 1 && selections[0].name() === TOOLS_IDS.TEXT) {
+      dispatch({
+        type: ENABLE_TEXT_CONTENT_EDIT,
+        payload: {
+          textIdOfEditableContent: selections[0].id(),
+        },
+      });
+    }
+  };
+
   // ALT is used to center scaling
   // SHIFT is used to scaling with keeping ratio
   return (
@@ -66,6 +81,8 @@ const NodesTransformer = () => {
       rotateEnabled={!useCloudimage}
       onMouseOver={changePointerIconToMove}
       onMouseLeave={changePointerIconToDraw}
+      onDblClick={enableTextContentChangeOnDblClick}
+      onDblTap={enableTextContentChangeOnDblClick}
       flipEnabled
       shouldOverdrawWholeArea
     />

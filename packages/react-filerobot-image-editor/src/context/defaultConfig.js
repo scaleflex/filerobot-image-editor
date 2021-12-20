@@ -101,6 +101,7 @@ export default {
     dontPrefixUrl: false,
     domain: 'cloudimg.io',
     version: '',
+    loadableQuery: '',
     secureProtocol: true,
     imageSealing: {
       enable: false,

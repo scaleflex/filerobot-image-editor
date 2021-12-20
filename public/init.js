@@ -80,9 +80,10 @@ const config = {
   // cloudimage: {
   //   token: 'test',
   //   version: 'v7',
+  //   loadableQuery: '',
   //   imageSealing: {
-  //     enable: true,
-  //     salt: 'qer',
+  //     enable: false,
+  //     salt: 'test',
   //     charCount: 20,
   //     includeParams: null,
   //   },

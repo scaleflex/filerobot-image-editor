@@ -187,8 +187,9 @@ const Watermark = () => {
   // Always keep watermark selected
   useEffect(() => {
     if (
-      selectionsIds.length === 0 ||
-      selectionsIds[0].id !== WATERMARK_ANNOTATION_ID
+      watermark &&
+      (selectionsIds.length === 0 ||
+        selectionsIds[0].id !== WATERMARK_ANNOTATION_ID)
     ) {
       dispatch({
         type: SELECT_ANNOTATION,
