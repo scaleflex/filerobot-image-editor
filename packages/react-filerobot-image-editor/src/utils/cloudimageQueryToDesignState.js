@@ -173,8 +173,10 @@ const cloudimageQueryToDesignState = (
         ? {
             [WATERMARK_ANNOTATION_ID]: {
               ...watermark,
+              x: (crop.x || 0) + (watermark.x || 0),
+              y: (crop.y || 0) + (watermark.y || 0),
               id: WATERMARK_ANNOTATION_ID,
-              name: watermark?.text ? TOOLS_IDS.TEXT : TOOLS_IDS.IMAGE,
+              name: watermark.text ? TOOLS_IDS.TEXT : TOOLS_IDS.IMAGE,
               ...(watermark.text
                 ? {
                     width: watermark.text.length * watermark.fontSize,
