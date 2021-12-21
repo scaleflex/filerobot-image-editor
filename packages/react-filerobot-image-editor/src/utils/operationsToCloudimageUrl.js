@@ -38,12 +38,16 @@ const generateResizeQuery = ({ width, height } = {}) =>
 const generateWatermarkQuery = (
   watermarkAnnotation = {},
   previewDimensions,
+  crop = {},
 ) => {
   const { width, height, x, y, opacity, ...watermark } = watermarkAnnotation;
   const queryParams = `wat=1&wat_gravity=absolute&wat_opacity=${opacity}&wat_pos=${toPrecisedFloat(
-    (x / previewDimensions.width) * 100,
+    ((x - (crop.x || 0)) / previewDimensions.width) * 100,
     2,
-  )}p,${toPrecisedFloat((y / previewDimensions.height) * 100, 2)}p`;
+  )}p,${toPrecisedFloat(
+    ((y - (crop.y || 0)) / previewDimensions.height) * 100,
+    2,
+  )}p`;
 
   if (watermarkAnnotation.name === TOOLS_IDS.TEXT) {
     return `${queryParams}&wat_text=${watermark.text.replaceAll(
@@ -186,6 +190,7 @@ const operationsToCloudimageUrl = (
       generateWatermarkQuery(
         annotations[WATERMARK_ANNOTATION_ID],
         previewDimensions,
+        crop,
       ),
     );
   }
