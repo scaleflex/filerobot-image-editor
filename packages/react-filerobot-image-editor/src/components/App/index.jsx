@@ -27,8 +27,6 @@ import {
   StyledPhoneToolsAndTabs,
 } from './App.styled';
 
-let cloudimageQueryLoaded = false;
-
 const App = () => {
   const {
     config,
@@ -52,6 +50,7 @@ const App = () => {
   } = config;
   const isPhoneScreen = usePhoneScreen();
   const isFirstRender = useRef(true);
+  const cloudimageQueryLoaded = useRef(false);
   // Hacky solution, For being used in beforeunload event
   // as it won't be possible to have the latest value of the state variable in js event handler.
   const haveNotSavedChangesRef = useRef(haveNotSavedChanges);
@@ -115,7 +114,7 @@ const App = () => {
 
   useEffect(() => {
     if (!isFirstRender.current && img) {
-      cloudimageQueryLoaded = false;
+      cloudimageQueryLoaded.current = false;
       handleLoading([loadAndSetOriginalImage(img)]);
     }
   }, [img]);
@@ -139,7 +138,7 @@ const App = () => {
       originalImage &&
       useCloudimage &&
       cloudimage?.loadableQuery &&
-      !cloudimageQueryLoaded
+      !cloudimageQueryLoaded.current
     ) {
       dispatch({
         type: UPDATE_STATE,
@@ -149,7 +148,7 @@ const App = () => {
           originalImage,
         ),
       });
-      cloudimageQueryLoaded = true;
+      cloudimageQueryLoaded.current = true;
     }
   }, [shownImageDimensions, originalImage, useCloudimage, cloudimage]);
 

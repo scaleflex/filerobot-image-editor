@@ -8,7 +8,7 @@ import App from 'components/App';
 import { AppProvider } from 'context';
 import defaultConfig from 'context/defaultConfig';
 import deepMerge from 'utils/deepMerge';
-import { FontsFaces, IconsColor, BrowserScrollbarStyles } from './globalStyles';
+import { FontsFaces, IconsColor, OverrideDefaultStyles } from './globalStyles';
 
 const AssemblyPoint = (props) => {
   const { img, onSave, useCloudimage, cloudimage } = props;
@@ -38,7 +38,7 @@ const AssemblyPoint = (props) => {
       <ThemeProvider theme={defaultAndProvidedConfigMerged.theme}>
         <FontsFaces />
         <IconsColor />
-        <BrowserScrollbarStyles />
+        <OverrideDefaultStyles />
         <AppProvider config={defaultAndProvidedConfigMerged}>
           <App />
         </AppProvider>

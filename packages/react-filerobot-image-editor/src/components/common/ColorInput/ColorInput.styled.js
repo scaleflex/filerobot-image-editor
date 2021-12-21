@@ -68,8 +68,8 @@ const StyledColorPointer = styled.span.attrs(
 )(
   ({ theme }) => `
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   border-radius: 20px;
   box-shadow: 0px 1px 2px rgba(78, 77, 77, 0.15);
   border: 2px solid ${theme.palette['bg-secondary']};

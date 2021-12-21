@@ -7,7 +7,6 @@ import { ROOT_CONTAINER_CLASS_NAME } from 'utils/constants';
 const FontsFaces = createGlobalStyle`
   .${ROOT_CONTAINER_CLASS_NAME} {
     font-family: ${({ theme = {} }) => theme.typography?.fontFamily || 'Arial'};
-    box-sizing: border-box;
   }
 
   .SfxModal-Wrapper * {
@@ -15,12 +14,16 @@ const FontsFaces = createGlobalStyle`
   }
 `;
 
-const BrowserScrollbarStyles = createGlobalStyle`
+const OverrideDefaultStyles = createGlobalStyle`
   .Menu-open {
     overflow: visible !important;
   }
 
-  .${ROOT_CONTAINER_CLASS_NAME} * {
+  .${ROOT_CONTAINER_CLASS_NAME}, #SfxPopper {
+    box-sizing: border-box;
+  }
+  .${ROOT_CONTAINER_CLASS_NAME} *, #SfxPopper * {
+    box-sizing: border-box;
     scrollbar-color: rgba(203, 211, 218, 1) rgba(203, 211, 218, 0.35);
 
     &::-webkit-scrollbar {
@@ -45,4 +48,4 @@ const IconsColor = createGlobalStyle`
   }
 `;
 
-export { FontsFaces, IconsColor, BrowserScrollbarStyles };
+export { FontsFaces, IconsColor, OverrideDefaultStyles };
