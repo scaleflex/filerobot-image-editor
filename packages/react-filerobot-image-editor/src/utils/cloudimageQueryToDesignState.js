@@ -169,13 +169,21 @@ const cloudimageQueryToDesignState = (
         }
       : {}),
     annotations: {
-      [WATERMARK_ANNOTATION_ID]: {
-        ...watermark,
-        id: WATERMARK_ANNOTATION_ID,
-        name: watermark.text ? TOOLS_IDS.TEXT : TOOLS_IDS.IMAGE,
-        width: watermark.text.length * watermark.fontSize,
-        height: watermark.fontSize,
-      },
+      ...(watermark
+        ? {
+            [WATERMARK_ANNOTATION_ID]: {
+              ...watermark,
+              id: WATERMARK_ANNOTATION_ID,
+              name: watermark?.text ? TOOLS_IDS.TEXT : TOOLS_IDS.IMAGE,
+              ...(watermark.text
+                ? {
+                    width: watermark.text.length * watermark.fontSize,
+                    height: watermark.fontSize,
+                  }
+                : {}),
+            },
+          }
+        : {}),
     },
   };
 
