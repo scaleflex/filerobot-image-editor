@@ -1,5 +1,6 @@
 /** Internal Dependencies */
 import { TOOLS_IDS } from 'utils/constants';
+import getElemDocumentCoords from 'utils/getElemDocumentCoords';
 import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
 import getBoundingRectUnScaled from './getBoundingRectUnScaled';
 import getNewAnnotationPreview, {
@@ -29,7 +30,7 @@ const previewThenCallAnnotationAdding = (
   previewGroup,
   callbkAfterPreview,
 ) => {
-  const getCanvasBoundingRect = () => canvas.content.getBoundingClientRect();
+  const getCanvasBoundingRect = () => getElemDocumentCoords(canvas.content);
 
   const wrapTextBoundsPreviewByRect = (textAnnotation) => {
     textAnnotationWrappedRect = getNewAnnotationPreview({

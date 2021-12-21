@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { useDrag } from 'hooks';
 import mapNumber from 'utils/mapNumber';
 import restrictNumber from 'utils/restrictNumber';
+import getElemDocumentCoords from 'utils/getElemDocumentCoords';
 import {
   colorToHsl,
   hexToRgb,
@@ -42,7 +43,7 @@ const ColorPicker = ({
   });
 
   const changeRangePickerPointerPosByColor = (color) => {
-    const { width, height } = rangePickerRef.current.getBoundingClientRect();
+    const { width, height } = getElemDocumentCoords(rangePickerRef.current);
     const colorHsl = colorToHsl(color);
     const colorHsv = hslToHsv(
       colorHsl[0],
@@ -59,7 +60,7 @@ const ColorPicker = ({
   };
 
   const changeRangePickerColorByPosition = (left, top) => {
-    const { width, height } = rangePickerRef.current.getBoundingClientRect();
+    const { width, height } = getElemDocumentCoords(rangePickerRef.current);
     const [barColorHue] = colorToHsl(bar.color);
     const restrictedLeft = restrictNumber(left, 0, width) || 0;
     const restrictedTop = restrictNumber(top, 0, height) || 0;
@@ -84,9 +85,9 @@ const ColorPicker = ({
   };
 
   const updateRangePickerColor = (e) => {
-    const rangePickerElem = rangePickerRef.current;
-    const { left, top, height, width } =
-      rangePickerElem.getBoundingClientRect();
+    const { left, top, height, width } = getElemDocumentCoords(
+      rangePickerRef.current,
+    );
     const pointerLeft = e
       ? restrictNumber(e.pageX - left, 0, width)
       : rangePicker.pointer.left || 0;
@@ -97,22 +98,21 @@ const ColorPicker = ({
   };
 
   const initColorsBarPointer = () => {
-    const { left } = barRef.current.getBoundingClientRect();
+    const { left } = getElemDocumentCoords(barRef.current);
     const [h] = colorToHsl(rangePicker.color);
     const targetColorElem = barRef.current.querySelector(`[data-hue='${h}']`);
     const targetColorRgb = targetColorElem?.style?.backgroundColor || bar.color;
     setBar({
       color: targetColorRgb,
       pointerLeft:
-        targetColorElem?.getBoundingClientRect?.()?.left - left ||
-        bar.pointerLeft,
+        getElemDocumentCoords(targetColorElem)?.left - left || bar.pointerLeft,
     });
     changeRangePickerPointerPosByColor(rangePicker.color);
   };
 
   const changeBarColorByPosition = (pointerLeft) => {
     const barElem = barRef.current;
-    const { width } = barElem.getBoundingClientRect();
+    const { width } = getElemDocumentCoords(barElem);
     const mappedPointerLeft = restrictNumber(
       Math.round(mapNumber(pointerLeft, 0, width, 0, colorsHuesCount)),
       0,
@@ -130,7 +130,7 @@ const ColorPicker = ({
 
   const updateBarColor = (e) => {
     const barElem = barRef.current;
-    const { left } = barElem.getBoundingClientRect();
+    const { left } = getElemDocumentCoords(barElem);
     const pointerEvent = e.touches?.[0] || e;
     changeBarColorByPosition(pointerEvent.pageX - left);
   };

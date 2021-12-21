@@ -9,6 +9,7 @@ import AnnotationOptions from 'components/common/AnnotationOptions';
 import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
 import randomId from 'utils/randomId';
 import { SELECT_ANNOTATION, SET_ANNOTATION } from 'actions';
+import getElemDocumentCoords from 'utils/getElemDocumentCoords';
 
 const eventsOptions = {
   passive: true,
@@ -32,8 +33,7 @@ const PenOptions = ({ t }) => {
   });
 
   const getPointerPosition = useCallback(() => {
-    const canvasBoundingRect =
-      canvasRef.current.content.getBoundingClientRect();
+    const canvasBoundingRect = getElemDocumentCoords(canvasRef.current.content);
     const canvasScale = canvasRef.current.scale();
     const pos = getPointerOffsetPositionBoundedToObject(
       previewGroup,
