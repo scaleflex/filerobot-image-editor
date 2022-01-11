@@ -38,14 +38,15 @@ const getInitialAppState = (config = {}) => {
       },
       isFlippedX: false,
       isFlippedY: false,
+      rotation: 0,
     },
     annotations: {},
     resize: {},
     // --- End of design states ---
+    shownImageDimensions: {},
     ...loadedConfigPrepared, // if provided it would override the above design states
     pointerCssIcon: POINTER_ICONS.DEFAULT,
     canvasScale: 1,
-    shownImageDimensions: {},
     zoom: {
       factor: DEFAULT_ZOOM_FACTOR,
       x: null,
@@ -53,8 +54,8 @@ const getInitialAppState = (config = {}) => {
     },
     isLoadingGlobally: true,
     selectionsIds: [],
-    tabId: null,
-    toolId: null,
+    tabId: config.defaultTabId || null,
+    toolId: config.defaultToolId || null,
     /* For UNDO/REDO/RESET,
      * Current/present state => considered properties related to design of the whole 1st order state.
      * `pastDesignStates` => contains the past states of those design properties (undo).

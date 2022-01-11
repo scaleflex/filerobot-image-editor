@@ -30,9 +30,12 @@ const CanvasNode = ({ children }) => {
     selectionsIds = [],
     zoom = {},
   } = useStore();
+  const defaultZoomFactor = DEFAULT_ZOOM_FACTOR;
   const isZoomEnabled = toolId !== TOOLS_IDS.CROP;
   const [isPanningEnabled, setIsPanningEnabled] = useState(
-    tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK,
+    tabId !== TABS_IDS.ANNOTATE &&
+      tabId !== TABS_IDS.WATERMARK &&
+      zoom.factor > defaultZoomFactor,
   );
 
   const cursorStyle = useMemo(
@@ -93,22 +96,22 @@ const CanvasNode = ({ children }) => {
   const handleZoom = (e) => {
     e.evt.preventDefault();
 
-    const scaleBy =
-      (e.evt.deltaY * ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR || 1) +
-      DEFAULT_ZOOM_FACTOR;
-    const stageCanvas = e.currentTarget;
-    const oldZoomScaleFactor = zoom.factor || 1;
+    const scaleBy = Math.max(
+      (Math.abs(e.evt.deltaY * ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR) || 1) +
+        defaultZoomFactor,
+      1.1,
+    );
+    const oldZoomScaleFactor = zoom.factor || defaultZoomFactor;
 
-    const isZoomIn = scaleBy < 0;
+    const isZoomIn = e.evt.deltaY < 0;
     const newScale = isZoomIn
-      ? oldZoomScaleFactor * Math.abs(scaleBy)
+      ? oldZoomScaleFactor * scaleBy
       : oldZoomScaleFactor / scaleBy;
-
     if (newScale < 0.5) {
       return;
     }
 
-    const pointer = stageCanvas.getPointerPosition();
+    const pointer = e.currentTarget.getPointerPosition();
 
     saveZoom({
       ...pointer,
@@ -117,7 +120,10 @@ const CanvasNode = ({ children }) => {
   };
 
   const togglePanningOnRightClick = () => {
-    if (tabId === TABS_IDS.ANNOTATE || tabId === TABS_IDS.WATERMARK) {
+    if (
+      (tabId === TABS_IDS.ANNOTATE || tabId === TABS_IDS.WATERMARK) &&
+      zoom.factor > defaultZoomFactor
+    ) {
       setIsPanningEnabled((val) => !val);
     }
   };
@@ -139,14 +145,16 @@ const CanvasNode = ({ children }) => {
 
   useEffect(() => {
     setIsPanningEnabled(
-      tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK,
+      tabId !== TABS_IDS.ANNOTATE &&
+        tabId !== TABS_IDS.WATERMARK &&
+        zoom.factor > defaultZoomFactor,
     );
-  }, [tabId]);
+  }, [tabId, zoom.factor, defaultZoomFactor]);
 
   // Zoom panning is done by dragging mouse except in annotate tab,
   // it's done by toggling panning through mouse right click (enable/disable) then drag mouse.
   const zoomedResponsiveCanvasScale =
-    canvasScale * ((isZoomEnabled && zoom.factor) || DEFAULT_ZOOM_FACTOR);
+    canvasScale * ((isZoomEnabled && zoom.factor) || defaultZoomFactor);
   return (
     <Stage
       width={canvasWidth}
@@ -155,7 +163,7 @@ const CanvasNode = ({ children }) => {
       scaleY={zoomedResponsiveCanvasScale}
       x={(isZoomEnabled && zoom.x) || null}
       y={(isZoomEnabled && zoom.y) || null}
-      zoomFactor={(isZoomEnabled && zoom.factor) || DEFAULT_ZOOM_FACTOR}
+      zoomFactor={(isZoomEnabled && zoom.factor) || defaultZoomFactor}
       onWheel={isZoomEnabled ? handleZoom : undefined}
       onTap={clearSelections}
       onClick={clearSelections}

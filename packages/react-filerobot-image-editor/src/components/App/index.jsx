@@ -36,6 +36,7 @@ const App = () => {
     originalImage,
     shownImageDimensions,
     t,
+    error = {},
   } = useStore();
   const {
     loadableDesignState,
@@ -64,12 +65,12 @@ const App = () => {
     });
   }, []);
 
-  const setError = useCallback((error) => {
+  const setError = useCallback((newError) => {
     dispatch({
       type: SET_ERROR,
       payload: {
         error: {
-          message: error.message,
+          message: newError.message || newError,
           duration: 0,
         },
       },
@@ -190,8 +191,8 @@ const App = () => {
       data-phone={isPhoneScreen}
     >
       {isLoadingGlobally && <Spinner label={t('loading')} />}
-      <Topbar />
-      {originalImage && (
+      {error?.duration !== 0 && <Topbar />}
+      {originalImage && error?.duration !== 0 && (
         <StyledMainContent>
           {!isPhoneScreen && <Tabs />}
           <StyledCanvasAndTools>

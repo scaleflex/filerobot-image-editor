@@ -1,10 +1,5 @@
 /** Internal Dependencies */
-import {
-  DEFAULT_IMAGE_TYPE,
-  MIN_CROP,
-  TABS_IDS,
-  TOOLS_IDS,
-} from 'utils/constants';
+import { MIN_CROP, TABS_IDS, TOOLS_IDS } from 'utils/constants';
 
 export default {
   theme: {
@@ -87,7 +82,7 @@ export default {
   onBeforeSave: undefined,
   closeAfterSave: false,
   defaultSavedImageName: undefined,
-  defaultSavedImageType: DEFAULT_IMAGE_TYPE,
+  defaultSavedImageType: null,
   forceToPngInEllipticalCrop: false,
   useBackendTranslations: true,
   translations: null,

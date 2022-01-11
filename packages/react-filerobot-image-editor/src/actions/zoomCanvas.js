@@ -4,7 +4,7 @@ import restrictNumber from 'utils/restrictNumber';
 
 export const ZOOM_CANVAS = 'ZOOM_CANVAS';
 
-const MIN_ZOOM_FACTOR = 0.5;
+const MIN_ZOOM_FACTOR = 0.25;
 const MAX_ZOOM_FACTOR = 50;
 
 const zoomCanvas = (state, payload) => {
@@ -22,11 +22,11 @@ const zoomCanvas = (state, payload) => {
   } else {
     const newZoomPoint = {
       x:
-        payload.x === 'center'
+        payload.x === 'center' || (!payload.x && payload.x !== 0)
           ? state.canvasWidth / 2
           : payload.x ?? state.zoom.x,
       y:
-        payload.y === 'center'
+        payload.y === 'center' || (!payload.y && payload.y !== 0)
           ? state.canvasHeight / 2
           : payload.y ?? state.zoom.y,
     };

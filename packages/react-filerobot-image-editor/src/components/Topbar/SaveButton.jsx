@@ -23,6 +23,7 @@ import restrictNumber from 'utils/restrictNumber';
 import { Resize } from 'components/tools/Resize';
 import operationsToCloudimageUrl from 'utils/operationsToCloudimageUrl';
 import imageToBase64 from 'utils/imageToBase64';
+import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import {
   StyledSaveButton,
   StyledFileExtensionSelect,
@@ -43,7 +44,7 @@ const SaveButton = () => {
     isLoadingGlobally,
     haveNotSavedChanges,
     t,
-    adjustments: { crop, isFlippedX, isFlippedY } = {},
+    adjustments: { crop, isFlippedX, isFlippedY, rotation = 0 } = {},
     config: {
       onClose,
       closeAfterSave,
@@ -88,6 +89,9 @@ const SaveButton = () => {
       y: preparedCanvas.height() / shownImageDimensions.height,
     };
     preparedDesignLayer.setAttrs({
+      rotation: 0,
+      offsetX: 0,
+      offsetY: 0,
       x: 0,
       y: 0,
       scaleX: preparedDesignLayerScale.x,
@@ -106,10 +110,19 @@ const SaveButton = () => {
       shownImageDimensions,
       preparedCanvas.attrs,
     );
+    const rotatedCropBox = getSizeAfterRotation(
+      mappedCropBox.width,
+      mappedCropBox.height,
+      rotation,
+    );
     preparedCanvas.setAttrs({
-      ...mappedCropBox,
-      x: -mappedCropBox.x,
-      y: -mappedCropBox.y,
+      offsetX: mappedCropBox.width / 2 + mappedCropBox.x,
+      offsetY: mappedCropBox.height / 2 + mappedCropBox.y,
+      width: rotatedCropBox.width,
+      height: rotatedCropBox.height,
+      x: rotatedCropBox.width / 2,
+      y: rotatedCropBox.height / 2,
+      rotation,
     });
 
     if (size.width) {
@@ -132,12 +145,6 @@ const SaveButton = () => {
     }
 
     const finalOptions = {
-      x: isFlippedX
-        ? -preparedCanvas.width() - Math.abs(preparedCanvas.x() * 2)
-        : 0,
-      y: isFlippedY
-        ? -preparedCanvas.height() - Math.abs(preparedCanvas.y() * 2)
-        : 0,
       mimeType: `image/${extension}`,
       ...(isQualityAcceptable ? { quality } : {}),
     };
@@ -205,7 +212,9 @@ const SaveButton = () => {
       dispatch({
         type: SET_ERROR,
         payload: {
-          message: t('nameIsRequired'),
+          error: {
+            message: t('nameIsRequired'),
+          },
         },
       });
       return;
@@ -300,15 +309,13 @@ const SaveButton = () => {
   }, [originalImage, isModalOpened]);
 
   useEffect(() => {
-    if (resize.width && resize.height) {
-      setImageFileInfo({
-        ...imageFileInfo,
-        size: {
-          width: resize.width,
-          height: resize.height,
-        },
-      });
-    }
+    setImageFileInfo({
+      ...imageFileInfo,
+      size: {
+        width: resize.width,
+        height: resize.height,
+      },
+    });
   }, [resize]);
 
   return (

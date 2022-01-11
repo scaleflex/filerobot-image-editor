@@ -1,21 +1,16 @@
 /** External Dependencies */
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, Layer } from 'react-konva';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import getDimensionsMinimalRatio from 'utils/getDimensionsMinimalRatio';
 import cropImage from 'utils/cropImage';
 import { DESIGN_LAYER_ID, IMAGE_NODE_ID, TOOLS_IDS } from 'utils/constants';
 import { SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import getProperImageToCanvasSpacing from 'utils/getProperImageToCanvasSpacing';
-// import getSizeAfterRotation from 'utils/getSizeAfterRotation';
+import { useStore } from 'hooks';
+import getSizeAfterRotation from 'utils/getSizeAfterRotation';
+import getCenterRotatedPoint from 'utils/getCenterRotatedPoint';
 import AnnotationNodes from './AnnotationNodes';
 import PreviewGroup from './PreviewGroup';
 
@@ -35,10 +30,9 @@ const DesignLayer = () => {
     finetunes = [],
     finetunesProps = {},
     filter = null,
-    // adjustments: { rotation = 0, crop = {}, isFlippedX, isFlippedY } = {},
-    adjustments: { crop = {}, isFlippedX, isFlippedY } = {},
+    adjustments: { rotation = 0, crop = {}, isFlippedX, isFlippedY } = {},
     resize,
-  } = useContext(AppContext);
+  } = useStore();
   const imageNodeRef = useRef();
   const previewGroupRef = useRef();
   const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
@@ -57,6 +51,12 @@ const DesignLayer = () => {
       height: spacedWidth / imgRatio,
     };
   }, [originalImage]);
+
+  const originalImgSizeAfterRotation = useMemo(
+    () =>
+      getSizeAfterRotation(originalImage.width, originalImage.height, rotation),
+    [originalImage, rotation],
+  );
 
   const originalImgInitialScale = useMemo(
     () =>
@@ -77,28 +77,16 @@ const DesignLayer = () => {
     [spacedOriginalImg, originalImgInitialScale],
   );
 
-  // const scaleAfterRotation = useMemo(() => {
-  //   const rotatedImgSize = getSizeAfterRotation(
-  //     scaledSpacedOriginalImg.width,
-  //     scaledSpacedOriginalImg.height,
-  //     rotation,
-  //   );
-
-  //   return getDimensionsMinimalRatio(
-  //     scaledSpacedOriginalImg.width,
-  //     scaledSpacedOriginalImg.height,
-  //     rotatedImgSize.width,
-  //     rotatedImgSize.height,
-  //   );
-  // }, [
-  //   scaledSpacedOriginalImg,
-  //   rotation,
-  //   initialCanvasWidth,
-  //   initialCanvasHeight,
-  // ]);
-
-  const resizedX = resize.width ? resize.width / originalImage.width : 1;
-  const resizedY = resize.height ? resize.height / originalImage.height : 1;
+  const isResizeDimensSmallerThanOriginal =
+    resize.width < originalImage.width && resize.height < originalImage.height;
+  const resizedX =
+    resize.width && isResizeDimensSmallerThanOriginal && !isCurrentlyCropping
+      ? resize.width / originalImgSizeAfterRotation.width
+      : 1;
+  const resizedY =
+    resize.height && isResizeDimensSmallerThanOriginal && !isCurrentlyCropping
+      ? resize.height / originalImgSizeAfterRotation.height
+      : 1;
 
   const xPointToCenterImgInCanvas =
     canvasWidth / (2 * canvasScale) -
@@ -115,10 +103,10 @@ const DesignLayer = () => {
 
   const imageDimensions = useMemo(
     () => ({
-      x: xPointToCenterImgInCanvas,
-      y: yPointToCenterImgInCanvas,
-      abstractX: xPointNoResizeNoCrop,
-      abstractY: yPointNoResizeNoCrop,
+      x: Math.round(xPointToCenterImgInCanvas),
+      y: Math.round(yPointToCenterImgInCanvas),
+      abstractX: Math.round(xPointNoResizeNoCrop),
+      abstractY: Math.round(yPointNoResizeNoCrop),
       width: scaledSpacedOriginalImg.width,
       height: scaledSpacedOriginalImg.height,
       scaledBy: canvasScale,
@@ -169,6 +157,20 @@ const DesignLayer = () => {
     }
   }, []);
 
+  const sizeAfterRotation = getSizeAfterRotation(
+    imageDimensions.width,
+    imageDimensions.height,
+    rotation,
+  );
+  const scaleAfterRotation = !isCurrentlyCropping
+    ? getDimensionsMinimalRatio(
+        imageDimensions.width,
+        imageDimensions.height,
+        sizeAfterRotation.width,
+        sizeAfterRotation.height,
+      )
+    : 1;
+
   useEffect(() => {
     if (originalImage) {
       cacheImageNode();
@@ -199,12 +201,19 @@ const DesignLayer = () => {
   ) {
     return null;
   }
-
+  const cropCenterRotatedPoint = getCenterRotatedPoint(
+    crop.x,
+    crop.y,
+    rotation,
+  );
   const xPointAfterCrop =
     xPointToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.width
       ? (isFlippedX ? -1 : 1) *
-        (imageDimensions.width / 2 - crop.x - crop.width / 2) *
+        (imageDimensions.width / 2 -
+          crop.x -
+          crop.width / 2 +
+          cropCenterRotatedPoint.x) *
         resizedX
       : 0);
 
@@ -212,7 +221,10 @@ const DesignLayer = () => {
     yPointToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.height
       ? (isFlippedY ? -1 : 1) *
-        (imageDimensions.height / 2 - crop.y - crop.height / 2) *
+        (imageDimensions.height / 2 -
+          crop.y -
+          crop.height / 2 +
+          cropCenterRotatedPoint.y) *
         resizedY
       : 0);
 
@@ -220,10 +232,14 @@ const DesignLayer = () => {
 
   const yPoint = isCurrentlyCropping ? yPointNoResizeNoCrop : yPointAfterCrop;
 
-  const finalScaleX = isFlippedX ? -resizedX : resizedX;
-  const finalScaleY = isFlippedY ? -resizedY : resizedY;
-  const defaultScaleX = isFlippedX ? -1 : 1;
-  const defaultScaleY = isFlippedY ? -1 : 1;
+  const finalScaleX =
+    (isFlippedX ? -1 : 1) *
+    (isCurrentlyCropping ? 1 : resizedX) *
+    scaleAfterRotation;
+  const finalScaleY =
+    (isFlippedY ? -1 : 1) *
+    (isCurrentlyCropping ? 1 : resizedY) *
+    scaleAfterRotation;
 
   return (
     <Layer
@@ -231,18 +247,13 @@ const DesignLayer = () => {
       ref={designLayerRef}
       xPadding={xPoint}
       yPadding={yPoint}
-      x={
-        (isFlippedX ? scaledSpacedOriginalImg.width : 0) *
-          (isCurrentlyCropping ? 1 : resizedX) +
-        xPoint
-      }
-      y={
-        (isFlippedY ? scaledSpacedOriginalImg.height : 0) *
-          (isCurrentlyCropping ? 1 : resizedY) +
-        yPoint
-      }
-      scaleX={isCurrentlyCropping ? defaultScaleX : finalScaleX}
-      scaleY={isCurrentlyCropping ? defaultScaleY : finalScaleY}
+      offsetX={scaledSpacedOriginalImg.width / 2}
+      offsetY={scaledSpacedOriginalImg.height / 2}
+      x={(scaledSpacedOriginalImg.width * resizedX) / 2 + xPoint}
+      y={(scaledSpacedOriginalImg.height * resizedY) / 2 + yPoint}
+      scaleX={finalScaleX}
+      scaleY={finalScaleY}
+      rotation={isCurrentlyCropping ? 0 : rotation}
       clipFunc={clipFunc}
     >
       <Image
@@ -250,9 +261,6 @@ const DesignLayer = () => {
         image={originalImage}
         width={scaledSpacedOriginalImg.width}
         height={scaledSpacedOriginalImg.height}
-        // scaleX={scaleAfterRotation}
-        // scaleY={scaleAfterRotation}
-        // rotation={rotation}
         offsetX={scaledSpacedOriginalImg.width / 2}
         offsetY={scaledSpacedOriginalImg.height / 2}
         x={scaledSpacedOriginalImg.width / 2}

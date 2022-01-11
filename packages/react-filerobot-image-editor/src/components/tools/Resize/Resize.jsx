@@ -9,7 +9,8 @@ import UnlockOutline from '@scaleflex/icons/unlock-outline';
 import { SET_RESIZE } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import { useStore } from 'hooks';
-import getProperDimensiosns from 'utils/getProperDimensions';
+import getProperDimensions from 'utils/getProperDimensions';
+import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import {
   StyledResizeWrapper,
   StyledResizeInput,
@@ -23,7 +24,7 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
     originalImage,
     resize,
     shownImageDimensions,
-    adjustments: { crop },
+    adjustments: { crop, rotation = 0 },
     theme,
     t,
   } = useStore();
@@ -31,14 +32,21 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
   const changeResize = (e) => {
     const { name, value } = e.target;
 
+    const originalImgSizeAfterRotation = getSizeAfterRotation(
+      originalImage.width,
+      originalImage.height,
+      rotation,
+    );
     const newResize = {
-      [name]: restrictNumber(value, 1, originalImage[name]),
+      [name]: restrictNumber(value, 1, originalImgSizeAfterRotation[name]),
     };
     const isHeight = name === 'height';
     const secondDimensionName = isHeight ? 'width' : 'height';
     const isRatioUnlocked = currentSize.ratioUnlocked ?? resize.ratioUnlocked;
     if (!isRatioUnlocked) {
-      const originalImgRatio = originalImage.width / originalImage.height;
+      const originalImgRatio =
+        originalImgSizeAfterRotation.width /
+        originalImgSizeAfterRotation.height;
       newResize[secondDimensionName] = isHeight
         ? Math.round(newResize[name] * originalImgRatio)
         : Math.round(newResize[name] / originalImgRatio);
@@ -92,11 +100,12 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
     (originalImage.width === resize.width &&
       originalImage.height === resize.height);
 
-  const dimensions = getProperDimensiosns(
+  const dimensions = getProperDimensions(
     ((currentSize.width || currentSize.height) && currentSize) || resize,
     crop,
     shownImageDimensions,
     originalImage,
+    rotation,
   );
   return (
     <StyledResizeWrapper alignLeft={alignLeft}>

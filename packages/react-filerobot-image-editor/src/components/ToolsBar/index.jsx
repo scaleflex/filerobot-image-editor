@@ -1,11 +1,11 @@
 /** External Depepdencneis */
-import React, { useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 
 /** Internal Depepdencneis */
-import AppContext from 'context';
 import { SELECT_TOOL } from 'actions';
 import { TABS_TOOLS, TOOLS_ITEMS } from 'components/tools/tools.constants';
 import { TABS_IDS } from 'utils/constants';
+import { useStore } from 'hooks';
 import { StyledToolsBar, StyledToolsBarItems } from './ToolsBar.styled';
 import ToolsBarItemOptionsWrapper from './ToolsBarItemOptionsWrapper';
 
@@ -18,7 +18,7 @@ const ToolsBar = () => {
     annotations,
     selectionsIds = [],
     config: { defaultTabId, defaultToolId, useCloudimage },
-  } = useContext(AppContext);
+  } = useStore();
   const currentTabId = tabId || defaultTabId;
   const currentToolId =
     toolId || defaultToolId || TABS_TOOLS[currentTabId]?.[0];

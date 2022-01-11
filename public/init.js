@@ -74,7 +74,7 @@ const config = {
   onClose: () => console.log('Act closing 👅'), // if we have value then close button will be shown unless showBackButton is true then if onClose has value the back button will be shown otherwise nothing will be shown.
   // tabsIds: [TABS.ADJUST, TABS.WATERMARK],
   // defaultTabId: TABS.ADJUST,
-  // defaultToolId: TOOLS_IDS.CROP,
+  // defaultToolId: TOOLS.CROP,
   // showBackButton: true,
   // useCloudimage: true,
   // cloudimage: {

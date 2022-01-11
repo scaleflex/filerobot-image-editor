@@ -6,7 +6,7 @@ import Compare from '@scaleflex/icons/compare';
 /** Internal Dependencies */
 import { TOGGLE_ORIGINAL_IMAGE_DISPLAY } from 'actions';
 import { useStore } from 'hooks';
-import getProperDimensiosns from 'utils/getProperDimensions';
+import getProperDimensions from 'utils/getProperDimensions';
 import { StyledSmallButton } from './Topbar.styled';
 
 const ImageDimensionsAndDisplayToggle = () => {
@@ -15,7 +15,7 @@ const ImageDimensionsAndDisplayToggle = () => {
     isResetted = true,
     originalImage,
     resize = {},
-    adjustments: { crop },
+    adjustments: { crop, rotation = 0 },
     shownImageDimensions,
     t,
   } = useStore();
@@ -52,11 +52,12 @@ const ImageDimensionsAndDisplayToggle = () => {
     return null;
   }
 
-  const dimensions = getProperDimensiosns(
+  const dimensions = getProperDimensions(
     resize,
     crop,
     shownImageDimensions,
     originalImage,
+    rotation,
   );
 
   return (
