@@ -7,7 +7,6 @@ import { CHANGE_ROTATION, SET_RESIZE } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import Slider from 'components/common/Slider';
-import { StyledRotateWrapper } from './Rotate.styled';
 
 const RotateOptions = () => {
   const {
@@ -45,16 +44,16 @@ const RotateOptions = () => {
   }, 20);
 
   return (
-    <StyledRotateWrapper>
-      <Slider
-        start={-180}
-        step={1}
-        end={180}
-        value={rotation}
-        onChange={changeRotation}
-        hideOverlay
-      />
-    </StyledRotateWrapper>
+    <Slider
+      min={-180}
+      step={1}
+      max={180}
+      value={rotation}
+      onChange={changeRotation}
+      annotation="°"
+      width="100%"
+      hideTrack
+    />
   );
 };
 

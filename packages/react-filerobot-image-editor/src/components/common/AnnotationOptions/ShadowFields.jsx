@@ -41,26 +41,26 @@ const ShadowFields = ({ annotation, updateAnnotation, t }) => {
           <Label>{t('horizontal')}</Label>
           <Slider
             annotation="px"
-            start={-100}
-            end={100}
+            min={-100}
+            max={100}
             onChange={(val) =>
               changeSliderValue('shadowOffsetX', val, -100, 100)
             }
             value={shadowOffsetX || 0}
-            hideOverlay
+            hideTrack
           />
         </StyledColumn>
         <StyledColumn>
           <Label>{t('vertical')}</Label>
           <Slider
             annotation="px"
-            start={-100}
-            end={100}
+            min={-100}
+            max={100}
             onChange={(val) =>
               changeSliderValue('shadowOffsetY', val, -100, 100)
             }
             value={shadowOffsetY || 0}
-            hideOverlay
+            hideTrack
           />
         </StyledColumn>
       </StyledTwoColumnsContainer>
@@ -80,7 +80,7 @@ const ShadowFields = ({ annotation, updateAnnotation, t }) => {
             onChange={(val) =>
               changeSliderValue('shadowOpacity', val / 100, 0, 1)
             }
-            value={shadowOpacity * 100}
+            value={Math.round(shadowOpacity * 100)}
           />
         </StyledColumn>
       </StyledTwoColumnsContainer>

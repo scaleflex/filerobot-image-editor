@@ -1,19 +1,16 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import ContinuousSlider from '@scaleflex/ui/core/continuous-slider';
+import Slider from '@scaleflex/ui/core/slider';
 
-const StyledSlider = styled(ContinuousSlider)`
-  margin-bottom: 8px;
-  padding: 0;
+const StyledSlider = styled(Slider)`
+  width: ${({ width }) => width || '100px'};
+  max-width: ${({ width }) => width || '100px'};
   user-select: none;
+  margin-bottom: 24px;
 
   .SfxSlider-annotation {
-    width: 50px;
     font-size: 13px;
     line-height: 16px;
-  }
-  input {
-    max-width: ${({ width }) => width || '100px'};
   }
 `;
 

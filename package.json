@@ -55,11 +55,9 @@
     "prettier-eslint-cli": "^5.0.1",
     "react": "16.8.0",
     "react-dom": "16.8.0",
-    "styled-components": "5.1.0",
-    "@scaleflex/icons": "1.0.0-beta.60",
-    "@scaleflex/ui": "1.0.0-beta.60",
     "rimraf": "^3.0.2",
     "source-map-explorer": "^2.5.2",
+    "styled-components": "5.1.0",
     "terser-webpack-plugin": "^5.2.5",
     "webpack": "^5.64.4",
     "webpack-bundle-analyzer": "^4.5.0",
@@ -73,6 +71,10 @@
     "set-prod-env": "cross-env BABEL_ENV=production NODE_ENV=production",
     "build:dist": "yarn set-prod-env webpack  --config webpack.prod.js",
     "build:lib": "lerna run build:lib",
-    "publish:packages": "yarn build:lib && lerna publish"
+    "publish:packages": "yarn build:lib && lerna publish",
+    "update": "lernaupdate"
+  },
+  "dependencies": {
+    "lerna-update-wizard": "0.17.8"
   }
 }

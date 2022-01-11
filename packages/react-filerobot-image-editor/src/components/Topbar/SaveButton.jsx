@@ -32,6 +32,8 @@ import {
   StyledResizeOnSave,
 } from './Topbar.styled';
 
+const sliderStyle = { marginBottom: 16 };
+
 const SaveButton = () => {
   const state = useStore();
   const {
@@ -364,10 +366,12 @@ const SaveButton = () => {
               <Label>{t('quality')}</Label>
               <Slider
                 annotation="%"
-                start={1}
-                end={100}
+                min={1}
+                max={100}
                 onChange={changeQuality}
                 value={parseInt(imageFileInfo.quality * 100, 10)}
+                width="100%"
+                style={sliderStyle}
               />
             </StyledQualityWrapper>
           )}

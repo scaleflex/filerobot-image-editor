@@ -27,7 +27,11 @@ const TransparencyField = ({ annotation, updateAnnotation, t }) => {
   return (
     <StyledSpacedOptionFields>
       <Label>{t('transparency')}</Label>
-      <Slider annotation="%" onChange={changeOpacity} value={opacity * 100} />
+      <Slider
+        annotation="%"
+        onChange={changeOpacity}
+        value={Math.round(opacity * 100)}
+      />
     </StyledSpacedOptionFields>
   );
 };

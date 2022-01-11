@@ -21,6 +21,10 @@ const OverrideDefaultStyles = createGlobalStyle`
 
   .${ROOT_CONTAINER_CLASS_NAME}, #SfxPopper {
     box-sizing: border-box;
+
+    .SfxPopper-root .SfxMenu-root {
+      overflow: visible;
+    }
   }
   .${ROOT_CONTAINER_CLASS_NAME} *, #SfxPopper * {
     box-sizing: border-box;

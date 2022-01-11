@@ -28,8 +28,8 @@ const ContrastOptions = () => {
 
   return (
     <Slider
-      start={MIN_VALUE}
-      end={MAX_VALUE}
+      min={MIN_VALUE}
+      max={MAX_VALUE}
       value={finetuneProps.contrast ?? DEFAULT_VALUE.contrast}
       onChange={changeValue}
       style={sliderStyle}

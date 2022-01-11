@@ -28,9 +28,9 @@ const BrightnessOptions = () => {
 
   return (
     <Slider
-      start={MIN_VALUE}
+      min={MIN_VALUE}
       step={0.05}
-      end={MAX_VALUE}
+      max={MAX_VALUE}
       value={finetuneProps.brightness ?? DEFAULT_VALUE.brightness}
       onChange={changeValue}
       style={sliderStyle}

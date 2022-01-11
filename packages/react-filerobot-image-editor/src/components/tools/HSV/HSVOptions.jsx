@@ -34,9 +34,9 @@ const HSVOptions = ({ t }) => {
       <StyledSliderContainer>
         <Label>{t('hue')}</Label>
         <Slider
-          start={0}
+          min={0}
           step={1}
-          end={259}
+          max={259}
           value={finetuneProps.hue ?? DEFAULT_VALUE.hue}
           onChange={(val) => changeValue('hue', val)}
           style={sliderStyle}
@@ -45,9 +45,9 @@ const HSVOptions = ({ t }) => {
       <StyledSliderContainer>
         <Label>{t('saturation')}</Label>
         <Slider
-          start={-2}
+          min={-2}
           step={0.5}
-          end={10}
+          max={10}
           value={finetuneProps.saturation ?? DEFAULT_VALUE.saturation}
           onChange={(val) => changeValue('saturation', val)}
           style={sliderStyle}
@@ -56,9 +56,9 @@ const HSVOptions = ({ t }) => {
       <StyledSliderContainer>
         <Label>{t('value')}</Label>
         <Slider
-          start={-2}
+          min={-2}
           step={0.1}
-          end={2}
+          max={2}
           value={finetuneProps.value ?? DEFAULT_VALUE.value}
           onChange={(val) => changeValue('value', val)}
           style={sliderStyle}
