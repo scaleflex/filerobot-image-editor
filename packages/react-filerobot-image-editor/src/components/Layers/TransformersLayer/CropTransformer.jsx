@@ -80,14 +80,14 @@ const CropTransformer = () => {
         const attrs = {
           width: crop.width || imageDimensions.width || 0,
           height: crop.height || imageDimensions.height || 0,
-          x: crop.x || imageDimensions.x || 0,
-          y: crop.y || imageDimensions.y || 0,
+          x: crop.x ?? imageDimensions.x ?? 0,
+          y: crop.y ?? imageDimensions.y ?? 0,
         };
         saveCrop(
           boundResizing(
             attrs,
             attrs,
-            imageDimensions,
+            { ...imageDimensions, abstractX: 0, abstractY: 0 },
             isCustom || isEllipse ? false : getProperCropRatio(),
             cropConfig,
           ),
