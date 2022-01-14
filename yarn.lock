@@ -1933,10 +1933,10 @@
   resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.61.tgz#d140d8ba213aa2cd82f049485cbbd0d6b22fc61c"
   integrity sha512-bEzNCSSXVDDMyE5S+nCVOVOPAOxhtrrcZZp/z5eZHoRRebFANdzs3p3BOnaEWVo13MOF/t5cop32RbvtppTUFQ==
 
-"@scaleflex/ui@1.0.0-beta.62":
-  version "1.0.0-beta.62"
-  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.62.tgz#5f20308258f01df4fbe3729370000a8cd00ee1e1"
-  integrity sha512-moZDISEyA+6kPolb2fYw3wzGYEs06zix+BJUFY+Lz1dKNv0Kr+kx/1v7gKNwzuLm5wFVBjkwGGGPUqFiA8BkYQ==
+"@scaleflex/ui@1.0.0-beta.66":
+  version "1.0.0-beta.66"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.66.tgz#39f090ffe0787a6592268a372aca7c9a96502368"
+  integrity sha512-q5Kooy3P1+ms0X/hKk4k1qvF6avbPSNXEy7o3OUq16+hKgtdOsXQN6kSd33tOyqRaZagdk1L2HbxFMOaCe8dZw==
   dependencies:
     "@popperjs/core" "^2.6.0"
     "@scaleflex/icons" "^1.0.0-beta.61"

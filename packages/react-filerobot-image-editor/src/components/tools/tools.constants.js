@@ -33,12 +33,10 @@ export const TOOLS_ITEMS = {
   [TOOLS_IDS.FLIP_X]: {
     id: TOOLS_IDS.FLIP_X,
     Item: FlipX,
-    hideFn: ({ useCloudimage }) => useCloudimage,
   },
   [TOOLS_IDS.FLIP_Y]: {
     id: TOOLS_IDS.FLIP_Y,
     Item: FlipY,
-    hideFn: ({ useCloudimage }) => useCloudimage,
   },
   [TOOLS_IDS.BRIGHTNESS]: {
     id: TOOLS_IDS.BRIGHTNESS,

@@ -1,4 +1,3 @@
-// TODO: Check maybe we split this file into folder with a file for each function.
 /** Internal Dependencies */
 import { ELLIPSE_CROP, TOOLS_IDS, WATERMARK_ANNOTATION_ID } from './constants';
 import getImageSealingParams from './getImageSealingParams';
@@ -24,16 +23,10 @@ const generateCropQuery = (crop, previewDimensions, originalDimensions) => {
 const generateResizeQuery = ({ width, height } = {}) =>
   `w=${width}&h=${height}`;
 
-// const generateRotationQuery = (rotationAngle) => {
-//   switch (rotationAngle) {
-//     case 90:
-//       return `r=270`;
-//     case -90:
-//       return `r=90`;
-//     default:
-//       return `r=${rotationAngle}`;
-//   }
-// };
+const generateRotationQuery = (rotationAngle) => `r=${-rotationAngle}`;
+
+const generateFlipQuery = (isFlippedX, isFlippedY) =>
+  `flip=${isFlippedX ? 'x' : ''}${isFlippedY ? 'y' : ''}`;
 
 const generateWatermarkQuery = (
   watermarkAnnotation = {},
@@ -149,7 +142,7 @@ const operationsToCloudimageUrl = (
   } = cloudimage;
   const {
     imgSrc,
-    adjustments: { crop },
+    adjustments: { crop, rotation, isFlippedX, isFlippedY },
     resize = {},
     finetunes = {},
     finetunesProps,
@@ -181,9 +174,13 @@ const operationsToCloudimageUrl = (
     );
   }
 
-  // if (orientationOperation) {
-  //   rotationQuery = generateRotationQuery(rotationAngle);
-  // }
+  if (rotation) {
+    operationsQueries.push(generateRotationQuery(rotation));
+  }
+
+  if (isFlippedX || isFlippedY) {
+    operationsQueries.push(generateFlipQuery(isFlippedX, isFlippedY));
+  }
 
   if (annotations[WATERMARK_ANNOTATION_ID]) {
     operationsQueries.push(

@@ -36,6 +36,7 @@ import enableTextContentEdit, {
 import setResize, { SET_RESIZE } from './setResize';
 import setSaved, { SET_SAVED } from './setSaved';
 import updateState, { UPDATE_STATE } from './updateState';
+import setLatestColor, { SET_LATEST_COLOR } from './setLatestColor';
 
 export default {
   [SET_ORIGINAL_IMAGE]: setOriginalImage,
@@ -52,6 +53,7 @@ export default {
   [SET_CANVAS_SIZE]: setCanvasSize,
   [SET_SHOWN_IMAGE_DIMENSIONS]: setShownImageDimensions,
   [ENABLE_TEXT_CONTENT_EDIT]: enableTextContentEdit,
+  [SET_LATEST_COLOR]: setLatestColor,
   // Start of Design actions...
   [ADD_FILTER]: addFilter,
   [SET_FINETUNE]: setFinetune,
@@ -85,6 +87,7 @@ export {
   SET_CANVAS_SIZE,
   SET_SHOWN_IMAGE_DIMENSIONS,
   ENABLE_TEXT_CONTENT_EDIT,
+  SET_LATEST_COLOR,
   // Start of Design actions...
   ADD_FILTER,
   SET_FINETUNE,

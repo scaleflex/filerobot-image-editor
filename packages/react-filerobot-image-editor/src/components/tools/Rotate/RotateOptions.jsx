@@ -1,12 +1,12 @@
 /** External Dependencies */
 import React from 'react';
+import RotationSlider from '@scaleflex/ui/core/rotation-slider';
 
 /** Internal Dependencies */
 import { useDebouncedCallback, useStore } from 'hooks';
 import { CHANGE_ROTATION, SET_RESIZE } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
-import Slider from 'components/common/Slider';
 
 const RotateOptions = () => {
   const {
@@ -15,7 +15,7 @@ const RotateOptions = () => {
     resize = {},
   } = useStore();
 
-  const changeRotation = useDebouncedCallback((newRotation) => {
+  const changeRotation = useDebouncedCallback((e, newRotation) => {
     if (rotation === newRotation) {
       return;
     }
@@ -44,15 +44,13 @@ const RotateOptions = () => {
   }, 20);
 
   return (
-    <Slider
+    <RotationSlider
       min={-180}
-      step={1}
       max={180}
       value={rotation}
+      angle={60}
       onChange={changeRotation}
-      annotation="°"
-      width="100%"
-      hideTrack
+      style={{ marginBottom: 20 }}
     />
   );
 };

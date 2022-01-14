@@ -101,6 +101,21 @@ const propertyToOperation = (
         },
       };
     }
+    case 'r': {
+      return {
+        adjustments: {
+          rotation: -parseInt(value, 10),
+        },
+      };
+    }
+    case 'flip':
+    case 'mirror':
+      return {
+        adjustments: {
+          isFlippedX: value.includes('x') || value.includes('h'),
+          isFlippedY: value.includes('y') || value.includes('v'),
+        },
+      };
     default: {
       let finetuneName;
       Object.keys(finetuneNameToParamInfo).forEach((key) => {
@@ -160,6 +175,7 @@ const cloudimageQueryToDesignState = (
     ...(cropX2 && cropY2 && crop
       ? {
           adjustments: {
+            ...unPreparedDesignState.adjustments,
             crop: {
               ...crop,
               width: (cropX2 || 0) - crop.x,

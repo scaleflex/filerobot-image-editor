@@ -66,6 +66,7 @@ const getInitialAppState = (config = {}) => {
     futureDesignStates: [],
     isResetted: true,
     haveNotSavedChanges: false,
+    latestColor: undefined,
   };
 };
 
