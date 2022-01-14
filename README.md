@@ -47,7 +47,7 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 ## Demo
 
-[***TEMP. DEMO HERE***](https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/v4_beta-demo/index.html?vh=3c166c&func=proxy)
+[***TEMP. DEMO HERE***](https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/v4_beta-demo/index.html?vh=09e38d&func=proxy)
 
 GIF Link TO BE ADDED...
 
