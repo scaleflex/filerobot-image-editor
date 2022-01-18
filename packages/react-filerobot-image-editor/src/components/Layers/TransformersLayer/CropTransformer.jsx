@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Ellipse, Image, Rect, Transformer } from 'react-konva';
 import Konva from 'konva';
 
@@ -24,6 +24,7 @@ const CropTransformer = () => {
     adjustments: { crop = {}, isFlippedX, isFlippedY } = {},
     config,
   } = useStore();
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const cropShapeRef = useRef();
   const cropTransformerRef = useRef();
   const tmpImgNodeRef = useRef();
@@ -95,7 +96,16 @@ const CropTransformer = () => {
         );
       }
     }
-  }, [cropRatio, cropConfig]);
+  }, [cropRatio, cropConfig, isFirstRender]);
+
+  // A hacky solution for applying boundResizing function on first render that would apply the right crop ratio.
+  useEffect(() => {
+    if (isFirstRender) {
+      setTimeout(() => {
+        setIsFirstRender(false);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (shownImageDimensions) {
