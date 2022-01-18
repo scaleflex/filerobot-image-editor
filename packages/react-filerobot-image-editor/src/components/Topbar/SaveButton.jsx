@@ -34,6 +34,8 @@ import {
 
 const sliderStyle = { marginBottom: 16 };
 
+let isFieSaveMounted = true;
+
 const SaveButton = () => {
   const state = useStore();
   const {
@@ -64,7 +66,9 @@ const SaveButton = () => {
     imageFileInfo.extension === 'jpeg' || imageFileInfo.extension === 'webp';
 
   const cancelModal = () => {
-    setIsModalOpened(false);
+    if (isFieSaveMounted) {
+      setIsModalOpened(false);
+    }
   };
 
   const handleSave = () => {
@@ -319,6 +323,14 @@ const SaveButton = () => {
       },
     });
   }, [resize]);
+
+  useEffect(() => {
+    isFieSaveMounted = true;
+
+    return () => {
+      isFieSaveMounted = false;
+    };
+  }, []);
 
   return (
     <>

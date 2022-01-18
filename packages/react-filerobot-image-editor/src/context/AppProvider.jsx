@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@scaleflex/ui/theme/hooks/use-theme';
 
@@ -10,10 +10,29 @@ import appReducer from './appReducer';
 import AppContext from './AppContext';
 import getInitialAppState from './getInitialAppState';
 
+let isFieMounted = true;
+
 const AppProvider = ({ children, config = {} }) => {
-  const [state, dispatch] = useAppReducer(
+  const [state, _dispatch] = useAppReducer(
     appReducer,
     getInitialAppState(config),
+  );
+
+  useEffect(() => {
+    isFieMounted = true;
+
+    return () => {
+      isFieMounted = false;
+    };
+  }, []);
+
+  const dispatch = useCallback(
+    (...args) => {
+      if (isFieMounted) {
+        _dispatch(...args);
+      }
+    },
+    [_dispatch],
   );
 
   useEffect(() => {
