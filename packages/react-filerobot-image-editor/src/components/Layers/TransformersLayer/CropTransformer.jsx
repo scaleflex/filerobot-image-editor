@@ -141,16 +141,23 @@ const CropTransformer = () => {
     );
   };
 
-  const attrs =
-    !crop.width && !crop.height
-      ? boundResizing(
-          shownImageDimensions,
-          { ...shownImageDimensions, x: 0, y: 0 },
-          { ...shownImageDimensions, abstractX: 0, abstractY: 0 },
-          isCustom || isEllipse ? false : getProperCropRatio(),
-          cropConfig,
-        )
-      : crop;
+  let attrs;
+  if (!crop.width && !crop.height) {
+    const unscaledImgDimensions = {
+      ...shownImageDimensions,
+      width: shownImageDimensions.width / shownImageDimensions.scaledBy,
+      height: shownImageDimensions.height / shownImageDimensions.scaledBy,
+    };
+    attrs = boundResizing(
+      unscaledImgDimensions,
+      { ...unscaledImgDimensions, x: 0, y: 0 },
+      { ...unscaledImgDimensions, abstractX: 0, abstractY: 0 },
+      isCustom || isEllipse ? false : getProperCropRatio(),
+      cropConfig,
+    );
+  } else {
+    attrs = crop;
+  }
 
   const { x = 0, y = 0, width, height } = attrs;
   const cropShapeProps = {
