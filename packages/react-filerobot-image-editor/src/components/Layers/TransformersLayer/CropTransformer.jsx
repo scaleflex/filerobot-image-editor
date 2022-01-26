@@ -143,10 +143,12 @@ const CropTransformer = () => {
 
   let attrs;
   if (!crop.width && !crop.height) {
+    const scaleFactor =
+      shownImageDimensions.scaledBy < 1 ? shownImageDimensions.scaledBy : 1;
     const unscaledImgDimensions = {
       ...shownImageDimensions,
-      width: shownImageDimensions.width / shownImageDimensions.scaledBy,
-      height: shownImageDimensions.height / shownImageDimensions.scaledBy,
+      width: shownImageDimensions.width / scaleFactor,
+      height: shownImageDimensions.height / scaleFactor,
     };
     attrs = boundResizing(
       unscaledImgDimensions,
