@@ -51,10 +51,9 @@ export const FLIP_DIRECTIONS = {
 
 export const DEFAULT_ZOOM_FACTOR = 1;
 
-export const SUPPORTED_IMAGE_TYPES = ['png', 'jpeg', 'webp'];
+export const SUPPORTED_IMAGE_TYPES = ['png', 'jpeg', 'jpg', 'webp'];
 export const POSSIBLE_IMAGE_TYPES = [
   ...SUPPORTED_IMAGE_TYPES,
-  'jpg',
   'svg',
   'gif',
   'avif',

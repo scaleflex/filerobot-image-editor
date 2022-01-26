@@ -62,8 +62,9 @@ const SaveButton = () => {
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [imageFileInfo, setImageFileInfo] = useState({ quality: 0.92 });
-  const isQualityAcceptable =
-    imageFileInfo.extension === 'jpeg' || imageFileInfo.extension === 'webp';
+  const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(
+    imageFileInfo.extension,
+  );
 
   const cancelModal = () => {
     if (isFieSaveMounted) {
@@ -150,8 +151,10 @@ const SaveButton = () => {
       });
     }
 
+    // As jpg doesn't support quality proeprty but it still same as jpeg,
+    // then we convert mime to image/jpeg and name the file with .jpg
     const finalOptions = {
-      mimeType: `image/${extension}`,
+      mimeType: `image/${extension === 'jpg' ? 'jpeg' : extension}`,
       ...(isQualityAcceptable ? { quality } : {}),
     };
     const finalCanvas = preparedCanvas.toCanvas(finalOptions);

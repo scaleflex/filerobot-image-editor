@@ -1,21 +1,22 @@
 /** External Dependencies */
-import {
-  Custom,
-  Ellipse,
-  Square,
-  Landscape,
-  Portrait,
-  CropClassicTv,
-  CropCinemaScope,
-} from '@scaleflex/icons';
+import Custom from '@scaleflex/icons/custom';
+import Ellipse from '@scaleflex/icons/ellipse';
+import Square from '@scaleflex/icons/square';
+import Landscape from '@scaleflex/icons/landscape';
+import Portrait from '@scaleflex/icons/portrait';
+import CropClassicTv from '@scaleflex/icons/crop-classic-tv';
+import CropCinemaScope from '@scaleflex/icons/crop-cinema-scope';
+import ImageOutline from '@scaleflex/icons/image-outline';
 
 /** Internal Dependencies */
 import { CUSTOM_CROP, ELLIPSE_CROP, ORIGINAL_CROP } from 'utils/constants';
+import toPrecisedFloat from 'utils/toPrecisedFloat';
 
 export const CROP_PRESETS = [
   {
     titleKey: 'original',
     ratio: ORIGINAL_CROP,
+    Icon: ImageOutline,
   },
   {
     titleKey: 'custom',
@@ -30,13 +31,13 @@ export const CROP_PRESETS = [
   },
   {
     titleKey: 'landscape',
-    ratio: 16 / 9,
+    ratio: toPrecisedFloat(16 / 9),
     ratioLabel: '16:9',
     Icon: Landscape,
   },
   {
     titleKey: 'portrait',
-    ratio: 9 / 16,
+    ratio: toPrecisedFloat(9 / 16),
     ratioLabel: '9:16',
     Icon: Portrait,
   },
@@ -47,13 +48,13 @@ export const CROP_PRESETS = [
   },
   {
     titleKey: 'classicTv',
-    ratio: 4 / 3,
+    ratio: toPrecisedFloat(4 / 3),
     ratioLabel: '4:3',
     Icon: CropClassicTv,
   },
   {
     titleKey: 'cinemascope',
-    ratio: 21 / 9,
+    ratio: toPrecisedFloat(21 / 9),
     ratioLabel: '21:9',
     Icon: CropCinemaScope,
   },

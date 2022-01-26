@@ -28,11 +28,17 @@ const mapCropBox = (crop, shownImageDimensions, toDimensions) => ({
       }
     : {}),
   width: Math.round(
-    mapNumber(crop.width, 0, shownImageDimensions.width, 0, toDimensions.width),
+    mapNumber(
+      crop.width ?? shownImageDimensions.width,
+      0,
+      shownImageDimensions.width,
+      0,
+      toDimensions.width,
+    ),
   ),
   height: Math.round(
     mapNumber(
-      crop.height,
+      crop.height ?? shownImageDimensions.height,
       0,
       shownImageDimensions.height,
       0,

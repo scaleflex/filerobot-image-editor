@@ -9,7 +9,7 @@ import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 import CropPresetsOption from './CropPresetsOption';
 
-const Crop = ({ selectTool, isSelected, t }) => {
+const Crop = ({ selectTool, isSelected }) => {
   const { config } = useStore();
   const [anchorEl, setAnchorEl] = useState();
 
@@ -25,7 +25,6 @@ const Crop = ({ selectTool, isSelected, t }) => {
   return (
     <ToolsBarItemButton
       id={TOOLS_IDS.CROP}
-      label={t('cropTool')}
       Icon={CropIcon}
       onClick={selectToolAndShowPresets}
       isSelected={isSelected}
@@ -44,7 +43,6 @@ Crop.defaultProps = {
 Crop.propTypes = {
   selectTool: PropTypes.func.isRequired,
   isSelected: PropTypes.bool,
-  t: PropTypes.func.isRequired,
 };
 
 export default Crop;

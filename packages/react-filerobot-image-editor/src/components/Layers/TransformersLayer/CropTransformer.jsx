@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Ellipse, Image, Rect, Transformer } from 'react-konva';
 import Konva from 'konva';
 
@@ -24,7 +24,6 @@ const CropTransformer = () => {
     adjustments: { crop = {}, isFlippedX, isFlippedY } = {},
     config,
   } = useStore();
-  const [isFirstRender, setIsFirstRender] = useState(true);
   const cropShapeRef = useRef();
   const cropTransformerRef = useRef();
   const tmpImgNodeRef = useRef();
@@ -75,15 +74,16 @@ const CropTransformer = () => {
     if (cropTransformerRef.current && cropShapeRef.current) {
       cropTransformerRef.current.nodes([cropShapeRef.current]);
 
-      if (shownImageDimensionsRef.current) {
+      if (shownImageDimensionsRef.current && crop.width && crop.height) {
         const imageDimensions = shownImageDimensionsRef.current;
 
         const attrs = {
-          width: crop.width || imageDimensions.width || 0,
-          height: crop.height || imageDimensions.height || 0,
-          x: crop.x ?? imageDimensions.x ?? 0,
-          y: crop.y ?? imageDimensions.y ?? 0,
+          width: crop.width,
+          height: crop.height,
+          x: crop.x ?? 0,
+          y: crop.y ?? 0,
         };
+
         saveCrop(
           boundResizing(
             attrs,
@@ -96,16 +96,12 @@ const CropTransformer = () => {
         );
       }
     }
-  }, [cropRatio, cropConfig, isFirstRender]);
-
-  // A hacky solution for applying boundResizing function on first render that would apply the right crop ratio.
-  useEffect(() => {
-    if (isFirstRender) {
-      setTimeout(() => {
-        setIsFirstRender(false);
-      });
-    }
-  }, []);
+  }, [
+    cropRatio,
+    cropConfig,
+    shownImageDimensions.width,
+    shownImageDimensions.height,
+  ]);
 
   useEffect(() => {
     if (shownImageDimensions) {
@@ -145,9 +141,18 @@ const CropTransformer = () => {
     );
   };
 
-  const { x = 0, y = 0 } = crop;
-  const width = crop.width || shownImageDimensions.width;
-  const height = crop.height || shownImageDimensions.height;
+  const attrs =
+    !crop.width && !crop.height
+      ? boundResizing(
+          shownImageDimensions,
+          { ...shownImageDimensions, x: 0, y: 0 },
+          { ...shownImageDimensions, abstractX: 0, abstractY: 0 },
+          isCustom || isEllipse ? false : getProperCropRatio(),
+          cropConfig,
+        )
+      : crop;
+
+  const { x = 0, y = 0, width, height } = attrs;
   const cropShapeProps = {
     x: isFlippedX ? shownImageDimensions.width - x - width : x,
     y: isFlippedY ? shownImageDimensions.height - y - height : y,

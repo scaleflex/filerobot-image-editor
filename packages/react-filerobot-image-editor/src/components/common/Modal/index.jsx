@@ -44,6 +44,7 @@ const Modal = ({
       <StyledModalTitle
         icon={<Icon size={25} />}
         iconShadow
+        onClose={onCancel}
         primary={title}
         secondary={hint}
         variant="with-icon"

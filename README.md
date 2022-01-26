@@ -332,11 +332,11 @@ Type: `string`
 
 Default: `png`
 
-Possible values: `'png' | 'jpeg' | 'webp'`
+Possible values: `'png' | 'jpeg' | 'jpg' | 'webp'`
 
 The default type used and selected in saving the image (the user has the possibility to change it from the saving modal).
 
-> Note: Quality modification will be applied to `jpeg` and `webp` types in returned [`base64`](#onsave) format only while saving the image by the default behavior.
+> Note: Quality modification will be applied to `jpeg`, `jpg` and `webp` types in returned [`base64`](#onsave) format only while saving the image by the default behavior.
 
 #### `forceToPngInEllipticalCrop`
 

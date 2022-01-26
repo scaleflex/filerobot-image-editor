@@ -7,6 +7,7 @@ import MenuItem from '@scaleflex/ui/core/menu-item';
 /** Internal Dependencies */
 import { SET_CROP } from 'actions';
 import { useStore } from 'hooks';
+import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styled';
 import {
   StyledMenuItemIcon,
   StyledOpenMenuButton,
@@ -38,8 +39,15 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
     onClose();
   };
 
+  const toolTitleKey =
+    CROP_PRESETS.filter(({ ratio }) => currentRatio === ratio)?.[0]?.titleKey ||
+    'cropTool';
+
   return (
     <>
+      <StyledToolsBarItemButtonLabel>
+        {t(toolTitleKey)}
+      </StyledToolsBarItemButtonLabel>
       <StyledOpenMenuButton color="link" size="lg">
         {/* BOTTOM ARROW HTML CODE : TOP ARROW HTML CODE */}
         {anchorEl ? <>&#9652;</> : <>&#9662;</>}
