@@ -19,7 +19,7 @@ export default {
   finetuneTab: 'Finetune',
   filtersTab: 'Filters',
   watermarkTab: 'Watermark',
-  annotateTab: 'Annotate',
+  annotateTab: 'Draw',
   resize: 'Resize',
   resizeTab: 'Resize',
   invalidImageError: 'Invalid image provided.',
