@@ -4,6 +4,8 @@ import Label from '@scaleflex/ui/core/label';
 
 const StyledTabs = styled.div`
   padding: 0 12px 12px 0;
+  overflow-y: auto;
+  max-height: 100%;
 
   [data-phone='true'] & {
     display: flex;
