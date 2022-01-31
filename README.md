@@ -660,7 +660,7 @@ The options available for cloudimage mode,
 
 Type: `number`
 
-Default: `10`
+Default: `8`
 
 The pixel ratio used in saving the image (higher the ratio, higher the resolution of the saved image till reaching the possible max. resolution for the image, higher the memory used & processing time of saving).
 

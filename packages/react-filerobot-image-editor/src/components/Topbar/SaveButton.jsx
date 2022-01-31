@@ -217,7 +217,7 @@ const SaveButton = () => {
     Konva.pixelRatio = previewPixelRatio;
     dispatch({ type: HIDE_LOADER });
 
-    cancelModal();
+    optionSaveFnRef.current = null;
     if (closeAfterSave && onClose) {
       onClose(CLOSING_REASONS.AFTER_SAVE, haveNotSavedChanges);
     }
@@ -225,7 +225,8 @@ const SaveButton = () => {
 
   const startSaving = () => {
     dispatch({ type: SHOW_LOADER });
-    setTimeout(handleSave, 0);
+    setIsModalOpened(false);
+    setTimeout(handleSave, 3);
   };
 
   const validateInfoThenSave = () => {
