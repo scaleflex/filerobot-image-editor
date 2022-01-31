@@ -9,7 +9,8 @@ import FilerobotImageEditor, {
 import uriDownload from '../packages/react-filerobot-image-editor/src/utils/uriDownload';
 
 const config = {
-  img: 'https://api.filerobot.com/scaleflex-tests-v5a/v3/get/d8880a7c-94fc-5524-b1de-a61de6650000?version=1638547407275',
+  img: 'https://fyeonxrm.filerobot.com/v7/Pavel/intel_motherboard-wallpaper-1600x900.jpg',
+  // img: 'https://api.filerobot.com/scaleflex-tests-v5a/v3/get/d8880a7c-94fc-5524-b1de-a61de6650000?version=1638547407275',
   annotationsCommon: {
     // fill: '#000000', // or should be no color? === undefined
     // stroke: '#000000', // or should be no color? === undefined
