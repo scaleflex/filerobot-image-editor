@@ -1,12 +1,12 @@
 /** External Dependencies */
-import { useCallback, useContext, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { SET_FINETUNE } from 'actions';
+import useStore from './useStore';
 
 const useFinetune = (finetune, initialProps) => {
-  const { dispatch, finetunes, finetunesProps } = useContext(AppContext);
+  const { dispatch, finetunes, finetunesProps } = useStore();
 
   const setFinetuneWithProps = useCallback((newFinetuneProps) => {
     dispatch({

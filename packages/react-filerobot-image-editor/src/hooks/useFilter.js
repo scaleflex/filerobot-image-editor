@@ -1,12 +1,12 @@
 /** External Dependencies */
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { ADD_FILTER } from 'actions';
+import useStore from './useStore';
 
 const useFilter = () => {
-  const { dispatch, filter } = useContext(AppContext);
+  const { dispatch, filter } = useStore();
 
   const setFilter = useCallback((filterToApply) => {
     dispatch({

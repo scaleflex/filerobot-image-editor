@@ -1,19 +1,12 @@
 /** External Dependencies */
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { SELECT_ANNOTATION, SET_ANNOTATION } from 'actions';
 import randomId from 'utils/randomId';
 import debounce from 'utils/debounce';
 import { TOOLS_IDS } from 'utils/constants';
+import { useStore } from 'hooks';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
 import useDebouncedCallback from '../useDebouncedCallback';
 
@@ -25,7 +18,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     annotations,
     selectionsIds = [],
     config,
-  } = useContext(AppContext);
+  } = useStore();
   const annotationDefaults = {
     ...config.annotationsCommon,
     ...config[annotations[selectionsIds[0]]?.name || annotation.name],

@@ -1,18 +1,18 @@
 /** External Dependencies */
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 
 /** Internal Dependencies */
 import { DesignLayer, TransformersLayer } from 'components/Layers';
-import AppContext, { AppProviderOverridenValue } from 'context';
+import { AppProviderOverridenValue } from 'context';
 import { SET_CANVAS_SIZE } from 'actions';
-import { useResizeObserver } from 'hooks';
+import { useResizeObserver, useStore } from 'hooks';
 import NodeControls from 'components/NodeControls';
 import CanvasNode from './CanvasNode';
 import { CanvasContainer, StyledOrignalImage } from './MainCanvas.styled';
 
 const MainCanvas = () => {
   const [observeResize] = useResizeObserver();
-  const providedAppContext = useContext(AppContext);
+  const providedAppContext = useStore();
 
   const setNewCanvasSize = useCallback(
     ({ width: containerWidth, height: containerHeight }) => {

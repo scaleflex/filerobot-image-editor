@@ -1,11 +1,11 @@
 /** External Dependencies */
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Popup from '@scaleflex/ui/core/popup';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { SET_ERROR } from 'actions';
+import { useStore } from 'hooks';
 
 const defaultAnchorOrigin = {
   horizontal: 'center',
@@ -18,7 +18,7 @@ const ERROR_TO_ROBOT_STATUS = {
 };
 
 const ErrorPopup = ({ anchorOrigin }) => {
-  const { error = {}, dispatch } = useContext(AppContext);
+  const { error = {}, dispatch } = useStore();
 
   if (!error.message) {
     return null;

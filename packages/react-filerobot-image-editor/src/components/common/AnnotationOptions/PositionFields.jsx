@@ -1,13 +1,13 @@
 /** External Dependencies */
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightAlt from '@scaleflex/icons/arrow-right-alt';
 import Point from '@scaleflex/icons/point';
 
 /** Internal Dependencies */
 import { POSITIONS } from 'utils/constants';
-import AppContext from 'context';
 import mapPositionStringToPoint from 'utils/mapPositionStringToPoint';
+import { useStore } from 'hooks';
 import { StyledIconWrapper } from './AnnotationOptions.styled';
 import {
   AVAILABLE_POSITIONS,
@@ -15,7 +15,7 @@ import {
 } from './AnnotationOptions.constants';
 
 const PositionFields = ({ annotation, updateAnnotation }) => {
-  const { designLayer } = useContext(AppContext);
+  const { designLayer } = useStore();
 
   const changePosition = (newPositionStr) => {
     updateAnnotation(

@@ -1,18 +1,18 @@
 /** External Dependencies */
-import React, { useContext } from 'react';
+import React from 'react';
 import Minus from '@scaleflex/icons/minus';
 import Plus from '@scaleflex/icons/plus';
 
 /** Internal Dependencies */
-import AppContext from 'context';
 import { ZOOM_CANVAS } from 'actions';
 import { DEFAULT_ZOOM_FACTOR, TOOLS_IDS } from 'utils/constants';
+import { useStore } from 'hooks';
 import { StyledSmallButton, StyledZoomPercentageLabel } from './Topbar.styled';
 
 const MULTIPLY_ZOOM_FACTOR = 1.1;
 
 const CanvasZooming = () => {
-  const { dispatch, zoom = {}, toolId, t } = useContext(AppContext);
+  const { dispatch, zoom = {}, toolId, t } = useStore();
 
   const saveZoom = (zoomFactor) => {
     dispatch({
