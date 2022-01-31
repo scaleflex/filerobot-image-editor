@@ -405,7 +405,7 @@ const SaveButton = () => {
           cancelLabel={t('cancel')}
           doneButtonColor="primary"
           areButtonsDisabled={isLoadingGlobally}
-          zIndex={111111}
+          zIndex={11110}
         >
           <StyledFileNameInput
             value={imageFileInfo.name}

@@ -705,7 +705,7 @@ example,
   {
     label: 'Save as new file',
     onClick: (triggerSaveModal, triggerSave) => triggerSave((...args) => {console.log('saved', args)}),  // Required to pass the callback function
-    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">...</svg>, // React component
+    icon: () => <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">...</svg>, // React component
   },
 ]
 ```
