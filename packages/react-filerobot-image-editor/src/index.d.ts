@@ -1,3 +1,4 @@
+import { ReactComponentElement } from "react";
 import { Filter } from "konva/lib/Node";
 
 declare const TABS = {
@@ -159,6 +160,17 @@ type imageDesignState = {
   }
 };
 
+type onSaveFunction = (savedImageData: savedImageData, imageDesignState: imageDesignState) => void;
+
+type triggerSaveModalFn = (onSaveFunction) => void;
+type triggerSavingFn = (onSaveFunction) => void;
+
+type saveOption = {
+  label: string,
+  icon: string | HTMLElement | ReactComponentElement,
+  onClick: (triggerSaveModalFn, triggerSavingFn) => void,
+};
+
 export interface FilerobotImageEditorConfig {
   img: string | HTMLImageElement;
   annotationsCommon?: annotationsCommon;
@@ -198,7 +210,7 @@ export interface FilerobotImageEditorConfig {
   defaultTabId?: availableTabs;
   defaultToolId?: availableTools;
   onBeforeSave?: (savedImageData: savedImageData) => void | boolean;
-  onSave?: (savedImageData: savedImageData, imageDesignState: imageDesignState) => void;
+  onSave?: onSaveFunction;
   onClose?: (closeReason: closingReasons, haveNotSavedChanges: boolean) => void;
   closeAfterSave?: boolean;
   defaultSavedImageName?: string;
@@ -210,6 +222,9 @@ export interface FilerobotImageEditorConfig {
   avoidChangesNotSavedAlertOnLeave?: boolean;
   loadableDesignState?: imageDesignState;
   showBackButton?: boolean;
+  savingPixelRatio: number;
+  previewPixelRatio: number;
+  moreSaveOptions?: saveOption[];
   useCloudimage?: boolean;
   cloudimage?: {
     token: string;

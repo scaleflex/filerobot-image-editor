@@ -7,11 +7,15 @@ const StyledButtonWrapper = styled.div`
   height: 22px;
   display: flex;
   align-items: center;
+  margin-right: 4px;
 `;
 
 const StyledButtonWithMenu = styled(Button)`
   height: 100%;
   padding: 4px 8px;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
   ${({ keepBorderRadius }) =>
     keepBorderRadius
       ? ''
@@ -29,7 +33,6 @@ const StyledMenuButton = styled(IconButton)`
   margin-left: 1px;
   height: 100%;
   padding: 4px 8px;
-  margin-right: 4px;
 
   svg {
     transform: rotate(-90deg);

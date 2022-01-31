@@ -89,6 +89,9 @@ export default {
   language: 'en',
   avoidChangesNotSavedAlertOnLeave: false,
   loadableDesignState: null,
+  moreSaveOptions: [],
+  savingPixelRatio: 10,
+  previewPixelRatio: window ? window.devicePixelRatio || 1 : 1,
   showBackButton: false, // TODO: For its label, Make sure it won't override backend's translation if provided from translations object and give possibility to user to change
   useCloudimage: false,
   cloudimage: {

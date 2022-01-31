@@ -656,6 +656,61 @@ The options available for cloudimage mode,
 | imageSealing.**`charCount`**     | number                                                          | 10                        | Calculated hash (URL ci_seal parameter) length                                                                                                                                                                                                                |
 | imageSealing.**`includeParams`** | string[]                                                        | []                        | URL query parameters to be sealed. By default, all parameters will be sealed. you can set a list of query parameters, ex, ['wat_url'] which enables you to freely append additional transformations to the URL (the sealed parameters cannot be overwritten). |
 
+#### `savingPixelRatio`
+
+Type: `number`
+
+Default: `10`
+
+The pixel ratio used in saving the image (higher the ratio, higher the resolution of the saved image till reaching the possible max. resolution for the image, higher the memory used & processing time of saving).
+
+> High pixel ratio might cause some device crashes/slowness while saving so consider choosing an appropriate ratio for your use case.
+
+#### `previewPixelRatio`
+
+Type: `number`
+
+Default: `window.devicePixelRatio`
+
+The pixel ratio used in previewing the image while doing the operations (higher the ratio, higher the resolution of the drawn/previewed image in the plugin till reaching the possible max. resolution for the image, higher the processing time of drawing the image & more memory used).
+
+> High pixel ratio might cause some device crashes/slowness while drawing/previewing and doing operations so consider choosing an appropriate ratio for your use case.
+
+#### `moreSaveOptions`
+
+Type: `array of objects`
+
+default: `[]`
+
+Used in case you want to show more saving options to the user besides the current save button as overlay menu opened through arrow next to save button.
+
+If left provided `[]` or left default value the arrow button that would open the menu will be hidden, otherwise it'll be shown
+
+Option's object to be provided,
+
+| Property      | Type                                                    | Default (possible values) | Description                                                                                                                                                                                                                                                                                                           |
+| ------------- | ------------------------------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`label`**   | string ***Required***                                   | ''                        | The option's label will be shown to the user                                                                                                                                                                                                                                                                          |
+| **`onClick`** | function (triggerSaveModal, triggerSave) ***Required*** | `undefined`               | The function will be triggered on clicking the option, it receives 2 parameters 1st is a function calls the saving modal, 2nd is a function calls saving directly and both of those functions accepts (1 argument as a callback function that's same as [`onSave function`](#onsave) called after the saving process) |
+| **`icon`**    | HTML Element, string or React Component                 | `null`                    | The option's icon will be shown before the label                                                                                                                                                                                                                                                                      |
+> Note: you must provide an [`onSave`](#onsave) callback function on using any of the passed functions to the option's onClick function.
+example,
+```js
+[
+  {
+    label: 'Save as new version',
+    onClick: (triggerSaveModal, triggerSave) => triggerSaveModal((...args) => {console.log('saved', args)}), // Required to pass the callback function
+    icon: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">...</svg>', // HTML Element as string
+  },
+  {
+    label: 'Save as new file',
+    onClick: (triggerSaveModal, triggerSave) => triggerSave((...args) => {console.log('saved', args)}),  // Required to pass the callback function
+    icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">...</svg>, // React component
+  },
+]
+```
+
+
 ### Callbacks
 
 #### `onBeforeSave`
@@ -668,7 +723,7 @@ This function will be fired once the user clicks save button and before triggeri
 
 > If the function returned `false` then the default saving behavior implemented in the plugin won't be triggered.
 >
-> This function is doesn't work in [`cloudimage mode`](#usecloudimage) and [`onSave`](#onsave) is fired directly.
+> This function is doesn't work in ([`cloudimage mode`](#usecloudimage) & [`moreSaveOptions`](#moresaveoptions)) and the [`onSave`](#onsave) is fired directly.
 
 #### `onSave`
 

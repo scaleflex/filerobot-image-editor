@@ -27,6 +27,7 @@ const Modal = ({
   cancelButtonColor = 'link',
   children,
   areButtonsDisabled,
+  zIndex,
 }) => {
   const onKeyUp = (e) => {
     if (e.key === 'Enter') {
@@ -38,7 +39,7 @@ const Modal = ({
     <LibModal
       open={isOpened}
       onClose={onCancel}
-      style={style}
+      style={{ ...style, zIndex }}
       onKeyUp={onKeyUp}
     >
       <StyledModalTitle
@@ -83,6 +84,7 @@ Modal.defaultProps = {
   cancelButtonColor: 'link',
   children: undefined,
   areButtonsDisabled: false,
+  zIndex: undefined,
 };
 
 Modal.propTypes = {
@@ -99,6 +101,7 @@ Modal.propTypes = {
   cancelButtonColor: PropTypes.string,
   children: PropTypes.node,
   areButtonsDisabled: PropTypes.bool,
+  zIndex: PropTypes.number,
 };
 
 export default Modal;

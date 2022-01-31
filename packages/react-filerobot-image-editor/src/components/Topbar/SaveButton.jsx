@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MenuItem from '@scaleflex/ui/core/menu-item';
 import SaveAs from '@scaleflex/icons/save-as';
 import Label from '@scaleflex/ui/core/label';
@@ -24,8 +24,9 @@ import { Resize } from 'components/tools/Resize';
 import operationsToCloudimageUrl from 'utils/operationsToCloudimageUrl';
 import imageToBase64 from 'utils/imageToBase64';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
+import ButtonWithMenu from 'components/common/ButtonWithMenu';
+import Konva from 'konva';
 import {
-  StyledSaveButton,
   StyledFileExtensionSelect,
   StyledFileNameInput,
   StyledQualityWrapper,
@@ -33,11 +34,13 @@ import {
 } from './Topbar.styled';
 
 const sliderStyle = { marginBottom: 16 };
+const saveButtonStyle = { marginLeft: 12 };
 
 let isFieSaveMounted = true;
 
 const SaveButton = () => {
   const state = useStore();
+  const optionSaveFnRef = useRef();
   const {
     theme,
     dispatch,
@@ -58,6 +61,9 @@ const SaveButton = () => {
       defaultSavedImageType,
       useCloudimage,
       cloudimage,
+      moreSaveOptions,
+      savingPixelRatio,
+      previewPixelRatio,
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -67,13 +73,16 @@ const SaveButton = () => {
   );
 
   const cancelModal = () => {
-    if (isFieSaveMounted) {
+    if (isFieSaveMounted && isModalOpened) {
+      optionSaveFnRef.current = null;
       setIsModalOpened(false);
     }
   };
 
   const handleSave = () => {
+    Konva.pixelRatio = savingPixelRatio;
     const { clipWidth, clipHeight, clipX, clipY } = designLayer.attrs;
+    const onSaveFn = optionSaveFnRef.current || onSave;
 
     // We're using this for letting the designLayer's clipFunc know that we are in saving mode
     // so it should apply elliptical crop if it is not applied and user is chosing ellitpical ratio.
@@ -198,13 +207,14 @@ const SaveButton = () => {
       ...(isQualityAcceptable ? { quality } : {}),
     };
 
-    onSave(finalImgPassedObject, finalImgDesignState);
+    onSaveFn(finalImgPassedObject, finalImgDesignState);
 
     // Reseting isSaving to false so we get everything back to normal if user wants to continue editing after saving.
     designLayer.setAttr('isSaving', false);
     dispatch({ type: SET_SAVED });
     imgNode.clearCache();
 
+    Konva.pixelRatio = previewPixelRatio;
     dispatch({ type: HIDE_LOADER });
 
     cancelModal();
@@ -213,9 +223,15 @@ const SaveButton = () => {
     }
   };
 
+  const startSaving = () => {
+    dispatch({ type: SHOW_LOADER });
+    setTimeout(handleSave, 0);
+  };
+
   const validateInfoThenSave = () => {
-    if (typeof onSave !== 'function') {
-      throw new Error('Please provide onSave function handler to the plugin.');
+    const onSaveFn = optionSaveFnRef.current || onSave;
+    if (typeof onSaveFn !== 'function') {
+      throw new Error('Please provide onSave function handler.');
     }
     if (!imageFileInfo.name || !imageFileInfo.extension) {
       dispatch({
@@ -229,9 +245,7 @@ const SaveButton = () => {
       return;
     }
 
-    dispatch({ type: SHOW_LOADER });
-
-    setTimeout(handleSave, 0);
+    startSaving();
   };
 
   const changeFileName = (e) => {
@@ -269,9 +283,9 @@ const SaveButton = () => {
         shownImageDimensions,
         originalImage,
       );
-      onSave(
+      const onSaveFn = optionSaveFnRef.current || onSave;
+      onSaveFn(
         {
-          // mimeType: `image/${extension}`,
           cloudimageUrl,
           width: resize.width || mappedCropBox.width,
           height: resize.height || mappedCropBox.height,
@@ -282,6 +296,7 @@ const SaveButton = () => {
     }
 
     if (
+      !optionSaveFnRef.current &&
       typeof onBeforeSave === 'function' &&
       onBeforeSave(imageFileInfo) === false
     ) {
@@ -300,6 +315,17 @@ const SaveButton = () => {
         ...newSize,
       },
     });
+  };
+
+  const changeSaveFnAndTriggerAnother = (saveFn, fnToTrigger) => {
+    if (typeof saveFn === 'function') {
+      optionSaveFnRef.current = saveFn;
+      fnToTrigger();
+    } else {
+      throw new Error(
+        'onSave function callback is required as an argument to the passed function.',
+      );
+    }
   };
 
   useEffect(() => {
@@ -335,11 +361,37 @@ const SaveButton = () => {
     };
   }, []);
 
+  const menuItems =
+    Array.isArray(moreSaveOptions) && moreSaveOptions.length > 0
+      ? moreSaveOptions.map((option, i) => ({
+          ...option,
+          key: `${option.label || i}-option-key`,
+          onClick:
+            typeof option.onClick === 'function'
+              ? () =>
+                  option.onClick(
+                    (saveCallback) =>
+                      changeSaveFnAndTriggerAnother(
+                        saveCallback,
+                        triggerSaveHandler,
+                      ),
+                    (saveCallback) =>
+                      changeSaveFnAndTriggerAnother(saveCallback, startSaving),
+                  )
+              : undefined,
+        }))
+      : [];
+
   return (
     <>
-      <StyledSaveButton onClick={triggerSaveHandler} color="primary" size="md">
-        {t('save')}
-      </StyledSaveButton>
+      <ButtonWithMenu
+        color="primary"
+        label={t('save')}
+        onClick={triggerSaveHandler}
+        menuPosition="bottom"
+        menuItems={menuItems}
+        menuStyle={saveButtonStyle}
+      />
       {isModalOpened && (
         <Modal
           title={t('saveAsModalLabel')}
@@ -353,6 +405,7 @@ const SaveButton = () => {
           cancelLabel={t('cancel')}
           doneButtonColor="primary"
           areButtonsDisabled={isLoadingGlobally}
+          zIndex={111111}
         >
           <StyledFileNameInput
             value={imageFileInfo.name}

@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ArrowLeftOutline from '@scaleflex/icons/arrow-left-outline';
 import Menu from '@scaleflex/ui/core/menu';
@@ -15,27 +15,34 @@ import {
   StyledMenuButton,
 } from './ButtonWithMenu.styled';
 
+let isFieButtonWithMenuMounted = true;
+
 const ButtonWithMenu = ({
   label,
   onClick,
   title,
   color,
-  size = 'sm',
   menuFromBtn,
   menuItems,
   menuPosition = 'bottom',
   arrowColor,
   disabled = false,
+  menuStyle,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const buttonSize = 'md';
 
   const openMenu = (e) => {
-    e.stopPropagation();
-    setAnchorEl(e.currentTarget);
+    if (isFieButtonWithMenuMounted) {
+      e.stopPropagation();
+      setAnchorEl(e.currentTarget);
+    }
   };
 
   const closeMenu = () => {
-    setAnchorEl(null);
+    if (isFieButtonWithMenuMounted) {
+      setAnchorEl(null);
+    }
   };
 
   const handleMenuItemClick = (onItemClick) => {
@@ -56,6 +63,14 @@ const ButtonWithMenu = ({
     }
   };
 
+  useEffect(() => {
+    isFieButtonWithMenuMounted = true;
+
+    return () => {
+      isFieButtonWithMenuMounted = false;
+    };
+  }, []);
+
   const hasMenuItems = menuItems.length > 0;
 
   return (
@@ -63,7 +78,7 @@ const ButtonWithMenu = ({
       <StyledButtonWrapper onClick={disabled ? undefined : handleButtonClick}>
         <StyledButtonWithMenu
           color={color}
-          size={size}
+          size={buttonSize}
           title={title}
           keepBorderRadius={!hasMenuItems}
           disabled={disabled}
@@ -73,7 +88,7 @@ const ButtonWithMenu = ({
         {hasMenuItems && (
           <StyledMenuButton
             color={color}
-            size={size}
+            size={buttonSize}
             onClick={menuFromBtn || disabled ? undefined : openMenu}
             disabled={disabled}
           >
@@ -86,6 +101,7 @@ const ButtonWithMenu = ({
           anchorEl={anchorEl}
           onClose={closeMenu}
           open
+          style={menuStyle}
           position={menuPosition}
         >
           {menuItems.map((item) => (
@@ -93,11 +109,16 @@ const ButtonWithMenu = ({
               key={item.key}
               active={item.isActive}
               onClick={() => handleMenuItemClick(item.onClick)}
-              size={size}
+              size={buttonSize}
             >
               {item.icon && (
-                <MenuItemIcon size={size}>
-                  <item.icon />
+                <MenuItemIcon size={buttonSize}>
+                  {typeof item.icon === 'string' ? (
+                    // eslint-disable-next-line react/no-danger
+                    <span dangerouslySetInnerHTML={{ __html: item.icon }} />
+                  ) : (
+                    <item.icon />
+                  )}
                 </MenuItemIcon>
               )}
               <MenuItemLabel>{item.label}</MenuItemLabel>
@@ -112,12 +133,12 @@ const ButtonWithMenu = ({
 ButtonWithMenu.defaultProps = {
   title: '',
   color: 'primary',
-  size: 'sm',
   menuFromBtn: false,
   menuPosition: 'bottom',
   onClick: undefined,
   disabled: false,
   arrowColor: undefined,
+  menuStyle: undefined,
 };
 
 ButtonWithMenu.propTypes = {
@@ -126,11 +147,11 @@ ButtonWithMenu.propTypes = {
   menuItems: PropTypes.instanceOf(Array).isRequired,
   title: PropTypes.string,
   color: PropTypes.string,
-  size: PropTypes.string,
   menuFromBtn: PropTypes.bool,
   menuPosition: PropTypes.string,
   disabled: PropTypes.bool,
   arrowColor: PropTypes.string,
+  menuStyle: PropTypes.instanceOf(Object),
 };
 
 export default ButtonWithMenu;
