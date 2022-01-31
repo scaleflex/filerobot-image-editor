@@ -72,6 +72,9 @@
     "build:dist": "yarn set-prod-env webpack  --config webpack.prod.js",
     "build:lib": "lerna run build:lib",
     "publish:packages": "yarn build:lib && lerna publish",
+    "publish:bundle": "yarn build:dist && echo // TODO: Apply script to upload bundle to filerobot",
+    "release:beta": "yarn && yarn publish:packages --dist-tag beta && yarn publish:bundle --tag beta",
+    "release:prod": "yarn && yarn publish:packages && yarn publish:bundle",
     "update": "lernaupdate"
   },
   "dependencies": {
