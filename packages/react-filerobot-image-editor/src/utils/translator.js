@@ -44,7 +44,7 @@ const sendMissingTranslationsToBackend = (missingTranslations = []) =>
 
     xhr.open(
       'POST',
-      `https://i18n.it/api/import/request-translations?grid_uuid=${TRANSLATIONS_GRID_UUID}`,
+      `https://i18n.ultrafast.io/import/request-translations?grid_uuid=${TRANSLATIONS_GRID_UUID}`,
     );
     xhr.send(JSON.stringify(payload));
   });
@@ -102,7 +102,7 @@ export const getBackendTranslations = (
 
     xhr.open(
       'GET',
-      `https://i18n.it/api/export?grid=${TRANSLATIONS_GRID_UUID}`,
+      `https://i18n.ultrafast.io/api/export?grid=${TRANSLATIONS_GRID_UUID}`,
     );
     xhr.send();
   });
