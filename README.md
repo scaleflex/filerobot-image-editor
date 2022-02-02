@@ -166,12 +166,13 @@ function App() {
       {isImgEditorShown && (
         <FilerobotImageEditor
 	  img="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+	  onSave={(editedImageObject, designState) => console.log('saved', editedImageObject, designState))}
 	  onClose={closeImgEditor}
 	  annotationsCommon={{
 	    fill: '#ff0000'
 	  }}
 	  Text={{ text: 'Filerobot...' }}
-	  tabs={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
+	  tabsIds={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
 	  defaultTabId={TABS.ANNOTATE} // or 'Annotate'
 	  defaultToolId={TOOLS.TEXT} // or 'Text'
         />
@@ -188,11 +189,12 @@ import FilerobotImageEditor, { TABS, TOOLS } from 'filerobot-image-editor';
 
 const config = {
   img: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+  onSave: (editedImageObject, designState) => console.log('saved', editedImageObject, designState),
   annotationsCommon: {
     fill: '#ff0000'
   },
   Text: { text: 'Filerobot...' },
-  tabs: [TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK], // or ['Adjust', 'Annotate', 'Watermark']
+  tabsIds: [TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK], // or ['Adjust', 'Annotate', 'Watermark']
   defaultTabId: TABS.ANNOTATE, // or 'Annotate'
   defaultToolId: TOOLS.TEXT, // or 'Text'
 };
