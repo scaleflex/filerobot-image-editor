@@ -10,6 +10,10 @@ const StyledOpenMenuButton = styled(Button)`
 
 const StyledMenuItemIcon = styled.div`
   margin-right: 6px;
+
+  svg {
+    vertical-align: middle;
+  }
 `;
 
 const StyledRatioLabel = styled(Label)`

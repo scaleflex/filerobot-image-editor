@@ -1,5 +1,5 @@
 {
-  "name": "filerobot-image-editor",
+  "name": "filerobot-image-editor-root",
   "version": "4.0.0-beta.0",
   "license": "MIT",
   "private": true,
@@ -51,6 +51,7 @@
     "eslint-plugin-react-hooks": "^4",
     "html-webpack-plugin": "^5.5.0",
     "lerna": "^4.0.0",
+    "lerna-update-wizard": "0.17.8",
     "prettier": "^2.4.1",
     "prettier-eslint-cli": "^5.0.1",
     "react": "16.8.0",
@@ -76,8 +77,5 @@
     "release:beta": "yarn && yarn publish:packages --dist-tag beta && yarn publish:bundle --tag beta",
     "release:prod": "yarn && yarn publish:packages && yarn publish:bundle",
     "update": "lernaupdate"
-  },
-  "dependencies": {
-    "lerna-update-wizard": "0.17.8"
   }
 }

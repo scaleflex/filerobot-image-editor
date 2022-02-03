@@ -34,7 +34,7 @@ const ColorInput = ({ position = 'top', onChange, color }) => {
     const localStoragePinnedColors =
       window.localStorage.getItem(pinnedColorsKey);
     if (JSON.stringify(newPinnedColors) !== localStoragePinnedColors) {
-      const maxOfSavedColors = 10;
+      const maxOfSavedColors = 9;
       const pinnedColorsToSave = newPinnedColors.slice(-maxOfSavedColors);
       window.localStorage.setItem(
         pinnedColorsKey,
@@ -44,15 +44,16 @@ const ColorInput = ({ position = 'top', onChange, color }) => {
     }
   };
 
-  const changeColor = (newColorHex, _rgb, newPinnedColors) => {
-    setCurrentColor(newColorHex);
-    onChange(newColorHex);
+  const changeColor = (_newColorHex, rgba, newPinnedColors) => {
+    setCurrentColor(rgba);
+    onChange(rgba);
     changePinnedColors(newPinnedColors);
-    if (latestColor !== newColorHex) {
+
+    if (latestColor !== rgba) {
       dispatch({
         type: SET_LATEST_COLOR,
         payload: {
-          latestColor: newColorHex,
+          latestColor: rgba,
         },
       });
     }
@@ -90,6 +91,7 @@ const ColorInput = ({ position = 'top', onChange, color }) => {
           onChange={changeColor}
           defaultColor={currentColor}
           pinnedColors={pinnedColors}
+          showTransparentColor
         />
       </Popper>
     </>

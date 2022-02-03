@@ -97,7 +97,7 @@ GIF Link TO BE ADDED...
 <hr />
 
 ## Prerequisites
-	> Following prerequisites are required only in NPM installation, but they're included in CDN bundle installation.
+	> Following prerequisites are required only in React Component installation, but they're included in CDN bundle installation and added as dependencies of other bridges packages.
 
 - react, react-dom: >= v16.8.0
 - styled-components: >= v5.1.0
@@ -261,6 +261,14 @@ Type: `string[]`
 Default: `[]`
 
 the tabs will be shown to the user, if empty array provided or left by default all tabs will be used otherwise the provided tabs ids would be shown.
+
+Access the available Tabs ids & tools ids through anyway of the following
+
+```js
+window.FilerobotImageEditor.TABS // TABS for CDN bundle
+window.FilerobotImageEditor.TOOLS // TOOLS for CDN bundle
+import { TABS, TOOLS } from '...' // TABS & TOOLS for any of the editor's NPM package
+```
 
 #### `defaultTabId`
 
