@@ -28,6 +28,7 @@ const ButtonWithMenu = ({
   arrowColor,
   disabled = false,
   menuStyle,
+  wrapperStyle,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const buttonSize = 'md';
@@ -75,7 +76,10 @@ const ButtonWithMenu = ({
 
   return (
     <>
-      <StyledButtonWrapper onClick={disabled ? undefined : handleButtonClick}>
+      <StyledButtonWrapper
+        onClick={disabled ? undefined : handleButtonClick}
+        style={wrapperStyle}
+      >
         <StyledButtonWithMenu
           color={color}
           size={buttonSize}
@@ -139,6 +143,7 @@ ButtonWithMenu.defaultProps = {
   disabled: false,
   arrowColor: undefined,
   menuStyle: undefined,
+  wrapperStyle: undefined,
 };
 
 ButtonWithMenu.propTypes = {
@@ -152,6 +157,7 @@ ButtonWithMenu.propTypes = {
   disabled: PropTypes.bool,
   arrowColor: PropTypes.string,
   menuStyle: PropTypes.instanceOf(Object),
+  wrapperStyle: PropTypes.instanceOf(Object),
 };
 
 export default ButtonWithMenu;

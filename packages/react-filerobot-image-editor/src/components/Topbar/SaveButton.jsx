@@ -34,7 +34,8 @@ import {
 } from './Topbar.styled';
 
 const sliderStyle = { marginBottom: 16 };
-const saveButtonStyle = { marginLeft: 12 };
+const saveButtonWrapperStyle = { width: 67 }; // 67px same width as tabs bar
+const saveButtonMenuStyle = { marginLeft: 12 };
 
 let isFieSaveMounted = true;
 
@@ -391,7 +392,8 @@ const SaveButton = () => {
         onClick={triggerSaveHandler}
         menuPosition="bottom"
         menuItems={menuItems}
-        menuStyle={saveButtonStyle}
+        menuStyle={saveButtonMenuStyle}
+        wrapperStyle={saveButtonWrapperStyle}
       />
       {isModalOpened && (
         <Modal
