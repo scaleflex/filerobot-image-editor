@@ -6,7 +6,20 @@ import FilerobotImageEditor, {
   TOOLS,
   TABS,
 } from '../packages/react-filerobot-image-editor/src';
-import uriDownload from '../packages/react-filerobot-image-editor/src/utils/uriDownload';
+
+const uriDownload = (url, fileName) => {
+  let tmpLink = document.createElement('a');
+  tmpLink.href = url;
+  tmpLink.download = fileName;
+  tmpLink.style = 'position: absolute; z-index: -111; visibility: none;';
+  document.body.appendChild(tmpLink);
+  tmpLink.click();
+  document.body.removeChild(tmpLink);
+  tmpLink = null;
+};
+
+export default uriDownload;
+
 
 const config = {
   img: 'https://fyeonxrm.filerobot.com/v7/Pavel/intel_motherboard-wallpaper-1600x900.jpg',
