@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="phone validation project" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <title>Image Editor</title>
+  </head>
+
+  <body>
+    <section class="content-wrapper">
+      <header class="header">
+        <div class="header-logo">
+          <a href="#">
+            <img src="./assets/scaleflex-logo.png" alt="scaleflex logo" />
+          </a>
+          <a class="img-editor">Image Editor</a>
+        </div>
+        <div class="navbar">
+          <a class="stars">
+            <img src="./assets/star.png" alt="star" />
+            star <span>10k</span>
+          </a>
+          <a class="git-hub">
+            <img src="./assets/gitHub-icon.png" alt="gitHub icon" />
+            GutHub
+          </a>
+        </div>
+      </header>
+
+      <div class="content">
+        <div>
+          <p class="content-title">
+            Edit, Resize, and Filter <br />
+            <span class="title">
+              any images for
+              <span class="colored-text">Free</span>
+            </span>
+          </p>
+        </div>
+        <div class="content-text">
+          <p>
+            The Filerobot Image Editor is the easiest way to integrate an
+            on-the-shelf and easy-to-use image editor in your web application.
+            Integrated with few lines of code, your users will be able to apply
+            transformations like resize, crop, rotate and
+            <span>various filters to anyimage.</span>
+          </p>
+        </div>
+        <div class="view-button">
+          <button>View on GitHub</button>
+          <p>Try to do it below</p>
+          <img src="./assets/arrow.png" alt="arrow shape" />
+        </div>
+        <div class="img-table">
+          <div class="configure-editor-tab">
+            <div class="configure-editor-tab-head">
+              <h1>Configure Editor</h1>
+              <img
+                id="config-arrow"
+                src="./assets/icArrow.png"
+                alt="arrow image"
+              />
+            </div>
+            <div id="config-wrapper" class="config-table">
+              <h1>Images</h1>
+              <div class="img-container">
+                <div class="uploaded-imgs-wrapper">
+                  <img
+                    id="default-uploaded-img"
+                    class="uploaded-img"
+                    data-image-editor-active-image
+                    src="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+                    alt="img"
+                  />
+                </div>
+                <div class="add-img">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name="image"
+                    id="add-image"
+                    style="display: none"
+                  />
+                  <label for="add-image">
+                    <img class="pluse-icon" src="./assets/+.png" alt="img" />
+                  </label>
+                </div>
+              </div>
+              <div class="tools-checkboxs">
+                <h2>Tabs</h2>
+                <div class="crop">
+                  <input id="crop" value="adjust" type="checkbox" name="Crop" />
+                  <label for="crop"> Adjust</label><br />
+                </div>
+                <div class="finetune">
+                  <input
+                    id="finetune"
+                    value="finetune"
+                    type="checkbox"
+                    name="Finetune"
+                  />
+                  <label for="finetune"> Finetune</label><br />
+                </div>
+                <div class="filter" id="filter-wrapper">
+                  <input
+                    id="filter"
+                    value="filter"
+                    type="checkbox"
+                    name="Filter"
+                  />
+                  <label for="filter"> Filter</label><br />
+                </div>
+                <div class="watermark">
+                  <input
+                    id="watermark"
+                    value="watermark"
+                    type="checkbox"
+                    name="Watermark"
+                  />
+                  <label for="watermark"> Watermark</label><br />
+                </div>
+                <div class="annotate" id="annotate-wrapper">
+                  <input
+                    id="annotate"
+                    value="annotate"
+                    type="checkbox"
+                    name="Annotate"
+                  />
+                  <label for="annotate"> Draw</label><br />
+                </div>
+                <div class="resize">
+                  <input
+                    id="resize"
+                    value="resize"
+                    type="checkbox"
+                    name="Resize"
+                    checked
+                  />
+                  <label for="resize"> Resize</label><br />
+                </div>
+              </div>
+              <div class="mode-content">
+                <h1>Mode</h1>
+                <select id="mode-options">
+                  <option class="mode-options" value="Downdload">
+                    Downdload
+                  </option>
+                  <option value="CloudImage">CloudImage</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="editor-container" id="editor_container"></div>
+          <div class="cyan-ellipse"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="filerobot-features">
+      <div class="filerobot-title">
+        Most popular features of the Filerobot <br />
+        <span>Image Editor</span>
+      </div>
+      <div class="filerobot-features-content">
+        <div class="resize">
+          <img src="./assets/ImageResizeMode.png" alt="resize img" />
+          <h3>Crop & resize</h3>
+          <p>
+            Use either or both tools to adjust the framing, size, and focus
+            point of your image for optimal impact on delivery.
+          </p>
+        </div>
+        <div class="watermark-wrapper">
+          <img src="./assets/watermark img.png" alt="watermark img" />
+          <h3>Add watermark</h3>
+          <p>
+            Adding a watermark is a great way to protect your work, and you can
+            do it with a discrete logo, an image or a simple text line.
+            Placement and orientation are up to you.
+          </p>
+        </div>
+        <div class="annotation">
+          <img src="./assets/Add annotation.png" alt="Add annotation img" />
+          <h3>Add annotation</h3>
+          <p>
+            Enrich and collaborate directly on your media for keeping track of
+            changes and ideas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="usage">
+      <div class="usage-title">
+        <h2>Ready to get started?</h2>
+        <p>
+          In the implementation example below you can edit an image and
+          instantly download the result. As simple as that. For more integration
+          options, please go to
+          <span class="documentation">
+            the documentation (<span class="colored-text">here</span>).
+          </span>
+        </p>
+      </div>
+      <div class="version-buttons">
+        <p class="js-version-btn">JS version</p>
+        <p>React version</p>
+      </div>
+      <div class="js-version-code">
+        <p>
+          <span class="code-cyan-color">import</span> {PinturaEditor}
+          <span class="code-cyan-color">from</span>
+          <span class="code-blue-color">'react-pintura'</span>;<br />
+          import {getEditorDefault} from 'pintura';<br />
+          <br />
+          import 'pintura/pintura.css'
+          <br />
+          function App() { <br />
+          &nbsp;&nbsp;cosnt[inlineResult, setInlineResult] = useState();<br />
+          <br />
+          return ( <br />
+          <span class="code-space">&#60;div&#62;</span><br />
+          <span class="code-two-spaces">&#60;PinturaEditor</span><br />
+          <span class="code-three-spaces">{...getEditorDefaults()}</span>
+          }<br />
+          <span class="code-three-spaces">src="my-image.jpeg"</span><br />
+          <span class="code-three-spaces">onProcess={(res)&nbsp;=></span><br />
+          <span class="code-four-spaces"
+            >setInlineResult(URL.createObjectURL(res.dest))</span
+          ><br />
+          <span class="code-three-spaces">}</span><br />
+          <span class="code-two-spaces">/&#62;</span>
+          <br />
+          <span class="code-two-spaces"
+            >{inlineResult && &#60;img src={inlineResult} alt="" }/&#62;</span
+          ><br />
+          <span class="code-space">&#60;/div&#62;</span> <br />
+          )
+        </p>
+      </div>
+      <div class="adapters">
+        <h2>Adapters</h2>
+        <div class="adapters-options">
+          <p class="adapter-react-option">
+            <img src="./assets/Ellipse 3.png" alt="Ellipse" />
+            React
+          </p>
+          <p class="adapter-js-option">
+            <img src="./assets/Ellipse 3.png" alt="Ellipse" />
+            Vanilla JS
+          </p>
+          <p class="adapter-angular-option">
+            <img src="./assets/Hollow-Ellipse 3.png" alt="Ellipse" />
+            Angular
+          </p>
+          <p class="adapter-vue-option">
+            <img src="./assets/Hollow-Ellipse 3.png" alt="Ellipse" />
+            Vue
+          </p>
+          <p class="adapter-web-option">
+            <img src="./assets/Hollow-Ellipse 3.png" alt="Ellipse" />
+            Web Component
+          </p>
+        </div>
+      </div>
+      <div class="legend-content">
+        <p class="legend-title">Legend:</p>
+        <p class="complete-feature">
+          <img src="./assets/Ellipse 3.png" alt="Ellipse" />
+          completed features
+        </p>
+        <p class="progress-feature">
+          <img src="./assets/half circle.png" alt="Ellipse" />
+          in progress features
+        </p>
+        <p class="to-do-feature">
+          <img src="./assets/Hollow-Ellipse 3.png" alt="Ellipse" />
+          to do features
+        </p>
+      </div>
+      <div>
+        <button class="explore-btn">Explore Documentation</button>
+      </div>
+    </section>
+
+    <section class="questions">
+      <h1>Any questions?</h1>
+      <p>
+        Contact us at <span>hello@filerobot.com</span>, our experts will be
+        happy to help!
+      </p>
+      <button>Contact us</button>
+    </section>
+
+    <section class="footer">
+      <div class="footer-logo">
+        <img src="./assets/scaleflex-logo.png" alt="scaleflex logo" />
+        <p>
+          Made with ❤ in 2019 in Paris, Munich and Sofia by the
+          <span>Scaleflex</span> team, the guys behind
+          <span>Cloudimage.io</span>.Powered by <span>Filerobot</span>. All
+          rightsreserved.
+        </p>
+      </div>
+      <div class="footer-info">
+        <h1>Info</h1>
+        <div class="footer-info-content">
+          <p>View GitHub</p>
+          <p>Current Issues</p>
+          <p>Documentation</p>
+        </div>
+      </div>
+      <div class="footer-filerobot">
+        <h1>Filerobot UI Family</h1>
+        <div class="footer-filerobot-content">
+          <p>Filerobot Uploader</p>
+          <p>React Cloudimage Responsive</p>
+          <p>JS Cloudimage Responsive</p>
+          <p>JS Cloudimage 360 view</p>
+          <p>JS Cloudimage Responsive</p>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
