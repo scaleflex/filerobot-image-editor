@@ -4,13 +4,21 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="phone validation project" />
+    <meta
+      name="description"
+      content="image editor crop, resize,
+    add watermark, add annotation"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+    rel="stylesheet"
+    />
     <link rel="stylesheet" href="./styles/main.css" />
-    <title>Image Editor</title>
+    <title>Filerobot Image Editor</title>
   </head>
 
   <body>
@@ -23,12 +31,23 @@
           <a class="img-editor">Image Editor</a>
         </div>
         <div class="navbar">
-          <a class="stars">
-            <img src="./assets/star.png" alt="star" />
-            star <span>10k</span>
+          <a
+            class="stars"
+            href="https://github.com/scaleflex/filerobot-image-editor/stargazers"
+            target="_blank"
+          >
+            <img class="star" src="./assets/star.png" alt="star" />
+            <img
+              src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?color=%235D6D7E&label=Star&logo=none&style=social"
+              alt="star-img"
+            />
           </a>
-          <a class="git-hub">
-            <img src="./assets/gitHub-icon.png" alt="gitHub icon" />
+          <a
+            class="git-hub"
+            href="https://github.com/scaleflex/filerobot-image-editor"
+            target="_blank"
+          >
+            <img src="./assets/github-icon.png" alt="github-icon" />
             GutHub
           </a>
         </div>
@@ -54,9 +73,16 @@
           </p>
         </div>
         <div class="view-button">
-          <button>View on GitHub</button>
+          <button>
+            <a
+              target="_blank"
+              href="https://github.com/scaleflex/filerobot-image-editor"
+            >
+              View on GitHub
+            </a>
+          </button>
           <p>Try to do it below</p>
-          <img src="./assets/arrow.png" alt="arrow shape" />
+          <img src="./assets/arrow.png" alt="arrow-shape" />
         </div>
         <div class="img-table">
           <div class="configure-editor-tab">
@@ -64,8 +90,8 @@
               <h1>Configure Editor</h1>
               <img
                 id="config-arrow"
-                src="./assets/icArrow.png"
-                alt="arrow image"
+                src="./assets/arrow-icon.png"
+                alt="arrow-icon-image"
               />
             </div>
             <div id="config-wrapper" class="config-table">
@@ -89,7 +115,11 @@
                     style="display: none"
                   />
                   <label for="add-image">
-                    <img class="pluse-icon" src="./assets/+.png" alt="img" />
+                    <img
+                      class="pluse-icon"
+                      src="./assets/adding-icon.png"
+                      alt="adding-icon"
+                    />
                   </label>
                 </div>
               </div>
@@ -113,9 +143,9 @@
                     id="filter"
                     value="filter"
                     type="checkbox"
-                    name="Filter"
+                    name="Filters"
                   />
-                  <label for="filter"> Filter</label><br />
+                  <label for="filter"> Filters</label><br />
                 </div>
                 <div class="watermark">
                   <input
@@ -149,8 +179,8 @@
               <div class="mode-content">
                 <h1>Mode</h1>
                 <select id="mode-options">
-                  <option class="mode-options" value="Downdload">
-                    Downdload
+                  <option class="mode-options" value="Download">
+                    Download
                   </option>
                   <option value="CloudImage">CloudImage</option>
                 </select>
@@ -170,7 +200,10 @@
       </div>
       <div class="filerobot-features-content">
         <div class="resize">
-          <img src="./assets/ImageResizeMode.png" alt="resize img" />
+          <img
+            src="./assets/image-resize-mode.png"
+            alt="image-resize-mode-img"
+          />
           <h3>Crop & resize</h3>
           <p>
             Use either or both tools to adjust the framing, size, and focus
@@ -178,7 +211,7 @@
           </p>
         </div>
         <div class="watermark-wrapper">
-          <img src="./assets/watermark img.png" alt="watermark img" />
+          <img src="./assets/watermark-img.png" alt="watermark-img" />
           <h3>Add watermark</h3>
           <p>
             Adding a watermark is a great way to protect your work, and you can
@@ -187,7 +220,7 @@
           </p>
         </div>
         <div class="annotation">
-          <img src="./assets/Add annotation.png" alt="Add annotation img" />
+          <img src="./assets/add-annotation.png" alt="add-annotation-img" />
           <h3>Add annotation</h3>
           <p>
             Enrich and collaborate directly on your media for keeping track of
@@ -205,7 +238,14 @@
           instantly download the result. As simple as that. For more integration
           options, please go to
           <span class="documentation">
-            the documentation (<span class="colored-text">here</span>).
+            the documentation (<span class="colored-text">
+              <a
+                href="https://github.com/scaleflex/filerobot-image-editor"
+                target="_blank"
+              >
+                here
+              </a> </span
+            >).
           </span>
         </p>
       </div>
@@ -246,7 +286,7 @@
         </p>
       </div>
       <div class="adapters">
-        <h2>Adapters</h2>
+        <h2>Bridges/Adapters</h2>
         <div class="adapters-options">
           <p class="adapter-react-option">
             <img src="./assets/Ellipse 3.png" alt="Ellipse" />
@@ -277,7 +317,7 @@
           completed features
         </p>
         <p class="progress-feature">
-          <img src="./assets/half circle.png" alt="Ellipse" />
+          <img src="./assets/half-circle.png" alt="half-circle-img" />
           in progress features
         </p>
         <p class="to-do-feature">
@@ -286,7 +326,14 @@
         </p>
       </div>
       <div>
-        <button class="explore-btn">Explore Documentation</button>
+        <button class="explore-btn">
+          <a
+            href="https://github.com/scaleflex/filerobot-image-editor"
+            target="_blank"
+          >
+            Explore Documentation
+          </a>
+        </button>
       </div>
     </section>
 
@@ -296,14 +343,21 @@
         Contact us at <span>hello@filerobot.com</span>, our experts will be
         happy to help!
       </p>
-      <button>Contact us</button>
+      <button>
+        <a
+          href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+          target="_blank"
+        >
+          Submit GitHub issue
+        </a>
+      </button>
     </section>
 
     <section class="footer">
       <div class="footer-logo">
-        <img src="./assets/scaleflex-logo.png" alt="scaleflex logo" />
+        <img src="./assets/scaleflex-logo.png" alt="scaleflex-logo" />
         <p>
-          Made with ❤ in 2019 in Paris, Munich and Sofia by the
+          Made with ❤ by the
           <span>Scaleflex</span> team, the guys behind
           <span>Cloudimage.io</span>.Powered by <span>Filerobot</span>. All
           rightsreserved.

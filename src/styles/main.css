@@ -45,6 +45,7 @@ body {
   display: flex;
   align-items: center;
   padding: 8px 16px;
+  cursor: pointer;
 }
 
 .content-wrapper .header .stars img {
@@ -64,6 +65,8 @@ body {
   padding: 6px 21px;
   font-size: 0.875em;
   margin-left: 0.625em;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .content-wrapper .header .git-hub img {
@@ -149,6 +152,27 @@ body {
   color: #ffff;
   cursor: pointer;
   border: none;
+}
+
+.content-wrapper .content .view-button button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 171px;
+  height: 48px;
+  padding: 8px 34px;
+  background-color: #3daba4;
+  border-radius: 4px;
+  font-weight: 700;
+  line-height: 32px;
+  color: #ffff;
+  cursor: pointer;
+  border: none;
+}
+
+.content-wrapper .content .view-button button a {
+  text-decoration: none;
+  color: #ffff;
 }
 
 .content-wrapper .content .view-button P {
@@ -477,6 +501,13 @@ body {
   color: #3daba4;
 }
 
+.usage .usage-title p .documentation .colored-text a {
+  font-weight: 600;
+  font-size: 20;
+  color: #3daba4;
+  text-decoration: none;
+}
+
 .usage .version-buttons {
   margin-top: 44px;
   display: flex;
@@ -640,6 +671,11 @@ body {
   cursor: pointer;
 }
 
+.usage .explore-btn a {
+  text-decoration: none;
+  color: #ffff;
+}
+
 .questions {
   padding: 60px 135px 60px 135px;
   display: flex;
@@ -679,6 +715,12 @@ body {
   line-height: 32px;
   border: none;
   cursor: pointer;
+}
+
+.questions button a {
+  color: #ffff;
+  font-size: 16px;
+  line-height: 32px;
 }
 
 .footer {
