@@ -135,7 +135,7 @@ VanillaJS only
 <script src="https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/4.0.0-beta/filerobot-image-editor.min.js"></script>
 ```
 
-> In all installation cases you must import the font family that will be used from your side as it is not included in the library by default, the default font family used is [**Roboto**](https://fonts.google.com/share?selection.family=Roboto:wght@400;500) in 2 font-weight (normal === 400 & medium === 500) which falls-back to **Arial** if not found.
+> In all installation cases you must import the font family that will be used from your side as it is not included in the library by default, the default font family used is [**Roboto**](https://fonts.google.com/share?selection.family=Roboto:wght@400;500) in 2 font-weight (normal === 400 & medium === 500) which fall-backs to **Arial** if not found.
 
 > Just import the font in your HTML/JS file before loading the plugin whether it's Roboto or you have provided another fontFamily from [`theme`](#theme) property and that's all!
 
