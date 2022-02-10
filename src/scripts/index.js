@@ -1,18 +1,28 @@
 import FilerobotImageEditor, { TABS, TOOLS } from "filerobot-image-editor";
 
-const crop = document.getElementById("crop");
-const finetune = document.getElementById("finetune");
-const filter = document.getElementById("filter");
-const watermark = document.getElementById("watermark");
-const annotate = document.getElementById("annotate");
-const resize = document.getElementById("resize");
-const addImg = document.getElementById("add-image");
-const modeOptions = document.getElementById("mode-options");
-const configArrow = document.getElementById("config-arrow");
-const configWrapper = document.getElementById("config-wrapper");
-const defaultUploadedImg = document.getElementById("default-uploaded-img");
+function getElementById(id) {
+  return document.getElementById(id);
+}
 
-const tabs = [TABS.RESIZE];
+const crop = getElementById("crop");
+const finetune = getElementById("finetune");
+const filter = getElementById("filter");
+const watermark = getElementById("watermark");
+const annotate = getElementById("annotate");
+const resize = getElementById("resize");
+const addImg = getElementById("add-image");
+const modeOptions = getElementById("mode-options");
+const configArrow = getElementById("config-arrow");
+const configWrapper = getElementById("config-wrapper");
+const defaultImg = getElementById("default-img");
+const jsTabTitle = getElementById("js-code-tab");
+const jsCodeWrapper = getElementById("js-code-wrapper");
+const reactTabTitle = getElementById("react-code-tab");
+const reactCodeWrapper = getElementById("react-code-wrapper");
+const cdnTabTitle = getElementById("cdn-code-tab");
+const cdnCodeWrapper = getElementById("cdn-code-wrapper");
+
+const selectedTabs = [TABS.RESIZE];
 let isConfigTabsOpen = false;
 let useCloudimage = false;
 
@@ -27,11 +37,9 @@ const IMG_EDITOR_TABS = {
 
 const pluginConfig = {
   img: "https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg",
-  annotationsCommon: {
-    fill: "#ff0000",
-  },
   Text: { text: "Filerobot..." },
-  tabsIds: [...tabs],
+  tabsIds: selectedTabs,
+  defaultTabId: TABS.RESIZE,
   defaultToolId: TOOLS.TEXT,
   cloudimage: {
     token: "demo",
@@ -39,53 +47,46 @@ const pluginConfig = {
   },
 };
 
-function filrebotoImageEditor() {
-  const filerobotImageEditor = new FilerobotImageEditor(
-    document.querySelector("#editor_container"),
-    pluginConfig,
-  );
+const filerobotImageEditor = new FilerobotImageEditor(
+  document.querySelector("#editor_container"),
+  pluginConfig,
+);
 
-  filerobotImageEditor.render({
-    onClose: (closingReason) => {
-      console.log("Closing reason", closingReason);
-      filerobotImageEditor.terminate();
-    },
-    onSave: (imageInfo) => {
-      onSave(
-        imageInfo[useCloudimage ? "cloudimageUrl" : "imageBase64"],
-        imageInfo.fullName,
-      );
-    },
-    useCloudimage,
-  });
-}
-
-filrebotoImageEditor();
+filerobotImageEditor.render({
+  onClose: (closingReason) => {
+    console.log("Closing reason", closingReason);
+    // filerobotImageEditor.terminate();
+  },
+  onSave: (imageInfo) => {
+    onSave(
+      imageInfo[useCloudimage ? "cloudimageUrl" : "imageBase64"],
+      imageInfo.fullName,
+    );
+  },
+  useCloudimage,
+});
 
 function onChangeTabsHandler(event) {
-  const value = event.target.value;
-  const checked = event.target.checked;
+  const { value, checked } = event.target;
   const nextTab = IMG_EDITOR_TABS[value];
 
   if (checked) {
-    if (!tabs.includes(nextTab)) {
-      tabs.push(nextTab);
+    if (!selectedTabs.includes(nextTab)) {
+      selectedTabs.push(nextTab);
     }
   } else {
-    const removedTabIndex = tabs.indexOf(nextTab);
+    const removedTabIndex = selectedTabs.indexOf(nextTab);
 
-    if (tabs.includes(nextTab) && tabs.length === 1) {
+    if (selectedTabs.includes(nextTab) && selectedTabs.length === 1) {
       event.target.checked = true;
 
       return;
     }
 
-    tabs.splice(removedTabIndex, 1);
+    selectedTabs.splice(removedTabIndex, 1);
   }
 
-  pluginConfig.tabsIds = [...tabs];
-
-  filrebotoImageEditor();
+  filerobotImageEditor.render({ tabsIds: [...selectedTabs] });
 }
 
 function onSave(url, fileName) {
@@ -114,21 +115,21 @@ function uploadImg(event) {
   nextImage.src = URL.createObjectURL(event.target.files[0]);
   nextImage.className = "uploaded-img";
 
-  toggleActiveImage(nextImage);
-
   nextImage.onclick = toggleActiveImage;
 
-  defaultUploadedImg.onclick = toggleActiveImage;
+  defaultImg.onclick = toggleActiveImage;
 
-  pluginConfig.img = nextImage.src;
+  filerobotImageEditor.render({ img: nextImage.src });
 
   nextImage.onload = () => {
-    filrebotoImageEditor();
+    toggleActiveImage(nextImage);
+
+    filerobotImageEditor.render({ img: nextImage.src });
   };
 }
 
-function toggleActiveImage(event) {
-  const nextImage = event?.target || event;
+function toggleActiveImage(eventOrImg) {
+  const nextImage = eventOrImg?.target || eventOrImg;
 
   const prevActiveImage = document.querySelector(
     "[data-image-editor-active-image]",
@@ -140,30 +141,29 @@ function toggleActiveImage(event) {
 
   nextImage.setAttribute("data-image-editor-active-image", "");
 
-  pluginConfig.img = nextImage.src;
-  filrebotoImageEditor();
+  filerobotImageEditor.render({ img: nextImage.src });
 }
 
-function closeConfigTabHandler() {
+function toggleConfigMenu() {
   if (isConfigTabsOpen) {
     configArrow.style.transform = " rotate(0deg)";
 
     configWrapper.style.opacity = "1";
     configWrapper.style.height = "unset";
-
-    isConfigTabsOpen = false;
+    configWrapper.style.display = "block";
   } else {
     configWrapper.style.opacity = "0";
     configWrapper.style.height = "0";
+    configWrapper.style.display = "none";
 
     configArrow.style.transform = " rotate(180deg)";
-
-    isConfigTabsOpen = true;
   }
+
+  isConfigTabsOpen = !isConfigTabsOpen;
 }
 
 function changeModeHandler() {
-  if (modeOptions.value === "CloudImage") {
+  if (modeOptions.value === "Cloudimage") {
     annotate.disabled = true;
     annotate.checked = false;
     filter.disabled = true;
@@ -174,8 +174,37 @@ function changeModeHandler() {
     filter.disabled = false;
     useCloudimage = false;
   }
+  filerobotImageEditor.render({ useCloudimage });
+}
 
-  filrebotoImageEditor();
+function changeCodeTabHandler(event) {
+  const nextCodeTab = event.target || event;
+
+  const prevCodeTab = document.querySelector("[selected-tab]");
+
+  if (prevCodeTab) {
+    prevCodeTab.removeAttribute("selected-tab");
+  }
+
+  nextCodeTab.setAttribute("selected-tab", "");
+
+  if (event.target.innerHTML === "JS version") {
+    jsCodeWrapper.style.display = "unset";
+    reactCodeWrapper.style.display = "none";
+    cdnCodeWrapper.style.display = "none";
+  }
+
+  if (event.target.innerHTML === "React version") {
+    reactCodeWrapper.style.display = "unset";
+    jsCodeWrapper.style.display = "none";
+    cdnCodeWrapper.style.display = "none";
+  }
+
+  if (event.target.innerHTML === "CDN version") {
+    cdnCodeWrapper.style.display = "unset ";
+    jsCodeWrapper.style.display = "none";
+    reactCodeWrapper.style.display = "none";
+  }
 }
 
 crop.addEventListener("change", onChangeTabsHandler);
@@ -185,5 +214,8 @@ watermark.addEventListener("change", onChangeTabsHandler);
 annotate.addEventListener("change", onChangeTabsHandler);
 resize.addEventListener("change", onChangeTabsHandler);
 addImg.addEventListener("change", uploadImg);
-configArrow.addEventListener("click", closeConfigTabHandler);
+configArrow.addEventListener("click", toggleConfigMenu);
 modeOptions.addEventListener("change", changeModeHandler);
+jsTabTitle.addEventListener("click", changeCodeTabHandler);
+reactTabTitle.addEventListener("click", changeCodeTabHandler);
+cdnTabTitle.addEventListener("click", changeCodeTabHandler);

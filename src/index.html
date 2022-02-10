@@ -6,18 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="image editor crop, resize,
-    add watermark, add annotation"
+      content="image editor crop, resize, add watermark, add annotation"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
-    rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles/main.css" />
     <title>Filerobot Image Editor</title>
   </head>
 
@@ -99,7 +97,7 @@
               <div class="img-container">
                 <div class="uploaded-imgs-wrapper">
                   <img
-                    id="default-uploaded-img"
+                    id="default-img"
                     class="uploaded-img"
                     data-image-editor-active-image
                     src="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
@@ -156,24 +154,26 @@
                   />
                   <label for="watermark"> Watermark</label><br />
                 </div>
-                <div class="annotate" id="annotate-wrapper">
-                  <input
-                    id="annotate"
-                    value="annotate"
-                    type="checkbox"
-                    name="Annotate"
-                  />
-                  <label for="annotate"> Draw</label><br />
-                </div>
-                <div class="resize">
-                  <input
-                    id="resize"
-                    value="resize"
-                    type="checkbox"
-                    name="Resize"
-                    checked
-                  />
-                  <label for="resize"> Resize</label><br />
+                <div class="draw-resize">
+                  <div class="annotate" id="annotate-wrapper">
+                    <input
+                      id="annotate"
+                      value="annotate"
+                      type="checkbox"
+                      name="Annotate"
+                    />
+                    <label for="annotate"> Draw</label><br />
+                  </div>
+                  <div class="resize">
+                    <input
+                      id="resize"
+                      value="resize"
+                      type="checkbox"
+                      name="Resize"
+                      checked
+                    />
+                    <label for="resize"> Resize</label><br />
+                  </div>
                 </div>
               </div>
               <div class="mode-content">
@@ -182,13 +182,12 @@
                   <option class="mode-options" value="Download">
                     Download
                   </option>
-                  <option value="CloudImage">CloudImage</option>
+                  <option value="Cloudimage">CloudImage</option>
                 </select>
               </div>
             </div>
           </div>
           <div class="editor-container" id="editor_container"></div>
-          <div class="cyan-ellipse"></div>
         </div>
       </div>
     </section>
@@ -250,41 +249,110 @@
         </p>
       </div>
       <div class="version-buttons">
-        <p class="js-version-btn">JS version</p>
-        <p>React version</p>
+        <p id="js-code-tab" selected-tab>JS version</p>
+        <p id="react-code-tab">React version</p>
+        <p id="cdn-code-tab">CDN version</p>
       </div>
       <div class="js-version-code">
-        <p>
-          <span class="code-cyan-color">import</span> {PinturaEditor}
-          <span class="code-cyan-color">from</span>
-          <span class="code-blue-color">'react-pintura'</span>;<br />
-          import {getEditorDefault} from 'pintura';<br />
-          <br />
-          import 'pintura/pintura.css'
-          <br />
-          function App() { <br />
-          &nbsp;&nbsp;cosnt[inlineResult, setInlineResult] = useState();<br />
-          <br />
-          return ( <br />
-          <span class="code-space">&#60;div&#62;</span><br />
-          <span class="code-two-spaces">&#60;PinturaEditor</span><br />
-          <span class="code-three-spaces">{...getEditorDefaults()}</span>
-          }<br />
-          <span class="code-three-spaces">src="my-image.jpeg"</span><br />
-          <span class="code-three-spaces">onProcess={(res)&nbsp;=></span><br />
-          <span class="code-four-spaces"
-            >setInlineResult(URL.createObjectURL(res.dest))</span
-          ><br />
-          <span class="code-three-spaces">}</span><br />
-          <span class="code-two-spaces">/&#62;</span>
-          <br />
-          <span class="code-two-spaces"
-            >{inlineResult && &#60;img src={inlineResult} alt="" }/&#62;</span
-          ><br />
-          <span class="code-space">&#60;/div&#62;</span> <br />
-          )
-        </p>
+        <pre><code id="js-code-wrapper" class="versions-text" >
+            <span class="red">import</span> <span class="dark-red">FilerobotImageEditor</span>, { <span class="blue">TABS</span>, <span class="blue">TOOLS</span> } <span class="red">from</span> 'filerobot-image-editor';
+
+            <span class="red">const</span> config = {
+              <span class="blue">img</span>: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+              <span class="light-blue">onSave</span>: (editedImageObject, designState) => console.<span class="light-blue">log</span>('saved', editedImageObject, designState),
+              <span class="blue">annotationsCommon</span>: {
+                fill: '#ff0000'
+              },
+              <span class="blue">Text</span>: { text: 'Filerobot...' },
+              <span class="blue">tabsIds</span>: [<span class="blue">TABS.ADJUST</span>,<span class="blue">TABS.ANNOTATE</span>,<span class="blue">TABS.WATERMARK</span>], <span class="gray">// or ['Adjust', 'Annotate', 'Watermark']</span>
+              <span class="blue">defaultTabId</span>: TABS.ANNOTATE, // or 'Annotate'
+              <span class="blue">defaultToolId</span>: TOOLS.TEXT, // or 'Text'
+            };
+
+            <span class="gray">// Assuming we have a div with id="editor_container"</span>
+            <span class="red">const</span> filerobotImageEditor = <span class="red">new</span> <span class="dark-red">FilerobotImageEditor</span>(
+              document.<span class="light-blue">querySelector</span>('#editor_container'),
+              config
+            );
+
+            filerobotImageEditor.<span class="light-blue">render</span>({
+              onClose: (closingReason) => {
+                console.<span class="light-blue">log</span>('Closing reason', closingReason);
+                filerobotImageEdtior.<span class="light-blue">terminate</span>();
+              }
+            });
+          </code></pre>
       </div>
+
+      <div class="react-version-code">
+        <pre><code id="react-code-wrapper" class="versions-text" style="display: none;">
+          <span class="red">import</span> <span class="dark-red">React</span>, { useState } <span class="red">from</span> 'react';
+          <span class="red">import</span> <span class="dark-red">FilerobotImageEditor</span>, { <span class="blue">TABS</span>, <span class="blue">TOOLS</span>} <span class="red">from</span> 'react-filerobot-image-editor';
+
+          <span class="red">function</span> <span class="dark-red">App</span>() {
+            <span class="red">const</span> [isImgEditorShown, setIsImgEditorShown] = <span class="light-blue">useState</span>(<span class="blue">false</span>);
+
+            <span class="red">const</span> <span class="light-blue">openImgEditor</span> = () => {
+              setIsImgEditorShown(<span class="blue">true</span>);
+            };
+
+            <span class="red">const</span> <span class="light-blue">closeImgEditor </span> = () => {
+              setIsImgEditorShown(<span class="blue">false</span>);
+            };
+
+            <span class="red">return</span> (
+              <span class="green">&lt;div></span>
+              <span class="green"> &lt;button</span> onClick={openImgEditor}>Open Filerobot image editor&lt;/button>
+                      {isImgEditorShown && (
+                      &lt;FilerobotImageEditor
+                          img="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+                          onSave={(editedImageObject, designState) => console.log('saved', editedImageObject, designState))}
+                          onClose={closeImgEditor}
+                          annotationsCommon={{
+                            fill: '#ff0000'
+                          }}
+                          Text={{ text: 'Filerobot...' }}
+                          tabsIds={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
+                          defaultTabId={TABS.ANNOTATE} // or 'Annotate'
+                          defaultToolId={TOOLS.TEXT} // or 'Text'
+                        />
+                      )}
+                &lt;/div>
+            );
+          }
+          </code></pre>
+      </div>
+
+      <div class="CDN-version-code">
+        <pre><code id="cdn-code-wrapper" class="versions-text" style="display: none;"  >
+          <span class="gray"> //after importing the plugin/library from CDN</span>
+            <span class="red">const</span> config = {
+              <span class="blue">img</span>: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+              <span class="light-blue">onSave</span>: (editedImageObject, designState) => console.<span class="light-blue">log</span>('saved', editedImageObject, designState),
+              <span class="blue">annotationsCommon</span>: {
+                fill: '#ff0000'
+              },
+              <span class="blue">Text</span>: { text: 'Filerobot...' },
+              <span class="blue">tabsIds</span>: [<span class="blue">window.FilerobotImageEditor.TABS.ADJUST</span>,<span class="blue">window.FilerobotImageEditor.TABS.ANNOTATE</span>,<span class="blue">window.FilerobotImageEditor.TABS.WATERMARK</span>], <span class="gray">// or ['Adjust', 'Annotate', 'Watermark']</span>
+              <span class="blue">defaultTabId</span>: window.FilerobotImageEditor.TABS.ANNOTATE, // or 'Annotate'
+              <span class="blue">defaultToolId</span>: window.FilerobotImageEditor.TOOLS.TEXT, // or 'Text'
+            };
+
+            <span class="gray">// Assuming we have a div with id="editor_container"</span>
+            <span class="red">const</span> filerobotImageEditor = <span class="red">new</span> <span class="dark-red">window.FilerobotImageEditor</span>(
+              document.<span class="light-blue">querySelector</span>('#editor_container'),
+              config
+            );
+
+            window.FilerobotImageEditor.<span class="light-blue">render</span>({
+              onClose: (closingReason) => {
+                console.<span class="light-blue">log</span>('Closing reason', closingReason);
+                window.FilerobotImageEditor.<span class="light-blue">terminate</span>();
+              }
+            });
+          </code></pre>
+      </div>
+
       <div class="adapters">
         <h2>Bridges/Adapters</h2>
         <div class="adapters-options">
@@ -366,19 +434,59 @@
       <div class="footer-info">
         <h1>Info</h1>
         <div class="footer-info-content">
-          <p>View GitHub</p>
-          <p>Current Issues</p>
-          <p>Documentation</p>
+          <a
+            href="https://github.com/scaleflex/filerobot-image-editor"
+            target="_blank"
+          >
+            View GitHub
+          </a>
+          <a
+            href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+            target="_blank"
+          >
+            Current Issues
+          </a>
+          <a
+            href=" https://github.com/scaleflex/filerobot-image-editor"
+            target="_blank"
+          >
+            Documentation
+          </a>
         </div>
       </div>
       <div class="footer-filerobot">
         <h1>Filerobot UI Family</h1>
         <div class="footer-filerobot-content">
-          <p>Filerobot Uploader</p>
-          <p>React Cloudimage Responsive</p>
-          <p>JS Cloudimage Responsive</p>
-          <p>JS Cloudimage 360 view</p>
-          <p>JS Cloudimage Responsive</p>
+          <a
+            href="https://www.npmjs.com/package/@filerobot/readme"
+            target="_blank"
+          >
+            Filerobot Uploader
+          </a>
+          <a
+            href="https://github.com/scaleflex/react-cloudimage-responsive"
+            target="_blank"
+          >
+            React Cloudimage Responsive
+          </a>
+          <a
+            href="https://github.com/scaleflex/js-cloudimage-responsive"
+            target="_blank"
+          >
+            JS Cloudimage Responsive
+          </a>
+          <a
+            href="https://github.com/scaleflex/js-cloudimage-360-view"
+            target="_blank"
+          >
+            JS Cloudimage 360 view
+          </a>
+          <a
+            href="https://github.com/scaleflex/js-cloudimage-responsive"
+            target="_blank"
+          >
+            JS Cloudimage Responsive
+          </a>
         </div>
       </div>
     </section>

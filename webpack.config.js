@@ -17,21 +17,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.html$/i,
-        loader: "html-loader",
-      },
-      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
-      },
-      {
-        test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
-        type: "asset/resource",
-      },
-      {
-        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
-        type: "asset/inline",
       },
       {
         test: /\.(scss|css)$/,
@@ -42,7 +30,7 @@ module.exports = {
   mode: "development",
   devServer: {
     historyApiFallback: true,
-    static: path.resolve(__dirname, "./dist"),
+    static: path.resolve(__dirname, "./public"),
     open: true,
     compress: true,
     hot: true,
@@ -50,7 +38,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Wordplex",
+      title: "filerobotImageEditor",
       template: path.resolve(__dirname, "./src/index.html"), // template file
       chunks: ["index"],
       inject: true,
