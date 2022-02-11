@@ -6,7 +6,6 @@
   "homepage": "https://github.com/scaleflex/filerobot-image-editor/tree/v4#readme",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/scaleflex/filerobot-image-editor/tree/v4"
