@@ -6,6 +6,7 @@ import Arrow from '@scaleflex/icons/arrow';
 /** Internal Dependencies */
 import { useResizeObserver } from 'hooks';
 import debounce from 'utils/debounce';
+import getScrollOffset from 'utils/getScrollOffset';
 import {
   StyledCarouselWrapper,
   StyledCarousel,
@@ -32,7 +33,7 @@ const Carousel = ({ children, style }) => {
     }
   };
 
-  const scrollCarouselToElement = (e, foundElements, direction) => {
+  const scrollCarouselToElement = (foundElements, direction) => {
     const liIndex = foundElements.findIndex((element) =>
       element.classList.contains('fie_carousel-item'),
     );
@@ -40,6 +41,7 @@ const Carousel = ({ children, style }) => {
       foundElements[liIndex].scrollIntoView({
         inline: direction,
         behavior: 'smooth',
+        block: 'nearest',
       });
       // setTimeout cuz we're not sure when the smooth scroll will be finished, we're waiting for 0.5s to start checking.
       setTimeout(() => {
@@ -49,19 +51,21 @@ const Carousel = ({ children, style }) => {
   };
 
   const scrollToPrev = (e) => {
+    const { topOffset, leftOffset } = getScrollOffset();
     const currentElements = document.elementsFromPoint(
-      e.pageX + e.currentTarget.offsetWidth,
-      e.pageY,
+      e.pageX + e.currentTarget.offsetWidth - leftOffset,
+      e.pageY - topOffset,
     );
-    scrollCarouselToElement(e, currentElements, 'end');
+    scrollCarouselToElement(currentElements, 'end');
   };
 
   const scrollToNext = (e) => {
+    const { topOffset, leftOffset } = getScrollOffset();
     const currentElements = document.elementsFromPoint(
-      e.pageX - e.currentTarget.offsetWidth,
-      e.pageY,
+      e.pageX - e.currentTarget.offsetWidth - leftOffset,
+      e.pageY - topOffset,
     );
-    scrollCarouselToElement(e, currentElements, 'start');
+    scrollCarouselToElement(currentElements, 'start');
   };
 
   const scrollByDragging = (e) => {
