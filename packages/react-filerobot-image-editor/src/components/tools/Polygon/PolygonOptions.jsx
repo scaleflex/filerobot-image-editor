@@ -23,6 +23,7 @@ const PolygonOptions = ({ t }) => {
       annotation={polygon}
       updateAnnotation={savePolygon}
       t={t}
+      hidePositionField
     />
   );
 };

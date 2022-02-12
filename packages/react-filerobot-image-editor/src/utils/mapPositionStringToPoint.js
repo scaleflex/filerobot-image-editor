@@ -1,6 +1,5 @@
 /** Internal Dependencies */
 import { POSITIONS } from './constants';
-import getAnnotationOffsetToTopLeft from './getAnnotationOffsetToTopLeft';
 import getSizeAfterRotation from './getSizeAfterRotation';
 
 const mapPositionStringToPoint = (annotation, designLayer, position) => {
@@ -11,52 +10,45 @@ const mapPositionStringToPoint = (annotation, designLayer, position) => {
     scaleY = 1,
     rotation = 0,
     padding = 0,
+    radius,
+    radiusX,
+    radiusY,
   } = annotation;
+  const annotationWidth = width || (radius || radiusX) * 2;
+  const annotationHeight = height || (radius || radiusY) * 2;
   const scaledRotatedAnnotationSize = getSizeAfterRotation(
-    width * scaleX,
-    height * scaleY,
+    annotationWidth * scaleX,
+    annotationHeight * scaleY,
     rotation,
   );
   const { clipWidth: designLayerWidth, clipHeight: designLayerHeight } =
     designLayer.attrs;
-  const annotationOffsetFromItsTopLeft =
-    getAnnotationOffsetToTopLeft(annotation);
 
   const xAxisMapping = {
-    left:
-      annotationOffsetFromItsTopLeft +
-      scaledRotatedAnnotationSize.offsetLeft +
-      padding,
+    left: scaledRotatedAnnotationSize.offsetLeft + padding,
     center:
       designLayerWidth / 2 -
       (scaledRotatedAnnotationSize.width / 2 -
-        annotationOffsetFromItsTopLeft -
         scaledRotatedAnnotationSize.offsetLeft) +
       padding,
     right:
       designLayerWidth -
       scaledRotatedAnnotationSize.width -
-      padding -
-      annotationOffsetFromItsTopLeft +
+      padding +
       scaledRotatedAnnotationSize.offsetLeft,
   };
 
   const yAxisMapping = {
-    top:
-      annotationOffsetFromItsTopLeft +
-      scaledRotatedAnnotationSize.offsetTop +
-      padding,
+    top: scaledRotatedAnnotationSize.offsetTop + padding,
     middle:
       designLayerHeight / 2 -
       (scaledRotatedAnnotationSize.height / 2 -
-        annotationOffsetFromItsTopLeft -
         scaledRotatedAnnotationSize.offsetTop) +
       padding,
     bottom:
       designLayerHeight -
       scaledRotatedAnnotationSize.height -
-      padding -
-      annotationOffsetFromItsTopLeft +
+      padding +
       scaledRotatedAnnotationSize.offsetTop,
   };
 
