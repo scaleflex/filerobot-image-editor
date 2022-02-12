@@ -9,7 +9,7 @@ import restrictNumber from 'utils/restrictNumber';
 import Slider from 'components/common/Slider';
 
 const MIN_VALUE = 0;
-const MAX_VALUE = 100;
+const MAX_VALUE = 150;
 
 const RectCornerField = ({
   annotation: rect,
