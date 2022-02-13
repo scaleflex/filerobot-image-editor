@@ -22,6 +22,12 @@ const reactCodeWrapper = getElementById("react-code-wrapper");
 const cdnTabTitle = getElementById("cdn-code-tab");
 const cdnCodeWrapper = getElementById("cdn-code-wrapper");
 
+const codeByTabIds = {
+  "js-code-tab": jsCodeWrapper,
+  "react-code-tab": reactCodeWrapper,
+  "cdn-code-tab": cdnCodeWrapper,
+};
+
 const selectedTabs = [TABS.RESIZE];
 let isConfigTabsOpen = false;
 let useCloudimage = false;
@@ -119,8 +125,6 @@ function uploadImg(event) {
 
   defaultImg.onclick = toggleActiveImage;
 
-  filerobotImageEditor.render({ img: nextImage.src });
-
   nextImage.onload = () => {
     toggleActiveImage(nextImage);
 
@@ -174,11 +178,13 @@ function changeModeHandler() {
     filter.disabled = false;
     useCloudimage = false;
   }
-  filerobotImageEditor.render({ useCloudimage });
+  filerobotImageEditor.render({ useCloudimage, tabsIds: [...selectedTabs] });
 }
 
-function changeCodeTabHandler(event) {
+function toggleActiveCodeTab(event) {
   const nextCodeTab = event.target || event;
+
+  changeCodeTabHandler(event);
 
   const prevCodeTab = document.querySelector("[selected-tab]");
 
@@ -187,24 +193,17 @@ function changeCodeTabHandler(event) {
   }
 
   nextCodeTab.setAttribute("selected-tab", "");
+}
 
-  if (event.target.innerHTML === "JS version") {
-    jsCodeWrapper.style.display = "unset";
-    reactCodeWrapper.style.display = "none";
-    cdnCodeWrapper.style.display = "none";
-  }
+function changeCodeTabHandler(event) {
+  const selectedCodeTabId = event.target.id;
+  const selectedCode = codeByTabIds[selectedCodeTabId];
 
-  if (event.target.innerHTML === "React version") {
-    reactCodeWrapper.style.display = "unset";
-    jsCodeWrapper.style.display = "none";
-    cdnCodeWrapper.style.display = "none";
-  }
+  Object.values(codeByTabIds).forEach((codeTab) => {
+    codeTab.style.display = "none";
+  });
 
-  if (event.target.innerHTML === "CDN version") {
-    cdnCodeWrapper.style.display = "unset ";
-    jsCodeWrapper.style.display = "none";
-    reactCodeWrapper.style.display = "none";
-  }
+  selectedCode.style.display = "unset";
 }
 
 crop.addEventListener("change", onChangeTabsHandler);
@@ -216,6 +215,6 @@ resize.addEventListener("change", onChangeTabsHandler);
 addImg.addEventListener("change", uploadImg);
 configArrow.addEventListener("click", toggleConfigMenu);
 modeOptions.addEventListener("change", changeModeHandler);
-jsTabTitle.addEventListener("click", changeCodeTabHandler);
-reactTabTitle.addEventListener("click", changeCodeTabHandler);
-cdnTabTitle.addEventListener("click", changeCodeTabHandler);
+jsTabTitle.addEventListener("click", toggleActiveCodeTab);
+reactTabTitle.addEventListener("click", toggleActiveCodeTab);
+cdnTabTitle.addEventListener("click", toggleActiveCodeTab);

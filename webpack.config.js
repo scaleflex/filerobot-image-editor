@@ -38,7 +38,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "filerobotImageEditor",
+      title: "Filerobot Image Editor",
       template: path.resolve(__dirname, "./src/index.html"), // template file
       chunks: ["index"],
       inject: true,

@@ -281,6 +281,17 @@ body {
   border-radius: 4px;
   margin-bottom: 25px;
   padding: 19px;
+  cursor: pointer;
+}
+
+.content-wrapper .img-table .config-table .add-img::before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin-bottom: 50px;
+  background: url("../../public/assets/adding-icon.png") center center;
+  background-repeat: no-repeat;
 }
 
 .content-wrapper .img-table .config-table .output-img {
@@ -513,6 +524,7 @@ body {
   display: flex;
   column-gap: 56px;
   width: 82%;
+  cursor: pointer;
 }
 
 .usage .version-buttons .js-version-btn,
@@ -526,7 +538,7 @@ body {
 .usage .js-version-code,
 .react-version-code,
 .CDN-version-code {
-  line-height: 26px;
+  line-height: 22px;
   font-size: 14px;
   background-color: #ffff;
   width: 89%;
@@ -746,6 +758,7 @@ body {
   color: #ffff;
   font-size: 16px;
   line-height: 32px;
+  text-decoration: none;
 }
 
 .footer {
@@ -774,6 +787,11 @@ body {
 }
 
 .footer .footer-logo span {
+  color: blue;
+}
+
+.footer .footer-logo a {
+  text-decoration: none;
   color: blue;
 }
 
@@ -848,15 +866,6 @@ body {
 
   .content-wrapper .content .img-table {
     width: unset;
-  }
-
-  .usage .version-buttons {
-    max-width: 1550px;
-  }
-
-  .usage .js-version-code {
-    margin: auto;
-    max-width: 1550px;
   }
 
   .usage .adapters {
