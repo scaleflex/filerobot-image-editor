@@ -11,13 +11,14 @@ const StyledOpenMenuButton = styled(Button)`
 const StyledMenuItemIcon = styled.div`
   margin-right: 6px;
 
-  svg {
+  svg,
+  span {
     vertical-align: middle;
   }
 `;
 
-const StyledRatioLabel = styled(Label)`
+const StyledRatioDescription = styled(Label)`
   margin-left: 4px;
 `;
 
-export { StyledOpenMenuButton, StyledMenuItemIcon, StyledRatioLabel };
+export { StyledOpenMenuButton, StyledMenuItemIcon, StyledRatioDescription };

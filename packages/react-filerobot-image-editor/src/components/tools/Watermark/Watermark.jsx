@@ -7,14 +7,14 @@ import UploadOutline from '@scaleflex/icons/upload-outline';
 import {
   SELECT_ANNOTATION,
   SET_ANNOTATION,
-  SET_ERROR,
+  SET_FEEDBACK,
   CLEAR_ANNOTATIONS_SELECTIONS,
 } from 'actions';
 import ButtonWithMenu from 'components/common/ButtonWithMenu';
 import TextControls from 'components/tools/Text/TextOptions/TextControls';
 import ImageControls from 'components/tools/Image/ImageControls';
 import { usePhoneScreen, useStore } from 'hooks';
-import { TOOLS_IDS } from 'utils/constants';
+import { FEEDBACK_STATUSES, TOOLS_IDS } from 'utils/constants';
 import HiddenUploadInput from 'components/common/HiddenUploadInput';
 import {
   StyledControlsWrapper,
@@ -137,13 +137,13 @@ const Watermark = () => {
     },
   ];
 
-  const setError = (errorMsg) => {
+  const setFeedback = (errorMsg) => {
     dispatch({
-      type: SET_ERROR,
+      type: SET_FEEDBACK,
       payload: {
-        error: {
+        feedback: {
           message: errorMsg,
-          status: 'warning',
+          status: FEEDBACK_STATUSES.WARNING,
         },
       },
     });
@@ -162,7 +162,7 @@ const Watermark = () => {
           setIsLoading(false);
         };
         img.onerror = () => {
-          setError(t('uploadImageError'));
+          setFeedback(t('uploadImageError'));
           setIsLoading(false);
         };
         img.src = URL.createObjectURL(imgFile);

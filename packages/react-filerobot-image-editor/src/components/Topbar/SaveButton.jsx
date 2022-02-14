@@ -16,7 +16,7 @@ import {
   SUPPORTED_IMAGE_TYPES,
   TOOLS_IDS,
 } from 'utils/constants';
-import { SET_SAVED, SET_ERROR, SHOW_LOADER, HIDE_LOADER } from 'actions';
+import { SET_SAVED, SET_FEEDBACK, SHOW_LOADER, HIDE_LOADER } from 'actions';
 import Modal from 'components/common/Modal';
 import Slider from 'components/common/Slider';
 import restrictNumber from 'utils/restrictNumber';
@@ -51,7 +51,7 @@ const SaveButton = () => {
     resize,
     isLoadingGlobally,
     haveNotSavedChanges,
-    error,
+    feedback,
     t,
     adjustments: { crop, isFlippedX, isFlippedY, rotation = 0 } = {},
     config: {
@@ -73,7 +73,7 @@ const SaveButton = () => {
   const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(
     imageFileInfo.extension,
   );
-  const isBlockerError = error.duration === 0;
+  const isBlockerError = feedback.duration === 0;
 
   const cancelModal = () => {
     if (isFieSaveMounted && isModalOpened) {
@@ -239,9 +239,9 @@ const SaveButton = () => {
     }
     if (!imageFileInfo.name || !imageFileInfo.extension) {
       dispatch({
-        type: SET_ERROR,
+        type: SET_FEEDBACK,
         payload: {
-          error: {
+          feedback: {
             message: t('nameIsRequired'),
           },
         },

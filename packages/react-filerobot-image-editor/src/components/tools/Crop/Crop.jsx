@@ -7,10 +7,11 @@ import { Crop as CropIcon } from '@scaleflex/icons/crop';
 import { useStore } from 'hooks';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
+import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styled';
 import CropPresetsOption from './CropPresetsOption';
 
 const Crop = ({ selectTool, isSelected }) => {
-  const { config } = useStore();
+  const { config, t } = useStore();
   const [anchorEl, setAnchorEl] = useState();
 
   const selectToolAndShowPresets = (toolId, e) => {
@@ -29,8 +30,12 @@ const Crop = ({ selectTool, isSelected }) => {
       onClick={selectToolAndShowPresets}
       isSelected={isSelected}
     >
-      {!config[TOOLS_IDS.CROP].noPresets && (
+      {!config[TOOLS_IDS.CROP].noPresets ? (
         <CropPresetsOption anchorEl={anchorEl} onClose={closeCropPresets} />
+      ) : (
+        <StyledToolsBarItemButtonLabel>
+          {t('cropTool')}
+        </StyledToolsBarItemButtonLabel>
       )}
     </ToolsBarItemButton>
   );

@@ -166,12 +166,53 @@ function App() {
       {isImgEditorShown && (
         <FilerobotImageEditor
 	  img="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
-	  onSave={(editedImageObject, designState) => console.log('saved', editedImageObject, designState))}
+	  onSave={(editedImageObject, designState) => console.log('saved', editedImageObject, designState)}
 	  onClose={closeImgEditor}
 	  annotationsCommon={{
 	    fill: '#ff0000'
 	  }}
 	  Text={{ text: 'Filerobot...' }}
+    Crop={{
+      presetsItems: [
+        {
+          titleKey: 'classicTv',
+          descriptionKey: '4:3',
+          ratio: toPrecisedFloat(4 / 3),
+          // icon: CropClassicTv, // optional, CropClassicTv is a React component. Possible (React component, string or HTML Element)
+        },
+        {
+          titleKey: 'cinemascope',
+          descriptionKey: '21:9',
+          ratio: toPrecisedFloat(21 / 9),
+          // icon: CropCinemaScope, // optional, CropCinemaScope is a React component.  Possible (React component, string or HTML Element)
+        },
+      ],
+      presetsFolders: [
+        {
+          titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
+          // icon: Social, // optional, Social is a React component. Possible (React component, string or HTML Element)
+          groups: [
+            {
+              titleKey: 'facebook',
+              items: [
+                {
+                  titleKey: 'profile',
+                  width: 180,
+                  height: 180,
+                  descriptionKey: 'fbProfileSize',
+                },
+                {
+                  titleKey: 'coverPhoto',
+                  width: 820,
+                  height: 312,
+                  descriptionKey: 'fbCoverPhotoSize',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    }}
 	  tabsIds={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
 	  defaultTabId={TABS.ANNOTATE} // or 'Annotate'
 	  defaultToolId={TOOLS.TEXT} // or 'Text'
@@ -194,6 +235,55 @@ const config = {
     fill: '#ff0000'
   },
   Text: { text: 'Filerobot...' },
+  translations: {
+    profile: 'Profile',
+    coverPhoto: 'Cover photo',
+    facebook: 'Facebook',
+    socialMedia: 'Social Media',
+    fbProfileSize: '180x180px',
+    fbCoverPhotoSize: '820x312px',
+  },
+  Crop: {
+    presetsItems: [
+      {
+        titleKey: 'classicTv',
+        descriptionKey: '4:3',
+        ratio: toPrecisedFloat(4 / 3),
+        // icon: CropClassicTv, // optional, CropClassicTv is a React component. Possible (React component, string or HTML Element)
+      },
+      {
+        titleKey: 'cinemascope',
+        descriptionKey: '21:9',
+        ratio: toPrecisedFloat(21 / 9),
+        // icon: CropCinemaScope, // optional, CropCinemaScope is a React component.  Possible (React component, string or HTML Element)
+      },
+    ],
+    presetsFolders: [
+      {
+        titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
+        // icon: Social, // optional, Social is a React component. Possible (React component, string or HTML Element)
+        groups: [
+          {
+            titleKey: 'facebook',
+            items: [
+              {
+                titleKey: 'profile',
+                width: 180,
+                height: 180,
+                descriptionKey: 'fbProfileSize',
+              },
+              {
+                titleKey: 'coverPhoto',
+                width: 820,
+                height: 312,
+                descriptionKey: 'fbCoverPhotoSize',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   tabsIds: [TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK], // or ['Adjust', 'Annotate', 'Watermark']
   defaultTabId: TABS.ANNOTATE, // or 'Annotate'
   defaultToolId: TOOLS.TEXT, // or 'Text'
@@ -292,7 +382,7 @@ Type: `boolean`
 
 Default: `true`
 
-A backend service that hosts the translations of the plugin to be able to change the translations without making a new build once the translations changed, and gives the change to support more languages too, if `true` the service would be used and the next [`language`](#language) property used in determining which language to show, `false` means avoid using this service in that case default translations and provided [`translations`](#translations) property will be used.
+A backend service that hosts the translations of the plugin to be able to change the translations without making a new build once the translations changed, and gives the chance to support more languages too, if `true` the service would be used and the next [`language`](#language) property used in determining which language to show, `false` means avoid using this service in that case default translations and provided [`translations`](#translations) property will be used.
 
 #### `language`
 
@@ -603,20 +693,107 @@ Default:
     maxWidth: null,
     maxHeight: null,
     ratio: 'original',
+    ratioTitle: 'Original',
     noPresets: false,
+    autoResize: false,
+    presetsItems: [],
+    presetsFolders: [],
 }
 ```
 
 The available options for crop tool,
 
-| Property        | Type             | Default (possible values)                                  | Description                                      |
-| --------------- | ---------------- | ---------------------------------------------------------- | ------------------------------------------------ |
-| **`minWidth`**  | number           | 14                                                         | Minimum width (in px) of the possible crop area  |
-| **`minHeight`** | number           | 14                                                         | Minimum height (in px) of the possible crop area |
-| **`maxWidth`**  | number           | null                                                       | Maximum width (in px) of the possible crop area  |
-| **`maxHeight`** | number           | null                                                       | Maximum height (in px) of the possible crop area |
-| **`ratio`**     | string \| number | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area                   |
-| **`noPresets`** | boolean          | false                                                      | hides the crop presets if `true`                 |
+| Property             | Type                                             | Default (possible values)                                  | Description                                                                                                                                                                                                                         |
+| -------------------- | ------------------------------------------------ | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`minWidth`**       | number                                           | 14                                                         | Minimum width (in px) of the possible crop area                                                                                                                                                                                     |
+| **`minHeight`**      | number                                           | 14                                                         | Minimum height (in px) of the possible crop area                                                                                                                                                                                    |
+| **`maxWidth`**       | number                                           | null                                                       | Maximum width (in px) of the possible crop area                                                                                                                                                                                     |
+| **`maxHeight`**      | number                                           | null                                                       | Maximum height (in px) of the possible crop area                                                                                                                                                                                    |
+| **`ratio`**          | string \| number                                 | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area                                                                                                                                                                                                      |
+| **`ratioTitle`**     | string \| number                                 | 'Original'                                                 | The title of the crop's ratio selected that will be shown initially besides the crop's tool icon                                                                                                                                    |
+| **`noPresets`**      | boolean                                          | false                                                      | hides the crop presets if `true`                                                                                                                                                                                                    |
+| **`autoResize`**     | boolean                                          | false                                                      | if `true` and the chosen crop preset item has both width & height then the original image will be croped and then apply resizing for the cropped image with the width & height, otherwise cropping without resizing will be applied |
+| **`presetsItems`**   | array of [`CropPresetItem`](#croppresetitem)     | []                                                         | Crop presets items to extend with the default ones provided in the plugin, will be shown in the first menu of the crop presets                                                                                                      |
+| **`presetsFolders`** | array of [`CropPresetFolder`](#croppresetfolder) | []                                                         | Crop presets folder to be shown as item with sublist on hovering opens another list with the provided crop presets groups that contains different crop items                                                                        |
+
+##### **CropPresetFolder**:
+
+Type: `object`
+
+| Property       | Type                                           | Default (possible values) | Description                                                                                                                                                                                 |
+| -------------- | ---------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`titleKey`** | string ***Required***                          | ''                        | Translation key for the title of the preset folder (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
+| **`groups`**   | array of [`CropPresetGroup`](#croppresetgroup) | undefined                 | The crop preset groups shown inside the sublist as breadcrumbs for the user and giving him the possibility to choose a crop preset item                                                     |
+| **`icon`**     | HTML Element \| string \| React Component      | undefined                 | An icon prefixed to the crop preset folder's title                                                                                                                                          |
+
+##### **CropPresetGroup**:
+
+Type: `object`
+
+| Property       | Type                                         | Default (possible values) | Description                                                                                                                                                                                |
+| -------------- | -------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **`titleKey`** | string ***Required***                        | ''                        | Translation key for the title of the preset group (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
+| **`items`**    | array of [`CropPresetItem`](#croppresetitem) | undefined                 | The crop preset items shown inside the group's breadcrumb which let the user choose from                                                                                                   |
+
+##### **CropPresetItem**:
+
+Type: `object`
+
+| Property             | Type                                                    | Default (possible values)                          | Description                                                                                                                                                                               |
+| -------------------- | ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`titleKey`**       | string ***Required***                                   | ''                                                 | Translation key for the title of the preset item (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
+| **`descriptionKey`** | string                                                  | ''                                                 | The Translation key of crop preset item's description label shown besides the title key for more descriptive preset (almost usedi n showing the preset item's ratio/size)                 |
+| **`ratio`**          | string ***Required if no `width` & `height` provided*** | '' ('original' \| 'ellipse' \| 'custom' \| number) | The preset item's ratio used in cropping                                                                                                                                                  |
+| **`width`**          | number ***Required if no `ratio` provided***            | undefined                                          | The width of crop preset item used in tandem with height for calculating the proper preset item's ratio (`ratio = width / height`)                                                        |
+| **`height`**         | number ***Required if no `ratio` provided***            | undefined                                          | The height of crop preset item used in tandem with width for calculating the proper preset item's ratio (`ratio = width / height`)                                                        |
+| **`icon`**           | HTML Element \| string \| React Component               | undefined                                          | An icon prefixed to the crop preset item's title                                                                                                                                          |
+
+Example,
+
+```js
+{
+  autoResize: true,
+  presetsItems: [
+    {
+      titleKey: 'classicTv',
+      descriptionKey: '4:3',
+      ratio: toPrecisedFloat(4 / 3),
+      icon: CropClassicTv,
+    },
+    {
+      titleKey: 'cinemascope',
+      descriptionKey: '21:9',
+      ratio: toPrecisedFloat(21 / 9),
+      icon: CropCinemaScope, // optional
+    },
+  ],
+  presetsFolders: [
+    {
+      titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
+      icon: Social, // React component, string or HTML Element
+      groups: [
+        {
+          titleKey: 'facebook',
+          items: [
+            {
+              titleKey: 'profile',
+              width: 180,
+              height: 180,
+              descriptionKey: 'fbProfilePhotoSize',
+            },
+            {
+              titleKey: 'coverPhoto',
+              width: 820,
+              height: 312,
+              descriptionKey: 'fbCoverPhotoSize',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
+```
 
 > Please note the letters-case of the above properties..
 
@@ -702,7 +879,7 @@ Option's object to be provided,
 | ------------- | ------------------------------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`label`**   | string ***Required***                                   | ''                        | The option's label will be shown to the user                                                                                                                                                                                                                                                                          |
 | **`onClick`** | function (triggerSaveModal, triggerSave) ***Required*** | `undefined`               | The function will be triggered on clicking the option, it receives 2 parameters 1st is a function calls the saving modal, 2nd is a function calls saving directly and both of those functions accepts (1 argument as a callback function that's same as [`onSave function`](#onsave) called after the saving process) |
-| **`icon`**    | HTML Element, string or React Component                 | `null`                    | The option's icon will be shown before the label                                                                                                                                                                                                                                                                      |
+| **`icon`**    | HTML Element \| string \| React Component               | `null`                    | The option's icon will be shown before the label                                                                                                                                                                                                                                                                      |
 > Note: you must provide an [`onSave`](#onsave) callback function on using any of the passed functions to the option's onClick function.
 example,
 ```js

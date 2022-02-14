@@ -31,6 +31,7 @@ const getInitialAppState = (config = {}) => {
     adjustments: {
       crop: {
         ratio: config[TOOLS_IDS.CROP].ratio,
+        ratioTitle: config[TOOLS_IDS.CROP].ratioTitle,
         width: null,
         height: null,
         x: 0,
@@ -56,7 +57,7 @@ const getInitialAppState = (config = {}) => {
     selectionsIds: [],
     tabId: config.defaultTabId || null,
     toolId: config.defaultToolId || null,
-    error: {},
+    feedback: {},
     /* For UNDO/REDO/RESET,
      * Current/present state => considered properties related to design of the whole 1st order state.
      * `pastDesignStates` => contains the past states of those design properties (undo).

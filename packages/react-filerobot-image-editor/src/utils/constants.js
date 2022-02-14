@@ -108,3 +108,8 @@ export const CLOSING_REASONS = {
   CLOSE_BUTTON: 'close-button-clicked',
   BACK_BUTTON: 'back-button-clicked',
 };
+
+export const FEEDBACK_STATUSES = {
+  WARNING: 'warning',
+  ERROR: 'error',
+};

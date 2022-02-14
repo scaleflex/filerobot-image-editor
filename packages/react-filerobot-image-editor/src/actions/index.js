@@ -2,7 +2,7 @@ import addFilter, { ADD_FILTER } from './addFilter';
 import hideLoader, { HIDE_LOADER } from './hideLoader';
 import redo, { REDO } from './redo';
 import reset, { RESET } from './reset';
-import setError, { SET_ERROR } from './setError';
+import setFeedback, { SET_FEEDBACK } from './setFeedback';
 import showLoader, { SHOW_LOADER } from './showLoader';
 import selectTab, { SELECT_TAB } from './selectTab';
 import undo, { UNDO } from './undo';
@@ -40,7 +40,7 @@ import setLatestColor, { SET_LATEST_COLOR } from './setLatestColor';
 
 export default {
   [SET_ORIGINAL_IMAGE]: setOriginalImage,
-  [SET_ERROR]: setError,
+  [SET_FEEDBACK]: setFeedback,
   [SHOW_LOADER]: showLoader,
   [HIDE_LOADER]: hideLoader,
   [CHANGE_POINTER_ICON]: changePointerIcon,
@@ -74,7 +74,7 @@ export default {
 
 export {
   SET_ORIGINAL_IMAGE,
-  SET_ERROR,
+  SET_FEEDBACK,
   SHOW_LOADER,
   HIDE_LOADER,
   CHANGE_POINTER_ICON,

@@ -9,12 +9,12 @@ import Tabs from 'components/Tabs';
 import ToolsBar from 'components/ToolsBar';
 import {
   HIDE_LOADER,
-  SET_ERROR,
+  SET_FEEDBACK,
   SET_ORIGINAL_IMAGE,
   SHOW_LOADER,
   UPDATE_STATE,
 } from 'actions';
-import ErrorPopup from 'components/ErrorPopup';
+import FeedbackPopup from 'components/FeedbackPopup';
 import loadImage from 'utils/loadImage';
 import { usePhoneScreen, useStore } from 'hooks';
 import Spinner from 'components/common/Spinner';
@@ -36,7 +36,7 @@ const App = () => {
     originalImage,
     shownImageDimensions,
     t,
-    error = {},
+    feedback = {},
   } = useStore();
   const {
     loadableDesignState,
@@ -67,9 +67,9 @@ const App = () => {
 
   const setError = useCallback((newError) => {
     dispatch({
-      type: SET_ERROR,
+      type: SET_FEEDBACK,
       payload: {
-        error: {
+        feedback: {
           message: newError.message || newError,
           duration: 0,
         },
@@ -192,7 +192,7 @@ const App = () => {
     >
       {isLoadingGlobally && <Spinner label={t('loading')} />}
       <Topbar />
-      {originalImage && error.duration !== 0 && (
+      {originalImage && feedback.duration !== 0 && (
         <StyledMainContent>
           {!isPhoneScreen && <Tabs />}
           <StyledCanvasAndTools>
@@ -208,7 +208,7 @@ const App = () => {
           </StyledCanvasAndTools>
         </StyledMainContent>
       )}
-      <ErrorPopup />
+      <FeedbackPopup />
     </StyledAppWrapper>
   );
 };

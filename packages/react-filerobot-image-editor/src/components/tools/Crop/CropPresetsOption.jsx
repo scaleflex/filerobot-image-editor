@@ -1,19 +1,18 @@
 /** External Dependencies */
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Menu from '@scaleflex/ui/core/menu';
-import MenuItem from '@scaleflex/ui/core/menu-item';
 
 /** Internal Dependencies */
-import { SET_CROP } from 'actions';
+import { SET_CROP, SET_RESIZE } from 'actions';
 import { useStore } from 'hooks';
 import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styled';
-import {
-  StyledMenuItemIcon,
-  StyledOpenMenuButton,
-  StyledRatioLabel,
-} from './Crop.styled';
-import { CROP_PRESETS } from './Crop.constants';
+import { TOOLS_IDS } from 'utils/constants';
+import toPrecisedFloat from 'utils/toPrecisedFloat';
+import { StyledOpenMenuButton } from './Crop.styled';
+import { DEFAULT_CROP_PRESETS } from './Crop.constants';
+import CropPresetGroupsList from './CropPresetGroupsFolder';
+import CropPresetItem from './CropPresetItem';
 
 const PREFIX_ICONS_DIMENS = { height: 16, width: 16 };
 
@@ -21,27 +20,86 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
   const {
     dispatch,
     t,
-    adjustments: { crop: { ratio: currentRatio } = {} } = {},
+    adjustments: {
+      crop: { ratio: currentRatio, ratioTitle, ratioFolderKey } = {},
+    } = {},
+    config,
   } = useStore();
+  const cropConfig = config[TOOLS_IDS.CROP];
 
-  const changeCropRatio = (e, newCropRatio) => {
+  const allPresets = useMemo(() => {
+    const { presetsItems = [], presetsFolders = [] } = cropConfig;
+    return [...presetsFolders, ...DEFAULT_CROP_PRESETS, ...presetsItems];
+  }, [cropConfig]);
+
+  const changeCropRatio = (e, newCropRatio, cropProps) => {
     e.stopPropagation();
-    if (newCropRatio === currentRatio) {
+    if (newCropRatio === currentRatio && ratioTitle === cropProps.ratioTitle) {
+      onClose();
       return;
     }
 
+    const newCrop = {
+      ratio: newCropRatio,
+      ratioTitle: cropProps.ratioTitle,
+      ratioGroupKey: cropProps.ratioGroupKey,
+      ratioFolderKey: cropProps.ratioFolderKey,
+    };
+
     dispatch({
       type: SET_CROP,
-      payload: {
-        ratio: newCropRatio,
-      },
+      payload: newCrop,
     });
+
+    if (cropConfig.autoResize && cropProps.width && cropProps.height) {
+      dispatch({
+        type: SET_RESIZE,
+        payload: {
+          width: cropProps.width,
+          height: cropProps.height,
+        },
+      });
+    }
     onClose();
   };
 
-  const toolTitleKey =
-    CROP_PRESETS.filter(({ ratio }) => currentRatio === ratio)?.[0]?.titleKey ||
-    'cropTool';
+  const renderPreset = ({
+    titleKey,
+    descriptionKey,
+    ratio,
+    width,
+    height,
+    groups,
+    icon: Icon,
+  }) =>
+    groups ? (
+      <CropPresetGroupsList
+        key={titleKey}
+        titleKey={titleKey}
+        groups={groups}
+        Icon={Icon}
+        onItemSelect={changeCropRatio}
+        prefixIconDimensions={PREFIX_ICONS_DIMENS}
+        t={t}
+      />
+    ) : (
+      <CropPresetItem
+        key={ratio}
+        ratio={ratio ?? toPrecisedFloat(width / height)}
+        title={t(titleKey)}
+        description={t(descriptionKey)}
+        Icon={Icon}
+        isActive={
+          currentRatio === (ratio ?? toPrecisedFloat(width / height)) &&
+          !ratioFolderKey
+        }
+        width={width}
+        height={height}
+        onClick={changeCropRatio}
+      />
+    );
+
+  const toolTitleKey = ratioTitle || 'cropTool';
 
   return (
     <>
@@ -59,22 +117,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
         open={Boolean(anchorEl)}
         position="top"
       >
-        {CROP_PRESETS.map(({ titleKey, ratio, ratioLabel, Icon }) => (
-          <MenuItem
-            key={ratio}
-            active={ratio === currentRatio}
-            onClick={(e) => changeCropRatio(e, ratio)}
-            size="sm"
-          >
-            {Icon && (
-              <StyledMenuItemIcon>
-                <Icon {...PREFIX_ICONS_DIMENS} />
-              </StyledMenuItemIcon>
-            )}
-            {t(titleKey)}
-            {ratioLabel && <StyledRatioLabel>{ratioLabel}</StyledRatioLabel>}
-          </MenuItem>
-        ))}
+        {allPresets.map(renderPreset)}
       </Menu>
     </>
   );

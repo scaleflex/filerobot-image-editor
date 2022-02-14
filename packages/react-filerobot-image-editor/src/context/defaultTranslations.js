@@ -86,4 +86,6 @@ export default {
   nameIsRequired: 'Name is required.',
   quality: 'Quality',
   imageDimensionsHoverTitle: 'Saved image size (width x height)',
+  cropSizeLowerThanResizedWarning:
+    'Note, the selected crop area is lower than the applied resize which might cause quality decrease',
 };

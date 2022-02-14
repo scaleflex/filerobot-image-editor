@@ -72,7 +72,11 @@ export default {
     maxWidth: null,
     maxHeight: null,
     ratio: 'original',
+    ratioTitle: 'Original',
     noPresets: false,
+    autoResize: false,
+    presetsItems: [],
+    presetsFolders: [],
   },
   tabsIds: [],
   defaultTabId: TABS_IDS.ADJUST,
@@ -92,7 +96,7 @@ export default {
   moreSaveOptions: [],
   savingPixelRatio: 8,
   previewPixelRatio: window ? window.devicePixelRatio || 1 : 1,
-  showBackButton: false, // TODO: For its label, Make sure it won't override backend's translation if provided from translations object and give possibility to user to change
+  showBackButton: false,
   useCloudimage: false,
   cloudimage: {
     token: '',

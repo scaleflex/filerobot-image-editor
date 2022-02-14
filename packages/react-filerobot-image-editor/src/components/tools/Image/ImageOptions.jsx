@@ -4,8 +4,8 @@ import Button from '@scaleflex/ui/core/button';
 
 /** Internal Dependencies */
 import { useAnnotation, useStore } from 'hooks';
-import { TOOLS_IDS } from 'utils/constants';
-import { SET_ERROR } from 'actions';
+import { FEEDBACK_STATUSES, TOOLS_IDS } from 'utils/constants';
+import { SET_FEEDBACK } from 'actions';
 import HiddenUploadInput from 'components/common/HiddenUploadInput';
 import ImageControls from './ImageControls';
 
@@ -51,13 +51,13 @@ const ImageOptions = () => {
     }
   };
 
-  const setError = (errorMsg) => {
+  const setFeedback = (msg) => {
     dispatch({
-      type: SET_ERROR,
+      type: SET_FEEDBACK,
       payload: {
-        error: {
-          message: errorMsg,
-          status: 'warning',
+        feedback: {
+          message: msg,
+          status: FEEDBACK_STATUSES.WARNING,
         },
       },
     });
@@ -80,7 +80,7 @@ const ImageOptions = () => {
             hideLoaderAfterDone(filesLength);
           };
           img.onerror = () => {
-            setError(t('uploadImageError'));
+            setFeedback(t('uploadImageError'));
             hideLoaderAfterDone(filesLength);
           };
           img.src = URL.createObjectURL(file);
@@ -93,7 +93,7 @@ const ImageOptions = () => {
       if (wrongFilesNames.length > 0) {
         const errorLabel =
           wrongFilesNames.length > 1 ? t('areNotImages') : t('isNotImage');
-        setError(
+        setFeedback(
           `${wrongFilesNames.join(', ')} ${errorLabel} ${t('toBeUploaded')}.`,
         );
       }

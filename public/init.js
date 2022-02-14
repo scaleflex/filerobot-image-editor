@@ -2,10 +2,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DuplicateIcon from '@scaleflex/icons/duplicate';
+import Social from '@scaleflex/icons/social';
+import CropClassicTv from '@scaleflex/icons/crop-classic-tv';
+import CropCinemaScope from '@scaleflex/icons/crop-cinema-scope';
+
 import FilerobotImageEditor, {
   TOOLS,
   TABS,
 } from '../packages/react-filerobot-image-editor/src';
+import toPrecisedFloat from '../packages/react-filerobot-image-editor/src/utils/toPrecisedFloat';
 
 const uriDownload = (url, fileName) => {
   let tmpLink = document.createElement('a');
@@ -41,6 +46,46 @@ const config = {
     // ratio: 4 / 100, // ORIGINAL_CROP, ELLIPSE_CROP, CUSTOM_CROP, ratio's number (10 / 4, 5 / 10...etc.)
     // minWidth: 200,
     // minHeight: 300,
+    autoResize: true,
+    presetsItems: [
+      {
+        titleKey: 'classicTv',
+        descriptionKey: '4:3',
+        ratio: toPrecisedFloat(4 / 3),
+        icon: CropClassicTv,
+      },
+      {
+        titleKey: 'cinemascope',
+        descriptionKey: '21:9',
+        ratio: toPrecisedFloat(21 / 9),
+        icon: CropCinemaScope, // optional
+      },
+    ],
+    presetsFolders: [
+      {
+        titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
+        icon: Social, // React component, string or HTML Element
+        groups: [
+          {
+            titleKey: 'facebook',
+            items: [
+              {
+                titleKey: 'profile',
+                width: 180,
+                height: 180,
+                descriptionKey: 'fbProfileSize',
+              },
+              {
+                titleKey: 'coverPhoto',
+                width: 820,
+                height: 312,
+                descriptionKey: 'fbCoverPhotoSize',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   [TOOLS.WATERMARK]: {
     gallery: [

@@ -106,6 +106,26 @@ type arrowAnnotation = annotationsCommon & {
   pointerWidth?: number;
 }
 
+type cropPresetItem = {
+  titleKey: string,
+  width?: number,
+  height?: number,
+  ratio?: string,
+  descriptionKey?: string,
+  icon?: string | HTMLElement | ReactComponentElement,
+};
+
+type cropPresetGroup = {
+  titleKey: string,
+  items: cropPresetItem[],
+};
+
+type cropPresetFolder = {
+  titleKey: string,
+  groups: cropPresetGroup[],
+  icon?: string | HTMLElement | ReactComponentElement,
+};
+
 type imageDesignState = {
   imgSrc?: string,
   finetunes?: Filter[],
@@ -122,10 +142,14 @@ type imageDesignState = {
   adjustments?: {
     crop: {
       ratio: string;
+      ratioTitle?: string;
       width?: number,
       height?: number,
       x?: number,
       y?: number,
+      autoResize?: boolean;
+      presetsItems?: cropPresetItem[];
+      presetsFolders?: cropPresetFolder[];
     },
     isFlippedX?: boolean;
     isFlippedY?: boolean;

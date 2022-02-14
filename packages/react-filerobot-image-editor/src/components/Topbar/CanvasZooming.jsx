@@ -12,8 +12,8 @@ import { StyledSmallButton, StyledZoomPercentageLabel } from './Topbar.styled';
 const MULTIPLY_ZOOM_FACTOR = 1.1;
 
 const CanvasZooming = () => {
-  const { dispatch, zoom = {}, toolId, error, t } = useStore();
-  const isBlockerError = error.duration === 0;
+  const { dispatch, zoom = {}, toolId, feedback, t } = useStore();
+  const isBlockerError = feedback.duration === 0;
 
   const saveZoom = (zoomFactor) => {
     dispatch({
