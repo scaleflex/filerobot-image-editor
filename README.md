@@ -748,6 +748,8 @@ Type: `object`
 | **`height`**         | number ***Required if no `ratio` provided***            | undefined                                          | The height of crop preset item used in tandem with width for calculating the proper preset item's ratio (`ratio = width / height`)                                                        |
 | **`icon`**           | HTML Element \| string \| React Component               | undefined                                          | An icon prefixed to the crop preset item's title                                                                                                                                          |
 
+> Note: `titleKey` of each object must be unique between the other objects in the same array.
+
 Example,
 
 ```js
