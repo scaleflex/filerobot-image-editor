@@ -22,7 +22,7 @@ const reactCodeWrapper = getElementById("react-code-wrapper");
 const cdnTabTitle = getElementById("cdn-code-tab");
 const cdnCodeWrapper = getElementById("cdn-code-wrapper");
 
-const codeByTabIds = {
+const exampleCodeTabs = {
   "js-code-tab": jsCodeWrapper,
   "react-code-tab": reactCodeWrapper,
   "cdn-code-tab": cdnCodeWrapper,
@@ -174,10 +174,19 @@ function changeModeHandler() {
     filter.checked = false;
     useCloudimage = true;
   } else {
+    if (selectedTabs.includes(annotate.name)) {
+      annotate.checked = true;
+    }
+
+    if (selectedTabs.includes(filter.name)) {
+      filter.checked = true;
+    }
+
     annotate.disabled = false;
     filter.disabled = false;
     useCloudimage = false;
   }
+
   filerobotImageEditor.render({ useCloudimage, tabsIds: [...selectedTabs] });
 }
 
@@ -197,9 +206,9 @@ function toggleActiveCodeTab(event) {
 
 function changeCodeTabHandler(event) {
   const selectedCodeTabId = event.target.id;
-  const selectedCode = codeByTabIds[selectedCodeTabId];
+  const selectedCode = exampleCodeTabs[selectedCodeTabId];
 
-  Object.values(codeByTabIds).forEach((codeTab) => {
+  Object.values(exampleCodeTabs).forEach((codeTab) => {
     codeTab.style.display = "none";
   });
 

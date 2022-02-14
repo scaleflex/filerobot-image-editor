@@ -1192,6 +1192,10 @@ body {
     width: 97%;
   }
 
+  .usage .version-buttons {
+    width: 86%;
+  }
+
   .questions p {
     text-align: center;
   }
