@@ -1,6 +1,6 @@
 {
   "name": "filerobot-image-editor-root",
-  "version": "4.0.0-beta.0",
+  "version": "4.0.0",
   "license": "MIT",
   "private": true,
   "workspaces": [

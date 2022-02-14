@@ -31,10 +31,6 @@ const StyledHistoryButton = styled(IconButton)`
   width: 23px;
   height: 23px;
   padding: 4px;
-
-  :disabled {
-    cursor: not-allowed;
-  }
 `;
 
 const StyledSmallButton = styled(IconButton)`

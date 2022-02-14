@@ -30,6 +30,10 @@ const OverrideDefaultStyles = createGlobalStyle`
     box-sizing: border-box;
     scrollbar-color: rgba(203, 211, 218, 1) rgba(203, 211, 218, 0.35);
 
+    :disabled, [aria-disabled="true"] {
+      cursor: not-allowed;
+    }
+
     &::-webkit-scrollbar {
       width: 4px;
       height: 4px;

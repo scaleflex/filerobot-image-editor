@@ -51,6 +51,7 @@ const SaveButton = () => {
     resize,
     isLoadingGlobally,
     haveNotSavedChanges,
+    error,
     t,
     adjustments: { crop, isFlippedX, isFlippedY, rotation = 0 } = {},
     config: {
@@ -72,6 +73,7 @@ const SaveButton = () => {
   const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(
     imageFileInfo.extension,
   );
+  const isBlockerError = error.duration === 0;
 
   const cancelModal = () => {
     if (isFieSaveMounted && isModalOpened) {
@@ -394,6 +396,7 @@ const SaveButton = () => {
         menuItems={menuItems}
         menuStyle={saveButtonMenuStyle}
         wrapperStyle={saveButtonWrapperStyle}
+        disabled={isLoadingGlobally || isBlockerError}
       />
       {isModalOpened && (
         <Modal

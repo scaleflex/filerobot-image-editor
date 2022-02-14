@@ -56,6 +56,7 @@ const getInitialAppState = (config = {}) => {
     selectionsIds: [],
     tabId: config.defaultTabId || null,
     toolId: config.defaultToolId || null,
+    error: {},
     /* For UNDO/REDO/RESET,
      * Current/present state => considered properties related to design of the whole 1st order state.
      * `pastDesignStates` => contains the past states of those design properties (undo).

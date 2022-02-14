@@ -11,7 +11,8 @@ import { RESET } from 'actions';
 import { StyledHistoryButton } from './Topbar.styled';
 
 const ResetButton = ({ margin }) => {
-  const { dispatch, isResetted = true, theme, t } = useStore();
+  const { dispatch, isResetted = true, theme, error, t } = useStore();
+  const isBlockerError = error.duration === 0;
 
   const [isModalOpened, setIsModalOpened] = useState(false);
 
@@ -35,7 +36,7 @@ const ResetButton = ({ margin }) => {
       <StyledHistoryButton
         color="link"
         onClick={isResetted ? undefined : openModal}
-        disabled={isResetted}
+        disabled={isResetted || isBlockerError}
         title={t('resetOperations')}
         margin={margin}
       >

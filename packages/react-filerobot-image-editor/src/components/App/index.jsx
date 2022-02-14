@@ -191,8 +191,8 @@ const App = () => {
       data-phone={isPhoneScreen}
     >
       {isLoadingGlobally && <Spinner label={t('loading')} />}
-      {error?.duration !== 0 && <Topbar />}
-      {originalImage && error?.duration !== 0 && (
+      <Topbar />
+      {originalImage && error.duration !== 0 && (
         <StyledMainContent>
           {!isPhoneScreen && <Tabs />}
           <StyledCanvasAndTools>

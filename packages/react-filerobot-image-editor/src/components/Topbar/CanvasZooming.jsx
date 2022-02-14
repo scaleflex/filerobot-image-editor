@@ -12,7 +12,8 @@ import { StyledSmallButton, StyledZoomPercentageLabel } from './Topbar.styled';
 const MULTIPLY_ZOOM_FACTOR = 1.1;
 
 const CanvasZooming = () => {
-  const { dispatch, zoom = {}, toolId, t } = useStore();
+  const { dispatch, zoom = {}, toolId, error, t } = useStore();
+  const isBlockerError = error.duration === 0;
 
   const saveZoom = (zoomFactor) => {
     dispatch({
@@ -37,7 +38,7 @@ const CanvasZooming = () => {
     saveZoom(zoom.factor / MULTIPLY_ZOOM_FACTOR);
   };
 
-  const isZoomDisabled = toolId === TOOLS_IDS.CROP;
+  const isZoomDisabled = toolId === TOOLS_IDS.CROP || isBlockerError;
 
   return (
     <>
@@ -51,7 +52,8 @@ const CanvasZooming = () => {
       </StyledSmallButton>
       <StyledZoomPercentageLabel
         title={t('resetZoomTitle')}
-        onClick={resetZoomToDefault}
+        onClick={isZoomDisabled ? undefined : resetZoomToDefault}
+        aria-disabled={isZoomDisabled}
       >
         {`${parseInt(zoom.factor * 100, 10)}%`}
       </StyledZoomPercentageLabel>
