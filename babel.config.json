@@ -25,11 +25,7 @@
       }
     ],
     [
-      "babel-plugin-styled-components",
-      {
-        "pure": true,
-        "namespace": "fie" // fie => filerobot-image-editor
-      }
+      "babel-plugin-styled-components"
     ],
     [
       "@babel/plugin-transform-runtime"
@@ -38,6 +34,13 @@
   "env": {
     "production": {
       "plugins": [
+        [
+          "babel-plugin-styled-components",
+          {
+            "pure": true,
+            "displayName": false
+          }
+        ],
         [
           "transform-react-remove-prop-types",
           {
