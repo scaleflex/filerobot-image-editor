@@ -30,6 +30,9 @@
         "pure": true,
         "namespace": "fie" // fie => filerobot-image-editor
       }
+    ],
+    [
+      "@babel/plugin-transform-runtime"
     ]
   ],
   "env": {

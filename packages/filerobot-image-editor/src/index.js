@@ -26,7 +26,6 @@ class FilerobotImageEditor {
     this.#unmount = unmountComponentAtNode;
   }
 
-  // TODO: check if this works fine with no issues and re-renders the affected functionalities on changing additionalConfig
   render(additionalConfig) {
     if (typeof additionalConfig === 'object') {
       this.config = this.config = deepMerge(
