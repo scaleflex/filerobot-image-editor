@@ -15,7 +15,7 @@ import {
 import { useStore } from 'hooks';
 import { endTouchesZooming, zoomOnTouchesMove } from './touchZoomingEvents';
 
-const ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR = 0.005;
+const ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR = 0.006;
 
 const CanvasNode = ({ children }) => {
   useStrictMode(true);
@@ -97,19 +97,12 @@ const CanvasNode = ({ children }) => {
 
   const handleZoom = (e) => {
     e.evt.preventDefault();
+    const newScale =
+      (zoom.factor || defaultZoomFactor) +
+      e.evt.deltaY * -ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR;
 
-    const scaleBy = Math.max(
-      (Math.abs(e.evt.deltaY * ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR) || 1) +
-        defaultZoomFactor,
-      1.1,
-    );
-    const oldZoomScaleFactor = zoom.factor || defaultZoomFactor;
-
-    const isZoomIn = e.evt.deltaY < 0;
-    const newScale = isZoomIn
-      ? oldZoomScaleFactor * scaleBy
-      : oldZoomScaleFactor / scaleBy;
-    if (newScale < 0.5) {
+    const minScale = 0.5;
+    if (newScale < minScale) {
       return;
     }
 
