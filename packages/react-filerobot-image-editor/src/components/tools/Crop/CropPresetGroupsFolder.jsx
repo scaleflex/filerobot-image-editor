@@ -17,7 +17,7 @@ const CropPresetGroupsFolder = ({
 }) => {
   const {
     adjustments: {
-      crop: { ratioFolderKey },
+      crop: { ratioFolderKey, ratioGroupKey },
     },
   } = useStore();
 
@@ -53,6 +53,7 @@ const CropPresetGroupsFolder = ({
               />
             ),
             key: groupTitleKey,
+            disableHover: true,
           })),
         },
       ]}

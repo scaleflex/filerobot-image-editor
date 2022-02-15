@@ -74,7 +74,7 @@ const ShadowFields = ({ annotation, updateAnnotation, t }) => {
           />
         </StyledColumn>
         <StyledColumn>
-          <Label>{t('transparency')}</Label>
+          <Label>{t('opacity')}</Label>
           <Slider
             annotation="%"
             onChange={(val) =>

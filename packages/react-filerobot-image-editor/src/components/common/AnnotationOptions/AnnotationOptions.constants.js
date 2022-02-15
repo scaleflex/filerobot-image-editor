@@ -16,7 +16,7 @@ export const posCssRotateDegFromRightSide = {
 };
 
 export const POPPABLE_OPTIONS = {
-  TRANSPARENCY: 'transparency',
+  OPACITY: 'opacity',
   STROKE: 'stroke',
   SHADOW: 'shadow',
   POSITION: 'position',

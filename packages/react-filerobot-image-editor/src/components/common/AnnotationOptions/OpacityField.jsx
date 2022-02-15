@@ -11,7 +11,7 @@ import Slider from '../Slider';
 const MIN_PERCENTANGE = 0;
 const MAX_PERCENTANGE = 1;
 
-const TransparencyField = ({ annotation, updateAnnotation, t }) => {
+const OpacityField = ({ annotation, updateAnnotation, t }) => {
   const { opacity } = annotation;
 
   const changeOpacity = (newOpactiy) => {
@@ -26,7 +26,7 @@ const TransparencyField = ({ annotation, updateAnnotation, t }) => {
 
   return (
     <StyledSpacedOptionFields>
-      <Label>{t('transparency')}</Label>
+      <Label>{t('opacity')}</Label>
       <Slider
         annotation="%"
         onChange={changeOpacity}
@@ -36,10 +36,10 @@ const TransparencyField = ({ annotation, updateAnnotation, t }) => {
   );
 };
 
-TransparencyField.propTypes = {
+OpacityField.propTypes = {
   annotation: PropTypes.instanceOf(Object).isRequired,
   updateAnnotation: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 };
 
-export default TransparencyField;
+export default OpacityField;

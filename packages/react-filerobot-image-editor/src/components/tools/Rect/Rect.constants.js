@@ -8,7 +8,7 @@ export const CORNER_RADIUS = 'corner-radius';
 
 export const RECT_POPPABLE_OPTIONS = [
   {
-    title: 'Corner radius',
+    titleKey: 'cornerRadius',
     name: CORNER_RADIUS,
     Icon: RadiusCorner,
   },

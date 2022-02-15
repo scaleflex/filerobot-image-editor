@@ -9,7 +9,7 @@ import Position from '@scaleflex/icons/position';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
-import TransparencyField from './TransparencyField';
+import OpacityField from './OpacityField';
 import StrokeFields from './StrokeFields';
 import ShadowFields from './ShadowFields';
 import PositionFields from './PositionFields';
@@ -36,24 +36,25 @@ const AnnotationOptions = ({
   const [currentOption, setCurrentOption] = useState(null);
   const {
     config: { useCloudimage },
+    t,
   } = useStore();
   const options = useMemo(
     () => [
       ...morePoppableOptionsPrepended,
       {
-        title: 'Transparency',
-        name: POPPABLE_OPTIONS.TRANSPARENCY,
+        titleKey: 'opacity',
+        name: POPPABLE_OPTIONS.OPACITY,
         Icon: Transparency,
       },
       ...(!useCloudimage
         ? [
-            { title: 'Stroke', name: POPPABLE_OPTIONS.STROKE, Icon: Stroke },
-            { title: 'Shadow', name: POPPABLE_OPTIONS.SHADOW, Icon: Shadow },
+            { titleKey: 'stroke', name: POPPABLE_OPTIONS.STROKE, Icon: Stroke },
+            { titleKey: 'shadow', name: POPPABLE_OPTIONS.SHADOW, Icon: Shadow },
           ]
         : []),
       !hidePositionField
         ? {
-            title: 'Position',
+            titleKey: 'position',
             name: POPPABLE_OPTIONS.POSITION,
             Icon: Position,
           }
@@ -65,7 +66,7 @@ const AnnotationOptions = ({
   const optionsPopups = useMemo(
     () => ({
       ...moreOptionsPopupComponentsObj,
-      [POPPABLE_OPTIONS.TRANSPARENCY]: TransparencyField,
+      [POPPABLE_OPTIONS.OPACITY]: OpacityField,
       [POPPABLE_OPTIONS.STROKE]: StrokeFields,
       [POPPABLE_OPTIONS.SHADOW]: ShadowFields,
       [POPPABLE_OPTIONS.POSITION]: PositionFields,
@@ -101,7 +102,7 @@ const AnnotationOptions = ({
           option && (
             <StyledIconWrapper
               key={option.name}
-              title={option.title}
+              title={t(option.titleKey)}
               onClick={(e) => toggleOptionPopup(e, option.name)}
             >
               <option.Icon size={18} />

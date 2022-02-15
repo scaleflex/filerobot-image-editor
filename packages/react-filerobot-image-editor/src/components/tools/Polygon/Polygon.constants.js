@@ -8,7 +8,7 @@ export const SIDES_NUMBER = 'sides-number';
 
 export const POLYGON_POPPABLE_OPTIONS = [
   {
-    title: 'Corner radius',
+    titleKey: 'sides',
     name: SIDES_NUMBER,
     Icon: PolygonSides,
   },

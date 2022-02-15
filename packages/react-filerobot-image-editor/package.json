@@ -28,8 +28,8 @@
     "lib"
   ],
   "dependencies": {
-    "@scaleflex/icons": "1.0.0-beta.67",
-    "@scaleflex/ui": "1.0.0-beta.68",
+    "@scaleflex/icons": "1.0.0-beta.71",
+    "@scaleflex/ui": "1.0.0-beta.71",
     "konva": "8.3.2",
     "prop-types": "15.7.2",
     "react-konva": "17.0.2-5"

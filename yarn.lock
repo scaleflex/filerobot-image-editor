@@ -1928,18 +1928,18 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.2.tgz#830beaec4b4091a9e9398ac50f865ddea52186b9"
   integrity sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==
 
-"@scaleflex/icons@1.0.0-beta.67", "@scaleflex/icons@^1.0.0-beta.67":
-  version "1.0.0-beta.67"
-  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.67.tgz#860fb30e42ec5fa77f1f5da45395733b0c14a3ad"
-  integrity sha512-5G5lwL42VOZ3AJbhSRBqsMR1sFBJewaINhhKbXKaOBWLBjdYrgh0x/2wL0ZGGPccQcnAHjupQQigpdkmRthdZQ==
+"@scaleflex/icons@1.0.0-beta.71", "@scaleflex/icons@^1.0.0-beta.71":
+  version "1.0.0-beta.71"
+  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.71.tgz#8be06f8b547c33273672c3c440d6cb4fbf2b3c82"
+  integrity sha512-Mo/rN9ScIZbyn28QA4lVZn5OiHP48avtqr1es6TWcdMj8S0o1wvR/pgRd7CGRUoGU9f5wVIHGBkR4IvJWMCi7w==
 
-"@scaleflex/ui@1.0.0-beta.68":
-  version "1.0.0-beta.68"
-  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.68.tgz#97ac385a419985e8dbcc63e3e922a37fc3959d22"
-  integrity sha512-a34lW2bK0seWao/RXdYulLHCHTYjQfJ3jcFCb3I4+CT8VqoaSWJ95arXiaobR2zAhcSOXZ/wI9DHXBUM42Gbbg==
+"@scaleflex/ui@1.0.0-beta.71":
+  version "1.0.0-beta.71"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.71.tgz#a283598f6d9965bced500928a0c054b28a368f52"
+  integrity sha512-/lWI3AOFSpRZY7SE4N/G9Bxz0sZseHERU+EheAPE00aRVFLW0/gP8weEI5pi9vOwVbKgaicEk3dwqnbYX80n2w==
   dependencies:
     "@popperjs/core" "^2.6.0"
-    "@scaleflex/icons" "^1.0.0-beta.67"
+    "@scaleflex/icons" "^1.0.0-beta.71"
     lodash.merge "^4.6.2"
     lodash.throttle "^4.1.1"
     polished "^3.6.6"

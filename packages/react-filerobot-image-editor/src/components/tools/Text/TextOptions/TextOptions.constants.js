@@ -11,12 +11,12 @@ export const TEXT_SPACINGS = 'text-spacings';
 
 export const TEXT_POPPABLE_OPTIONS = [
   {
-    title: 'Text alignment',
+    titleKey: 'textAlignment',
     name: TEXT_ALIGNMENT,
     Icon: AlignCenter,
   },
   {
-    title: 'Text spacings',
+    titleKey: 'textSpacings',
     name: TEXT_SPACINGS,
     Icon: Spacing,
   },

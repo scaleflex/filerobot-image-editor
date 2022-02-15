@@ -19,6 +19,7 @@ const StyledMenuItemIcon = styled.div`
 
 const StyledRatioDescription = styled(Label)`
   margin-left: 4px;
+  cursor: pointer;
 `;
 
 export { StyledOpenMenuButton, StyledMenuItemIcon, StyledRatioDescription };
