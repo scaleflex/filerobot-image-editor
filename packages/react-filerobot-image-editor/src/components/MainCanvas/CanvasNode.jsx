@@ -152,6 +152,7 @@ const CanvasNode = ({ children }) => {
     canvasScale * ((isZoomEnabled && zoom.factor) || defaultZoomFactor);
   return (
     <Stage
+      className="FIE_canvas-node"
       width={canvasWidth}
       height={canvasHeight}
       scaleX={zoomedResponsiveCanvasScale}

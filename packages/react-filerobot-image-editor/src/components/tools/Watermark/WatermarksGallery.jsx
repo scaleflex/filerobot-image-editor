@@ -27,9 +27,10 @@ const WatermarksGallery = ({ selectWatermark, style }) => {
   }
 
   return (
-    <Carousel style={style}>
+    <Carousel className="FIE_watermark-gallery" style={style}>
       {gallery.map((watermarkUrl) => (
         <StyledWatermarkGalleryItem
+          className="FIE_watermark-selected-item"
           onClick={getWatermarkImgAndSelect}
           key={watermarkUrl}
           aria-selected={watermarkUrl === currentWatermarkUrl}

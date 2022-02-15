@@ -28,6 +28,7 @@ const BrightnessOptions = () => {
 
   return (
     <Slider
+      className="FIE_brightness-option"
       min={MIN_VALUE}
       step={0.05}
       max={MAX_VALUE}

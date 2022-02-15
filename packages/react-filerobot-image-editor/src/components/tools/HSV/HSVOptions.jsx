@@ -31,9 +31,10 @@ const HSVOptions = ({ t }) => {
 
   return (
     <>
-      <StyledSliderContainer>
-        <Label>{t('hue')}</Label>
+      <StyledSliderContainer className="FIE_hue-option-wrapper">
+        <Label className="FIE_hue-option-label">{t('hue')}</Label>
         <Slider
+          className="FIE_hue-option"
           min={0}
           step={1}
           max={259}
@@ -42,9 +43,10 @@ const HSVOptions = ({ t }) => {
           style={sliderStyle}
         />
       </StyledSliderContainer>
-      <StyledSliderContainer>
-        <Label>{t('saturation')}</Label>
+      <StyledSliderContainer className="FIE_saturation-option-wrapper">
+        <Label className="FIE_saturation-option-label">{t('saturation')}</Label>
         <Slider
+          className="FIE_saturation-option"
           min={-2}
           step={0.5}
           max={10}
@@ -53,9 +55,10 @@ const HSVOptions = ({ t }) => {
           style={sliderStyle}
         />
       </StyledSliderContainer>
-      <StyledSliderContainer>
-        <Label>{t('value')}</Label>
+      <StyledSliderContainer className="FIE_value-option-wrapper">
+        <Label className="FIE_value-option-label">{t('value')}</Label>
         <Slider
+          className="FIE_value-option"
           min={-2}
           step={0.1}
           max={2}

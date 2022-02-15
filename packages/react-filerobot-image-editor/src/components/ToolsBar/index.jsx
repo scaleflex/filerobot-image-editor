@@ -93,11 +93,15 @@ const ToolsBar = () => {
   }, []);
 
   return (
-    <StyledToolsBar>
+    <StyledToolsBar className="FIE_tools-bar-wrapper">
       <ToolsBarItemOptionsWrapper>
         {ToolOptionsComponent && <ToolOptionsComponent t={t} />}
       </ToolsBarItemOptionsWrapper>
-      {items && <StyledToolsBarItems>{items}</StyledToolsBarItems>}
+      {items && (
+        <StyledToolsBarItems className="FIE_tools-bar">
+          {items}
+        </StyledToolsBarItems>
+      )}
     </StyledToolsBar>
   );
 };

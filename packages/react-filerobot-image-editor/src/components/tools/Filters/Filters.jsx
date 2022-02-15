@@ -14,7 +14,7 @@ const Filters = () => {
   const [appliedFilter, applyFilter] = useFilter();
 
   return (
-    <Carousel style={style}>
+    <Carousel className="FIE_filters" style={style}>
       {AVAILABLE_FILTERS.map((filter) => (
         <FilterItem
           key={filter.label}

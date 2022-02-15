@@ -108,8 +108,12 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
     rotation,
   );
   return (
-    <StyledResizeWrapper alignLeft={alignLeft}>
+    <StyledResizeWrapper
+      className="FIE_resize-tool-options"
+      alignLeft={alignLeft}
+    >
       <StyledResizeInput
+        className="FIE_resize-width-option"
         value={dimensions.width}
         name="width"
         onChange={changeResize}
@@ -120,8 +124,9 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
         placeholder="Width"
         noLeftMargin={alignLeft}
       />
-      <StyledXLabel>x</StyledXLabel>
+      <StyledXLabel className="FIE_resize-x-label">x</StyledXLabel>
       <StyledResizeInput
+        className="FIE_resize-height-option"
         value={dimensions.height}
         name="height"
         onChange={changeResize}
@@ -132,6 +137,7 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
         placeholder="Height"
       />
       <StyledRatioLockIcon
+        className="FIE_resize-ratio-locker"
         title={t('toggleRatioLockTitle')}
         onClick={toggleRatioLock}
         color="link"
@@ -145,6 +151,7 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
       </StyledRatioLockIcon>
       {!hideResetButton && (
         <Button
+          className="FIE_resize-reset-button"
           size="sm"
           onClick={isOriginalSize ? undefined : resetResize}
           disabled={isOriginalSize}

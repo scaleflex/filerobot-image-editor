@@ -30,6 +30,7 @@ const AnnotationOptions = ({
   updateAnnotation,
   hideFillOption,
   hidePositionField,
+  className,
   ...rest
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -92,7 +93,9 @@ const AnnotationOptions = ({
     anchorEl && currentOption && optionsPopups[currentOption];
 
   return (
-    <StyledOptions>
+    <StyledOptions
+      className={`FIE_annotations-options${className ? ` ${className}` : ''}`}
+    >
       {!hideFillOption && (
         <ColorInput color={annotation.fill} onChange={changeAnnotationFill} />
       )}
@@ -101,6 +104,7 @@ const AnnotationOptions = ({
         (option) =>
           option && (
             <StyledIconWrapper
+              className="FIE_annotation-option-triggerer"
               key={option.name}
               title={t(option.titleKey)}
               onClick={(e) => toggleOptionPopup(e, option.name)}
@@ -111,6 +115,7 @@ const AnnotationOptions = ({
       )}
       {OptionPopupComponent && (
         <Menu
+          className="FIE_annotation-option-popup"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={toggleOptionPopup}
@@ -136,6 +141,7 @@ AnnotationOptions.defaultProps = {
   morePoppableOptionsAppended: [],
   hideFillOption: false,
   hidePositionField: false,
+  className: undefined,
 };
 
 AnnotationOptions.propTypes = {
@@ -147,6 +153,7 @@ AnnotationOptions.propTypes = {
   morePoppableOptionsAppended: PropTypes.arrayOf(PropTypes.object),
   moreOptionsPopupComponentsObj: PropTypes.instanceOf(Object),
   hidePositionField: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default AnnotationOptions;

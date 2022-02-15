@@ -15,13 +15,18 @@ const ToolsBarItemButton = ({
   Icon,
   isSelected,
   children,
+  className,
 }) => {
   const handleClick = useCallback((e) => {
     onClick(id, e);
   }, []);
 
   return (
-    <StyledToolsBarItemButton onClick={handleClick} aria-selected={isSelected}>
+    <StyledToolsBarItemButton
+      className={className}
+      onClick={handleClick}
+      aria-selected={isSelected}
+    >
       <Icon size={16} />
       {label && (
         <StyledToolsBarItemButtonLabel>{label}</StyledToolsBarItemButtonLabel>
@@ -43,6 +48,7 @@ ToolsBarItemButton.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
   onClick: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
   Icon: PropTypes.oneOfType([
     PropTypes.node,

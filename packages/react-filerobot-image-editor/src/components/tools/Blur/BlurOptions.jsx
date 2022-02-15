@@ -28,6 +28,7 @@ const BlurOptions = () => {
 
   return (
     <Slider
+      className="FIE_blur-option"
       min={MIN_VALUE}
       max={MAX_VALUE}
       value={finetuneProps.blurRadius ?? DEFAULT_VALUE.blurRadius}

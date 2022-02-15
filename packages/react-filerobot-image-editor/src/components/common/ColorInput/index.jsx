@@ -8,7 +8,7 @@ import { useStore } from 'hooks';
 import { SET_LATEST_COLOR } from 'actions';
 import { StyledColorPicker, StyledPickerTrigger } from './ColorInput.styled';
 
-const pinnedColorsKey = 'fie_pinnedColors';
+const pinnedColorsKey = 'FIE_pinnedColors';
 
 const ColorInput = ({ position = 'top', onChange, color }) => {
   const {
@@ -75,11 +75,13 @@ const ColorInput = ({ position = 'top', onChange, color }) => {
   return (
     <>
       <StyledPickerTrigger
+        className="FIE_color-picker-triggerer"
         onClick={togglePicker}
         $color={currentColor}
         onChange={onChange}
       />
       <Popper
+        className="FIE_color-picker"
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         position={position}

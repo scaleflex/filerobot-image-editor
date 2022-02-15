@@ -110,6 +110,7 @@ const TextControls = ({ text, saveText, children }) => {
 
   return (
     <AnnotationOptions
+      className="FIE_text-tool-options"
       annotation={text}
       updateAnnotation={saveText}
       morePoppableOptionsPrepended={!useCloudimage ? TEXT_POPPABLE_OPTIONS : []}
@@ -119,6 +120,7 @@ const TextControls = ({ text, saveText, children }) => {
       t={t}
     >
       <StyledFontFamilySelect
+        className="FIE_text-font-family-option"
         onChange={changeFontFamily}
         value={text.fontFamily}
         placeholder={t('fontFamily')}
@@ -127,6 +129,7 @@ const TextControls = ({ text, saveText, children }) => {
         {/* fontFamily is string or object */}
         {fonts.map((fontFamily = '') => (
           <MenuItem
+            className="FIE_text-font-family-item"
             key={fontFamily.value ?? fontFamily}
             value={fontFamily.value ?? fontFamily}
           >
@@ -135,6 +138,7 @@ const TextControls = ({ text, saveText, children }) => {
         ))}
       </StyledFontFamilySelect>
       <StyledFontSizeInput
+        className="FIE_text-size-option"
         value={text.fontSize || ''}
         name="fontSize"
         onChange={changeTextProps}
@@ -146,12 +150,14 @@ const TextControls = ({ text, saveText, children }) => {
       {!useCloudimage && (
         <>
           <StyledIconWrapper
+            className="FIE_text-bold-option"
             aria-selected={(text.fontStyle || '').includes('bold')}
             onClick={() => changeFontStyle('bold')}
           >
             <FontBold />
           </StyledIconWrapper>
           <StyledIconWrapper
+            className="FIE_text-italic-option"
             aria-selected={(text.fontStyle || '').includes('italic')}
             onClick={() => changeFontStyle('italic')}
           >

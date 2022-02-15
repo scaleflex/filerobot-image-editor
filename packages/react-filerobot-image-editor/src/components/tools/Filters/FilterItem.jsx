@@ -44,8 +44,13 @@ const FilterItem = ({
   }, [image]);
 
   return (
-    <StyledFilterItem onClick={handleFilterApplying} aria-selected={isActive}>
+    <StyledFilterItem
+      className="FIE_filters-item"
+      onClick={handleFilterApplying}
+      aria-selected={isActive}
+    >
       <FilterItemPreview
+        className="FIE_filters-item-preview"
         width={FILTER_PREVIEW_WIDTH}
         height={FILTER_PREVIEW_HEIGHT}
       >
@@ -61,7 +66,9 @@ const FilterItem = ({
           />
         </Layer>
       </FilterItemPreview>
-      <FilterItemLabel>{filterLabel}</FilterItemLabel>
+      <FilterItemLabel className="FIE_filters-item-label">
+        {filterLabel}
+      </FilterItemLabel>
     </StyledFilterItem>
   );
 };

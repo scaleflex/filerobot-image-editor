@@ -63,7 +63,11 @@ const NodeControls = () => {
   };
 
   return (
-    <StyledNodeControls left={position.left} top={position.top}>
+    <StyledNodeControls
+      className="FIE_annotation-controls-overlay"
+      left={position.left}
+      top={position.top}
+    >
       {/* {selectionsLength === 1 && (
         <IconButton color="link" size="sm" onClick={changeAnnotationOrder}>
           <LayerOrder />

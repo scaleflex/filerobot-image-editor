@@ -28,6 +28,7 @@ const ContrastOptions = () => {
 
   return (
     <Slider
+      className="FIE_contrast-option"
       min={MIN_VALUE}
       max={MAX_VALUE}
       value={finetuneProps.contrast ?? DEFAULT_VALUE.contrast}

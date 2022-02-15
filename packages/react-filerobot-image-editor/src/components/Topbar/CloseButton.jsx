@@ -23,7 +23,12 @@ const CloseButton = () => {
   };
 
   return (
-    <StyledCloseOrBackButton color="link" size="sm" onClick={closeWithReason}>
+    <StyledCloseOrBackButton
+      className="FIE_topbar-close-button"
+      color="link"
+      size="sm"
+      onClick={closeWithReason}
+    >
       {onClose && <CrossOutline />}
     </StyledCloseOrBackButton>
   );

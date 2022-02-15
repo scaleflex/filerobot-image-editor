@@ -389,6 +389,7 @@ const SaveButton = () => {
   return (
     <>
       <ButtonWithMenu
+        className="FIE_topbar-save"
         color="primary"
         label={t('save')}
         onClick={triggerSaveHandler}
@@ -400,6 +401,7 @@ const SaveButton = () => {
       />
       {isModalOpened && (
         <Modal
+          className="FIE_save-modal"
           title={t('saveAsModalLabel')}
           Icon={(props) => (
             <SaveAs color={theme.palette['accent-primary']} {...props} />
@@ -414,6 +416,7 @@ const SaveButton = () => {
           zIndex={11110}
         >
           <StyledFileNameInput
+            className="FIE_save-file-name-input"
             value={imageFileInfo.name}
             onChange={changeFileName}
             size="sm"
@@ -422,6 +425,7 @@ const SaveButton = () => {
             focusOnMount
           />
           <StyledFileExtensionSelect
+            className="FIE_save-extension-selector"
             onChange={(ext) =>
               setImageFileInfo({ ...imageFileInfo, extension: ext })
             }
@@ -436,7 +440,7 @@ const SaveButton = () => {
             ))}
           </StyledFileExtensionSelect>
           {isQualityAcceptable && (
-            <StyledQualityWrapper>
+            <StyledQualityWrapper className="FIE_save-quality-wrapper">
               <Label>{t('quality')}</Label>
               <Slider
                 annotation="%"
@@ -449,7 +453,7 @@ const SaveButton = () => {
               />
             </StyledQualityWrapper>
           )}
-          <StyledResizeOnSave>
+          <StyledResizeOnSave className="FIE_save-resize-wrapper">
             <Label>{t('resize')}</Label>
             <Resize
               onChange={resizeImageFile}

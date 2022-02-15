@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const Warmth = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_warmth-tool-button"
     id={TOOLS_IDS.WARMTH}
     label={t('warmthTool')}
     Icon={WarmthIcon}

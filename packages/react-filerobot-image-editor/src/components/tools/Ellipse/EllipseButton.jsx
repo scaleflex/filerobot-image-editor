@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const EllipseButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_ellipse-tool-button"
     id={TOOLS_IDS.ELLIPSE}
     label={t('ellipseTool')}
     Icon={EllipseIcon}

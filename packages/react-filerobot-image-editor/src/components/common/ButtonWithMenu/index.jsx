@@ -10,7 +10,7 @@ import MenuItem, {
 
 /** Internal Dependencies */
 import {
-  StyledButtonWithMenu,
+  StyledMainButton,
   StyledButtonWrapper,
   StyledMenuButton,
 } from './ButtonWithMenu.styled';
@@ -27,6 +27,7 @@ const ButtonWithMenu = ({
   menuPosition = 'bottom',
   arrowColor,
   disabled = false,
+  className,
   menuStyle,
   wrapperStyle,
 }) => {
@@ -77,10 +78,12 @@ const ButtonWithMenu = ({
   return (
     <>
       <StyledButtonWrapper
+        className={`${className}-wrapper`}
         onClick={disabled ? undefined : handleButtonClick}
         style={wrapperStyle}
       >
-        <StyledButtonWithMenu
+        <StyledMainButton
+          className={`${className}-button`}
           color={color}
           size={buttonSize}
           title={title}
@@ -88,9 +91,10 @@ const ButtonWithMenu = ({
           disabled={disabled}
         >
           {label}
-        </StyledButtonWithMenu>
+        </StyledMainButton>
         {hasMenuItems && (
           <StyledMenuButton
+            className={`${className}-menu-opener`}
             color={color}
             size={buttonSize}
             onClick={menuFromBtn || disabled ? undefined : openMenu}
@@ -102,6 +106,7 @@ const ButtonWithMenu = ({
       </StyledButtonWrapper>
       {hasMenuItems && (
         <Menu
+          className={`${className}-menu`}
           anchorEl={anchorEl}
           onClose={closeMenu}
           open
@@ -110,6 +115,7 @@ const ButtonWithMenu = ({
         >
           {menuItems.map((item) => (
             <MenuItem
+              className={`${className}-menu-item`}
               key={item.key}
               active={item.isActive}
               onClick={() => handleMenuItemClick(item.onClick)}
@@ -148,8 +154,9 @@ ButtonWithMenu.defaultProps = {
 
 ButtonWithMenu.propTypes = {
   label: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
   menuItems: PropTypes.instanceOf(Array).isRequired,
+  className: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   title: PropTypes.string,
   color: PropTypes.string,
   menuFromBtn: PropTypes.bool,

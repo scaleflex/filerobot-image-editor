@@ -6,7 +6,10 @@ import PropTypes from 'prop-types';
 import { StyledToolsBarItemOptionsWrapper } from './ToolsBar.styled';
 
 const ToolsBarItemOptionsWrapper = ({ children }) => (
-  <StyledToolsBarItemOptionsWrapper hasChildren={Boolean(children)}>
+  <StyledToolsBarItemOptionsWrapper
+    className="FIE_tool-options-wrapper"
+    hasChildren={Boolean(children)}
+  >
     {children}
   </StyledToolsBarItemOptionsWrapper>
 );

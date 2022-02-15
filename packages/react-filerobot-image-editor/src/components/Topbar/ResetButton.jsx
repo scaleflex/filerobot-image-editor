@@ -34,6 +34,7 @@ const ResetButton = ({ margin }) => {
   return (
     <>
       <StyledHistoryButton
+        className="FIE_topbar-reset-button"
         color="link"
         onClick={isResetted ? undefined : openModal}
         disabled={isResetted || isBlockerError}

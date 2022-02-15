@@ -45,6 +45,7 @@ const FlipX = ({ selectTool, isSelected, t }) => {
 
   return (
     <ToolsBarItemButton
+      className="FIE_flip-x-tool-button"
       id={TOOLS_IDS.FLIP_X}
       label={reverseLabelOfCurrXFlipDir}
       Icon={reverseIconOfCurrXFlipDir}

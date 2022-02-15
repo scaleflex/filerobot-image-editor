@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const RotateButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_rotate-tool-button"
     id={TOOLS_IDS.ROTATE}
     label={t('rotateTool')}
     Icon={RotateIcon}

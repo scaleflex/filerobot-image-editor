@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const Contrast = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_contrast-tool-button"
     id={TOOLS_IDS.CONTRAST}
     label={t('contrastTool')}
     Icon={ContrastIcon}

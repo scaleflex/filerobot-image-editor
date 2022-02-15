@@ -8,9 +8,9 @@ import { StyledSpinnerWrapper, StyledSpinner } from './Spinner.styled';
 
 const Spinner = ({ label }) => {
   return (
-    <StyledSpinnerWrapper>
-      <StyledSpinner />
-      {label && <Label>{label}</Label>}
+    <StyledSpinnerWrapper className="FIE_spinner-wrapper">
+      <StyledSpinner className="FIE_spinner" />
+      {label && <Label className="FIE_spinner-label">{label}</Label>}
     </StyledSpinnerWrapper>
   );
 };

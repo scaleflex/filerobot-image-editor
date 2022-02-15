@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const ArrowButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_arrow-tool-button"
     id={TOOLS_IDS.ARROW}
     label={t('arrowTool')}
     Icon={ArrowIcon}

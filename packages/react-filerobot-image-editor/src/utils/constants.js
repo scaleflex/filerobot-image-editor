@@ -84,8 +84,6 @@ export const ORIGINAL_CROP = 'original';
 export const CUSTOM_CROP = 'custom';
 export const ELLIPSE_CROP = 'ellipse';
 
-export const MAIN_CANVAS_ID = 'fie_main-canvas';
-
 export const POSITIONS = {
   TOP_LEFT: 'top-left',
   TOP_CENTER: 'top-center',

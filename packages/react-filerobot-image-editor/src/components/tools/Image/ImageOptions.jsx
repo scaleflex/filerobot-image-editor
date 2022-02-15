@@ -111,6 +111,7 @@ const ImageOptions = () => {
   return (
     <ImageControls image={image} saveImage={saveImage} t={t}>
       <Button
+        className="FIE_image-tool-add-option"
         color="secondary"
         onClick={isLoading ? undefined : triggerUploadInput}
         disabled={isLoading}

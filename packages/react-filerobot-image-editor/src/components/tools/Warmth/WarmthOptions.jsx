@@ -28,6 +28,7 @@ const WarmthOptions = () => {
 
   return (
     <Slider
+      className="FIE_warmth-option"
       min={MIN_VALUE}
       max={MAX_VALUE}
       value={finetuneProps.warmth ?? DEFAULT_VALUE.warmth}

@@ -36,6 +36,7 @@ const FeedbackPopup = ({ anchorOrigin }) => {
 
   return (
     <Popup
+      className="FIE_feedback-robot"
       anchorOrigin={anchorOrigin}
       autoHideDuration={feedback.duration ?? 5000}
       message={feedback.message}

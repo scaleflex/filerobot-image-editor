@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const PolygonButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_polygon-tool-button"
     id={TOOLS_IDS.POLYGON}
     label={t('polygonTool')}
     Icon={PolygonIcon}

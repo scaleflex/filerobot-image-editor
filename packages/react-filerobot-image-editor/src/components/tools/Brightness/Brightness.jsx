@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const Brightness = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_brightness-tool-button"
     id={TOOLS_IDS.BRIGHTNESS}
     label={t('brightnessTool')}
     Icon={BrightnessIcon}

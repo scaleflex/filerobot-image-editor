@@ -45,6 +45,7 @@ const RotateOptions = () => {
 
   return (
     <RotationSlider
+      className="FIE_rotate-slider"
       min={-180}
       max={180}
       value={rotation}

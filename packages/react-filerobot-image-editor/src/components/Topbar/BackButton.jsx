@@ -27,7 +27,12 @@ const BackButton = () => {
   };
 
   return (
-    <StyledCloseOrBackButton color="link" size="sm" onClick={closeWithReason}>
+    <StyledCloseOrBackButton
+      className="FIE_topbar-back-button"
+      color="link"
+      size="sm"
+      onClick={closeWithReason}
+    >
       {onClose && (
         <>
           <ArrowLeftOutline size={9} />

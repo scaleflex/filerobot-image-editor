@@ -28,6 +28,7 @@ const Modal = ({
   children,
   areButtonsDisabled,
   zIndex,
+  className,
 }) => {
   const onKeyUp = (e) => {
     if (e.key === 'Enter') {
@@ -37,6 +38,7 @@ const Modal = ({
 
   return (
     <LibModal
+      className={className}
       open={isOpened}
       onClose={onCancel}
       style={{ ...style, zIndex }}
@@ -85,6 +87,7 @@ Modal.defaultProps = {
   children: undefined,
   areButtonsDisabled: false,
   zIndex: undefined,
+  className: undefined,
 };
 
 Modal.propTypes = {
@@ -102,6 +105,7 @@ Modal.propTypes = {
   children: PropTypes.node,
   areButtonsDisabled: PropTypes.bool,
   zIndex: PropTypes.number,
+  className: PropTypes.string,
 };
 
 export default Modal;

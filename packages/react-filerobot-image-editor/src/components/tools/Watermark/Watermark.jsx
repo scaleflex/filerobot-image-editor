@@ -211,9 +211,9 @@ const Watermark = () => {
   );
 
   return (
-    <div>
+    <div className="FIE_watermark-tool-wrapper">
       {watermark?.name === TOOLS_IDS.TEXT && (
-        <StyledControlsWrapper>
+        <StyledControlsWrapper className="FIE_watermark-options-wrapper">
           <TextControls
             text={watermark}
             saveText={updateWatermarkOptions}
@@ -224,7 +224,7 @@ const Watermark = () => {
         </StyledControlsWrapper>
       )}
       {watermark?.name === TOOLS_IDS.IMAGE && (
-        <StyledControlsWrapper>
+        <StyledControlsWrapper className="FIE_watermark-options-wrapper">
           <ImageControls
             image={watermark}
             saveImage={updateWatermarkOptions}
@@ -234,8 +234,12 @@ const Watermark = () => {
           </ImageControls>
         </StyledControlsWrapper>
       )}
-      <StyledWatermarkWrapper noWrap={Boolean(watermark?.name)}>
+      <StyledWatermarkWrapper
+        className="FIE_watermark-add-wrapper"
+        noWrap={Boolean(watermark?.name)}
+      >
         <ButtonWithMenu
+          className="FIE_watermark-add"
           color="secondary"
           label={t('addWatermark')}
           title={t('addWatermarkTitle')}

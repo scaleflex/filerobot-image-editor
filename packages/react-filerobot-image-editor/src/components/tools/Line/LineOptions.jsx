@@ -14,6 +14,7 @@ const LineOptions = ({ t }) => {
 
   return (
     <AnnotationOptions
+      className="FIE_line-tool-options"
       annotation={line}
       updateAnnotation={saveLine}
       t={t}

@@ -17,6 +17,7 @@ const UndoButton = ({ margin }) => {
 
   return (
     <StyledHistoryButton
+      className="FIE_topbar-undo-button"
       color="link"
       onClick={hasUndo ? dispatchUndo : undefined}
       disabled={!hasUndo || isBlockerError}

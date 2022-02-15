@@ -13,9 +13,17 @@ const TabItem = ({ id, label, Icon, isSelected, onClick }) => {
   }, []);
 
   return (
-    <StyledTabItem aria-selected={isSelected} onClick={handleClick}>
+    <StyledTabItem
+      className="FIE_tab"
+      aria-selected={isSelected}
+      onClick={handleClick}
+    >
       <Icon />
-      {label && <StyledTabItemLabel>{label}</StyledTabItemLabel>}
+      {label && (
+        <StyledTabItemLabel className="FIE_tab-label">
+          {label}
+        </StyledTabItemLabel>
+      )}
     </StyledTabItem>
   );
 };

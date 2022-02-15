@@ -193,12 +193,12 @@ const App = () => {
       {isLoadingGlobally && <Spinner label={t('loading')} />}
       <Topbar />
       {originalImage && feedback.duration !== 0 && (
-        <StyledMainContent>
+        <StyledMainContent className="FIE_main-container">
           {!isPhoneScreen && <Tabs />}
-          <StyledCanvasAndTools>
+          <StyledCanvasAndTools className="FIE_editor-content">
             <MainCanvas />
             {isPhoneScreen ? (
-              <StyledPhoneToolsAndTabs>
+              <StyledPhoneToolsAndTabs className="FIE_phone-tools-tabs-wrapper">
                 <ToolsBar />
                 <Tabs />
               </StyledPhoneToolsAndTabs>

@@ -16,6 +16,7 @@ const RedoButton = ({ margin }) => {
 
   return (
     <StyledHistoryButton
+      className="FIE_topbar-redo-button"
       color="link"
       onClick={hasRedo ? dispatchRedo : undefined}
       disabled={!hasRedo}

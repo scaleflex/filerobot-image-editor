@@ -15,7 +15,7 @@ import {
   StyledPrevArrowWrapper,
 } from './Carousel.styled';
 
-const Carousel = ({ children, style }) => {
+const Carousel = ({ children, style, className }) => {
   const scrollingByDraggingLatestX = useRef(false);
   const carouselRef = useRef();
   const [observeResize] = useResizeObserver();
@@ -35,7 +35,7 @@ const Carousel = ({ children, style }) => {
 
   const scrollCarouselToElement = (foundElements, direction) => {
     const liIndex = foundElements.findIndex((element) =>
-      element.classList.contains('fie_carousel-item'),
+      element.classList.contains('FIE_carousel-item'),
     );
     if (liIndex !== -1) {
       foundElements[liIndex].scrollIntoView({
@@ -108,24 +108,34 @@ const Carousel = ({ children, style }) => {
 
   return (
     <StyledCarouselWrapper
+      className={`${className}-wrapper`}
       style={style}
       onMouseDown={startScrollByDragging}
       onTouchStart={startScrollByDragging}
     >
       {isPrevArrowShown && (
-        <StyledPrevArrowWrapper onClick={scrollToPrev}>
+        <StyledPrevArrowWrapper
+          className="FIE_carousel-prev-button"
+          onClick={scrollToPrev}
+        >
           <Arrow />
         </StyledPrevArrowWrapper>
       )}
-      <StyledCarousel ref={carouselRef}>
+      <StyledCarousel className={`${className}-items`} ref={carouselRef}>
         {childrenArray.map((child) => (
-          <StyledCarouselItem className="fie_carousel-item" key={child.key}>
+          <StyledCarouselItem
+            className={`${className}-item-wrapper FIE_carousel-item`}
+            key={child.key}
+          >
             {child}
           </StyledCarouselItem>
         ))}
       </StyledCarousel>
       {isNextArrowShown && (
-        <StyledNextArrowWrapper onClick={scrollToNext}>
+        <StyledNextArrowWrapper
+          className="FIE_carousel-next-button"
+          onClick={scrollToNext}
+        >
           <Arrow />
         </StyledNextArrowWrapper>
       )}
@@ -139,6 +149,7 @@ Carousel.defaultProps = {
 
 Carousel.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string.isRequired,
   style: PropTypes.instanceOf(Object),
 };
 

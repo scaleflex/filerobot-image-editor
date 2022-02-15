@@ -103,14 +103,19 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
 
   return (
     <>
-      <StyledToolsBarItemButtonLabel>
+      <StyledToolsBarItemButtonLabel className="FIE_crop-tool-label FIE_selected-crop-preset-label">
         {t(toolTitleKey)}
       </StyledToolsBarItemButtonLabel>
-      <StyledOpenMenuButton color="link" size="lg">
+      <StyledOpenMenuButton
+        className="FIE_crop-presets-opener-button"
+        color="link"
+        size="lg"
+      >
         {/* BOTTOM ARROW HTML CODE : TOP ARROW HTML CODE */}
         {anchorEl ? <>&#9652;</> : <>&#9662;</>}
       </StyledOpenMenuButton>
       <Menu
+        className="FIE_crop-presets-menu"
         anchorEl={anchorEl}
         enableOverlay
         onClose={onClose}

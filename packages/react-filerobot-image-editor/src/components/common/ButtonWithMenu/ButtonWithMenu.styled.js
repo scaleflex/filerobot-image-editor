@@ -10,7 +10,7 @@ const StyledButtonWrapper = styled.div`
   margin-right: 4px;
 `;
 
-const StyledButtonWithMenu = styled(Button)`
+const StyledMainButton = styled(Button)`
   height: 100%;
   padding: 4px 8px;
   flex-grow: 1;
@@ -41,4 +41,4 @@ const StyledMenuButton = styled(IconButton)`
   }
 `;
 
-export { StyledButtonWrapper, StyledButtonWithMenu, StyledMenuButton };
+export { StyledButtonWrapper, StyledMainButton, StyledMenuButton };

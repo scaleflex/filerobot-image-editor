@@ -51,7 +51,7 @@ const Tabs = () => {
   }
 
   return (
-    <StyledTabs>
+    <StyledTabs className="FIE_tabs">
       {chosenTabs.map(({ id, labelKey, icon }) => (
         <TabItem
           key={id}

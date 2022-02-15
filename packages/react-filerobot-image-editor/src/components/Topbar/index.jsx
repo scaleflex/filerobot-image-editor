@@ -24,27 +24,35 @@ const Topbar = () => {
   const isPhoneScreen = usePhoneScreen();
 
   return (
-    <StyledTopbar reverseDirection={showBackButton}>
-      <StyledFlexCenterAlignedContainer reverseDirection={showBackButton}>
-        <div>
-          <SaveButton />
-          {isPhoneScreen && (
-            <div style={{ marginTop: 6 }}>
+    <StyledTopbar reverseDirection={showBackButton} className="FIE_topbar">
+      <StyledFlexCenterAlignedContainer
+        reverseDirection={showBackButton}
+        className="FIE_topbar-buttons-wrapper"
+      >
+        {isPhoneScreen ? (
+          <div>
+            <SaveButton />
+            <div
+              style={{ marginTop: 6 }}
+              className="FIE_topbar-history-buttons"
+            >
               <ResetButton margin="0" />
               <UndoButton margin="0" />
               <RedoButton margin="0" />
             </div>
-          )}
-        </div>
-        {!isPhoneScreen && (
-          <div>
-            <ResetButton />
-            <UndoButton />
-            <RedoButton />
           </div>
+        ) : (
+          <>
+            <SaveButton />
+            <div className="FIE_topbar-history-buttons">
+              <ResetButton />
+              <UndoButton />
+              <RedoButton />
+            </div>
+          </>
         )}
       </StyledFlexCenterAlignedContainer>
-      <StyledFlexCenterAlignedContainer>
+      <StyledFlexCenterAlignedContainer className="FIE_topbar-center-options">
         <ImageDimensionsAndDisplayToggle />
         <Separator />
         <CanvasZooming />

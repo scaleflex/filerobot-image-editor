@@ -32,10 +32,16 @@ const MainCanvas = () => {
   }, []);
 
   return (
-    <CanvasContainer ref={observeCanvasContainerResizing}>
+    <CanvasContainer
+      className="FIE_canvas-container"
+      ref={observeCanvasContainerResizing}
+    >
       {!providedAppContext.textIdOfEditableContent && <NodeControls />}
       {providedAppContext.isShowOriginalImage && (
-        <StyledOrignalImage src={providedAppContext.originalImage.src} />
+        <StyledOrignalImage
+          className="FIE_original-image-compare"
+          src={providedAppContext.originalImage.src}
+        />
       )}
       <CanvasNode>
         <AppProviderOverridenValue overridingValue={providedAppContext}>

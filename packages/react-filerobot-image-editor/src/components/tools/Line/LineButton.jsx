@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const LineButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_line-tool-button"
     id={TOOLS_IDS.LINE}
     label={t('lineTool')}
     Icon={Line}

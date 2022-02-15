@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const HSV = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_hsv-tool-button"
     id={TOOLS_IDS.HSV}
     label={t('hsvTool')}
     Icon={SaturationIcon}

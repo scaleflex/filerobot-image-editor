@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const RectButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_rect-tool-button"
     id={TOOLS_IDS.RECT}
     label={t('rectangleTool')}
     Icon={RectIcon}

@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const TextButton = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_text-tool-button"
     id={TOOLS_IDS.TEXT}
     label={t('textTool')}
     Icon={TextIcon}

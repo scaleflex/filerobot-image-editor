@@ -9,6 +9,7 @@ import { TOOLS_IDS } from 'utils/constants';
 
 const Blur = ({ selectTool, isSelected, t }) => (
   <ToolsBarItemButton
+    className="FIE_blur-tool-button"
     id={TOOLS_IDS.BLUR}
     label={t('blurTool')}
     Icon={BlurIcon}
