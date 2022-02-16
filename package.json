@@ -68,15 +68,16 @@
   },
   "scripts": {
     "fix": "prettier-eslint \"packages/**/src/**/*.(js|jsx)\"",
-    "analyze": "source-map-explorer dist/filerobot-image-editor.min.js",
     "dev": "webpack serve --config webpack.dev.js",
     "set-prod-env": "cross-env BABEL_ENV=production NODE_ENV=production",
     "build:dist": "yarn set-prod-env webpack  --config webpack.prod.js",
+    "build:source-mapped-dist": "yarn set-prod-env webpack  --config webpack.prod.js --devtool source-map --env disableAnalyzerPlugin",
     "build:lib": "lerna run build:lib",
     "publish:packages": "yarn build:lib && lerna publish",
     "publish:bundle": "yarn build:dist && echo // TODO: Apply script to upload bundle to filerobot",
     "release:beta": "yarn && yarn publish:packages --dist-tag beta && yarn publish:bundle --tag beta",
     "release:prod": "yarn && yarn publish:packages && yarn publish:bundle",
+    "analyze:bundle": "yarn build:source-mapped-dist && source-map-explorer dist/filerobot-image-editor.min.js",
     "update": "lernaupdate"
   }
 }

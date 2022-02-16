@@ -12,14 +12,13 @@ const banner = `/**
  * Released under the ${pkg.license} license
  * Date: ${now.toISOString()}
  */`;
-
-module.exports = {
+module.exports = (env) => ({
   entry: path.resolve(
     __dirname,
     'packages/filerobot-image-editor/src/index.js',
   ),
   mode: 'production',
-  devtool: 'source-map',
+  devtool: false,
   module: {
     rules: [
       {
@@ -46,7 +45,9 @@ module.exports = {
       }),
     ],
   },
-  plugins: [new BundleAnalyzerPlugin()],
+  // disableAnalyzerPlugin is provided from analyze script for disabling the analyzer plugin
+  // as we use other plugin for analyzing the already bundeled dist from the script fired.
+  plugins: [...(env.disableAnalyzerPlugin ? [] : [new BundleAnalyzerPlugin()])],
   output: {
     clean: true,
     filename: 'filerobot-image-editor.min.js',
@@ -57,4 +58,4 @@ module.exports = {
       export: 'default',
     },
   },
-};
+});
