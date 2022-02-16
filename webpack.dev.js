@@ -30,7 +30,7 @@ module.exports = {
   devServer: {
     port: 1111,
     open: true,
-    // 'only' is better for having HOT but there is some issue currently with webpack 5 and hot of dev server so we are using hot: true for refreshing also
+    // 'only' is better for having HOT but there is some issue currently with webpack 5 and hot of dev server with react so we are using hot: true for refreshing alsos
     hot: true,
     client: {
       overlay: true,
