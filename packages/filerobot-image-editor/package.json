@@ -1,6 +1,6 @@
 {
   "name": "filerobot-image-editor",
-  "version": "4.0.0-beta.29",
+  "version": "4.0.0-beta.30",
   "license": "MIT",
   "author": "Scaleflex",
   "homepage": "https://github.com/scaleflex/filerobot-image-editor/tree/v4#readme",
@@ -31,7 +31,7 @@
     "@babel/runtime": "^7.17.2",
     "react": "16.8.0",
     "react-dom": "16.8.0",
-    "react-filerobot-image-editor": "^4.0.0-beta.29",
+    "react-filerobot-image-editor": "^4.0.0-beta.30",
     "styled-components": "5.1.0"
   },
   "scripts": {
