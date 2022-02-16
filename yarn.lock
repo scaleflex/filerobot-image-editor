@@ -978,23 +978,18 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.2.tgz"
   integrity sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==
 
-"@scaleflex/icons@1.0.0-beta.67":
-  version "1.0.0-beta.67"
-  resolved "https://registry.npmjs.org/@scaleflex/icons/-/icons-1.0.0-beta.67.tgz"
-  integrity sha512-5G5lwL42VOZ3AJbhSRBqsMR1sFBJewaINhhKbXKaOBWLBjdYrgh0x/2wL0ZGGPccQcnAHjupQQigpdkmRthdZQ==
+"@scaleflex/icons@1.0.0-beta.71", "@scaleflex/icons@^1.0.0-beta.71":
+  version "1.0.0-beta.71"
+  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.71.tgz#8be06f8b547c33273672c3c440d6cb4fbf2b3c82"
+  integrity sha512-Mo/rN9ScIZbyn28QA4lVZn5OiHP48avtqr1es6TWcdMj8S0o1wvR/pgRd7CGRUoGU9f5wVIHGBkR4IvJWMCi7w==
 
-"@scaleflex/icons@^1.0.0-beta.67":
-  version "1.0.0-beta.69"
-  resolved "https://registry.npmjs.org/@scaleflex/icons/-/icons-1.0.0-beta.69.tgz"
-  integrity sha512-RDrIbCW2WPopYeN/ofLQ7TAt9CaPXUGG+zEQ2jGVg0560W3f4l6xmaG2UDFuiZK618fxJZgzgQOFEuwSbgviVg==
-
-"@scaleflex/ui@1.0.0-beta.68":
-  version "1.0.0-beta.68"
-  resolved "https://registry.npmjs.org/@scaleflex/ui/-/ui-1.0.0-beta.68.tgz"
-  integrity sha512-a34lW2bK0seWao/RXdYulLHCHTYjQfJ3jcFCb3I4+CT8VqoaSWJ95arXiaobR2zAhcSOXZ/wI9DHXBUM42Gbbg==
+"@scaleflex/ui@1.0.0-beta.71":
+  version "1.0.0-beta.71"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.71.tgz#a283598f6d9965bced500928a0c054b28a368f52"
+  integrity sha512-/lWI3AOFSpRZY7SE4N/G9Bxz0sZseHERU+EheAPE00aRVFLW0/gP8weEI5pi9vOwVbKgaicEk3dwqnbYX80n2w==
   dependencies:
     "@popperjs/core" "^2.6.0"
-    "@scaleflex/icons" "^1.0.0-beta.67"
+    "@scaleflex/icons" "^1.0.0-beta.71"
     lodash.merge "^4.6.2"
     lodash.throttle "^4.1.1"
     polished "^3.6.6"
@@ -2374,14 +2369,14 @@ faye-websocket@^0.11.3:
   dependencies:
     websocket-driver ">=0.5.1"
 
-filerobot-image-editor@^4.0.0-beta.27:
-  version "4.0.0-beta.28"
-  resolved "https://registry.npmjs.org/filerobot-image-editor/-/filerobot-image-editor-4.0.0-beta.28.tgz"
-  integrity sha512-Ii+h8nXxuZSo05Q9+viIQfTQabwpZS/0E+35KrrHQVO85+0G4taxeZDRoGns8ZbFkYSayepYgtTeAYs6Trqoxg==
+filerobot-image-editor@^4.0.0-beta.29:
+  version "4.0.0-beta.29"
+  resolved "https://registry.yarnpkg.com/filerobot-image-editor/-/filerobot-image-editor-4.0.0-beta.29.tgz#92ed226814b8229d9c4657edb95830e0fe4b23c9"
+  integrity sha512-LcwyhnvZMRnKxX7XQEkxf+90eK3ABjTL6xk+NR5jy+rHsgo7T48W8k+DUMZWCtB+vtF3BkPsEg5/2ONRTmSC9A==
   dependencies:
     react "16.8.0"
     react-dom "16.8.0"
-    react-filerobot-image-editor "^4.0.0-beta.28"
+    react-filerobot-image-editor "^4.0.0-beta.29"
     styled-components "5.1.0"
 
 fill-range@^7.0.1:
@@ -2990,10 +2985,10 @@ kind-of@^6.0.2:
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-6.0.3.tgz"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
-konva@8.3.0:
-  version "8.3.0"
-  resolved "https://registry.npmjs.org/konva/-/konva-8.3.0.tgz"
-  integrity sha512-V83lFjf1xPJp7SzWKktOgRFPYa8SOHKVfgru3jjdMjKTGNpCGrIh3CuJeKC/tJ5Fg0P3lOpPCR30gDbDsATmDA==
+konva@8.3.2:
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/konva/-/konva-8.3.2.tgz#3823a6ea0eb3605142c637f327c4cc29fd188c02"
+  integrity sha512-vWi51qFTFkEIp+HxMek1eH1fA1zFo0DPD3uqUez+v2gy/IfZF2eLu9DcEj7Exk532hxfHJi/2oZ0GQYHlhg/dQ==
 
 loader-runner@^4.2.0:
   version "4.2.0"
@@ -3611,14 +3606,14 @@ react-fast-compare@^3.0.1:
   resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
-react-filerobot-image-editor@^4.0.0-beta.28:
-  version "4.0.0-beta.28"
-  resolved "https://registry.npmjs.org/react-filerobot-image-editor/-/react-filerobot-image-editor-4.0.0-beta.28.tgz"
-  integrity sha512-HERTf7S4ajTvVX74vKJzG7hvE9JSAcUYdgm6G5r37JBS03zG7K+1/Ha+g8sigLgy4nncKYyjbEWzBmkP/WlQPQ==
+react-filerobot-image-editor@^4.0.0-beta.29:
+  version "4.0.0-beta.29"
+  resolved "https://registry.yarnpkg.com/react-filerobot-image-editor/-/react-filerobot-image-editor-4.0.0-beta.29.tgz#12313ea4a1d3cd35daa171fb94242de221bf0c52"
+  integrity sha512-VtlpBiI/W4QVEMI2wW68ovkKlrKUlyRSg4i/TZKSfelA2knBN9GWZsGgv9jqRG74Zha7zcWrgvFmrH34Zry66Q==
   dependencies:
-    "@scaleflex/icons" "1.0.0-beta.67"
-    "@scaleflex/ui" "1.0.0-beta.68"
-    konva "8.3.0"
+    "@scaleflex/icons" "1.0.0-beta.71"
+    "@scaleflex/ui" "1.0.0-beta.71"
+    konva "8.3.2"
     prop-types "15.7.2"
     react-konva "17.0.2-5"
 
