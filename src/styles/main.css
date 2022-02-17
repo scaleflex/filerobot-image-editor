@@ -935,11 +935,6 @@ body {
     width: 82%;
     margin-top: 32px;
   }
-
-  .footer {
-    max-width: 1550px;
-    margin: auto;
-  }
 }
 
 @media (max-width: 1050px) {
