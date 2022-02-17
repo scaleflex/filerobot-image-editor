@@ -21,7 +21,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
     dispatch,
     t,
     adjustments: {
-      crop: { ratio: currentRatio, ratioTitle, ratioFolderKey } = {},
+      crop: { ratio: currentRatio, ratioTitleKey, ratioFolderKey } = {},
     } = {},
     config,
   } = useStore();
@@ -34,14 +34,10 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
 
   const changeCropRatio = (e, newCropRatio, cropProps) => {
     e.stopPropagation();
-    if (newCropRatio === currentRatio && ratioTitle === cropProps.ratioTitle) {
-      onClose();
-      return;
-    }
 
     const newCrop = {
       ratio: newCropRatio,
-      ratioTitle: cropProps.ratioTitle,
+      ratioTitleKey: cropProps.ratioTitleKey,
       ratioGroupKey: cropProps.ratioGroupKey,
       ratioFolderKey: cropProps.ratioFolderKey,
     };
@@ -86,7 +82,8 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
       <CropPresetItem
         key={ratio}
         ratio={ratio ?? toPrecisedFloat(width / height)}
-        title={t(titleKey)}
+        titleKey={titleKey}
+        t={t}
         description={t(descriptionKey)}
         Icon={Icon}
         isActive={
@@ -99,7 +96,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
       />
     );
 
-  const toolTitleKey = ratioTitle || 'cropTool';
+  const toolTitleKey = ratioTitleKey || 'cropTool';
 
   return (
     <>

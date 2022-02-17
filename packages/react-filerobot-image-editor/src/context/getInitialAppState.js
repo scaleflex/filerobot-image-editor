@@ -31,7 +31,7 @@ const getInitialAppState = (config = {}) => {
     adjustments: {
       crop: {
         ratio: config[TOOLS_IDS.CROP].ratio,
-        ratioTitle: config[TOOLS_IDS.CROP].ratioTitle,
+        ratioTitleKey: config[TOOLS_IDS.CROP].ratioTitleKey,
         width: null,
         height: null,
         x: 0,

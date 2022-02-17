@@ -142,7 +142,7 @@ type imageDesignState = {
   adjustments?: {
     crop: {
       ratio: string;
-      ratioTitle?: string;
+      ratioTitleKey?: string;
       width?: number,
       height?: number,
       x?: number,

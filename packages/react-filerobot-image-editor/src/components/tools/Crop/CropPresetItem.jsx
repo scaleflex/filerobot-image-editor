@@ -9,7 +9,7 @@ import { StyledMenuItemIcon, StyledRatioDescription } from './Crop.styled';
 const PREFIX_ICONS_DIMENS = { height: 16, width: 16 };
 
 const CropPresetItem = ({
-  title,
+  titleKey,
   description,
   ratio,
   onClick,
@@ -17,9 +17,10 @@ const CropPresetItem = ({
   isActive,
   width,
   height,
+  t,
 }) => {
   const handleOnClick = (e) =>
-    onClick(e, ratio, { ratioTitle: title, width, height });
+    onClick(e, ratio, { ratioTitleKey: titleKey, width, height });
 
   return (
     <MenuItem active={isActive} onClick={handleOnClick} size="sm">
@@ -33,7 +34,7 @@ const CropPresetItem = ({
           )}
         </StyledMenuItemIcon>
       )}
-      {title}
+      {t(titleKey)}
       {description && (
         <StyledRatioDescription>{description}</StyledRatioDescription>
       )}
@@ -48,9 +49,10 @@ CropPresetItem.defaultProps = {
 };
 
 CropPresetItem.propTypes = {
-  title: PropTypes.string.isRequired,
+  titleKey: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
   ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   width: PropTypes.number,

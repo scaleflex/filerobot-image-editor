@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from '@scaleflex/ui/core/menu-item';
 
@@ -20,6 +20,7 @@ const CropPresetGroupsFolder = ({
       crop: { ratioFolderKey, ratioGroupKey },
     },
   } = useStore();
+  const [expandedGroup, setExpandedGroup] = useState('');
 
   const onItemSelectFromFolder = (e, newRatio, cropProps) => {
     onItemSelect(e, newRatio, {
@@ -46,7 +47,13 @@ const CropPresetGroupsFolder = ({
           subList: groups.map(({ titleKey: groupTitleKey, items }) => ({
             content: (
               <CropPresetGroup
-                groupTitleKey={t(groupTitleKey)}
+                groupTitleKey={groupTitleKey}
+                setExpandedGroup={setExpandedGroup}
+                isExpanded={
+                  expandedGroup === ''
+                    ? ratioGroupKey === groupTitleKey
+                    : expandedGroup === groupTitleKey
+                }
                 t={t}
                 items={items}
                 onItemSelect={onItemSelectFromFolder}

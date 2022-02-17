@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Accordion from '@scaleflex/ui/core/accordion';
 
@@ -8,16 +8,22 @@ import toPrecisedFloat from 'utils/toPrecisedFloat';
 import { useStore } from 'hooks';
 import CropPresetItem from './CropPresetItem';
 
-const CropPresetGroup = ({ groupTitleKey, items, onItemSelect, t }) => {
+const CropPresetGroup = ({
+  groupTitleKey,
+  items,
+  onItemSelect,
+  t,
+  isExpanded,
+  setExpandedGroup,
+}) => {
   const {
     adjustments: {
-      crop: { ratio: currentRatio, ratioGroupKey },
+      crop: { ratio: currentRatio, ratioGroupKey, ratioTitleKey },
     },
   } = useStore();
-  const [isExpanded, setIsExpanded] = useState(ratioGroupKey === groupTitleKey);
 
   const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
+    setExpandedGroup(isExpanded ? null : groupTitleKey);
   };
 
   const onItemSelectFromGroup = (e, newRatio, cropProps) => {
@@ -39,7 +45,8 @@ const CropPresetGroup = ({ groupTitleKey, items, onItemSelect, t }) => {
         return (
           <CropPresetItem
             key={titleKey}
-            title={t(titleKey)}
+            titleKey={titleKey}
+            t={t}
             description={t(descriptionKey)}
             size="sm"
             onClick={onItemSelectFromGroup}
@@ -48,7 +55,9 @@ const CropPresetGroup = ({ groupTitleKey, items, onItemSelect, t }) => {
             ratio={newRatio}
             Icon={icon}
             isActive={
-              currentRatio === newRatio && ratioGroupKey === groupTitleKey
+              currentRatio === newRatio &&
+              ratioTitleKey === titleKey &&
+              ratioGroupKey === groupTitleKey
             }
           />
         );
@@ -62,6 +71,8 @@ CropPresetGroup.propTypes = {
   items: PropTypes.instanceOf(Array).isRequired,
   onItemSelect: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
+  isExpanded: PropTypes.bool.isRequired,
+  setExpandedGroup: PropTypes.func.isRequired,
 };
 
 export default CropPresetGroup;

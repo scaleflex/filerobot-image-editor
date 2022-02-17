@@ -697,7 +697,7 @@ Default:
     maxWidth: null,
     maxHeight: null,
     ratio: 'original',
-    ratioTitle: 'Original',
+    ratioTitleKey: 'original',
     noPresets: false,
     autoResize: false,
     presetsItems: [],
@@ -714,7 +714,7 @@ The available options for crop tool,
 | **`maxWidth`**       | number                                           | null                                                       | Maximum width (in px) of the possible crop area                                                                                                                                                                                     |
 | **`maxHeight`**      | number                                           | null                                                       | Maximum height (in px) of the possible crop area                                                                                                                                                                                    |
 | **`ratio`**          | string \| number                                 | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area                                                                                                                                                                                                      |
-| **`ratioTitle`**     | string \| number                                 | 'Original'                                                 | The title of the crop's ratio selected that will be shown initially besides the crop's tool icon                                                                                                                                    |
+| **`ratioTitleKey`**  | string                                           | 'original'                                                 | The title's translation key of the crop's ratio selected that will be shown initially besides the crop's tool icon                                                                                                                  |
 | **`noPresets`**      | boolean                                          | false                                                      | hides the crop presets if `true`                                                                                                                                                                                                    |
 | **`autoResize`**     | boolean                                          | false                                                      | if `true` and the chosen crop preset item has both width & height then the original image will be croped and then apply resizing for the cropped image with the width & height, otherwise cropping without resizing will be applied |
 | **`presetsItems`**   | array of [`CropPresetItem`](#croppresetitem)     | []                                                         | Crop presets items to extend with the default ones provided in the plugin, will be shown in the first menu of the crop presets                                                                                                      |
