@@ -35,6 +35,7 @@ export default {
     lineHeight: 1,
     align: 'left', // left, center, right
     fontStyle: 'normal', // 'bold', 'italic', 'bold italic'
+    onFontChange: undefined,
   },
   [TOOLS_IDS.IMAGE]: {
     fill: undefined,

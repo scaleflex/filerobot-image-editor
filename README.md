@@ -516,23 +516,25 @@ Default:
     lineHeight: 1,
     align: 'left',
     fontStyle: 'normal',
+    onFontChange: (newFontFamily) => undefined,
 }
 ```
 
 The options available for the text annotation tool in additon to the annotationsCommon property,
 
-| Property            | Type                   | Default (possible values)                                  | Description                                                      |
-| ------------------- | ---------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------- |
-| **`text`**          | string                 | 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' | The placeholder text added on adding a new text annotation       |
-| **`fontFamily`**    | string                 | 'Arial'                                                    | The font family used for the text                                |
-| **`fonts`**         | (strings \| objects)[] | mentioned above                                            | The fonts available to the user to choose from while adding text |
-| **`fontSize`**      | number                 | 14                                                         | The default size of the text added                               |
-| **`letterSpacing`** | number                 | 0                                                          | The spaces/paddings between letters of the text                  |
-| **`lineHeight`**    | number                 | 1                                                          | Height of each line of the added text                            |
-| **`align`**         | string                 | 'left' ('left' \| 'center' \| 'right')                     | The horizontal alignment of the added text                       |
-| **`fontStyle`**     | string                 | 'normal' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added                            |
+| Property            | Type                   | Default (possible values)                                  | Description                                                                                                                                                                               |
+| ------------------- | ---------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`text`**          | string                 | 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' | The placeholder text added on adding a new text annotation                                                                                                                                |
+| **`fontFamily`**    | string                 | 'Arial'                                                    | The font family used for the text                                                                                                                                                         |
+| **`fonts`**         | (strings \| objects)[] | mentioned above                                            | The fonts available to the user to choose from while adding text                                                                                                                          |
+| **`fontSize`**      | number                 | 14                                                         | The default size of the text added                                                                                                                                                        |
+| **`letterSpacing`** | number                 | 0                                                          | The spaces/paddings between letters of the text                                                                                                                                           |
+| **`lineHeight`**    | number                 | 1                                                          | Height of each line of the added text                                                                                                                                                     |
+| **`align`**         | string                 | 'left' ('left' \| 'center' \| 'right')                     | The horizontal alignment of the added text                                                                                                                                                |
+| **`fontStyle`**     | string                 | 'normal' ('normal' \| 'bold' \| 'italic' \| 'bold italic') | The font style & weight of text added                                                                                                                                                     |
+| **`onFontChange`**  | function               | `(newFontFamily) => undefined`                             | A callback method called on changing the font family (almost will be needed in lazy loading/importing the chosen font family incase you don't want to load all the fonts before choosing) |
 
-> Fonts must be loaded from your side in implementation to take effect as it is not guaranteed that the user has the font on his system.
+> Fonts must be loaded from your side in implementation to take effect as it is not guaranteed that the user has the font on his OS.
 
 #### `Image`
 

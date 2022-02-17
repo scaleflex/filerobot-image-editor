@@ -29,7 +29,7 @@ const TextControls = ({ text, saveText, children }) => {
   const { dispatch, textIdOfEditableContent, designLayer, t, config } =
     useStore();
   const { useCloudimage } = config;
-  const { fonts = [] } = config[TOOLS_IDS.TEXT];
+  const { fonts = [], onFontChange } = config[TOOLS_IDS.TEXT];
 
   const changeTextProps = useCallback(
     (e) => {
@@ -47,6 +47,9 @@ const TextControls = ({ text, saveText, children }) => {
       changeTextProps({
         target: { name: 'fontFamily', value: newFontFamily },
       });
+      if (typeof onFontChange === 'function') {
+        onFontChange(newFontFamily);
+      }
     },
     [changeTextProps],
   );
@@ -119,24 +122,26 @@ const TextControls = ({ text, saveText, children }) => {
       }
       t={t}
     >
-      <StyledFontFamilySelect
-        className="FIE_text-font-family-option"
-        onChange={changeFontFamily}
-        value={text.fontFamily}
-        placeholder={t('fontFamily')}
-        size="sm"
-      >
-        {/* fontFamily is string or object */}
-        {fonts.map((fontFamily = '') => (
-          <MenuItem
-            className="FIE_text-font-family-item"
-            key={fontFamily.value ?? fontFamily}
-            value={fontFamily.value ?? fontFamily}
-          >
-            {fontFamily.label ?? fontFamily}
-          </MenuItem>
-        ))}
-      </StyledFontFamilySelect>
+      {Array.isArray(fonts) && fonts.length > 1 && (
+        <StyledFontFamilySelect
+          className="FIE_text-font-family-option"
+          onChange={changeFontFamily}
+          value={text.fontFamily}
+          placeholder={t('fontFamily')}
+          size="sm"
+        >
+          {/* fontFamily is string or object */}
+          {fonts.map((fontFamily = '') => (
+            <MenuItem
+              className="FIE_text-font-family-item"
+              key={fontFamily.value ?? fontFamily}
+              value={fontFamily.value ?? fontFamily}
+            >
+              {fontFamily.label ?? fontFamily}
+            </MenuItem>
+          ))}
+        </StyledFontFamilySelect>
+      )}
       <StyledFontSizeInput
         className="FIE_text-size-option"
         value={text.fontSize || ''}

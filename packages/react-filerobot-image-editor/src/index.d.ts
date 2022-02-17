@@ -201,6 +201,7 @@ export interface FilerobotImageEditorConfig {
   // [TOOLS_IDS.TEXT]
   Text?: textAnnotation & {
     fonts?: (string | { label: string; value: string })[];
+    onFontChange?: (newFontFamily: string) => void;
   };
   // [TOOLS_IDS.IMAGE]
   Image?: annotationsCommon;

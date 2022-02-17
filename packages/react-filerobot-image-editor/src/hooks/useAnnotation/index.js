@@ -32,7 +32,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
   const canvas = previewGroup?.getStage();
 
   const saveAnnotation = useCallback((annotationData) => {
-    const { fonts, ...savableAnnotationData } = annotationData;
+    const { fonts, onFontChange, ...savableAnnotationData } = annotationData;
     dispatch({
       type: SET_ANNOTATION,
       payload: savableAnnotationData,
