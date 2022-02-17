@@ -77,6 +77,28 @@ const CropTransformer = () => {
     });
   };
 
+  const saveBoundedCropWithLatestConfig = (cropWidth, cropHeight) => {
+    const imageDimensions = shownImageDimensionsRef.current;
+
+    const attrs = {
+      width: cropWidth,
+      height: cropHeight,
+      x: crop.x ?? 0,
+      y: crop.y ?? 0,
+    };
+
+    saveCrop(
+      boundResizing(
+        attrs,
+        attrs,
+        { ...imageDimensions, abstractX: 0, abstractY: 0 },
+        isCustom || isEllipse ? false : getProperCropRatio(),
+        cropConfig,
+      ),
+      true,
+    );
+  };
+
   useEffect(() => {
     if (designLayer && cropTransformerRef.current && cropShapeRef.current) {
       if (tmpImgNodeRef.current) {
@@ -93,37 +115,24 @@ const CropTransformer = () => {
   }, [designLayer, originalImage]);
 
   useEffect(() => {
+    if (shownImageDimensionsRef.current) {
+      const imageDimensions = shownImageDimensionsRef.current;
+      saveBoundedCropWithLatestConfig(
+        crop.width ?? imageDimensions.width,
+        crop.height ?? imageDimensions.height,
+      );
+    }
+  }, [cropRatio]);
+
+  useEffect(() => {
     if (cropTransformerRef.current && cropShapeRef.current) {
       cropTransformerRef.current.nodes([cropShapeRef.current]);
 
       if (shownImageDimensionsRef.current && crop.width && crop.height) {
-        const imageDimensions = shownImageDimensionsRef.current;
-
-        const attrs = {
-          width: crop.width,
-          height: crop.height,
-          x: crop.x ?? 0,
-          y: crop.y ?? 0,
-        };
-
-        saveCrop(
-          boundResizing(
-            attrs,
-            attrs,
-            { ...imageDimensions, abstractX: 0, abstractY: 0 },
-            isCustom || isEllipse ? false : getProperCropRatio(),
-            cropConfig,
-          ),
-          true,
-        );
+        saveBoundedCropWithLatestConfig(crop.width, crop.height);
       }
     }
-  }, [
-    cropRatio,
-    cropConfig,
-    shownImageDimensions.width,
-    shownImageDimensions.height,
-  ]);
+  }, [cropConfig, shownImageDimensions.width, shownImageDimensions.height]);
 
   useEffect(() => {
     if (shownImageDimensions) {
