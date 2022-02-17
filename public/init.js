@@ -102,10 +102,16 @@ const config = {
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/Logo+Vertical/SCALEFLEX+LOGO+VERTICAL.PNG?vh=9a6fa1',
     ],
   },
-  // [TOOLS.TEXT]: {
-  //   fonts: ['Arial', 'another', { label: 'Tahoma', value: 'Tahoma' }, 'hey-there'], // must be loaded in the website or the user have them on his system
-  //   fontFamily: 'test',
-  // },
+  [TOOLS.TEXT]: {
+    //   fonts: ['Arial', 'another', { label: 'Tahoma', value: 'Tahoma' }, 'hey-there'], // must be loaded in the website or the user have them on his system
+    //   fontFamily: 'test',
+    // onFontChange: (newFontFamily, reRenderCanvasFn) => {
+    //   if (newFontFamily.toLowerCase() === 'sans-serif') {
+    //     //  Load sans-serif font.
+    //     reRenderCanvasFn();
+    //   }
+    // },
+  },
   // onBeforeSave: (imageFileInfo) => {
   //   console.log('info', imageFileInfo);
   //   return false;

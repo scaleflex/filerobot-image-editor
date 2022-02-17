@@ -47,11 +47,15 @@ const TextControls = ({ text, saveText, children }) => {
       changeTextProps({
         target: { name: 'fontFamily', value: newFontFamily },
       });
-      if (typeof onFontChange === 'function') {
-        onFontChange(newFontFamily);
+      if (
+        text.fontFamily !== newFontFamily &&
+        typeof onFontChange === 'function'
+      ) {
+        const reRenderCanvasFn = designLayer.draw.bind(designLayer);
+        onFontChange(newFontFamily, reRenderCanvasFn);
       }
     },
-    [changeTextProps],
+    [changeTextProps, text, designLayer],
   );
 
   const changeFontStyle = useCallback(
