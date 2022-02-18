@@ -19,7 +19,7 @@ body {
 }
 
 .content-wrapper {
-  padding: 1.5em 1.56em;
+  padding: 23px 25px 60px 24px;
 }
 
 .content-wrapper .header {
@@ -143,7 +143,7 @@ body {
 }
 
 .content-wrapper .content .content-text {
-  margin-top: 8px;
+  margin-top: 12px;
   font-weight: 400;
   color: #4d5c74;
   font-size: 1.25em;
@@ -156,6 +156,7 @@ body {
   line-height: 30px;
   color: #4d5c74;
   text-align: center;
+  margin-top: 12px;
 }
 
 .content-wrapper .content .view-button {
@@ -164,7 +165,7 @@ body {
   height: 48px;
   align-items: center;
   justify-content: space-between;
-  margin-top: 28px;
+  margin-top: 32px;
   position: relative;
 }
 
@@ -219,24 +220,11 @@ body {
   margin-top: 36px;
   display: flex;
   z-index: 99;
-  width: 75vw;
+  width: 970px;
+  column-gap: 30px;
 }
 
-.content-wrapper .img-table .configure-editor-tab-head img {
-  transition: transform 0.25s ease-in-out;
-  -moz-transition: transform 0.25s ease-in-out;
-  -webkit-transition: transform 0.25s ease-in-out;
-  cursor: pointer;
-}
-
-.content-wrapper .content .img-table .configure-editor-tab-head {
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
-  margin-top: 8px;
-}
-
-.content-wrapper .content .img-table h1 {
+.content-wrapper .content .img-table h4 {
   font-size: 16px;
   line-height: 32px;
   font-weight: 500;
@@ -246,8 +234,9 @@ body {
 .content-wrapper .img-table .config-table {
   margin-top: 16px;
   background-color: #f9fafc;
-  padding: 16px;
-  width: 19.14vw;
+  padding: 16px 7.55px 50px 16px;
+  width: 255px;
+  max-height: 490px;
   transition: opacity 0.5s ease-in-out;
   -moz-transition: opacity 0.5s ease-in-out;
   -webkit-transition: opacity 0.5s ease-in-out;
@@ -269,10 +258,27 @@ body {
   height: 206px;
 }
 
-.content-wrapper .img-table .config-table h1 {
+.content-wrapper .img-table .config-table h4 {
   font-size: 14px;
   line-height: 21px;
   color: #4d5c74;
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+
+.content-wrapper .img-table .config-table input {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #dfe1ec;
+}
+
+.content-wrapper .img-table .config-table h5 {
+  margin-top: 30px;
+  font-size: 14px;
+  line-height: 21px;
+  color: #4d5c74;
+  margin-bottom: 9px;
+  font-weight: 400;
 }
 
 .content-wrapper .img-table .config-table .img-container {
@@ -285,7 +291,7 @@ body {
   flex-wrap: wrap;
   row-gap: 6px;
   column-gap: 6px;
-  max-width: 65%;
+  max-width: 162px;
 }
 
 .content-wrapper .img-table .config-table .uploaded-img {
@@ -294,6 +300,13 @@ body {
   border: 2px solid #ffff;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.content-wrapper .img-table .config-table .default-uploaded-img {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 .content-wrapper
@@ -309,7 +322,6 @@ body {
   border: 1px solid #dfe1ec;
   background-color: #ffff;
   border-radius: 4px;
-  margin-bottom: 25px;
   padding: 19px;
   cursor: pointer;
 }
@@ -340,53 +352,93 @@ body {
 }
 
 .content-wrapper .img-table .tools-checkboxs {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
   font-size: 14px;
   line-height: 17px;
   color: #203254;
 }
 
-.content-wrapper .img-table .tools-checkboxs h2 {
+.content-wrapper .img-table .tools-checkboxs div {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 21px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #ffff;
+  border: 1px solid #dfe1ec;
+}
+
+/* When the checkbox is checked */
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #ffff;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+  left: 1px;
+  top: 3px;
+  width: 13px;
+  height: 10px;
+  background-image: url("../../public/assets/check-icon.png");
+  background-repeat: no-repeat;
+}
+
+.content-wrapper .tools-checkboxs label {
   font-size: 14px;
-  line-height: 21px;
-  color: #4d5c74;
-  margin-bottom: 8px;
-  margin-top: 25px;
-}
-
-.content-wrapper .img-table .tools-checkboxs .crop,
-.finetune,
-.filter,
-.watermark,
-.annotate {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.content-wrapper .img-table .tools-checkboxs .resize {
-  display: flex;
-  align-items: center;
-  margin-bottom: 27px;
-}
-
-.content-wrapper .tools-checkboxs .crop label,
-.finetune label,
-.filter label,
-.watermark label,
-.annotate label,
-.resize label {
-  margin-left: 6px;
+  line-height: 17px;
+  color: #203254;
+  font-weight: 400;
 }
 
 .content-wrapper .img-table .mode-content {
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
 }
 
-.content-wrapper .img-table .mode-content h1 {
-  font-size: 14px;
-  line-height: 21px;
-  color: #4d5c74;
+.content-wrapper .img-table .mode-content h4 {
   margin-bottom: 8px;
 }
 
@@ -397,6 +449,7 @@ body {
   font-size: 14px;
   line-height: 24px;
   color: #203254;
+  width: 231.45px;
 }
 
 .content-wrapper .img-table .mode-content .mode-options {
@@ -407,7 +460,7 @@ body {
 }
 
 .content-wrapper .img-table .editor-container {
-  width: 80%;
+  width: 685px;
   max-width: 858px;
 }
 
@@ -423,8 +476,9 @@ body {
 }
 
 .filerobot-features {
-  padding: 60px 0;
+  padding: 60px 25px;
   display: flex;
+  box-sizing: content-box;
   flex-direction: column;
   align-items: center;
 }
@@ -433,85 +487,47 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 108px;
   font-weight: 600;
   line-height: 54px;
   font-size: 40px;
   color: #203254;
-}
-
-.filerobot-features .filerobot-title span {
-  display: flex;
-  justify-content: center;
+  max-width: 772px;
+  text-align: center;
+  margin-bottom: 32px;
 }
 
 .filerobot-features .filerobot-features-content {
-  display: flex;
-  justify-content: center;
-  column-gap: 30px;
-  margin-top: 32px;
-  width: 72.875em;
+  display: grid;
+  grid-template-columns: repeat(3, 4fr);
+  gap: 30px;
 }
 
-.filerobot-features .filerobot-features-content .resize {
+.filerobot-features .filerobot-features-content img {
   width: 100%;
+  max-width: 370px;
 }
 
-.filerobot-features .filerobot-features-content .resize h3 {
+.filerobot-features .filerobot-features-content h3 {
   margin: 16px 0 8px 0;
   font-weight: 500;
   font-size: 22px;
   line-height: 24px;
   color: #203254;
+  max-width: 370px;
 }
 
-.filerobot-features .filerobot-features-content .resize p {
+.filerobot-features .filerobot-features-content p {
   color: #4d5c74;
   font-size: 16px;
   line-height: 24px;
-}
-
-.filerobot-features .filerobot-features-content .watermark-wrapper {
-  width: 100%;
-}
-
-.filerobot-features .filerobot-features-content .watermark-wrapper h3 {
-  margin: 16px 0 8px 0;
-  font-weight: 500;
-  font-size: 22px;
-  line-height: 24px;
-  color: #203254;
-}
-
-.filerobot-features .filerobot-features-content .watermark-wrapper p {
-  color: #4d5c74;
-  font-size: 16px;
-  line-height: 24px;
-}
-
-.filerobot-features .filerobot-features-content .annotation {
-  width: 100%;
-}
-
-.filerobot-features .filerobot-features-content .annotation h3 {
-  margin: 16px 0 8px 0;
-  font-weight: 500;
-  font-size: 22px;
-  line-height: 24px;
-  color: #203254;
-}
-
-.filerobot-features .filerobot-features-content .annotation p {
-  color: #4d5c74;
-  font-size: 16px;
-  line-height: 24px;
+  max-width: 370px;
 }
 
 .usage {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px 0;
+  padding: 60px 25px;
   background-color: #f1f8ff;
 }
 
@@ -521,7 +537,7 @@ body {
   align-items: center;
 }
 
-.usage .usage-title h2 {
+.usage .usage-title h3 {
   font-size: 40px;
   line-height: 54px;
   font-weight: 600;
@@ -635,7 +651,7 @@ body {
 .usage .adapters .adapters-options {
   display: flex;
   margin-top: 24px;
-  column-gap: 48px;
+  column-gap: 24px;
   border-bottom: 1px solid #dfe1ec;
   padding-bottom: 32px;
 }
@@ -748,13 +764,13 @@ body {
 
 .questions {
   position: relative;
-  padding: 60px 0;
+  padding: 60px 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.questions h1 {
+.questions h3 {
   margin-bottom: 12px;
   font-weight: 600;
   font-size: 40px;
@@ -808,16 +824,18 @@ body {
 
 .footer {
   position: relative;
-  padding: 60px 0;
+  padding: 60px 25px;
+  box-sizing: content-box;
   height: 325px;
   display: flex;
-  column-gap: 13%;
+  justify-content: space-between;
 }
 
 .footer .footer-logo {
   display: flex;
   flex-direction: column;
   max-width: 550px;
+  width: 35.9vw;
   row-gap: 24px;
   color: #4d5c74;
 }
@@ -843,7 +861,7 @@ body {
 
 .footer .footer-wrapper {
   display: flex;
-  column-gap: 80px;
+  column-gap: 5.22vw;
 }
 
 .footer .footer-info {
@@ -851,7 +869,7 @@ body {
   flex-direction: column;
 }
 
-.footer .footer-info h1 {
+.footer .footer-info h4 {
   margin-bottom: 24px;
   font-weight: 600;
   font-size: 18px;
@@ -875,7 +893,7 @@ body {
   line-height: 19.36px;
 }
 
-.footer .footer-filerobot h1 {
+.footer .footer-filerobot h4 {
   font-weight: 600;
   font-size: 18px;
   line-height: 21.78px;
@@ -921,43 +939,28 @@ body {
     line-height: 32px;
   }
 
-  .content-wrapper .img-table .config-table {
-    width: unset;
-  }
-
-  .content-wrapper .content .img-table {
-    width: unset;
-  }
-
   .usage .adapters {
     display: flex;
     flex-direction: column;
     width: 82%;
     margin-top: 32px;
   }
+
+  .footer .footer-wrapper {
+    column-gap: 80px;
+  }
 }
 
 @media (max-width: 1050px) {
   .content-wrapper .content .img-table {
     flex-direction: column;
-    width: unset;
-  }
-
-  .content-wrapper .content .img-table h1 {
-    width: unset;
-  }
-
-  .content-wrapper .content .configure-editor-tab {
-    padding: 12px;
-  }
-
-  .content-wrapper .img-table .configure-editor-tab-head img {
-    margin-right: 10px;
+    align-items: center;
+    width: 76.7%;
+    row-gap: 30px;
   }
 
   .content-wrapper .img-table .config-table {
-    width: unset;
-    height: unset;
+    width: 100%;
   }
 
   .content-wrapper .img-table .editor-container {
@@ -970,12 +973,10 @@ body {
 
   .content-wrapper .img-table .tools-checkboxs {
     display: flex;
-    column-gap: 20px;
-    margin-top: 10px;
-  }
-
-  .content-wrapper .img-table .tools-checkboxs h2 {
-    margin-top: 0;
+    flex-direction: row;
+    column-gap: 12px;
+    margin-top: 8px;
+    row-gap: 12px;
   }
 
   .content-wrapper .img-table .tools-checkboxs .draw-resize {
@@ -990,164 +991,22 @@ body {
   .content-wrapper .img-table .mode-content {
     display: flex;
     flex-direction: row;
-    column-gap: 8px;
+    column-gap: 16px;
     align-items: center;
-    margin-top: 26px;
+    margin-top: 30px;
   }
 
-  .content-wrapper .img-table .mode-content h1 {
+  .content-wrapper .img-table .mode-content h4 {
     margin-bottom: 0;
+    margin-top: 0;
     width: 37px;
     margin-left: 4px;
   }
-}
-
-@media (max-width: 1030px) {
-  .footer .footer-logo {
-    max-width: 49%;
-  }
-}
-
-@media (max-width: 1370px) {
-  .content-wrapper .content .img-table .editor-img {
-    width: 100%;
-  }
-
-  .content-wrapper .content .img-table .table-img {
-    width: 80%;
-  }
 
   .filerobot-features .filerobot-features-content {
-    width: 100%;
-  }
-
-  .filerobot-features .filerobot-features-content img {
-    width: 80%;
-  }
-
-  .usage {
-    padding: 60px 100px;
-  }
-}
-
-@media (max-width: 1130px) {
-  .filerobot-features {
-    padding: 60px 16px;
-  }
-
-  .usage {
-    padding: 60px 16px;
-  }
-
-  .usage .js-version-code {
-    width: 84%;
-  }
-
-  .questions {
-    padding: 60px 16px;
-  }
-
-  .footer {
-    padding: 60px 16px;
-  }
-}
-
-@media (max-width: 850px) {
-  .usage .adapters .adapters-options {
-    column-gap: 12px;
-  }
-
-  .usage .legend-content {
-    column-gap: 12px;
-  }
-}
-
-@media (max-width: 810px) {
-  .content-wrapper .content .img-table h1 {
-    font-size: 13px;
-  }
-
-  .content-wrapper .img-table .editor-container {
-    width: 93vw;
-  }
-}
-
-@media (max-width: 785px) {
-  .filerobot-features .filerobot-title {
-    font-size: 31px;
-  }
-}
-
-@media (max-width: 680px) {
-  .content-wrapper .content .content-text {
-    width: 100%;
-  }
-
-  .content-wrapper .content .content-text p {
-    width: 100%;
-    padding-left: 28px;
-  }
-
-  .filerobot-features .filerobot-title {
-    font-size: 24px;
-  }
-
-  .filerobot-features .filerobot-features-content .resize h3 {
-    font-size: 19px;
-  }
-
-  .filerobot-features .filerobot-features-content .watermark-wrapper h3 {
-    font-size: 19px;
-  }
-
-  .filerobot-features .filerobot-features-content .annotation h3 {
-    font-size: 19px;
-  }
-
-  .footer {
-    padding: 60px 0 0 3px;
-  }
-
-  .footer .footer-logo {
-    width: 38%;
-    row-gap: 12px;
-  }
-
-  .footer .footer-info h1 {
-    margin-top: 11px;
-  }
-
-  .footer .footer-info .footer-info-content {
-    font-size: 14px;
-  }
-
-  .footer .footer-filerobot h1 {
-    margin-top: 10px;
-  }
-
-  .footer .footer-filerobot .footer-filerobot-content {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 630px) {
-  .content-wrapper .content .cyan-ellipse {
-    display: none;
-  }
-
-  .content-wrapper .img-table .tools-checkboxs {
-    max-width: 484px;
-    flex-wrap: wrap;
-  }
-
-  .content-wrapper .img-table .tools-checkboxs h2 {
-    margin-top: 0;
-  }
-
-  .content-wrapper .img-table .tools-checkboxs .draw-resize {
-    display: flex;
-    column-gap: 29px;
-    margin-left: 53px;
+    display: grid;
+    grid-template-columns: repeat(2, 4fr);
+    gap: 30px;
   }
 }
 
@@ -1157,12 +1016,12 @@ body {
   }
 
   .content-wrapper {
-    padding: 1.5em 1em;
+    padding: 1.5em 25px;
   }
 
   .content-wrapper .header .stars {
     padding: 8px 5px;
-    margin-left: 22px;
+    margin-left: 19px;
   }
 
   .content-wrapper .header .git-hub {
@@ -1176,43 +1035,38 @@ body {
   }
 
   .content-wrapper .content .content-title {
-    font-size: 42px;
+    font-size: 40px;
   }
 
   .content-wrapper .content .img-table {
     margin-left: 0;
+    row-gap: 30px;
   }
 
   .content-wrapper .content .cyan-ellipse {
     display: none;
   }
 
+  .filerobot-features .filerobot-title {
+    font-size: 32px;
+  }
+
   .filerobot-features .filerobot-features-content {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(1, 4fr);
+    gap: 30px;
+  }
+
+  .filerobot-features .filerobot-features-content h3 {
+    text-align: center;
+  }
+
+  .filerobot-features .filerobot-features-content p {
+    text-align: center;
   }
 
   .filerobot-features .filerobot-features-content img {
     width: 100%;
-  }
-
-  .filerobot-features .filerobot-features-content .resize {
-    text-align: center;
-  }
-
-  .filerobot-features .filerobot-features-content .resize p {
-    margin-bottom: 60px;
-  }
-
-  .filerobot-features .filerobot-features-content .watermark-wrapper {
-    text-align: center;
-  }
-
-  .filerobot-features .filerobot-features-content .watermark-wrapper p {
-    margin-bottom: 60px;
-  }
-
-  .filerobot-features .filerobot-features-content .annotation {
-    text-align: center;
   }
 
   .content-wrapper .content .img-table {
@@ -1224,10 +1078,6 @@ body {
     flex-wrap: wrap;
   }
 
-  .content-wrapper .img-table .tools-checkboxs h2 {
-    margin-top: 0;
-  }
-
   .content-wrapper .img-table .tools-checkboxs .draw-resize {
     display: flex;
     column-gap: 27px;
@@ -1236,6 +1086,10 @@ body {
 
   .content-wrapper .img-table .mode-content {
     margin-top: 10px;
+  }
+
+  .content-wrapper .img-table .config-table {
+    width: 94%;
   }
 
   .usage .usage-title p {
@@ -1276,12 +1130,18 @@ body {
     max-width: unset;
   }
 
+  .footer .footer-logo p {
+    padding: 0 13px;
+  }
+
   .footer .footer-info .footer-info-content {
     margin-bottom: 29px;
   }
 
   .footer .footer-wrapper {
+    column-gap: 0;
     padding-bottom: 60px;
-    column-gap: 77px;
+    padding: 0 13px;
+    justify-content: space-between;
   }
 }

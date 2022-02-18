@@ -83,99 +83,99 @@
           <img src="./assets/arrow.png" alt="arrow-shape" />
         </div>
         <div class="img-table container">
-          <div class="configure-editor-tab">
-            <div class="configure-editor-tab-head">
-              <h1>Configure Editor</h1>
-              <img
-                id="config-arrow"
-                src="./assets/arrow-icon.png"
-                alt="arrow-icon-image"
+          <div id="config-wrapper" class="config-table">
+            <h4>Images</h4>
+            <div class="img-container">
+              <div class="uploaded-imgs-wrapper"></div>
+              <input
+                class="add-img"
+                type="file"
+                accept="image/*"
+                name="image"
+                id="add-image"
               />
             </div>
-            <div id="config-wrapper" class="config-table">
-              <h1>Images</h1>
-              <div class="img-container">
-                <div class="uploaded-imgs-wrapper">
-                  <img
-                    id="default-img"
-                    class="uploaded-img"
-                    data-image-editor-active-image
-                    src="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
-                    alt="img"
-                  />
-                </div>
-                <input
-                  class="add-img"
-                  type="file"
-                  accept="image/*"
-                  name="image"
-                  id="add-image"
-                />
+            <h5>Tabs</h5>
+            <div class="tools-checkboxs">
+              <div>
+                <label class="checkbox-container" for="crop">
+                  Adjust
+                  <input
+                    id="crop"
+                    value="adjust"
+                    type="checkbox"
+                    name="Crop"
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
               </div>
-              <div class="tools-checkboxs">
-                <h2>Tabs</h2>
-                <div class="crop">
-                  <input id="crop" value="adjust" type="checkbox" name="Crop" />
-                  <label for="crop"> Adjust</label><br />
-                </div>
-                <div class="finetune">
+              <div>
+                <label class="checkbox-container" for="finetune">
+                  Finetune
                   <input
                     id="finetune"
                     value="finetune"
                     type="checkbox"
                     name="Finetune"
-                  />
-                  <label for="finetune"> Finetune</label><br />
-                </div>
-                <div class="filter" id="filter-wrapper">
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
+              </div>
+              <div id="filter-wrapper">
+                <label class="checkbox-container" for="filter">
+                  Filters
                   <input
                     id="filter"
                     value="filter"
                     type="checkbox"
                     name="Filters"
-                  />
-                  <label for="filter"> Filters</label><br />
-                </div>
-                <div class="watermark">
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
+              </div>
+              <div>
+                <label class="checkbox-container" for="watermark">
+                  Watermark
                   <input
                     id="watermark"
                     value="watermark"
                     type="checkbox"
                     name="Watermark"
-                  />
-                  <label for="watermark"> Watermark</label><br />
-                </div>
-                <div class="draw-resize">
-                  <div class="annotate" id="annotate-wrapper">
-                    <input
-                      id="annotate"
-                      value="annotate"
-                      type="checkbox"
-                      name="Annotate"
-                    />
-                    <label for="annotate"> Draw</label><br />
-                  </div>
-                  <div class="resize">
-                    <input
-                      id="resize"
-                      value="resize"
-                      type="checkbox"
-                      name="Resize"
-                      checked
-                    />
-                    <label for="resize"> Resize</label><br />
-                  </div>
-                </div>
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
               </div>
-              <div class="mode-content">
-                <h1>Mode</h1>
-                <select id="mode-options">
-                  <option class="mode-options" value="Download">
-                    Download
-                  </option>
-                  <option value="Cloudimage">CloudImage</option>
-                </select>
+              <div id="annotate-wrapper">
+                <label class="checkbox-container" for="annotate">
+                  Draw
+                  <input
+                    id="annotate"
+                    value="annotate"
+                    type="checkbox"
+                    name="Annotate"
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
               </div>
+              <div>
+                <label class="checkbox-container" for="resize">
+                  Resize
+                  <input
+                    id="resize"
+                    value="resize"
+                    type="checkbox"
+                    name="Resize"
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
+              </div>
+            </div>
+            <div class="mode-content">
+              <h4>Mode</h4>
+              <select id="mode-options">
+                <option class="mode-options" value="Download">Download</option>
+                <option value="Cloudimage">CloudImage</option>
+              </select>
             </div>
           </div>
           <div class="editor-container" id="editor_container"></div>
@@ -188,10 +188,10 @@
     <section class="filerobot-features container-fluid">
       <div class="filerobot-title">
         Most popular features of the Filerobot <br />
-        <span>Image Editor</span>
+        Image Editor
       </div>
       <div class="filerobot-features-content">
-        <div class="resize">
+        <div>
           <img
             src="./assets/image-resize-mode.png"
             alt="image-resize-mode-img"
@@ -202,7 +202,7 @@
             point of your image for optimal impact on delivery.
           </p>
         </div>
-        <div class="watermark-wrapper">
+        <div>
           <img src="./assets/watermark-img.png" alt="watermark-img" />
           <h3>Add watermark</h3>
           <p>
@@ -211,7 +211,7 @@
             Placement and orientation are up to you.
           </p>
         </div>
-        <div class="annotation">
+        <div>
           <img src="./assets/add-annotation.png" alt="add-annotation-img" />
           <h3>Add annotation</h3>
           <p>
@@ -224,7 +224,7 @@
 
     <section class="usage">
       <div class="usage-title">
-        <h2>Ready to get started?</h2>
+        <h3>Ready to get started?</h3>
         <p class="container">
           In the implementation example below you can edit an image and
           instantly download the result. As simple as that. For more integration
@@ -347,7 +347,7 @@
       </div>
 
       <div class="adapters container">
-        <h2>Bridges/Adapters</h2>
+        <h4>Bridges/Adapters</h4>
         <div class="adapters-options">
           <p class="adapter-react-option">
             <img src="./assets/Ellipse 3.png" alt="Ellipse" />
@@ -399,7 +399,7 @@
     </section>
 
     <section class="questions">
-      <h1>Any questions?</h1>
+      <h3>Any questions?</h3>
       <p>
         Contact us at <span>hello@filerobot.com</span>, our experts will be
         happy to help!
@@ -440,7 +440,7 @@
       </div>
       <div class="footer-wrapper">
         <div class="footer-info">
-          <h1>Info</h1>
+          <h4>Info</h4>
           <div class="footer-info-content">
             <a
               href="https://github.com/scaleflex/filerobot-image-editor"
@@ -463,7 +463,7 @@
           </div>
         </div>
         <div class="footer-filerobot">
-          <h1>Filerobot UI Family</h1>
+          <h4>Filerobot UI Family</h4>
           <div class="footer-filerobot-content">
             <a
               href="https://www.npmjs.com/package/@filerobot/readme"

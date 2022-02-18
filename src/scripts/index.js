@@ -12,9 +12,6 @@ const annotate = getElementById("annotate");
 const resize = getElementById("resize");
 const addImg = getElementById("add-image");
 const modeOptions = getElementById("mode-options");
-const configArrow = getElementById("config-arrow");
-const configWrapper = getElementById("config-wrapper");
-const defaultImg = getElementById("default-img");
 const jsTabTitle = getElementById("js-code-tab");
 const jsCodeWrapper = getElementById("js-code-wrapper");
 const reactTabTitle = getElementById("react-code-tab");
@@ -22,15 +19,28 @@ const reactCodeWrapper = getElementById("react-code-wrapper");
 const cdnTabTitle = getElementById("cdn-code-tab");
 const cdnCodeWrapper = getElementById("cdn-code-wrapper");
 
-const exampleCodeTabs = {
+let useCloudimage = false;
+
+const EXAMPLE_CODE_TABS = {
   "js-code-tab": jsCodeWrapper,
   "react-code-tab": reactCodeWrapper,
   "cdn-code-tab": cdnCodeWrapper,
 };
 
-const selectedTabs = [TABS.RESIZE];
-let isConfigTabsOpen = false;
-let useCloudimage = false;
+const DEFAULT_IMAGES_SRCS = [
+  "https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg",
+  "https://scaleflex.airstore.io/demo/spencer-davis-unsplash.jpg",
+  "https://scaleflex.cloudimg.io/v7/demo/damian-markutt-unsplash.jpg",
+];
+
+const selectedTabs = [
+  TABS.ADJUST,
+  TABS.FINETUNE,
+  TABS.FILTERS,
+  TABS.WATERMARK,
+  TABS.ANNOTATE,
+  TABS.RESIZE,
+];
 
 const IMG_EDITOR_TABS = {
   adjust: TABS.ADJUST,
@@ -45,7 +55,7 @@ const pluginConfig = {
   img: "https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg",
   Text: { text: "Filerobot..." },
   tabsIds: selectedTabs,
-  defaultTabId: TABS.RESIZE,
+  defaultTabId: [TABS.RESIZE],
   defaultToolId: TOOLS.TEXT,
   cloudimage: {
     token: "demo",
@@ -112,18 +122,22 @@ function onSave(url, fileName) {
   tmpLink = null;
 }
 
-function uploadImg(event) {
-  const nextImage = new Image();
+function appendImageToContainer(image) {
   const imagesWrapper = document.querySelector(".uploaded-imgs-wrapper");
 
-  imagesWrapper.appendChild(nextImage);
+  imagesWrapper.appendChild(image);
+
+  image.className = "uploaded-img";
+
+  image.onclick = toggleActiveImage;
+}
+
+function uploadImg(event) {
+  const nextImage = new Image();
 
   nextImage.src = URL.createObjectURL(event.target.files[0]);
-  nextImage.className = "uploaded-img";
 
-  nextImage.onclick = toggleActiveImage;
-
-  defaultImg.onclick = toggleActiveImage;
+  appendImageToContainer(nextImage);
 
   nextImage.onload = () => {
     toggleActiveImage(nextImage);
@@ -146,24 +160,6 @@ function toggleActiveImage(eventOrImg) {
   nextImage.setAttribute("data-image-editor-active-image", "");
 
   filerobotImageEditor.render({ img: nextImage.src });
-}
-
-function toggleConfigMenu() {
-  if (isConfigTabsOpen) {
-    configArrow.style.transform = " rotate(0deg)";
-
-    configWrapper.style.opacity = "1";
-    configWrapper.style.height = "unset";
-    configWrapper.style.display = "block";
-  } else {
-    configWrapper.style.opacity = "0";
-    configWrapper.style.height = "0";
-    configWrapper.style.display = "none";
-
-    configArrow.style.transform = " rotate(180deg)";
-  }
-
-  isConfigTabsOpen = !isConfigTabsOpen;
 }
 
 function changeModeHandler() {
@@ -206,14 +202,27 @@ function toggleActiveCodeTab(event) {
 
 function changeCodeTabHandler(event) {
   const selectedCodeTabId = event.target.id;
-  const selectedCode = exampleCodeTabs[selectedCodeTabId];
+  const selectedCode = EXAMPLE_CODE_TABS[selectedCodeTabId];
 
-  Object.values(exampleCodeTabs).forEach((codeTab) => {
+  Object.values(EXAMPLE_CODE_TABS).forEach((codeTab) => {
     codeTab.style.display = "none";
   });
 
   selectedCode.style.display = "unset";
 }
+
+document.onreadystatechange = () => {
+  DEFAULT_IMAGES_SRCS.forEach((imageSrc, index) => {
+    const image = new Image();
+    image.src = imageSrc;
+
+    appendImageToContainer(image);
+
+    if (!index) {
+      toggleActiveImage(image);
+    }
+  });
+};
 
 crop.addEventListener("change", onChangeTabsHandler);
 finetune.addEventListener("change", onChangeTabsHandler);
@@ -222,7 +231,6 @@ watermark.addEventListener("change", onChangeTabsHandler);
 annotate.addEventListener("change", onChangeTabsHandler);
 resize.addEventListener("change", onChangeTabsHandler);
 addImg.addEventListener("change", uploadImg);
-configArrow.addEventListener("click", toggleConfigMenu);
 modeOptions.addEventListener("change", changeModeHandler);
 jsTabTitle.addEventListener("click", toggleActiveCodeTab);
 reactTabTitle.addEventListener("click", toggleActiveCodeTab);
