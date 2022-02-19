@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="image editor crop, resize, add watermark, add annotation"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Filerobot Image Editor</title>
+  <script defer src="index.04529d2a30cd39e190e2.bundle.js"></script></head>
+
+  <body>
+    <section class="content-wrapper">
+      <header class="header">
+        <div class="header-logo">
+          <a href="#">
+            <img src="./assets/scaleflex-logo.png" alt="scaleflex logo" />
+          </a>
+          <a class="img-editor">Image Editor</a>
+        </div>
+        <div class="navbar">
+          <a
+            class="stars"
+            href="https://github.com/scaleflex/filerobot-image-editor/stargazers"
+            target="_blank"
+          >
+            <img class="star" src="./assets/star.png" alt="star" />
+            <img
+              class="stars-label"
+              src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?color=fff&label=Star&logo=none&style=flat&labelColor=fff"
+              alt="star-img"
+            />
+          </a>
+          <a
+            class="git-hub"
+            href="https://github.com/scaleflex/filerobot-image-editor"
+            target="_blank"
+          >
+            <img src="./assets/github-icon.png" alt="github-icon" />
+            <p>GitHub</p>
+          </a>
+        </div>
+      </header>
+
+      <div class="content">
+        <div>
+          <h1 class="content-title">
+            Edit, Resize, and Filter <br />
+            <span class="title">
+              any images for
+              <span class="colored-text">Free</span>
+            </span>
+          </h1>
+        </div>
+        <div class="content-text container">
+          <p>
+            The Filerobot Image Editor is the easiest way to integrate an
+            on-the-shelf and easy-to-use image editor in your web application.
+            Integrated with few lines of code, your users will be able to apply
+            transformations like resize, crop, rotate and
+            <span>various filters to any image.</span>
+          </p>
+        </div>
+        <div class="view-button">
+          <button>
+            <a
+              target="_blank"
+              href="https://github.com/scaleflex/filerobot-image-editor"
+            >
+              View on GitHub
+            </a>
+          </button>
+          <p>Try to do it below</p>
+          <img src="./assets/arrow.png" alt="arrow-shape" />
+        </div>
+        <div class="img-table container">
+          <div id="config-wrapper" class="config-table">
+            <h4>Images</h4>
+            <div class="img-container">
+              <div class="uploaded-imgs-wrapper"></div>
+              <input
+                class="add-img"
+                type="file"
+                accept="image/*"
+                name="image"
+                id="add-image"
+              />
+            </div>
+            <h5>Tabs</h5>
+            <div class="tools-checkboxs">
+              <div>
+                <label class="checkbox-container" for="crop">
+                  Adjust
+                  <input
+                    id="crop"
+                    value="adjust"
+                    type="checkbox"
+                    name="Crop"
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
+              </div>
+              <div>
+                <label class="checkbox-container" for="finetune">
+                  Finetune
+                  <input
+                    id="finetune"
+                    value="finetune"
+                    type="checkbox"
+                    name="Finetune"
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
+              </div>
+              <div id="filter-wrapper">
+                <label class="checkbox-container" for="filter">
+                  Filters
+                  <input
+                    id="filter"
+                    value="filter"
+                    type="checkbox"
+                    name="Filters"
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
+              </div>
+              <div>
+                <label class="checkbox-container" for="watermark">
+                  Watermark
+                  <input
+                    id="watermark"
+                    value="watermark"
+                    type="checkbox"
+                    name="Watermark"
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
+              </div>
+              <div id="annotate-wrapper">
+                <label class="checkbox-container" for="annotate">
+                  Draw
+                  <input
+                    id="annotate"
+                    value="annotate"
+                    type="checkbox"
+                    name="Annotate"
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
+              </div>
+              <div>
+                <label class="checkbox-container" for="resize">
+                  Resize
+                  <input
+                    id="resize"
+                    value="resize"
+                    type="checkbox"
+                    name="Resize"
+                    checked />
+                  <span class="checkmark"></span></label
+                ><br />
+              </div>
+            </div>
+            <div class="mode-content">
+              <h4>Mode</h4>
+              <select id="mode-options">
+                <option class="mode-options" value="Download">Download</option>
+                <option value="Cloudimage">CloudImage</option>
+              </select>
+            </div>
+          </div>
+          <div class="editor-container" id="editor_container"></div>
+        </div>
+        <div class="blue-blur-ellipse"></div>
+        <div class="cyan-blur-ellipse"></div>
+      </div>
+    </section>
+
+    <section class="filerobot-features container-fluid">
+      <div class="filerobot-title">
+        Most popular features of the Filerobot <br />
+        Image Editor
+      </div>
+      <div class="filerobot-features-content">
+        <div>
+          <img
+            src="./assets/image-resize-mode.png"
+            alt="image-resize-mode-img"
+          />
+          <h3>Crop & resize</h3>
+          <p>
+            Use either or both tools to adjust the framing, size, and focus
+            point of your image for optimal impact on delivery.
+          </p>
+        </div>
+        <div>
+          <img src="./assets/watermark-img.png" alt="watermark-img" />
+          <h3>Add watermark</h3>
+          <p>
+            Adding a watermark is a great way to protect your work, and you can
+            do it with a discrete logo, an image or a simple text line.
+            Placement and orientation are up to you.
+          </p>
+        </div>
+        <div>
+          <img src="./assets/add-annotation.png" alt="add-annotation-img" />
+          <h3>Add annotation</h3>
+          <p>
+            Enrich and collaborate directly on your media for keeping track of
+            changes and ideas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="usage">
+      <div class="usage-title">
+        <h3>Ready to get started?</h3>
+        <p class="container">
+          In the implementation example below you can edit an image and
+          instantly download the result. As simple as that. For more integration
+          options, please go to
+          <span class="documentation">
+            the documentation (<span class="colored-text">
+              <a
+                href="https://github.com/scaleflex/filerobot-image-editor"
+                target="_blank"
+              >
+                here
+              </a> </span
+            >).
+          </span>
+        </p>
+      </div>
+      <div class="version-buttons container">
+        <p id="js-code-tab" selected-tab>JS version</p>
+        <p id="react-code-tab">React version</p>
+        <p id="cdn-code-tab">CDN version</p>
+      </div>
+      <div class="js-version-code container">
+        <pre><code id="js-code-wrapper" class="versions-text" >
+            <span class="red">import</span> <span class="dark-red">FilerobotImageEditor</span>, { <span class="blue">TABS</span>, <span class="blue">TOOLS</span> } <span class="red">from</span> 'filerobot-image-editor';
+
+            <span class="red">const</span> config = {
+              <span class="blue">img</span>: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+              <span class="light-blue">onSave</span>: (editedImageObject, designState) => console.<span class="light-blue">log</span>('saved', editedImageObject, designState),
+              <span class="blue">annotationsCommon</span>: {
+                fill: '#ff0000'
+              },
+              <span class="blue">Text</span>: { text: 'Filerobot...' },
+              <span class="blue">tabsIds</span>: [<span class="blue">TABS.ADJUST</span>,<span class="blue">TABS.ANNOTATE</span>,<span class="blue">TABS.WATERMARK</span>], <span class="gray">// or ['Adjust', 'Annotate', 'Watermark']</span>
+              <span class="blue">defaultTabId</span>: TABS.ANNOTATE, // or 'Annotate'
+              <span class="blue">defaultToolId</span>: TOOLS.TEXT, // or 'Text'
+            };
+
+            <span class="gray">// Assuming we have a div with id="editor_container"</span>
+            <span class="red">const</span> filerobotImageEditor = <span class="red">new</span> <span class="dark-red">FilerobotImageEditor</span>(
+              document.<span class="light-blue">querySelector</span>('#editor_container'),
+              config
+            );
+
+            filerobotImageEditor.<span class="light-blue">render</span>({
+              onClose: (closingReason) => {
+                console.<span class="light-blue">log</span>('Closing reason', closingReason);
+                filerobotImageEdtior.<span class="light-blue">terminate</span>();
+              }
+            });
+          </code></pre>
+      </div>
+
+      <div class="react-version-code container">
+        <pre><code id="react-code-wrapper" class="versions-text" style="display: none;">
+          <span class="red">import</span> <span class="dark-red">React</span>, { useState } <span class="red">from</span> 'react';
+          <span class="red">import</span> <span class="dark-red">FilerobotImageEditor</span>, { <span class="blue">TABS</span>, <span class="blue">TOOLS</span>} <span class="red">from</span> 'react-filerobot-image-editor';
+
+          <span class="red">function</span> <span class="dark-red">App</span>() {
+            <span class="red">const</span> [isImgEditorShown, setIsImgEditorShown] = <span class="light-blue">useState</span>(<span class="blue">false</span>);
+
+            <span class="red">const</span> <span class="light-blue">openImgEditor</span> = () => {
+              setIsImgEditorShown(<span class="blue">true</span>);
+            };
+
+            <span class="red">const</span> <span class="light-blue">closeImgEditor </span> = () => {
+              setIsImgEditorShown(<span class="blue">false</span>);
+            };
+
+            <span class="red">return</span> (
+              <span class="green">&lt;div></span>
+              <span class="green"> &lt;button</span> onClick={openImgEditor}>Open Filerobot image editor&lt;/button>
+                      {isImgEditorShown && (
+                      &lt;FilerobotImageEditor
+                          img="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+                          onSave={(editedImageObject, designState) => console.log('saved', editedImageObject, designState))}
+                          onClose={closeImgEditor}
+                          annotationsCommon={{
+                            fill: '#ff0000'
+                          }}
+                          Text={{ text: 'Filerobot...' }}
+                          tabsIds={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
+                          defaultTabId={TABS.ANNOTATE} // or 'Annotate'
+                          defaultToolId={TOOLS.TEXT} // or 'Text'
+                        />
+                      )}
+                &lt;/div>
+            );
+          }
+          </code></pre>
+      </div>
+
+      <div class="CDN-version-code container">
+        <pre><code id="cdn-code-wrapper" class="versions-text" style="display: none;"  >
+          <span class="gray"> //after importing the plugin/library from CDN</span>
+            <span class="red">const</span> config = {
+              <span class="blue">img</span>: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+              <span class="light-blue">onSave</span>: (editedImageObject, designState) => console.<span class="light-blue">log</span>('saved', editedImageObject, designState),
+              <span class="blue">annotationsCommon</span>: {
+                fill: '#ff0000'
+              },
+              <span class="blue">Text</span>: { text: 'Filerobot...' },
+              <span class="blue">tabsIds</span>: [<span class="blue">window.FilerobotImageEditor.TABS.ADJUST</span>,<span class="blue">window.FilerobotImageEditor.TABS.ANNOTATE</span>,<span class="blue">window.FilerobotImageEditor.TABS.WATERMARK</span>], <span class="gray">// or ['Adjust', 'Annotate', 'Watermark']</span>
+              <span class="blue">defaultTabId</span>: window.FilerobotImageEditor.TABS.ANNOTATE, // or 'Annotate'
+              <span class="blue">defaultToolId</span>: window.FilerobotImageEditor.TOOLS.TEXT, // or 'Text'
+            };
+
+            <span class="gray">// Assuming we have a div with id="editor_container"</span>
+            <span class="red">const</span> filerobotImageEditor = <span class="red">new</span> <span class="dark-red">window.FilerobotImageEditor</span>(
+              document.<span class="light-blue">querySelector</span>('#editor_container'),
+              config
+            );
+
+            window.FilerobotImageEditor.<span class="light-blue">render</span>({
+              onClose: (closingReason) => {
+                console.<span class="light-blue">log</span>('Closing reason', closingReason);
+                window.FilerobotImageEditor.<span class="light-blue">terminate</span>();
+              }
+            });
+          </code></pre>
+      </div>
+
+      <div class="adapters container">
+        <h4>Bridges/Adapters</h4>
+        <div class="adapters-options">
+          <p class="adapter-react-option">
+            <img src="./assets/Ellipse 3.png" alt="Ellipse" />
+            React
+          </p>
+          <p class="adapter-js-option">
+            <img src="./assets/Ellipse 3.png" alt="Ellipse" />
+            Vanilla JS
+          </p>
+          <p class="adapter-angular-option">
+            <img src="./assets/Hollow-Ellipse 3.png" alt="Ellipse" />
+            Angular
+          </p>
+          <p class="adapter-vue-option">
+            <img src="./assets/Hollow-Ellipse 3.png" alt="Ellipse" />
+            Vue
+          </p>
+          <p class="adapter-web-option">
+            <img src="./assets/Hollow-Ellipse 3.png" alt="Ellipse" />
+            react-native
+          </p>
+        </div>
+      </div>
+      <div class="legend-content container">
+        <p class="legend-title">Legend:</p>
+        <p class="complete-feature">
+          <img src="./assets/Ellipse 3.png" alt="Ellipse" />
+          completed features
+        </p>
+        <p class="progress-feature">
+          <img src="./assets/half-circle.png" alt="half-circle-img" />
+          in progress features
+        </p>
+        <p class="to-do-feature">
+          <img src="./assets/Hollow-Ellipse 3.png" alt="Ellipse" />
+          to do features
+        </p>
+      </div>
+      <div>
+        <button class="explore-btn">
+          <a
+            href="https://github.com/scaleflex/filerobot-image-editor"
+            target="_blank"
+          >
+            Explore Documentation
+          </a>
+        </button>
+      </div>
+    </section>
+
+    <section class="questions">
+      <h3>Any questions?</h3>
+      <p>
+        Contact us at <span>hello@filerobot.com</span>, our experts will be
+        happy to help!
+      </p>
+      <button>
+        <a
+          href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+          target="_blank"
+        >
+          Submit GitHub issue
+        </a>
+      </button>
+      <div class="cyan-blur-ellipse"></div>
+    </section>
+
+    <section class="footer container-fluid">
+      <div class="footer-logo">
+        <img src="./assets/scaleflex-logo.png" alt="scaleflex-logo" />
+        <p>
+          Made with ❤ by the
+          <span
+            ><a href=" https://scaleflex.com/" target="_blank"
+              >Scaleflex</a
+            ></span
+          >
+          team, the guys behind
+          <span
+            ><a href=" https://cloudimage.io/" target="_blank"
+              >Cloudimage.io</a
+            ></span
+          >.Powered by
+          <span
+            ><a href="https://filerobot.com/" target="_blank"
+              >Filerobot</a
+            ></span
+          >. All rights reserved.
+        </p>
+      </div>
+      <div class="footer-wrapper">
+        <div class="footer-info">
+          <h4>Info</h4>
+          <div class="footer-info-content">
+            <a
+              href="https://github.com/scaleflex/filerobot-image-editor"
+              target="_blank"
+            >
+              View GitHub
+            </a>
+            <a
+              href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+              target="_blank"
+            >
+              Current Issues
+            </a>
+            <a
+              href=" https://github.com/scaleflex/filerobot-image-editor"
+              target="_blank"
+            >
+              Documentation
+            </a>
+          </div>
+        </div>
+        <div class="footer-filerobot">
+          <h4>Filerobot UI Family</h4>
+          <div class="footer-filerobot-content">
+            <a
+              href="https://www.npmjs.com/package/@filerobot/readme"
+              target="_blank"
+            >
+              Filerobot Media Asset Widget
+            </a>
+            <a
+              href="https://github.com/scaleflex/react-cloudimage-responsive"
+              target="_blank"
+            >
+              React Cloudimage Responsive
+            </a>
+            <a
+              href="https://github.com/scaleflex/js-cloudimage-responsive"
+              target="_blank"
+            >
+              JS Cloudimage Responsive
+            </a>
+            <a
+              href="https://github.com/scaleflex/js-cloudimage-360-view"
+              target="_blank"
+            >
+              JS Cloudimage 360 view
+            </a>
+            <a
+              href="https://github.com/scaleflex/js-cloudimage-responsive"
+              target="_blank"
+            >
+              JS Cloudimage Responsive
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="cyan-blur-ellipse"></div>
+    </section>
+  </body>
+</html>
