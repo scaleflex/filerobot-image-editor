@@ -71,6 +71,7 @@ const CropTransformer = () => {
     dispatch({
       type: SET_CROP,
       payload: {
+        ...crop,
         ...newCrop,
         dismissHistory: noHistory,
       },

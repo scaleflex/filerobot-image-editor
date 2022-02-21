@@ -13,7 +13,7 @@ const setCrop = (state, payload) => {
         : toPrecisedFloat(payload.ratio) ?? oldCrop.ratio,
     width: toPrecisedFloat(payload.width) ?? oldCrop.width,
     height: toPrecisedFloat(payload.height) ?? oldCrop.height,
-    ratioTitleKey: payload.ratioTitleKey,
+    ratioTitleKey: payload.ratioTitleKey ?? oldCrop.ratioTitleKey,
     ratioGroupKey: payload.ratioGroupKey,
     ratioFolderKey: payload.ratioFolderKey,
   };
