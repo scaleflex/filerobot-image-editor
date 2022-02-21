@@ -15,10 +15,7 @@ const RotateOptions = () => {
     resize = {},
   } = useStore();
 
-  const changeRotation = useDebouncedCallback((e, newRotation) => {
-    if (rotation === newRotation) {
-      return;
-    }
+  const changeRotation = useDebouncedCallback((_e, newRotation) => {
     const rotationAngle = restrictNumber(newRotation, -180, 180);
     dispatch({
       type: CHANGE_ROTATION,
