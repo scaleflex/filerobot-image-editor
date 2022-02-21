@@ -34,24 +34,23 @@ const PenOptions = ({ t }) => {
 
   const getPointerPosition = useCallback(() => {
     const canvasBoundingRect = getElemDocumentCoords(canvasRef.current.content);
-    const canvasScale = canvasRef.current.scale();
     const pos = getPointerOffsetPositionBoundedToObject(
       previewGroup,
       canvasBoundingRect,
     );
 
     return [
-      pos.offsetX / canvasScale.x - (designLayer.attrs.xPadding || 0),
-      pos.offsetY / canvasScale.y - (designLayer.attrs.yPadding || 0),
+      pos.offsetX - (designLayer.attrs.xPadding || 0),
+      pos.offsetY - (designLayer.attrs.yPadding || 0),
     ];
   }, []);
 
-  const handlePointerMove = useCallback((e) => {
+  const handlePointerMove = useCallback(() => {
     if (!updatedPen.current.moved) {
       updatedPen.current = {
         moved: true,
         id: randomId(TOOLS_IDS.PEN),
-        points: [...updatedPen.current.points, ...getPointerPosition(e)],
+        points: [...updatedPen.current.points, ...getPointerPosition()],
       };
 
       savePenNoDebounce({
@@ -61,7 +60,7 @@ const PenOptions = ({ t }) => {
       });
     } else {
       updatedPen.current.points = updatedPen.current.points.concat(
-        getPointerPosition(e),
+        getPointerPosition(),
       );
 
       dispatch({
@@ -100,7 +99,7 @@ const PenOptions = ({ t }) => {
     }
     e.evt.preventDefault();
 
-    updatedPen.current = { points: getPointerPosition(e) };
+    updatedPen.current = { points: getPointerPosition() };
 
     canvasRef.current.on('mousemove touchmove', handlePointerMove);
     canvasRef.current.on('mouseleave touchcancel', handlePointerUp);
