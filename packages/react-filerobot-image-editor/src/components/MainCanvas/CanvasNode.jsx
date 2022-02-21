@@ -5,7 +5,7 @@ import Konva from 'konva';
 import { Stage, useStrictMode } from 'react-konva';
 
 /** Internal Dependencies */
-import { CLEAR_ANNOTATIONS_SELECTIONS, ZOOM_CANVAS } from 'actions';
+import { CLEAR_ANNOTATIONS_SELECTIONS, SET_CROP, ZOOM_CANVAS } from 'actions';
 import {
   DEFAULT_ZOOM_FACTOR,
   POINTER_ICONS,
@@ -29,11 +29,13 @@ const CanvasNode = ({ children }) => {
     canvasScale,
     selectionsIds = [],
     zoom = {},
+    adjustments: { crop = {} } = {},
+    designLayer,
     config: { previewPixelRatio },
   } = useStore();
   Konva.pixelRatio = previewPixelRatio;
   const defaultZoomFactor = DEFAULT_ZOOM_FACTOR;
-  const isZoomEnabled = toolId !== TOOLS_IDS.CROP;
+  const isZoomEnabled = true;
   const [isPanningEnabled, setIsPanningEnabled] = useState(
     tabId !== TABS_IDS.ANNOTATE &&
       tabId !== TABS_IDS.WATERMARK &&
@@ -95,8 +97,30 @@ const CanvasNode = ({ children }) => {
     };
   };
 
+  const handleCropZooming = (e) => {
+    const newScale =
+      (crop.scaleBy || defaultZoomFactor) +
+      e.evt.deltaY * -ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR;
+    // const pointer = designLayer.getRelativePointerPosition();
+    if (newScale < 0.1) {
+      return;
+    }
+
+    dispatch({
+      type: SET_CROP,
+      payload: {
+        ...crop,
+        scaleBy: newScale,
+      },
+    });
+  };
+
   const handleZoom = (e) => {
     e.evt.preventDefault();
+    if (toolId === TOOLS_IDS.CROP) {
+      handleCropZooming(e);
+      return;
+    }
     const newScale =
       (zoom.factor || defaultZoomFactor) +
       e.evt.deltaY * -ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR;

@@ -13,6 +13,7 @@ const setCrop = (state, payload) => {
         : toPrecisedFloat(payload.ratio) ?? oldCrop.ratio,
     width: toPrecisedFloat(payload.width) ?? oldCrop.width,
     height: toPrecisedFloat(payload.height) ?? oldCrop.height,
+    scaleBy: payload.scaleBy ?? oldCrop.scaleBy,
     ratioTitleKey: payload.ratioTitleKey ?? oldCrop.ratioTitleKey,
     ratioGroupKey: payload.ratioGroupKey,
     ratioFolderKey: payload.ratioFolderKey,
@@ -30,7 +31,8 @@ const setCrop = (state, payload) => {
     oldCrop.ratio === newCrop.ratio &&
     oldCrop.ratioTitleKey === newCrop.ratioTitleKey &&
     oldCrop.ratioGroupKey === newCrop.ratioGroupKey &&
-    oldCrop.ratioFolderKey === newCrop.ratioFolderKey
+    oldCrop.ratioFolderKey === newCrop.ratioFolderKey &&
+    oldCrop.scaleBy === newCrop.scaleBy
   ) {
     return state;
   }

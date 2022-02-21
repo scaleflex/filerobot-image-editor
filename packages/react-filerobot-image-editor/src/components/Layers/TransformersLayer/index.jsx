@@ -18,7 +18,7 @@ const TransformersLayer = () => {
       y={shownImageDimensions.abstractY || 0}
     >
       <NodesTransformer />
-      {toolId === TOOLS_IDS.CROP && <CropTransformer />}
+      {/* {toolId === TOOLS_IDS.CROP && <CropTransformer />} */}
     </Layer>
   );
 };

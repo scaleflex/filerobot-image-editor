@@ -126,17 +126,20 @@ const DesignLayer = () => {
     // As elliptical crop isn't applied while in crop tool.
     const isCroppingAndNotSaving =
       isCurrentlyCropping && !designLayerRef.current?.attrs?.isSaving;
+    const { scaledBy, ...orgCropDimensions } = imageDimensions;
     const clipBox = isCroppingAndNotSaving
       ? {
-          ...imageDimensions,
+          ...orgCropDimensions,
           x: 0,
           y: 0,
+          scaleBy: crop.scaleBy ?? 1,
         }
       : {
-          width: crop.width || imageDimensions.width,
-          height: crop.height || imageDimensions.height,
+          width: crop.width || orgCropDimensions.width,
+          height: crop.height || orgCropDimensions.height,
           x: crop.x || 0,
           y: crop.y || 0,
+          scaleBy: crop.scaleBy ?? 1,
         };
     cropImage(ctx, { ratio: crop.ratio, ...clipBox }, isCroppingAndNotSaving);
     if (designLayerRef.current) {
@@ -145,6 +148,7 @@ const DesignLayer = () => {
         clipY: clipBox.y,
         clipWidth: clipBox.width,
         clipHeight: clipBox.height,
+        clipScaleBy: clipBox.scaleBy,
       });
     }
   };
@@ -232,14 +236,17 @@ const DesignLayer = () => {
 
   const yPoint = isCurrentlyCropping ? yPointNoResizeNoCrop : yPointAfterCrop;
 
+  const cropScaleBy = crop.scaleBy ?? 1;
   const finalScaleX =
     (isFlippedX ? -1 : 1) *
     (isCurrentlyCropping ? 1 : resizedX) *
-    scaleAfterRotation;
+    scaleAfterRotation *
+    cropScaleBy;
   const finalScaleY =
     (isFlippedY ? -1 : 1) *
     (isCurrentlyCropping ? 1 : resizedY) *
-    scaleAfterRotation;
+    scaleAfterRotation *
+    cropScaleBy;
 
   return (
     <Layer
@@ -255,6 +262,7 @@ const DesignLayer = () => {
       scaleY={finalScaleY}
       rotation={isCurrentlyCropping ? 0 : rotation}
       clipFunc={clipFunc}
+      draggable
     >
       <Image
         id={IMAGE_NODE_ID}
@@ -265,7 +273,7 @@ const DesignLayer = () => {
         offsetY={scaledSpacedOriginalImg.height / 2}
         x={scaledSpacedOriginalImg.width / 2}
         y={scaledSpacedOriginalImg.height / 2}
-        listening={false}
+        // listening={false}
         filters={finetunesAndFilter}
         ref={imageNodeRef}
         {...finetunesProps}
