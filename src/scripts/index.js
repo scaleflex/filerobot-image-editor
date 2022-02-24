@@ -18,6 +18,8 @@ const reactTabTitle = getElementById("react-code-tab");
 const reactCodeWrapper = getElementById("react-code-wrapper");
 const cdnTabTitle = getElementById("cdn-code-tab");
 const cdnCodeWrapper = getElementById("cdn-code-wrapper");
+const copyButtons = document.querySelectorAll(".copy-button");
+const accordions = document.querySelectorAll("[data-accordion]");
 
 let useCloudimage = false;
 
@@ -28,7 +30,7 @@ const EXAMPLE_CODE_TABS = {
 };
 
 const DEFAULT_IMAGES_SRCS = [
-  "https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg",
+  "https://scaleflex.cloudimg.io/v7/demo/river.png",
   "https://scaleflex.airstore.io/demo/spencer-davis-unsplash.jpg",
   "https://scaleflex.cloudimg.io/v7/demo/damian-markutt-unsplash.jpg",
 ];
@@ -52,7 +54,7 @@ const IMG_EDITOR_TABS = {
 };
 
 const pluginConfig = {
-  img: "https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg",
+  img: "https://scaleflex.cloudimg.io/v7/demo/river.png",
   Text: { text: "Filerobot..." },
   tabsIds: selectedTabs,
   defaultTabId: [TABS.RESIZE],
@@ -224,6 +226,31 @@ document.onreadystatechange = () => {
   });
 };
 
+function copyCodeHandler(event) {
+  const copyButton = event.currentTarget.getElementsByTagName("p")[0];
+  const currentCodeTabId = document.querySelector("[selected-tab]").id;
+  const currentCodeToCopy = EXAMPLE_CODE_TABS[currentCodeTabId];
+
+  navigator.clipboard.writeText(currentCodeToCopy.innerText);
+
+  if (copyButton.innerHTML === "Copy") {
+    copyButton.innerHTML = "copied";
+
+    setTimeout(() => {
+      copyButton.innerHTML = "Copy";
+    }, 500);
+  }
+}
+
+function showAccordionContent(event) {
+  const contentId = event.target.getAttribute("data-accordion");
+  const content = document.querySelector(
+    `[data-accordion-content="${contentId}"]`,
+  );
+
+  content.style.display = !content?.offsetWidth ? "block" : "none";
+}
+
 crop.addEventListener("change", onChangeTabsHandler);
 finetune.addEventListener("change", onChangeTabsHandler);
 filter.addEventListener("change", onChangeTabsHandler);
@@ -235,3 +262,10 @@ modeOptions.addEventListener("change", changeModeHandler);
 jsTabTitle.addEventListener("click", toggleActiveCodeTab);
 reactTabTitle.addEventListener("click", toggleActiveCodeTab);
 cdnTabTitle.addEventListener("click", toggleActiveCodeTab);
+copyButtons.forEach((copyButton) => {
+  copyButton.addEventListener("click", copyCodeHandler);
+});
+
+accordions.forEach((accordion) => {
+  accordion.addEventListener("click", showAccordionContent);
+});
