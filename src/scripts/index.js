@@ -124,44 +124,43 @@ function onSave(url, fileName) {
   tmpLink = null;
 }
 
-function appendImageToContainer(image) {
+function appendImageToContainer(imageSrc) {
   const imagesWrapper = document.querySelector(".uploaded-imgs-wrapper");
+  const imageWrapper = document.createElement("div");
 
-  imagesWrapper.appendChild(image);
+  imageWrapper.style.backgroundImage = `url(${imageSrc})`;
 
-  image.className = "uploaded-img";
+  imageWrapper.className = "uploaded-img";
 
-  image.onclick = toggleActiveImage;
+  imageWrapper.onclick = () => toggleActiveImage(imageWrapper, imageSrc);
+
+  imagesWrapper.appendChild(imageWrapper);
+
+  return imageWrapper;
 }
 
 function uploadImg(event) {
-  const nextImage = new Image();
+  const imageSrc = URL.createObjectURL(event.target.files[0]);
 
-  nextImage.src = URL.createObjectURL(event.target.files[0]);
+  const imageContainer = appendImageToContainer(imageSrc);
 
-  appendImageToContainer(nextImage);
+  toggleActiveImage(imageContainer, imageSrc);
 
-  nextImage.onload = () => {
-    toggleActiveImage(nextImage);
-
-    filerobotImageEditor.render({ img: nextImage.src });
-  };
+  filerobotImageEditor.render({ img: imageSrc });
 }
 
-function toggleActiveImage(eventOrImg) {
-  const nextImage = eventOrImg?.target || eventOrImg;
-
-  const prevActiveImage = document.querySelector(
+function toggleActiveImage(imageContainer, imageSrc) {
+  const prevImageContainer = document.querySelector(
     "[data-image-editor-active-image]",
   );
 
-  if (prevActiveImage) {
-    prevActiveImage.removeAttribute("data-image-editor-active-image");
+  if (prevImageContainer) {
+    prevImageContainer.removeAttribute("data-image-editor-active-image");
   }
 
-  nextImage.setAttribute("data-image-editor-active-image", "");
+  imageContainer.setAttribute("data-image-editor-active-image", "");
 
-  filerobotImageEditor.render({ img: nextImage.src });
+  filerobotImageEditor.render({ img: imageSrc });
 }
 
 function changeModeHandler() {
@@ -215,13 +214,10 @@ function changeCodeTabHandler(event) {
 
 document.onreadystatechange = () => {
   DEFAULT_IMAGES_SRCS.forEach((imageSrc, index) => {
-    const image = new Image();
-    image.src = imageSrc;
-
-    appendImageToContainer(image);
+    const imageContainer = appendImageToContainer(imageSrc);
 
     if (!index) {
-      toggleActiveImage(image);
+      toggleActiveImage(imageContainer, imageSrc);
     }
   });
 };
