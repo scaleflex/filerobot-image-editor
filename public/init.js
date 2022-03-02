@@ -183,7 +183,7 @@ const config = {
     // ratio: 4 / 100, // ORIGINAL_CROP, ELLIPSE_CROP, CUSTOM_CROP, ratio's number (10 / 4, 5 / 10...etc.)
     // minWidth: 200,
     // minHeight: 300,
-    autoResize: false,
+    // autoResize: false,
     presetsItems: [
       {
         titleKey: 'classicTv',
