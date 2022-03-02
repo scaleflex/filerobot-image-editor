@@ -47,7 +47,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
       payload: newCrop,
     });
 
-    if (cropConfig.autoResize && cropProps.width && cropProps.height) {
+    if (cropConfig.autoResize) {
       dispatch({
         type: SET_RESIZE,
         payload: {

@@ -79,6 +79,10 @@ const CropTransformer = () => {
   };
 
   const saveBoundedCropWithLatestConfig = (cropWidth, cropHeight) => {
+    if (cropTransformerRef.current && cropShapeRef.current) {
+      cropTransformerRef.current.nodes([cropShapeRef.current]);
+    }
+
     const imageDimensions = shownImageDimensionsRef.current;
 
     const attrs = {
@@ -126,12 +130,14 @@ const CropTransformer = () => {
   }, [cropRatio]);
 
   useEffect(() => {
-    if (cropTransformerRef.current && cropShapeRef.current) {
-      cropTransformerRef.current.nodes([cropShapeRef.current]);
-
-      if (shownImageDimensionsRef.current && crop.width && crop.height) {
-        saveBoundedCropWithLatestConfig(crop.width, crop.height);
-      }
+    if (
+      cropTransformerRef.current &&
+      cropShapeRef.current &&
+      shownImageDimensionsRef.current &&
+      crop.width &&
+      crop.height
+    ) {
+      saveBoundedCropWithLatestConfig(crop.width, crop.height);
     }
   }, [cropConfig, shownImageDimensions.width, shownImageDimensions.height]);
 
