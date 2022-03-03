@@ -38,7 +38,7 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
       rotation,
     );
     const newResize = {
-      [name]: restrictNumber(value, 1, originalImgSizeAfterRotation[name]),
+      [name]: restrictNumber(value, 1),
     };
     const isHeight = name === 'height';
     const secondDimensionName = isHeight ? 'width' : 'height';
@@ -107,6 +107,8 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
     originalImage,
     rotation,
   );
+
+  const isManualChangeDisabled = resize.manualChangeDisabled;
   return (
     <StyledResizeWrapper
       className="FIE_resize-tool-options"
@@ -116,32 +118,35 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
         className="FIE_resize-width-option"
         value={dimensions.width}
         name="width"
-        onChange={changeResize}
+        onChange={isManualChangeDisabled ? undefined : changeResize}
         inputMode="numeric"
         title={t('resizeWidthTitle')}
         type="number"
         size="sm"
         placeholder="Width"
         noLeftMargin={alignLeft}
+        disabled={isManualChangeDisabled}
       />
       <StyledXLabel className="FIE_resize-x-label">x</StyledXLabel>
       <StyledResizeInput
         className="FIE_resize-height-option"
         value={dimensions.height}
         name="height"
-        onChange={changeResize}
+        onChange={isManualChangeDisabled ? undefined : changeResize}
         inputMode="numeric"
         title={t('resizeHeightTitle')}
         type="number"
         size="sm"
         placeholder="Height"
+        disabled={isManualChangeDisabled}
       />
       <StyledRatioLockIcon
         className="FIE_resize-ratio-locker"
         title={t('toggleRatioLockTitle')}
-        onClick={toggleRatioLock}
+        onClick={isManualChangeDisabled ? undefined : toggleRatioLock}
         color="link"
         size="sm"
+        disabled={isManualChangeDisabled}
       >
         {currentSize.ratioUnlocked || resize.ratioUnlocked ? (
           <UnlockOutline color={theme.palette['icons-secondary']} />
@@ -153,8 +158,10 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
         <Button
           className="FIE_resize-reset-button"
           size="sm"
-          onClick={isOriginalSize ? undefined : resetResize}
-          disabled={isOriginalSize}
+          onClick={
+            isOriginalSize || isManualChangeDisabled ? undefined : resetResize
+          }
+          disabled={isOriginalSize || isManualChangeDisabled}
           title={t('resetSize')}
         >
           {t('reset')}

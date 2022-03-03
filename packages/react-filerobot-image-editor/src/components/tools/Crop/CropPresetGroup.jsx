@@ -39,29 +39,40 @@ const CropPresetGroup = ({
       onChange={toggleExpand}
       expanded={isExpanded}
     >
-      {items.map(({ titleKey, ratio, width, height, descriptionKey, icon }) => {
-        const newRatio = ratio ?? toPrecisedFloat(width / height);
+      {items.map(
+        ({
+          titleKey,
+          ratio,
+          width,
+          height,
+          descriptionKey,
+          icon,
+          disableManualResize,
+        }) => {
+          const newRatio = ratio ?? toPrecisedFloat(width / height);
 
-        return (
-          <CropPresetItem
-            key={titleKey}
-            titleKey={titleKey}
-            t={t}
-            description={t(descriptionKey)}
-            size="sm"
-            onClick={onItemSelectFromGroup}
-            width={width}
-            height={height}
-            ratio={newRatio}
-            Icon={icon}
-            isActive={
-              currentRatio === newRatio &&
-              ratioTitleKey === titleKey &&
-              ratioGroupKey === groupTitleKey
-            }
-          />
-        );
-      })}
+          return (
+            <CropPresetItem
+              key={titleKey}
+              titleKey={titleKey}
+              t={t}
+              description={t(descriptionKey)}
+              size="sm"
+              onClick={onItemSelectFromGroup}
+              width={width}
+              height={height}
+              ratio={newRatio}
+              Icon={icon}
+              disableManualResize={disableManualResize}
+              isActive={
+                currentRatio === newRatio &&
+                ratioTitleKey === titleKey &&
+                ratioGroupKey === groupTitleKey
+              }
+            />
+          );
+        },
+      )}
     </Accordion>
   );
 };

@@ -1,11 +1,22 @@
 /** External Dependencies */
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import Konva from 'konva';
-import { Stage, useStrictMode } from 'react-konva';
+import { useStrictMode } from 'react-konva';
 
 /** Internal Dependencies */
-import { CLEAR_ANNOTATIONS_SELECTIONS, ZOOM_CANVAS } from 'actions';
+import {
+  CHANGE_POINTER_ICON,
+  CLEAR_ANNOTATIONS_SELECTIONS,
+  ZOOM_CANVAS,
+} from 'actions';
 import {
   DEFAULT_ZOOM_FACTOR,
   POINTER_ICONS,
@@ -14,11 +25,13 @@ import {
 } from 'utils/constants';
 import { useStore } from 'hooks';
 import { endTouchesZooming, zoomOnTouchesMove } from './touchZoomingEvents';
+import { StyledCanvasNode } from './MainCanvas.styled';
 
 const ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR = 0.006;
 
 const CanvasNode = ({ children }) => {
   useStrictMode(true);
+  const canvasRef = useRef();
   const {
     dispatch,
     pointerCssIcon,
@@ -76,6 +89,8 @@ const CanvasNode = ({ children }) => {
   const clearSelections = useCallback(
     (e) => {
       e.evt.preventDefault();
+      e.target.container().focus();
+
       if (e.target instanceof Konva.Stage && selectionsIds.length > 0) {
         dispatch({
           type: CLEAR_ANNOTATIONS_SELECTIONS,
@@ -101,26 +116,12 @@ const CanvasNode = ({ children }) => {
       (zoom.factor || defaultZoomFactor) +
       e.evt.deltaY * -ZOOM_DELTA_TO_SCALE_CONVERT_FACTOR;
 
-    const minScale = 0.5;
-    if (newScale < minScale) {
-      return;
-    }
-
     const pointer = e.currentTarget.getPointerPosition();
 
     saveZoom({
       ...pointer,
       factor: newScale,
     });
-  };
-
-  const togglePanningOnRightClick = () => {
-    if (
-      (tabId === TABS_IDS.ANNOTATE || tabId === TABS_IDS.WATERMARK) &&
-      zoom.factor > defaultZoomFactor
-    ) {
-      setIsPanningEnabled((val) => !val);
-    }
   };
 
   const preventDraggingIfMultiTouches = (e) => {
@@ -138,12 +139,69 @@ const CanvasNode = ({ children }) => {
     endTouchesZooming(resetPanningAbility);
   };
 
+  const mapKeyboardKeys = (e) => {
+    if (
+      (e.code === 'Space' || e.key === 'Control') &&
+      !e.repeat &&
+      zoom.factor > defaultZoomFactor &&
+      isZoomEnabled
+    ) {
+      e.preventDefault();
+      setIsPanningEnabled(true);
+      dispatch({
+        type: CHANGE_POINTER_ICON,
+        payload: {
+          pointerCssIcon: POINTER_ICONS.DRAG,
+        },
+      });
+    }
+  };
+
+  const revertKeyboardKeysEffect = (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      resetPanningAbility();
+    }
+  };
+
+  const focusCanvasOnEnter = () => {
+    if (canvasRef.current) {
+      canvasRef.current.container().focus();
+    }
+  };
+
+  useEffect(() => {
+    dispatch({
+      type: CHANGE_POINTER_ICON,
+      payload: {
+        pointerCssIcon: POINTER_ICONS[isPanningEnabled ? 'DRAG' : 'DEFAULT'],
+      },
+    });
+  }, [isPanningEnabled]);
+
   useEffect(() => {
     setIsPanningEnabled(
       tabId !== TABS_IDS.ANNOTATE &&
         tabId !== TABS_IDS.WATERMARK &&
         zoom.factor > defaultZoomFactor,
     );
+
+    // Remove & register the event on changing tabId, zoom.factor, defaultZoomFactor to always access latest state.
+    let canvasContainer;
+    if (canvasRef.current) {
+      canvasContainer = canvasRef.current.container();
+      canvasContainer.addEventListener('mouseenter', focusCanvasOnEnter);
+      canvasContainer.addEventListener('keydown', mapKeyboardKeys);
+      canvasContainer.addEventListener('keyup', revertKeyboardKeysEffect);
+    }
+
+    return () => {
+      if (canvasContainer) {
+        canvasContainer.removeEventListener('mouseenter', focusCanvasOnEnter);
+        canvasContainer.removeEventListener('keydown', mapKeyboardKeys);
+        canvasContainer.removeEventListener('keyup', revertKeyboardKeysEffect);
+      }
+    };
   }, [tabId, zoom.factor, defaultZoomFactor]);
 
   // Zoom panning is done by dragging mouse except in annotate tab,
@@ -151,8 +209,10 @@ const CanvasNode = ({ children }) => {
   const zoomedResponsiveCanvasScale =
     canvasScale * ((isZoomEnabled && zoom.factor) || defaultZoomFactor);
   return (
-    <Stage
+    <StyledCanvasNode
       className="FIE_canvas-node"
+      tabIndex={-1}
+      ref={canvasRef}
       width={canvasWidth}
       height={canvasHeight}
       scaleX={zoomedResponsiveCanvasScale}
@@ -163,7 +223,6 @@ const CanvasNode = ({ children }) => {
       onWheel={isZoomEnabled ? handleZoom : undefined}
       onTap={clearSelections}
       onClick={clearSelections}
-      onContextMenu={togglePanningOnRightClick}
       onTouchMove={
         isZoomEnabled ? (e) => zoomOnTouchesMove(e, saveZoom) : undefined
       }
@@ -175,7 +234,7 @@ const CanvasNode = ({ children }) => {
       style={cursorStyle}
     >
       {children}
-    </Stage>
+    </StyledCanvasNode>
   );
 };
 

@@ -5,8 +5,9 @@ const setResize = (state, payload) => ({
   isDesignState: !payload.dismissHistory,
   resize: {
     ...state.resize,
-    // width, height, ratioUnlocked (locked by default).
+    // width, height, manualChangeDisabled (false by default), ratioUnlocked (locked by default).
     ...payload,
+    manualChangeDisabled: payload.manualChangeDisabled ?? false,
   },
 });
 

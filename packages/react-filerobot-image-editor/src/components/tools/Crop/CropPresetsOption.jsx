@@ -53,6 +53,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
         payload: {
           width: cropProps.width,
           height: cropProps.height,
+          manualChangeDisabled: cropProps.disableManualResize,
         },
       });
     }
@@ -67,6 +68,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
     height,
     groups,
     icon: Icon,
+    disableManualResize,
   }) =>
     groups ? (
       <CropPresetGroupsList
@@ -77,6 +79,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
         onItemSelect={changeCropRatio}
         prefixIconDimensions={PREFIX_ICONS_DIMENS}
         t={t}
+        disableManualResize={disableManualResize}
       />
     ) : (
       <CropPresetItem
@@ -93,6 +96,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
         width={width}
         height={height}
         onClick={changeCropRatio}
+        disableManualResize={disableManualResize}
       />
     );
 

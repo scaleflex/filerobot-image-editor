@@ -18,9 +18,15 @@ const CropPresetItem = ({
   width,
   height,
   t,
+  disableManualResize,
 }) => {
   const handleOnClick = (e) =>
-    onClick(e, ratio, { ratioTitleKey: titleKey, width, height });
+    onClick(e, ratio, {
+      ratioTitleKey: titleKey,
+      width,
+      height,
+      disableManualResize,
+    });
 
   return (
     <MenuItem active={isActive} onClick={handleOnClick} size="sm">
@@ -46,6 +52,7 @@ CropPresetItem.defaultProps = {
   Icon: undefined,
   width: undefined,
   height: undefined,
+  disableManualResize: false,
 };
 
 CropPresetItem.propTypes = {
@@ -55,6 +62,7 @@ CropPresetItem.propTypes = {
   t: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
   ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  disableManualResize: PropTypes.bool,
   width: PropTypes.number,
   height: PropTypes.number,
   Icon: PropTypes.oneOfType([

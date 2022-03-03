@@ -77,15 +77,13 @@ const DesignLayer = () => {
     [spacedOriginalImg, originalImgInitialScale],
   );
 
-  const isResizeDimensSmallerThanOriginal =
-    resize.width < originalImage.width && resize.height < originalImage.height;
   const resizedX =
-    resize.width && isResizeDimensSmallerThanOriginal && !isCurrentlyCropping
-      ? resize.width / originalImgSizeAfterRotation.width
+    resize.width && !isCurrentlyCropping
+      ? resize.width / (crop.width ?? originalImgSizeAfterRotation.width)
       : 1;
   const resizedY =
-    resize.height && isResizeDimensSmallerThanOriginal && !isCurrentlyCropping
-      ? resize.height / originalImgSizeAfterRotation.height
+    resize.height && !isCurrentlyCropping
+      ? resize.height / (crop.height ?? originalImgSizeAfterRotation.height)
       : 1;
 
   const xPointToCenterImgInCanvas =

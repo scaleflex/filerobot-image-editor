@@ -67,6 +67,7 @@ export const POINTER_ICONS = {
   DRAW: 'crosshair',
   SELECT: 'pointer',
   MOVE: 'move',
+  DRAG: 'GRAB',
 };
 
 export const DEFAULT_ENABLED_ANCHORS = [

@@ -38,6 +38,7 @@ const cropFolderPresets = [
             width: 400,
             height: 400,
             descriptionKey: 'liProfilePhotoSize',
+            disableManualResize: false,
           },
           {
             titleKey: 'profileCoverPhoto',
@@ -190,6 +191,7 @@ const config = {
         descriptionKey: '4:3',
         ratio: toPrecisedFloat(4 / 3),
         icon: CropClassicTv,
+        // disableManualResize: false,
       },
       {
         titleKey: 'cinemascope',

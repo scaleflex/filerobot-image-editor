@@ -1,4 +1,5 @@
 /** External Dependencies */
+import { Stage } from 'react-konva';
 import styled from 'styled-components';
 
 const CanvasContainer = styled.div`
@@ -23,4 +24,8 @@ const StyledOrignalImage = styled.img`
   z-index: 2;
 `;
 
-export { CanvasContainer, StyledOrignalImage };
+const StyledCanvasNode = styled(Stage)`
+  outline: none;
+`;
+
+export { CanvasContainer, StyledOrignalImage, StyledCanvasNode };
