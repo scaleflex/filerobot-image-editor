@@ -73,7 +73,7 @@ export default {
     maxWidth: null,
     maxHeight: null,
     ratio: 'original',
-    ratioTitleKey: 'original',
+    ratioTitleKey: undefined,
     noPresets: false,
     autoResize: false,
     presetsItems: [],
