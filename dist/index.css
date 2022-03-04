@@ -115,6 +115,11 @@ body {
   max-width: 527px;
 }
 
+.content-wrapper .content .content-title span {
+  display: flex;
+  justify-content: center;
+}
+
 .content-wrapper .content .cyan-blur-ellipse {
   position: absolute;
   width: 222px;
@@ -1250,6 +1255,10 @@ body {
   .content-wrapper .content .content-title {
     font-size: 34px;
     line-height: 43.57px;
+  }
+
+  .content-wrapper .content .content-title span {
+    display: unset;
   }
 
   .content-wrapper .content .view-button {
