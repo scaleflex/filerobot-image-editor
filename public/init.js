@@ -182,6 +182,7 @@ const config = {
     // maxHeight: 300,
     // noPresets: false, // Hiding crop presets
     // ratio: 4 / 100, // ORIGINAL_CROP, ELLIPSE_CROP, CUSTOM_CROP, ratio's number (10 / 4, 5 / 10...etc.)
+    // ratioTitleKey: '',
     // minWidth: 200,
     // minHeight: 300,
     // autoResize: false,

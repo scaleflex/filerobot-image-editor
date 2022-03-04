@@ -113,7 +113,7 @@ type cropPresetItem = {
   ratio?: string,
   descriptionKey?: string,
   icon?: string | HTMLElement | ReactComponentElement,
-  isManualChangeDisabled?: boolean,
+  disableManualResize?: boolean,
 };
 
 type cropPresetGroup = {
