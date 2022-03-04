@@ -1,3 +1,6 @@
+/*!***********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/main.css ***!
+  \***********************************************************************/
 * {
   margin: 0;
   padding: 0;
@@ -349,7 +352,7 @@ body {
   width: 12px;
   height: 12px;
   margin-bottom: 50px;
-  background: url("../../public/assets/adding-icon.png") center center;
+  background: url(eb21b7b12b93c61ee0db.png) center center;
   background-repeat: no-repeat;
 }
 
@@ -438,7 +441,7 @@ body {
   top: 3px;
   width: 13px;
   height: 10px;
-  background-image: url("../../public/assets/check-icon.png");
+  background-image: url(d62ea6c5847aecd7e859.png);
   background-repeat: no-repeat;
 }
 
@@ -468,7 +471,7 @@ body {
   color: #203254;
   width: 231.45px;
   -webkit-appearance: none;
-  background-image: url(../../public/assets/arrow-icon.png);
+  background-image: url(34b1d4ea13b63c1d86c6.png);
   background-repeat: no-repeat;
   background-position-x: 97%;
   background-position-y: calc(20px - (8px / 2));
@@ -1427,3 +1430,4 @@ body {
     display: flex;
   }
 }
+
