@@ -89,7 +89,7 @@ const CanvasNode = ({ children }) => {
   const clearSelections = useCallback(
     (e) => {
       e.evt.preventDefault();
-      e.target.container().focus();
+      e.currentTarget.container?.().focus();
 
       if (e.target instanceof Konva.Stage && selectionsIds.length > 0) {
         dispatch({

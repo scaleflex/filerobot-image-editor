@@ -10,7 +10,7 @@ const TabItem = ({ id, label, Icon, isSelected, onClick }) => {
     if (typeof onClick === 'function') {
       onClick(id);
     }
-  }, []);
+  }, [id]);
 
   return (
     <StyledTabItem

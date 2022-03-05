@@ -9,4 +9,3 @@ declare class FilerobotImageEditor {
 }
 
 export default FilerobotImageEditor;
-export { TABS, TOOLS };

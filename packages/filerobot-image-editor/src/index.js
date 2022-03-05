@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React from 'react';
+import { createElement } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
 /** Internal Dependencies */
@@ -34,8 +34,7 @@ class FilerobotImageEditor {
       );
     }
 
-    // eslint-disable-next-line react/jsx-filename-extension
-    this.#render(<AssemblyPoint {...this.config} />, this.container);
+    this.#render(createElement(AssemblyPoint, this.config), this.container);
   }
 
   terminate() {
@@ -43,6 +42,7 @@ class FilerobotImageEditor {
   }
 }
 
-export default FilerobotImageEditor;
+FilerobotImageEditor.TABS = TABS;
+FilerobotImageEditor.TOOLS = TOOLS;
 
-export { TOOLS, TABS };
+export default FilerobotImageEditor;
