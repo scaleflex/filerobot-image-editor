@@ -1,6 +1,6 @@
 /* eslint-disable  */
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { createElement } from 'react';
+import { render } from 'react-dom';
 import DuplicateIcon from '@scaleflex/icons/duplicate';
 import Social from '@scaleflex/icons/social';
 import CropClassicTv from '@scaleflex/icons/crop-classic-tv';
@@ -289,7 +289,7 @@ const config = {
 // const filerobotImageEditor = new FilerobotImageEditor(container, config);
 // filerobotImageEditor.render();
 
-ReactDOM.render(
-  <FilerobotImageEditor {...config} />,
+render(
+  createElement(FilerobotImageEditor, config),
   document.getElementById('root'),
 );

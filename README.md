@@ -226,8 +226,9 @@ function App() {
 ### VanillaJS Example
 
 ```js
-import FilerobotImageEditor, { TABS, TOOLS } from 'filerobot-image-editor';
+import FilerobotImageEditor from 'filerobot-image-editor';
 
+const { TABS, TOOLS } = FilerobotImageEditor;
 const config = {
   img: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
   onSave: (editedImageObject, designState) => console.log('saved', editedImageObject, designState),
@@ -303,7 +304,7 @@ filerobotImageEditor.render({
 });
 ```
 
-> Important Note: if you are importing the library from CDN then you could access it using `window.FilerobotImageEditor` and access both `TABS & TOOLS` from `window.FilerobotImageEditor.TABS`  & `window.FilerobotImageEditor.TOOLS`.
+> NOTE: if you are importing the library from CDN then you could access it using `window.FilerobotImageEditor` and access both `TABS & TOOLS` from `window.FilerobotImageEditor.TABS`  & `window.FilerobotImageEditor.TOOLS`, see [`tabsIds`](#tabsids).
 
 <hr />
 
@@ -342,7 +343,7 @@ Almost you would need those 2 objects ([**palette**](https://github.com/scalefle
 
 As the colors of the plugin are retrieved dynamically from the theme object, it gives you the possibility to customize the colors and font-family to yours.
 
-> Note: You must import the font family from your side in 2 weights (Normal === 400, Medium === 500) to have fonts work properly and show text as expected, which means `Roboto` is not included in the plugin by default so you must import it from your side too if you have provided another font family value through theme don't forget to import it from your side too.
+> NOTE: You must import the font family from your side in 2 weights (Normal === 400, Medium === 500) to have fonts work properly and show text as expected, which means `Roboto` is not included in the plugin by default so you must import it from your side too if you have provided another font family value through theme don't forget to import it from your side too.
 
 #### `tabsIds`
 
@@ -355,9 +356,15 @@ the tabs will be shown to the user, if empty array provided or left by default a
 Access the available Tabs ids & tools ids through anyway of the following
 
 ```js
-window.FilerobotImageEditor.TABS // TABS for CDN bundle
-window.FilerobotImageEditor.TOOLS // TOOLS for CDN bundle
-import { TABS, TOOLS } from '...' // TABS & TOOLS for any of the editor's NPM package
+// Accessing from the CDN bundle
+const { TABS, TOOLS } = window.FilerobotImageEditor;
+
+// Accessing from react component lib. NPM
+import ReactFilerobotImageEditor, { TABS, TOOLS } from 'react-filerobot-image-editor';
+
+// Access from VanillaJS lib. NPM
+import VanillaFilerobotImageEditor from 'filerobot-image-editor'
+const { TABS, TOOLS } = VanillaFilerobotImageEditor;
 ```
 
 #### `defaultTabId`
@@ -436,7 +443,7 @@ Possible values: `'png' | 'jpeg' | 'jpg' | 'webp'`
 
 The default type used and selected in saving the image (the user has the possibility to change it from the saving modal).
 
-> Note: Quality modification will be applied to `jpeg`, `jpg` and `webp` types in returned [`base64`](#onsave) format only while saving the image by the default behavior.
+> NOTE: Quality modification will be applied to `jpeg`, `jpg` and `webp` types in returned [`base64`](#onsave) format only while saving the image by the default behavior.
 
 #### `forceToPngInEllipticalCrop`
 
@@ -753,7 +760,7 @@ Type: `object`
 | **`icon`**                | HTML Element \| string \| React Component               | undefined                                          | An icon prefixed to the crop preset item's title                                                                                                                                          |
 | **`disableManualResize`** | boolean                                                 | false                                              | If `true` the resize inputs will be disabled if the user selected this crop preset item and `autoResize` must be `true` otherwise it won't affect                                         |
 
-> Note: `titleKey` of each object must be unique between the other objects in the same array.
+> NOTE: `titleKey` of each object must be unique between the other objects in the same array.
 
 Example,
 
@@ -887,7 +894,7 @@ Option's object to be provided,
 | **`label`**   | string ***Required***                                   | ''                        | The option's label will be shown to the user                                                                                                                                                                                                                                                                          |
 | **`onClick`** | function (triggerSaveModal, triggerSave) ***Required*** | `undefined`               | The function will be triggered on clicking the option, it receives 2 parameters 1st is a function calls the saving modal, 2nd is a function calls saving directly and both of those functions accepts (1 argument as a callback function that's same as [`onSave function`](#onsave) called after the saving process) |
 | **`icon`**    | HTML Element \| string \| React Component               | `null`                    | The option's icon will be shown before the label                                                                                                                                                                                                                                                                      |
-> Note: you must provide an [`onSave`](#onsave) callback function on using any of the passed functions to the option's onClick function.
+> NOTE: you must provide an [`onSave`](#onsave) callback function on using any of the passed functions to the option's onClick function.
 example,
 ```js
 [
@@ -951,7 +958,7 @@ Triggered once the user clicks either close/cancel button or back button, if not
 * React-native (no ETA)
 * Flutter (no ETA)
 
-> Note: Currently additional docs of bridges are provided in the current page but on having more bridges docs will be moved to separate files.
+> NOTE: Currently additional docs of bridges are provided in the current page but on having more bridges docs will be moved to separate files.
 
 <hr />
 
