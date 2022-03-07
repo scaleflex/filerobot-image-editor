@@ -69,7 +69,7 @@
     "dev": "vite",
     "dev:force-prebundle-deps": "vite --force",
     "set-prod-env": "cross-env BABEL_ENV=production NODE_ENV=production",
-    "build:dist": "yarn set-prod-env vite build",
+    "build:js-dist": "lerna run build:lib --scope react-filerobot-image-editor && yarn set-prod-env vite build",
     "build:lib": "lerna run build:lib",
     "analyze:bundle": "source-map-explorer dist/filerobot-image-editor.min.js{,.map}",
     "publish:packages": "yarn build:lib && lerna publish",
