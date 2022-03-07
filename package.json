@@ -73,7 +73,7 @@
     "build:lib": "lerna run build:lib",
     "analyze:bundle": "source-map-explorer dist/filerobot-image-editor.min.js{,.map}",
     "publish:packages": "yarn build:lib && lerna publish",
-    "publish:bundle": "yarn build:dist && echo // TODO: Apply script to upload bundle to filerobot",
+    "publish:bundle": "yarn build:js-dist && echo // TODO: Apply script to upload bundle to filerobot",
     "release:beta": "yarn && yarn publish:packages --dist-tag beta && yarn publish:bundle --tag beta",
     "release:prod": "yarn && yarn publish:packages && yarn publish:bundle",
     "update": "lernaupdate"
