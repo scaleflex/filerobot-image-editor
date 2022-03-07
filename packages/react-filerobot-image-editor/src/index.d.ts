@@ -265,7 +265,8 @@ export interface FilerobotImageEditorConfig {
       charCount?: number;
       includeParams?: string[];
     }
-  }
+  };
+  observePluginContainerSize?: boolean;
 }
 
 declare const FilerobotImageEditor: (props: FilerobotImageEditorConfig) => React.ReactNode;

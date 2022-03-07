@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { memo, useCallback, useEffect, useRef } from 'react';
+import React, { memo, useCallback, useEffect, useState, useRef } from 'react';
 
 /** Internal Dependencies */
 import MainCanvas from 'components/MainCanvas';
@@ -16,7 +16,7 @@ import {
 } from 'actions';
 import FeedbackPopup from 'components/FeedbackPopup';
 import loadImage from 'utils/loadImage';
-import { usePhoneScreen, useStore } from 'hooks';
+import { usePhoneScreen, useResizeObserver, useStore } from 'hooks';
 import Spinner from 'components/common/Spinner';
 import { getBackendTranslations } from 'utils/translator';
 import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
@@ -48,8 +48,15 @@ const App = () => {
     translations,
     language,
     defaultSavedImageName,
+    observePluginContainerSize,
   } = config;
+  const [observeResize, unobserveElement] = useResizeObserver();
+  const [rootSize, setRootSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
   const isPhoneScreen = usePhoneScreen();
+  const pluginRootRef = useRef(null);
   const isFirstRender = useRef(true);
   const cloudimageQueryLoaded = useRef(false);
   // Hacky solution, For being used in beforeunload event
@@ -121,11 +128,7 @@ const App = () => {
   }, [img]);
 
   useEffect(() => {
-    if (
-      !isFirstRender.current &&
-      typeof loadableDesignState === 'object' &&
-      loadableDesignState.imgSrc
-    ) {
+    if (!isFirstRender.current && loadableDesignState?.imgSrc) {
       handleLoading([loadAndSetOriginalImage(loadableDesignState.imgSrc)]);
     }
   }, [loadableDesignState]);
@@ -152,6 +155,25 @@ const App = () => {
       cloudimageQueryLoaded.current = true;
     }
   }, [shownImageDimensions, originalImage, useCloudimage, cloudimage]);
+
+  useEffect(() => {
+    let isUnmounted = false;
+    if (observePluginContainerSize && pluginRootRef.current) {
+      observeResize(pluginRootRef.current.parentNode, ({ width, height }) =>
+        setRootSize({ width, height }),
+      );
+    } else if (rootSize.width && rootSize.height && !isUnmounted) {
+      setRootSize({ width: undefined, height: undefined });
+    }
+
+    return () => {
+      if (observePluginContainerSize && pluginRootRef.current) {
+        unobserveElement(pluginRootRef.current);
+      }
+
+      isUnmounted = true;
+    };
+  }, [observePluginContainerSize]);
 
   useEffect(() => {
     const initialRequestsPromises = [
@@ -189,6 +211,8 @@ const App = () => {
     <StyledAppWrapper
       className={ROOT_CONTAINER_CLASS_NAME}
       data-phone={isPhoneScreen}
+      ref={pluginRootRef}
+      $size={rootSize}
     >
       {isLoadingGlobally && <Spinner label={t('loading')} />}
       <Topbar />

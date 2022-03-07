@@ -1,7 +1,12 @@
 /** External Dependencies */
 import styled from 'styled-components';
 
-const StyledAppWrapper = styled.div`
+const StyledAppWrapper = styled.div.attrs(({ $size = {} }) => ({
+  style: {
+    width: $size.width ?? '100%',
+    height: $size.height ?? '100%',
+  },
+}))`
   display: flex;
   flex-direction: column;
   align-items: center;

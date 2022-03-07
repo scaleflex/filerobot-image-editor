@@ -283,6 +283,7 @@ const config = {
   //     includeParams: null,
   //   },
   // },
+  // observePluginContainerSize: true,
 };
 
 // JS Calling

@@ -113,4 +113,5 @@ export default {
       includeParams: [],
     },
   },
+  observePluginContainerSize: false,
 };

@@ -911,6 +911,15 @@ example,
 ]
 ```
 
+#### `observePluginContainerSize`
+
+Type: `boolean`
+
+Default: `false`
+
+By default the plugin's root HTML Element is set with `100%` for both `height` & `width` to respect the plugin's container HTML element size using CSS, If provided `true` to this property then that root element will always be the same absolute `width` & `height` values of the plugin's container HTML Element through JS observable not CSS.
+
+> NOTE: This property might be useful in some cases (one of them if you leave height of the container element to `auto` or didn't set it) in those cases the root element will be the same current size values of the container by JS.
 
 ### Callbacks
 
