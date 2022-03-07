@@ -18,7 +18,7 @@ const BackButton = () => {
   } = useStore();
 
   // Hacky solution for avoiding (zoom & image info) components go to right if we have no close button.
-  if (!onClose) {
+  if (typeof onClose !== 'function') {
     return <span />;
   }
 
