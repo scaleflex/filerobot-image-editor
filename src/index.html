@@ -56,7 +56,7 @@
         <div>
           <h1 class="content-title">
             Edit, Resize, and Filter
-             <span>any images for <span class="colored-text">Free</span></span>
+             <span>any images for  <span class="colored-text">Free</span></span>
             </span>
           </h1>
         </div>
@@ -121,7 +121,7 @@
                 ><br />
               </div>
               <div id="filter-wrapper">
-                <label class="checkbox-container" for="filter">
+                <label id="filter-label" class="checkbox-container" for="filter">
                   Filters
                   <input
                     id="filter"
@@ -145,7 +145,7 @@
                 ><br />
               </div>
               <div id="annotate-wrapper">
-                <label class="checkbox-container" for="annotate">
+                <label id="annotate-label" class="checkbox-container" for="annotate">
                   Draw
                   <input
                     id="annotate"
@@ -177,7 +177,9 @@
               </select>
             </div>
           </div>
-          <div class="editor-container" id="editor_container"></div>
+          <div class="editor-container" id="editor_container">
+            <div class="plugin-spinner"></div>
+          </div>
         </div>
         <div class="blue-blur-ellipse"></div>
         <div class="cyan-blur-ellipse"></div>
@@ -243,7 +245,7 @@
         <p id="js-code-tab" class="version-button" selected-tab>JS version</p>
         <p id="react-code-tab" class="version-button">React version</p>
         <p id="cdn-code-tab" class="version-button">CDN version</p>
-        <div class="copy-button copy-wrapper mobile-copy-button">
+        <div class="copy-button  mobile-copy-button">
           <img src="./assets/copy-icon.png" alt="copy-icon" />
           <p id="copt-text">Copy</p>
         </div>
@@ -254,8 +256,9 @@
           <p id="copt-text">Copy</p>
         </div>
         <pre><code id="js-code-wrapper" class="versions-text" >
-            <span class="red">import</span> <span class="dark-red">FilerobotImageEditor</span>, { <span class="blue">TABS</span>, <span class="blue">TOOLS</span> } <span class="red">from</span> 'filerobot-image-editor';
+            <span class="red">import</span> <span class="dark-red">FilerobotImageEditor</span> <span class="red">from</span> 'filerobot-image-editor';
 
+            <span class="red">const</span> { TABS, TOOLS } = FilerobotImageEditor;
             <span class="red">const</span> config = {
               <span class="blue">img</span>: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
               <span class="light-blue">onSave</span>: (editedImageObject, designState) => console.<span class="light-blue">log</span>('saved', editedImageObject, designState),

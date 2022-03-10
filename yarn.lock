@@ -2369,15 +2369,15 @@ faye-websocket@^0.11.3:
   dependencies:
     websocket-driver ">=0.5.1"
 
-filerobot-image-editor@^4.0.0-beta.30:
-  version "4.0.0-beta.30"
-  resolved "https://registry.npmjs.org/filerobot-image-editor/-/filerobot-image-editor-4.0.0-beta.30.tgz"
-  integrity sha512-JR4216NB3RlzZ7OiWeAQlfnuPqs6IDL1aDptxp3bYyZhL0nkzPBTnVwfKkhrGl5OCWkKuebA38z9pF765XO0kA==
+filerobot-image-editor@^4.0.0-beta.37:
+  version "4.0.0-beta.37"
+  resolved "https://registry.yarnpkg.com/filerobot-image-editor/-/filerobot-image-editor-4.0.0-beta.37.tgz#de3a9bf6c1185b94b9833b571ddfc1bedb70cb24"
+  integrity sha512-V39/6sdsc0qva4A++BLJEkGzLNfPazm5TfBKXac4S+2pn5q820moTSSGaB9pZg3s+scKq+uV7LKfmHmL/h1vfg==
   dependencies:
     "@babel/runtime" "^7.17.2"
-    react "16.8.0"
-    react-dom "16.8.0"
-    react-filerobot-image-editor "^4.0.0-beta.30"
+    react "17.0.2"
+    react-dom "17.0.2"
+    react-filerobot-image-editor "^4.0.0-beta.36"
     styled-components "5.1.0"
 
 fill-range@^7.0.1:
@@ -3599,25 +3599,24 @@ react-clientside-effect@^1.2.5:
   dependencies:
     "@babel/runtime" "^7.12.13"
 
-react-dom@16.8.0:
-  version "16.8.0"
-  resolved "https://registry.npmjs.org/react-dom/-/react-dom-16.8.0.tgz"
-  integrity sha512-dBzoAGYZpW9Yggp+CzBPC7q1HmWSeRc93DWrwbskmG1eHJWznZB/p0l/Sm+69leIGUS91AXPB/qB3WcPnKx8Sw==
+react-dom@17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
+  integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.13.0"
+    scheduler "^0.20.2"
 
 react-fast-compare@^3.0.1:
   version "3.2.0"
   resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
-react-filerobot-image-editor@^4.0.0-beta.30:
-  version "4.0.0-beta.30"
-  resolved "https://registry.npmjs.org/react-filerobot-image-editor/-/react-filerobot-image-editor-4.0.0-beta.30.tgz"
-  integrity sha512-eO3lwWG416DvA5bXsQKcr7mx0MwImS71RJFL8b3QT4wVXKhKQU/KCjJhlE8D9a/qmtf//8FEgjBCjYBFHWRuwQ==
+react-filerobot-image-editor@^4.0.0-beta.36:
+  version "4.0.0-beta.36"
+  resolved "https://registry.yarnpkg.com/react-filerobot-image-editor/-/react-filerobot-image-editor-4.0.0-beta.36.tgz#fb226c96970591e0dd28158362446664bf91dd44"
+  integrity sha512-/wOhBQq4xPOAq+I9/wYVzTfVJL8+qXIqV35qlZ8u+NT+ERfwHPSmNMC8z8GQCpGyFVrb5Pjf3ADvQNOnd9BwFw==
   dependencies:
     "@babel/runtime" "^7.17.2"
     "@scaleflex/icons" "1.0.0-beta.71"
@@ -3668,15 +3667,13 @@ react-reconciler@~0.26.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
-react@16.8.0:
-  version "16.8.0"
-  resolved "https://registry.npmjs.org/react/-/react-16.8.0.tgz"
-  integrity sha512-g+nikW2D48kqgWSPwNo0NH9tIGG3DsQFlrtrQ1kj6W77z5ahyIHG0w8kPpz4Sdj6gyLnz0lEd/xsjOoGge2MYQ==
+react@17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
+  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.13.0"
 
 readable-stream@^2.0.1:
   version "2.3.7"
@@ -3874,14 +3871,6 @@ safe-buffer@5.2.1, safe-buffer@>=5.1.0, safe-buffer@^5.0.1, safe-buffer@^5.1.0, 
   version "2.1.2"
   resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
-
-scheduler@^0.13.0:
-  version "0.13.6"
-  resolved "https://registry.npmjs.org/scheduler/-/scheduler-0.13.6.tgz"
-  integrity sha512-IWnObHt413ucAYKsD9J1QShUKkbKLQQHdxRyw73sw4FN26iWr3DY/H34xGPe4nmL1DwXyWmSWmMrA9TfQbE/XQ==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 scheduler@^0.20.2:
   version "0.20.2"

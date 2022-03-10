@@ -1,4 +1,4 @@
-import FilerobotImageEditor, { TABS, TOOLS } from "filerobot-image-editor";
+import FilerobotImageEditor from "filerobot-image-editor";
 
 function getElementById(id) {
   return document.getElementById(id);
@@ -7,8 +7,10 @@ function getElementById(id) {
 const crop = getElementById("crop");
 const finetune = getElementById("finetune");
 const filter = getElementById("filter");
+const filterLabel = getElementById("filter-label");
 const watermark = getElementById("watermark");
 const annotate = getElementById("annotate");
+const annotateLabel = getElementById("annotate-label");
 const resize = getElementById("resize");
 const addImg = getElementById("add-image");
 const modeOptions = getElementById("mode-options");
@@ -22,6 +24,7 @@ const copyButtons = document.querySelectorAll(".copy-button");
 const accordions = document.querySelectorAll("[data-accordion]");
 
 let useCloudimage = false;
+const { TABS, TOOLS } = FilerobotImageEditor;
 
 const EXAMPLE_CODE_TABS = {
   "js-code-tab": jsCodeWrapper,
@@ -59,6 +62,7 @@ const pluginConfig = {
   tabsIds: selectedTabs,
   defaultTabId: [TABS.RESIZE],
   defaultToolId: TOOLS.TEXT,
+  observePluginContainerSize: true,
   cloudimage: {
     token: "demo",
     version: "v7",
@@ -71,10 +75,6 @@ const filerobotImageEditor = new FilerobotImageEditor(
 );
 
 filerobotImageEditor.render({
-  onClose: (closingReason) => {
-    console.log("Closing reason", closingReason);
-    // filerobotImageEditor.terminate();
-  },
   onSave: (imageInfo) => {
     onSave(
       imageInfo[useCloudimage ? "cloudimageUrl" : "imageBase64"],
@@ -165,10 +165,16 @@ function toggleActiveImage(imageContainer, imageSrc) {
 
 function changeModeHandler() {
   if (modeOptions.value === "Cloudimage") {
-    annotate.disabled = true;
     annotate.checked = false;
-    filter.disabled = true;
+    annotate.disabled = true;
+    annotateLabel.style.color = "gray";
+    annotateLabel.style.cursor = "auto";
+
     filter.checked = false;
+    filter.disabled = true;
+    filterLabel.style.color = "gray";
+    filterLabel.style.cursor = "auto";
+
     useCloudimage = true;
   } else {
     if (selectedTabs.includes(annotate.name)) {
@@ -179,8 +185,13 @@ function changeModeHandler() {
       filter.checked = true;
     }
 
-    annotate.disabled = false;
     filter.disabled = false;
+    filterLabel.style.color = "#203254";
+    filterLabel.style.cursor = "pointer";
+    annotate.disabled = false;
+    annotateLabel.style.color = "#203254";
+    annotateLabel.style.cursor = "pointer";
+
     useCloudimage = false;
   }
 
@@ -261,7 +272,6 @@ cdnTabTitle.addEventListener("click", toggleActiveCodeTab);
 copyButtons.forEach((copyButton) => {
   copyButton.addEventListener("click", copyCodeHandler);
 });
-
 accordions.forEach((accordion) => {
   accordion.addEventListener("click", showAccordionContent);
 });
