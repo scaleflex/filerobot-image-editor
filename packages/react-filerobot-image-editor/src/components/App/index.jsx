@@ -20,6 +20,9 @@ import { usePhoneScreen, useResizeObserver, useStore } from 'hooks';
 import Spinner from 'components/common/Spinner';
 import { getBackendTranslations } from 'utils/translator';
 import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
+import finetunesStrsToClasses from 'utils/finetunesStrsToClasses';
+import filterStrToClass from 'utils/filterStrToClass';
+import isSameImage from 'utils/isSameImage';
 import {
   StyledAppWrapper,
   StyledMainContent,
@@ -50,6 +53,7 @@ const App = () => {
     defaultSavedImageName,
     observePluginContainerSize,
   } = config;
+
   const [observeResize, unobserveElement] = useResizeObserver();
   const [rootSize, setRootSize] = useState({
     width: undefined,
@@ -59,6 +63,7 @@ const App = () => {
   const pluginRootRef = useRef(null);
   const isFirstRender = useRef(true);
   const cloudimageQueryLoaded = useRef(false);
+  const imageBeingLoadedSrc = useRef(null);
   // Hacky solution, For being used in beforeunload event
   // as it won't be possible to have the latest value of the state variable in js event handler.
   const haveNotSavedChangesRef = useRef(haveNotSavedChanges);
@@ -87,21 +92,36 @@ const App = () => {
   // We are promisifying the image loading for mixing it with other promises
   const loadAndSetOriginalImage = (imgToLoad) =>
     new Promise((resolve) => {
-      if (!imgToLoad && originalImage) {
-        resolve();
+      const imgSrc = imgToLoad?.src || imgToLoad;
+      if (
+        imageBeingLoadedSrc.current === imgSrc ||
+        (!imgSrc && originalImage) ||
+        isSameImage(imgSrc, originalImage)
+      ) {
+        if (!imageBeingLoadedSrc.current) {
+          resolve();
+        }
+        return;
       }
+
+      const triggerResolve = () => {
+        imageBeingLoadedSrc.current = null;
+        resolve();
+      };
+
+      imageBeingLoadedSrc.current = imgSrc;
 
       if (typeof imgToLoad === 'string') {
         loadImage(imgToLoad, defaultSavedImageName)
           .then(setNewOriginalImage)
           .catch(setError)
-          .finally(resolve);
+          .finally(triggerResolve);
       } else if (imgToLoad instanceof HTMLImageElement) {
         setNewOriginalImage(imgToLoad);
-        resolve();
+        triggerResolve();
       } else {
         setError(t('invalidImageError'));
-        resolve();
+        triggerResolve();
       }
     });
 
@@ -112,24 +132,47 @@ const App = () => {
     }
   };
 
-  const handleLoading = (loadingPromises = []) => {
+  // loadingPromisesFn is a function for enabling the ability to show loader first then trigger requests not vice versa.
+  const handleLoading = (loadingPromisesFn = () => []) => {
     dispatch({ type: SHOW_LOADER });
 
-    return Promise.all(loadingPromises).finally(() => {
+    return Promise.all(loadingPromisesFn()).finally(() => {
       dispatch({ type: HIDE_LOADER });
     });
   };
 
+  const updateDesignStateWithLoadableOne = () => {
+    if (loadableDesignState && Object.keys(loadableDesignState).length > 0) {
+      dispatch({
+        type: UPDATE_STATE,
+        payload: {
+          ...loadableDesignState,
+          finetunes: finetunesStrsToClasses(loadableDesignState?.finetunes),
+          filter: filterStrToClass(loadableDesignState?.filter),
+        },
+      });
+    }
+  };
+
   useEffect(() => {
-    if (!isFirstRender.current && img) {
+    if (!isFirstRender.current && img && !isSameImage(img, originalImage)) {
       cloudimageQueryLoaded.current = false;
-      handleLoading([loadAndSetOriginalImage(img)]);
+      handleLoading(() => [loadAndSetOriginalImage(img)]);
     }
   }, [img]);
 
   useEffect(() => {
-    if (!isFirstRender.current && loadableDesignState?.imgSrc) {
-      handleLoading([loadAndSetOriginalImage(loadableDesignState.imgSrc)]);
+    if (!isFirstRender.current) {
+      const newImgSrc = loadableDesignState?.imgSrc;
+      if (newImgSrc && !isSameImage(newImgSrc, originalImage)) {
+        handleLoading(() => [
+          loadAndSetOriginalImage(newImgSrc).then(
+            updateDesignStateWithLoadableOne,
+          ),
+        ]);
+      } else {
+        updateDesignStateWithLoadableOne();
+      }
     }
   }, [loadableDesignState]);
 
@@ -176,17 +219,14 @@ const App = () => {
   }, [observePluginContainerSize]);
 
   useEffect(() => {
-    const initialRequestsPromises = [
+    const initialRequestsPromisesFn = () => [
       loadAndSetOriginalImage(loadableDesignState?.imgSrc || img),
+      ...(useBackendTranslations
+        ? [getBackendTranslations(language, translations)]
+        : []),
     ];
 
-    if (useBackendTranslations) {
-      initialRequestsPromises.push(
-        getBackendTranslations(language, translations),
-      );
-    }
-
-    handleLoading(initialRequestsPromises);
+    handleLoading(initialRequestsPromisesFn);
     isFirstRender.current = false;
 
     if (window && !avoidChangesNotSavedAlertOnLeave) {
