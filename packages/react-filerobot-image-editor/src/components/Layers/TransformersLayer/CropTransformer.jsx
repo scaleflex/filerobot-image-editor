@@ -117,7 +117,7 @@ const CropTransformer = () => {
         tmpImgNodeRef.current.clearCache();
       }
     };
-  }, [designLayer, originalImage]);
+  }, [designLayer, originalImage, shownImageDimensions]);
 
   useEffect(() => {
     if (shownImageDimensionsRef.current) {

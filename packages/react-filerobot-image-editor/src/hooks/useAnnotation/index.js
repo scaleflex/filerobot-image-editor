@@ -52,7 +52,6 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
   const updateTmpAnnotation = useDebouncedCallback((updatesObjOrFn) => {
     setTmpAnnotation((latest) => ({
       ...latest,
-      id: undefined,
       shouldSave: false,
       neverSave: false,
       ...(typeof updatesObjOrFn === 'function'

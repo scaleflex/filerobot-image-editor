@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Popper from '@scaleflex/ui/core/popper';
 
@@ -12,11 +12,11 @@ const pinnedColorsKey = 'FIE_pinnedColors';
 
 const ColorInput = ({ position = 'top', onChange, color }) => {
   const {
+    selectionsIds = [],
     config: { annotationsCommon = {} },
     dispatch,
     latestColor,
   } = useStore();
-  const isFirstRender = useRef(true);
   const [anchorEl, setAnchorEl] = useState();
   const [currentColor, setCurrentColor] = useState(
     () => latestColor || color || annotationsCommon.fill,
@@ -64,13 +64,10 @@ const ColorInput = ({ position = 'top', onChange, color }) => {
   };
 
   useEffect(() => {
-    if (!isFirstRender.current) {
-      setCurrentColor(color);
-      isFirstRender.current = false;
-    } else {
-      onChange(currentColor);
-    }
-  }, [color]);
+    const colorToSet = (selectionsIds.length === 0 && latestColor) || color;
+    setCurrentColor(colorToSet);
+    onChange(colorToSet);
+  }, [color, selectionsIds]);
 
   return (
     <>
