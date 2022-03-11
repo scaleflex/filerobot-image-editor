@@ -1,4 +1,6 @@
-/* eslint-disable  */
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-extraneous-dependencies */
 import { createElement } from 'react';
 import { render } from 'react-dom';
 import DuplicateIcon from '@scaleflex/icons/duplicate';

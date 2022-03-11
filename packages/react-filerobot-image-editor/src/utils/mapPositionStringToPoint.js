@@ -21,17 +21,23 @@ const mapPositionStringToPoint = (annotation, designLayer, position) => {
     annotationHeight * scaleY,
     rotation,
   );
-  const { clipWidth: designLayerWidth, clipHeight: designLayerHeight } =
-    designLayer.attrs;
+  const {
+    clipWidth: designLayerWidth,
+    clipHeight: designLayerHeight,
+    clipX: designLayerX = 0,
+    clipY: designLayerY = 0,
+  } = designLayer.attrs;
 
   const xAxisMapping = {
-    left: scaledRotatedAnnotationSize.offsetLeft + padding,
+    left: designLayerX + scaledRotatedAnnotationSize.offsetLeft + padding,
     center:
+      designLayerX +
       designLayerWidth / 2 -
       (scaledRotatedAnnotationSize.width / 2 -
         scaledRotatedAnnotationSize.offsetLeft) +
       padding,
     right:
+      designLayerX +
       designLayerWidth -
       scaledRotatedAnnotationSize.width -
       padding +
@@ -39,13 +45,15 @@ const mapPositionStringToPoint = (annotation, designLayer, position) => {
   };
 
   const yAxisMapping = {
-    top: scaledRotatedAnnotationSize.offsetTop + padding,
+    top: designLayerY + scaledRotatedAnnotationSize.offsetTop + padding,
     middle:
+      designLayerY +
       designLayerHeight / 2 -
       (scaledRotatedAnnotationSize.height / 2 -
         scaledRotatedAnnotationSize.offsetTop) +
       padding,
     bottom:
+      designLayerY +
       designLayerHeight -
       scaledRotatedAnnotationSize.height -
       padding +

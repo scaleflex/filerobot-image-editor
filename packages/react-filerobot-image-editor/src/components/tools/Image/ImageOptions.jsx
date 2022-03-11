@@ -14,7 +14,12 @@ const ADDED_IMG_SPACING_PERCENT = 0.15;
 const ImageOptions = () => {
   const [isLoading, setIsLoading] = useState();
   const uploadImgsInput = useRef();
-  const { shownImageDimensions, dispatch, t } = useStore();
+  const {
+    shownImageDimensions,
+    dispatch,
+    adjustments: { crop = {} },
+    t,
+  } = useStore();
   const [image, saveImage, addNewImage] = useAnnotation(
     {
       name: TOOLS_IDS.IMAGE,
@@ -26,18 +31,23 @@ const ImageOptions = () => {
   const requestedImgsCount = useRef(0);
 
   const addImgScaled = (loadedImg) => {
+    const layerWidth = crop.width || shownImageDimensions.width;
+    const layerHeight = crop.height || shownImageDimensions.height;
+    const layerCropX = crop.x || 0;
+    const layerCropY = crop.y || 0;
+
     const newImgRatio = Math.min(
       1,
-      shownImageDimensions.width /
+      layerWidth /
         (loadedImg.width + loadedImg.width * ADDED_IMG_SPACING_PERCENT),
-      shownImageDimensions.height /
+      layerHeight /
         (loadedImg.height + loadedImg.height * ADDED_IMG_SPACING_PERCENT),
     );
 
     addNewImage({
       image: loadedImg,
-      x: shownImageDimensions.width / 2 - (loadedImg.width * newImgRatio) / 2,
-      y: shownImageDimensions.height / 2 - (loadedImg.height * newImgRatio) / 2,
+      x: layerCropX + layerWidth / 2 - (loadedImg.width * newImgRatio) / 2,
+      y: layerCropY + layerHeight / 2 - (loadedImg.height * newImgRatio) / 2,
       width: loadedImg.width * newImgRatio,
       height: loadedImg.height * newImgRatio,
     });

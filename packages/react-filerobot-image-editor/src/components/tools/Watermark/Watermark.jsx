@@ -35,6 +35,7 @@ const Watermark = () => {
     dispatch,
     t,
     useCloudimage,
+    adjustments: { crop = {} },
   } = useStore();
   const isPhoneScreen = usePhoneScreen();
   const [isLoading, setIsLoading] = useState(false);
@@ -45,20 +46,23 @@ const Watermark = () => {
     [annotations[WATERMARK_ANNOTATION_ID]],
   );
 
+  const layerWidth = crop.width || shownImageDimensions.width;
+  const layerHeight = crop.height || shownImageDimensions.height;
+  const layerCropX = crop.x || 0;
+  const layerCropY = crop.y || 0;
+
   const addTextWatermark = () => {
     const dimensions = {};
-    dimensions.height =
-      shownImageDimensions.height * WATERMARK_IMG_RATIO_FROM_ORIGINAL;
-    dimensions.width =
-      shownImageDimensions.width * WATERMARK_IMG_RATIO_FROM_ORIGINAL;
+    dimensions.height = layerHeight * WATERMARK_IMG_RATIO_FROM_ORIGINAL;
+    dimensions.width = layerWidth * WATERMARK_IMG_RATIO_FROM_ORIGINAL;
 
     const textWatermark = {
       ...config.annotationsCommon,
       ...config[TOOLS_IDS.TEXT],
       ...dimensions,
       padding: 1,
-      x: shownImageDimensions.width / 2 - dimensions.width / 2,
-      y: shownImageDimensions.height / 2 - dimensions.height / 2,
+      x: layerCropX + layerWidth / 2 - dimensions.width / 2,
+      y: layerCropY + layerHeight / 2 - dimensions.height / 2,
       fill: '#000000',
       id: WATERMARK_ANNOTATION_ID,
       name: TOOLS_IDS.TEXT,
@@ -74,16 +78,14 @@ const Watermark = () => {
   const addImgWatermark = (loadedImg) => {
     const imgRatio = loadedImg.width / loadedImg.height;
     const newImgDimensions = {};
-    if (shownImageDimensions.height > shownImageDimensions.width) {
+    if (layerHeight > layerWidth) {
       const newImgScale =
-        (shownImageDimensions.height * WATERMARK_IMG_RATIO_FROM_ORIGINAL) /
-        loadedImg.height;
+        (layerHeight * WATERMARK_IMG_RATIO_FROM_ORIGINAL) / loadedImg.height;
       newImgDimensions.height = loadedImg.height * newImgScale;
       newImgDimensions.width = newImgDimensions.height * imgRatio;
     } else {
       const newImgScale =
-        (shownImageDimensions.width * WATERMARK_IMG_RATIO_FROM_ORIGINAL) /
-        loadedImg.width;
+        (layerWidth * WATERMARK_IMG_RATIO_FROM_ORIGINAL) / loadedImg.width;
       newImgDimensions.width = loadedImg.width * newImgScale;
       newImgDimensions.height = newImgDimensions.width / imgRatio;
     }
@@ -94,8 +96,8 @@ const Watermark = () => {
       ...newImgDimensions,
       padding: 1,
       image: loadedImg,
-      x: shownImageDimensions.width / 2 - newImgDimensions.width / 2,
-      y: shownImageDimensions.height / 2 - newImgDimensions.height / 2,
+      x: layerCropX + layerWidth / 2 - newImgDimensions.width / 2,
+      y: layerCropY + layerHeight / 2 - newImgDimensions.height / 2,
       id: WATERMARK_ANNOTATION_ID,
       name: TOOLS_IDS.IMAGE,
       replaceCurrent: true,
@@ -120,7 +122,7 @@ const Watermark = () => {
   };
 
   const menuItems = [
-    useCloudimage && {
+    !useCloudimage && {
       key: 'upload-watermark',
       label: t('uploadWatermark'),
       icon: UploadOutline,
