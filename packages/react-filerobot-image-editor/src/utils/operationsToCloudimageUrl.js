@@ -1,7 +1,6 @@
 /** Internal Dependencies */
 import { ELLIPSE_CROP, TOOLS_IDS, WATERMARK_ANNOTATION_ID } from './constants';
 import getImageSealingParams from './getImageSealingParams';
-import imageToBase64 from './imageToBase64';
 import mapCropBox from './mapCropBox';
 import mapNumber from './mapNumber';
 import toPrecisedFloat from './toPrecisedFloat';
@@ -53,11 +52,11 @@ const generateWatermarkQuery = (
   }
 
   const imgSrc = watermark.image?.src || watermark.image;
-  const watermarkUrl = imgSrc.startsWith('blob:')
-    ? imageToBase64(imgSrc)
-    : imgSrc;
+  const watermarkUrl = !imgSrc.startsWith('blob:') && imgSrc;
 
-  return `${queryParams}&wat_url=${watermarkUrl}&wat_scale=${toPrecisedFloat(
+  return `${queryParams}${
+    watermarkUrl ? `&wat_url=${watermarkUrl}` : ''
+  }&wat_scale=${toPrecisedFloat(
     (width / previewDimensions.width) * 100,
     2,
   )}p,${toPrecisedFloat((height / previewDimensions.height) * 100, 2)}p`;

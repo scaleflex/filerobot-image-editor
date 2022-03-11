@@ -113,27 +113,30 @@ const ButtonWithMenu = ({
           style={menuStyle}
           position={menuPosition}
         >
-          {menuItems.map((item) => (
-            <MenuItem
-              className={`${className}-menu-item`}
-              key={item.key}
-              active={item.isActive}
-              onClick={() => handleMenuItemClick(item.onClick)}
-              size={buttonSize}
-            >
-              {item.icon && (
-                <MenuItemIcon size={buttonSize}>
-                  {typeof item.icon === 'string' ? (
-                    // eslint-disable-next-line react/no-danger
-                    <span dangerouslySetInnerHTML={{ __html: item.icon }} />
-                  ) : (
-                    <item.icon />
+          {menuItems.map(
+            (item) =>
+              item && (
+                <MenuItem
+                  className={`${className}-menu-item`}
+                  key={item.key}
+                  active={item.isActive}
+                  onClick={() => handleMenuItemClick(item.onClick)}
+                  size={buttonSize}
+                >
+                  {item.icon && (
+                    <MenuItemIcon size={buttonSize}>
+                      {typeof item.icon === 'string' ? (
+                        // eslint-disable-next-line react/no-danger
+                        <span dangerouslySetInnerHTML={{ __html: item.icon }} />
+                      ) : (
+                        <item.icon />
+                      )}
+                    </MenuItemIcon>
                   )}
-                </MenuItemIcon>
-              )}
-              <MenuItemLabel>{item.label}</MenuItemLabel>
-            </MenuItem>
-          ))}
+                  <MenuItemLabel>{item.label}</MenuItemLabel>
+                </MenuItem>
+              ),
+          )}
         </Menu>
       )}
     </>
