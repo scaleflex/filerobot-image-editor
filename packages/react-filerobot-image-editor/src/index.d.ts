@@ -267,6 +267,7 @@ export interface FilerobotImageEditorConfig {
     }
   };
   observePluginContainerSize?: boolean;
+  showCanvasOnly?: boolean;
 }
 
 declare const FilerobotImageEditor: (props: FilerobotImageEditorConfig) => React.ReactNode;

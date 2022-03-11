@@ -284,6 +284,7 @@ const config = {
   //   },
   // },
   // observePluginContainerSize: true,
+  // showCanvasOnly: true,
 };
 
 // JS Calling

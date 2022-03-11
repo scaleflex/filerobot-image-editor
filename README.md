@@ -921,6 +921,16 @@ By default the plugin's root HTML Element is set with `100%` for both `height` &
 
 > NOTE: This property might be useful in some cases (one of them if you leave height of the container element to `auto` or didn't set it) in those cases the root element will be the same current size values of the container by JS.
 
+#### `showCanvasOnly`
+
+Type: `boolean`
+
+Default: `false`
+
+Hides all the UI of the plugin including (save & close buttons, tabs & tools bars...etc.) except the canvas only if `true`, otherwise the whole UI will be shown as normal.
+
+> This prop might be useful if are using the editor in different ways in the same project, (ex. using the editor in doing different transformations for quick photo editing & using the editor after uploading some profile photo to crop the photo only and dismiss other transformations).
+
 ### Callbacks
 
 #### `onBeforeSave`

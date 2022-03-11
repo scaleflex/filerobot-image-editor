@@ -114,4 +114,5 @@ export default {
     },
   },
   observePluginContainerSize: false,
+  showCanvasOnly: false,
 };

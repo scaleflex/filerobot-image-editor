@@ -52,6 +52,7 @@ const App = () => {
     language,
     defaultSavedImageName,
     observePluginContainerSize,
+    showCanvasOnly,
   } = config;
 
   const [observeResize, unobserveElement] = useResizeObserver();
@@ -255,20 +256,21 @@ const App = () => {
       $size={rootSize}
     >
       {isLoadingGlobally && <Spinner label={t('loading')} />}
-      <Topbar />
+      {!showCanvasOnly && <Topbar />}
       {originalImage && feedback.duration !== 0 && (
         <StyledMainContent className="FIE_main-container">
-          {!isPhoneScreen && <Tabs />}
+          {!isPhoneScreen && !showCanvasOnly && <Tabs />}
           <StyledCanvasAndTools className="FIE_editor-content">
             <MainCanvas />
-            {isPhoneScreen ? (
-              <StyledPhoneToolsAndTabs className="FIE_phone-tools-tabs-wrapper">
+            {!showCanvasOnly &&
+              (isPhoneScreen ? (
+                <StyledPhoneToolsAndTabs className="FIE_phone-tools-tabs-wrapper">
+                  <ToolsBar />
+                  <Tabs />
+                </StyledPhoneToolsAndTabs>
+              ) : (
                 <ToolsBar />
-                <Tabs />
-              </StyledPhoneToolsAndTabs>
-            ) : (
-              <ToolsBar />
-            )}
+              ))}
           </StyledCanvasAndTools>
         </StyledMainContent>
       )}
