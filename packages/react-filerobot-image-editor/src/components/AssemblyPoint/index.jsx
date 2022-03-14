@@ -11,13 +11,19 @@ import deepMerge from 'utils/deepMerge';
 import { FontsFaces, IconsColor, OverrideDefaultStyles } from './globalStyles';
 
 const AssemblyPoint = (props) => {
-  const { source, useCloudimage, cloudimage } = props;
+  const { img, source, useCloudimage, cloudimage } = props;
+  // TODO: Remove this property from here after PROD. release
+  if (img) {
+    throw new Error(
+      '`img` is renamed to `source` please consider renaming it from your configurations.',
+    );
+  }
   if (
     !source ||
     (typeof source !== 'string' && !(source instanceof HTMLImageElement))
   ) {
     throw new Error(
-      '`source` property is required either a string of image url or a HTMLImageElement.',
+      '`source` property is required either a string of image url or a HTMLImageElement for the image that will be edited.',
     );
   }
   if (useCloudimage) {
@@ -47,6 +53,8 @@ const AssemblyPoint = (props) => {
 AssemblyPoint.defaultProps = {
   useCloudimage: false,
   cloudimage: {},
+  // TODO: Remove this property from here after PROD. release
+  img: undefined,
 };
 
 AssemblyPoint.propTypes = {
@@ -56,6 +64,13 @@ AssemblyPoint.propTypes = {
     PropTypes.instanceOf(SVGImageElement),
     PropTypes.instanceOf(ImageBitmap),
   ]).isRequired,
+  // TODO: Remove this property from here after PROD. release
+  img: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(HTMLImageElement),
+    PropTypes.instanceOf(SVGImageElement),
+    PropTypes.instanceOf(ImageBitmap),
+  ]),
   useCloudimage: PropTypes.bool,
   cloudimage: PropTypes.instanceOf(Object),
 };
