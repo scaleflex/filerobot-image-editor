@@ -34,7 +34,6 @@ const Watermark = () => {
     config,
     dispatch,
     t,
-    useCloudimage,
     adjustments: { crop = {} },
   } = useStore();
   const isPhoneScreen = usePhoneScreen();
@@ -122,7 +121,7 @@ const Watermark = () => {
   };
 
   const menuItems = [
-    !useCloudimage && {
+    !config.useCloudimage && {
       key: 'upload-watermark',
       label: t('uploadWatermark'),
       icon: UploadOutline,

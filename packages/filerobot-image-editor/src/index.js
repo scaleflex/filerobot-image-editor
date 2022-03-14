@@ -3,7 +3,7 @@ import { createElement } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
 /** Internal Dependencies */
-import AssemblyPoint, { TOOLS, TABS } from 'react-filerobot-image-editor';
+import AssemblyPoint, { TOOLS, TABS } from 'react-filerobot-image-editor/src/';
 import deepMerge from 'react-filerobot-image-editor/lib/utils/deepMerge';
 
 class FilerobotImageEditor {

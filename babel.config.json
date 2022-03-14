@@ -21,7 +21,10 @@
       {
         "root": [
           "./src"
-        ]
+        ],
+        "alias": {
+          "react-filerobot-image-editor/src/": "react-filerobot-image-editor"
+        }
       }
     ],
     [
