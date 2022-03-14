@@ -115,4 +115,6 @@ export default {
   },
   observePluginContainerSize: false,
   showCanvasOnly: false,
+  getCurrentImgDataFnRef: undefined,
+  onModify: undefined,
 };

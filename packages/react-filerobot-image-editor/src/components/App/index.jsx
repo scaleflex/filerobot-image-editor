@@ -16,7 +16,12 @@ import {
 } from 'actions';
 import FeedbackPopup from 'components/FeedbackPopup';
 import loadImage from 'utils/loadImage';
-import { usePhoneScreen, useResizeObserver, useStore } from 'hooks';
+import {
+  usePhoneScreen,
+  useResizeObserver,
+  useStore,
+  useTransformedImgData,
+} from 'hooks';
 import Spinner from 'components/common/Spinner';
 import { getBackendTranslations } from 'utils/translator';
 import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
@@ -45,7 +50,7 @@ const App = () => {
     loadableDesignState,
     useCloudimage,
     cloudimage,
-    img,
+    source,
     avoidChangesNotSavedAlertOnLeave,
     useBackendTranslations,
     translations,
@@ -53,6 +58,7 @@ const App = () => {
     defaultSavedImageName,
     observePluginContainerSize,
     showCanvasOnly,
+    getCurrentImgDataFnRef,
   } = config;
 
   const [observeResize, unobserveElement] = useResizeObserver();
@@ -68,6 +74,7 @@ const App = () => {
   // Hacky solution, For being used in beforeunload event
   // as it won't be possible to have the latest value of the state variable in js event handler.
   const haveNotSavedChangesRef = useRef(haveNotSavedChanges);
+  const transformImgFn = useTransformedImgData();
 
   const setNewOriginalImage = useCallback((newOriginalImage) => {
     dispatch({
@@ -156,11 +163,15 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (!isFirstRender.current && img && !isSameImage(img, originalImage)) {
+    if (
+      !isFirstRender.current &&
+      source &&
+      !isSameImage(source, originalImage)
+    ) {
       cloudimageQueryLoaded.current = false;
-      handleLoading(() => [loadAndSetOriginalImage(img)]);
+      handleLoading(() => [loadAndSetOriginalImage(source)]);
     }
-  }, [img]);
+  }, [source]);
 
   useEffect(() => {
     if (!isFirstRender.current) {
@@ -221,7 +232,7 @@ const App = () => {
 
   useEffect(() => {
     const initialRequestsPromisesFn = () => [
-      loadAndSetOriginalImage(loadableDesignState?.imgSrc || img),
+      loadAndSetOriginalImage(loadableDesignState?.imgSrc || source),
       ...(useBackendTranslations
         ? [getBackendTranslations(language, translations)]
         : []),
@@ -243,6 +254,12 @@ const App = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (getCurrentImgDataFnRef && typeof getCurrentImgDataFnRef === 'object') {
+      getCurrentImgDataFnRef.current = transformImgFn;
+    }
+  }, [transformImgFn]);
 
   useEffect(() => {
     haveNotSavedChangesRef.current = haveNotSavedChanges;

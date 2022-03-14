@@ -1,4 +1,4 @@
-import { FilerobotImageEditorConfig, TABS, TOOLS } from 'react-filerobot-image-editor';
+import { FilerobotImageEditorConfig, TABS, TOOLS, getCurrentImgDataFunction } from 'react-filerobot-image-editor';
 
 declare class FilerobotImageEditor {
   TABS: typeof TABS;
@@ -6,6 +6,7 @@ declare class FilerobotImageEditor {
   constructor(container: HTMLElement, config: FilerobotImageEditorConfig);
   render(additionalConfig?: FilerobotImageEditorConfig): void;
   terminate(): void;
+  getCurrentImgData: getCurrentImgDataFunction;
 }
 
 export default FilerobotImageEditor;

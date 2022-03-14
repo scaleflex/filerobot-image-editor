@@ -17,3 +17,5 @@ export { default as useStore } from './useStore';
 export { default as useDrag } from './useDrag';
 
 export { default as usePhoneScreen } from './usePhoneScreen';
+
+export { default as useTransformedImgData } from './useTransformedImgData';

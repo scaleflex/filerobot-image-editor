@@ -6,13 +6,15 @@ import undo from 'actions/undo';
 import { useReducer } from 'react';
 import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 
+let timeout;
+
 /**
  * A normal react useReducer wrapped inside our own UNDO/REDO Reducer as middleware
  * for updating the UNDO/REDO states automatically
  *
  */
 // TODO: maybe? make another reducer/context for design state and having the undo/redo to it only.
-const useAppReducer = (reducer, initialState) => {
+const useAppReducer = (reducer, initialState, passedConfig = {}) => {
   const initialStateWithUndoRedo = {
     ...initialState,
     pastDesignStates: [],
@@ -40,7 +42,7 @@ const useAppReducer = (reducer, initialState) => {
       const currentState = extractCurrentDesignState(state);
       const { isDesignState, ...neededNewPresentState } = newPresentState;
 
-      return {
+      const newState = {
         ...neededNewPresentState,
         pastDesignStates: [currentState, ...state.pastDesignStates],
         hasUndo: true,
@@ -49,6 +51,15 @@ const useAppReducer = (reducer, initialState) => {
         isResetted: false,
         haveNotSavedChanges: true,
       };
+
+      timeout = setTimeout(() => {
+        clearTimeout(timeout);
+        if (typeof passedConfig.onModify === 'function') {
+          passedConfig.onModify(newState);
+        }
+      });
+
+      return newState;
     }
 
     return newPresentState;

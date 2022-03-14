@@ -25,8 +25,7 @@ const uriDownload = (url, fileName) => {
   tmpLink = null;
 };
 
-export default uriDownload;
-
+const saveFnRef = {};
 const cropFolderPresets = [
   {
     titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
@@ -166,8 +165,8 @@ const cropFolderPresets = [
 ];
 
 const config = {
-  // img: 'https://fyeonxrm.filerobot.com/v7/Pavel/intel_motherboard-wallpaper-1600x900.jpg',
-  img: 'https://api.filerobot.com/scaleflex-tests-v5a/v3/get/d8880a7c-94fc-5524-b1de-a61de6650000?version=1638547407275',
+  source:
+    'https://api.filerobot.com/scaleflex-tests-v5a/v3/get/d8880a7c-94fc-5524-b1de-a61de6650000?version=1638547407275',
   annotationsCommon: {
     // fill: '#000000', // or should be no color? === undefined
     // stroke: '#000000', // or should be no color? === undefined
@@ -287,6 +286,13 @@ const config = {
   // },
   // observePluginContainerSize: true,
   // showCanvasOnly: true,
+  // getCurrentImgDataFnRef: saveFnRef,
+  // onModify: (currentDesignState) => {
+  //   console.log('current design state', currentDesignState);
+  //   const savedImgData = saveFnRef.current({ name: 'Custom name ' });
+  //   uriDownload(savedImgData.imageData.imageBase64);
+  //   console.log('image after saving', savedImgData);
+  // },
 };
 
 // JS Calling

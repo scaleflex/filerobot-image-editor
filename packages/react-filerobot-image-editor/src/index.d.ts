@@ -1,4 +1,4 @@
-import { ReactComponentElement } from "react";
+import { ReactComponentElement, RefObject } from "react";
 import { Filter } from "konva/lib/Node";
 
 declare const TABS = {
@@ -187,6 +187,13 @@ type imageDesignState = {
 
 type onSaveFunction = (savedImageData: savedImageData, imageDesignState: imageDesignState) => void;
 
+export type getCurrentImgDataFunction = (imageFileInfo: {
+  name?: string,
+  extension?: string,
+  quality?: number,
+  size?: { width?: number, height?: number },
+}, pixelRatio: boolean) => ({ imageData: savedImageData, designState: imageDesignState });
+
 type triggerSaveModalFn = (onSaveFunction) => void;
 type triggerSavingFn = (onSaveFunction) => void;
 
@@ -197,7 +204,7 @@ type saveOption = {
 };
 
 export interface FilerobotImageEditorConfig {
-  img: string | HTMLImageElement;
+  source: string | HTMLImageElement;
   annotationsCommon?: annotationsCommon;
   // [TOOLS_IDS.TEXT]
   Text?: textAnnotation & {
@@ -268,6 +275,10 @@ export interface FilerobotImageEditorConfig {
   };
   observePluginContainerSize?: boolean;
   showCanvasOnly?: boolean;
+  getCurrentImgDataFnRef?: RefObject | {
+    current?: getCurrentImgDataFunction
+  };
+  onModify?: (currentImageDesignState: imageDesignState) => void;
 }
 
 declare const FilerobotImageEditor: (props: FilerobotImageEditorConfig) => React.ReactNode;

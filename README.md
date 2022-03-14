@@ -97,7 +97,7 @@ GIF Link TO BE ADDED...
 <hr />
 
 ## Prerequisites
-	> Following prerequisites are required only in React Component installation, but they're included in CDN bundle installation and added as dependencies of other bridges packages.
+	> Following prerequisites are required only in React Component installation, but they're included in CDN bundle installation and added as dependencies of other bridges/adapters packages.
 
 - react, react-dom: >= v16.8.0
 - styled-components: >= v5.1.0
@@ -165,7 +165,7 @@ function App() {
       <button onClick={openImgEditor}>Open Filerobot image editor</button>
       {isImgEditorShown && (
         <FilerobotImageEditor
-	  img="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+	  source="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
 	  onSave={(editedImageObject, designState) => console.log('saved', editedImageObject, designState)}
 	  onClose={closeImgEditor}
 	  annotationsCommon={{
@@ -230,7 +230,7 @@ import FilerobotImageEditor from 'filerobot-image-editor';
 
 const { TABS, TOOLS } = FilerobotImageEditor;
 const config = {
-  img: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+  source: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
   onSave: (editedImageObject, designState) => console.log('saved', editedImageObject, designState),
   annotationsCommon: {
     fill: '#ff0000'
@@ -312,7 +312,7 @@ filerobotImageEditor.render({
 
 ### Properties
 
-#### `img`
+#### `source`
 
 Type: `string` | `HTMLImageElement` ***Required***.
 
@@ -843,19 +843,19 @@ Default:
 ```
 The options available for cloudimage mode,
 
-| Property                         | Type                                                            | Default (possible values) | Description                                                                                                                                                                                                                                                   |
-| -------------------------------- | --------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`token`**                      | string ***Required if [useCloudimage](#usecloudimage) `true`*** | ''                        | The [cloudimage](https://cloudimage.io/) token                                                                                                                                                                                                                |
-| **`dontPrefixUrl`**              | boolean                                                         | false                     | Don't prefix the whole URL (protocol, token & domain) to the generated cloudimage URL                                                                                                                                                                         |
-| **`domain`**                     | string                                                          | cloudimg.io               | Domain used in cloudimage service                                                                                                                                                                                                                             |
-| **`version`**                    | string                                                          | ''                        | The version of cloudimage service used                                                                                                                                                                                                                        |
-| **`secureProtocol`**             | boolean                                                         | true                      | `true` means using (`https`) in the URL, `false` means using (`http`)                                                                                                                                                                                         |
-| **`loadableQuery`**              | string                                                          | ''                        | A cloudimage string query params to load in the plugin's design state and continue editing on previous edits (ex, `w=500&h=300&blur=5`), you could use it in addition to [`loadableDesignState`](#loadabledesignstate-experimental)                           |
-| **`imageSealing`**               | object                                                          | mentioned above           | Assigns the options for image sealing feature (your cloudimage account must support it)                                                                                                                                                                       |
-| imageSealing.**`enable`**        | boolean                                                         | true                      | `true` means using (`https`) in the URL, `false` means using (`http`)                                                                                                                                                                                         |
-| imageSealing.**`salt`**          | string ***Required if imageSealing enabled***                   | ''                        | The salt string is set upon configuration and is used for the encryption                                                                                                                                                                                      |
-| imageSealing.**`charCount`**     | number                                                          | 10                        | Calculated hash (URL ci_seal parameter) length                                                                                                                                                                                                                |
-| imageSealing.**`includeParams`** | string[]                                                        | []                        | URL query parameters to be sealed. By default, all parameters will be sealed. you can set a list of query parameters, ex, ['wat_url'] which enables you to freely append additional transformations to the URL (the sealed parameters cannot be overwritten). |
+| Property                         | Type                                          | Default (possible values) | Description                                                                                                                                                                                                                                                   |
+| -------------------------------- | --------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`token`**                      | string                                        | ''                        | The [cloudimage](https://cloudimage.io/) token                                                                                                                                                                                                                |
+| **`dontPrefixUrl`**              | boolean                                       | false                     | Don't prefix the whole URL (protocol, token & domain) to the generated cloudimage URL                                                                                                                                                                         |
+| **`domain`**                     | string                                        | cloudimg.io               | Domain used in cloudimage service                                                                                                                                                                                                                             |
+| **`version`**                    | string                                        | ''                        | The version of cloudimage service used                                                                                                                                                                                                                        |
+| **`secureProtocol`**             | boolean                                       | true                      | `true` means using (`https`) in the URL, `false` means using (`http`)                                                                                                                                                                                         |
+| **`loadableQuery`**              | string                                        | ''                        | A cloudimage string query params to load in the plugin's design state and continue editing on previous edits (ex, `w=500&h=300&blur=5`), you could use it in addition to [`loadableDesignState`](#loadabledesignstate-experimental)                           |
+| **`imageSealing`**               | object                                        | mentioned above           | Assigns the options for image sealing feature (your cloudimage account must support it)                                                                                                                                                                       |
+| imageSealing.**`enable`**        | boolean                                       | true                      | `true` means using (`https`) in the URL, `false` means using (`http`)                                                                                                                                                                                         |
+| imageSealing.**`salt`**          | string ***Required if imageSealing enabled*** | ''                        | The salt string is set upon configuration and is used for the encryption                                                                                                                                                                                      |
+| imageSealing.**`charCount`**     | number                                        | 10                        | Calculated hash (URL ci_seal parameter) length                                                                                                                                                                                                                |
+| imageSealing.**`includeParams`** | string[]                                      | []                        | URL query parameters to be sealed. By default, all parameters will be sealed. you can set a list of query parameters, ex, ['wat_url'] which enables you to freely append additional transformations to the URL (the sealed parameters cannot be overwritten). |
 
 #### `savingPixelRatio`
 
@@ -931,6 +931,35 @@ Hides all the UI of the plugin including (save & close buttons, tabs & tools bar
 
 > This prop might be useful if are using the editor in different ways in the same project, (ex. using the editor in doing different transformations for quick photo editing & using the editor after uploading some profile photo to crop the photo only and dismiss other transformations).
 
+#### `getCurrentImgDataFnRef`
+
+Type: `React Ref | Object`
+
+Default: undefined
+
+If provided the canvas processing/saving/manipulating function will be assigned as `.current` proeprty to this passed `Object | React Ref` to be used/called somewhere else other than the default save button and returns both the final transformed image data object & current design state which are same as params as [`onSave callback`](#onsave),
+
+The passed object/ref becomes with the following syntax after assigning internally
+```js
+{ current: (imageFileInfo = {}, pixelRatio = false) => ({ imageData, designState }) }
+```
+The function has the following params:
+
+- *`imageFIleInfo`*: An object, defines the info of the file to be considered while saving, and contains the following properties:
+  ```js
+  {
+    name,
+    extension,
+    quality, // applied in JPEG/JPG/WEBP formats only
+    size: { // used in resizing
+      width, height
+    },
+  }
+  ```
+- *`pixelRatio`*: A `number`, that defines the pixel ratio used in transforming/saving the image (higher the ratio, higher the resolution of the saved image till reaching the possible max. resolution for the image, higher the memory used & processing time of saving/transforming).
+
+> NOTE: Calling the assigned function will be UI blocker so take care where & when you are calling the function.
+
 ### Callbacks
 
 #### `onBeforeSave`
@@ -947,13 +976,26 @@ This function will be fired once the user clicks save button and before triggeri
 
 #### `onSave`
 
-Type: `function(savedImageData, imageDesignState) {}` ***Required***
+Type: `function(imageData, imageDesignState) {}`
 
 Default: `undefined`
 
-Must be provided for avoiding plugin's error, it's used for handling the save functionality which is triggered once the user clicks on save button of the saving modal or once clicking the save button if the default behavior is prevented from [`onBeforeSave`](#onbeforesave) function.
+it's used for handling the save functionality which is triggered once the user clicks on save button of the saving modal or once clicking the save button if the default behavior is prevented from [`onBeforeSave`](#onbeforesave) function.
 
-> In `savedImageData` parameter you have 2 formats (Base64 string & Canvas HTML element) of saved image, the Canvas HTML element format doesn't support quality chosen while saving from default behavior.
+> In `imageData` parameter you have 2 formats (Base64 string & Canvas HTML element) of saved image, the Canvas HTML element format doesn't support quality chosen while saving from default behavior.
+
+
+#### `onModify`
+
+Type: `function(currentImageDesignState)`
+
+Default: `undefined`
+
+Called after any operation/transformation is applied on the image (ex. Add/change filter, resize the image...etc.).
+
+- *`currentImageDesignState`*: An object contains the latest design state of the current state of the plugin.
+
+> NOTE: This callback might be triggered multiple times at changing some properties related to same operation/functionality so please make sure you have checked when it's called to understand the behavior you'll have.
 
 #### `onClose`
 
@@ -994,6 +1036,10 @@ Initializes/rerenders the plugin with the possibility to provide an additional c
 #### `terminate()`
 
 Unmounts the plugin's container from the page to be removed.
+
+#### `getCurrentImgDataFunction(imageFileInfo, pixelRatio)`
+
+Calling the function will trigger the function responsible for handling/manipulating the current image operations and have the possible final results of the current image data besides the current design state, it's the brdige for the function mentioned here [`getCurrentImgDataFnRef`](#getcurrentimgdatafnref).
 
 <hr />
 

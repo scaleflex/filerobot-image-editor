@@ -18,7 +18,10 @@ const getInitialAppState = (config = {}) => {
 
   return {
     // --- Start of design states ---
-    imgSrc: typeof config.img === 'string' ? config.img : config.img?.src || '',
+    imgSrc:
+      typeof config.source === 'string'
+        ? config.source
+        : config.source?.src || '',
     finetunes: [],
     finetunesProps: {},
     filter: null,

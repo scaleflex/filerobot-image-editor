@@ -16,6 +16,7 @@ const AppProvider = ({ children, config = {} }) => {
   const [state, _dispatch] = useAppReducer(
     appReducer,
     getInitialAppState(config),
+    config,
   );
 
   useEffect(() => {
