@@ -23,7 +23,8 @@
           "./src"
         ],
         "alias": {
-          "react-filerobot-image-editor/src/": "react-filerobot-image-editor"
+          "react-filerobot-image-editor/src/": "react-filerobot-image-editor",
+          "react-filerobot-image-editor/src/utils/deepMerge": "react-filerobot-image-editor/lib/utils/deepMerge",
         }
       }
     ],
