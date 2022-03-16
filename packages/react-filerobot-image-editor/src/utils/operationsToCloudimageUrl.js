@@ -213,8 +213,11 @@ const operationsToCloudimageUrl = (
   }
   paramsStr = paramsStr.replaceAll(' ', '+');
 
-  return `${url}${encodeURIComponent(imgSrc)}${
-    paramsStr ? `?${paramsStr.replace(/&$/, '')}` : ''
+  const queryPrefixOperator =
+    (!dontPrefixUrl && '?') || imgSrc.indexOf('?') === -1 ? '?' : '&';
+
+  return `${url}${dontPrefixUrl ? imgSrc : encodeURIComponent(imgSrc)}${
+    paramsStr ? `${queryPrefixOperator}${paramsStr.replace(/&$/, '')}` : ''
   }`;
 };
 
