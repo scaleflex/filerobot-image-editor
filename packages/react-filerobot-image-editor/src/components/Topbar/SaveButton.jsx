@@ -7,6 +7,8 @@ import Label from '@scaleflex/ui/core/label';
 /** Internal Dependencies */
 import { useStore, useTransformedImgData } from 'hooks';
 import getFileFullName from 'utils/getFileFullName';
+import mapCropBox from 'utils/mapCropBox';
+import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 import {
   CLOSING_REASONS,
   ELLIPSE_CROP,
@@ -17,6 +19,7 @@ import Modal from 'components/common/Modal';
 import Slider from 'components/common/Slider';
 import restrictNumber from 'utils/restrictNumber';
 import { Resize } from 'components/tools/Resize';
+import operationsToCloudimageUrl from 'utils/operationsToCloudimageUrl';
 import ButtonWithMenu from 'components/common/ButtonWithMenu';
 import {
   StyledFileExtensionSelect,
@@ -37,6 +40,7 @@ const SaveButton = () => {
   const {
     theme,
     dispatch,
+    shownImageDimensions,
     originalImage,
     resize,
     isLoadingGlobally,
@@ -52,6 +56,7 @@ const SaveButton = () => {
       forceToPngInEllipticalCrop,
       defaultSavedImageType,
       useCloudimage,
+      cloudimage,
       moreSaveOptions,
     },
   } = state;
@@ -124,9 +129,32 @@ const SaveButton = () => {
 
   const triggerSaveHandler = () => {
     if (useCloudimage) {
-      const transformedCloudimageData = transformImgFn;
+      const { filter, ...designState } = extractCurrentDesignState(state);
+      const cloudimageUrl = operationsToCloudimageUrl(
+        cloudimage,
+        designState,
+        shownImageDimensions,
+        originalImage,
+      );
+      const mappedCropBox = mapCropBox(
+        {
+          x: crop.x,
+          y: crop.y,
+          width: crop.width,
+          height: crop.height,
+        },
+        shownImageDimensions,
+        originalImage,
+      );
       const onSaveFn = optionSaveFnRef.current || onSave;
-      onSaveFn(transformedCloudimageData);
+      onSaveFn(
+        {
+          cloudimageUrl,
+          width: resize.width || mappedCropBox.width,
+          height: resize.height || mappedCropBox.height,
+        },
+        designState,
+      );
       return;
     }
 
