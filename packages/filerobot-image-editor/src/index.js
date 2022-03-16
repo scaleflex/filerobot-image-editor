@@ -12,6 +12,7 @@ class FilerobotImageEditor {
   #render;
   #unmount;
   #getCurrentImgDataFnRef;
+  #updateStateFnRef;
 
   constructor(container, config = {}) {
     this.container = container;
@@ -26,6 +27,7 @@ class FilerobotImageEditor {
     this.#render = render;
     this.#unmount = unmountComponentAtNode;
     this.#getCurrentImgDataFnRef = {};
+    this.#updateStateFnRef = {};
   }
 
   render(additionalConfig) {
@@ -39,6 +41,7 @@ class FilerobotImageEditor {
     this.config = {
       ...this.config,
       getCurrentImgDataFnRef: this.#getCurrentImgDataFnRef,
+      updateStateFnRef: this.#updateStateFnRef,
     };
     this.#render(createElement(AssemblyPoint, this.config), this.container);
   }
@@ -49,6 +52,10 @@ class FilerobotImageEditor {
 
   getCurrentImgData(props) {
     return this.#getCurrentImgDataFnRef?.current?.(props) || {};
+  }
+
+  updateState(newStatePart) {
+    this.#updateStateFnRef?.current?.(newStatePart);
   }
 }
 

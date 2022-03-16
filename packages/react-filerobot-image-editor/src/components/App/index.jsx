@@ -59,6 +59,7 @@ const App = () => {
     observePluginContainerSize,
     showCanvasOnly,
     getCurrentImgDataFnRef,
+    updateStateFnRef,
   } = config;
 
   const [observeResize, unobserveElement] = useResizeObserver();
@@ -253,6 +254,17 @@ const App = () => {
         );
       }
     };
+  }, []);
+
+  useEffect(() => {
+    if (updateStateFnRef && typeof updateStateFnRef === 'object') {
+      updateStateFnRef.current = (newStatePart) => {
+        dispatch({
+          type: UPDATE_STATE,
+          payload: newStatePart,
+        });
+      };
+    }
   }, []);
 
   useEffect(() => {

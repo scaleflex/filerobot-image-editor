@@ -1,6 +1,6 @@
 /** External Dependencies */
 import Konva from 'konva';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /** Internal Dependencies */
 import { HIDE_LOADER, SET_SAVED } from 'actions';
@@ -15,6 +15,7 @@ import mapCropBox from 'utils/mapCropBox';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import imageToBase64 from 'utils/imageToBase64';
 import getFileFullName from 'utils/getFileFullName';
+import operationsToCloudimageUrl from 'utils/operationsToCloudimageUrl';
 import useStore from './useStore';
 
 const useTransformedImgData = () => {
@@ -30,8 +31,44 @@ const useTransformedImgData = () => {
       previewPixelRatio,
       forceToPngInEllipticalCrop,
       defaultSavedImageType,
+      useCloudimage,
+      cloudimage,
     },
   } = state;
+
+  const getTransformedCloudimageData = useCallback(
+    (imageFileInfo = {}) => {
+      const { filter, ...designState } = extractCurrentDesignState(state);
+      const cloudimageUrl = operationsToCloudimageUrl(
+        cloudimage,
+        designState,
+        shownImageDimensions,
+        originalImage,
+      );
+      const mappedCropBox = mapCropBox(
+        {
+          x: crop.x,
+          y: crop.y,
+          width: crop.width,
+          height: crop.height,
+        },
+        shownImageDimensions,
+        originalImage,
+      );
+
+      const imageData = {
+        cloudimageUrl,
+        width: imageFileInfo?.size?.width || mappedCropBox.width,
+        height: imageFileInfo?.size?.height || mappedCropBox.height,
+      };
+
+      return {
+        imageData,
+        designState,
+      };
+    },
+    [cloudimage],
+  );
 
   const getTransformedImgData = useCallback(
     (imageFileInfo = {}, pixelRatio = false) => {
@@ -206,7 +243,11 @@ const useTransformedImgData = () => {
     ],
   );
 
-  return getTransformedImgData;
+  return useMemo(
+    () =>
+      useCloudimage ? getTransformedCloudimageData : getTransformedImgData,
+    [useCloudimage, getTransformedCloudimageData, getTransformedImgData],
+  );
 };
 
 export default useTransformedImgData;

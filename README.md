@@ -960,6 +960,17 @@ The function has the following params:
 
 > NOTE: Calling the assigned function will be UI blocker so take care where & when you are calling the function.
 
+#### `updateStateFnRef`
+
+
+Type: `React Ref | Object`
+
+Default: undefined
+
+Assigns the update state main function of the plugin inside `.current` property of the passed object/ref to be used in changing the main state of the application, the function has 1 paramter which is the new state part (an object type).
+
+> NOTE: Be-aware while using this function as it might cause an un-expected behavior and we don't recommend to use it unless you know what you are doing.
+
 ### Callbacks
 
 #### `onBeforeSave`
