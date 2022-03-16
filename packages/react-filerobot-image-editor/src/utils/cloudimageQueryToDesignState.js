@@ -31,7 +31,7 @@ const propertyToOperation = (
       };
     }
     case 'wat_url':
-      return { watermark: { image: value } };
+      return { watermark: { image: decodeURIComponent(value) } };
     case 'wat_scale': {
       const [scaleX, scaleY] = value.split(',');
       return {

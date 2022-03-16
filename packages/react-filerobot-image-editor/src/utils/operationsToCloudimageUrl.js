@@ -66,7 +66,7 @@ const generateWatermarkQuery = (
     ((width * scaleX) / scaledWidth) * 100,
     2,
   )}p,${toPrecisedFloat(((height * scaleY) / scaledHeight) * 100, 2)}p${
-    watermarkUrl ? `&wat_url=${watermarkUrl}` : ''
+    watermarkUrl ? `&wat_url=${encodeURIComponent(watermarkUrl)}` : ''
   }`;
 };
 
@@ -204,6 +204,8 @@ const operationsToCloudimageUrl = (
     );
   }
 
+  operationsQueries.push('ci_url_encoded=1');
+
   let paramsStr = operationsQueries.join('&');
 
   if (imageSealing.enable) {
@@ -211,10 +213,8 @@ const operationsToCloudimageUrl = (
   }
   paramsStr = paramsStr.replaceAll(' ', '+');
 
-  const queryPrefixOperator = imgSrc.indexOf('?') === -1 ? '?' : '&';
-
-  return `${url}${imgSrc}${
-    paramsStr ? `${queryPrefixOperator}${paramsStr.replace(/&$/, '')}` : ''
+  return `${url}${encodeURIComponent(imgSrc)}${
+    paramsStr ? `?${paramsStr.replace(/&$/, '')}` : ''
   }`;
 };
 
