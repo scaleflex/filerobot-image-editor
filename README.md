@@ -701,6 +701,8 @@ Default:
 {
     minWidth: 14,
     minHeight: 14,
+    width: null,
+    height: null,
     maxWidth: null,
     maxHeight: null,
     ratio: 'original',
@@ -718,6 +720,8 @@ The available options for crop tool,
 | -------------------- | ------------------------------------------------ | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`minWidth`**       | number                                           | 14                                                         | Minimum width (in px) of the possible crop area                                                                                                                                                                                     |
 | **`minHeight`**      | number                                           | 14                                                         | Minimum height (in px) of the possible crop area                                                                                                                                                                                    |
+| **`width`**          | number                                           | null                                                       | Sets the current width of the crop area                                                                                                                                                                                             |
+| **`height`**         | number                                           | 14                                                         | Sets the current height of the crop area                                                                                                                                                                                            |
 | **`maxWidth`**       | number                                           | null                                                       | Maximum width (in px) of the possible crop area                                                                                                                                                                                     |
 | **`maxHeight`**      | number                                           | null                                                       | Maximum height (in px) of the possible crop area                                                                                                                                                                                    |
 | **`ratio`**          | string \| number                                 | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area                                                                                                                                                                                                      |

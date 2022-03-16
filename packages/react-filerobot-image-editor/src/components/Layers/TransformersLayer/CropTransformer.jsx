@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Ellipse, Image, Rect, Transformer } from 'react-konva';
 import Konva from 'konva';
 
@@ -32,14 +32,17 @@ const CropTransformer = () => {
   const tmpImgNodeRef = useRef();
   const shownImageDimensionsRef = useRef();
   const cropConfig = config[TOOLS_IDS.CROP];
-  const cropRatio = crop.ratio || cropConfig.ratio;
-  const isCustom = cropRatio === CUSTOM_CROP;
-  const isEllipse = cropRatio === ELLIPSE_CROP;
+  const [internalCrop, setInternalCrop] = useState(() => ({
+    ...crop,
+    ...cropConfig,
+  }));
+  const isCustom = internalCrop.ratio === CUSTOM_CROP;
+  const isEllipse = internalCrop.ratio === ELLIPSE_CROP;
 
   const getProperCropRatio = () =>
-    cropRatio === ORIGINAL_CROP
+    internalCrop.ratio === ORIGINAL_CROP
       ? originalImage.width / originalImage.height
-      : cropRatio;
+      : internalCrop.ratio;
 
   const saveCrop = ({ width, height, x, y }, noHistory) => {
     const newCrop = {
@@ -88,8 +91,8 @@ const CropTransformer = () => {
     const attrs = {
       width: cropWidth,
       height: cropHeight,
-      x: crop.x ?? 0,
-      y: crop.y ?? 0,
+      x: internalCrop.x ?? 0,
+      y: internalCrop.y ?? 0,
     };
 
     saveCrop(
@@ -123,21 +126,53 @@ const CropTransformer = () => {
     if (shownImageDimensionsRef.current) {
       const imageDimensions = shownImageDimensionsRef.current;
       saveBoundedCropWithLatestConfig(
-        crop.width ?? imageDimensions.width,
-        crop.height ?? imageDimensions.height,
+        internalCrop.width ?? imageDimensions.width,
+        internalCrop.height ?? imageDimensions.height,
       );
     }
-  }, [cropRatio]);
+  }, [internalCrop]);
+
+  useEffect(() => {
+    if (crop.ratio) {
+      setInternalCrop({ ...internalCrop, ratio: crop.ratio });
+    }
+  }, [crop.ratio]);
+
+  useEffect(() => {
+    if (crop.width && crop.height) {
+      setInternalCrop({
+        ...internalCrop,
+        width: crop.width,
+        height: crop.height,
+      });
+    }
+  }, [crop.width, crop.height]);
+
+  useEffect(() => {
+    if (cropConfig.width && cropConfig.height) {
+      setInternalCrop({
+        ...internalCrop,
+        width: cropConfig.width,
+        height: cropConfig.height,
+      });
+    }
+  }, [cropConfig.width, cropConfig.height]);
+
+  useEffect(() => {
+    if (cropConfig.ratio) {
+      setInternalCrop({ ...internalCrop, ratio: crop.ratio });
+    }
+  }, [cropConfig.ratio]);
 
   useEffect(() => {
     if (
       cropTransformerRef.current &&
       cropShapeRef.current &&
       shownImageDimensionsRef.current &&
-      crop.width &&
-      crop.height
+      internalCrop.width &&
+      internalCrop.height
     ) {
-      saveBoundedCropWithLatestConfig(crop.width, crop.height);
+      saveBoundedCropWithLatestConfig(internalCrop.width, internalCrop.height);
     }
   }, [cropConfig, shownImageDimensions.width, shownImageDimensions.height]);
 
@@ -180,7 +215,7 @@ const CropTransformer = () => {
   };
 
   let attrs;
-  if (!crop.width && !crop.height) {
+  if (!internalCrop.width && !internalCrop.height) {
     const scaleFactor =
       shownImageDimensions.scaledBy < 1 ? shownImageDimensions.scaledBy : 1;
     const unscaledImgDimensions = {
@@ -196,7 +231,7 @@ const CropTransformer = () => {
       cropConfig,
     );
   } else {
-    attrs = crop;
+    attrs = internalCrop;
   }
 
   const { x = 0, y = 0, width, height } = attrs;

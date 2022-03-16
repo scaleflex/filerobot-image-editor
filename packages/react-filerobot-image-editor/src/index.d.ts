@@ -148,9 +148,6 @@ type imageDesignState = {
       height?: number,
       x?: number,
       y?: number,
-      autoResize?: boolean;
-      presetsItems?: cropPresetItem[];
-      presetsFolders?: cropPresetFolder[];
     },
     isFlippedX?: boolean;
     isFlippedY?: boolean;
@@ -233,10 +230,15 @@ export interface FilerobotImageEditorConfig {
   Crop?: {
     minWidth?: number;
     minHeight?: number;
-    maxWidth?: null;
-    maxHeight?: null;
+    maxWidth?: number;
+    maxHeight?: number;
     ratio?: 'original' | 'custom' | 'ellipse' | number;
     noPresets?: boolean;
+    width?: number;
+    height?: number;
+    autoResize?: boolean;
+    presetsItems?: cropPresetItem[];
+    presetsFolders?: cropPresetFolder[];
   };
   // TABS_IDS
   tabsIds?: (availableTabs)[] | [];
