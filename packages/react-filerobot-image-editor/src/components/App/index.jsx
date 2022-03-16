@@ -258,14 +258,14 @@ const App = () => {
 
   useEffect(() => {
     if (updateStateFnRef && typeof updateStateFnRef === 'object') {
-      updateStateFnRef.current = (newStatePart) => {
+      updateStateFnRef.current = (newStatePartObjOrFn) => {
         dispatch({
           type: UPDATE_STATE,
-          payload: newStatePart,
+          payload: newStatePartObjOrFn,
         });
       };
     }
-  }, []);
+  }, [updateStateFnRef, dispatch]);
 
   useEffect(() => {
     if (getCurrentImgDataFnRef && typeof getCurrentImgDataFnRef === 'object') {

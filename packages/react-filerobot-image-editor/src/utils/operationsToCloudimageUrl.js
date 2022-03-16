@@ -54,12 +54,12 @@ const generateWatermarkQuery = (
   const imgSrc = watermark.image?.src || watermark.image;
   const watermarkUrl = !imgSrc.startsWith('blob:') && imgSrc;
 
-  return `${queryParams}${
-    watermarkUrl ? `&wat_url=${watermarkUrl}` : ''
-  }&wat_scale=${toPrecisedFloat(
+  return `${queryParams}&wat_scale=${toPrecisedFloat(
     (width / previewDimensions.width) * 100,
     2,
-  )}p,${toPrecisedFloat((height / previewDimensions.height) * 100, 2)}p`;
+  )}p,${toPrecisedFloat((height / previewDimensions.height) * 100, 2)}p${
+    watermarkUrl ? `&wat_url=${watermarkUrl}` : ''
+  }`;
 };
 
 export const finetuneNameToParamInfo = {
@@ -147,6 +147,7 @@ const operationsToCloudimageUrl = (
     finetunesProps,
     annotations = {},
   } = operations;
+
   const url = !dontPrefixUrl
     ? `http${secureProtocol ? 's' : ''}://${token}.${domain.replace(
         /^(https?:\/\/)?(www\.)?|^\.|\/$/g,
@@ -181,6 +182,10 @@ const operationsToCloudimageUrl = (
     operationsQueries.push(generateFlipQuery(isFlippedX, isFlippedY));
   }
 
+  if (finetunes.length > 0 && finetunesProps) {
+    operationsQueries.push(generateFinetuneQuery(finetunes, finetunesProps));
+  }
+
   if (annotations[WATERMARK_ANNOTATION_ID]) {
     operationsQueries.push(
       generateWatermarkQuery(
@@ -189,10 +194,6 @@ const operationsToCloudimageUrl = (
         crop,
       ),
     );
-  }
-
-  if (finetunes.length > 0 && finetunesProps) {
-    operationsQueries.push(generateFinetuneQuery(finetunes, finetunesProps));
   }
 
   let paramsStr = operationsQueries.join('&');

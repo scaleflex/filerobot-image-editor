@@ -279,7 +279,7 @@ export interface FilerobotImageEditorConfig {
     current?: getCurrentImgDataFunction
   };
   updateStateFnRef?: RefObject | {
-    current?: (newStatePart: {}) => void;
+    current?: (newStatePart: {} | ((currentState: {}) => void)) => void;
   };
   onModify?: (currentImageDesignState: imageDesignState) => void;
 }

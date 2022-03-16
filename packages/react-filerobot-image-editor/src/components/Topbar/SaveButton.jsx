@@ -124,9 +124,12 @@ const SaveButton = () => {
 
   const triggerSaveHandler = () => {
     if (useCloudimage) {
-      const transformedCloudimageData = transformImgFn;
+      const transformedCloudimageData = transformImgFn(imageFileInfo);
       const onSaveFn = optionSaveFnRef.current || onSave;
-      onSaveFn(transformedCloudimageData);
+      onSaveFn(
+        transformedCloudimageData.imageData,
+        transformedCloudimageData.designState,
+      );
       return;
     }
 

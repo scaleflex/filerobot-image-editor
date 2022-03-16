@@ -88,9 +88,7 @@ const pluginConfig = {
 
 function onSave(url, fileName) {
   let tmpLink = document.createElement('a');
-  tmpLink.href = useCloudimage
-    ? `${url}&func=proxy`.replace(/\?vh=.*&/, '&')
-    : url;
+  tmpLink.href = url;
 
   if (useCloudimage) {
     tmpLink.target = '_blank';

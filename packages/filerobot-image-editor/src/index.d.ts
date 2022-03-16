@@ -7,7 +7,7 @@ declare class FilerobotImageEditor {
   render(additionalConfig?: FilerobotImageEditorConfig): void;
   terminate(): void;
   getCurrentImgData: getCurrentImgDataFunction;
-  updateStateFnRef: (newStatePart: {}) => void;
+  updateStateFnRef: (newStatePart: {} | ((currentState: {}) => void)) => void;
 }
 
 export default FilerobotImageEditor;

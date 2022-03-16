@@ -967,7 +967,7 @@ Type: `React Ref | Object`
 
 Default: undefined
 
-Assigns the update state main function of the plugin inside `.current` property of the passed object/ref to be used in changing the main state of the application, the function has 1 paramter which is the new state part (an object type).
+Assigns the update state main function of the plugin inside `.current` property of the passed object/ref to be used in changing the main state of the application, the function has 1 paramter that could be either (`function | object`) the function receives the current state object as argument. The object is the new state part, in both types not required to return/pass the whole state object as it gets deep merged with the current state.
 
 > NOTE: Be-aware while using this function as it might cause an un-expected behavior and we don't recommend to use it unless you know what you are doing.
 
