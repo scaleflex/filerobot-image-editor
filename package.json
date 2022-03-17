@@ -82,7 +82,7 @@
     "build:packages": "lerna run build:lib",
     "publish:packages": "yarn build:packages && lerna publish",
     "analyze:bundle": "source-map-explorer dist/filerobot-image-editor.min.js{,.map}",
-    "release:beta": "yarn && publish:packages --dist-tag beta && yarn publish:bundle beta",
+    "release:beta": "yarn && yarn publish:packages --dist-tag beta && yarn publish:bundle beta",
     "release:prod": "yarn && yarn publish:packages && yarn publish:bundle latest && yarn release:gh-pages"
   }
 }
