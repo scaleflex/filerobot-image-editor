@@ -21,6 +21,7 @@ const pluginVersion = version || 'latest';
 const pluginStaticFolder = process.argv[2] === 'latest' ? 'latest' : 'beta';
 const securityTemplateId = process.env.UPLOAD_SECURITY_TEMPLATE_ID;
 
+console.log('===== [Bundle Deployment is starting] =====');
 const generateSassKey = () =>
   fetch(`${apiUrl}/${pluginsContainer}/key/${securityTemplateId}`)
     .then((res) => res.json())
