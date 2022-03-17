@@ -7,12 +7,12 @@
     "packages/*"
   ],
   "author": "Scaleflex",
-  "homepage": "https://github.com/scaleflex/filerobot-image-editor/tree/v4#readme",
+  "homepage": "https://github.com/scaleflex/filerobot-image-editor/#readme",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/scaleflex/filerobot-image-editor/tree/v4"
+    "url": "https://github.com/scaleflex/filerobot-image-editor"
   },
   "keywords": [
     "image editor",
