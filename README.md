@@ -1,11 +1,9 @@
-> **THIS BRANCH IS THE *`BETA`* RELEASE OF THE NEW MAJOR VERSION (V4)**
-
 <p align="center">
 	<a href="https://github.com/scaleflex/filerobot-image-editor/blob/master/LICENSE">
 		<img src="https://img.shields.io/npm/l/filerobot-image-editor?style=for-the-badge" alt="License (MIT)" />
 	</a>
 	<a href="#installation">
-		<img src="https://img.shields.io/npm/v/filerobot-image-editor/beta?label=Version&style=for-the-badge&logo=npm" alt="Version" />
+		<img src="https://img.shields.io/npm/v/filerobot-image-editor/latest?label=Version&style=for-the-badge&logo=npm" alt="Version" />
 	</a>
 	<a href="#">
 		<img alt="GitHub stars" src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?style=for-the-badge&logo=github" />
@@ -36,7 +34,12 @@
   </a>
 	<br />
 	<br />
+	<a href="https://scaleflex.github.io/filerobot-image-editor/">Editor Preview</a>
+  •
 	<a href="https://www.filerobot.com/en/home">Learn more about Filerobot</a>
+  •
+	<a href="https://codesandbox.io/s/holy-resonance-j0n5z">CodeSandbox</a>
+
 </p>
 
 # Filerobot Image Editor (FIE)
@@ -47,9 +50,9 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 ## Demo
 
-[***TEMP. DEMO HERE***](https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/v4_beta-demo/index.html?vh=d47df7&func=proxy)
+<u>[**DEMO/Preview link**](https://scaleflex.github.io/filerobot-image-editor/)</u>
 
-GIF Link TO BE ADDED...
+<!-- GIF Link TO BE ADDED... -->
 
 ## Features
 
@@ -118,13 +121,13 @@ GIF Link TO BE ADDED...
 #### React Component
 
 ```bash
-npm install --save react-filerobot-image-editor@beta
+npm install --save react-filerobot-image-editor
 ```
 
 #### VanillaJS
 
 ```bash
-npm install --save filerobot-image-editor@beta
+npm install --save filerobot-image-editor
 ```
 
 ### CDN
@@ -132,10 +135,11 @@ npm install --save filerobot-image-editor@beta
 VanillaJS only
 
 ```js
-<script src="https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/4.0.0-beta/filerobot-image-editor.min.js"></script>
+// latest => last production version of the plugin, possible to replace with some earlier version (ex. 3.17.0) & if available will be requested
+<script src="https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/latest/filerobot-image-editor.min.js"></script>
 ```
 
-> In all installation cases you must import the font family that will be used from your side as it is not included in the library by default, the default font family used is [**Roboto**](https://fonts.google.com/share?selection.family=Roboto:wght@400;500) in 2 font-weight (normal === 400 & medium === 500) which fall-backs to **Arial** if not found.
+> IMPORTANT NOTE: In all installation cases you must import the font family that will be used from your side as it is not included in the library by default, the default font family used is [**Roboto**](https://fonts.google.com/share?selection.family=Roboto:wght@400;500) in 2 font-weight (normal === 400 & medium === 500) which fall-backs to **Arial** if not found.
 
 > Just import the font in your HTML/JS file before loading the plugin whether it's Roboto or you have provided another fontFamily from [`theme`](#theme) property and that's all!
 
@@ -226,7 +230,9 @@ function App() {
 ### VanillaJS Example
 
 ```js
-import FilerobotImageEditor from 'filerobot-image-editor';
+import FilerobotImageEditor from 'filerobot-image-editor'; // Load library from NPM
+// or load from CDN as following and use (window.FilerobotImageEditor):
+// <script src="https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/latest/filerobot-image-editor.min.js"></script>
 
 const { TABS, TOOLS } = FilerobotImageEditor;
 const config = {
@@ -319,8 +325,6 @@ filerobotImageEditor.render({
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u> `undefined`.
-
-Supported Version: 
 
 The image url or an `HTMLImageElement` for the image which the operations/edits will be applied on.
 
@@ -1126,15 +1130,27 @@ Triggered once the user clicks either close/cancel button or back button, if not
 
 In addition to the main config mentioned above which works for all bridges, the following methods are specific for this bridge only:
 
-#### `render(additionalConfig)`
+#### `render`
+
+<u>Type:</u> `function render (additionalConfig)`
+
+<u>Supported version:</u> +v4.0.0
 
 Initializes/rerenders the plugin with the possibility to provide an additional config properties to the previously provided properties to the same plugin's instance.
 
-#### `terminate()`
+#### `terminate`
+
+<u>Type:</u> `function terminate ()`
+
+<u>Supported version:</u> +v4.0.0
 
 Unmounts the plugin's container from the page to be removed.
 
-#### `getCurrentImgDataFunction(imageFileInfo, pixelRatio)`
+#### `getCurrentImgDataFunction`
+
+<u>Type:</u> `function getCurrentImgDataFunction (imageFileInfo, pixelRatio)`
+
+<u>Supported version:</u> +v4.0.0
 
 Calling the function will trigger the function responsible for handling/manipulating the current image operations and have the possible final results of the current image data besides the current design state, it's the brdige for the function mentioned here [`getCurrentImgDataFnRef`](#getcurrentimgdatafnref).
 
@@ -1146,7 +1162,7 @@ This project is used by the following companies:
 
 - [Scaleflex](https://scaleflex.com/)
 
-> Fork the repoistory, append your company's name with the URL in above format inside the README.md file and make a PR!
+> Fork the repoistory, append your company's name with the URL in above format inside the README.md file and make a PR! or create a GitHub issue mentioning (Site's name & domain).
 
 ## Feedback
 
@@ -1154,7 +1170,7 @@ Create an issue on github repo. and mention the details there.
 
 ## Contributing
 
-All contributions are super welcome!
+All contributions are super welcomed!
 
 ## License
 
