@@ -314,17 +314,23 @@ filerobotImageEditor.render({
 
 #### `source`
 
-Type: `string` | `HTMLImageElement` ***Required***.
+<u>Type:</u> `string` | `HTMLImageElement` ***Required***.
 
-Default: `undefined`.
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `undefined`.
+
+Supported Version: 
 
 The image url or an `HTMLImageElement` for the image which the operations/edits will be applied on.
 
 #### `theme`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 
 Theme from [@scaleflex/ui](https://github.com/scaleflex/ui/blob/1617f8b19ade7199110df6e2ceff77dacefd75bd/packages/ui/src/theme/entity/default-theme.ts#L43) deep merged with following overrides
 
@@ -347,9 +353,11 @@ As the colors of the plugin are retrieved dynamically from the theme object, it 
 
 #### `tabsIds`
 
-Type: `string[]`
+<u>Type:</u> `string[]`
 
-Default: `[]`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `[]`
 
 the tabs will be shown to the user, if empty array provided or left by default all tabs will be used otherwise the provided tabs ids would be shown.
 
@@ -369,41 +377,51 @@ const { TABS, TOOLS } = VanillaFilerobotImageEditor;
 
 #### `defaultTabId`
 
-Type: `string`
+<u>Type:</u> `string`
 
-Default: `Adjust`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `Adjust`
 
 The default opened tab once the user opens the plugin.
 
 #### `defaultToolId`
 
-Type: `string`
+<u>Type:</u> `string`
 
-Default: first tool of the default opened tab.
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> first tool of the default opened tab.
 
 The default opened tool once the user opens the plugin, and must be one of the tools related to the opened tab.
 
 #### `useBackendTranslations`
 
-Type: `boolean`
+<u>Type:</u> `boolean`
 
-Default: `true`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `true`
 
 A backend service that hosts the translations of the plugin to be able to change the translations without making a new build once the translations changed, and gives the chance to support more languages too, if `true` the service would be used and the next [`language`](#language) property used in determining which language to show, `false` means avoid using this service in that case default translations and provided [`translations`](#translations) property will be used.
 
 #### `language`
 
-Type: `string`
+<u>Type:</u> `string`
 
-Default: `en`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `en`
 
 The 2 letters shorthand used for the language/translations, would be used in case [`useBackendTranslations`](#usebackendtranslations) is `true`.
 
 #### `translations`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default: `null`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `null`
 
 If provided will be used in overriding the default translations arrived locally with the plugin & [backend's](#usebackendtranslations) translations.
 
@@ -411,33 +429,41 @@ If provided will be used in overriding the default translations arrived locally 
 
 #### `avoidChangesNotSavedAlertOnLeave`
 
-Type: `boolean`
+<u>Type:</u> `boolean`
 
-Default: `false`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `false`
 
 By default once the user makes any change/edit on the image and hasn't saved the image yet and tried to leave the page before saving then a browser's confirmation would be shown asking him if he really wants to leave before saving, `true` means it won't be shown.
 
 #### `showBackButton`
 
-Type: `boolean`
+<u>Type:</u> `boolean`
 
-Default: `false`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `false`
 
 If `true` Close button on the top right will be hidden and back button will be shown on the top left (with replacing positions of save & history buttons).
 
 #### `defaultSavedImageName`
 
-Type: `string`
+<u>Type:</u> `string`
 
-Default: undefined
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> undefined
 
 The image file name used as default name for the image's file that will be saved if not provided the name will be extracted from provided image's src.
 
 #### `defaultSavedImageType`
 
-Type: `string`
+<u>Type:</u> `string`
 
-Default: `png`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `png`
 
 Possible values: `'png' | 'jpeg' | 'jpg' | 'webp'`
 
@@ -447,33 +473,41 @@ The default type used and selected in saving the image (the user has the possibi
 
 #### `forceToPngInEllipticalCrop`
 
-Type: `boolean`
+<u>Type:</u> `boolean`
 
-Default: `false`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `false`
 
 If `true` then the saved image's type will always be `png` type if the user made an elliptical crop for preserving the transparency even if the user chose another extension in the saving modal, otherwise the familiar behavior (defaultSavedImageType or user's selected types) wins.
 
 #### `closeAfterSave`
 
-Type: `boolean`
+<u>Type:</u> `boolean`
 
-Default: `false`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `false`
 
 Fires [`onClose`](#onclose) callback after handling save & triggering [`onSave`](#onsave) if `true`.
 
 #### `loadableDesignState` *Experimental*
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default: `null`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `null`
 
 If provided the plugin will load this design state at the initial load to give the possibility to get back to that design in another time and continue editing it, it accepts the same object as provided in the [`onSave`](#onsave) callback's designState parameter.
 
 #### `annotationsCommon`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 ```js
 {
     fill: '#000000',
@@ -504,9 +538,11 @@ The common options existed in all the annotations tools and used as default valu
 
 #### `Text`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 ```js
 {
     ...annotationsCommon,
@@ -547,9 +583,11 @@ The options available for the text annotation tool in additon to the annotations
 
 #### `Image`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 ```js
 {
     ...annotationsCommon,
@@ -565,9 +603,11 @@ The options available for image annotation tool in additon to the annotationsCom
 
 #### `Rect`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 ```js
 {
     ...annotationsCommon,
@@ -582,17 +622,21 @@ The options available for Rect annotation tool in additon to the annotationsComm
 
 #### `Ellipse`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default: `annotationsCommon`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `annotationsCommon`
 
 No specific options available for ellipse only the annotationsCommon are used for ellipse and you could override any of them for ellipse only by passing them here.
 
 #### `Polygon`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 ```js
 {
     ...annotationsCommon,
@@ -608,9 +652,11 @@ The available options for polygon annotation tool in additon to the annotationsC
 
 #### `Pen`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 ```js
 {
     ...annotationsCommon,
@@ -629,9 +675,11 @@ The available options for pen annotation tool in additon to the annotationsCommo
 
 #### `Line`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 ```js
 {
     ...annotationsCommon,
@@ -648,9 +696,11 @@ The available options for line annotation tool in additon to the annotationsComm
 
 #### `Arrow`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 ```js
 {
     ...annotationsCommon,
@@ -671,9 +721,11 @@ The available options for arrow annotation tool in additon to the annotationsCom
 
 #### `Watermark`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 
 ```js
 {
@@ -694,9 +746,11 @@ The available options for watermark tool, the watermark is using the options of 
 
 #### `Crop`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 ```js
 {
     minWidth: 14,
@@ -729,7 +783,9 @@ The available options for crop tool,
 
 ##### **CropPresetFolder**:
 
-Type: `object`
+<u>Type:</u> `object`
+
+<u>Supported version:</u> +v4.0.0
 
 | Property       | Type                                           | Default (possible values) | Description                                                                                                                                                                                 |
 | -------------- | ---------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -739,7 +795,9 @@ Type: `object`
 
 ##### **CropPresetGroup**:
 
-Type: `object`
+<u>Type:</u> `object`
+
+<u>Supported version:</u> +v4.0.0
 
 | Property       | Type                                         | Default (possible values) | Description                                                                                                                                                                                |
 | -------------- | -------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -748,7 +806,9 @@ Type: `object`
 
 ##### **CropPresetItem**:
 
-Type: `object`
+<u>Type:</u> `object`
+
+<u>Supported version:</u> +v4.0.0
 
 | Property                  | Type                                                    | Default (possible values)                          | Description                                                                                                                                                                               |
 | ------------------------- | ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -813,9 +873,11 @@ Example,
 
 #### `useCloudimage`
 
-Type: `boolean`
+<u>Type:</u> `boolean`
 
-Default: `false`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `false`
 
 If `true` the plugin will work in [`cloudimage`](https://cloudimage.io/) mode means you will receive a cloudimage's URL contains the transformations/operations on saving not the image itself and some of tabs, tools and options are not supported in this mode, otherwise the default mode is used.
 
@@ -823,9 +885,11 @@ If `true` the plugin will work in [`cloudimage`](https://cloudimage.io/) mode me
 
 #### `cloudimage`
 
-Type: `object`
+<u>Type:</u> `object`
 
-Default:
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u>
 ```js
 {
   token: '',
@@ -859,9 +923,11 @@ The options available for cloudimage mode,
 
 #### `savingPixelRatio`
 
-Type: `number`
+<u>Type:</u> `number`
 
-Default: `8`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `8`
 
 The pixel ratio used in saving the image (higher the ratio, higher the resolution of the saved image till reaching the possible max. resolution for the image, higher the memory used & processing time of saving).
 
@@ -869,9 +935,11 @@ The pixel ratio used in saving the image (higher the ratio, higher the resolutio
 
 #### `previewPixelRatio`
 
-Type: `number`
+<u>Type:</u> `number`
 
-Default: `window.devicePixelRatio`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `window.devicePixelRatio`
 
 The pixel ratio used in previewing the image while doing the operations (higher the ratio, higher the resolution of the drawn/previewed image in the plugin till reaching the possible max. resolution for the image, higher the processing time of drawing the image & more memory used).
 
@@ -879,9 +947,11 @@ The pixel ratio used in previewing the image while doing the operations (higher 
 
 #### `moreSaveOptions`
 
-Type: `array of objects`
+<u>Type:</u> `array of objects`
 
-default: `[]`
+<u>Supported version:</u> +v4.0.0
+
+<u>default:</u> `[]`
 
 Used in case you want to show more saving options to the user besides the current save button as overlay menu opened through arrow next to save button.
 
@@ -913,9 +983,11 @@ example,
 
 #### `observePluginContainerSize`
 
-Type: `boolean`
+<u>Type:</u> `boolean`
 
-Default: `false`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `false`
 
 By default the plugin's root HTML Element is set with `100%` for both `height` & `width` to respect the plugin's container HTML element size using CSS, If provided `true` to this property then that root element will always be the same absolute `width` & `height` values of the plugin's container HTML Element through JS observable not CSS.
 
@@ -923,9 +995,11 @@ By default the plugin's root HTML Element is set with `100%` for both `height` &
 
 #### `showCanvasOnly`
 
-Type: `boolean`
+<u>Type:</u> `boolean`
 
-Default: `false`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `false`
 
 Hides all the UI of the plugin including (save & close buttons, tabs & tools bars...etc.) except the canvas only if `true`, otherwise the whole UI will be shown as normal.
 
@@ -933,9 +1007,11 @@ Hides all the UI of the plugin including (save & close buttons, tabs & tools bar
 
 #### `getCurrentImgDataFnRef`
 
-Type: `React Ref | Object`
+<u>Type:</u> `React Ref | Object`
 
-Default: undefined
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> undefined
 
 If provided the canvas processing/saving/manipulating function will be assigned as `.current` proeprty to this passed `Object | React Ref` to be used/called somewhere else other than the default save button and returns both the final transformed image data object & current design state which are same as params as [`onSave callback`](#onsave),
 
@@ -963,9 +1039,11 @@ The function has the following params:
 #### `updateStateFnRef`
 
 
-Type: `React Ref | Object`
+<u>Type:</u> `React Ref | Object`
 
-Default: undefined
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> undefined
 
 Assigns the update state main function of the plugin inside `.current` property of the passed object/ref to be used in changing the main state of the application, the function has 1 paramter that could be either (`function | object`) the function receives the current state object as argument. The object is the new state part, in both types not required to return/pass the whole state object as it gets deep merged with the current state.
 
@@ -975,9 +1053,11 @@ Assigns the update state main function of the plugin inside `.current` property 
 
 #### `onBeforeSave`
 
-Type: `function(imageFileInfo) {}`
+<u>Type:</u> `function(imageFileInfo) {}`
 
-Default: `undefined`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `undefined`
 
 This function will be fired once the user clicks save button and before triggering the default saving behavior...
 
@@ -987,9 +1067,11 @@ This function will be fired once the user clicks save button and before triggeri
 
 #### `onSave`
 
-Type: `function(imageData, imageDesignState) {}`
+<u>Type:</u> `function(imageData, imageDesignState) {}`
 
-Default: `undefined`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `undefined`
 
 it's used for handling the save functionality which is triggered once the user clicks on save button of the saving modal or once clicking the save button if the default behavior is prevented from [`onBeforeSave`](#onbeforesave) function.
 
@@ -998,9 +1080,11 @@ it's used for handling the save functionality which is triggered once the user c
 
 #### `onModify`
 
-Type: `function(currentImageDesignState)`
+<u>Type:</u> `function(currentImageDesignState)`
 
-Default: `undefined`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `undefined`
 
 Called after any operation/transformation is applied on the image (ex. Add/change filter, resize the image...etc.).
 
@@ -1010,9 +1094,11 @@ Called after any operation/transformation is applied on the image (ex. Add/chang
 
 #### `onClose`
 
-Type: `function(closingReason, haveNotSavedChanges) {}`
+<u>Type:</u> `function(closingReason, haveNotSavedChanges) {}`
 
-Default: `undefined`
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `undefined`
 
 Triggered once the user clicks either close/cancel button or back button, if not provided then the closing button won't shown at all.
 

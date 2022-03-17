@@ -17,7 +17,12 @@ const banner = `/**
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
+  const isGithubPagesBuild = process.env.VITE_BUILD_TYPE === 'gh-pages';
   console.log(`🕺🏽Running in ${isProduction ? 'Production' : 'Development'}.`);
+
+  if (isGithubPagesBuild) {
+    console.log('⌛ Building GitHub pages demo...');
+  }
 
   return {
     publicDir: false,
@@ -47,21 +52,28 @@ export default defineConfig(({ mode }) => {
       open: true,
     },
     build: {
-      lib: {
-        entry: './packages/filerobot-image-editor/src/index.js',
-        fileName: () => 'filerobot-image-editor.min.js',
-        name: 'FilerobotImageEditor',
-        formats: ['umd'],
-      },
-      minify: 'terser',
-      terserOptions: {
-        format: {
-          comments: false,
-          preamble: banner,
-        },
-      },
-      outDir: './dist',
-      sourcemap: 'hidden',
+      ...(isGithubPagesBuild
+        ? {
+            outDir: './demo-dist',
+            sourcemap: false,
+          }
+        : {
+            lib: {
+              entry: './packages/filerobot-image-editor/src/index.js',
+              fileName: () => 'filerobot-image-editor.min.js',
+              name: 'FilerobotImageEditor',
+              formats: ['umd'],
+            },
+            minify: 'terser',
+            terserOptions: {
+              format: {
+                comments: false,
+                preamble: banner,
+              },
+            },
+            outDir: './dist',
+            sourcemap: 'hidden',
+          }),
     },
   };
 });

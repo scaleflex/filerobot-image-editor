@@ -13,6 +13,7 @@ package-lock.json
 dist
 lib
 build
+demo-dist
 
 # misc
 .DS_Store
