@@ -52,7 +52,7 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 <p align="center">
   <strong>
-      <a href="https://scaleflex.github.io/filerobot-image-editor/">🔗 <u>DEMO/PREVIEW LINK</u></a>
+      <a href="https://scaleflex.github.io/filerobot-image-editor/" target="_blank">🔗 <u>DEMO/PREVIEW LINK</u></a>
   </strong>
 </p>
 
