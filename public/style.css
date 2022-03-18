@@ -483,6 +483,7 @@ body {
   position: relative;
   width: 685px;
   box-shadow: 0px 2px 41px 10px rgba(107, 130, 175, 0.1);
+  height: 500px;
 }
 
 .content-wrapper .img-table .editor-container .plugin-spinner {

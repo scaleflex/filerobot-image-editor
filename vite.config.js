@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    base: './',
     publicDir: false,
     cacheDir: '.vite',
     plugins: [
