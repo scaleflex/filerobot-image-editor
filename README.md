@@ -50,7 +50,11 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 ## Demo
 
-<u>[**DEMO/Preview link**](https://scaleflex.github.io/filerobot-image-editor/)</u>
+<p align="center">
+  <strong>
+      <a href="https://scaleflex.github.io/filerobot-image-editor/">🔗 <u>DEMO/PREVIEW LINK</u></a>
+  </strong>
+</p>
 
 <!-- GIF Link TO BE ADDED... -->
 
