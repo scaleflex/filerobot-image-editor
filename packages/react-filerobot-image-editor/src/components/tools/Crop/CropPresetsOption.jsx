@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import Menu from '@scaleflex/ui/core/menu';
 
 /** Internal Dependencies */
-import { SET_CROP, SET_RESIZE } from 'actions';
+import { SET_CROP, SET_RESIZE, ZOOM_CANVAS } from 'actions';
 import { useStore } from 'hooks';
 import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styled';
-import { TOOLS_IDS } from 'utils/constants';
+import { DEFAULT_ZOOM_FACTOR, TOOLS_IDS } from 'utils/constants';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
 import { StyledOpenMenuButton } from './Crop.styled';
 import { DEFAULT_CROP_PRESETS } from './Crop.constants';
@@ -23,6 +23,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
     adjustments: {
       crop: { ratio: currentRatio, ratioTitleKey, ratioFolderKey } = {},
     } = {},
+    shownImageDimensions,
     config,
   } = useStore();
   const cropConfig = config[TOOLS_IDS.CROP];
@@ -54,6 +55,20 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
           width: cropProps.width,
           height: cropProps.height,
           manualChangeDisabled: cropProps.disableManualResize,
+        },
+      });
+      dispatch({
+        type: ZOOM_CANVAS,
+        payload: {
+          factor:
+            cropProps.width > shownImageDimensions.width ||
+            cropProps.height > shownImageDimensions.height
+              ? Math.min(
+                  shownImageDimensions.width / cropProps.width,
+                  shownImageDimensions.height / cropProps.height,
+                )
+              : DEFAULT_ZOOM_FACTOR,
+          useAsFitFactor: true,
         },
       });
     }

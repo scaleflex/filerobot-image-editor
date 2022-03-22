@@ -39,13 +39,18 @@ const zoomCanvas = (state, payload) => {
     );
   }
 
+  if (payload.useAsFitFactor) {
+    newZoomData.fitCanvasFactor = newZoomData.factor;
+  }
+
   return newZoomData.factor === state.zoom.factor &&
     newZoomData.x === state.zoom.x &&
-    newZoomData.y === state.zoom.y
+    newZoomData.y === state.zoom.y &&
+    newZoomData.fitCanvasFactor === state.zoom.fitCanvasFactor
     ? state
     : {
         ...state,
-        zoom: newZoomData,
+        zoom: { ...state.zoom, ...newZoomData },
       };
 };
 

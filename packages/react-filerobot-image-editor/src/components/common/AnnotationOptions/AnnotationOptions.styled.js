@@ -15,7 +15,6 @@ const StyledOptionPopupContent = styled.div`
   box-shadow: 0px 1px 2px ${({ theme }) => theme.palette['light-shadow']};
   border-radius: 2px;
   overflow: visible;
-  width: max-content;
 
   * {
     font-family: 'Roboto', sans-serif;
