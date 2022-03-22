@@ -14,6 +14,10 @@
       rel="stylesheet"
     />
     <link
+    rel="stylesheet"
+    href="https://cdn.scaleflex.it/plugins/js-cloudimage-responsive/4.8.5/js-cloudimage-responsive.min.css?vh=a076ef&func=proxy"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
       rel="stylesheet"
     />
@@ -27,7 +31,12 @@
           <a href=" https://scaleflex.com/" target="_blank">
             <img src="./public/assets/scaleflex-logo.svg" alt="scaleflex logo" />
           </a>
-          <a class="img-editor">Image Editor</a>
+          <a
+          class="img-editor"
+          href="/"
+          >
+            Image Editor
+          </a>
         </div>
         <div class="navbar">
           <a
@@ -70,14 +79,13 @@
           </p>
         </div>
         <div class="view-button">
-          <button>
             <a
+              class="transition-filled-button"
               target="_blank"
               href="https://github.com/scaleflex/filerobot-image-editor"
             >
               View on GitHub
             </a>
-          </button>
           <p>Try to do it below</p>
           <img src="./public/assets/arrow.png" alt="arrow-shape" />
         </div>
@@ -96,77 +104,81 @@
             </div>
             <h5>Tabs</h5>
             <div class="tools-checkboxs">
-              <div>
-                <label class="checkbox-container" for="crop">
-                  Adjust
-                  <input
-                    id="crop"
-                    value="adjust"
-                    type="checkbox"
-                    name="Crop"
-                    checked />
-                  <span class="checkmark"></span></label
-                ><br />
+              <div class="tabs-left-column">
+                <div class="checkbox-wrapper">
+                  <label class="checkbox-container" for="crop">
+                    Adjust
+                    <input
+                      id="crop"
+                      value="adjust"
+                      type="checkbox"
+                      name="Crop"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
+                <div>
+                  <label class="checkbox-container" for="finetune">
+                    Finetune
+                    <input
+                      id="finetune"
+                      value="finetune"
+                      type="checkbox"
+                      name="Finetune"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
+                <div id="filter-wrapper">
+                  <label id="filter-label" class="checkbox-container" for="filter">
+                    Filters
+                    <input
+                      id="filter"
+                      value="filter"
+                      type="checkbox"
+                      name="Filters"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
               </div>
-              <div>
-                <label class="checkbox-container" for="finetune">
-                  Finetune
-                  <input
-                    id="finetune"
-                    value="finetune"
-                    type="checkbox"
-                    name="Finetune"
-                    checked />
-                  <span class="checkmark"></span></label
-                ><br />
-              </div>
-              <div id="filter-wrapper">
-                <label id="filter-label" class="checkbox-container" for="filter">
-                  Filters
-                  <input
-                    id="filter"
-                    value="filter"
-                    type="checkbox"
-                    name="Filters"
-                    checked />
-                  <span class="checkmark"></span></label
-                ><br />
-              </div>
-              <div>
-                <label class="checkbox-container" for="watermark">
-                  Watermark
-                  <input
-                    id="watermark"
-                    value="watermark"
-                    type="checkbox"
-                    name="Watermark"
-                    checked />
-                  <span class="checkmark"></span></label
-                ><br />
-              </div>
-              <div id="annotate-wrapper">
-                <label id="annotate-label" class="checkbox-container" for="annotate">
-                  Draw
-                  <input
-                    id="annotate"
-                    value="annotate"
-                    type="checkbox"
-                    name="Annotate"
-                    checked />
-                  <span class="checkmark"></span></label
-                ><br />
-              </div>
-              <div>
-                <label class="checkbox-container" for="resize">
-                  Resize
-                  <input
-                    id="resize"
-                    value="resize"
-                    type="checkbox"
-                    name="Resize"
-                    checked />
-                  <span class="checkmark"></span></label
-                ><br />
+              <div class="tabs-right-column">
+                <div>
+                  <label class="checkbox-container" for="watermark">
+                    Watermark
+                    <input
+                      id="watermark"
+                      value="watermark"
+                      type="checkbox"
+                      name="Watermark"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
+                <div id="annotate-wrapper">
+                  <label id="annotate-label" class="checkbox-container" for="annotate">
+                    Draw
+                    <input
+                      id="annotate"
+                      value="annotate"
+                      type="checkbox"
+                      name="Annotate"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
+                <div>
+                  <label class="checkbox-container" for="resize">
+                    Resize
+                    <input
+                      id="resize"
+                      value="resize"
+                      type="checkbox"
+                      name="Resize"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
               </div>
             </div>
             <div class="mode-content">
@@ -193,7 +205,7 @@
       <div class="filerobot-features-content">
         <div>
           <img
-            src="./public/assets/image-resize-mode.svg"
+            ci-src="https://scaleflex.cloudimg.io/v7/demo/add+resize.jpg?vh=e022a7"
             alt="image-resize-mode-img"
           />
           <h3>Crop & resize</h3>
@@ -203,7 +215,10 @@
           </p>
         </div>
         <div>
-          <img src="./public/assets/watermark-img.svg" alt="watermark-img" />
+          <img
+          ci-src="https://scaleflex.cloudimg.io/v7/demo/add+watermark.jpg?vh=74bcf8"
+          alt="watermark-img"
+          />
           <h3>Add watermark</h3>
           <p>
             Adding a watermark is a great way to protect your work, and you can
@@ -212,7 +227,10 @@
           </p>
         </div>
         <div>
-          <img src="./public/assets/add-annotation.svg" alt="add-annotation-img" />
+          <img
+          ci-src="https://scaleflex.cloudimg.io/v7/demo/add+annotation.jpg?vh=537263"
+          alt="add-annotation-img"
+          />
           <h3>Add annotation</h3>
           <p>
             Enrich and collaborate directly on your media for keeping track of
@@ -403,15 +421,14 @@
           to do features
         </p>
       </div>
-      <div>
-        <button class="explore-btn">
+      <div class="explore-button">
           <a
+            class="transition-filled-button"
             href="https://github.com/scaleflex/filerobot-image-editor"
             target="_blank"
           >
             Explore Documentation
           </a>
-        </button>
       </div>
     </section>
 
@@ -421,14 +438,13 @@
         Contact us at <span>hello@filerobot.com</span>, our experts will be
         happy to help!
       </p>
-      <button>
         <a
+          class="transition-filled-button"
           href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
           target="_blank"
         >
           Submit GitHub issue
         </a>
-      </button>
       <div class="cyan-blur-ellipse"></div>
     </section>
 
@@ -446,19 +462,19 @@
           <div class="accordion-content" data-accordion-content="2">
             <div class="footer-info-content">
               <a
-                href="https://github.com/scaleflex/filerobot-image-editor"
-                target="_blank"
+              href="https://github.com/scaleflex/filerobot-image-editor"
+              target="_blank"
               >
                 View GitHub
               </a>
               <a
-                href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
-                target="_blank"
+              href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+              target="_blank"
               >
                 Current Issues
               </a>
               <a
-                href=" https://github.com/scaleflex/filerobot-image-editor"
+                href="https://github.com/scaleflex/filerobot-image-editor#user-content-contents"
                 target="_blank"
               >
                 Documentation
@@ -478,34 +494,34 @@
           <div class="accordion-content" data-accordion-content="1">
             <div class="footer-filerobot-content">
               <a
-                href="https://www.npmjs.com/package/@filerobot/readme"
+                href="https://scaleflex.cloudimg.io/v7/plugins/filerobot-widget/demo/index.html?vh=d6c246&func=proxy&fmaw_path=/"
                 target="_blank"
               >
                 Filerobot Media Asset Widget
               </a>
               <a
-                href="https://github.com/scaleflex/react-cloudimage-responsive"
+                href="https://scaleflex.github.io/filerobot-image-editor/"
+                target="_blank"
+              >
+              Filerobot Image Editor
+            </a>
+              <a
+                href="https://scaleflex.github.io/react-cloudimage-responsive/"
                 target="_blank"
               >
                 React Cloudimage Responsive
               </a>
               <a
-                href="https://github.com/scaleflex/js-cloudimage-responsive"
+                href="https://scaleflex.github.io/js-cloudimage-responsive/"
                 target="_blank"
               >
                 JS Cloudimage Responsive
               </a>
               <a
-                href="https://github.com/scaleflex/js-cloudimage-360-view"
+                href="https://scaleflex.github.io/js-cloudimage-360-view/"
                 target="_blank"
               >
                 JS Cloudimage 360 view
-              </a>
-              <a
-                href="https://github.com/scaleflex/js-cloudimage-responsive"
-                target="_blank"
-              >
-                JS Cloudimage Responsive
               </a>
             </div>
           </div>
@@ -517,8 +533,8 @@
           href="https://github.com/scaleflex/filerobot-image-editor/stargazers"
           target="_blank"
         >
-          <img class="star" src="./public/assets/git-stars.svg" alt="star" />
-          <img
+        <img class="star" src="./public/assets/git-stars.svg" alt="star" />
+        <img
             class="stars-label"
             src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?color=fff&label=Star&logo=none&style=flat&labelColor=fff"
             alt="star-img"
@@ -529,32 +545,25 @@
           href="https://github.com/scaleflex/filerobot-image-editor"
           target="_blank"
         >
-          <img src="./public/assets/github-logo.svg" alt="github-icon" />
+        <img src="./public/assets/github-logo.svg" alt="github-icon" />
           <p>GitHub</p>
         </a>
       </div>
       <div class="footer-logo">
-        <a href=" https://scaleflex.com/" target="_blank">
+        <a href="https://www.scaleflex.com/en/home" target="_blank">
           <img src="./public/assets/scaleflex-logo.svg" alt="scaleflex logo" />
         </a>
         <p>
           Made with ❤ by the
-          <span
-            ><a href=" https://scaleflex.com/" target="_blank"
-              >Scaleflex</a
-            ></span
-          >
+          <span>
+            <a href=" https://scaleflex.com/en/home" target="_blank">Scaleflex</a>
+          </span>
           team, the guys behind
-          <span
-            ><a href=" https://cloudimage.io/" target="_blank"
-              >Cloudimage.io</a
-            ></span
-          >.Powered by
-          <span
-            ><a href="https://filerobot.com/" target="_blank"
-              >Filerobot</a
-            ></span
-          >. All rights reserved.
+          <span>
+            <a href=" https://cloudimage.io/en/home" target="_blank"
+              >Cloudimage.io</a></span>. Powered by
+          <span>
+            <a href="https://filerobot.com/en/home" target="_blank">Filerobot</a></span>. All rights reserved.
         </p>
         <div class="footer-blur-circle"></div>
       </div>
@@ -563,20 +572,20 @@
           <h4>Info</h4>
           <div class="footer-info-content">
             <a
-              href="https://github.com/scaleflex/filerobot-image-editor"
-              target="_blank"
+            href="https://github.com/scaleflex/filerobot-image-editor"
+            target="_blank"
             >
               View GitHub
             </a>
             <a
-              href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
-              target="_blank"
+            href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+            target="_blank"
             >
               Current Issues
             </a>
             <a
-              href=" https://github.com/scaleflex/filerobot-image-editor"
-              target="_blank"
+            href=" https://github.com/scaleflex/filerobot-image-editor#user-content-contents"
+            target="_blank"
             >
               Documentation
             </a>
@@ -586,41 +595,56 @@
           <h4>Filerobot UI Family</h4>
           <div class="footer-filerobot-content">
             <a
-              href="https://www.npmjs.com/package/@filerobot/readme"
+              href="https://scaleflex.cloudimg.io/v7/plugins/filerobot-widget/demo/index.html?vh=d6c246&func=proxy&fmaw_path=/"
               target="_blank"
             >
               Filerobot Media Asset Widget
             </a>
             <a
-              href="https://github.com/scaleflex/react-cloudimage-responsive"
+              href="https://scaleflex.github.io/filerobot-image-editor/"
+              target="_blank"
+            >
+              Filerobot Image Editor
+            </a>
+            <a
+              href="https://scaleflex.github.io/react-cloudimage-responsive/"
               target="_blank"
             >
               React Cloudimage Responsive
             </a>
             <a
-              href="https://github.com/scaleflex/js-cloudimage-responsive"
+              href="https://scaleflex.github.io/js-cloudimage-responsive/"
               target="_blank"
             >
               JS Cloudimage Responsive
             </a>
             <a
-              href="https://github.com/scaleflex/js-cloudimage-360-view"
+              href="https://scaleflex.github.io/js-cloudimage-360-view"
               target="_blank"
             >
               JS Cloudimage 360 view
             </a>
-            <a
-              href="https://github.com/scaleflex/js-cloudimage-responsive"
-              target="_blank"
-            >
-              JS Cloudimage Responsive
-            </a>
           </div>
         </div>
       </div>
-      <div class="cyan-blur-ellipse"></div>
     </section>
 
     <script type="module" src="./public/init.js"></script>
+    <script src="https://cdn.scaleflex.it/plugins/js-cloudimage-responsive/4.8.5/js-cloudimage-responsive.min.js"></script>
+    <script src="https://cdn.scaleflex.it/filerobot/js-cloudimage-responsive/lazysizes.min.js"></script>
+    <script>
+      const ciResponsive = new window.CIResponsive({
+        token: "scaleflex",
+        baseURL: "https://scaleflex.cloudimg.io/v7/demo/",
+        params: 'org_if_sml=1&version=16.04.2020',
+        lazyLoading: true,
+        exactSize: false,
+        limitFactor: 10,
+        apiVersion: 'v7',
+        lowQualityPreview: {
+          minImgWidth: 180
+        }
+      });
+    </script>
   </body>
 </html>

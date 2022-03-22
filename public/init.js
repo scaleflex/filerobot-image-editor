@@ -35,9 +35,9 @@ const EXAMPLE_CODE_TABS = {
 };
 
 const DEFAULT_IMAGES_SRCS = [
-  'https://scaleflex.cloudimg.io/v7/demo/river.png',
-  'https://scaleflex.airstore.io/demo/spencer-davis-unsplash.jpg',
-  'https://scaleflex.cloudimg.io/v7/demo/damian-markutt-unsplash.jpg',
+  'https://scaleflex.cloudimg.io/v7/demo/river.png?w=100',
+  'https://scaleflex.cloudimg.io/v7/demo/spencer-davis-unsplash.jpg?w=100',
+  'https://scaleflex.cloudimg.io/v7/demo/damian-markutt-unsplash.jpg?w=100',
 ];
 
 const selectedTabs = [
@@ -142,6 +142,8 @@ function onChangeTabsHandler(event) {
 }
 
 function toggleActiveImage(imageContainer, imageSrc) {
+  const removeResizeParamRegex = /\?.+/g
+  const imageUrl = imageSrc.replace(removeResizeParamRegex, '');
   const prevImageContainer = document.querySelector(
     '[data-image-editor-active-image]',
   );
@@ -152,7 +154,7 @@ function toggleActiveImage(imageContainer, imageSrc) {
 
   imageContainer.setAttribute('data-image-editor-active-image', '');
 
-  filerobotImageEditor.render({ source: imageSrc });
+  filerobotImageEditor.render({ source: imageUrl });
 }
 
 function appendImageToContainer(imageSrc) {
@@ -166,6 +168,7 @@ function appendImageToContainer(imageSrc) {
   imageWrapper.onclick = () => toggleActiveImage(imageWrapper, imageSrc);
 
   imagesWrapper.appendChild(imageWrapper);
+  imagesWrapper.scrollTop = imagesWrapper.scrollHeight;
 
   return imageWrapper;
 }
