@@ -24,6 +24,7 @@ const OverrideDefaultStyles = createGlobalStyle`
 
     .SfxPopper-root .SfxMenu-root {
       overflow: visible;
+      width: max-content;
 
       .SfxMenuItem-prefix {
         margin-right: 6px;
