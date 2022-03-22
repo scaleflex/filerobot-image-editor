@@ -30,8 +30,8 @@ const CanvasZooming = () => {
     saveZoom(zoom.factor * MULTIPLY_ZOOM_FACTOR);
   };
 
-  const resetZoomToDefault = () => {
-    saveZoom(DEFAULT_ZOOM_FACTOR);
+  const fitCanvas = () => {
+    saveZoom(zoom.fitCanvasFactor || DEFAULT_ZOOM_FACTOR);
   };
 
   const zoomOut = () => {
@@ -52,7 +52,7 @@ const CanvasZooming = () => {
       </StyledSmallButton>
       <StyledZoomPercentageLabel
         title={t('resetZoomTitle')}
-        onClick={isZoomDisabled ? undefined : resetZoomToDefault}
+        onClick={isZoomDisabled ? undefined : fitCanvas}
         aria-disabled={isZoomDisabled}
       >
         {`${parseInt(zoom.factor * 100, 10)}%`}
