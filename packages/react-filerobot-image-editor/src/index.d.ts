@@ -1,4 +1,4 @@
-import { ReactComponentElement, RefObject } from "react";
+import { FunctionComponent, RefObject } from "react";
 import { Filter } from "konva/lib/Node";
 
 declare const TABS = {
@@ -112,7 +112,7 @@ type cropPresetItem = {
   height?: number,
   ratio?: string,
   descriptionKey?: string,
-  icon?: string | HTMLElement | ReactComponentElement,
+  icon?: string | HTMLElement | FunctionComponent,
   disableManualResize?: boolean,
 };
 
@@ -124,7 +124,7 @@ type cropPresetGroup = {
 type cropPresetFolder = {
   titleKey: string,
   groups: cropPresetGroup[],
-  icon?: string | HTMLElement | ReactComponentElement,
+  icon?: string | HTMLElement | FunctionComponent,
 };
 
 type imageDesignState = {
@@ -199,7 +199,7 @@ type triggerSavingFn = (onSaveFunction) => void;
 
 type saveOption = {
   label: string,
-  icon: string | HTMLElement | ReactComponentElement,
+  icon: string | HTMLElement | FunctionComponent,
   onClick: (triggerSaveModalFn, triggerSavingFn) => void,
 };
 
@@ -284,7 +284,7 @@ export interface FilerobotImageEditorConfig {
   onModify?: (currentImageDesignState: imageDesignState) => void;
 }
 
-declare const FilerobotImageEditor: (props: FilerobotImageEditorConfig) => React.ReactNode;
+declare const FilerobotImageEditor: FunctionComponent<FilerobotImageEditorConfig>;
 
 export default FilerobotImageEditor;
 export { TABS, TOOLS };
