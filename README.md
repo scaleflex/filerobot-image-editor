@@ -320,6 +320,8 @@ filerobotImageEditor.render({
 
 ## Config
 
+> NOTE: The plugin respects the container/wrapper HTML element through CSS by having both `width` & `height` set `100%` so you could change the width/height of the plugin through adding/changing width/height of the wrapper HTML element.
+
 ### Properties
 
 #### `source`
