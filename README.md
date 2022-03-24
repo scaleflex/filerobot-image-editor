@@ -104,7 +104,7 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 <hr />
 
 ## Prerequisites
-	> Following prerequisites are required only in React Component installation, but they're included in CDN bundle installation and added as dependencies of other bridges/adapters packages.
+	> Following prerequisites are required only in React Function component installation, but they're included in CDN bundle installation and added as dependencies of other bridges/adapters packages.
 
 - react, react-dom: >= v16.8.0
 - styled-components: >= v5.1.0
@@ -122,7 +122,7 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 ### NPM
 
-#### React Component
+#### React component
 
 ```bash
 npm install --save react-filerobot-image-editor
@@ -186,19 +186,19 @@ function App() {
           titleKey: 'classicTv',
           descriptionKey: '4:3',
           ratio: toPrecisedFloat(4 / 3),
-          // icon: CropClassicTv, // optional, CropClassicTv is a React component. Possible (React component, string or HTML Element)
+          // icon: CropClassicTv, // optional, CropClassicTv is a React Function component. Possible (React Function component, string or HTML Element)
         },
         {
           titleKey: 'cinemascope',
           descriptionKey: '21:9',
           ratio: toPrecisedFloat(21 / 9),
-          // icon: CropCinemaScope, // optional, CropCinemaScope is a React component.  Possible (React component, string or HTML Element)
+          // icon: CropCinemaScope, // optional, CropCinemaScope is a React Function component.  Possible (React Function component, string or HTML Element)
         },
       ],
       presetsFolders: [
         {
           titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
-          // icon: Social, // optional, Social is a React component. Possible (React component, string or HTML Element)
+          // icon: Social, // optional, Social is a React Function component. Possible (React Function component, string or HTML Element)
           groups: [
             {
               titleKey: 'facebook',
@@ -260,19 +260,19 @@ const config = {
         titleKey: 'classicTv',
         descriptionKey: '4:3',
         ratio: toPrecisedFloat(4 / 3),
-        // icon: CropClassicTv, // optional, CropClassicTv is a React component. Possible (React component, string or HTML Element)
+        // icon: CropClassicTv, // optional, CropClassicTv is a React Function component. Possible (React Function component, string or HTML Element)
       },
       {
         titleKey: 'cinemascope',
         descriptionKey: '21:9',
         ratio: toPrecisedFloat(21 / 9),
-        // icon: CropCinemaScope, // optional, CropCinemaScope is a React component.  Possible (React component, string or HTML Element)
+        // icon: CropCinemaScope, // optional, CropCinemaScope is a React Function component.  Possible (React Function component, string or HTML Element)
       },
     ],
     presetsFolders: [
       {
         titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
-        // icon: Social, // optional, Social is a React component. Possible (React component, string or HTML Element)
+        // icon: Social, // optional, Social is a React Function component. Possible (React Function component, string or HTML Element)
         groups: [
           {
             titleKey: 'facebook',
@@ -375,7 +375,7 @@ Access the available Tabs ids & tools ids through anyway of the following
 // Accessing from the CDN bundle
 const { TABS, TOOLS } = window.FilerobotImageEditor;
 
-// Accessing from react component lib. NPM
+// Accessing from React Function component lib. NPM
 import ReactFilerobotImageEditor, { TABS, TOOLS } from 'react-filerobot-image-editor';
 
 // Access from VanillaJS lib. NPM
@@ -795,11 +795,11 @@ The available options for crop tool,
 
 <u>Supported version:</u> +v4.0.0
 
-| Property       | Type                                           | Default (possible values) | Description                                                                                                                                                                                 |
-| -------------- | ---------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`titleKey`** | string ***Required***                          | ''                        | Translation key for the title of the preset folder (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
-| **`groups`**   | array of [`CropPresetGroup`](#croppresetgroup) | undefined                 | The crop preset groups shown inside the sublist as breadcrumbs for the user and giving him the possibility to choose a crop preset item                                                     |
-| **`icon`**     | HTML Element \| string \| React Component      | undefined                 | An icon prefixed to the crop preset folder's title                                                                                                                                          |
+| Property       | Type                                               | Default (possible values) | Description                                                                                                                                                                                 |
+| -------------- | -------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`titleKey`** | string ***Required***                              | ''                        | Translation key for the title of the preset folder (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
+| **`groups`**   | array of [`CropPresetGroup`](#croppresetgroup)     | undefined                 | The crop preset groups shown inside the sublist as breadcrumbs for the user and giving him the possibility to choose a crop preset item                                                     |
+| **`icon`**     | HTML Element \| string \| React Function component | undefined                 | An icon prefixed to the crop preset folder's title                                                                                                                                          |
 
 ##### **CropPresetGroup**:
 
@@ -825,7 +825,7 @@ The available options for crop tool,
 | **`ratio`**               | string ***Required if no `width` & `height` provided*** | '' ('original' \| 'ellipse' \| 'custom' \| number) | The preset item's ratio used in cropping                                                                                                                                                  |
 | **`width`**               | number ***Required if no `ratio` provided***            | undefined                                          | The width of crop preset item used in tandem with height for calculating the proper preset item's ratio (`ratio = width / height`)                                                        |
 | **`height`**              | number ***Required if no `ratio` provided***            | undefined                                          | The height of crop preset item used in tandem with width for calculating the proper preset item's ratio (`ratio = width / height`)                                                        |
-| **`icon`**                | HTML Element \| string \| React Component               | undefined                                          | An icon prefixed to the crop preset item's title                                                                                                                                          |
+| **`icon`**                | HTML Element \| string \| React Function component      | undefined                                          | An icon prefixed to the crop preset item's title                                                                                                                                          |
 | **`disableManualResize`** | boolean                                                 | false                                              | If `true` the resize inputs will be disabled if the user selected this crop preset item and `autoResize` must be `true` otherwise it won't affect                                         |
 
 > NOTE: `titleKey` of each object must be unique between the other objects in the same array.
@@ -852,7 +852,7 @@ Example,
   presetsFolders: [
     {
       titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
-      icon: Social, // React component, string or HTML Element
+      icon: Social, // React Function component, string or HTML Element
       groups: [
         {
           titleKey: 'facebook',
@@ -971,7 +971,7 @@ Option's object to be provided,
 | ------------- | ------------------------------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`label`**   | string ***Required***                                   | ''                        | The option's label will be shown to the user                                                                                                                                                                                                                                                                          |
 | **`onClick`** | function (triggerSaveModal, triggerSave) ***Required*** | `undefined`               | The function will be triggered on clicking the option, it receives 2 parameters 1st is a function calls the saving modal, 2nd is a function calls saving directly and both of those functions accepts (1 argument as a callback function that's same as [`onSave function`](#onsave) called after the saving process) |
-| **`icon`**    | HTML Element \| string \| React Component               | `null`                    | The option's icon will be shown before the label                                                                                                                                                                                                                                                                      |
+| **`icon`**    | HTML Element \| string \| React Function component      | `null`                    | The option's icon will be shown before the label                                                                                                                                                                                                                                                                      |
 > NOTE: you must provide an [`onSave`](#onsave) callback function on using any of the passed functions to the option's onClick function.
 example,
 ```js
@@ -984,7 +984,7 @@ example,
   {
     label: 'Save as new file',
     onClick: (triggerSaveModal, triggerSave) => triggerSave((...args) => {console.log('saved', args)}),  // Required to pass the callback function
-    icon: () => <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">...</svg>, // React component
+    icon: () => <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">...</svg>, // React Function component
   },
 ]
 ```
