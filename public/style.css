@@ -941,7 +941,6 @@ body {
   position: relative;
   padding: 60px 25px;
   box-sizing: content-box;
-  height: 325px;
   display: flex;
   justify-content: space-between;
 }
@@ -1365,7 +1364,7 @@ body {
   }
 
   .content-wrapper .content .img-table {
-    width: 96vw;
+    width: 100%;
   }
 
   .content-wrapper .img-table .tools-checkboxs {
@@ -1383,7 +1382,7 @@ body {
   }
 
   .content-wrapper .img-table .config-table {
-    width: 94%;
+    width: 100%;
   }
 
   .content-wrapper .img-table .tools-checkboxs .tabs-left-column {
