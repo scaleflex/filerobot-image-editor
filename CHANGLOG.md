@@ -19,6 +19,16 @@ Types of changes:
 
 -------------
 
+## v4.1.0 - 2022-03-28
+### Added
+- Zoom presets menu and its visibility control property `useZoomPresetsMenu`.
+
+### Improved
+- Zoom behavior to simulate the zooming percentage to the final image size.
+
+### Fixed
+- Typescript types of the plugin react component.
+
 ## v4.0.0 - 2022-03-17
 ### Added
 - New features (more annotations, finetunes, more filters) with options for customization.
