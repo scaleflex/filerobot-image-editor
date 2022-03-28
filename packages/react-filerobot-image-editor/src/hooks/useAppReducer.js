@@ -1,9 +1,11 @@
+/** External Dependencies */
+import { useReducer } from 'react';
+
 /** Internal Dependencies */
 import { REDO, RESET, UNDO } from 'actions';
 import redo from 'actions/redo';
 import reset from 'actions/reset';
 import undo from 'actions/undo';
-import { useReducer } from 'react';
 import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 
 let timeout;
