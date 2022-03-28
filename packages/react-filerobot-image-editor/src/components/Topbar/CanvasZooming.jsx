@@ -7,21 +7,29 @@ import Plus from '@scaleflex/icons/plus';
 import { ZOOM_CANVAS } from 'actions';
 import { DEFAULT_ZOOM_FACTOR, TOOLS_IDS } from 'utils/constants';
 import { useStore } from 'hooks';
+import getZoomFitFactor from 'utils/getZoomFitFactor';
 import { StyledSmallButton, StyledZoomPercentageLabel } from './Topbar.styled';
 
 const MULTIPLY_ZOOM_FACTOR = 1.1;
 
 const CanvasZooming = () => {
-  const { dispatch, zoom = {}, toolId, feedback, t } = useStore();
+  const {
+    dispatch,
+    zoom = {},
+    toolId,
+    feedback,
+    t,
+    shownImageDimensions,
+    resize,
+    originalImage,
+    adjustments: { crop },
+  } = useStore();
   const isBlockerError = feedback.duration === 0;
-
   const saveZoom = (zoomFactor) => {
     dispatch({
       type: ZOOM_CANVAS,
       payload: {
         factor: zoomFactor,
-        x: 'center',
-        y: 'center',
       },
     });
   };
@@ -31,7 +39,15 @@ const CanvasZooming = () => {
   };
 
   const fitCanvas = () => {
-    saveZoom(zoom.fitCanvasFactor || DEFAULT_ZOOM_FACTOR);
+    const usedAsOrgDimens =
+      (resize.width && resize.height && resize) ||
+      (crop.width && crop.height && crop) ||
+      shownImageDimensions;
+    const fitCanvasFactor = getZoomFitFactor(
+      (crop.width && crop.height && crop) || shownImageDimensions,
+      usedAsOrgDimens,
+    );
+    saveZoom(fitCanvasFactor || DEFAULT_ZOOM_FACTOR);
   };
 
   const zoomOut = () => {
@@ -39,6 +55,13 @@ const CanvasZooming = () => {
   };
 
   const isZoomDisabled = toolId === TOOLS_IDS.CROP || isBlockerError;
+  const previewToRealImgFactor =
+    originalImage && !resize.width && !resize.height
+      ? Math.min(
+          (shownImageDimensions.width * zoom.factor) / originalImage.width,
+          (shownImageDimensions.height * zoom.factor) / originalImage.height,
+        )
+      : zoom.factor;
 
   return (
     <>
@@ -55,7 +78,7 @@ const CanvasZooming = () => {
         onClick={isZoomDisabled ? undefined : fitCanvas}
         aria-disabled={isZoomDisabled}
       >
-        {`${parseInt(zoom.factor * 100, 10)}%`}
+        {`${parseInt(previewToRealImgFactor * 100, 10)}%`}
       </StyledZoomPercentageLabel>
       <StyledSmallButton
         onClick={zoomIn}

@@ -6,11 +6,12 @@ import LockOutline from '@scaleflex/icons/lock-outline';
 import UnlockOutline from '@scaleflex/icons/unlock-outline';
 
 /** Internal Dependencies */
-import { SET_RESIZE } from 'actions';
+import { SET_RESIZE, ZOOM_CANVAS } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import { useStore } from 'hooks';
 import getProperDimensions from 'utils/getProperDimensions';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
+import getZoomFitFactor from 'utils/getZoomFitFactor';
 import {
   StyledResizeWrapper,
   StyledResizeInput,
@@ -68,6 +69,18 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
       type: SET_RESIZE,
       payload: newResize,
     });
+    // Fit if there was no resized width/height before for avoiding jumping on change resize
+    // as we are simulating zoom relattive to original image dimensions but not applying the real original image dimensions
+    if (!resize.width || !resize.height) {
+      const dimensUsedInFit =
+        (crop.width && crop.height && crop) || shownImageDimensions;
+      dispatch({
+        type: ZOOM_CANVAS,
+        payload: {
+          factor: getZoomFitFactor(dimensUsedInFit, newResize),
+        },
+      });
+    }
   };
 
   const toggleRatioLock = () => {
@@ -91,6 +104,15 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
         width: null,
         height: null,
         ratioUnlocked: false,
+      },
+    });
+    const dimensUsedInFit =
+      (crop.width && crop.height && crop) || shownImageDimensions;
+    // Fitting after reset resize
+    dispatch({
+      type: ZOOM_CANVAS,
+      payload: {
+        factor: getZoomFitFactor(dimensUsedInFit, dimensUsedInFit),
       },
     });
   };

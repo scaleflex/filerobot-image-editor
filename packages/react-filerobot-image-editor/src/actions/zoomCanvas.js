@@ -22,11 +22,11 @@ const zoomCanvas = (state, payload) => {
   } else {
     const newZoomPoint = {
       x:
-        payload.x === 'center' || (!payload.x && payload.x !== 0)
+        !payload.x && payload.x !== 0
           ? state.canvasWidth / 2
           : payload.x ?? state.zoom.x,
       y:
-        payload.y === 'center' || (!payload.y && payload.y !== 0)
+        !payload.y && payload.y !== 0
           ? state.canvasHeight / 2
           : payload.y ?? state.zoom.y,
     };
@@ -39,14 +39,9 @@ const zoomCanvas = (state, payload) => {
     );
   }
 
-  if (payload.useAsFitFactor) {
-    newZoomData.fitCanvasFactor = newZoomData.factor;
-  }
-
   return newZoomData.factor === state.zoom.factor &&
     newZoomData.x === state.zoom.x &&
-    newZoomData.y === state.zoom.y &&
-    newZoomData.fitCanvasFactor === state.zoom.fitCanvasFactor
+    newZoomData.y === state.zoom.y
     ? state
     : {
         ...state,

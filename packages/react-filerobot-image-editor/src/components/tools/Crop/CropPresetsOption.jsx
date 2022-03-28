@@ -9,6 +9,7 @@ import { useStore } from 'hooks';
 import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styled';
 import { DEFAULT_ZOOM_FACTOR, TOOLS_IDS } from 'utils/constants';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
+import getZoomFitFactor from 'utils/getZoomFitFactor';
 import { StyledOpenMenuButton } from './Crop.styled';
 import { DEFAULT_CROP_PRESETS } from './Crop.constants';
 import CropPresetGroupsList from './CropPresetGroupsFolder';
@@ -63,12 +64,8 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
           factor:
             cropProps.width > shownImageDimensions.width ||
             cropProps.height > shownImageDimensions.height
-              ? Math.min(
-                  shownImageDimensions.width / cropProps.width,
-                  shownImageDimensions.height / cropProps.height,
-                )
+              ? getZoomFitFactor(shownImageDimensions, cropProps)
               : DEFAULT_ZOOM_FACTOR,
-          useAsFitFactor: true,
         },
       });
     }
