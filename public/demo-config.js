@@ -279,6 +279,7 @@ const config = {
   //   uriDownload(savedImgData.imageData.imageBase64);
   //   console.log('image after saving', savedImgData);
   // },
+  // useZoomPresetsMenu: true,
 };
 
 export default config;

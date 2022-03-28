@@ -117,4 +117,5 @@ export default {
   showCanvasOnly: false,
   getCurrentImgDataFnRef: undefined,
   onModify: undefined,
+  useZoomPresetsMenu: true,
 };

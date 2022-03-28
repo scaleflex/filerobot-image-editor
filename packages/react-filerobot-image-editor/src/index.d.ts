@@ -282,6 +282,7 @@ export interface FilerobotImageEditorConfig {
     current?: (newStatePart: {} | ((currentState: {}) => void)) => void;
   };
   onModify?: (currentImageDesignState: imageDesignState) => void;
+  useZoomPresetsMenu?: boolean;
 }
 
 declare const FilerobotImageEditor: FunctionComponent<FilerobotImageEditorConfig>;

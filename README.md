@@ -1057,6 +1057,16 @@ Assigns the update state main function of the plugin inside `.current` property 
 
 > NOTE: Be-aware while using this function as it might cause an un-expected behavior and we don't recommend to use it unless you know what you are doing.
 
+#### `useZoomPresetsMenu`
+
+<u>Type:</u> `Boolean`
+
+<u>Supported version:</u> +v4.1.0
+
+<u>Default:</u> true
+
+On clicking on the zoom percentage and having this property set `true` some zoom presets percentages will be shown for the user to quickly choose some zoom percentage, if set to `false` the zoom presets won't be shown and only `fit percentage` will be used as default.
+
 ### Callbacks
 
 #### `onBeforeSave`
