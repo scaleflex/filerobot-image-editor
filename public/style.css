@@ -6,6 +6,7 @@
 
 body {
   font-family: "Inter";
+  overflow-x: hidden;
 }
 
 .container {
@@ -42,6 +43,10 @@ body {
 
 .content-wrapper .header .img-editor {
   font-weight: 500;
+  text-decoration: none;
+  font-size: 20px;
+  line-height: 32px;
+  color: #203254;
 }
 
 .content-wrapper .header .navbar {
@@ -177,13 +182,13 @@ body {
   position: relative;
 }
 
-.content-wrapper .content .view-button button {
+.content-wrapper .content .view-button a {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 171px;
   height: 48px;
-  padding: 8px 34px;
+  padding: 8px 24px;
   background-color: #3daba4;
   border-radius: 4px;
   font-weight: 700;
@@ -191,6 +196,7 @@ body {
   color: #ffff;
   cursor: pointer;
   border: none;
+  text-decoration: none;
 }
 
 .content-wrapper .content .view-button button {
@@ -370,15 +376,9 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  row-gap: 12px;
   font-size: 14px;
   line-height: 17px;
   color: #203254;
-}
-
-.content-wrapper .img-table .tools-checkboxs div {
-  display: flex;
-  align-items: center;
 }
 
 .checkbox-container {
@@ -861,22 +861,19 @@ body {
   color: #4d5c74;
 }
 
-.usage .explore-btn {
-  background-color: #3daba4;
-  padding: 8px 32px 8px 32px;
-  border-radius: 4px;
+.usage .explore-button {
+  margin-top: 32px;
+}
+
+.usage .explore-button a {
+  text-decoration: none;
   color: #ffff;
-  border: none;
+  background-color: #3daba4;
+  padding: 14px 32.299px;
+  border-radius: 4px;
   font-weight: 700;
   font-size: 16px;
   line-height: 32px;
-  margin-top: 32px;
-  cursor: pointer;
-}
-
-.usage .explore-btn a {
-  text-decoration: none;
-  color: #ffff;
 }
 
 .questions {
@@ -910,7 +907,7 @@ body {
   color: #203254;
 }
 
-.questions button {
+.questions a {
   padding: 8px 32px 8px 32px;
   background-color: #3daba4;
   border-radius: 4px;
@@ -920,6 +917,7 @@ body {
   border: none;
   cursor: pointer;
   font-weight: 700;
+  text-decoration: none;
 }
 
 .questions button a {
@@ -943,7 +941,6 @@ body {
   position: relative;
   padding: 60px 25px;
   box-sizing: content-box;
-  height: 325px;
   display: flex;
   justify-content: space-between;
 }
@@ -1141,6 +1138,14 @@ body {
   filter: blur(120px);
 }
 
+.transition-filled-button {
+  transition: all 300ms ease-in-out;
+}
+
+.transition-filled-button:hover {
+  background-color: #35918a !important;
+}
+
 @media (min-width: 1980px) {
   .content-wrapper .header {
     margin: auto;
@@ -1195,7 +1200,25 @@ body {
     column-gap: 12px;
     margin-top: 8px;
     row-gap: 12px;
-    overflow-y: scroll;
+    flex-wrap: wrap;
+  }
+
+  .content-wrapper .img-table .tools-checkboxs .tabs-left-column {
+    display: flex;
+    flex-direction: row;
+    column-gap: 12px;
+    margin-top: 8px;
+    row-gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .content-wrapper .img-table .tools-checkboxs .tabs-right-column {
+    display: flex;
+    flex-direction: row;
+    column-gap: 12px;
+    margin-top: 8px;
+    row-gap: 12px;
+    flex-wrap: wrap;
   }
 
   .content-wrapper .img-table .tools-checkboxs::-webkit-scrollbar {
@@ -1268,9 +1291,16 @@ body {
     padding: 16px 16px;
   }
 
+  .content-wrapper .content {
+    align-items: flex-start;
+  }
+
   .content-wrapper .content .content-title {
-    font-size: 34px;
-    line-height: 43.57px;
+    text-align: left;
+  }
+
+  .content-wrapper .content .content-text p {
+    text-align: left;
   }
 
   .content-wrapper .content .content-title span {
@@ -1306,29 +1336,35 @@ body {
   }
 
   .filerobot-features {
-    padding: 31.34px 17px 60px 16px;
+    padding: 31.34px 16px 60px 16px;
+    align-items: flex-start;
   }
 
   .filerobot-features .filerobot-title {
     font-size: 30px;
     line-height: 36.31px;
-    max-width: 327px;
     text-align: start;
     margin-bottom: 16px;
   }
 
   .filerobot-features .filerobot-features-content {
     display: grid;
-    grid-template-columns: repeat(1, 4fr);
+    grid-template-columns: repeat(1, 100%);
+    width: 100%;
     gap: 40px;
   }
 
   .filerobot-features .filerobot-features-content img {
     width: 100%;
+    max-width: unset;
+  }
+
+  .filerobot-features .filerobot-features-content p {
+    max-width: unset;
   }
 
   .content-wrapper .content .img-table {
-    width: 96vw;
+    width: 100%;
   }
 
   .content-wrapper .img-table .tools-checkboxs {
@@ -1346,11 +1382,30 @@ body {
   }
 
   .content-wrapper .img-table .config-table {
-    width: 94%;
+    width: 100%;
+  }
+
+  .content-wrapper .img-table .tools-checkboxs .tabs-left-column {
+    display: flex;
+    flex-direction: column;
+    column-gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    row-gap: unset;
+  }
+
+  .content-wrapper .img-table .tools-checkboxs .tabs-right-column {
+    display: flex;
+    flex-direction: column;
+    column-gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    row-gap: unset;
   }
 
   .usage {
-    padding: 30px 17px 34px 16px;
+    padding: 30px 16px 34px 16px;
+    align-items: flex-start;
   }
 
   .usage .usage-title h3 {
@@ -1360,8 +1415,13 @@ body {
     max-width: 327px;
   }
 
+  .usage .usage-title {
+    align-items: flex-start;
+  }
+
   .usage .usage-title p {
-    max-width: 401px;
+    text-align: left;
+    max-width: unset;
   }
 
   .usage .adapters .adapters-options {
@@ -1434,12 +1494,18 @@ body {
     width: 97%;
   }
 
+  .questions {
+    padding: 60px 16px;
+    align-items: flex-start;
+  }
+
   .questions h3 {
     font-size: 10.604vw;
+    text-align: left;
   }
 
   .questions p {
-    text-align: center;
+    text-align: left;
   }
 
   .questions .cyan-blur-ellipse {

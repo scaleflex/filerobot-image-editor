@@ -14,7 +14,7 @@ export default {
   showImageTitle: 'Show original image',
   zoomInTitle: 'Zoom in',
   zoomOutTitle: 'Zoom out',
-  resetZoomTitle: 'Zoom percentage (Click to reset)',
+  toggleZoomMenuTitle: 'Toggle zoom menu',
   adjustTab: 'Adjust',
   finetuneTab: 'Finetune',
   filtersTab: 'Filters',
@@ -91,4 +91,6 @@ export default {
   imageDimensionsHoverTitle: 'Saved image size (width x height)',
   cropSizeLowerThanResizedWarning:
     'Note, the selected crop area is lower than the applied resize which might cause quality decrease',
+  actualSize: 'Actual size (100%)',
+  fitSize: 'Fit size',
 };
