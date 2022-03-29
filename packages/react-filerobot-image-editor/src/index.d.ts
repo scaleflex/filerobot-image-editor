@@ -1,5 +1,4 @@
 import { FunctionComponent, RefObject } from "react";
-import { Filter } from "konva/lib/Node";
 
 declare const TABS = {
   FINETUNE: 'Finetune',
@@ -129,59 +128,60 @@ type cropPresetFolder = {
 
 type imageDesignState = {
   imgSrc?: string,
-  finetunes?: Filter[],
+  finetunes?: string[],
   finetunesProps?: {
-    brightness?: number;
-    contrast?: number;
-    hue?: number;
-    saturation?: number;
-    value: number;
-    blurRadius?: number;
-    warmth?: number;
+    brightness?: number,
+    contrast?: number,
+    hue?: number,
+    saturation?: number,
+    value?: number,
+    blurRadius?: number,
+    warmth?: number,
   },
-  filter?: Filter,
+  filter?: string,
   adjustments?: {
     crop: {
-      ratio: string;
-      ratioTitleKey?: string;
+      ratio: string,
       width?: number,
       height?: number,
       x?: number,
       y?: number,
-      autoResize?: boolean;
-      presetsItems?: cropPresetItem[];
-      presetsFolders?: cropPresetFolder[];
+      ratioFolderKey?: string,
+      ratioGroupKey?: string,
+      ratioTitleKey?: string,
     },
-    isFlippedX?: boolean;
-    isFlippedY?: boolean;
+    isFlippedX?: boolean,
+    isFlippedY?: boolean,
+    rotation?: number,
   },
   annotations?: {
     [key?: string]: annotationsCommon &
       (textAnnotation | rectAnnotation | polygonAnnotation | penAnnotation | lineAnnotation | arrowAnnotation) &
       {
-        id: string;
-        name: string;
-        x: number;
-        y: number;
-        scaleX?: number;
-        scaleY?: number;
-        width?: number; //Text/Image/Rect
-        height?: number; //Text/Image/Rect
-        radius?: number; // Polygon
-        radiusX?: number; // Ellipse
-        radiusY?: number; // Ellipse
-        points?: number[]; // Pen/Line/Arrow
-        image?: string | HTMLElement; // Image
+        id: string,
+        name: string,
+        x: number,
+        y: number,
+        scaleX?: number,
+        scaleY?: number,
+        width?: number, //Text/Image/Rect
+        height?: number, //Text/Image/Rect
+        radius?: number, // Polygon
+        radiusX?: number, // Ellipse
+        radiusY?: number, // Ellipse
+        points?: number[], // Pen/Line/Arrow
+        image?: string | HTMLElement, // Image
       }
   },
   resize?: {
-    width?: number;
-    height?: number;
+    width?: number,
+    height?: number,
+    manualChangeDisabled?: boolean,
   },
   shownImageDimensions?: {
-    width: number;
-    height: number;
-    scaledBy: number;
+    width: number,
+    height: number,
+    scaledBy: number,
   }
 };
 
@@ -237,6 +237,10 @@ export interface FilerobotImageEditorConfig {
     maxHeight?: null;
     ratio?: 'original' | 'custom' | 'ellipse' | number;
     noPresets?: boolean;
+    ratioTitleKey?: string;
+    presetsItems?: cropPresetItem[];
+    presetsFolders?: cropPresetFolder[];
+    autoResize?: boolean;
   };
   // TABS_IDS
   tabsIds?: (availableTabs)[] | [];
