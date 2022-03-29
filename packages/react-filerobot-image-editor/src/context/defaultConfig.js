@@ -95,7 +95,7 @@ export default {
   avoidChangesNotSavedAlertOnLeave: false,
   loadableDesignState: null,
   moreSaveOptions: [],
-  savingPixelRatio: 8,
+  savingPixelRatio: 4,
   previewPixelRatio: window ? window.devicePixelRatio || 1 : 1,
   showBackButton: false,
   useCloudimage: false,

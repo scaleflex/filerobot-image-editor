@@ -18,6 +18,10 @@ Types of changes:
 > `- **BREAKING**: Some message`
 
 -------------
+<!-- ## v4.1.2 - ...
+
+### Improved
+- Changed default value of `savingPixelRatio` to `4` instead of `8` for avoiding errors in some browsers and faster saving. -->
 
 ## v4.1.1 - 2022-03-29
 ### Fixed

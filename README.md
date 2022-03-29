@@ -937,11 +937,11 @@ The options available for cloudimage mode,
 
 <u>Supported version:</u> +v4.0.0
 
-<u>Default:</u> `8`
+<u>Default:</u> `4`
 
 The pixel ratio used in saving the image (higher the ratio, higher the resolution of the saved image till reaching the possible max. resolution for the image, higher the memory used & processing time of saving).
 
-> High pixel ratio might cause some device crashes/slowness while saving so consider choosing an appropriate ratio for your use case.
+> High pixel ratio might cause some device crashes/slowness or showing stack error in some browsers while saving so consider choosing an appropriate ratio for your use case.
 
 #### `previewPixelRatio`
 
