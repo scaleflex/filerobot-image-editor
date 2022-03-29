@@ -19,6 +19,10 @@ Types of changes:
 
 -------------
 
+## v4.1.1 - 2022-03-29
+### Fixed
+- Typescript types of the plugin react component.
+
 ## v4.1.0 - 2022-03-28
 ### Added
 - Zoom presets menu and its visibility control property `useZoomPresetsMenu`.
