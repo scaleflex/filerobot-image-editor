@@ -185,13 +185,13 @@ function App() {
         {
           titleKey: 'classicTv',
           descriptionKey: '4:3',
-          ratio: toPrecisedFloat(4 / 3),
+          ratio: 4 / 3,
           // icon: CropClassicTv, // optional, CropClassicTv is a React Function component. Possible (React Function component, string or HTML Element)
         },
         {
           titleKey: 'cinemascope',
           descriptionKey: '21:9',
-          ratio: toPrecisedFloat(21 / 9),
+          ratio: 21 / 9,
           // icon: CropCinemaScope, // optional, CropCinemaScope is a React Function component.  Possible (React Function component, string or HTML Element)
         },
       ],
@@ -259,13 +259,13 @@ const config = {
       {
         titleKey: 'classicTv',
         descriptionKey: '4:3',
-        ratio: toPrecisedFloat(4 / 3),
+        ratio: 4 / 3,
         // icon: CropClassicTv, // optional, CropClassicTv is a React Function component. Possible (React Function component, string or HTML Element)
       },
       {
         titleKey: 'cinemascope',
         descriptionKey: '21:9',
-        ratio: toPrecisedFloat(21 / 9),
+        ratio: 21 / 9,
         // icon: CropCinemaScope, // optional, CropCinemaScope is a React Function component.  Possible (React Function component, string or HTML Element)
       },
     ],
@@ -841,13 +841,13 @@ Example,
     {
       titleKey: 'classicTv',
       descriptionKey: '4:3',
-      ratio: toPrecisedFloat(4 / 3),
+      ratio: 4 / 3,
       icon: CropClassicTv,
     },
     {
       titleKey: 'cinemascope',
       descriptionKey: '21:9',
-      ratio: toPrecisedFloat(21 / 9),
+      ratio: 21 / 9,
       icon: CropCinemaScope, // optional
     },
   ],
