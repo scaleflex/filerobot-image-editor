@@ -247,13 +247,11 @@ function copyCodeHandler(event) {
 
   navigator.clipboard.writeText(currentCodeToCopy.innerText);
 
-  if (copyButton.innerHTML === 'Copy') {
-    copyButton.innerHTML = 'copied';
+    copyButton.innerHTML = 'Copied';
 
     setTimeout(() => {
       copyButton.innerHTML = 'Copy';
     }, 500);
-  }
 }
 
 function showAccordionContent(event) {
