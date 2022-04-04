@@ -94,6 +94,7 @@ const CanvasZooming = () => {
         color="link"
         title={t('zoomOutTitle')}
         disabled={isZoomDisabled}
+        className="FIE_topbar-zoom-out-btn"
       >
         <Minus />
       </StyledSmallButton>
@@ -105,14 +106,25 @@ const CanvasZooming = () => {
             : (useZoomPresetsMenu && toggleZoomingMenu) || fitCanvas
         }
         aria-disabled={isZoomDisabled}
+        className="FIE_topbar-zoom-label"
       >
         {`${toPrecisedFloat(previewToRealImgFactor * 100, 0)}%`}
       </StyledZoomPercentageLabel>
+      <StyledSmallButton
+        onClick={zoomIn}
+        color="link"
+        title={t('zoomInTitle')}
+        disabled={isZoomDisabled}
+        className="FIE_topbar-zoom-in-btn"
+      >
+        <Plus />
+      </StyledSmallButton>
       <Menu
         anchorEl={zoomingMenuAnchorEl}
         onClose={toggleZoomingMenu}
         open={Boolean(zoomingMenuAnchorEl)}
         position="bottom"
+        className="FIE_topbar-zoom-menu"
       >
         {ZOOM_FACTORS_PRESETS.map(({ factor, labelKey, label }) => (
           <MenuItem
@@ -123,14 +135,6 @@ const CanvasZooming = () => {
           </MenuItem>
         ))}
       </Menu>
-      <StyledSmallButton
-        onClick={zoomIn}
-        color="link"
-        title={t('zoomInTitle')}
-        disabled={isZoomDisabled}
-      >
-        <Plus />
-      </StyledSmallButton>
     </>
   );
 };
