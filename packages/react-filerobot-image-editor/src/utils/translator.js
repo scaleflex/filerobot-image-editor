@@ -44,7 +44,7 @@ const sendMissingTranslationsToBackend = (missingTranslations = []) =>
 
     xhr.open(
       'POST',
-      `https://i18n.ultrafast.io/import/request-translations?grid_uuid=${TRANSLATIONS_GRID_UUID}`,
+      `https://neo.wordplex.io/api/import/request-translations?grid_uuid=${TRANSLATIONS_GRID_UUID}`,
     );
     xhr.send(JSON.stringify(payload));
   });
