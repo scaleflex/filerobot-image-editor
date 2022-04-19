@@ -14,6 +14,7 @@ import CanvasZooming from './CanvasZooming';
 import {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
+  StyledHistoryButtonsWrapper,
 } from './Topbar.styled';
 import BackButton from './BackButton';
 
@@ -21,7 +22,6 @@ const Topbar = () => {
   const {
     config: { showBackButton },
   } = useStore();
-  const isPhoneScreen = usePhoneScreen();
 
   return (
     <StyledTopbar reverseDirection={showBackButton} className="FIE_topbar">
@@ -29,28 +29,12 @@ const Topbar = () => {
         reverseDirection={showBackButton}
         className="FIE_topbar-buttons-wrapper"
       >
-        {isPhoneScreen ? (
-          <div>
-            <SaveButton />
-            <div
-              style={{ marginTop: 6 }}
-              className="FIE_topbar-history-buttons"
-            >
-              <ResetButton margin="0" />
-              <UndoButton margin="0" />
-              <RedoButton margin="0" />
-            </div>
-          </div>
-        ) : (
-          <>
-            <SaveButton />
-            <div className="FIE_topbar-history-buttons">
-              <ResetButton />
-              <UndoButton />
-              <RedoButton />
-            </div>
-          </>
-        )}
+        <SaveButton />
+        <StyledHistoryButtonsWrapper className="FIE_topbar-history-buttons">
+          <ResetButton margin="0" />
+          <UndoButton margin="0" />
+          <RedoButton margin="0" />
+        </StyledHistoryButtonsWrapper>
       </StyledFlexCenterAlignedContainer>
       <StyledFlexCenterAlignedContainer className="FIE_topbar-center-options">
         <ImageDimensionsAndDisplayToggle />

@@ -22,15 +22,25 @@ const StyledTopbar = styled.div`
   }
 `;
 
+const StyledHistoryButtonsWrapper = styled.div`
+  display: flex;
+  margin: 0 4px;
+  column-gap: 4px;
+  align-items: center;
+`;
+
 const StyledHistoryButton = styled(IconButton)`
   margin: ${({ margin }) => margin ?? '0 4px'};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 2px;
+`;
 
-  :first-of-type {
-    margin: ${({ margin }) => margin ?? '0 4px 0 8px'};
-  }
-  width: 23px;
-  height: 23px;
-  padding: 4px;
+const StyledDimensionsLabel = styled(Label)`
+  flex-shrink: 0;
 `;
 
 const StyledSmallButton = styled(IconButton)`
@@ -97,4 +107,6 @@ export {
   StyledFileExtensionSelect,
   StyledQualityWrapper,
   StyledResizeOnSave,
+  StyledDimensionsLabel,
+  StyledHistoryButtonsWrapper,
 };
