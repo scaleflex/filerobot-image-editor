@@ -2073,24 +2073,23 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@scaleflex/icons@1.0.0-beta.75", "@scaleflex/icons@^1.0.0-beta.75":
-  version "1.0.0-beta.75"
-  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.75.tgz#839b5f4bfeec116137dbb99bca7def05e35c51a1"
-  integrity sha512-tk53t547HtCfNjISyXPUBN472vMy/bsyHNc9XuFpNTpOWPL3QvTMnAjdq9k5vQX0uOZ5lQU7McDLTYTMIPbRTQ==
+"@scaleflex/icons@1.0.0-beta.80", "@scaleflex/icons@^1.0.0-beta.80":
+  version "1.0.0-beta.80"
+  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.80.tgz#7fc7e1d32fdbf54a1b5150c1b8b63f995a292d1c"
+  integrity sha512-QUPwFDmFNlE3GZ5kcr5Fp3KzetcG4FQyOYO76vPi9v0h/+gr9NKfLDhx5AI72XHZrVdp42I4Mu17jGREQy2Q6A==
 
-"@scaleflex/ui@1.0.0-beta.78":
-  version "1.0.0-beta.78"
-  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.78.tgz#11fd6ed8c5deb236563b43562357ec0fd0d8b640"
-  integrity sha512-MpoZnYEOsRe0hVcaK1jjeTBd5yV5gGUxjqtjIrMlBSNrkkos4/L4ix4w/J1NpyPznxHG5Ic21j/ZfoOXIm9P4A==
+"@scaleflex/ui@1.0.0-beta.80":
+  version "1.0.0-beta.80"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.80.tgz#4df46acbbadebef91ab78a80bb763f637c1f4756"
+  integrity sha512-h4IiShDPcg4F+dLb7Fw6Xk1KmMWTm/NJzJaSeQ84ysCFquFrDgJKs5WKQ0yn/pdnCQfdec4801ACVpybqmA8UQ==
   dependencies:
     "@popperjs/core" "^2.6.0"
-    "@scaleflex/icons" "^1.0.0-beta.75"
+    "@scaleflex/icons" "^1.0.0-beta.80"
     lodash.merge "^4.6.2"
     lodash.throttle "^4.1.1"
     polished "^3.6.6"
     prop-types "^15.7.2"
     react-focus-lock "^2.4.1"
-    react-popper "^2.2.4"
     use-callback-ref "^1.2.4"
 
 "@tootallnate/once@1":
@@ -5983,7 +5982,7 @@ loglevel@^1.4.1:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.8.0.tgz#e7ec73a57e1e7b419cb6c6ac06bf050b67356114"
   integrity sha512-G6A/nJLRgWOuuwdNuA6koovfEV1YpqqAG4pRUlFaz3jj2QNZ8M4vBqnVA+HBTmU/AMNUtlOsMmSpF6NyOjztbA==
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
+loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -7314,11 +7313,6 @@ react-dom@17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
-react-fast-compare@^3.0.1:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
-  integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
-
 react-focus-lock@^2.4.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/react-focus-lock/-/react-focus-lock-2.7.1.tgz#a9fbb3fa4efaee32162406e5eb96ae658964193b"
@@ -7343,14 +7337,6 @@ react-konva@17.0.2-5:
   dependencies:
     react-reconciler "~0.26.2"
     scheduler "^0.20.2"
-
-react-popper@^2.2.4:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-2.2.5.tgz#1214ef3cec86330a171671a4fbcbeeb65ee58e96"
-  integrity sha512-kxGkS80eQGtLl18+uig1UIf9MKixFSyPxglsgLBxlYnyDf65BiY9B3nZSc6C9XUNDgStROB0fMQlTEz1KxGddw==
-  dependencies:
-    react-fast-compare "^3.0.1"
-    warning "^4.0.2"
 
 react-reconciler@~0.26.2:
   version "0.26.2"
@@ -8880,13 +8866,6 @@ vue-eslint-parser@^2.0.2:
     espree "^3.5.2"
     esquery "^1.0.0"
     lodash "^4.17.4"
-
-warning@^4.0.2:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
-  integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
-  dependencies:
-    loose-envify "^1.0.0"
 
 wcwidth@^1.0.0:
   version "1.0.1"
