@@ -11,7 +11,15 @@ import { RESET } from 'actions';
 import { StyledHistoryButton } from './Topbar.styled';
 
 const ResetButton = ({ margin }) => {
-  const { dispatch, isResetted = true, theme, feedback, t } = useStore();
+  const {
+    dispatch,
+    isResetted = true,
+    theme,
+    feedback,
+    t,
+    config,
+  } = useStore();
+
   const isBlockerError = feedback.duration === 0;
 
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -25,9 +33,9 @@ const ResetButton = ({ margin }) => {
   };
 
   const dispatchReset = useCallback(() => {
-    dispatch({ type: RESET });
+    dispatch({ type: RESET, payload: { config } });
     cancelModal();
-  }, []);
+  }, [config]);
 
   const WarningIcon = () => <Warning color={theme.palette.warning} size={25} />;
 

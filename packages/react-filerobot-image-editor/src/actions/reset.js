@@ -3,10 +3,13 @@ import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 
 export const RESET = 'RESET';
 
-const reset = (state) => {
-  const resettedDesignState = extractCurrentDesignState({
-    imgSrc: state.imgSrc,
-  });
+const reset = (state, payload) => {
+  const resettedDesignState = extractCurrentDesignState(
+    {
+      ...payload.config,
+    },
+    true,
+  );
 
   return {
     ...state,
