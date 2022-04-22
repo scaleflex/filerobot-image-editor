@@ -7,6 +7,7 @@ const reset = (state, payload) => {
   const resettedDesignState = extractCurrentDesignState(
     {
       ...payload.config,
+      imgSrc: state.imgSrc,
     },
     true,
   );
