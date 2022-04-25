@@ -287,6 +287,7 @@ export interface FilerobotImageEditorConfig {
   };
   onModify?: (currentImageDesignState: imageDesignState) => void;
   useZoomPresetsMenu?: boolean;
+  disableZooming?: boolean;
 }
 
 declare const FilerobotImageEditor: FunctionComponent<FilerobotImageEditorConfig>;

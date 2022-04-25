@@ -118,4 +118,5 @@ export default {
   getCurrentImgDataFnRef: undefined,
   onModify: undefined,
   useZoomPresetsMenu: true,
+  disableZooming: false,
 };

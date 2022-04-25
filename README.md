@@ -1069,6 +1069,18 @@ Assigns the update state main function of the plugin inside `.current` property 
 
 On clicking on the zoom percentage and having this property set `true` some zoom presets percentages will be shown for the user to quickly choose some zoom percentage, if set to `false` the zoom presets won't be shown and only `fit percentage` will be used as default.
 
+Note: If [`disableZooming`](#disablezooming) property is `true` then this property won't have any effect.
+
+#### `disableZooming`
+
+<u>Type:</u> `Boolean`
+
+<u>Supported version:</u> +v4.2.0
+
+<u>Default:</u> false
+
+If `true`, there will be no zooming functionality available in the plugin & UI related to zooming will be removed.
+
 ### Callbacks
 
 #### `onBeforeSave`

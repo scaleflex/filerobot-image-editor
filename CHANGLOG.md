@@ -18,10 +18,15 @@ Types of changes:
 > `- **BREAKING**: Some message`
 
 -------------
-<!-- ## v4.1.2 - ...
+<!--
+## NEW VERSION CHANGES - ..... (Un-commented and replace with version number on releasing)
 
 ### Improved
-- Changed default value of `savingPixelRatio` to `4` instead of `8` for avoiding errors in some browsers and faster saving. -->
+- Changed default value of `savingPixelRatio` to `4` instead of `8` for avoiding errors in some browsers and faster saving.
+
+### Added
+- `disableZooming` property for disabling zoom functionality & removing zoom-related UI.
+-->
 
 ## v4.1.1 - 2022-03-29
 ### Fixed
