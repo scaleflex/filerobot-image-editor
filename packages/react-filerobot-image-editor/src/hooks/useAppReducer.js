@@ -3,9 +3,6 @@ import { useReducer } from 'react';
 
 /** Internal Dependencies */
 import { REDO, RESET, UNDO } from 'actions';
-import redo from 'actions/redo';
-import reset from 'actions/reset';
-import undo from 'actions/undo';
 import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 
 let timeout;
@@ -28,16 +25,8 @@ const useAppReducer = (reducer, initialState, passedConfig = {}) => {
   const undoRedoResetReducer = (state, action) => {
     const newPresentState = reducer(state, action) || initialStateWithUndoRedo;
 
-    if (action.type === UNDO) {
-      return undo(state) || state;
-    }
-
-    if (action.type === REDO) {
-      return redo(state) || state;
-    }
-
-    if (action.type === RESET) {
-      return reset(state) || state;
+    if ([UNDO, REDO, RESET].includes(action.type)) {
+      return newPresentState;
     }
 
     if (newPresentState.isDesignState) {

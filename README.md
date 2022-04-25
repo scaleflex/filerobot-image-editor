@@ -309,7 +309,7 @@ const filerobotImageEditor = new FilerobotImageEditor(
 filerobotImageEditor.render({
   onClose: (closingReason) => {
     console.log('Closing reason', closingReason);
-    filerobotImageEdtior.terminate();
+    filerobotImageEditor.terminate();
   }
 });
 ```
