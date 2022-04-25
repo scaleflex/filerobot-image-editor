@@ -185,14 +185,18 @@ type imageDesignState = {
   }
 };
 
-type onSaveFunction = (savedImageData: savedImageData, imageDesignState: imageDesignState) => void;
+type onSaveFunction = (savedImageData: savedImageData, imageDesignState: imageDesignState) => void | Promise;
 
 export type getCurrentImgDataFunction = (imageFileInfo: {
   name?: string,
   extension?: string,
   quality?: number,
   size?: { width?: number, height?: number },
-}, pixelRatio: boolean) => ({ imageData: savedImageData, designState: imageDesignState });
+}, pixelRatio?: boolean | number, keepLoadingSpinnerShown?: boolean) => ({
+  imageData: savedImageData,
+  designState: imageDesignState,
+  hideLoadingSpinner: () => void,
+});
 
 type triggerSaveModalFn = (onSaveFunction) => void;
 type triggerSavingFn = (onSaveFunction) => void;

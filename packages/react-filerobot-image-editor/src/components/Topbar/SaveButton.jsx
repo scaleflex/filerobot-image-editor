@@ -12,7 +12,7 @@ import {
   ELLIPSE_CROP,
   SUPPORTED_IMAGE_TYPES,
 } from 'utils/constants';
-import { SET_FEEDBACK, SHOW_LOADER } from 'actions';
+import { HIDE_LOADER, SET_FEEDBACK, SHOW_LOADER } from 'actions';
 import Modal from 'components/common/Modal';
 import Slider from 'components/common/Slider';
 import restrictNumber from 'utils/restrictNumber';
@@ -71,9 +71,21 @@ const SaveButton = () => {
   };
 
   const handleSave = () => {
-    const transformedData = transformImgFn(imageFileInfo);
+    const transformedData = transformImgFn(imageFileInfo, false, true);
     const onSaveFn = optionSaveFnRef.current || onSave;
-    onSaveFn(transformedData.imageData, transformedData.designState);
+    const savingResult = onSaveFn(
+      transformedData.imageData,
+      transformedData.designState,
+    );
+
+    const hideLoadingSpinner = () => {
+      dispatch({ type: HIDE_LOADER });
+    };
+    if (savingResult instanceof Promise) {
+      savingResult.finally(hideLoadingSpinner);
+    } else {
+      hideLoadingSpinner();
+    }
 
     optionSaveFnRef.current = null;
     if (closeAfterSave && onClose) {

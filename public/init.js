@@ -72,7 +72,10 @@ const pluginConfig = {
   },
 };
 
-function onSave(url, fileName) {
+function onSave(imageInfo) {
+  const url = imageInfo[useCloudimage ? 'cloudimageUrl' : 'imageBase64'];
+  const { fullName: fileName } = imageInfo;
+
   let tmpLink = document.createElement('a');
   tmpLink.href = url;
 
@@ -87,6 +90,15 @@ function onSave(url, fileName) {
   tmpLink.click();
   document.body.removeChild(tmpLink);
   tmpLink = null;
+  // return new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     console.log('Simulating some Async process');
+  //     console.log(
+  //       'ex. (Uploading file to server), this message is logged once async process is done.',
+  //     );
+  //     resolve();
+  //   }, 5000);
+  // });
 }
 
 const filerobotImageEditor = new FilerobotImageEditor(
@@ -95,12 +107,7 @@ const filerobotImageEditor = new FilerobotImageEditor(
 );
 
 filerobotImageEditor.render({
-  onSave: (imageInfo) => {
-    onSave(
-      imageInfo[useCloudimage ? 'cloudimageUrl' : 'imageBase64'],
-      imageInfo.fullName,
-    );
-  },
+  onSave,
   useCloudimage,
 });
 
@@ -128,7 +135,7 @@ function onChangeTabsHandler(event) {
 }
 
 function toggleActiveImage(imageContainer, imageSrc) {
-  const removeResizeParamRegex = /\?.+/g
+  const removeResizeParamRegex = /\?.+/g;
   const imageUrl = imageSrc.replace(removeResizeParamRegex, '');
   const prevImageContainer = document.querySelector(
     '[data-image-editor-active-image]',
@@ -247,11 +254,11 @@ function copyCodeHandler(event) {
 
   navigator.clipboard.writeText(currentCodeToCopy.innerText);
 
-    copyButton.innerHTML = 'Copied';
+  copyButton.innerHTML = 'Copied';
 
-    setTimeout(() => {
-      copyButton.innerHTML = 'Copy';
-    }, 500);
+  setTimeout(() => {
+    copyButton.innerHTML = 'Copy';
+  }, 500);
 }
 
 function showAccordionContent(event) {

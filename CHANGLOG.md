@@ -21,7 +21,9 @@ Types of changes:
 <!-- ## v4.1.2 - ...
 
 ### Improved
-- Changed default value of `savingPixelRatio` to `4` instead of `8` for avoiding errors in some browsers and faster saving. -->
+- Changed default value of `savingPixelRatio` to `4` instead of `8` for avoiding errors in some browsers and faster saving.
+- Keep showing the save loading spinner in case of returning a Promise from `onSave` and hide it after the promise's resolving/rejection
+- Enabling Possibility in `getCurrentImgDataFnRef` function to keep save loading spinner shown and hide it manually through params.-->
 
 ## v4.1.1 - 2022-03-29
 ### Fixed
