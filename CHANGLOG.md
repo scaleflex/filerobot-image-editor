@@ -20,6 +20,9 @@ Types of changes:
 -------------
 ## v4.2.0 - 2022-04-26
 
+### Fixed
+- Reset button disregards the default provided crop ratio and replaces with the original image's ratio.
+
 ### Added
 - `disableZooming` property for disabling zoom functionality & removing zoom-related UI.
 
