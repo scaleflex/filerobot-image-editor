@@ -50,8 +50,14 @@ class FilerobotImageEditor {
     this.#unmount(this.container);
   }
 
-  getCurrentImgData(props) {
-    return this.#getCurrentImgDataFnRef?.current?.(props) || {};
+  getCurrentImgData(imageFileInfo, pixelRatio, keepLoadingSpinnerShown) {
+    return (
+      this.#getCurrentImgDataFnRef?.current?.(
+        imageFileInfo,
+        pixelRatio,
+        keepLoadingSpinnerShown,
+      ) || {}
+    );
   }
 
   updateState(newStatePart) {
