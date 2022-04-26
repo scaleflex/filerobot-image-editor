@@ -280,6 +280,7 @@ const config = {
   //   console.log('image after saving', savedImgData);
   // },
   // useZoomPresetsMenu: true,
+  // disableZooming: true,
 };
 
 export default config;

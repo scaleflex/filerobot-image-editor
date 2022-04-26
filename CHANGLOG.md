@@ -18,10 +18,17 @@ Types of changes:
 > `- **BREAKING**: Some message`
 
 -------------
-<!-- ## v4.1.2 - ...
+<!--
+## NEW VERSION CHANGES - ..... (Un-commented and replace with version number on releasing)
+
+### Added
+- `disableZooming` property for disabling zoom functionality & removing zoom-related UI.
 
 ### Improved
-- Changed default value of `savingPixelRatio` to `4` instead of `8` for avoiding errors in some browsers and faster saving. -->
+- Changed default value of `savingPixelRatio` to `4` instead of `8` for avoiding errors in some browsers and faster saving.
+- Plugin's styles by adding background for the whole editor & decreasing the bottom spacing of tabs bottom bar on phone screens.
+
+-->
 
 ## v4.1.1 - 2022-03-29
 ### Fixed
