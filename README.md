@@ -937,11 +937,11 @@ The options available for cloudimage mode,
 
 <u>Supported version:</u> +v4.0.0
 
-<u>Default:</u> `8`
+<u>Default:</u> `4`
 
 The pixel ratio used in saving the image (higher the ratio, higher the resolution of the saved image till reaching the possible max. resolution for the image, higher the memory used & processing time of saving).
 
-> High pixel ratio might cause some device crashes/slowness while saving so consider choosing an appropriate ratio for your use case.
+> High pixel ratio might cause some device crashes/slowness or showing stack error in some browsers while saving so consider choosing an appropriate ratio for your use case.
 
 #### `previewPixelRatio`
 
@@ -1027,7 +1027,12 @@ If provided the canvas processing/saving/manipulating function will be assigned 
 
 The passed object/ref becomes with the following syntax after assigning internally
 ```js
-{ current: (imageFileInfo = {}, pixelRatio = false) => ({ imageData, designState }) }
+{ current: (imageFileInfo = {}, pixelRatio = false, keepLoadingSpinnerShown = false) => ({
+    imageData, // An object has the current image data & info
+    designState, // An object contains the current design state of the image's editor
+    hideLoadingSpinner // A function hides the loading spinner on calling if not already hidden (useful in case you have provided `keepLoadingSpinnerShown` param with `true` and wants to hide the spinner after finishing some operation from ur side)
+  })
+}
 ```
 The function has the following params:
 
@@ -1069,6 +1074,18 @@ Assigns the update state main function of the plugin inside `.current` property 
 
 On clicking on the zoom percentage and having this property set `true` some zoom presets percentages will be shown for the user to quickly choose some zoom percentage, if set to `false` the zoom presets won't be shown and only `fit percentage` will be used as default.
 
+Note: If [`disableZooming`](#disablezooming) property is `true` then this property won't have any effect.
+
+#### `disableZooming`
+
+<u>Type:</u> `Boolean`
+
+<u>Supported version:</u> +v4.2.0
+
+<u>Default:</u> false
+
+If `true`, there will be no zooming functionality available in the plugin & UI related to zooming will be removed.
+
 ### Callbacks
 
 #### `onBeforeSave`
@@ -1093,7 +1110,7 @@ This function will be fired once the user clicks save button and before triggeri
 
 <u>Default:</u> `undefined`
 
-it's used for handling the save functionality which is triggered once the user clicks on save button of the saving modal or once clicking the save button if the default behavior is prevented from [`onBeforeSave`](#onbeforesave) function.
+it's used for handling the save functionality which is triggered once the user clicks on save button of the saving modal or once clicking the save button if the default behavior is prevented from [`onBeforeSave`](#onbeforesave) function, If you need to keep showing the loading spinner (shown on start saving) till you finish some functionality/operation from your project's side (ex. async uploading file to your server) then you must return a `Promise` otherwise returning nothing/void is fine.
 
 > In `imageData` parameter you have 2 formats (Base64 string & Canvas HTML element) of saved image, the Canvas HTML element format doesn't support quality chosen while saving from default behavior.
 
@@ -1162,9 +1179,9 @@ Initializes/rerenders the plugin with the possibility to provide an additional c
 
 Unmounts the plugin's container from the page to be removed.
 
-#### `getCurrentImgDataFunction`
+#### `getCurrentImgData`
 
-<u>Type:</u> `function getCurrentImgDataFunction (imageFileInfo, pixelRatio)`
+<u>Type:</u> `function getCurrentImgData (imageFileInfo, pixelRatio, keepLoadingSpinnerShown)`
 
 <u>Supported version:</u> +v4.0.0
 
