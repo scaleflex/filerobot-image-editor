@@ -64,7 +64,7 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 - ⏭️ Live Comparison (Applied Operations & original).
 - ⏳ History management (Undo/Redo/Reset).
 - ✂️ Image Adjustment.
-- 🔂 Export current design state & load it whenever you want to continue past edits *Experimental*
+- 🔂 Export current design state & load it whenever you want to continue past edits _Experimental_
 - 🎨 Image Annotating & Drawing.
 - 🖼️ Watermarking & positioning.
 - 🪟 Image Resizing.
@@ -80,13 +80,14 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 <hr />
 
 ## Contents
+
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
   - React
-	- [NPM](#react-component)
+  - [NPM](#react-component)
   - VanillaJS
-	- [NPM](#vanillajs)
-	- [CDN](#cdn)
+  - [NPM](#vanillajs)
+  - [CDN](#cdn)
 - [Usage/Examples](#usageexamples)
   - [React Example](#react-example)
   - [VanillaJS Example](#vanillajs-example)
@@ -104,16 +105,19 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 <hr />
 
 ## Prerequisites
+
 > Following prerequisites are required only in React Component installation, but they're included in CDN bundle installation and added as dependencies of other bridges/adapters packages.
+
 <!-- TODO: Remove react v18 isn't supported yet notice on supporting v18 -->
+
 - react, react-dom: >= v16.8.0 (**react v18 isn't supported yet**)
 - styled-components: >= v5.1.0
 
 <details>
   <summary>Prerequisites Installation (Click to show)</summary>
 
-  - react, react-dom: `npm install --save react react-dom` or use their CDN.
-  - styled-components: `npm install --save styled-components` or use their CDN.
+- react, react-dom: `npm install --save react react-dom` or use their CDN.
+- styled-components: `npm install --save styled-components` or use their CDN.
 </details>
 
 <hr />
@@ -131,8 +135,10 @@ npm install --save react-filerobot-image-editor
 #### VanillaJS
 
 ```bash
-npm install --save filerobot-image-editor
+npm install --save filerobot-image-editor react-filerobot-image-editor
 ```
+
+> NOTE: if your npm version < 7 you don't need to install react-filerobot-image-editor .
 
 ### CDN
 
@@ -155,7 +161,10 @@ VanillaJS only
 
 ```js
 import React, { useState } from 'react';
-import FilerobotImageEditor, { TABS, TOOLS } from 'react-filerobot-image-editor';
+import FilerobotImageEditor, {
+  TABS,
+  TOOLS,
+} from 'react-filerobot-image-editor';
 
 function App() {
   const [isImgEditorShown, setIsImgEditorShown] = useState(false);
@@ -173,57 +182,59 @@ function App() {
       <button onClick={openImgEditor}>Open Filerobot image editor</button>
       {isImgEditorShown && (
         <FilerobotImageEditor
-	  source="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
-	  onSave={(editedImageObject, designState) => console.log('saved', editedImageObject, designState)}
-	  onClose={closeImgEditor}
-	  annotationsCommon={{
-	    fill: '#ff0000'
-	  }}
-	  Text={{ text: 'Filerobot...' }}
-    Crop={{
-      presetsItems: [
-        {
-          titleKey: 'classicTv',
-          descriptionKey: '4:3',
-          ratio: 4 / 3,
-          // icon: CropClassicTv, // optional, CropClassicTv is a React Function component. Possible (React Function component, string or HTML Element)
-        },
-        {
-          titleKey: 'cinemascope',
-          descriptionKey: '21:9',
-          ratio: 21 / 9,
-          // icon: CropCinemaScope, // optional, CropCinemaScope is a React Function component.  Possible (React Function component, string or HTML Element)
-        },
-      ],
-      presetsFolders: [
-        {
-          titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
-          // icon: Social, // optional, Social is a React Function component. Possible (React Function component, string or HTML Element)
-          groups: [
-            {
-              titleKey: 'facebook',
-              items: [
-                {
-                  titleKey: 'profile',
-                  width: 180,
-                  height: 180,
-                  descriptionKey: 'fbProfileSize',
-                },
-                {
-                  titleKey: 'coverPhoto',
-                  width: 820,
-                  height: 312,
-                  descriptionKey: 'fbCoverPhotoSize',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    }}
-	  tabsIds={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
-	  defaultTabId={TABS.ANNOTATE} // or 'Annotate'
-	  defaultToolId={TOOLS.TEXT} // or 'Text'
+          source="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+          onSave={(editedImageObject, designState) =>
+            console.log('saved', editedImageObject, designState)
+          }
+          onClose={closeImgEditor}
+          annotationsCommon={{
+            fill: '#ff0000',
+          }}
+          Text={{ text: 'Filerobot...' }}
+          Crop={{
+            presetsItems: [
+              {
+                titleKey: 'classicTv',
+                descriptionKey: '4:3',
+                ratio: 4 / 3,
+                // icon: CropClassicTv, // optional, CropClassicTv is a React Function component. Possible (React Function component, string or HTML Element)
+              },
+              {
+                titleKey: 'cinemascope',
+                descriptionKey: '21:9',
+                ratio: 21 / 9,
+                // icon: CropCinemaScope, // optional, CropCinemaScope is a React Function component.  Possible (React Function component, string or HTML Element)
+              },
+            ],
+            presetsFolders: [
+              {
+                titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
+                // icon: Social, // optional, Social is a React Function component. Possible (React Function component, string or HTML Element)
+                groups: [
+                  {
+                    titleKey: 'facebook',
+                    items: [
+                      {
+                        titleKey: 'profile',
+                        width: 180,
+                        height: 180,
+                        descriptionKey: 'fbProfileSize',
+                      },
+                      {
+                        titleKey: 'coverPhoto',
+                        width: 820,
+                        height: 312,
+                        descriptionKey: 'fbCoverPhotoSize',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          }}
+          tabsIds={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
+          defaultTabId={TABS.ANNOTATE} // or 'Annotate'
+          defaultToolId={TOOLS.TEXT} // or 'Text'
         />
       )}
     </div>
@@ -241,9 +252,10 @@ import FilerobotImageEditor from 'filerobot-image-editor'; // Load library from 
 const { TABS, TOOLS } = FilerobotImageEditor;
 const config = {
   source: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
-  onSave: (editedImageObject, designState) => console.log('saved', editedImageObject, designState),
+  onSave: (editedImageObject, designState) =>
+    console.log('saved', editedImageObject, designState),
   annotationsCommon: {
-    fill: '#ff0000'
+    fill: '#ff0000',
   },
   Text: { text: 'Filerobot...' },
   translations: {
@@ -303,18 +315,18 @@ const config = {
 // Assuming we have a div with id="editor_container"
 const filerobotImageEditor = new FilerobotImageEditor(
   document.querySelector('#editor_container'),
-  config
+  config,
 );
 
 filerobotImageEditor.render({
   onClose: (closingReason) => {
     console.log('Closing reason', closingReason);
     filerobotImageEditor.terminate();
-  }
+  },
 });
 ```
 
-> NOTE: if you are importing the library from CDN then you could access it using `window.FilerobotImageEditor` and access both `TABS & TOOLS` from `window.FilerobotImageEditor.TABS`  & `window.FilerobotImageEditor.TOOLS`, see [`tabsIds`](#tabsids).
+> NOTE: if you are importing the library from CDN then you could access it using `window.FilerobotImageEditor` and access both `TABS & TOOLS` from `window.FilerobotImageEditor.TABS` & `window.FilerobotImageEditor.TOOLS`, see [`tabsIds`](#tabsids).
 
 <hr />
 
@@ -326,7 +338,7 @@ filerobotImageEditor.render({
 
 #### `source`
 
-<u>Type:</u> `string` | `HTMLImageElement` ***Required***.
+<u>Type:</u> `string` | `HTMLImageElement` **_Required_**.
 
 <u>Supported version:</u> +v4.0.0
 
@@ -355,7 +367,7 @@ Theme from [@scaleflex/ui](https://github.com/scaleflex/ui/blob/1617f8b19ade7199
 }
 ```
 
-Almost you would need those 2 objects ([**palette**](https://github.com/scaleflex/ui/blob/master/packages/ui/src/utils/types/palette/color.ts#L1) *values are the possible keys for palette object* & [**typograpghy**](https://github.com/scaleflex/ui/blob/master/packages/ui/src/theme/entity/default-theme.ts#L52)) to have the proper theme you want.
+Almost you would need those 2 objects ([**palette**](https://github.com/scaleflex/ui/blob/master/packages/ui/src/utils/types/palette/color.ts#L1) _values are the possible keys for palette object_ & [**typograpghy**](https://github.com/scaleflex/ui/blob/master/packages/ui/src/theme/entity/default-theme.ts#L52)) to have the proper theme you want.
 
 As the colors of the plugin are retrieved dynamically from the theme object, it gives you the possibility to customize the colors and font-family to yours.
 
@@ -378,10 +390,13 @@ Access the available Tabs ids & tools ids through anyway of the following
 const { TABS, TOOLS } = window.FilerobotImageEditor;
 
 // Accessing from React Function component lib. NPM
-import ReactFilerobotImageEditor, { TABS, TOOLS } from 'react-filerobot-image-editor';
+import ReactFilerobotImageEditor, {
+  TABS,
+  TOOLS,
+} from 'react-filerobot-image-editor';
 
 // Access from VanillaJS lib. NPM
-import VanillaFilerobotImageEditor from 'filerobot-image-editor'
+import VanillaFilerobotImageEditor from 'filerobot-image-editor';
 const { TABS, TOOLS } = VanillaFilerobotImageEditor;
 ```
 
@@ -501,7 +516,7 @@ If `true` then the saved image's type will always be `png` type if the user made
 
 Fires [`onClose`](#onclose) callback after handling save & triggering [`onSave`](#onsave) if `true`.
 
-#### `loadableDesignState` *Experimental*
+#### `loadableDesignState` _Experimental_
 
 <u>Type:</u> `object`
 
@@ -518,6 +533,7 @@ If provided the plugin will load this design state at the initial load to give t
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u>
+
 ```js
 {
     fill: '#000000',
@@ -553,6 +569,7 @@ The common options existed in all the annotations tools and used as default valu
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u>
+
 ```js
 {
     ...annotationsCommon,
@@ -598,6 +615,7 @@ The options available for the text annotation tool in additon to the annotations
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u>
+
 ```js
 {
     ...annotationsCommon,
@@ -618,12 +636,14 @@ The options available for image annotation tool in additon to the annotationsCom
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u>
+
 ```js
 {
     ...annotationsCommon,
     cornerRadius: 0,
 }
 ```
+
 The options available for Rect annotation tool in additon to the annotationsCommon property,
 
 | Property           | Type   | Default (possible values) | Description                           |
@@ -647,6 +667,7 @@ No specific options available for ellipse only the annotationsCommon are used fo
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u>
+
 ```js
 {
     ...annotationsCommon,
@@ -667,6 +688,7 @@ The available options for polygon annotation tool in additon to the annotationsC
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u>
+
 ```js
 {
     ...annotationsCommon,
@@ -690,6 +712,7 @@ The available options for pen annotation tool in additon to the annotationsCommo
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u>
+
 ```js
 {
     ...annotationsCommon,
@@ -711,6 +734,7 @@ The available options for line annotation tool in additon to the annotationsComm
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u>
+
 ```js
 {
     ...annotationsCommon,
@@ -761,6 +785,7 @@ The available options for watermark tool, the watermark is using the options of 
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u>
+
 ```js
 {
     minWidth: 14,
@@ -799,7 +824,7 @@ The available options for crop tool,
 
 | Property       | Type                                               | Default (possible values) | Description                                                                                                                                                                                 |
 | -------------- | -------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`titleKey`** | string ***Required***                              | ''                        | Translation key for the title of the preset folder (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
+| **`titleKey`** | string **_Required_**                              | ''                        | Translation key for the title of the preset folder (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
 | **`groups`**   | array of [`CropPresetGroup`](#croppresetgroup)     | undefined                 | The crop preset groups shown inside the sublist as breadcrumbs for the user and giving him the possibility to choose a crop preset item                                                     |
 | **`icon`**     | HTML Element \| string \| React Function component | undefined                 | An icon prefixed to the crop preset folder's title                                                                                                                                          |
 
@@ -811,7 +836,7 @@ The available options for crop tool,
 
 | Property       | Type                                         | Default (possible values) | Description                                                                                                                                                                                |
 | -------------- | -------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **`titleKey`** | string ***Required***                        | ''                        | Translation key for the title of the preset group (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
+| **`titleKey`** | string **_Required_**                        | ''                        | Translation key for the title of the preset group (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
 | **`items`**    | array of [`CropPresetItem`](#croppresetitem) | undefined                 | The crop preset items shown inside the group's breadcrumb which let the user choose from                                                                                                   |
 
 ##### **CropPresetItem**:
@@ -822,11 +847,11 @@ The available options for crop tool,
 
 | Property                  | Type                                                    | Default (possible values)                          | Description                                                                                                                                                                               |
 | ------------------------- | ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`titleKey`**            | string ***Required***                                   | ''                                                 | Translation key for the title of the preset item (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
+| **`titleKey`**            | string **_Required_**                                   | ''                                                 | Translation key for the title of the preset item (the translation must be existed in [`translations`](#translations) object if the backend's translations don't include that translation) |
 | **`descriptionKey`**      | string                                                  | ''                                                 | The Translation key of crop preset item's description label shown besides the title key for more descriptive preset (almost usedi n showing the preset item's ratio/size)                 |
-| **`ratio`**               | string ***Required if no `width` & `height` provided*** | '' ('original' \| 'ellipse' \| 'custom' \| number) | The preset item's ratio used in cropping                                                                                                                                                  |
-| **`width`**               | number ***Required if no `ratio` provided***            | undefined                                          | The width of crop preset item used in tandem with height for calculating the proper preset item's ratio (`ratio = width / height`)                                                        |
-| **`height`**              | number ***Required if no `ratio` provided***            | undefined                                          | The height of crop preset item used in tandem with width for calculating the proper preset item's ratio (`ratio = width / height`)                                                        |
+| **`ratio`**               | string **_Required if no `width` & `height` provided_** | '' ('original' \| 'ellipse' \| 'custom' \| number) | The preset item's ratio used in cropping                                                                                                                                                  |
+| **`width`**               | number **_Required if no `ratio` provided_**            | undefined                                          | The width of crop preset item used in tandem with height for calculating the proper preset item's ratio (`ratio = width / height`)                                                        |
+| **`height`**              | number **_Required if no `ratio` provided_**            | undefined                                          | The height of crop preset item used in tandem with width for calculating the proper preset item's ratio (`ratio = width / height`)                                                        |
 | **`icon`**                | HTML Element \| string \| React Function component      | undefined                                          | An icon prefixed to the crop preset item's title                                                                                                                                          |
 | **`disableManualResize`** | boolean                                                 | false                                              | If `true` the resize inputs will be disabled if the user selected this crop preset item and `autoResize` must be `true` otherwise it won't affect                                         |
 
@@ -900,6 +925,7 @@ If `true` the plugin will work in [`cloudimage`](https://cloudimage.io/) mode me
 <u>Supported version:</u> +v4.0.0
 
 <u>Default:</u>
+
 ```js
 {
   token: '',
@@ -915,6 +941,7 @@ If `true` the plugin will work in [`cloudimage`](https://cloudimage.io/) mode me
   }
 }
 ```
+
 The options available for cloudimage mode,
 
 | Property                         | Type                                          | Default (possible values) | Description                                                                                                                                                                                                                                                   |
@@ -927,7 +954,7 @@ The options available for cloudimage mode,
 | **`loadableQuery`**              | string                                        | ''                        | A cloudimage string query params to load in the plugin's design state and continue editing on previous edits (ex, `w=500&h=300&blur=5`), you could use it in addition to [`loadableDesignState`](#loadabledesignstate-experimental)                           |
 | **`imageSealing`**               | object                                        | mentioned above           | Assigns the options for image sealing feature (your cloudimage account must support it)                                                                                                                                                                       |
 | imageSealing.**`enable`**        | boolean                                       | true                      | `true` means using (`https`) in the URL, `false` means using (`http`)                                                                                                                                                                                         |
-| imageSealing.**`salt`**          | string ***Required if imageSealing enabled*** | ''                        | The salt string is set upon configuration and is used for the encryption                                                                                                                                                                                      |
+| imageSealing.**`salt`**          | string **_Required if imageSealing enabled_** | ''                        | The salt string is set upon configuration and is used for the encryption                                                                                                                                                                                      |
 | imageSealing.**`charCount`**     | number                                        | 10                        | Calculated hash (URL ci_seal parameter) length                                                                                                                                                                                                                |
 | imageSealing.**`includeParams`** | string[]                                      | []                        | URL query parameters to be sealed. By default, all parameters will be sealed. you can set a list of query parameters, ex, ['wat_url'] which enables you to freely append additional transformations to the URL (the sealed parameters cannot be overwritten). |
 
@@ -971,24 +998,42 @@ Option's object to be provided,
 
 | Property      | Type                                                    | Default (possible values) | Description                                                                                                                                                                                                                                                                                                           |
 | ------------- | ------------------------------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`label`**   | string ***Required***                                   | ''                        | The option's label will be shown to the user                                                                                                                                                                                                                                                                          |
-| **`onClick`** | function (triggerSaveModal, triggerSave) ***Required*** | `undefined`               | The function will be triggered on clicking the option, it receives 2 parameters 1st is a function calls the saving modal, 2nd is a function calls saving directly and both of those functions accepts (1 argument as a callback function that's same as [`onSave function`](#onsave) called after the saving process) |
+| **`label`**   | string **_Required_**                                   | ''                        | The option's label will be shown to the user                                                                                                                                                                                                                                                                          |
+| **`onClick`** | function (triggerSaveModal, triggerSave) **_Required_** | `undefined`               | The function will be triggered on clicking the option, it receives 2 parameters 1st is a function calls the saving modal, 2nd is a function calls saving directly and both of those functions accepts (1 argument as a callback function that's same as [`onSave function`](#onsave) called after the saving process) |
 | **`icon`**    | HTML Element \| string \| React Function component      | `null`                    | The option's icon will be shown before the label                                                                                                                                                                                                                                                                      |
+
 > NOTE: you must provide an [`onSave`](#onsave) callback function on using any of the passed functions to the option's onClick function.
-example,
+> example,
+
 ```js
 [
   {
     label: 'Save as new version',
-    onClick: (triggerSaveModal, triggerSave) => triggerSaveModal((...args) => {console.log('saved', args)}), // Required to pass the callback function
+    onClick: (triggerSaveModal, triggerSave) =>
+      triggerSaveModal((...args) => {
+        console.log('saved', args);
+      }), // Required to pass the callback function
     icon: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">...</svg>', // HTML Element as string
   },
   {
     label: 'Save as new file',
-    onClick: (triggerSaveModal, triggerSave) => triggerSave((...args) => {console.log('saved', args)}),  // Required to pass the callback function
-    icon: () => <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">...</svg>, // React Function component
+    onClick: (triggerSaveModal, triggerSave) =>
+      triggerSave((...args) => {
+        console.log('saved', args);
+      }), // Required to pass the callback function
+    icon: () => (
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        ...
+      </svg>
+    ), // React Function component
   },
-]
+];
 ```
 
 #### `observePluginContainerSize`
@@ -1026,17 +1071,24 @@ Hides all the UI of the plugin including (save & close buttons, tabs & tools bar
 If provided the canvas processing/saving/manipulating function will be assigned as `.current` proeprty to this passed `Object | React Ref` to be used/called somewhere else other than the default save button and returns both the final transformed image data object & current design state which are same as params as [`onSave callback`](#onsave),
 
 The passed object/ref becomes with the following syntax after assigning internally
+
 ```js
-{ current: (imageFileInfo = {}, pixelRatio = false, keepLoadingSpinnerShown = false) => ({
+{
+  current: (
+    imageFileInfo = {},
+    pixelRatio = false,
+    keepLoadingSpinnerShown = false,
+  ) => ({
     imageData, // An object has the current image data & info
     designState, // An object contains the current design state of the image's editor
-    hideLoadingSpinner // A function hides the loading spinner on calling if not already hidden (useful in case you have provided `keepLoadingSpinnerShown` param with `true` and wants to hide the spinner after finishing some operation from ur side)
-  })
+    hideLoadingSpinner, // A function hides the loading spinner on calling if not already hidden (useful in case you have provided `keepLoadingSpinnerShown` param with `true` and wants to hide the spinner after finishing some operation from ur side)
+  });
 }
 ```
+
 The function has the following params:
 
-- *`imageFIleInfo`*: An object, defines the info of the file to be considered while saving, and contains the following properties:
+- _`imageFIleInfo`_: An object, defines the info of the file to be considered while saving, and contains the following properties:
   ```js
   {
     name,
@@ -1047,12 +1099,11 @@ The function has the following params:
     },
   }
   ```
-- *`pixelRatio`*: A `number`, that defines the pixel ratio used in transforming/saving the image (higher the ratio, higher the resolution of the saved image till reaching the possible max. resolution for the image, higher the memory used & processing time of saving/transforming).
+- _`pixelRatio`_: A `number`, that defines the pixel ratio used in transforming/saving the image (higher the ratio, higher the resolution of the saved image till reaching the possible max. resolution for the image, higher the memory used & processing time of saving/transforming).
 
 > NOTE: Calling the assigned function will be UI blocker so take care where & when you are calling the function.
 
 #### `updateStateFnRef`
-
 
 <u>Type:</u> `React Ref | Object`
 
@@ -1114,7 +1165,6 @@ it's used for handling the save functionality which is triggered once the user c
 
 > In `imageData` parameter you have 2 formats (Base64 string & Canvas HTML element) of saved image, the Canvas HTML element format doesn't support quality chosen while saving from default behavior.
 
-
 #### `onModify`
 
 <u>Type:</u> `function(currentImageDesignState)`
@@ -1125,7 +1175,7 @@ it's used for handling the save functionality which is triggered once the user c
 
 Called after any operation/transformation is applied on the image (ex. Add/change filter, resize the image...etc.).
 
-- *`currentImageDesignState`*: An object contains the latest design state of the current state of the plugin.
+- _`currentImageDesignState`_: An object contains the latest design state of the current state of the plugin.
 
 > NOTE: This callback might be triggered multiple times at changing some properties related to same operation/functionality so please make sure you have checked when it's called to understand the behavior you'll have.
 
@@ -1139,19 +1189,19 @@ Called after any operation/transformation is applied on the image (ex. Add/chang
 
 Triggered once the user clicks either close/cancel button or back button, if not provided then the closing button won't shown at all.
 
-- *`closingReason`*: A string value showcases the place/reason the plugin closed.
-- *`haveNotSavedChanges`*: A boolean value, true means the user has clicked the close button before saving latest changes otherwise he closed after saving.
+- _`closingReason`_: A string value showcases the place/reason the plugin closed.
+- _`haveNotSavedChanges`_: A boolean value, true means the user has clicked the close button before saving latest changes otherwise he closed after saving.
 
 <hr />
 
 ## Bridges
 
-* [Vanilla JS <s>***(done)***</s>](#vanilla-javascript)
-* [React <s>***(done)***</s>](#react-component)
-* Angular (no ETA)
-* Vue (no ETA)
-* React-native (no ETA)
-* Flutter (no ETA)
+- [Vanilla JS <s>**_(done)_**</s>](#vanilla-javascript)
+- [React <s>**_(done)_**</s>](#react-component)
+- Angular (no ETA)
+- Vue (no ETA)
+- React-native (no ETA)
+- Flutter (no ETA)
 
 > NOTE: Currently additional docs of bridges are provided in the current page but on having more bridges docs will be moved to separate files.
 
