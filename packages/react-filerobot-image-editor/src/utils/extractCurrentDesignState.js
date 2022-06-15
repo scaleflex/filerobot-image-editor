@@ -9,8 +9,10 @@ import getInitialAppState from 'context/getInitialAppState';
  * @param {Object} defaultValue Value assigned to any undefined/null property in returned object.
  * @returns {Object} The extracted design state.
  */
-const extractCurrentDesignState = (state) => {
-  const initialAppState = getInitialAppState(defaultConfig);
+const extractCurrentDesignState = (state, useStateAsConfig) => {
+  const initialAppState = getInitialAppState(
+    useStateAsConfig ? state : defaultConfig,
+  );
 
   return {
     imgSrc: state.imgSrc || initialAppState.imgSrc,

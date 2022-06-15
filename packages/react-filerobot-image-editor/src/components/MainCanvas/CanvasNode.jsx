@@ -42,11 +42,11 @@ const CanvasNode = ({ children }) => {
     canvasScale,
     selectionsIds = [],
     zoom = {},
-    config: { previewPixelRatio },
+    config: { previewPixelRatio, disableZooming },
   } = useStore();
   Konva.pixelRatio = previewPixelRatio;
   const defaultZoomFactor = DEFAULT_ZOOM_FACTOR;
-  const isZoomEnabled = toolId !== TOOLS_IDS.CROP;
+  const isZoomEnabled = !disableZooming && toolId !== TOOLS_IDS.CROP;
   const [isPanningEnabled, setIsPanningEnabled] = useState(
     tabId !== TABS_IDS.ANNOTATE &&
       tabId !== TABS_IDS.WATERMARK &&

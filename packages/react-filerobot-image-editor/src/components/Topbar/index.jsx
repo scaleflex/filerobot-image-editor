@@ -20,7 +20,7 @@ import BackButton from './BackButton';
 
 const Topbar = () => {
   const {
-    config: { showBackButton },
+    config: { showBackButton, disableZooming },
   } = useStore();
 
   return (
@@ -38,8 +38,12 @@ const Topbar = () => {
       </StyledFlexCenterAlignedContainer>
       <StyledFlexCenterAlignedContainer className="FIE_topbar-center-options">
         <ImageDimensionsAndDisplayToggle />
-        <Separator />
-        <CanvasZooming />
+        {!disableZooming && (
+          <>
+            <Separator />
+            <CanvasZooming />
+          </>
+        )}
       </StyledFlexCenterAlignedContainer>
       {showBackButton ? <BackButton /> : <CloseButton />}
     </StyledTopbar>

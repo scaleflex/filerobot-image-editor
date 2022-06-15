@@ -66,7 +66,11 @@ const useTransformedImgData = () => {
     };
   };
 
-  const getTransformedImgData = (imageFileInfo = {}, pixelRatio = false) => {
+  const getTransformedImgData = (
+    imageFileInfo = {},
+    pixelRatio = false,
+    keepLoadingSpinnerShown = false,
+  ) => {
     Konva.pixelRatio = pixelRatio || savingPixelRatio;
     const { clipWidth, clipHeight, clipX, clipY } = designLayer.attrs;
 
@@ -217,11 +221,18 @@ const useTransformedImgData = () => {
     imgNode.clearCache();
 
     Konva.pixelRatio = previewPixelRatio;
-    dispatch({ type: HIDE_LOADER });
+
+    const hideLoadingSpinner = () => {
+      dispatch({ type: HIDE_LOADER });
+    };
+    if (!keepLoadingSpinnerShown) {
+      hideLoadingSpinner();
+    }
 
     return {
       imageData: finalImgPassedObject,
       designState: finalImgDesignState,
+      hideLoadingSpinner,
     };
   };
 

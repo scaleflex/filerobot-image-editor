@@ -114,7 +114,7 @@ body {
   line-height: 58px;
   color: #203254;
   z-index: 99;
-  max-width: 527px;
+  max-width: 540px;
   text-align: center;
 }
 
@@ -185,13 +185,13 @@ body {
 .content-wrapper .content .view-button a {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 171px;
   height: 48px;
-  padding: 8px 24px;
   background-color: #3daba4;
   border-radius: 4px;
   font-weight: 700;
+  font-size: 16px;
   line-height: 32px;
   color: #ffff;
   cursor: pointer;
@@ -298,6 +298,8 @@ body {
   max-width: 170px;
   max-height: 106px;
   overflow-y: scroll;
+  scrollbar-color: #dfe1ec #fff;
+  scrollbar-width: thin;
 }
 .content-wrapper .config-table .uploaded-imgs-wrapper::-webkit-scrollbar {
   width: 5px;
@@ -343,18 +345,10 @@ body {
   border: 1px solid #dfe1ec;
   background-color: #ffff;
   border-radius: 4px;
-  padding: 19px;
-  cursor: pointer;
-}
-
-.content-wrapper .img-table .config-table .add-img::before {
-  content: "";
-  display: block;
-  width: 12px;
-  height: 12px;
-  margin-bottom: 50px;
   background: url("./assets/adding-icon.png") center center;
   background-repeat: no-repeat;
+  padding-top: 49px;
+  cursor: pointer;
 }
 
 .content-wrapper .img-table .config-table .output-img {
@@ -674,6 +668,7 @@ body {
 
 .usage pre {
   overflow-x: scroll;
+  scrollbar-width: none;
 }
 
 .usage .copy-wrapper {

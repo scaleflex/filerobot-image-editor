@@ -17,6 +17,7 @@ const StyledAppWrapper = styled.div.attrs(({ $size = {} }) => ({
   overflow: auto;
   position: relative;
   min-height: 250px;
+  background: ${({ theme }) => theme.palette['bg-secondary']};
 `;
 
 const StyledMainContent = styled.div`
@@ -45,6 +46,9 @@ const StyledCanvasAndTools = styled.div`
 const StyledPhoneToolsAndTabs = styled.div`
   width: 100%;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `;
 
 export {
