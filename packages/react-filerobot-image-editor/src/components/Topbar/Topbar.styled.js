@@ -20,6 +20,7 @@ const StyledTopbar = styled.div`
   [data-phone='true'] & {
     padding: 6px 6px 4px 6px;
   }
+  overflow: auto;
 `;
 
 const StyledHistoryButtonsWrapper = styled.div`

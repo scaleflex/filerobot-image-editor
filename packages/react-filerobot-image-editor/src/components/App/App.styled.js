@@ -17,7 +17,6 @@ const StyledAppWrapper = styled.div.attrs(({ $size = {} }) => ({
   overflow: auto;
   position: relative;
   min-height: 250px;
-  min-width: 300px;
 `;
 
 const StyledMainContent = styled.div`
