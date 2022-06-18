@@ -23,10 +23,10 @@ const setCrop = (state, payload) => {
     oldCrop.y === newCrop.y &&
     (oldCrop.width === newCrop.width ||
       (newCrop.width === toPrecisedFloat(state.shownImageDimensions.width) &&
-        !oldCrop.width)) &&
+        !oldCrop.width !== null)) &&
     (oldCrop.height === newCrop.height ||
       (newCrop.height === toPrecisedFloat(state.shownImageDimensions.height) &&
-        !oldCrop.height)) &&
+        oldCrop.height !== null)) &&
     oldCrop.ratio === newCrop.ratio &&
     oldCrop.ratioTitleKey === newCrop.ratioTitleKey &&
     oldCrop.ratioGroupKey === newCrop.ratioGroupKey &&
