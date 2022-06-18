@@ -1,13 +1,12 @@
 /** External Dependencies */
 import React from 'react';
-import Label from '@scaleflex/ui/core/label';
 import Compare from '@scaleflex/icons/compare';
 
 /** Internal Dependencies */
 import { TOGGLE_ORIGINAL_IMAGE_DISPLAY } from 'actions';
 import { useStore } from 'hooks';
 import getProperDimensions from 'utils/getProperDimensions';
-import { StyledSmallButton } from './Topbar.styled';
+import { StyledSmallButton, StyledDimensionsLabel } from './Topbar.styled';
 
 const ImageDimensionsAndDisplayToggle = () => {
   const {
@@ -62,9 +61,9 @@ const ImageDimensionsAndDisplayToggle = () => {
 
   return (
     <>
-      <Label title={t('imageDimensionsHoverTitle')}>
+      <StyledDimensionsLabel title={t('imageDimensionsHoverTitle')}>
         {`${dimensions.width} x ${dimensions.height} px`}
-      </Label>
+      </StyledDimensionsLabel>
       <StyledSmallButton
         color="link"
         horizontalMargin="8px"
