@@ -34,6 +34,10 @@ const OverrideDefaultStyles = createGlobalStyle`
   .${ROOT_CONTAINER_CLASS_NAME} *, #SfxPopper * {
     box-sizing: border-box;
     scrollbar-color: rgba(203, 211, 218, 1) rgba(203, 211, 218, 0.35);
+    
+    :not(button) > svg:not([color]) {
+      color: ${({ theme }) => theme.palette['icons-primary']}
+    }
 
     :disabled, [aria-disabled="true"] {
       cursor: not-allowed;
@@ -55,10 +59,4 @@ const OverrideDefaultStyles = createGlobalStyle`
   }
 `;
 
-const IconsColor = createGlobalStyle`
-  :not(button) > svg:not([color]) {
-    color: ${({ theme }) => theme.palette['icons-primary']}
-  }
-`;
-
-export { FontsFaces, IconsColor, OverrideDefaultStyles };
+export { FontsFaces, OverrideDefaultStyles };

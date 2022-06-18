@@ -8,7 +8,7 @@ import App from 'components/App';
 import { AppProvider } from 'context';
 import defaultConfig from 'context/defaultConfig';
 import deepMerge from 'utils/deepMerge';
-import { FontsFaces, IconsColor, OverrideDefaultStyles } from './globalStyles';
+import { FontsFaces, OverrideDefaultStyles } from './globalStyles';
 
 const AssemblyPoint = (props) => {
   const { img, source, useCloudimage, cloudimage } = props;
@@ -40,7 +40,6 @@ const AssemblyPoint = (props) => {
     <React.StrictMode>
       <ThemeProvider theme={defaultAndProvidedConfigMerged.theme}>
         <FontsFaces />
-        <IconsColor />
         <OverrideDefaultStyles />
         <AppProvider config={defaultAndProvidedConfigMerged}>
           <App />
