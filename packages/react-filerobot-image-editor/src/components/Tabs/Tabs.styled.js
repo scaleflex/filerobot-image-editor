@@ -54,6 +54,7 @@ const StyledTabItemLabel = styled(Label)`
   margin-top: 6px;
   font-size: 11px;
   line-height: 12px;
+  text-align: center;
 
   [data-phone='true'] & {
     font-size: 10px;
