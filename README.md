@@ -1151,7 +1151,7 @@ This function will be fired once the user clicks save button and before triggeri
 
 > If the function returned `false` then the default saving behavior implemented in the plugin won't be triggered.
 >
-> This function is doesn't work in ([`cloudimage mode`](#usecloudimage) & [`moreSaveOptions`](#moresaveoptions)) and the [`onSave`](#onsave) is fired directly.
+> This function doesn't work in ([`cloudimage mode`](#usecloudimage) & [`moreSaveOptions`](#moresaveoptions)) and the [`onSave`](#onsave) is fired directly.
 
 #### `onSave`
 
@@ -1235,7 +1235,7 @@ Unmounts the plugin's container from the page to be removed.
 
 <u>Supported version:</u> +v4.0.0
 
-Calling the function will trigger the function responsible for handling/manipulating the current image operations and have the possible final results of the current image data besides the current design state, it's the brdige for the function mentioned here [`getCurrentImgDataFnRef`](#getcurrentimgdatafnref).
+Calling the function will trigger the function responsible for handling/manipulating the current image operations and have the possible final results of the current image data besides the current design state, it's the bridge for the function mentioned here [`getCurrentImgDataFnRef`](#getcurrentimgdatafnref).
 
 <hr />
 
