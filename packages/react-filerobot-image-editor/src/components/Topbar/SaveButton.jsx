@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MenuItem from '@scaleflex/ui/core/menu-item';
 import SaveAs from '@scaleflex/icons/save-as';
 import Label from '@scaleflex/ui/core/label';

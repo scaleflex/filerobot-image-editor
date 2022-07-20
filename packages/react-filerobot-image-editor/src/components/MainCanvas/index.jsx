@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 /** Internal Dependencies */
 import { DesignLayer, TransformersLayer } from 'components/Layers';

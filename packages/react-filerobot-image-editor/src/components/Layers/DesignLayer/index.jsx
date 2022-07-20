@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Image, Layer } from 'react-konva';
 
 /** Internal Dependencies */

@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 /** Internal Dependencies */
 import { StyledHiddenUploadInput } from './HiddenUploadInput.styled';

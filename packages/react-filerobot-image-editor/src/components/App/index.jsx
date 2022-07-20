@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { memo, useCallback, useEffect, useState, useRef } from 'react';
+import { memo, useCallback, useEffect, useState, useRef } from 'react';
 
 /** Internal Dependencies */
 import MainCanvas from 'components/MainCanvas';

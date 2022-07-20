@@ -33,6 +33,7 @@ module.exports = {
     'react/no-array-index-key': 'error',
     'react/prefer-read-only-props': 'error',
     'react/jsx-key': ['error', { checkKeyMustBeforeSpread: true }],
+    'react/react-in-jsx-scope': 'off',
   },
   settings: {
     'import/resolver': {

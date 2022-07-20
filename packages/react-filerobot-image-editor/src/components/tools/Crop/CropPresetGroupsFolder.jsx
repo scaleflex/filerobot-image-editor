@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from '@scaleflex/ui/core/menu-item';
 

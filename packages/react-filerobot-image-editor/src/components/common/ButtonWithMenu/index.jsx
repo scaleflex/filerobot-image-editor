@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ArrowLeftOutline from '@scaleflex/icons/arrow-left-outline';
 import Menu from '@scaleflex/ui/core/menu';

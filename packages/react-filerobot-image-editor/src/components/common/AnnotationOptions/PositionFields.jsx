@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightAlt from '@scaleflex/icons/arrow-right-alt';
 import Point from '@scaleflex/icons/point';

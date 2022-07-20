@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FlipY as FlipYIcon } from '@scaleflex/icons/flip-y';
 

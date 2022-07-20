@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Menu from '@scaleflex/ui/core/menu';
 import Transparency from '@scaleflex/icons/transparency';

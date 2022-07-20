@@ -1,6 +1,6 @@
 /** External Dependencies */
 import { createElement } from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { createRoot } from 'react-dom/client'
 
 /** Internal Dependencies */
 import AssemblyPoint, { TOOLS, TABS } from 'react-filerobot-image-editor/src/';
@@ -9,23 +9,21 @@ import deepMerge from 'react-filerobot-image-editor/src/utils/deepMerge';
 class FilerobotImageEditor {
   static TABS = TABS;
   static TOOLS = TOOLS;
-  #render;
-  #unmount;
+  #root;
   #getCurrentImgDataFnRef;
   #updateStateFnRef;
 
   constructor(container, config = {}) {
     this.container = container;
     this.config = config;
-
+    
     if (!container || !(container instanceof HTMLElement)) {
       throw new Error(
         '`container` (argument 0) is required to initialize the image editor plugin.',
       );
     }
 
-    this.#render = render;
-    this.#unmount = unmountComponentAtNode;
+    this.#root = createRoot(this.container)
     this.#getCurrentImgDataFnRef = {};
     this.#updateStateFnRef = {};
   }
@@ -43,11 +41,11 @@ class FilerobotImageEditor {
       getCurrentImgDataFnRef: this.#getCurrentImgDataFnRef,
       updateStateFnRef: this.#updateStateFnRef,
     };
-    this.#render(createElement(AssemblyPoint, this.config), this.container);
+    this.#root.render(createElement(AssemblyPoint, this.config));
   }
 
   terminate() {
-    this.#unmount(this.container);
+    this.#root.unmount();
   }
 
   getCurrentImgData(imageFileInfo, pixelRatio, keepLoadingSpinnerShown) {
