@@ -25,7 +25,7 @@ Types of changes:
 
 ### Chore
 
-- support React 18
+- Support React 18
 
 ### Fixed
 
