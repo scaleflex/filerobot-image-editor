@@ -29,19 +29,15 @@ Types of changes:
 
 ### Fixed
 
-- tab label text is not centered T7893
-- ellipse doesn't crop on first use in cloudimage T7490
-- topbar on small mobile screen
-
-### Fixed
-
-- npm versions with peer dependencies
+- Tab label text is not centered T7893
+- Ellipse doesn't crop on first use in cloudimage T7490
+- Topbar on small mobile screen
 
 ## v4.2.1 - 2022-06-7
 
 ### Fixed
 
-- npm versions with peer dependencies
+- Npm versions with peer dependencies
 
 ### Fixed
 
