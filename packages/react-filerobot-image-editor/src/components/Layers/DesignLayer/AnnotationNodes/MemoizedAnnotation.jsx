@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { memo } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */

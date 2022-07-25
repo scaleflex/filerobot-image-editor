@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from '@scaleflex/ui/core/menu-item';
 import FontBold from '@scaleflex/icons/font-bold';

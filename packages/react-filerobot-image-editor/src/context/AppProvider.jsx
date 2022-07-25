@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { useCallback, useEffect, useMemo } from 'react';
+import  React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@scaleflex/ui/theme/hooks/use-theme';
 

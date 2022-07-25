@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Crop as CropIcon } from '@scaleflex/icons/crop';
 

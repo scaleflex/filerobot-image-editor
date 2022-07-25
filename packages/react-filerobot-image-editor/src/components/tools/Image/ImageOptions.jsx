@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '@scaleflex/ui/core/button';
 
 /** Internal Dependencies */

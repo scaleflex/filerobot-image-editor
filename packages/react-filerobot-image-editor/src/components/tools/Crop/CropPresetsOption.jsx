@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Menu from '@scaleflex/ui/core/menu';
 

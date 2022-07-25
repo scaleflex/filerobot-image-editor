@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Minus from '@scaleflex/icons/minus';
 import Plus from '@scaleflex/icons/plus';
 import Menu from '@scaleflex/ui/core/menu';

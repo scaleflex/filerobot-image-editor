@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { Children, useRef, useState, useEffect } from 'react';
+import React, { Children, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Arrow from '@scaleflex/icons/arrow';
 

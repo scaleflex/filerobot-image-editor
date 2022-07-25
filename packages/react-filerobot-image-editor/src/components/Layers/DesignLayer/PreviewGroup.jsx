@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { Group } from 'react-konva';
 
 const PreviewGroup = (props, ref) => {

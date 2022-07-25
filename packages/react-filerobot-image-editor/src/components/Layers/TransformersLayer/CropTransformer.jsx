@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Ellipse, Image, Rect, Transformer } from 'react-konva';
 import Konva from 'konva';
 

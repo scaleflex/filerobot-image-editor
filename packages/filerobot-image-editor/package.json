@@ -34,7 +34,7 @@
     "styled-components": "5.3.5"
   },
   "peerDependencies": {
-    "react-filerobot-image-editor": "^4.2.0"
+    "react-filerobot-image-editor": "^4.3.0"
   },
   "scripts": {
     "build:lib": "rimraf lib && cross-env BABEL_ENV=production NODE_ENV=production babel src -d lib --config-file ../../babel.config.json -D"

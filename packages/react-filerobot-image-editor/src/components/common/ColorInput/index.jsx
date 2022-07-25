@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Popper from '@scaleflex/ui/core/popper';
 

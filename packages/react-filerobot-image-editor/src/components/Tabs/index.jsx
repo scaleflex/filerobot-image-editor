@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 /** Internal Dependencies */
 import { SELECT_TAB } from 'actions';
