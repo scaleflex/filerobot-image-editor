@@ -1,4 +1,4 @@
-import { FunctionComponent, RefObject } from "react";
+import { FunctionComponent, RefObject } from 'react';
 
 declare const TABS = {
   FINETUNE: 'Finetune',
@@ -45,32 +45,36 @@ type availableTools = typeof TOOLS[keyof typeof TOOLS];
 type lineCap = 'butt' | 'round' | 'square';
 
 // CLOSING_REASONS
-type closingReasons = 'after-saving' | 'close-button-clicked' | 'back-button-clicked' | string;
+type closingReasons =
+  | 'after-saving'
+  | 'close-button-clicked'
+  | 'back-button-clicked'
+  | string;
 
 type savedImageData = {
-  name: string,
-  extension: string,
-  mimeType: string,
-  fullName?: string,
-  height?: number,
-  width?: number,
-  imageBase64?: string,
-  imageCanvas?: HTMLCanvasElement, // doesn't support quality
+  name: string;
+  extension: string;
+  mimeType: string;
+  fullName?: string;
+  height?: number;
+  width?: number;
+  imageBase64?: string;
+  imageCanvas?: HTMLCanvasElement; // doesn't support quality
   quality?: number;
   cloudimageUrl?: string;
-}
+};
 
 type annotationsCommon = {
-  fill?: string,
-  stroke?: string,
-  strokeWidth?: number
-  shadowOffsetX?: number,
-  shadowOffsetY?: number,
-  shadowBlur?: number,
-  shadowColor?: string,
-  shadowOpacity?: number,
-  opacity?: number,
-}
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+  shadowOffsetX?: number;
+  shadowOffsetY?: number;
+  shadowBlur?: number;
+  shadowColor?: string;
+  shadowOpacity?: number;
+  opacity?: number;
+};
 
 type textAnnotation = annotationsCommon & {
   text?: string;
@@ -80,131 +84,149 @@ type textAnnotation = annotationsCommon & {
   lineHeight?: number;
   align?: 'left' | 'center' | 'right';
   fontStyle?: 'normal' | 'bold' | 'italic' | 'bold italic';
-}
+};
 
 type rectAnnotation = annotationsCommon & {
   cornerRadius?: number;
-}
+};
 
 type polygonAnnotation = annotationsCommon & {
   sides?: number;
-}
+};
 
 type penAnnotation = annotationsCommon & {
   tension?: number;
   lineCap?: lineCap;
-}
+};
 
 type lineAnnotation = annotationsCommon & {
   lineCap?: lineCap;
-}
+};
 
 type arrowAnnotation = annotationsCommon & {
   lineCap?: lineCap;
   pointerLength?: number;
   pointerWidth?: number;
-}
+};
+
+type rotateAnnotation = {
+  angle?: number;
+  componentType?: 'slider' | 'button';
+};
 
 type cropPresetItem = {
-  titleKey: string,
-  width?: number,
-  height?: number,
-  ratio?: string,
-  descriptionKey?: string,
-  icon?: string | HTMLElement | FunctionComponent,
-  disableManualResize?: boolean,
+  titleKey: string;
+  width?: number;
+  height?: number;
+  ratio?: string;
+  descriptionKey?: string;
+  icon?: string | HTMLElement | FunctionComponent;
+  disableManualResize?: boolean;
 };
 
 type cropPresetGroup = {
-  titleKey: string,
-  items: cropPresetItem[],
+  titleKey: string;
+  items: cropPresetItem[];
 };
 
 type cropPresetFolder = {
-  titleKey: string,
-  groups: cropPresetGroup[],
-  icon?: string | HTMLElement | FunctionComponent,
+  titleKey: string;
+  groups: cropPresetGroup[];
+  icon?: string | HTMLElement | FunctionComponent;
 };
 
 type imageDesignState = {
-  imgSrc?: string,
-  finetunes?: string[],
+  imgSrc?: string;
+  finetunes?: string[];
   finetunesProps?: {
-    brightness?: number,
-    contrast?: number,
-    hue?: number,
-    saturation?: number,
-    value?: number,
-    blurRadius?: number,
-    warmth?: number,
-  },
-  filter?: string,
+    brightness?: number;
+    contrast?: number;
+    hue?: number;
+    saturation?: number;
+    value?: number;
+    blurRadius?: number;
+    warmth?: number;
+  };
+  filter?: string;
   adjustments?: {
     crop: {
-      ratio: string,
-      width?: number,
-      height?: number,
-      x?: number,
-      y?: number,
-      ratioFolderKey?: string,
-      ratioGroupKey?: string,
-      ratioTitleKey?: string,
-    },
-    isFlippedX?: boolean,
-    isFlippedY?: boolean,
-    rotation?: number,
-  },
+      ratio: string;
+      width?: number;
+      height?: number;
+      x?: number;
+      y?: number;
+      ratioFolderKey?: string;
+      ratioGroupKey?: string;
+      ratioTitleKey?: string;
+    };
+    isFlippedX?: boolean;
+    isFlippedY?: boolean;
+    rotation?: number;
+  };
   annotations?: {
     [key?: string]: annotationsCommon &
-      (textAnnotation | rectAnnotation | polygonAnnotation | penAnnotation | lineAnnotation | arrowAnnotation) &
-      {
-        id: string,
-        name: string,
-        x: number,
-        y: number,
-        scaleX?: number,
-        scaleY?: number,
-        width?: number, //Text/Image/Rect
-        height?: number, //Text/Image/Rect
-        radius?: number, // Polygon
-        radiusX?: number, // Ellipse
-        radiusY?: number, // Ellipse
-        points?: number[], // Pen/Line/Arrow
-        image?: string | HTMLElement, // Image
-      }
-  },
+      (
+        | textAnnotation
+        | rectAnnotation
+        | polygonAnnotation
+        | penAnnotation
+        | lineAnnotation
+        | arrowAnnotation
+      ) & {
+        id: string;
+        name: string;
+        x: number;
+        y: number;
+        scaleX?: number;
+        scaleY?: number;
+        width?: number; //Text/Image/Rect
+        height?: number; //Text/Image/Rect
+        radius?: number; // Polygon
+        radiusX?: number; // Ellipse
+        radiusY?: number; // Ellipse
+        points?: number[]; // Pen/Line/Arrow
+        image?: string | HTMLElement; // Image
+      };
+  };
   resize?: {
-    width?: number,
-    height?: number,
-    manualChangeDisabled?: boolean,
-  },
+    width?: number;
+    height?: number;
+    manualChangeDisabled?: boolean;
+  };
   shownImageDimensions?: {
-    width: number,
-    height: number,
-    scaledBy: number,
-  }
+    width: number;
+    height: number;
+    scaledBy: number;
+  };
 };
 
-type onSaveFunction = (savedImageData: savedImageData, imageDesignState: imageDesignState) => void | Promise;
+type onSaveFunction = (
+  savedImageData: savedImageData,
+  imageDesignState: imageDesignState,
+) => void | Promise;
 
-export type getCurrentImgDataFunction = (imageFileInfo: {
-  name?: string,
-  extension?: string,
-  quality?: number,
-  size?: { width?: number, height?: number },
-}, pixelRatio?: boolean | number, keepLoadingSpinnerShown?: boolean) => ({
-  imageData: savedImageData,
-  designState: imageDesignState,
-  hideLoadingSpinner: () => void,
-});
+export type getCurrentImgDataFunction = (
+  imageFileInfo: {
+    name?: string;
+    extension?: string;
+    quality?: number;
+    size?: { width?: number; height?: number };
+  },
+  pixelRatio?: boolean | number,
+  keepLoadingSpinnerShown?: boolean,
+) => {
+  imageData: savedImageData;
+  designState: imageDesignState;
+  hideLoadingSpinner: () => void;
+};
 
 type triggerSaveModalFn = (onSaveFunction) => void;
 type triggerSavingFn = (onSaveFunction) => void;
 
 type saveOption = {
-  label: string,
-  icon: string | HTMLElement | FunctionComponent,
-  onClick: (triggerSaveModalFn, triggerSavingFn) => void,
+  label: string;
+  icon: string | HTMLElement | FunctionComponent;
+  onClick: (triggerSaveModalFn, triggerSavingFn) => void;
 };
 
 export interface FilerobotImageEditorConfig {
@@ -213,7 +235,10 @@ export interface FilerobotImageEditorConfig {
   // [TOOLS_IDS.TEXT]
   Text?: textAnnotation & {
     fonts?: (string | { label: string; value: string })[];
-    onFontChange?: (newFontFamily: string, reRenderCanvasFn: () => void) => void;
+    onFontChange?: (
+      newFontFamily: string,
+      reRenderCanvasFn: () => void,
+    ) => void;
   };
   // [TOOLS_IDS.IMAGE]
   Image?: annotationsCommon;
@@ -229,6 +254,8 @@ export interface FilerobotImageEditorConfig {
   Line?: lineAnnotation;
   // [TOOLS_IDS.ARROW]: {
   Arrow?: arrowAnnotation;
+  // [TOOLS_IDS.ROTATE]:
+  Rotate?: rotateAnnotation;
   // [TOOLS_IDS.WATERMARK]
   Watermark?: {
     gallery?: string[] | [];
@@ -247,7 +274,7 @@ export interface FilerobotImageEditorConfig {
     autoResize?: boolean;
   };
   // TABS_IDS
-  tabsIds?: (availableTabs)[] | [];
+  tabsIds?: availableTabs[] | [];
   defaultTabId?: availableTabs;
   defaultToolId?: availableTools;
   onBeforeSave?: (savedImageData: savedImageData) => void | boolean;
@@ -259,7 +286,17 @@ export interface FilerobotImageEditorConfig {
   forceToPngInEllipticalCrop?: boolean;
   useBackendTranslations?: boolean;
   translations?: object;
-  language?: 'en' | 'fr' | 'de' | 'it' | 'pt' | 'es' | 'nl' | 'pl' | 'ro' | string;
+  language?:
+    | 'en'
+    | 'fr'
+    | 'de'
+    | 'it'
+    | 'pt'
+    | 'es'
+    | 'nl'
+    | 'pl'
+    | 'ro'
+    | string;
   avoidChangesNotSavedAlertOnLeave?: boolean;
   loadableDesignState?: imageDesignState;
   showBackButton?: boolean;
@@ -279,16 +316,20 @@ export interface FilerobotImageEditorConfig {
       salt?: string;
       charCount?: number;
       includeParams?: string[];
-    }
+    };
   };
   observePluginContainerSize?: boolean;
   showCanvasOnly?: boolean;
-  getCurrentImgDataFnRef?: RefObject | {
-    current?: getCurrentImgDataFunction
-  };
-  updateStateFnRef?: RefObject | {
-    current?: (newStatePart: {} | ((currentState: {}) => void)) => void;
-  };
+  getCurrentImgDataFnRef?:
+    | RefObject
+    | {
+        current?: getCurrentImgDataFunction;
+      };
+  updateStateFnRef?:
+    | RefObject
+    | {
+        current?: (newStatePart: {} | ((currentState: {}) => void)) => void;
+      };
   onModify?: (currentImageDesignState: imageDesignState) => void;
   useZoomPresetsMenu?: boolean;
   disableZooming?: boolean;
