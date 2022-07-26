@@ -79,6 +79,10 @@ export default {
     presetsItems: [],
     presetsFolders: [],
   },
+  [TOOLS_IDS.ROTATE]: {
+    angle: 60,
+    componentType: 'slider', // slider | buttons
+  },
   tabsIds: [],
   defaultTabId: TABS_IDS.ADJUST,
   defaultToolId: TOOLS_IDS.CROP,
