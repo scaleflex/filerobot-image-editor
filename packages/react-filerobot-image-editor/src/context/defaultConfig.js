@@ -64,6 +64,8 @@ export default {
   },
   [TOOLS_IDS.WATERMARK]: {
     gallery: [],
+    textScalingRatio: 0.5,
+    imageScalingRatio: 0.5,
   },
   [TOOLS_IDS.CROP]: {
     minWidth: MIN_CROP.WIDTH,
