@@ -189,6 +189,10 @@ const config = {
     ],
     presetsFolders: cropFolderPresets,
   },
+  [TOOLS.ROTATE]: {
+    angle: 60,
+    componentType: 'slider',
+  },
   [TOOLS.WATERMARK]: {
     gallery: [
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/PNG/SCALEFLEX+LOGO+-+Color+Dark+text.png?vh=45cac1',

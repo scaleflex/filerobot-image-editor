@@ -282,6 +282,7 @@
                 fill: '#ff0000'
               },
               <span class="blue">Text</span>: { text: 'Filerobot...' },
+              <span class="blue">Render</span>: { angle: 90, componentType: 'buttons' },
               <span class="blue">tabsIds</span>: [<span class="blue">TABS.ADJUST</span>,<span class="blue">TABS.ANNOTATE</span>,<span class="blue">TABS.WATERMARK</span>], <span class="gray">// or ['Adjust', 'Annotate', 'Watermark']</span>
               <span class="blue">defaultTabId</span>: TABS.ANNOTATE, // or 'Annotate'
               <span class="blue">defaultToolId</span>: TOOLS.TEXT, // or 'Text'
@@ -334,6 +335,7 @@
                             fill: '#ff0000'
                           }}
                           Text={{ text: 'Filerobot...' }}
+                          Render={{ angle: 90, componentType: 'buttons' }}
                           tabsIds={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
                           defaultTabId={TABS.ANNOTATE} // or 'Annotate'
                           defaultToolId={TOOLS.TEXT} // or 'Text'
