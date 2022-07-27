@@ -26,7 +26,7 @@ import {
 } from './Topbar.styled';
 
 const sliderStyle = { marginBottom: 16 };
-const saveButtonWrapperStyle = { width: 67 }; // 67px same width as tabs bar
+const saveButtonWrapperStyle = { width: 80 }; // 80px same width as tabs bar
 const saveButtonMenuStyle = { marginLeft: 12 };
 
 let isFieSaveMounted = true;

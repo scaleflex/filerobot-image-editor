@@ -15,7 +15,7 @@ const StyledTabs = styled.div`
 
 const StyledTabItem = styled.div(
   ({ theme }) => `
-    width: 67px;
+    width: 80px;
     height: 62px;
     border-radius: 4px;
     display: flex;
