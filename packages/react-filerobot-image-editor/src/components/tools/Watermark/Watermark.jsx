@@ -39,6 +39,7 @@ const Watermark = () => {
   const isPhoneScreen = usePhoneScreen();
   const [isLoading, setIsLoading] = useState(false);
   const uploadImgInput = useRef();
+  const watermarkConfig = config[TOOLS_IDS.WATERMARK];
 
   const watermark = useMemo(
     () => annotations[WATERMARK_ANNOTATION_ID],
@@ -49,11 +50,15 @@ const Watermark = () => {
   const layerHeight = crop.height || shownImageDimensions.height;
   const layerCropX = crop.x || 0;
   const layerCropY = crop.y || 0;
+  const waternarkTextRatio =
+    watermarkConfig.textScalingRatio || WATERMARK_IMG_RATIO_FROM_ORIGINAL;
+  const waternarkImageRatio =
+    watermarkConfig.imageScalingRatio || WATERMARK_IMG_RATIO_FROM_ORIGINAL;
 
   const addTextWatermark = () => {
     const dimensions = {};
-    dimensions.height = layerHeight * WATERMARK_IMG_RATIO_FROM_ORIGINAL;
-    dimensions.width = layerWidth * WATERMARK_IMG_RATIO_FROM_ORIGINAL;
+    dimensions.height = layerHeight * waternarkTextRatio;
+    dimensions.width = layerWidth * waternarkTextRatio;
 
     const textWatermark = {
       ...config.annotationsCommon,
@@ -79,12 +84,11 @@ const Watermark = () => {
     const newImgDimensions = {};
     if (layerHeight > layerWidth) {
       const newImgScale =
-        (layerHeight * WATERMARK_IMG_RATIO_FROM_ORIGINAL) / loadedImg.height;
+        (layerHeight * waternarkImageRatio) / loadedImg.height;
       newImgDimensions.height = loadedImg.height * newImgScale;
       newImgDimensions.width = newImgDimensions.height * imgRatio;
     } else {
-      const newImgScale =
-        (layerWidth * WATERMARK_IMG_RATIO_FROM_ORIGINAL) / loadedImg.width;
+      const newImgScale = (layerWidth * waternarkImageRatio) / loadedImg.width;
       newImgDimensions.width = loadedImg.width * newImgScale;
       newImgDimensions.height = newImgDimensions.width / imgRatio;
     }

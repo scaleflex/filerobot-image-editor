@@ -259,6 +259,8 @@ export interface FilerobotImageEditorConfig {
   // [TOOLS_IDS.WATERMARK]
   Watermark?: {
     gallery?: string[] | [];
+    textScalingRatio?: number;
+    imageScalingRatio?: number;
   };
   // [TOOLS_IDS.CROP]
   Crop?: {
