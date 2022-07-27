@@ -190,8 +190,8 @@ const config = {
     presetsFolders: cropFolderPresets,
   },
   [TOOLS.ROTATE]: {
-    angle: 90,
-    componentType: 'buttons',
+    angle: 60,
+    componentType: 'slider',
   },
   [TOOLS.WATERMARK]: {
     gallery: [
