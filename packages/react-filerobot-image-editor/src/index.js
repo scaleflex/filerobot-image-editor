@@ -1,4 +1,4 @@
-/** Internal Dependencies */
+/** Internal Dependenciess */
 import FilerobotImageEditor from 'components/AssemblyPoint';
 import { TABS_IDS, TOOLS_IDS } from 'utils/constants';
 
