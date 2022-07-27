@@ -191,6 +191,7 @@ function App() {
             fill: '#ff0000',
           }}
           Text={{ text: 'Filerobot...' }}
+          Render={{ angle: 90, componentType: 'buttons' }}
           Crop={{
             presetsItems: [
               {
@@ -258,6 +259,7 @@ const config = {
     fill: '#ff0000',
   },
   Text: { text: 'Filerobot...' },
+  Render: { angle: 90, componentType: 'buttons' },
   translations: {
     profile: 'Profile',
     coverPhoto: 'Cover photo',
