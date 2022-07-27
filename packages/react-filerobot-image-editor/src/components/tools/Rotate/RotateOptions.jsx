@@ -69,7 +69,7 @@ const RotateOptions = () => {
         <ToolsBarItemButton
           className="FIE_rotate_button_right"
           id={TOOLS_IDS.IMAGE}
-          label={`-${rotateConfig.angle}°`}
+          label={`+${rotateConfig.angle}°`}
           Icon={RotationRight}
           onClick={changeRotationButtonPositive}
         />
