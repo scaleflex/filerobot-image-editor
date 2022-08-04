@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useCallback, memo } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
@@ -17,9 +17,9 @@ const ToolsBarItemButton = ({
   children,
   className,
 }) => {
-  const handleClick = useCallback((e) => {
+  const handleClick = (e) => {
     onClick(id, e);
-  }, []);
+  };
 
   return (
     <StyledToolsBarItemButton

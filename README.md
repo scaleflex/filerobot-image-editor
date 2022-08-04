@@ -191,6 +191,7 @@ function App() {
             fill: '#ff0000',
           }}
           Text={{ text: 'Filerobot...' }}
+          Render={{ angle: 90, componentType: 'buttons' }}
           Crop={{
             presetsItems: [
               {
@@ -258,6 +259,7 @@ const config = {
     fill: '#ff0000',
   },
   Text: { text: 'Filerobot...' },
+  Render: { angle: 90, componentType: 'buttons' },
   translations: {
     profile: 'Profile',
     coverPhoto: 'Cover photo',
@@ -765,6 +767,8 @@ The available options for arrow annotation tool in additon to the annotationsCom
 {
     ...(config[TOOLS.TEXT || TOOLS.IMAGE]), // depends on the added watermark type the config will be used
     gallery: [],
+    textScalingRatio: 0.33,
+    imageScalingRatio: 0.33,
 }
 ```
 

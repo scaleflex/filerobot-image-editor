@@ -189,6 +189,10 @@ const config = {
     ],
     presetsFolders: cropFolderPresets,
   },
+  [TOOLS.ROTATE]: {
+    angle: 60,
+    componentType: 'slider',
+  },
   [TOOLS.WATERMARK]: {
     gallery: [
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/PNG/SCALEFLEX+LOGO+-+Color+Dark+text.png?vh=45cac1',
@@ -203,6 +207,8 @@ const config = {
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/Logo+Vertical/SCALEFLEX+LOGO+VERTICAL+WHITE+TEXT.png?vh=fca07b',
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/Logo+Vertical/SCALEFLEX+LOGO+VERTICAL.PNG?vh=9a6fa1',
     ],
+    textScalingRatio: 0.33,
+    imageScalingRatio: 0.33,
   },
   [TOOLS.TEXT]: {
     text: 'Filerobot...',
