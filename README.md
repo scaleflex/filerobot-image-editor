@@ -191,7 +191,7 @@ function App() {
             fill: '#ff0000',
           }}
           Text={{ text: 'Filerobot...' }}
-          Render={{ angle: 90, componentType: 'buttons' }}
+          Rotate={{ angle: 90, componentType: 'slider' }}
           Crop={{
             presetsItems: [
               {
@@ -259,7 +259,7 @@ const config = {
     fill: '#ff0000',
   },
   Text: { text: 'Filerobot...' },
-  Render: { angle: 90, componentType: 'buttons' },
+  Rotate: { angle: 90, componentType: 'slider' },
   translations: {
     profile: 'Profile',
     coverPhoto: 'Cover photo',
@@ -774,13 +774,37 @@ The available options for arrow annotation tool in additon to the annotationsCom
 
 The available options for watermark tool, the watermark is using the options of text and image annotation tools mentioned above depending on the watermark chosen,
 
-| Property      | Type     | Default (possible values) | Description                                                                                                                          |
-| ------------- | -------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| **`gallery`** | string[] | []                        | Watermark images urls which are considered to show a list of available watermarks to be used by the user directly from watermark tab |
+| Property                | Type     | Default (possible values) | Description                                                                                                                          |
+| ----------------------- | -------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **`gallery`**           | string[] | []                        | Watermark images urls which are considered to show a list of available watermarks to be used by the user directly from watermark tab |
+| **`textScalingRatio`**  | number   | 0.33                      | Ratio for text scaling                                                                                                               |
+| **`imageScalingRatio`** | number   | 0.33                      | Ratio for image scaling                                                                                                              |
 
 > Text watermark width/multi-lines are not supported in the [cloudimage](#usecloudimage) mode even if the transformation/resize frame is shown while selecting which means text watermark will always be 1 line in generated cloudimage's URL from the plugin
 >
 > Supported fonts for text watermark in cloudimage mode only are found [here](https://docs.cloudimage.io/go/cloudimage-documentation-v7/en/watermarking/text-watermark/watermark-fonts) you could provide them/any of them through [`Text` property](#text).
+
+#### `Rotate`
+
+<u>Type:</u> `object`
+
+<u>Supported version:</u> +v4.3.2
+
+<u>Default:</u>
+
+```js
+{
+    angle: 90,
+    componentType: 'slider',
+}
+```
+
+The available options for crop tool,
+
+| Property            | Type   | Default (possible values) | Description                          |
+| ------------------- | ------ | ------------------------- | ------------------------------------ |
+| **`angle`**         | number | 90                        | angle of rotation                    |
+| **`componentType`** | number | ('slider' \| 'buttons')   | Component used for changing rotation |
 
 #### `Crop`
 

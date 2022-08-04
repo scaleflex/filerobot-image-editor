@@ -1,6 +1,8 @@
 /** External Dependencies */
 import React from 'react';
 import RotationSlider from '@scaleflex/ui/core/rotation-slider';
+import RotationLeft from '@scaleflex/icons/rotation-left';
+import RotationRight from '@scaleflex/icons/rotation-right';
 
 /** Internal Dependencies */
 import { useDebouncedCallback, useStore } from 'hooks';
@@ -9,8 +11,6 @@ import restrictNumber from 'utils/restrictNumber';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import { TOOLS_IDS } from 'utils/constants';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
-import { RotationLeft } from '@scaleflex/icons/rotation-left';
-import { RotationRight } from '@scaleflex/icons/rotation-right';
 
 const RotateOptions = () => {
   const {

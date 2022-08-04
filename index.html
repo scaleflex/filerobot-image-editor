@@ -14,8 +14,8 @@
       rel="stylesheet"
     />
     <link
-    rel="stylesheet"
-    href="https://cdn.scaleflex.it/plugins/js-cloudimage-responsive/4.8.5/js-cloudimage-responsive.min.css?vh=a076ef&func=proxy"
+      rel="stylesheet"
+      href="https://cdn.scaleflex.it/plugins/js-cloudimage-responsive/4.8.5/js-cloudimage-responsive.min.css?vh=a076ef&func=proxy"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
@@ -29,11 +29,14 @@
       <header class="header">
         <div class="header-logo">
           <a href=" https://scaleflex.com/" target="_blank">
-            <img src="./public/assets/scaleflex-logo.svg" alt="scaleflex logo" />
+            <img
+              src="./public/assets/scaleflex-logo.svg"
+              alt="scaleflex logo"
+            />
           </a>
           <a
-          class="img-editor"
-          href="https://scaleflex.github.io/filerobot-image-editor/"
+            class="img-editor"
+            href="https://scaleflex.github.io/filerobot-image-editor/"
           >
             Image Editor
           </a>
@@ -66,26 +69,27 @@
         <div>
           <h1 class="content-title">
             Edit, Resize, and Filter
-             <span>any images for  <span class="colored-text">Free</span></span>
+            <span>any images for <span class="colored-text">Free</span></span>
           </h1>
         </div>
         <div class="content-text container">
           <p>
-            The <strong>Filerobot Image Editor</strong>  is the easiest way to integrate an 
-            on-the-shelf and easy-to-use image editor in your web application, <strong>for free</strong>. Integrated 
-            with few lines of code, look forward to effortless image transformations! 
-            Your users can resize, crop, rotate, and add various filters to any image 
-            - all from within their browser!
+            The <strong>Filerobot Image Editor</strong> is the easiest way to
+            integrate an on-the-shelf and easy-to-use image editor in your web
+            application, <strong>for free</strong>. Integrated with few lines of
+            code, look forward to effortless image transformations! Your users
+            can resize, crop, rotate, and add various filters to any image - all
+            from within their browser!
           </p>
         </div>
         <div class="view-button">
-            <a
-              class="transition-filled-button"
-              target="_blank"
-              href="https://github.com/scaleflex/filerobot-image-editor"
-            >
-              View on GitHub
-            </a>
+          <a
+            class="transition-filled-button"
+            target="_blank"
+            href="https://github.com/scaleflex/filerobot-image-editor"
+          >
+            View on GitHub
+          </a>
           <p>Test it out below</p>
           <img src="./public/assets/arrow.png" alt="arrow-shape" />
         </div>
@@ -130,7 +134,11 @@
                   ><br />
                 </div>
                 <div id="filter-wrapper">
-                  <label id="filter-label" class="checkbox-container" for="filter">
+                  <label
+                    id="filter-label"
+                    class="checkbox-container"
+                    for="filter"
+                  >
                     Filters
                     <input
                       id="filter"
@@ -156,7 +164,11 @@
                   ><br />
                 </div>
                 <div id="annotate-wrapper">
-                  <label id="annotate-label" class="checkbox-container" for="annotate">
+                  <label
+                    id="annotate-label"
+                    class="checkbox-container"
+                    for="annotate"
+                  >
                     Draw
                     <input
                       id="annotate"
@@ -210,30 +222,31 @@
           />
           <h3>Crop & resize effortlessly</h3>
           <p>
-            Cropping and resizing has never been easier. 
-            Adjust the framing, size, and focus point of your image for optimal impact on delivery.
+            Cropping and resizing has never been easier. Adjust the framing,
+            size, and focus point of your image for optimal impact on delivery.
           </p>
         </div>
         <div>
           <img
-          ci-src="https://scaleflex.cloudimg.io/v7/demo/add+watermark.jpg?vh=74bcf8"
-          alt="watermark-img"
+            ci-src="https://scaleflex.cloudimg.io/v7/demo/add+watermark.jpg?vh=74bcf8"
+            alt="watermark-img"
           />
           <h3>Add watermark easily</h3>
           <p>
-            Want to protect your images? Place a discrete logo, an image, 
-            or a simple text line as a watermark. Placement and orientation are up to you.
+            Want to protect your images? Place a discrete logo, an image, or a
+            simple text line as a watermark. Placement and orientation are up to
+            you.
           </p>
         </div>
         <div>
           <img
-          ci-src="https://scaleflex.cloudimg.io/v7/demo/add+annotation.jpg?vh=537263"
-          alt="add-annotation-img"
+            ci-src="https://scaleflex.cloudimg.io/v7/demo/add+annotation.jpg?vh=537263"
+            alt="add-annotation-img"
           />
           <h3>Annotate seamlessly</h3>
           <p>
-            Enrich and collaborate directly on your media to keep track of changes 
-            and ideas in one place.
+            Enrich and collaborate directly on your media to keep track of
+            changes and ideas in one place.
           </p>
         </div>
       </div>
@@ -243,8 +256,9 @@
       <div class="usage-title">
         <h3>Ready to get started?</h3>
         <p class="container">
-          The implementation example allows you to edit an image and instantly download the result. 
-          For more integration options, head over to the documentation
+          The implementation example allows you to edit an image and instantly
+          download the result. For more integration options, head over to the
+          documentation
           <span class="documentation">
             the documentation (<span class="colored-text">
               <a
@@ -261,7 +275,7 @@
         <p id="js-code-tab" class="version-button" selected-tab>JS version</p>
         <p id="react-code-tab" class="version-button">React version</p>
         <p id="cdn-code-tab" class="version-button">CDN version</p>
-        <div class="copy-button  mobile-copy-button">
+        <div class="copy-button mobile-copy-button">
           <img src="./public/assets/copy-icon.png" alt="copy-icon" />
           <p id="copt-text">Copy</p>
         </div>
@@ -282,7 +296,7 @@
                 fill: '#ff0000'
               },
               <span class="blue">Text</span>: { text: 'Filerobot...' },
-              <span class="blue">Render</span>: { angle: 90, componentType: 'buttons' },
+              <span class="blue">Rotate</span>: { angle: 90, componentType: 'slider' },
               <span class="blue">tabsIds</span>: [<span class="blue">TABS.ADJUST</span>,<span class="blue">TABS.ANNOTATE</span>,<span class="blue">TABS.WATERMARK</span>], <span class="gray">// or ['Adjust', 'Annotate', 'Watermark']</span>
               <span class="blue">defaultTabId</span>: TABS.ANNOTATE, // or 'Annotate'
               <span class="blue">defaultToolId</span>: TOOLS.TEXT, // or 'Text'
@@ -335,7 +349,7 @@
                             fill: '#ff0000'
                           }}
                           Text={{ text: 'Filerobot...' }}
-                          Render={{ angle: 90, componentType: 'buttons' }}
+                          Rotate={{ angle: 90, componentType: 'slider' }}
                           tabsIds={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
                           defaultTabId={TABS.ANNOTATE} // or 'Annotate'
                           defaultToolId={TOOLS.TEXT} // or 'Text'
@@ -361,6 +375,7 @@
                 fill: '#ff0000'
               },
               <span class="blue">Text</span>: { text: 'Filerobot...' },
+              <span class="blue">Rotate</span>: { angle: 90, componentType: 'slider' },
               <span class="blue">tabsIds</span>: [<span class="blue">window.FilerobotImageEditor.TABS.ADJUST</span>,<span class="blue">window.FilerobotImageEditor.TABS.ANNOTATE</span>,<span class="blue">window.FilerobotImageEditor.TABS.WATERMARK</span>], <span class="gray">// or ['Adjust', 'Annotate', 'Watermark']</span>
               <span class="blue">defaultTabId</span>: window.FilerobotImageEditor.TABS.ANNOTATE, // or 'Annotate'
               <span class="blue">defaultToolId</span>: window.FilerobotImageEditor.TOOLS.TEXT, // or 'Text'
@@ -422,13 +437,13 @@
         </p>
       </div>
       <div class="explore-button">
-          <a
-            class="transition-filled-button"
-            href="https://github.com/scaleflex/filerobot-image-editor"
-            target="_blank"
-          >
-            Explore Documentation
-          </a>
+        <a
+          class="transition-filled-button"
+          href="https://github.com/scaleflex/filerobot-image-editor"
+          target="_blank"
+        >
+          Explore Documentation
+        </a>
       </div>
     </section>
 
@@ -438,13 +453,13 @@
         Contact us at <span>hello@filerobot.com</span>, our experts will be
         happy to help!
       </p>
-        <a
-          class="transition-filled-button"
-          href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
-          target="_blank"
-        >
-          Submit GitHub issue
-        </a>
+      <a
+        class="transition-filled-button"
+        href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+        target="_blank"
+      >
+        Submit GitHub issue
+      </a>
       <div class="cyan-blur-ellipse"></div>
     </section>
 
@@ -462,14 +477,14 @@
           <div class="accordion-content" data-accordion-content="2">
             <div class="footer-info-content">
               <a
-              href="https://github.com/scaleflex/filerobot-image-editor"
-              target="_blank"
+                href="https://github.com/scaleflex/filerobot-image-editor"
+                target="_blank"
               >
                 View GitHub
               </a>
               <a
-              href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
-              target="_blank"
+                href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+                target="_blank"
               >
                 Current Issues
               </a>
@@ -503,8 +518,8 @@
                 href="https://scaleflex.github.io/filerobot-image-editor/"
                 target="_blank"
               >
-              Filerobot Image Editor
-            </a>
+                Filerobot Image Editor
+              </a>
               <a
                 href="https://scaleflex.github.io/js-cloudimage-responsive/"
                 target="_blank"
@@ -527,8 +542,8 @@
           href="https://github.com/scaleflex/filerobot-image-editor/stargazers"
           target="_blank"
         >
-        <img class="star" src="./public/assets/git-stars.svg" alt="star" />
-        <img
+          <img class="star" src="./public/assets/git-stars.svg" alt="star" />
+          <img
             class="stars-label"
             src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?color=fff&label=Star&logo=none&style=flat&labelColor=fff"
             alt="star-img"
@@ -539,7 +554,7 @@
           href="https://github.com/scaleflex/filerobot-image-editor"
           target="_blank"
         >
-        <img src="./public/assets/github-logo.svg" alt="github-icon" />
+          <img src="./public/assets/github-logo.svg" alt="github-icon" />
           <p>GitHub</p>
         </a>
       </div>
@@ -550,14 +565,21 @@
         <p>
           Made with ❤ by the
           <span>
-            <a href=" https://scaleflex.com/en/home" target="_blank">Scaleflex</a>
+            <a href=" https://scaleflex.com/en/home" target="_blank"
+              >Scaleflex</a
+            >
           </span>
           team, the guys behind
           <span>
             <a href=" https://cloudimage.io/en/home" target="_blank"
-              >Cloudimage.io</a></span>. Powered by
+              >Cloudimage.io</a
+            ></span
+          >. Powered by
           <span>
-            <a href="https://filerobot.com/en/home" target="_blank">Filerobot</a></span>. All rights reserved.
+            <a href="https://filerobot.com/en/home" target="_blank"
+              >Filerobot</a
+            ></span
+          >. All rights reserved.
         </p>
         <div class="footer-blur-circle"></div>
       </div>
@@ -566,20 +588,20 @@
           <h4>Info</h4>
           <div class="footer-info-content">
             <a
-            href="https://github.com/scaleflex/filerobot-image-editor"
-            target="_blank"
+              href="https://github.com/scaleflex/filerobot-image-editor"
+              target="_blank"
             >
               View GitHub
             </a>
             <a
-            href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
-            target="_blank"
+              href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+              target="_blank"
             >
               Current Issues
             </a>
             <a
-            href=" https://github.com/scaleflex/filerobot-image-editor#user-content-contents"
-            target="_blank"
+              href=" https://github.com/scaleflex/filerobot-image-editor#user-content-contents"
+              target="_blank"
             >
               Documentation
             </a>
@@ -604,13 +626,13 @@
               href="https://scaleflex.github.io/js-cloudimage-responsive/"
               target="_blank"
             >
-               Cloudimage Responsive
+              Cloudimage Responsive
             </a>
             <a
               href="https://scaleflex.github.io/js-cloudimage-360-view"
               target="_blank"
             >
-               Cloudimage 360 view
+              Cloudimage 360 view
             </a>
           </div>
         </div>
@@ -622,16 +644,16 @@
     <script src="https://cdn.scaleflex.it/filerobot/js-cloudimage-responsive/lazysizes.min.js"></script>
     <script>
       const ciResponsive = new window.CIResponsive({
-        token: "scaleflex",
-        baseURL: "https://scaleflex.cloudimg.io/v7/demo/",
+        token: 'scaleflex',
+        baseURL: 'https://scaleflex.cloudimg.io/v7/demo/',
         params: 'org_if_sml=1&version=16.04.2020',
         lazyLoading: true,
         exactSize: false,
         limitFactor: 10,
         apiVersion: 'v7',
         lowQualityPreview: {
-          minImgWidth: 180
-        }
+          minImgWidth: 180,
+        },
       });
     </script>
   </body>

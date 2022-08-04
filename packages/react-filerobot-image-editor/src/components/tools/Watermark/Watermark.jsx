@@ -50,15 +50,15 @@ const Watermark = () => {
   const layerHeight = crop.height || shownImageDimensions.height;
   const layerCropX = crop.x || 0;
   const layerCropY = crop.y || 0;
-  const waternarkTextRatio =
+  const watermarkTextRatio =
     watermarkConfig.textScalingRatio || WATERMARK_IMG_RATIO_FROM_ORIGINAL;
-  const waternarkImageRatio =
+  const watermarkImageRatio =
     watermarkConfig.imageScalingRatio || WATERMARK_IMG_RATIO_FROM_ORIGINAL;
 
   const addTextWatermark = () => {
     const dimensions = {};
-    dimensions.height = layerHeight * waternarkTextRatio;
-    dimensions.width = layerWidth * waternarkTextRatio;
+    dimensions.height = layerHeight * watermarkTextRatio;
+    dimensions.width = layerWidth * watermarkTextRatio;
 
     const textWatermark = {
       ...config.annotationsCommon,
@@ -84,11 +84,11 @@ const Watermark = () => {
     const newImgDimensions = {};
     if (layerHeight > layerWidth) {
       const newImgScale =
-        (layerHeight * waternarkImageRatio) / loadedImg.height;
+        (layerHeight * watermarkImageRatio) / loadedImg.height;
       newImgDimensions.height = loadedImg.height * newImgScale;
       newImgDimensions.width = newImgDimensions.height * imgRatio;
     } else {
-      const newImgScale = (layerWidth * waternarkImageRatio) / loadedImg.width;
+      const newImgScale = (layerWidth * watermarkImageRatio) / loadedImg.width;
       newImgDimensions.width = loadedImg.width * newImgScale;
       newImgDimensions.height = newImgDimensions.width / imgRatio;
     }
