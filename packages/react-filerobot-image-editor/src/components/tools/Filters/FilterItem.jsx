@@ -10,8 +10,7 @@ import {
   FilterItemLabel,
 } from './Filters.styled';
 
-const FILTER_PREVIEW_WIDTH = 60;
-const FILTER_PREVIEW_HEIGHT = 45;
+const FILTER_PREVIEW_MAX_SIZE = 60;
 
 const FilterItem = ({
   filterLabel,
@@ -43,6 +42,11 @@ const FilterItem = ({
     };
   }, [image]);
 
+  const ratio = Math.min(
+    FILTER_PREVIEW_MAX_SIZE / image.width,
+    FILTER_PREVIEW_MAX_SIZE / image.height,
+  );
+
   return (
     <StyledFilterItem
       className="FIE_filters-item"
@@ -51,15 +55,15 @@ const FilterItem = ({
     >
       <FilterItemPreview
         className="FIE_filters-item-preview"
-        width={FILTER_PREVIEW_WIDTH}
-        height={FILTER_PREVIEW_HEIGHT}
+        width={image.width * ratio}
+        height={image.height * ratio}
       >
         <Layer onTap={handleFilterApplying}>
           <Image
             image={image}
             filters={filterFn ? [filterFn] : []}
-            width={FILTER_PREVIEW_WIDTH}
-            height={FILTER_PREVIEW_HEIGHT}
+            width={image.width * ratio}
+            height={image.height * ratio}
             x={0}
             y={0}
             ref={imageNodeRef}
