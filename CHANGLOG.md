@@ -21,6 +21,37 @@ Types of changes:
 
 ---
 
+## v4.3.7 - 2022-08-31
+
+### Added
+
+- Multiple rotate option https://github.com/scaleflex/filerobot-image-editor#rotate
+- new Watermark scaling options https://github.com/scaleflex/filerobot-image-editor#watermark
+
+## v4.3.6 - 2022-07-25
+
+### Chore
+
+- Bump version
+
+## v4.3.5 - 2022-07-25
+
+### Chore
+
+- Bump version
+
+## v4.3.4 - 2022-07-25
+
+### Chore
+
+- Bump version
+
+## v4.3.3 - 2022-07-25
+
+### Chore
+
+- Bump version
+
 ## v4.3.0 - 2022-07-25
 
 ### Chore
