@@ -27,6 +27,8 @@ function Warmth(imageData) {
   }
 }
 
+Warmth.finetuneName = 'Warmth'; // We assign the finetune name here instead of using the fn. name as on prod. code the fn. name is optimized that might cause bug in that case.
+
 export default Warmth;
 
 /**
