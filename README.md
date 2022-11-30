@@ -767,6 +767,8 @@ The available options for arrow annotation tool in additon to the annotationsCom
 {
     ...(config[TOOLS.TEXT || TOOLS.IMAGE]), // depends on the added watermark type the config will be used
     gallery: [],
+    textScalingRatio: 0.33,
+    imageScalingRatio: 0.33,
 }
 ```
 

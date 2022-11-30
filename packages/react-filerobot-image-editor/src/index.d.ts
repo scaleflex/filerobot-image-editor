@@ -111,7 +111,7 @@ type arrowAnnotation = annotationsCommon & {
 
 type rotateAnnotation = {
   angle?: number;
-  componentType?: 'slider' | 'button';
+  componentType?: 'slider' | 'buttons';
 };
 
 type cropPresetItem = {
