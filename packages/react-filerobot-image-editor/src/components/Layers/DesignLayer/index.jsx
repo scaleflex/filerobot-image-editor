@@ -43,7 +43,7 @@ const DesignLayer = () => {
   );
 
   const spacedOriginalImg = useMemo(() => {
-    const spacedWidth = originalImage.width - CANVAS_TO_IMG_SPACING;
+    const spacedWidth = Math.max(originalImage.width - CANVAS_TO_IMG_SPACING, 20);
     const imgRatio = originalImage.width / originalImage.height;
 
     return {
