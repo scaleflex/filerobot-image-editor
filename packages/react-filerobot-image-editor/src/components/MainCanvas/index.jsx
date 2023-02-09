@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 /** Internal Dependencies */
 import { DesignLayer, TransformersLayer } from 'components/Layers';
@@ -13,6 +13,7 @@ import { CanvasContainer, StyledOrignalImage } from './MainCanvas.styled';
 const MainCanvas = () => {
   const [observeResize] = useResizeObserver();
   const providedAppContext = useStore();
+  const canvasContainerRef = useRef(null);
 
   const setNewCanvasSize = useCallback(
     ({ width: containerWidth, height: containerHeight }) => {
@@ -27,15 +28,12 @@ const MainCanvas = () => {
     [],
   );
 
-  const observeCanvasContainerResizing = useCallback((element) => {
-    observeResize(element, setNewCanvasSize);
+  useEffect(() => {
+    observeResize(canvasContainerRef.current, setNewCanvasSize);
   }, []);
 
   return (
-    <CanvasContainer
-      className="FIE_canvas-container"
-      ref={observeCanvasContainerResizing}
-    >
+    <CanvasContainer className="FIE_canvas-container" ref={canvasContainerRef}>
       {!providedAppContext.textIdOfEditableContent && <NodeControls />}
       {providedAppContext.isShowOriginalImage && (
         <StyledOrignalImage
