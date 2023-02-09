@@ -367,6 +367,28 @@ Theme from [@scaleflex/ui](https://github.com/scaleflex/ui/blob/1617f8b19ade7199
     fontFamily: 'Roboto, Arial',
   },
 }
+
+// Used properties in case you need to provide your custom colors/theme, you should customize those properties (all or any of them) with your color hex/name string values.
+{
+  palette: {
+    'bg-secondary': '....',
+    'bg-primary': : '....',
+    'bg-primary-active': : '....',
+    'accent-primary': : '....',
+    'accent-primary-active': : '....',
+    'icons-primary': : '....',
+    'icons-secondary': : '....',
+    'borders-secondary': : '....',
+    'borders-primary': : '....',
+    'borders-strong': : '....',
+    'light-shadow': : '....',
+    'warning': : '....',
+
+  },
+  typography: {
+    fontFamily: : '....', // Font family string value, you should import this font in your app.
+  },
+}
 ```
 
 Almost you would need those 2 objects ([**palette**](https://github.com/scaleflex/ui/blob/master/packages/ui/src/utils/types/palette/color.ts#L1) _values are the possible keys for palette object_ & [**typograpghy**](https://github.com/scaleflex/ui/blob/master/packages/ui/src/theme/entity/default-theme.ts#L52)) to have the proper theme you want.
