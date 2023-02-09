@@ -359,6 +359,7 @@ The image url or an `HTMLImageElement` for the image which the operations/edits 
 Theme from [@scaleflex/ui](https://github.com/scaleflex/ui/blob/1617f8b19ade7199110df6e2ceff77dacefd75bd/packages/ui/src/theme/entity/default-theme.ts#L43) deep merged with following overrides
 
 ```
+// Overrides
 {
   palette: {
     'bg-primary-active': '#ECF3FF',
