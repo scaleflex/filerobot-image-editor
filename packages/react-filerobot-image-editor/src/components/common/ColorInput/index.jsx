@@ -10,13 +10,15 @@ import { StyledColorPicker, StyledPickerTrigger } from './ColorInput.styled';
 
 const pinnedColorsKey = 'FIE_pinnedColors';
 
-const ColorInput = ({ position = 'top', onChange, color }) => {
+// colorFor is used to save the latest color for a specific purpose (e.g. fill/shadow/stroke)
+const ColorInput = ({ position = 'top', onChange, color, colorFor }) => {
   const {
     selectionsIds = [],
     config: { annotationsCommon = {} },
     dispatch,
-    latestColor,
+    latestColors = {},
   } = useStore();
+  const latestColor = latestColors[colorFor];
   const [anchorEl, setAnchorEl] = useState();
   const [currentColor, setCurrentColor] = useState(
     () => latestColor || color || annotationsCommon.fill,
@@ -53,7 +55,9 @@ const ColorInput = ({ position = 'top', onChange, color }) => {
       dispatch({
         type: SET_LATEST_COLOR,
         payload: {
-          latestColor: rgba,
+          latestColors: {
+            [colorFor]: rgba,
+          },
         },
       });
     }
@@ -104,6 +108,7 @@ ColorInput.defaultProps = {
 
 ColorInput.propTypes = {
   onChange: PropTypes.func.isRequired,
+  colorFor: PropTypes.string.isRequired,
   position: PropTypes.string,
   color: PropTypes.string,
 };

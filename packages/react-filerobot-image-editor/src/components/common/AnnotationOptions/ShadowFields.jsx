@@ -84,7 +84,11 @@ const ShadowFields = ({ annotation, updateAnnotation, t }) => {
           />
         </StyledColumn>
       </StyledTwoColumnsContainer>
-      <ColorInput color={shadowColor} onChange={changeShadowColor} />
+      <ColorInput
+        color={shadowColor}
+        onChange={changeShadowColor}
+        colorFor="shadow"
+      />
     </StyledSpacedOptionFields>
   );
 };
