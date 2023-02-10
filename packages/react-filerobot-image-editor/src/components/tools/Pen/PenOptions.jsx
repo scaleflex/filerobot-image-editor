@@ -43,7 +43,7 @@ const PenOptions = ({ t }) => {
       pos.offsetX - (designLayer.attrs.xPadding || 0),
       pos.offsetY - (designLayer.attrs.yPadding || 0),
     ];
-  }, []);
+  }, [designLayer]);
 
   const handlePointerMove = useCallback(() => {
     if (!updatedPen.current.moved) {
@@ -72,7 +72,7 @@ const PenOptions = ({ t }) => {
         },
       });
     }
-  }, []);
+  }, [getPointerPosition]);
 
   const handlePointerUp = useCallback(() => {
     if (updatedPen.current.id) {
@@ -91,23 +91,26 @@ const PenOptions = ({ t }) => {
     document.removeEventListener('touchend', handlePointerUp, eventsOptions);
     document.removeEventListener('mouseleave', handlePointerUp, eventsOptions);
     document.removeEventListener('touchcancel', handlePointerUp, eventsOptions);
-  }, []);
+  }, [handlePointerMove]);
 
-  const handlePointerDown = useCallback((e) => {
-    if (e.target.attrs.draggable) {
-      return;
-    }
-    e.evt.preventDefault();
+  const handlePointerDown = useCallback(
+    (e) => {
+      if (e.target.attrs.draggable) {
+        return;
+      }
+      e.evt.preventDefault();
 
-    updatedPen.current = { points: getPointerPosition() };
+      updatedPen.current = { points: getPointerPosition() };
 
-    canvasRef.current.on('mousemove touchmove', handlePointerMove);
-    canvasRef.current.on('mouseleave touchcancel', handlePointerUp);
-    document.addEventListener('mouseup', handlePointerUp, eventsOptions);
-    document.addEventListener('touchend', handlePointerUp, eventsOptions);
-    document.addEventListener('mouseleave', handlePointerUp, eventsOptions);
-    document.addEventListener('touchcancel', handlePointerUp, eventsOptions);
-  }, []);
+      canvasRef.current.on('mousemove touchmove', handlePointerMove);
+      canvasRef.current.on('mouseleave touchcancel', handlePointerUp);
+      document.addEventListener('mouseup', handlePointerUp, eventsOptions);
+      document.addEventListener('touchend', handlePointerUp, eventsOptions);
+      document.addEventListener('mouseleave', handlePointerUp, eventsOptions);
+      document.addEventListener('touchcancel', handlePointerUp, eventsOptions);
+    },
+    [getPointerPosition, handlePointerMove, handlePointerUp],
+  );
 
   useEffect(() => {
     canvasRef.current = designLayer?.getStage();
@@ -120,7 +123,7 @@ const PenOptions = ({ t }) => {
         canvasRef.current.off('mousedown touchstart', handlePointerDown);
       }
     };
-  }, []);
+  }, [designLayer]);
 
   return (
     <AnnotationOptions

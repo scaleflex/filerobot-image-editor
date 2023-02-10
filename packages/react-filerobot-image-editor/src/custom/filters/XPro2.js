@@ -34,4 +34,6 @@ function XPro2(imageData) {
   }
 }
 
+XPro2.filterName = 'XPro2'; // We assign the filter name here instead of using the fn. name as on prod. code the fn. name is optimized that might cause bug in that case.
+
 export default XPro2;

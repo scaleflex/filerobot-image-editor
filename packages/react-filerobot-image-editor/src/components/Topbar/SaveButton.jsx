@@ -267,7 +267,7 @@ const SaveButton = () => {
             onChange={changeFileName}
             size="sm"
             placeholder={t('name')}
-            error={Boolean(imageFileInfo.name)}
+            error={!imageFileInfo.name}
             focusOnMount
           />
           <StyledFileExtensionSelect

@@ -112,7 +112,8 @@ const generateFinetuneQuery = (finetunes, finetunesProps = {}) => {
   const queryParams = [];
   finetunes.forEach((finetuneFn) => {
     const finetuneParamInfo =
-      finetuneFn.name && finetuneNameToParamInfo[finetuneFn.name];
+      (finetuneFn.finetuneName || finetuneFn.name) &&
+      finetuneNameToParamInfo[finetuneFn.finetuneName || finetuneFn.name];
     if (finetuneParamInfo) {
       const finetuneCloudimageVal = toPrecisedFloat(
         mapNumber(

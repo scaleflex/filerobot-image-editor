@@ -37,7 +37,11 @@ const StrokeFields = ({ annotation, updateAnnotation, t }) => {
         onChange={changeStrokeWidth}
         value={strokeWidth}
       />
-      <ColorInput color={stroke} onChange={changeStrokeColor} />
+      <ColorInput
+        color={stroke}
+        onChange={changeStrokeColor}
+        colorFor="stroke"
+      />
     </StyledSpacedOptionFields>
   );
 };

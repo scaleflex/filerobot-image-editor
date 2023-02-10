@@ -10,8 +10,8 @@ import {
   FilterItemLabel,
 } from './Filters.styled';
 
-const FILTER_PREVIEW_WIDTH = 60;
-const FILTER_PREVIEW_HEIGHT = 45;
+const MAX_FILTER_PREVIEW_WIDTH = 60;
+const MAX_FILTER_PREVIEW_HEIGHT = 45;
 
 const FilterItem = ({
   filterLabel,
@@ -43,6 +43,15 @@ const FilterItem = ({
     };
   }, [image]);
 
+  const imgRatio = image.width / image.height;
+  const isVerticalImg = imgRatio < 1;
+  const filterImgPreviewWidth = isVerticalImg
+    ? MAX_FILTER_PREVIEW_WIDTH
+    : MAX_FILTER_PREVIEW_HEIGHT * imgRatio;
+  const filterImgPreviewHeight = isVerticalImg
+    ? MAX_FILTER_PREVIEW_WIDTH / imgRatio
+    : MAX_FILTER_PREVIEW_HEIGHT;
+
   return (
     <StyledFilterItem
       className="FIE_filters-item"
@@ -51,17 +60,17 @@ const FilterItem = ({
     >
       <FilterItemPreview
         className="FIE_filters-item-preview"
-        width={FILTER_PREVIEW_WIDTH}
-        height={FILTER_PREVIEW_HEIGHT}
+        width={MAX_FILTER_PREVIEW_WIDTH}
+        height={MAX_FILTER_PREVIEW_HEIGHT}
       >
         <Layer onTap={handleFilterApplying}>
           <Image
             image={image}
             filters={filterFn ? [filterFn] : []}
-            width={FILTER_PREVIEW_WIDTH}
-            height={FILTER_PREVIEW_HEIGHT}
-            x={0}
-            y={0}
+            width={filterImgPreviewWidth}
+            height={filterImgPreviewHeight}
+            x={-(filterImgPreviewWidth - MAX_FILTER_PREVIEW_WIDTH) / 2}
+            y={-(filterImgPreviewHeight - MAX_FILTER_PREVIEW_HEIGHT) / 2}
             ref={imageNodeRef}
           />
         </Layer>

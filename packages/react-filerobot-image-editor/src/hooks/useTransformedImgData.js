@@ -185,10 +185,12 @@ const useTransformedImgData = () => {
       },
     };
     if (finalImgDesignState.filter) {
-      finalImgDesignState.filter = finalImgDesignState.filter.name;
+      finalImgDesignState.filter =
+        finalImgDesignState.filter.filterName ||
+        finalImgDesignState.filter.name;
     }
     finalImgDesignState.finetunes = finalImgDesignState.finetunes.map(
-      (finetuneFn) => finetuneFn.name,
+      (finetuneFn) => finetuneFn.finetuneName || finetuneFn.name,
     );
     Object.keys(finalImgDesignState.annotations).forEach((k) => {
       const annotation = finalImgDesignState.annotations[k];
