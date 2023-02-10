@@ -359,12 +359,35 @@ The image url or an `HTMLImageElement` for the image which the operations/edits 
 Theme from [@scaleflex/ui](https://github.com/scaleflex/ui/blob/1617f8b19ade7199110df6e2ceff77dacefd75bd/packages/ui/src/theme/entity/default-theme.ts#L43) deep merged with following overrides
 
 ```
+// Overrides
 {
   palette: {
     'bg-primary-active': '#ECF3FF',
   },
   typography: {
     fontFamily: 'Roboto, Arial',
+  },
+}
+
+// Used properties in case you need to provide your custom colors/theme, you should customize those properties (all or any of them) with your color hex/name string values.
+{
+  palette: {
+    'bg-secondary': '....',
+    'bg-primary': : '....',
+    'bg-primary-active': : '....',
+    'accent-primary': : '....',
+    'accent-primary-active': : '....',
+    'icons-primary': : '....',
+    'icons-secondary': : '....',
+    'borders-secondary': : '....',
+    'borders-primary': : '....',
+    'borders-strong': : '....',
+    'light-shadow': : '....',
+    'warning': : '....',
+
+  },
+  typography: {
+    fontFamily: : '....', // Font family string value, you should import this font in your app.
   },
 }
 ```

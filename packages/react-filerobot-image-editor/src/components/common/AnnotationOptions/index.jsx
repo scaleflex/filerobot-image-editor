@@ -97,7 +97,11 @@ const AnnotationOptions = ({
       className={`FIE_annotations-options${className ? ` ${className}` : ''}`}
     >
       {!hideFillOption && (
-        <ColorInput color={annotation.fill} onChange={changeAnnotationFill} />
+        <ColorInput
+          color={annotation.fill}
+          onChange={changeAnnotationFill}
+          colorFor="fill"
+        />
       )}
       {children}
       {options.map(
@@ -149,8 +153,8 @@ AnnotationOptions.propTypes = {
   updateAnnotation: PropTypes.func.isRequired,
   children: PropTypes.node,
   hideFillOption: PropTypes.bool,
-  morePoppableOptionsPrepended: PropTypes.arrayOf(PropTypes.object),
-  morePoppableOptionsAppended: PropTypes.arrayOf(PropTypes.object),
+  morePoppableOptionsPrepended: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
+  morePoppableOptionsAppended: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   moreOptionsPopupComponentsObj: PropTypes.instanceOf(Object),
   hidePositionField: PropTypes.bool,
   className: PropTypes.string,
