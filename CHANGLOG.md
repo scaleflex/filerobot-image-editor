@@ -21,6 +21,30 @@ Types of changes:
 
 ---
 
+## v4.3.8 - 2023-02-10
+
+### Fixed
+
+- Move crossOrigin = 'Anonymous' before .src for avoiding sometimes CORS issue (Issue [#242](https://github.com/scaleflex/filerobot-image-editor/issues/242)).
+- Some filters/finetunes names are changed on saving the image in prod (Issue [#266](https://github.com/scaleflex/filerobot-image-editor/issues/266)).
+- Issue of sometimes the canvas don't draw the main image (Issues [#251](https://github.com/scaleflex/filerobot-image-editor/issues/251) & [#276](https://github.com/scaleflex/filerobot-image-editor/issues/276)).
+- 50x50 image and smaller is not working (Issue [#220](https://github.com/scaleflex/filerobot-image-editor/issues/220)).
+- PEN as default TOOL don't work bug (Issue [#288](https://github.com/scaleflex/filerobot-image-editor/issues/288))
+- Issue of button doesn't have a type (Issue [#268](https://github.com/scaleflex/filerobot-image-editor/issues/268)).
+
+
+### Improved
+
+- Filters' previews, Consider ratio in image filters preview by center cropping the image (Issue [#253](https://github.com/scaleflex/filerobot-image-editor/issues/253)).
+- If no Annotation component found avoid showing error (possible to happen if provided wrong annotation type from developer side).
+- The behavior of color picker, by splitting the saved fill/stroke/shadow colors (Issue [#285](https://github.com/scaleflex/filerobot-image-editor/issues/285)).
+- Update TS types for `defaultSavedImageType`.
+- Update `@scaleflex/ui`, `@scaleflex/icons`, `konva` & `react-konva`.
+
+### Security
+
+- Apply Dependabot suggested fixes/improvements.
+
 ## v4.3.7 - 2022-08-31
 
 ### Added
