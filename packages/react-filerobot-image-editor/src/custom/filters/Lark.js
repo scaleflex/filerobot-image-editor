@@ -34,4 +34,6 @@ function Lark(imageData) {
   }
 }
 
+Lark.filterName = 'Lark'; // We assign the filter name here instead of using the fn. name as on prod. code the fn. name is optimized that might cause bug in that case.
+
 export default Lark;

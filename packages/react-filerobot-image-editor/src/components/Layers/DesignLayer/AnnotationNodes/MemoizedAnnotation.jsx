@@ -11,6 +11,7 @@ const MemoizedAnnotation = ({
   selectionsIds,
 }) => {
   const AnnotationComponent = ANNOTATION_NAMES_TO_COMPONENT[annotation.name];
+  if (!AnnotationComponent) return null;
 
   return (
     <AnnotationComponent

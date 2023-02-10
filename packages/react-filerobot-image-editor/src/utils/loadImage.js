@@ -3,8 +3,8 @@ import extractNameFromUrl from './extractNameFromUrl';
 const loadImage = (imageSrc, imageFileName) =>
   new Promise((resolve, reject) => {
     const imageElement = new Image();
-    imageElement.src = imageSrc;
     imageElement.crossOrigin = 'Anonymous';
+    imageElement.src = imageSrc;
     imageElement.name = imageFileName ?? extractNameFromUrl(imageSrc);
     imageElement.onload = () => {
       resolve(imageElement);

@@ -15,6 +15,7 @@ import AnnotationNodes from './AnnotationNodes';
 import PreviewGroup from './PreviewGroup';
 
 const CANVAS_TO_IMG_SPACING = getProperImageToCanvasSpacing();
+const MIN_SPACED_WIDTH = 10; // As sometimes the spaced width is less than that and it might be hard to view the image initially.
 
 const DesignLayer = () => {
   const designLayerRef = useRef();
@@ -43,7 +44,10 @@ const DesignLayer = () => {
   );
 
   const spacedOriginalImg = useMemo(() => {
-    const spacedWidth = originalImage.width - CANVAS_TO_IMG_SPACING;
+    const spacedWidth = Math.max(
+      MIN_SPACED_WIDTH,
+      originalImage.width - CANVAS_TO_IMG_SPACING,
+    );
     const imgRatio = originalImage.width / originalImage.height;
 
     return {
