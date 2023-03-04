@@ -126,13 +126,13 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 ### NPM
 
-#### React component
+#### VanillaJS
 
 ```bash
 npm install --save react-filerobot-image-editor
 ```
 
-#### VanillaJS
+#### React component
 
 ```bash
 npm install --save filerobot-image-editor react-filerobot-image-editor
