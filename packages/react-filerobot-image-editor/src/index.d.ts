@@ -118,7 +118,7 @@ type cropPresetItem = {
   titleKey: string;
   width?: number;
   height?: number;
-  ratio?: string;
+  ratio?: string | number;
   descriptionKey?: string;
   icon?: string | HTMLElement | FunctionComponent;
   disableManualResize?: boolean;
@@ -150,7 +150,7 @@ type imageDesignState = {
   filter?: string;
   adjustments?: {
     crop: {
-      ratio: string;
+      ratio: string | number;
       width?: number;
       height?: number;
       x?: number;
