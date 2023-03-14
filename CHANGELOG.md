@@ -21,6 +21,15 @@ Types of changes:
 
 ---
 
+<!--
+## v4.3.8 -
+
+### Fixed
+
+- Respect `defaultSavedImageName` in case of providing `source` property with `HTMLImageElement`
+
+-->
+
 ## v4.3.8 - 2023-02-10
 
 ### Fixed
