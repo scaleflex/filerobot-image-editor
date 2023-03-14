@@ -108,8 +108,6 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 > Following prerequisites are required only in React Component installation, but they're included in CDN bundle installation and added as dependencies of other bridges/adapters packages.
 
-<
-
 - react, react-dom: >= v18.2.0
 - styled-components: >= v5.3.5
 

@@ -126,6 +126,18 @@ const App = () => {
           .catch(setError)
           .finally(triggerResolve);
       } else if (imgToLoad instanceof HTMLImageElement) {
+        if (!imgToLoad.name && defaultSavedImageName) {
+          // eslint-disable-next-line no-param-reassign
+          imgToLoad.name = defaultSavedImageName;
+        }
+        if (!imgToLoad.complete) {
+          imgToLoad.addEventListener('load', () => {
+            setNewOriginalImage(imgToLoad);
+            triggerResolve();
+          });
+          return;
+        }
+
         setNewOriginalImage(imgToLoad);
         triggerResolve();
       } else {
