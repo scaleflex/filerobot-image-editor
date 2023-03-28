@@ -531,6 +531,22 @@ The default type used and selected in saving the image (the user has the possibi
 
 > NOTE: Quality modification will be applied to `jpeg`, `jpg` and `webp` types in returned [`base64`](#onsave) format only while saving the image by the default behavior.
 
+#### `defaultSavedImageQuality`
+
+<u>Type:</u> `number`
+
+<u>Supported version:</u> +v4.4.0
+
+<u>Default:</u> `0.92`
+
+Possible values: `[0.1 - 1]`
+
+The default value used for quality property used in the final saving of the canvas. the higher value used (Min: 0.1, Max: 1) the higher generated image's resolution the higher generated image file's size and vice-versa.
+
+> NOTE: Quality modification will be applied to `jpeg`, `jpg` and `webp` types in returned [`base64`](#onsave) format only.
+
+> NOTE: The value of this property will reflect the quality option found in the default save behavior's UI (if default save behavior used otherwise UI only is not affected).
+
 #### `forceToPngInEllipticalCrop`
 
 <u>Type:</u> `boolean`

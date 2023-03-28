@@ -283,6 +283,7 @@ export interface FilerobotImageEditorConfig {
   closeAfterSave?: boolean;
   defaultSavedImageName?: string;
   defaultSavedImageType?: 'png' | 'jpeg' | 'jpg' | 'webp';
+  defaultSavedImageQuality?: number;
   forceToPngInEllipticalCrop?: boolean;
   useBackendTranslations?: boolean;
   translations?: object;

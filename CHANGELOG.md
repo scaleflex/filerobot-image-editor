@@ -31,6 +31,7 @@ Types of changes:
 ### Added
 
 - Backward compatability for react 17.
+- `defaultSavedImageQuality` property for increasing/decreasing the saved image quality whether default save behavior used or not.
 
 ### Improved
 

@@ -25,6 +25,8 @@ import {
   StyledResizeOnSave,
 } from './Topbar.styled';
 
+const DEFAULT_QUALITY_VAL = 0.92;
+
 const sliderStyle = { marginBottom: 16 };
 const saveButtonWrapperStyle = { width: 67 }; // 67px same width as tabs bar
 const saveButtonMenuStyle = { marginLeft: 12 };
@@ -52,12 +54,18 @@ const SaveButton = () => {
       forceToPngInEllipticalCrop,
       defaultSavedImageName,
       defaultSavedImageType,
+      defaultSavedImageQuality = DEFAULT_QUALITY_VAL,
       useCloudimage,
       moreSaveOptions,
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [imageFileInfo, setImageFileInfo] = useState({ quality: 0.92 });
+  const [imageFileInfo, setImageFileInfo] = useState({
+    quality:
+      defaultSavedImageQuality <= 0 || defaultSavedImageQuality > 1
+        ? DEFAULT_QUALITY_VAL
+        : defaultSavedImageQuality,
+  });
   const transformImgFn = useTransformedImgData();
   const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(
     imageFileInfo.extension,
