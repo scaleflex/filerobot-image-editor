@@ -1,25 +1,34 @@
 /** External Dependencies */
-import React, { useRef, useState } from 'react';
-import Button from '@scaleflex/ui/core/button';
+import React, { useMemo, useRef, useState } from 'react';
+import { Images, UploadOutline } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useAnnotation, useStore } from 'hooks';
 import { FEEDBACK_STATUSES, TOOLS_IDS } from 'utils/constants';
 import { SET_FEEDBACK } from 'actions';
 import HiddenUploadInput from 'components/common/HiddenUploadInput';
+import ButtonWithMenu from 'components/common/ButtonWithMenu';
 import ImageControls from './ImageControls';
+import ImagesGallery from './ImagesGallery';
 
 const ADDED_IMG_SPACING_PERCENT = 0.15;
 
 const ImageOptions = () => {
   const [isLoading, setIsLoading] = useState();
+  const [galleryAnchorEl, setGalleryAnchorEl] = useState(null);
   const uploadImgsInput = useRef();
+  const menuItemsBtnRef = useRef();
   const {
     shownImageDimensions,
     dispatch,
     adjustments: { crop = {} },
     t,
+    config = {},
   } = useStore();
+  const imageConfig = config[TOOLS_IDS.IMAGE];
+  const isUploadEnabled = !imageConfig.disableUpload;
+  const isGalleryEnabled =
+    Array.isArray(imageConfig.gallery) && imageConfig.gallery.length > 0;
   const [image, saveImage, addNewImage] = useAnnotation(
     {
       name: TOOLS_IDS.IMAGE,
@@ -118,24 +127,77 @@ const ImageOptions = () => {
     }
   };
 
+  const importImgFromGallery = (imgUrl) => {
+    setIsLoading(true);
+    const img = new Image();
+    img.onload = () => {
+      addImgScaled(img);
+      hideLoaderAfterDone(1);
+    };
+    img.onerror = () => {
+      setFeedback(t('uploadImageError'));
+      hideLoaderAfterDone(1);
+    };
+    img.crossOrigin = 'Anonymous';
+    img.src = imgUrl;
+  };
+
+  const openGalleryPanel = () => {
+    setGalleryAnchorEl(menuItemsBtnRef.current);
+  };
+
+  const closeGalleryPanel = () => {
+    setGalleryAnchorEl(null);
+  };
+
+  const menuItems = useMemo(
+    () => [
+      isUploadEnabled && {
+        key: 'add-by-upload-image',
+        label: isLoading ? t('importing') : t('uploadImage'),
+        icon: UploadOutline,
+        onClick: isLoading ? undefined : triggerUploadInput,
+      },
+      isGalleryEnabled && {
+        key: 'add-from-gallery',
+        label: t('fromGallery'),
+        icon: Images,
+        onClick: openGalleryPanel,
+      },
+    ],
+    [imageConfig, isLoading, t],
+  );
+
   return (
     <ImageControls image={image} saveImage={saveImage} t={t}>
-      <Button
+      <ButtonWithMenu
         className="FIE_image-tool-add-option"
         color="secondary"
-        onClick={isLoading ? undefined : triggerUploadInput}
-        disabled={isLoading}
+        label={t('addImage')}
+        title={t('addImageTitle')}
+        menuPosition="top"
+        menuItems={menuItems}
         size="sm"
         style={{ maxHeight: 24 }}
-      >
-        {isLoading ? t('importing') : t('addImage')}
-      </Button>
-      <HiddenUploadInput
-        ref={uploadImgsInput}
-        onChange={isLoading ? undefined : importImages}
-        disabled={isLoading}
-        multiple
+        buttonRef={menuItemsBtnRef}
+        menuFromBtn
       />
+      {isUploadEnabled && (
+        <HiddenUploadInput
+          ref={uploadImgsInput}
+          onChange={isLoading ? undefined : importImages}
+          disabled={isLoading}
+          multiple
+        />
+      )}
+      {isGalleryEnabled && (
+        <ImagesGallery
+          gallery={imageConfig.gallery}
+          onSelect={importImgFromGallery}
+          onClose={closeGalleryPanel}
+          anchorEl={galleryAnchorEl}
+        />
+      )}
     </ImageControls>
   );
 };

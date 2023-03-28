@@ -52,6 +52,8 @@ export default {
   imageTool: 'Image',
   importing: 'Importing...',
   addImage: '+ Add image',
+  uploadImage: 'Upload image',
+  fromGallery: 'From gallery',
   lineTool: 'Line',
   penTool: 'Pen',
   polygonTool: 'Polygon',
@@ -93,4 +95,5 @@ export default {
     'Note, the selected crop area is lower than the applied resize which might cause quality decrease',
   actualSize: 'Actual size (100%)',
   fitSize: 'Fit size',
+  addImageTitle: 'Select image to add...',
 };

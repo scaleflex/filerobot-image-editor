@@ -86,6 +86,14 @@ type textAnnotation = annotationsCommon & {
   fontStyle?: 'normal' | 'bold' | 'italic' | 'bold italic';
 };
 
+type imageAnnotation = annotationsCommon & {
+  disableUpload?: boolean;
+  gallery?: {
+    originalUrl: string;
+    previewUrl: string;
+  }[];
+};
+
 type rectAnnotation = annotationsCommon & {
   cornerRadius?: number;
 };
@@ -241,7 +249,7 @@ export interface FilerobotImageEditorConfig {
     ) => void;
   };
   // [TOOLS_IDS.IMAGE]
-  Image?: annotationsCommon;
+  Image?: imageAnnotation;
   // [TOOLS_IDS.ELLIPSE]
   Ellipse?: annotationsCommon;
   // [TOOLS_IDS.RECT]

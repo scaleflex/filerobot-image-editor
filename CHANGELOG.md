@@ -32,6 +32,8 @@ Types of changes:
 
 - Backward compatability for react 17.
 - `defaultSavedImageQuality` property for increasing/decreasing the saved image quality whether default save behavior used or not.
+- Support adding gallery for image tool to enable possibility to add image from custom/preloaded images `image.gallery`.
+- Support `image.disableUpload` which disables the possibility to upload image from local device.
 
 ### Improved
 

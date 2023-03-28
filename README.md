@@ -671,14 +671,21 @@ The options available for the text annotation tool in additon to the annotations
 {
     ...annotationsCommon,
     fill: undefined,
+    disableUpload: false,
+    gallery: [{
+      originalUrl: '...', // The url of the image in original size to be added in canvas
+      previewUrl: '...', // The url of the image to be used as preview in gallery list (for less data consuming & better performance).
+    }]
 }
 ```
 
 The options available for image annotation tool in additon to the annotationsCommon property,
 
-| Property   | Type   | Default (possible values) | Description                                   |
-| ---------- | ------ | ------------------------- | --------------------------------------------- |
-| **`fill`** | string | undefined                 | The color fills the image's transparent parts |
+| Property            | Type                                            | Default (possible values) | Description                                                                                                                                                                                                                                               |
+| ------------------- | ----------------------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`fill`**          | string                                          | undefined                 | The color fills the image's transparent parts                                                                                                                                                                                                             |
+| **`disableUpload`** | boolean                                         | false                     | If `true` Disables the possibility to upload/add image from local device (user's computer)                                                                                                                                                                |
+| **`gallery`**       | ({ originalUrl: string, previewUrl: string })[] | []                        | Custom images that the user will choose from, to add on the canvas, `originalUrl` is the url for the original size for an image `previewUrl` is the preview url for the same image (considers as thumbnail for better performance & less data consuming). |
 
 #### `Rect`
 

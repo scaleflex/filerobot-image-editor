@@ -30,9 +30,13 @@ const ButtonWithMenu = ({
   className,
   menuStyle,
   wrapperStyle,
+  buttonRef,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const buttonSize = 'md';
+
+  const filteredMenuItems = menuItems.filter(Boolean);
+  const hasMultipleMenuItems = filteredMenuItems.length > 1;
 
   const openMenu = (e) => {
     if (isFieButtonWithMenuMounted) {
@@ -56,12 +60,15 @@ const ButtonWithMenu = ({
   };
 
   const handleButtonClick = (e) => {
-    if (menuFromBtn) {
+    if (menuFromBtn && hasMultipleMenuItems) {
       openMenu(e);
+      return;
     }
 
     if (typeof onClick === 'function') {
       onClick();
+    } else if (filteredMenuItems[0]?.onClick) {
+      filteredMenuItems[0].onClick();
     }
   };
 
@@ -73,26 +80,25 @@ const ButtonWithMenu = ({
     };
   }, []);
 
-  const hasMenuItems = menuItems.length > 0;
-
   return (
     <>
       <StyledButtonWrapper
         className={`${className}-wrapper`}
         onClick={disabled ? undefined : handleButtonClick}
         style={wrapperStyle}
+        ref={buttonRef}
       >
         <StyledMainButton
           className={`${className}-button`}
           color={color}
           size={buttonSize}
           title={title}
-          keepBorderRadius={!hasMenuItems}
+          keepBorderRadius={!hasMultipleMenuItems}
           disabled={disabled}
         >
           {label}
         </StyledMainButton>
-        {hasMenuItems && (
+        {hasMultipleMenuItems && (
           <StyledMenuButton
             className={`${className}-menu-opener`}
             color={color}
@@ -104,7 +110,7 @@ const ButtonWithMenu = ({
           </StyledMenuButton>
         )}
       </StyledButtonWrapper>
-      {hasMenuItems && (
+      {hasMultipleMenuItems && (
         <Menu
           className={`${className}-menu`}
           anchorEl={anchorEl}
@@ -153,6 +159,7 @@ ButtonWithMenu.defaultProps = {
   arrowColor: undefined,
   menuStyle: undefined,
   wrapperStyle: undefined,
+  buttonRef: undefined,
 };
 
 ButtonWithMenu.propTypes = {
@@ -168,6 +175,7 @@ ButtonWithMenu.propTypes = {
   arrowColor: PropTypes.string,
   menuStyle: PropTypes.instanceOf(Object),
   wrapperStyle: PropTypes.instanceOf(Object),
+  buttonRef: PropTypes.instanceOf(Object),
 };
 
 export default ButtonWithMenu;
