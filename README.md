@@ -108,14 +108,26 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 > Following prerequisites are required only in React Component installation, but they're included in CDN bundle installation and added as dependencies of other bridges/adapters packages.
 
-- react, react-dom: >= v18.2.0
+> All of the following libraries are required, as the plugin is depending on them in the implementation.
+
+- react, react-dom: >= v17.0.0
+- react-konva >= v17.0.0
 - styled-components: >= v5.3.5
+
+**Compatability table (installed version of react should meet the opposite react-konva version in the table).**
+
+| react & react-dom versions | react-konva version |
+| -------------------------- | ------------------- |
+| v17.x.x                    | v17.x.x             |
+| v18.x.x                    | v18.x.x             |
 
 <details>
   <summary>Prerequisites Installation (Click to show)</summary>
 
-- react, react-dom: `npm install --save react react-dom` or use their CDN.
-- styled-components: `npm install --save styled-components` or use their CDN.
+- react, react-dom, react-konva & styled-components:
+```bash
+npm install --save react react-dom react-konva styled-components
+```
 </details>
 
 <hr />

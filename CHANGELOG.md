@@ -22,12 +22,15 @@ Types of changes:
 ---
 
 <!--
-## v4.3.8 -
+## v4.4.0 -
 
 ### Fixed
 
 - Respect `defaultSavedImageName` in case of providing `source` property with `HTMLImageElement`
 
+### Added
+
+- Backward compatability for react 17.
 -->
 
 ## v4.3.8 - 2023-02-10
