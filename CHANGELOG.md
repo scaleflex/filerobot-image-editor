@@ -31,6 +31,10 @@ Types of changes:
 ### Added
 
 - Backward compatability for react 17.
+
+### Improved
+
+- If image changed, re-extract its name & extension.
 -->
 
 ## v4.3.8 - 2023-02-10

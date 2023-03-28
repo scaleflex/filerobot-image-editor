@@ -50,6 +50,7 @@ const SaveButton = () => {
       onBeforeSave,
       onSave,
       forceToPngInEllipticalCrop,
+      defaultSavedImageName,
       defaultSavedImageType,
       useCloudimage,
       moreSaveOptions,
@@ -178,20 +179,30 @@ const SaveButton = () => {
     }
   };
 
+  const setFileNameAndExtension = () => {
+    const { name, extension } = getFileFullName(
+      defaultSavedImageName || originalImage.name,
+      forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
+        ? 'png'
+        : SUPPORTED_IMAGE_TYPES.includes(
+            defaultSavedImageType?.toLowerCase(),
+          ) && defaultSavedImageType,
+    );
+
+    setImageFileInfo({ ...imageFileInfo, name, extension });
+  };
+
+  useEffect(() => {
+    if (originalImage) {
+      setFileNameAndExtension();
+    }
+  }, [originalImage]);
+
   useEffect(() => {
     if (originalImage && (!imageFileInfo.name || !imageFileInfo.extension)) {
-      const { name, extension } = getFileFullName(
-        originalImage.name,
-        forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
-          ? 'png'
-          : SUPPORTED_IMAGE_TYPES.includes(
-              defaultSavedImageType?.toLowerCase(),
-            ) && defaultSavedImageType,
-      );
-
-      setImageFileInfo({ ...imageFileInfo, name, extension });
+      setFileNameAndExtension();
     }
-  }, [originalImage, isModalOpened]);
+  }, [isModalOpened]);
 
   useEffect(() => {
     setImageFileInfo({
