@@ -21,7 +21,7 @@ Types of changes:
 
 ---
 
-<!--
+
 ## v4.4.0 -
 
 ### Fixed
@@ -39,7 +39,7 @@ Types of changes:
 ### Improved
 
 - If image changed, re-extract its name & extension.
--->
+- Split react-konva library from dependencies and make it developer installable to determine the version to use.
 
 ## v4.3.8 - 2023-02-10
 
