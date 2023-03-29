@@ -27,6 +27,7 @@ Types of changes:
 ### Fixed
 
 - Respect `defaultSavedImageName` in case of providing `source` property with `HTMLImageElement`
+- Crop transformer is not updated on changing to (original) crop preset if no interaction happened with canvas ([#291](https://github.com/scaleflex/filerobot-image-editor/issues/291)).
 
 ### Added
 

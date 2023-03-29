@@ -1,3 +1,4 @@
+import { ORIGINAL_CROP } from 'utils/constants';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
 
 export const SET_CROP = 'SET_CROP';
@@ -23,10 +24,12 @@ const setCrop = (state, payload) => {
     oldCrop.y === newCrop.y &&
     (oldCrop.width === newCrop.width ||
       (newCrop.width === toPrecisedFloat(state.shownImageDimensions.width) &&
-        !oldCrop.width !== null)) &&
+        !oldCrop.width !== null &&
+        newCrop.ratio !== ORIGINAL_CROP)) &&
     (oldCrop.height === newCrop.height ||
       (newCrop.height === toPrecisedFloat(state.shownImageDimensions.height) &&
-        oldCrop.height !== null)) &&
+        oldCrop.height !== null &&
+        newCrop.ratio !== ORIGINAL_CROP)) &&
     oldCrop.ratio === newCrop.ratio &&
     oldCrop.ratioTitleKey === newCrop.ratioTitleKey &&
     oldCrop.ratioGroupKey === newCrop.ratioGroupKey &&
