@@ -25,7 +25,10 @@ const deactivateTextChange = () => {
   }
   if (transformer) {
     transformer.show();
-    transformer.forceUpdate();
+    /**
+     * Disabled because of bug (#322)
+     */
+    // transformer.forceUpdate();
   }
   if (typeof disableTextEditCallback === 'function') {
     disableTextEditCallback();
