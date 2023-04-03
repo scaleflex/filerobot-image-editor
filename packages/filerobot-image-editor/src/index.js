@@ -1,6 +1,6 @@
 /** External Dependencies */
 import { createElement } from 'react';
-import { createRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client';
 
 /** Internal Dependencies */
 import AssemblyPoint, { TOOLS, TABS } from 'react-filerobot-image-editor/src/';
@@ -16,14 +16,14 @@ class FilerobotImageEditor {
   constructor(container, config = {}) {
     this.container = container;
     this.config = config;
-    
+
     if (!container || !(container instanceof HTMLElement)) {
       throw new Error(
         '`container` (argument 0) is required to initialize the image editor plugin.',
       );
     }
 
-    this.#root = createRoot(this.container)
+    this.#root = createRoot(this.container);
     this.#getCurrentImgDataFnRef = {};
     this.#updateStateFnRef = {};
   }
@@ -41,6 +41,11 @@ class FilerobotImageEditor {
       getCurrentImgDataFnRef: this.#getCurrentImgDataFnRef,
       updateStateFnRef: this.#updateStateFnRef,
     };
+
+    if (!this.#root._internalRoot) {
+      this.#root = createRoot(this.container);
+    }
+
     this.#root.render(createElement(AssemblyPoint, this.config));
   }
 
