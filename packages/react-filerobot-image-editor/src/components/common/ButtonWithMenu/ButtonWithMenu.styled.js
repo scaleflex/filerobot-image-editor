@@ -8,6 +8,7 @@ const StyledButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-right: 4px;
+  flex-shrink: 0;
 `;
 
 const StyledMainButton = styled(Button)`

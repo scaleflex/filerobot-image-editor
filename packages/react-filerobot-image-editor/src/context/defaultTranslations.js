@@ -75,6 +75,7 @@ export default {
   lineHeight: 'Line height',
   warmthTool: 'Warmth',
   addWatermark: '+ Add watermark',
+  addTextWatermark: '+ Add text watermark',
   addWatermarkTitle: 'Choose the watermark type',
   uploadWatermark: 'Upload watermark',
   addWatermarkAsText: 'Add as text',

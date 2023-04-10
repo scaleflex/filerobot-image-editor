@@ -247,7 +247,7 @@ const Watermark = () => {
         <ButtonWithMenu
           className="FIE_watermark-add"
           color="secondary"
-          label={t('addWatermark')}
+          label={menuItems[0] ? t('addWatermark') : t('addTextWatermark')}
           title={t('addWatermarkTitle')}
           menuPosition="top"
           menuItems={menuItems}
