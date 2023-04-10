@@ -22,6 +22,18 @@ Types of changes:
 ---
 
 
+<!-- ## v4.4.1 - 2023-xx-xx
+
+### Fixed
+
+- Crop doesn't work if no action with the canvas's UI ([Issue #298](https://github.com/scaleflex/filerobot-image-editor/issues/298))
+- Bug of having error on unmounting the component with textarea opened while adding text ([Issue #322](https://github.com/scaleflex/filerobot-image-editor/issues/322))
+
+### Improved
+
+- The add watermark button design & label
+- Render function logic in JS version. -->
+
 ## v4.4.0 - 2023-03-30
 
 ### Fixed
