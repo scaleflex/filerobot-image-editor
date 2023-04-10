@@ -15,6 +15,8 @@ import {
 } from 'utils/constants';
 import { boundDragging, boundResizing } from './cropAreaBounding';
 
+let isFirstRenderCropUpdated = false;
+
 const CropTransformer = () => {
   const {
     dispatch,
@@ -144,6 +146,19 @@ const CropTransformer = () => {
   useEffect(() => {
     if (shownImageDimensions) {
       shownImageDimensionsRef.current = shownImageDimensions;
+      // Used to fill in the missing crop at the first render incase of custom crop ratio provided from config so we need to apply it
+      if (
+        !isFirstRenderCropUpdated &&
+        cropRatio &&
+        shownImageDimensions.x &&
+        shownImageDimensions.width
+      ) {
+        saveBoundedCropWithLatestConfig(
+          crop.width ?? shownImageDimensions.width,
+          crop.height ?? shownImageDimensions.height,
+        );
+        isFirstRenderCropUpdated = true;
+      }
     }
   }, [shownImageDimensions]);
 
