@@ -32,7 +32,8 @@ Types of changes:
 ### Improved
 
 - The add watermark button design & label
-- Render function logic in JS version. -->
+- Render function logic in JS version.
+- Tabs labels become center aligned & space broken in-case of tab's label with multiple words.-->
 
 ## v4.4.0 - 2023-03-30
 
