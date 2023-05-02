@@ -31,10 +31,8 @@ export default defineConfig(({ mode }) => {
     plugins: [
       nodeResolve({
         extensions: ['.js', '.jsx', '.json'],
-        moduleDirectories: [
-          './packages/react-filerobot-image-editor/src',
-          'node_modules',
-        ],
+        modulePaths: ['./packages/react-filerobot-image-editor/src'],
+        moduleDirectories: ['node_modules'],
       }),
       react(
         isProduction
