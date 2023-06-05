@@ -8,6 +8,7 @@ const deepMerge = (source, object = {}, considerArray = false) => {
       const valType = typeof val;
       if (
         valType !== 'object' ||
+        val instanceof HTMLElement ||
         val === null ||
         Array.isArray(val) ||
         !source[k] ||
