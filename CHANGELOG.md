@@ -34,7 +34,8 @@ Types of changes:
 - The add watermark button design & label
 - Render function logic in JS version.
 - Tabs labels become center aligned & space broken in-case of tab's label with multiple words.
-- Typescript types (adding `theme` object into types & update the `updateState` function naming in VanillaJs version package's types)-->
+- Typescript types (adding `theme` object into types & update the `updateState` function naming in VanillaJs version package's types)
+- app: wait one tick before setNewOriginalImage-->
 
 ## v4.4.0 - 2023-03-30
 
