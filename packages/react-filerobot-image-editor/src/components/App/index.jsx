@@ -120,30 +120,40 @@ const App = () => {
 
       imageBeingLoadedSrc.current = imgSrc;
 
-      if (typeof imgToLoad === 'string') {
-        loadImage(imgToLoad, defaultSavedImageName)
-          .then(setNewOriginalImage)
-          .catch(setError)
-          .finally(triggerResolve);
-      } else if (imgToLoad instanceof HTMLImageElement) {
-        if (!imgToLoad.name && defaultSavedImageName) {
-          // eslint-disable-next-line no-param-reassign
-          imgToLoad.name = defaultSavedImageName;
-        }
-        if (!imgToLoad.complete) {
-          imgToLoad.addEventListener('load', () => {
-            setNewOriginalImage(imgToLoad);
-            triggerResolve();
-          });
-          return;
-        }
+      // This timeout is a workaround when re-initializing
+      // the react app from vanilla JS. Due to a bug in react
+      // the dispatch method that is called in setNewOriginalImage
+      // still points to the old dispatch method after re-init,
+      // so we need to wait for one tick to make sure it's updated.
+      //
+      // This applies to both URLs and HTMLImageElement, since URLs
+      // may resolve immediately in some cases, e.g. memory cache.
+      setTimeout(() => {
+        if (typeof imgToLoad === 'string') {
+          loadImage(imgToLoad, defaultSavedImageName)
+            .then(setNewOriginalImage)
+            .catch(setError)
+            .finally(triggerResolve);
+        } else if (imgToLoad instanceof HTMLImageElement) {
+          if (!imgToLoad.name && defaultSavedImageName) {
+            // eslint-disable-next-line no-param-reassign
+            imgToLoad.name = defaultSavedImageName;
+          }
+          if (!imgToLoad.complete) {
+            imgToLoad.addEventListener('load', () => {
+              setNewOriginalImage(imgToLoad);
+              triggerResolve();
+            });
+            return;
+          }
 
-        setNewOriginalImage(imgToLoad);
-        triggerResolve();
-      } else {
-        setError(t('invalidImageError'));
-        triggerResolve();
-      }
+          setNewOriginalImage(imgToLoad);
+          triggerResolve();
+        } else {
+          setError(t('invalidImageError'));
+          triggerResolve();
+        }
+      }, 0);
     });
 
   const promptDialogIfHasChangeNotSaved = (e) => {
