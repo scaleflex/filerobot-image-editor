@@ -28,6 +28,7 @@ Types of changes:
 
 - Crop doesn't work if no action with the canvas's UI ([Issue #298](https://github.com/scaleflex/filerobot-image-editor/issues/298))
 - Bug of having error on unmounting the component with textarea opened while adding text ([Issue #322](https://github.com/scaleflex/filerobot-image-editor/issues/322))
+- Resize isn't considered in developer's transform function `getCurrentImgDataFnRef` ([Issue #344](https://github.com/scaleflex/filerobot-image-editor/issues/344))
 
 ### Improved
 

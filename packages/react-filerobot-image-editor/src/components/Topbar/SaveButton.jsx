@@ -7,10 +7,12 @@ import Label from '@scaleflex/ui/core/label';
 /** Internal Dependencies */
 import { useStore, useTransformedImgData } from 'hooks';
 import getFileFullName from 'utils/getFileFullName';
+import getDefaultSaveQuality from 'utils/getDefaultSaveQuality';
 import {
   CLOSING_REASONS,
   ELLIPSE_CROP,
   SUPPORTED_IMAGE_TYPES,
+  DEFAULT_SAVE_QUALITY,
 } from 'utils/constants';
 import { HIDE_LOADER, SET_FEEDBACK, SHOW_LOADER } from 'actions';
 import Modal from 'components/common/Modal';
@@ -24,8 +26,6 @@ import {
   StyledQualityWrapper,
   StyledResizeOnSave,
 } from './Topbar.styled';
-
-const DEFAULT_QUALITY_VAL = 0.92;
 
 const sliderStyle = { marginBottom: 16 };
 const saveButtonWrapperStyle = { width: 67 }; // 67px same width as tabs bar
@@ -54,17 +54,14 @@ const SaveButton = () => {
       forceToPngInEllipticalCrop,
       defaultSavedImageName,
       defaultSavedImageType,
-      defaultSavedImageQuality = DEFAULT_QUALITY_VAL,
+      defaultSavedImageQuality = DEFAULT_SAVE_QUALITY,
       useCloudimage,
       moreSaveOptions,
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [imageFileInfo, setImageFileInfo] = useState({
-    quality:
-      defaultSavedImageQuality <= 0 || defaultSavedImageQuality > 1
-        ? DEFAULT_QUALITY_VAL
-        : defaultSavedImageQuality,
+    quality: getDefaultSaveQuality(defaultSavedImageQuality),
   });
   const transformImgFn = useTransformedImgData();
   const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(
@@ -268,6 +265,7 @@ const SaveButton = () => {
         <Modal
           className="FIE_save-modal"
           title={t('saveAsModalLabel')}
+          // eslint-disable-next-line react/no-unstable-nested-components
           Icon={(props) => (
             <SaveAs color={theme.palette['accent-primary']} {...props} />
           )}

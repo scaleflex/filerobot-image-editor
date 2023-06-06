@@ -24,6 +24,7 @@ const useTransformedImgData = () => {
     designLayer,
     shownImageDimensions,
     originalImage,
+    resize,
     adjustments: { crop, rotation = 0, isFlippedX, isFlippedY },
     config: {
       savingPixelRatio,
@@ -71,6 +72,10 @@ const useTransformedImgData = () => {
     pixelRatio = false,
     keepLoadingSpinnerShown = false,
   ) => {
+    const currentImgFileInfo = {
+      size: resize,
+      ...imageFileInfo,
+    };
     Konva.pixelRatio = pixelRatio || savingPixelRatio;
     const { clipWidth, clipHeight, clipX, clipY } = designLayer.attrs;
 
@@ -110,7 +115,7 @@ const useTransformedImgData = () => {
       quality = 92,
       size = {},
     } = {
-      ...((!imageFileInfo.name || !imageFileInfo.extension) &&
+      ...((!currentImgFileInfo.name || !currentImgFileInfo.extension) &&
         getFileFullName(
           originalImage.name,
           forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
@@ -119,7 +124,7 @@ const useTransformedImgData = () => {
                 defaultSavedImageType?.toLowerCase(),
               ) && defaultSavedImageType,
         )),
-      ...imageFileInfo,
+      ...currentImgFileInfo,
     };
 
     const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(extension);

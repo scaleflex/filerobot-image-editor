@@ -8,6 +8,8 @@ export const WATERMARK_ANNOTATION_ID = 'watermark';
 
 export const TRANSLATIONS_GRID_UUID = '353297d2-40b4-4684-a875-45a2178a8157';
 
+export const DEFAULT_SAVE_QUALITY = 0.92;
+
 export const TABS_IDS = {
   FINETUNE: 'Finetune',
   FILTERS: 'Filters',

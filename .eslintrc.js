@@ -34,6 +34,10 @@ module.exports = {
     'react/prefer-read-only-props': 'error',
     'react/jsx-key': ['error', { checkKeyMustBeforeSpread: true }],
     'react/react-in-jsx-scope': 'off',
+    'react/function-component-definition': [
+      2,
+      { namedComponents: 'arrow-function' },
+    ],
   },
   settings: {
     'import/resolver': {
