@@ -1,5 +1,18 @@
 const BaseFilters = {
-  brightness: (pixelRGB, value) => {
+  apply: (imageData, ...filters) => {
+    const pixels = imageData.data; //  [0, 1, 2, 3,...] => [r, g, b, a, ...]
+    const len = pixels.length;
+
+    for (let i = 0; i < len; i += 4) {
+      for (const filter of filters) {
+        [pixels[i], pixels[i + 1], pixels[i + 2]] = filter(
+          [pixels[i], pixels[i + 1], pixels[i + 2]],
+        );
+      };
+    }
+  },
+
+  brightness: (value) => (pixelRGB) => {
     let currentValue = value;
     currentValue = currentValue > 1 ? 1 : currentValue;
     currentValue = currentValue < -1 ? -1 : currentValue;
@@ -11,7 +24,7 @@ const BaseFilters = {
       pixelRGB[2] + currentValue,
     ];
   },
-  contrast: (pixelRGB, value) => {
+  contrast: (value) => (pixelRGB) => {
     let currentValue = value;
     currentValue *= 255;
     const factor = (259 * (currentValue + 255)) / (255 * (259 - currentValue));
@@ -21,7 +34,7 @@ const BaseFilters = {
       factor * (pixelRGB[2] - 128) + 128,
     ];
   },
-  saturation: (pixelRGB, value) => {
+  saturation: (value) => (pixelRGB) => {
     let currentValue = value;
     currentValue = currentValue < -1 ? -1 : currentValue;
     const r = pixelRGB[0];
@@ -35,7 +48,7 @@ const BaseFilters = {
       -gray * currentValue + b * (1 + currentValue),
     ];
   },
-  grayscale: (pixelRGB) => {
+  grayscale: () => (pixelRGB) => {
     const r = pixelRGB[0];
     const g = pixelRGB[1];
     const b = pixelRGB[2];
@@ -43,7 +56,7 @@ const BaseFilters = {
     const average = 0.2126 * r + 0.7152 * g + 0.0722 * b;
     return new Array(3).fill(average);
   },
-  sepia: (pixelRGB, value) => {
+  sepia: (value) => (pixelRGB) => {
     const r = pixelRGB[0];
     const g = pixelRGB[1];
     const b = pixelRGB[2];
@@ -54,13 +67,13 @@ const BaseFilters = {
       r * 0.272 * value + g * 0.534 * value + b * (1 - 0.869 * value),
     ];
   },
-  adjustRGB: (pixelRGB, adjustingRGB) => [
+  adjustRGB: (adjustingRGB) => (pixelRGB) => [
     pixelRGB[0] * adjustingRGB[0], // R
     pixelRGB[1] * adjustingRGB[1], // G
     pixelRGB[2] * adjustingRGB[2], // B
   ],
   // RGBV => [R, G, B, Value]
-  colorFilter: (pixelRGB, colorRGBV) => {
+  colorFilter: (colorRGBV) => (pixelRGB) => {
     const r = pixelRGB[0];
     const g = pixelRGB[1];
     const b = pixelRGB[2];

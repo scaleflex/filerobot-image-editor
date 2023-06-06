@@ -12,20 +12,11 @@ const SEPIA_CONST = 0.3;
  * node.filters([Brooklyn]);
  */
 function Brooklyn(imageData) {
-  const pixels = imageData.data; //  [0, 1, 2, 3,...] => [r, g, b, a, ...]
-  const len = pixels.length;
-
-  for (let i = 0; i < len; i += 4) {
-    [pixels[i], pixels[i + 1], pixels[i + 2]] = BaseFilters.colorFilter(
-      [pixels[i], pixels[i + 1], pixels[i + 2]],
-      COLOR_FILTER_CONST,
-    );
-
-    [pixels[i], pixels[i + 1], pixels[i + 2]] = BaseFilters.sepia(
-      [pixels[i], pixels[i + 1], pixels[i + 2]],
-      SEPIA_CONST,
-    );
-  }
+  BaseFilters.apply(
+    imageData,
+    BaseFilters.colorFilter(COLOR_FILTER_CONST),
+    BaseFilters.sepia(SEPIA_CONST),
+  );
 }
 
 Brooklyn.filterName = 'Brooklyn'; // We assign the filter name here instead of using the fn. name as on prod. code the fn. name is optimized that might cause bug in that case.

@@ -13,25 +13,12 @@ const BRIGHTNESS_CONST = 0.15;
  * node.filters([Hudson]);
  */
 function Hudson(imageData) {
-  const pixels = imageData.data; //  [0, 1, 2, 3,...] => [r, g, b, a, ...]
-  const len = pixels.length;
-
-  for (let i = 0; i < len; i += 4) {
-    [pixels[i], pixels[i + 1], pixels[i + 2]] = BaseFilters.adjustRGB(
-      [pixels[i], pixels[i + 1], pixels[i + 2]],
-      ADJUST_RGB_CONST,
-    );
-
-    [pixels[i], pixels[i + 1], pixels[i + 2]] = BaseFilters.contrast(
-      [pixels[i], pixels[i + 1], pixels[i + 2]],
-      CONTRAST_CONST,
-    );
-
-    [pixels[i], pixels[i + 1], pixels[i + 2]] = BaseFilters.brightness(
-      [pixels[i], pixels[i + 1], pixels[i + 2]],
-      BRIGHTNESS_CONST,
-    );
-  }
+  BaseFilters.apply(
+    imageData,
+    BaseFilters.adjustRGB(ADJUST_RGB_CONST),
+    BaseFilters.contrast(CONTRAST_CONST),
+    BaseFilters.brightness(BRIGHTNESS_CONST),
+  );
 }
 
 Hudson.filterName = 'Hudson'; // We assign the filter name here instead of using the fn. name as on prod. code the fn. name is optimized that might cause bug in that case.
