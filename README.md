@@ -1152,7 +1152,7 @@ Hides all the UI of the plugin including (save & close buttons, tabs & tools bar
 
 <u>Default:</u> undefined
 
-If provided the canvas processing/saving/manipulating function will be assigned as `.current` proeprty to this passed `Object | React Ref` to be used/called somewhere else other than the default save button and returns both the final transformed image data object & current design state which are same as params as [`onSave callback`](#onsave),
+If provided the canvas processing/saving/manipulating function will be assigned as `.current` property to this passed `Object | React Ref` to be used/called somewhere else other than the default save button and returns both the final transformed image data object & current design state which are same as params as [`onSave callback`](#onsave),
 
 The passed object/ref becomes with the following syntax after assigning internally
 
