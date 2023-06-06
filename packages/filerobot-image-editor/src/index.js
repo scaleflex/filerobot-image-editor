@@ -26,6 +26,11 @@ class FilerobotImageEditor {
     this.#root = createRoot(this.container);
     this.#getCurrentImgDataFnRef = {};
     this.#updateStateFnRef = {};
+
+    this.getCurrentImgData = this.getCurrentImgData.bind(this);
+    this.render = this.render.bind(this);
+    this.terminate = this.terminate.bind(this);
+    this.updateState = this.updateState.bind(this);
   }
 
   render(additionalConfig) {
