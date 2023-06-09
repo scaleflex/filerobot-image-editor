@@ -22,13 +22,16 @@ Types of changes:
 ---
 
 
-<!-- ## v4.4.1 - 2023-xx-xx
+## v4.5.0 - 2023-06-09
 
 ### Fixed
 
-- Crop doesn't work if no action with the canvas's UI ([Issue #298](https://github.com/scaleflex/filerobot-image-editor/issues/298))
-- Bug of having error on unmounting the component with textarea opened while adding text ([Issue #322](https://github.com/scaleflex/filerobot-image-editor/issues/322))
-- Resize isn't considered in developer's transform function `getCurrentImgDataFnRef` ([Issue #344](https://github.com/scaleflex/filerobot-image-editor/issues/344))
+- Crop doesn't work if no action with the canvas's UI ([Issue #298](https://github.com/scaleflex/filerobot-image-editor/issues/298)).
+- Bug of having error on unmounting the component with textarea opened while adding text ([Issue #322](https://github.com/scaleflex/filerobot-image-editor/issues/322)).
+- Resize isn't considered in developer's transform function `getCurrentImgDataFnRef` ([Issue #344](https://github.com/scaleflex/filerobot-image-editor/issues/344)).
+
+### Added
+- `noCrossOrigin` property changes the option while loading the original image ([Issue #344](https://github.com/scaleflex/filerobot-image-editor/issues/319)).
 
 ### Improved
 
@@ -36,7 +39,7 @@ Types of changes:
 - Render function logic in JS version.
 - Tabs labels become center aligned & space broken in-case of tab's label with multiple words.
 - Typescript types (adding `theme` object into types & update the `updateState` function naming in VanillaJs version package's types)
-- app: wait one tick before setNewOriginalImage-->
+- The loading of original image by waiting a tick for avoiding issues possible to happen with the whole plugin ([PR #334](https://github.com/scaleflex/filerobot-image-editor/pull/334)).
 
 ## v4.4.0 - 2023-03-30
 

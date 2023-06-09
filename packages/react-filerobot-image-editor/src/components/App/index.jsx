@@ -60,6 +60,7 @@ const App = () => {
     showCanvasOnly,
     getCurrentImgDataFnRef,
     updateStateFnRef,
+    noCrossOrigin,
   } = config;
 
   const [observeResize, unobserveElement] = useResizeObserver();
@@ -130,7 +131,7 @@ const App = () => {
       // may resolve immediately in some cases, e.g. memory cache.
       setTimeout(() => {
         if (typeof imgToLoad === 'string') {
-          loadImage(imgToLoad, defaultSavedImageName)
+          loadImage(imgToLoad, defaultSavedImageName, noCrossOrigin)
             .then(setNewOriginalImage)
             .catch(setError)
             .finally(triggerResolve);

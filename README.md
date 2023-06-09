@@ -1221,6 +1221,18 @@ Note: If [`disableZooming`](#disablezooming) property is `true` then this proper
 
 If `true`, there will be no zooming functionality available in the plugin & UI related to zooming will be removed.
 
+#### `noCrossOrigin`
+
+<u>Type:</u> `Boolean`
+
+<u>Supported version:</u> +v4.5.0
+
+<u>Default:</u> false
+
+If `true`, `crossOrigin=Anonymous` property with its value won't be used in the original image (image to be edited) loading request -- not recommended --.
+
+> Disabling the usage of crossOrigin might cause some issues with applying filters or saving the image so it is not recommended to provide it `true` unless you know what you are doing.
+
 ### Callbacks
 
 #### `onBeforeSave`

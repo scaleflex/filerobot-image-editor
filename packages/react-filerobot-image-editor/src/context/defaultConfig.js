@@ -128,4 +128,5 @@ export default {
   onModify: undefined,
   useZoomPresetsMenu: true,
   disableZooming: false,
+  noCrossOrigin: false,
 };
