@@ -1,4 +1,4 @@
-import { Theme } from '@scaleflex/ui/theme';
+import { ThemeOverride } from '@scaleflex/ui/theme';
 import { FunctionComponent, RefObject } from 'react';
 
 declare const TABS = {
@@ -239,7 +239,7 @@ type saveOption = {
 };
 
 export interface FilerobotImageEditorConfig {
-  theme?: Pick<Theme, 'breakpoints' | 'typography' | 'shape' | 'palette'>;
+  theme?: ThemeOverride;
   source: string | HTMLImageElement;
   annotationsCommon?: annotationsCommon;
   // [TOOLS_IDS.TEXT]
