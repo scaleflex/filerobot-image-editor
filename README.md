@@ -1340,6 +1340,7 @@ Calling the function will trigger the function responsible for handling/manipula
 This project is used by the following companies:
 
 - [Scaleflex](https://scaleflex.com/)
+- [Fast Image Resize](https://benkaiser.github.io/fast-image-resizer/)
 
 > Fork the repoistory, append your company's name with the URL in above format inside the README.md file and make a PR! or create a GitHub issue mentioning (Site's name & domain).
 
