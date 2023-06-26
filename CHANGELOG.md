@@ -22,6 +22,12 @@ Types of changes:
 ---
 
 
+## v4.5.1 - 2023-06-26
+
+### Fixed
+
+- Typescript `theme` types.
+
 ## v4.5.0 - 2023-06-09
 
 ### Fixed
