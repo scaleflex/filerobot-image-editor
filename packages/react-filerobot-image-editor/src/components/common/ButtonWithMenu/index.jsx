@@ -65,10 +65,10 @@ const ButtonWithMenu = ({
       return;
     }
 
-    if (typeof onClick === 'function') {
-      onClick();
-    } else if (filteredMenuItems[0]?.onClick) {
+    if (typeof filteredMenuItems[0]?.onClick === 'function') {
       filteredMenuItems[0].onClick();
+    } else if (typeof onClick === 'function') {
+      onClick();
     }
   };
 
