@@ -53,6 +53,7 @@ export default {
     strokeWidth: 1,
     tension: 0.5,
     lineCap: 'round',
+    selectAnnotationAfterDrawing: true,
   },
   [TOOLS_IDS.LINE]: {
     lineCap: 'butt', // butt/round/square

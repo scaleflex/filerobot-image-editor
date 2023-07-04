@@ -106,6 +106,7 @@ type polygonAnnotation = annotationsCommon & {
 type penAnnotation = annotationsCommon & {
   tension?: number;
   lineCap?: lineCap;
+  selectAnnotationAfterDrawing?: boolean;
 };
 
 type lineAnnotation = annotationsCommon & {
