@@ -75,7 +75,7 @@ const PenOptions = ({ t }) => {
   }, [getPointerPosition]);
 
   const handlePointerUp = useCallback(() => {
-    if (updatedPen.current.id) {
+    if (updatedPen.current.id && config[TOOLS_IDS.PEN].selectAnnotationAfterDrawing) { 
       dispatch({
         type: SELECT_ANNOTATION,
         payload: {
