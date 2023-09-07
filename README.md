@@ -111,15 +111,15 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 > All of the following libraries are required, as the plugin is depending on them in the implementation.
 
 - react, react-dom: >= v17.0.0
-- react-konva >= v17.0.0
+- react-konva >= v17.0.1-1
 - styled-components: >= v5.3.5
 
 **Compatability table (installed version of react should meet the opposite react-konva version in the table).**
 
-| react & react-dom versions | react-konva version |
-| -------------------------- | ------------------- |
-| v17.x.x                    | v17.x.x             |
-| v18.x.x                    | v18.x.x             |
+| react & react-dom versions |    react-konva version    |
+| -------------------------- | -------------------       |
+| v17.x.x                    | >= v17.0.1-1 <= v17.0.2-6 |
+| v18.x.x                    | v18.x.x                   |
 
 <details>
   <summary>Prerequisites Installation (Click to show)</summary>
