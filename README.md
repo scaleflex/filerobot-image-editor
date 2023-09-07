@@ -753,13 +753,14 @@ The available options for polygon annotation tool in additon to the annotationsC
     strokeWidth: 1,
     tension: 0.5,
     lineCap: 'round',
+    selectAnnotationAfterDrawing: true,
 }
 ```
 
 The available options for pen annotation tool in additon to the annotationsCommon property,
 
 | Property                           | Type    | Default (possible values)              | Description                                                                                                 |
-| -----------------------------------| ------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| ---------------------------------- | ------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | **`lineCap`**                      | string  | 'butt' ('butt' \| 'round' \| 'square') | The start & end borders line cap                                                                            |
 | **`tension`**                      | number  | 0.5                                    | Tension value of the drawn line higher value makes line more curvy & tensioned (better to leave it default) |
 | **`selectAnnotationAfterDrawing`** | boolean | true                                   | Auto selection after drawing                                                                                |

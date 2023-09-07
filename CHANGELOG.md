@@ -22,6 +22,16 @@ Types of changes:
 ---
 
 
+<!-- ## v4.5.2 - 2023-xx-xx
+
+### Fixed
+
+- Docs. react-konva proper version that works with react 17.
+
+### Added
+
+- [`selectAnnotationAfterDrawing`](https://github.com/scaleflex/filerobot-image-editor#pen) property that enables/disables auto selection of drawn annotation using the pen tool. -->
+
 ## v4.5.1 - 2023-06-26
 
 ### Fixed
