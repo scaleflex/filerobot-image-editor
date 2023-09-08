@@ -27,6 +27,7 @@ Types of changes:
 ### Fixed
 
 - Docs. react-konva proper version that works with react 17.
+- Can't draw an ellipse inside polygon or rectangle ([Isuue #2590](https://scaleflexhq.atlassian.net/browse/FRA-2590))
 
 ### Added
 

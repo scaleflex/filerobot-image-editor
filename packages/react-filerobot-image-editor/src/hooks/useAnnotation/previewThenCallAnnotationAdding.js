@@ -126,6 +126,8 @@ const previewThenCallAnnotationAdding = (
         ...boundingRect,
       });
     }
+
+    canvas.setAttrs({ isDrawing: true });
   };
 
   const handlePointerOut = () => {
@@ -176,6 +178,7 @@ const previewThenCallAnnotationAdding = (
     textAnnotationWrappedRect = null;
     latestAnnotationProps = null;
 
+    canvas.setAttrs({ isDrawing: false });
     canvas.off('mousemove touchmove', handlePointerMove);
     canvas.off('mouseleave touchcancel', handlePointerOut);
     document.removeEventListener('mouseup', handlePointerUp, eventsOptions);
