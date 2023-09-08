@@ -30,7 +30,12 @@ Types of changes:
 
 ### Added
 
-- [`selectAnnotationAfterDrawing`](https://github.com/scaleflex/filerobot-image-editor#pen) property that enables/disables auto selection of drawn annotation using the pen tool. -->
+- [`selectAnnotationAfterDrawing`](https://github.com/scaleflex/filerobot-image-editor#pen) property that enables/disables auto selection of drawn annotation using the pen tool.
+
+### Improved
+
+- If the watermark image is not loaded due to some reason and user tries to add it as watermark, feedback error will be shown.
+-->
 
 ## v4.5.1 - 2023-06-26
 

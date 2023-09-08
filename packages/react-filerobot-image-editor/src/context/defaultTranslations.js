@@ -97,4 +97,5 @@ export default {
   actualSize: 'Actual size (100%)',
   fitSize: 'Fit size',
   addImageTitle: 'Select image to add...',
+  mutualizedFailedToLoadImg: 'Failed to load image.',
 };

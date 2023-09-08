@@ -6,10 +6,11 @@ import PropTypes from 'prop-types';
 import { useStore } from 'hooks';
 import { TOOLS_IDS, WATERMARK_ANNOTATION_ID } from 'utils/constants';
 import Carousel from 'components/common/Carousel';
+import { SET_FEEDBACK } from 'actions';
 import { StyledWatermarkGalleryItem } from './Watermark.styled';
 
 const WatermarksGallery = ({ selectWatermark, style }) => {
-  const { config, annotations } = useStore();
+  const { config, annotations, dispatch, t } = useStore();
 
   const currentWatermarkUrl = useMemo(
     () => (annotations[WATERMARK_ANNOTATION_ID] || {}).image?.src,
@@ -17,7 +18,23 @@ const WatermarksGallery = ({ selectWatermark, style }) => {
   );
 
   const getWatermarkImgAndSelect = (e) => {
-    selectWatermark(e.currentTarget.children[0]);
+    const watermarkImgEl = e.currentTarget.children[0];
+    if (watermarkImgEl.complete) {
+      if (!watermarkImgEl.naturalWidth) {
+        dispatch({
+          type: SET_FEEDBACK,
+          payload: {
+            feedback: {
+              message: t('mutualizedFailedToLoadImg'),
+              duration: 2000,
+            },
+          },
+        });
+        return;
+      }
+
+      selectWatermark(watermarkImgEl);
+    }
   };
 
   const { gallery = [] } = config[TOOLS_IDS.WATERMARK] || {};
