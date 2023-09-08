@@ -27,11 +27,17 @@ Types of changes:
 ### Fixed
 
 - Docs. react-konva proper version that works with react 17.
-- Can't draw an ellipse inside polygon or rectangle ([Isuue #2590](https://scaleflexhq.atlassian.net/browse/FRA-2590))
+- Can't draw an ellipse inside polygon or rectangle
+- changing save button label causing shifting problem
 
 ### Added
 
-- [`selectAnnotationAfterDrawing`](https://github.com/scaleflex/filerobot-image-editor#pen) property that enables/disables auto selection of drawn annotation using the pen tool. -->
+- [`selectAnnotationAfterDrawing`](https://github.com/scaleflex/filerobot-image-editor#pen) property that enables/disables auto selection of drawn annotation using the pen tool.
+
+### Improved
+
+- If the watermark image is not loaded due to some reason and user tries to add it as watermark, feedback error will be shown.
+-->
 
 ## v4.5.1 - 2023-06-26
 
