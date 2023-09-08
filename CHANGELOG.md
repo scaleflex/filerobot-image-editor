@@ -26,7 +26,7 @@ Types of changes:
 
 ### Fixed
 
-- Docs. react-kersionva proper von that works with react 17.
+- Docs. react-konva proper version that works with react 17.
 - Can't draw an ellipse inside polygon or rectangle [Issue #366](https://github.com/scaleflex/filerobot-image-editor/issues/366)
 - changing save button label causing shifting problem
 
