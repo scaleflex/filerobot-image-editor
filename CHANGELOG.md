@@ -27,6 +27,7 @@ Types of changes:
 ### Fixed
 
 - Docs. react-konva proper version that works with react 17.
+- changing save button label causing shifting problem ([Issue #2400](https://scaleflexhq.atlassian.net/browse/FRA-2400))
 
 ### Added
 
