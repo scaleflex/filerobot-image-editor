@@ -61,9 +61,13 @@ const useAnnotationEvents = () => {
   });
 
   const selectAnnotationOnClick = useCallback((e) => {
-    if (e.target.id() === WATERMARK_ANNOTATION_ID) {
+    if (
+      e.target.id() === WATERMARK_ANNOTATION_ID ||
+      e.target.getStage().attrs.isDrawing
+    ) {
       return;
     }
+
     const multiple = e.evt.ctrlKey || e.evt.shiftKey || e.evt.metaKey;
     dispatch({
       type: SELECT_ANNOTATION,
