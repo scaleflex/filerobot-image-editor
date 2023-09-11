@@ -1235,6 +1235,8 @@ If `true`, `crossOrigin=Anonymous` property with its value won't be used in the 
 
 > Disabling the usage of crossOrigin might cause some issues with applying filters or saving the image so it is not recommended to provide it `true` unless you know what you are doing.
 
+> If u face strange behavior with CORS, please check this issue #319 might be useful for you.
+
 ### Callbacks
 
 #### `onBeforeSave`
