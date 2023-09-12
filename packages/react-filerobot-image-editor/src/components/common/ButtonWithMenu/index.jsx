@@ -13,12 +13,13 @@ import {
   StyledMainButton,
   StyledButtonWrapper,
   StyledMenuButton,
+  StyledMenu,
 } from './ButtonWithMenu.styled';
 
 let isFieButtonWithMenuMounted = true;
 
 const ButtonWithMenu = ({
-  label,
+  t,
   onClick,
   title,
   color,
@@ -96,7 +97,7 @@ const ButtonWithMenu = ({
           keepBorderRadius={!hasMultipleMenuItems}
           disabled={disabled}
         >
-          {label}
+          {hasMultipleMenuItems ? t('Download') : t('Save as')}
         </StyledMainButton>
         {hasMultipleMenuItems && (
           <StyledMenuButton
@@ -111,7 +112,7 @@ const ButtonWithMenu = ({
         )}
       </StyledButtonWrapper>
       {hasMultipleMenuItems && (
-        <Menu
+        <StyledMenu
           className={`${className}-menu`}
           anchorEl={anchorEl}
           onClose={closeMenu}
@@ -143,7 +144,7 @@ const ButtonWithMenu = ({
                 </MenuItem>
               ),
           )}
-        </Menu>
+        </StyledMenu>
       )}
     </>
   );

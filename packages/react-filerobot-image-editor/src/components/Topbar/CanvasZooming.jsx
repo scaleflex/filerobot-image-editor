@@ -88,7 +88,7 @@ const CanvasZooming = () => {
       : zoom.factor;
 
   return (
-    <>
+    <div style={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
       <StyledSmallButton
         onClick={zoomOut}
         color="link"
@@ -135,7 +135,7 @@ const CanvasZooming = () => {
           </MenuItem>
         ))}
       </Menu>
-    </>
+    </div>
   );
 };
 

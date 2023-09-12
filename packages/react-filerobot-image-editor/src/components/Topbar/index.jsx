@@ -24,20 +24,17 @@ const Topbar = () => {
   } = useStore();
 
   return (
-    <StyledTopbar reverseDirection={showBackButton} className="FIE_topbar">
-      <StyledFlexCenterAlignedContainer
-        reverseDirection={showBackButton}
-        className="FIE_topbar-buttons-wrapper"
-      >
+    <StyledTopbar className="FIE_topbar">
+      <StyledHistoryButtonsWrapper className="FIE_topbar-buttons-wrapper">
         <SaveButton />
-        <StyledHistoryButtonsWrapper className="FIE_topbar-history-buttons">
-          <ResetButton margin="0" />
-          <UndoButton margin="0" />
-          <RedoButton margin="0" />
-        </StyledHistoryButtonsWrapper>
-      </StyledFlexCenterAlignedContainer>
-      <StyledFlexCenterAlignedContainer className="FIE_topbar-center-options">
+      </StyledHistoryButtonsWrapper>
+
+      <StyledFlexCenterAlignedContainer
+        // style={{ backgroundColor: 'yellow' }}
+        className="FIE_topbar-center-options"
+      >
         <ImageDimensionsAndDisplayToggle />
+
         {!disableZooming && (
           <>
             <Separator />
@@ -45,7 +42,14 @@ const Topbar = () => {
           </>
         )}
       </StyledFlexCenterAlignedContainer>
-      {showBackButton ? <BackButton /> : <CloseButton />}
+
+      <StyledHistoryButtonsWrapper className="FIE_topbar-history-buttons">
+        <ResetButton margin="0" />
+        <UndoButton margin="0" />
+        <RedoButton margin="0" />
+
+        {showBackButton ? <BackButton /> : <CloseButton />}
+      </StyledHistoryButtonsWrapper>
     </StyledTopbar>
   );
 };

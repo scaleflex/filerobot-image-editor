@@ -2,6 +2,8 @@
 import styled from 'styled-components';
 import Button from '@scaleflex/ui/core/button';
 import IconButton from '@scaleflex/ui/core/icon-button';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette/color';
+import { Menu } from '@scaleflex/ui/core';
 
 const StyledButtonWrapper = styled.div`
   height: 22px;
@@ -12,34 +14,33 @@ const StyledButtonWrapper = styled.div`
 `;
 
 const StyledMainButton = styled(Button)`
-  height: 100%;
-  padding: 4px 8px;
   flex-grow: 1;
+  border-radius: 4px;
   justify-content: center;
   align-items: center;
   ${({ keepBorderRadius }) =>
     keepBorderRadius
       ? ''
       : 'border-top-right-radius: 0; border-bottom-right-radius: 0'};
-
-  span {
-    font-size: 12px !important;
-    line-height: 14px !important;
-  }
 `;
 
 const StyledMenuButton = styled(IconButton)`
+  border-radius: 4px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   margin-left: 1px;
-  height: 100%;
-  padding: 4px 8px;
 
   svg {
     transform: rotate(-90deg);
-    width: 10px;
+    height: 20px;
     margin-top: -4px;
   }
 `;
 
-export { StyledButtonWrapper, StyledMainButton, StyledMenuButton };
+const StyledMenu = styled(Menu)`
+  padding: 8px 0;
+  /* background-color: red; */
+  background-color: ${({ theme: { palette } }) => palette[PC.Error]};
+`;
+
+export { StyledButtonWrapper, StyledMainButton, StyledMenuButton, StyledMenu };

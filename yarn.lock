@@ -1720,7 +1720,7 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@popperjs/core@^2.6.0":
+"@popperjs/core@^2.6.0", "@popperjs/core@^2.9.0":
   version "2.11.8"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
@@ -1774,23 +1774,19 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@scaleflex/icons@1.0.0-beta.99":
-  version "1.0.0-beta.99"
-  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0-beta.99.tgz#4af7e7196206b33a518d7ec6210f093f8d79fcdf"
-  integrity sha512-LXFn0/7jbtCxv90yO7dt7Mx/n9f5Fvl9bovf8HABFX1Y2V4Iw+egdnm6LGt+fbl61lq7Ea8aFCr/YKH4jmGpvw==
+"@scaleflex/icons@2.1.7", "@scaleflex/icons@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-2.1.7.tgz#9f646ea7d3ccf9c374325eaf715e6056f5324f5e"
+  integrity sha512-adaxoCe0GXkRiVBI4im/xvrzoy9g3yZH/w2NNijMBjrVU94MEtmfvT4hkfcyQOQl+fvBcQfj2EiENZ0Y2p7TLQ==
 
-"@scaleflex/icons@^1.0.0-beta.99":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-1.0.0.tgz#e7981adae514ef29e8ead9e3b2113a6c8a91aa6c"
-  integrity sha512-8NZ+9sSBZPjhBZPz0k+7BrhN1LPNqHwmdeHt9XD4K8aR6EDPwIg9WCHXLLSsivEGXBNaiVZ/4KkMqa3wau2eRg==
-
-"@scaleflex/ui@1.0.0-beta.99":
-  version "1.0.0-beta.99"
-  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-1.0.0-beta.99.tgz#f9d09bd8ecc8ed3b400902cb95153635bf12c828"
-  integrity sha512-PglsU+2xHI7MYiLS9BNbPacXTbsc+Nvj7/p0fQ37E9mhJiM2/rRKCJG4YiyDQRpnc9VjyOIF12GDvHAmiFnrCQ==
+"@scaleflex/ui@2.1.9":
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-2.1.9.tgz#4475d9a21ad6d6dd58424df9bc74151487a275cd"
+  integrity sha512-6eXn8GOo2FMIvN5WlXc2VANhsSHZXXNaoUVtZj0HC03alHTl46Q54qdErJNGTV2QxcB+u9f9piZ1HyXxXFwG8w==
   dependencies:
     "@popperjs/core" "^2.6.0"
-    "@scaleflex/icons" "^1.0.0-beta.99"
+    "@scaleflex/icons" "^2.1.7"
+    "@tippyjs/react" "^4.2.6"
     lodash.merge "^4.6.2"
     lodash.throttle "^4.1.1"
     polished "^3.6.6"
@@ -1831,6 +1827,13 @@
   version "0.27.8"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"
   integrity sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==
+
+"@tippyjs/react@^4.2.6":
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/@tippyjs/react/-/react-4.2.6.tgz#971677a599bf663f20bb1c60a62b9555b749cc71"
+  integrity sha512-91RicDR+H7oDSyPycI13q3b7o4O60wa2oRbjlz2fyRLmHImc4vyDwuUP8NtZaN0VARJY5hybvDYrFzhY9+Lbyw==
+  dependencies:
+    tippy.js "^6.3.1"
 
 "@tootallnate/once@2":
   version "2.0.0"
@@ -7183,15 +7186,13 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-konva@18.2.5:
-  version "18.2.5"
-  resolved "https://registry.yarnpkg.com/react-konva/-/react-konva-18.2.5.tgz#592692619c5f4a9c14726e146574ddc8bc468a7c"
-  integrity sha512-lTqJStcHnpGSXB9RlV7p5at3MpRML/TujzbuUDZRIInsLocJ/I4Nhhg3w6yJm9UV05kcwr88OY6LO+2zRyzXog==
+react-konva@17.0.1-1:
+  version "17.0.1-1"
+  resolved "https://registry.yarnpkg.com/react-konva/-/react-konva-17.0.1-1.tgz#f773c51121b706e94d0258adfaaf609e0f28b927"
+  integrity sha512-KqEJUnEyV+asX4h1wII7YsOwO8jkOUhrz2x2LUBqEtygOOsBgnLr16Aqck0JJhx4rFzuAHz4+MKom002LHiTug==
   dependencies:
-    "@types/react-reconciler" "^0.28.2"
-    its-fine "^1.0.6"
-    react-reconciler "~0.29.0"
-    scheduler "^0.23.0"
+    react-reconciler "~0.26.1"
+    scheduler "^0.20.1"
 
 react-konva@18.2.7:
   version "18.2.7"
@@ -7202,6 +7203,15 @@ react-konva@18.2.7:
     its-fine "^1.0.6"
     react-reconciler "~0.29.0"
     scheduler "^0.23.0"
+
+react-reconciler@~0.26.1:
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.26.2.tgz#bbad0e2d1309423f76cf3c3309ac6c96e05e9d91"
+  integrity sha512-nK6kgY28HwrMNwDnMui3dvm3rCFjZrcGiuwLc5COUipBK5hWHLOxMJhSnSomirqWwjPBJKV1QcbkI0VJr7Gl1Q==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    scheduler "^0.20.2"
 
 react-reconciler@~0.29.0:
   version "0.29.0"
@@ -7621,6 +7631,14 @@ safe-regex-test@^1.0.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
+
+scheduler@^0.20.1, scheduler@^0.20.2:
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.2.tgz#4baee39436e34aa93b4874bddcbf0fe8b8b50e91"
+  integrity sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
 
 scheduler@^0.23.0:
   version "0.23.0"
@@ -8179,6 +8197,13 @@ through@2, "through@>=2.2.7 <3", through@^2.3.4, through@^2.3.6:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
+
+tippy.js@^6.3.1:
+  version "6.3.7"
+  resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.3.7.tgz#8ccfb651d642010ed9a32ff29b0e9e19c5b8c61c"
+  integrity sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==
+  dependencies:
+    "@popperjs/core" "^2.9.0"
 
 tmp@^0.0.33:
   version "0.0.33"

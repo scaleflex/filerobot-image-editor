@@ -7,15 +7,14 @@ import Label from '@scaleflex/ui/core/label';
 import Select from '@scaleflex/ui/core/select';
 
 const StyledTopbar = styled.div`
-  padding: 12px 12px 8px 12px;
+  padding: 16px;
   box-sizing: border-box;
   position: relative;
   width: 100%;
   display: flex;
+  gap: 16px;
   align-items: center;
   justify-content: space-between;
-  ${({ reverseDirection }) =>
-    reverseDirection ? 'flex-direction: row-reverse' : ''};
 
   [data-phone='true'] & {
     padding: 6px 6px 4px 6px;
@@ -24,8 +23,9 @@ const StyledTopbar = styled.div`
 `;
 
 const StyledHistoryButtonsWrapper = styled.div`
+  /* background-color: red; */
+  width: 160px;
   display: flex;
-  margin: 0 4px;
   column-gap: 4px;
   align-items: center;
 `;
@@ -42,18 +42,24 @@ const StyledHistoryButton = styled(IconButton)`
 
 const StyledDimensionsLabel = styled(Label)`
   flex-shrink: 0;
+  /* width: 92px; */
 `;
 
 const StyledSmallButton = styled(IconButton)`
-  width: 20px;
-  height: 20px;
-  margin: 0 ${(props) => props.horizontalMargin ?? '4px'};
-  padding: 4px;
+  /* width: 32px;
+  height: 32px; */
+  /* margin: 0 ${(props) => props.horizontalMargin ?? '4px'}; */
+  padding: 9px;
 `;
 
 const StyledFlexCenterAlignedContainer = styled.div`
+  width: 384px;
+  height: 32px;
+  /* background-color: yellow; */
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 12px;
   ${({ reverseDirection }) =>
     reverseDirection ? 'flex-direction: row-reverse' : ''};
 `;
