@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React from 'react';
+import PropTypes from 'prop-types';
 import Compare from '@scaleflex/icons/compare';
 
 /** Internal Dependencies */
@@ -8,7 +9,7 @@ import { useStore } from 'hooks';
 import getProperDimensions from 'utils/getProperDimensions';
 import { StyledSmallButton, StyledDimensionsLabel } from './Topbar.styled';
 
-const ImageDimensionsAndDisplayToggle = () => {
+const ImageDimensionsAndDisplayToggle = ({ showBackButton }) => {
   const {
     dispatch,
     isResetted = true,
@@ -65,16 +66,25 @@ const ImageDimensionsAndDisplayToggle = () => {
         {`${dimensions.width} x ${dimensions.height} px`}
       </StyledDimensionsLabel>
       <StyledSmallButton
-        color="link"
+        color="basic"
         onMouseDown={isResetted ? undefined : showOriginalImage}
         onTouchStart={isResetted ? undefined : showOriginalImage}
         disabled={isResetted}
+        showBackButton={showBackButton}
         title={t('showImageTitle')}
       >
         <Compare />
       </StyledSmallButton>
     </>
   );
+};
+
+ImageDimensionsAndDisplayToggle.defaultProps = {
+  showBackButton: false,
+};
+
+ImageDimensionsAndDisplayToggle.propTypes = {
+  showBackButton: PropTypes.bool,
 };
 
 export default ImageDimensionsAndDisplayToggle;

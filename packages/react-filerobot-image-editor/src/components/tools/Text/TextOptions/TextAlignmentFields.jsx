@@ -26,19 +26,19 @@ const TextAlignmentFields = ({
     <StyledSpacedOptionFields>
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('left')}
-        aria-selected={align === 'left'}
+        active={align === 'left'}
       >
         <AlignLeft />
       </StyledIconWrapper>
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('center')}
-        aria-selected={align === 'center'}
+        active={align === 'center'}
       >
         <AlignCenter />
       </StyledIconWrapper>
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('right')}
-        aria-selected={align === 'right'}
+        active={align === 'right'}
       >
         <AlignLeft style={rightAlignmentCssTransform} />
       </StyledIconWrapper>

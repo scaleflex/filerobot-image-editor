@@ -1,11 +1,13 @@
 /** External Dependencies */
 import React from 'react';
 import Konva from 'konva';
+import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { useFinetune } from 'hooks';
 import restrictNumber from 'utils/restrictNumber';
 import Slider from 'components/common/Slider';
+import { StyledSliderContainer, StyledSliderLabel } from '../tools.styled';
 
 const MIN_VALUE = -1;
 const DEFAULT_VALUE = {
@@ -14,7 +16,7 @@ const DEFAULT_VALUE = {
 const MAX_VALUE = 1;
 const sliderStyle = { width: 150, padding: 0 };
 
-const BrightnessOptions = () => {
+const BrightnessOptions = ({ t }) => {
   const [finetuneProps, setFinetuneProps] = useFinetune(
     Konva.Filters.Brighten,
     DEFAULT_VALUE,
@@ -27,16 +29,26 @@ const BrightnessOptions = () => {
   };
 
   return (
-    <Slider
-      className="FIE_brightness-option"
-      min={MIN_VALUE}
-      step={0.05}
-      max={MAX_VALUE}
-      value={finetuneProps.brightness ?? DEFAULT_VALUE.brightness}
-      onChange={changeValue}
-      style={sliderStyle}
-    />
+    <StyledSliderContainer className="FIE_brightness-option-wrapper">
+      <StyledSliderLabel className="FIE_brightness-option-label">
+        {t('brightness')}
+      </StyledSliderLabel>
+      <Slider
+        className="FIE_brightness-option"
+        min={MIN_VALUE}
+        step={0.05}
+        max={MAX_VALUE}
+        width="124px"
+        value={finetuneProps.brightness ?? DEFAULT_VALUE.brightness}
+        onChange={changeValue}
+        style={sliderStyle}
+      />
+    </StyledSliderContainer>
   );
+};
+
+BrightnessOptions.propTypes = {
+  t: PropTypes.func.isRequired,
 };
 
 export default BrightnessOptions;

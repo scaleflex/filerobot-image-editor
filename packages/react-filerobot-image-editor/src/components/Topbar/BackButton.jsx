@@ -1,14 +1,12 @@
 /** External Dependencies */
 import React from 'react';
+import { Button } from '@scaleflex/ui/core';
 import ArrowLeftOutline from '@scaleflex/icons/arrow-left-outline';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import { CLOSING_REASONS } from 'utils/constants';
-import {
-  StyledBackButtonLabel,
-  StyledCloseOrBackButton,
-} from './Topbar.styled';
+import { StyledBackButtonLabel } from './Topbar.styled';
 
 const BackButton = () => {
   const {
@@ -27,19 +25,15 @@ const BackButton = () => {
   };
 
   return (
-    <StyledCloseOrBackButton
+    <Button
       className="FIE_topbar-back-button"
-      color="link"
+      color="link-secondary"
       size="sm"
       onClick={closeWithReason}
+      startIcon={<ArrowLeftOutline />}
     >
-      {onClose && (
-        <>
-          <ArrowLeftOutline size={9} />
-          <StyledBackButtonLabel>{t('back')}</StyledBackButtonLabel>
-        </>
-      )}
-    </StyledCloseOrBackButton>
+      <StyledBackButtonLabel>{t('back')}</StyledBackButtonLabel>
+    </Button>
   );
 };
 

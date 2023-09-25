@@ -1,12 +1,14 @@
 /** External Dependeices */
 import React from 'react';
 import PropTypes from 'prop-types';
-import MenuItem from '@scaleflex/ui/core/menu-item';
 
 /** Internal Dependeices */
-import { StyledMenuItemIcon, StyledRatioDescription } from './Crop.styled';
-
-const PREFIX_ICONS_DIMENS = { height: 16, width: 16 };
+import {
+  StyledMenuItemIcon,
+  StyledMenuItem,
+  StyledRatioDescription,
+  StyledMenuItemLabel,
+} from './Crop.styled';
 
 const CropPresetItem = ({
   titleKey,
@@ -15,6 +17,7 @@ const CropPresetItem = ({
   onClick,
   Icon,
   isActive,
+  theme,
   width,
   height,
   t,
@@ -29,22 +32,24 @@ const CropPresetItem = ({
     });
 
   return (
-    <MenuItem active={isActive} onClick={handleOnClick} size="sm">
+    <StyledMenuItem active={isActive} onClick={handleOnClick}>
       {Icon && (
         <StyledMenuItemIcon>
           {typeof Icon === 'string' ? (
             // eslint-disable-next-line react/no-danger
             <span dangerouslySetInnerHTML={{ __html: Icon }} />
           ) : (
-            <Icon {...PREFIX_ICONS_DIMENS} />
+            <Icon color={theme.palette['icon-primary']} />
           )}
         </StyledMenuItemIcon>
       )}
-      {t(titleKey)}
+
+      <StyledMenuItemLabel>{t(titleKey)}</StyledMenuItemLabel>
+
       {description && (
         <StyledRatioDescription>{description}</StyledRatioDescription>
       )}
-    </MenuItem>
+    </StyledMenuItem>
   );
 };
 
@@ -63,6 +68,7 @@ CropPresetItem.propTypes = {
   isActive: PropTypes.bool.isRequired,
   ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   disableManualResize: PropTypes.bool,
+  theme: PropTypes.func.isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
   Icon: PropTypes.oneOfType([

@@ -5,7 +5,8 @@ import CrossOutline from '@scaleflex/icons/cross-outline';
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import { CLOSING_REASONS } from 'utils/constants';
-import { StyledCloseOrBackButton } from './Topbar.styled';
+import Separator from 'components/common/Separator';
+import { StyledCloseButton } from './Topbar.styled';
 
 const CloseButton = () => {
   const {
@@ -23,14 +24,17 @@ const CloseButton = () => {
   };
 
   return (
-    <StyledCloseOrBackButton
-      className="FIE_topbar-close-button"
-      color="link"
-      size="sm"
-      onClick={closeWithReason}
-    >
-      {onClose && <CrossOutline />}
-    </StyledCloseOrBackButton>
+    <>
+      <Separator />
+      <StyledCloseButton
+        className="FIE_topbar-close-button"
+        color="basic"
+        size="md"
+        onClick={closeWithReason}
+      >
+        {onClose && <CrossOutline />}
+      </StyledCloseButton>
+    </>
   );
 };
 

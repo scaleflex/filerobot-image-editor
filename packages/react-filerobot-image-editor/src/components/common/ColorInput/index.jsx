@@ -1,17 +1,17 @@
 /** External Dependencies */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Popper from '@scaleflex/ui/core/popper';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import { SET_LATEST_COLOR } from 'actions';
-import { StyledColorPicker, StyledPickerTrigger } from './ColorInput.styled';
+import ColorPickerModal from '../ColorPickerModal/index';
+import { StyledPickerTrigger } from './ColorInput.styled';
 
 const pinnedColorsKey = 'FIE_pinnedColors';
 
 // colorFor is used to save the latest color for a specific purpose (e.g. fill/shadow/stroke)
-const ColorInput = ({ position = 'top', onChange, color, colorFor }) => {
+const ColorInput = ({ onChange, color, colorFor }) => {
   const {
     selectionsIds = [],
     config: { annotationsCommon = {} },
@@ -81,35 +81,25 @@ const ColorInput = ({ position = 'top', onChange, color, colorFor }) => {
         $color={currentColor}
         onChange={onChange}
       />
-      <Popper
-        className="FIE_color-picker"
-        anchorEl={anchorEl}
+      <ColorPickerModal
+        hideModalTitle
+        onChange={changeColor}
+        defaultColor={currentColor}
+        pinnedColors={pinnedColors}
         open={Boolean(anchorEl)}
-        position={position}
-        onClick={togglePicker}
-        overlay
-        zIndex={11111}
-      >
-        <StyledColorPicker
-          onChange={changeColor}
-          defaultColor={currentColor}
-          pinnedColors={pinnedColors}
-          showTransparentColor
-        />
-      </Popper>
+        onClose={togglePicker}
+      />
     </>
   );
 };
 
 ColorInput.defaultProps = {
-  position: 'top',
   color: undefined,
 };
 
 ColorInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   colorFor: PropTypes.string.isRequired,
-  position: PropTypes.string,
   color: PropTypes.string,
 };
 

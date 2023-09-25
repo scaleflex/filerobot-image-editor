@@ -1,7 +1,6 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Label from '@scaleflex/ui/core/label';
 
 /** Internal Dependencies */
 import restrictNumber from 'utils/restrictNumber';
@@ -12,7 +11,7 @@ import Slider from '../Slider';
 const MIN_PERCENTANGE = 0;
 const MAX_PERCENTANGE = 100;
 
-const StrokeFields = ({ annotation, updateAnnotation, t }) => {
+const StrokeFields = ({ annotation, updateAnnotation }) => {
   const { stroke, strokeWidth } = annotation;
 
   const changeStrokeWidth = (newStrokeWidth) => {
@@ -31,11 +30,11 @@ const StrokeFields = ({ annotation, updateAnnotation, t }) => {
 
   return (
     <StyledSpacedOptionFields>
-      <Label>{t('stroke')}</Label>
       <Slider
         annotation="px"
         onChange={changeStrokeWidth}
         value={strokeWidth}
+        noMargin
       />
       <ColorInput
         color={stroke}
@@ -49,7 +48,6 @@ const StrokeFields = ({ annotation, updateAnnotation, t }) => {
 StrokeFields.propTypes = {
   annotation: PropTypes.instanceOf(Object).isRequired,
   updateAnnotation: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
 };
 
 export default StrokeFields;

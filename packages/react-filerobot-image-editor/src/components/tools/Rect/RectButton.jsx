@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Square as RectIcon } from '@scaleflex/icons/square';
+import { CropLandscape as RectIcon } from '@scaleflex/icons/crop-landscape';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

@@ -1,34 +1,30 @@
 /** External Dependencies */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import IconButton from '@scaleflex/ui/core/icon-button';
 import Input from '@scaleflex/ui/core/input';
-import Label from '@scaleflex/ui/core/label';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
+import { FontVariant as FV } from '@scaleflex/ui/utils/types/typography';
 
 const StyledResizeWrapper = styled.div`
   display: flex;
-  justify-content: ${({ alignLeft }) => (alignLeft ? 'left' : 'center')};
+  justify-content: ${({ alignment }) => alignment || 'center'};
   align-items: center;
-  flex-wrap: wrap;
+  gap: 12px;
+  flex-wrap: ${({ disableWrap }) => (disableWrap ? 'no-wrap' : 'wrap')};
 `;
 
-const StyledResizeInput = styled(Input)`
-  width: 70px;
-  height: 24px;
-  margin: ${({ noLeftMargin }) => (noLeftMargin ? '8px 8px 8px 0' : '8px')};
-`;
+const StyledResizeInput = styled(Input)(
+  ({ theme }) => css`
+    width: ${({ disableWrap }) => (disableWrap ? '100%' : '70px')};
+    margin-top: '4px';
 
-const StyledRatioLockIcon = styled(IconButton)`
-  margin-right: 16px;
-`;
+    span {
+      color: ${theme.palette[PC.TextSecondary]};
+      ${theme.typography.font[FV.LabelMedium]};
+    }
+  `,
+);
 
-const StyledXLabel = styled(Label)`
-  font-size: 13px;
-  line-height: 15px;
-`;
+const StyledRatioLockIcon = styled(IconButton)``;
 
-export {
-  StyledResizeWrapper,
-  StyledResizeInput,
-  StyledRatioLockIcon,
-  StyledXLabel,
-};
+export { StyledResizeWrapper, StyledResizeInput, StyledRatioLockIcon };

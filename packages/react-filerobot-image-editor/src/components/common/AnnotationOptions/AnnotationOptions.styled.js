@@ -1,19 +1,28 @@
 /** External Dependencies */
 import styled from 'styled-components';
 import Label from '@scaleflex/ui/core/label';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 
 const StyledOptions = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 8px;
+  padding: 8px 16px;
+  margin-top: 4px;
+  gap: 8px;
   flex-wrap: wrap;
+
+  svg {
+    color: ${({ theme: { palette } }) => palette[PC.IconsPrimary]};
+  }
 `;
 
 const StyledOptionPopupContent = styled.div`
   background: ${({ theme }) => theme.palette['bg-secondary']};
   box-shadow: 0px 1px 2px ${({ theme }) => theme.palette['light-shadow']};
-  border-radius: 2px;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
   overflow: visible;
 
   * {
@@ -23,11 +32,6 @@ const StyledOptionPopupContent = styled.div`
 
 const StyledSpacedOptionFields = styled.div`
   padding: 8px 12px;
-`;
-
-const StyledHeadline = styled(Label)`
-  font-weight: 500;
-  margin-bottom: 12px;
 `;
 
 const StyledTwoColumnsContainer = styled.div`
@@ -43,11 +47,14 @@ const StyledColumn = styled.div`
 `;
 
 const StyledIconWrapper = styled.div(
-  ({ theme, addThinBorder, noMargin, secondaryIconColor }) => `
+  ({ theme, addThinBorder, secondaryIconColor, active }) => `
     cursor: pointer;
-    padding: 3px 6px;
-    margin: ${noMargin ? 0 : '0 4px'};
-    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
 
     svg {
       vertical-align: middle;
@@ -56,17 +63,23 @@ const StyledIconWrapper = styled.div(
 
     ${
       addThinBorder
-        ? `border: 0.5px solid ${theme.palette['borders-secondary']}`
+        ? `border: 0.5px solid ${theme.palette['borders-secondary']};
+        padding: 9px 9px;`
         : ''
     };
-    color: ${secondaryIconColor ? '#959DA8' : ''};
+    color: ${secondaryIconColor ? theme.palette[PC.IconsSecondary] : ''};
 
-    &[aria-selected='true'] {
-      background: ${theme.palette['bg-primary-active']};
+    ${
+      active &&
+      `
+      border-radius: 4px;
+      border-color: ${theme.palette[PC.AccentStateless]};
+      background-color: ${theme.palette[PC.BackgroundActive]};
 
-      * {
-        color: ${theme.palette['accent-primary-active']};
-      }
+        * {
+          color: ${theme.palette[PC.AccentStateless]};
+        }
+      `
     }
 
     :hover {
@@ -75,12 +88,16 @@ const StyledIconWrapper = styled.div(
   `,
 );
 
+const StyledIconLabel = styled(Label)`
+  color: ${({ theme: { palette } }) => palette[PC.TextPrimary]};
+`;
+
 export {
-  StyledHeadline,
   StyledTwoColumnsContainer,
   StyledColumn,
   StyledIconWrapper,
   StyledSpacedOptionFields,
   StyledOptions,
   StyledOptionPopupContent,
+  StyledIconLabel,
 };

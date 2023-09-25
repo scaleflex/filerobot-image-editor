@@ -1,7 +1,6 @@
 /** External Dependencies */
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import Menu from '@scaleflex/ui/core/menu';
 
 /** Internal Dependencies */
 import { SET_CROP, SET_RESIZE, ZOOM_CANVAS } from 'actions';
@@ -10,12 +9,12 @@ import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styl
 import { DEFAULT_ZOOM_FACTOR, TOOLS_IDS } from 'utils/constants';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
 import getZoomFitFactor from 'utils/getZoomFitFactor';
-import { StyledOpenMenuButton } from './Crop.styled';
+import { MoveDownOutline, MoveUpOutline } from '@scaleflex/icons';
+import { Menu } from '@scaleflex/ui/core';
+import { StyledOpenMenuButton, StyledMenu } from './Crop.styled';
 import { DEFAULT_CROP_PRESETS } from './Crop.constants';
 import CropPresetGroupsList from './CropPresetGroupsFolder';
 import CropPresetItem from './CropPresetItem';
-
-const PREFIX_ICONS_DIMENS = { height: 16, width: 16 };
 
 const CropPresetsOption = ({ anchorEl, onClose }) => {
   const {
@@ -26,6 +25,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
     } = {},
     shownImageDimensions,
     config,
+    theme,
   } = useStore();
   const cropConfig = config[TOOLS_IDS.CROP];
 
@@ -88,8 +88,8 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
         titleKey={titleKey}
         groups={groups}
         Icon={Icon}
+        theme={theme}
         onItemSelect={changeCropRatio}
-        prefixIconDimensions={PREFIX_ICONS_DIMENS}
         t={t}
         disableManualResize={disableManualResize}
       />
@@ -105,6 +105,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
           currentRatio === (ratio ?? toPrecisedFloat(width / height)) &&
           !ratioFolderKey
         }
+        theme={theme}
         width={width}
         height={height}
         onClick={changeCropRatio}
@@ -121,11 +122,10 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
       </StyledToolsBarItemButtonLabel>
       <StyledOpenMenuButton
         className="FIE_crop-presets-opener-button"
-        color="link"
+        color="link-secondary"
         size="lg"
       >
-        {/* BOTTOM ARROW HTML CODE : TOP ARROW HTML CODE */}
-        {anchorEl ? <>&#9652;</> : <>&#9662;</>}
+        {anchorEl ? <MoveUpOutline size={10} /> : <MoveDownOutline size={10} />}
       </StyledOpenMenuButton>
       <Menu
         className="FIE_crop-presets-menu"
@@ -135,7 +135,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
         open={Boolean(anchorEl)}
         position="top"
       >
-        {allPresets.map(renderPreset)}
+        <StyledMenu>{allPresets.map(renderPreset)}</StyledMenu>
       </Menu>
     </>
   );

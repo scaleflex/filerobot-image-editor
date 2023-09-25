@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default */
-// eslint-disable-next-line import/no-named-as-default-member
+// eslint-disable-next-line import/no-named-as-default-member, import/no-relative-packages
 import FilerobotImageEditor from '../packages/filerobot-image-editor/src';
 import config from './demo-config';
 
@@ -63,7 +63,7 @@ const pluginConfig = {
   ...config,
   source: 'https://scaleflex.cloudimg.io/v7/demo/river.png',
   tabsIds: selectedTabs,
-  defaultTabId: TABS.RESIZE,
+  defaultTabId: TABS.ADJUST,
   defaultToolId: null,
   observePluginContainerSize: true,
   cloudimage: {

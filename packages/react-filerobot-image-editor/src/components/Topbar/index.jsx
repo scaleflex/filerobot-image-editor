@@ -1,9 +1,12 @@
 /** External Dependencies */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import Separator from 'components/common/Separator';
-import { usePhoneScreen, useStore } from 'hooks';
+import { useStore } from 'hooks';
+import { IconButton } from '@scaleflex/ui/core';
+import { Menu } from '@scaleflex/icons';
 import CloseButton from './CloseButton';
 import SaveButton from './SaveButton';
 import ResetButton from './ResetButton';
@@ -15,42 +18,68 @@ import {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
   StyledHistoryButtonsWrapper,
+  StyledHistoryButtons,
+  StyledZoomingButtons,
 } from './Topbar.styled';
 import BackButton from './BackButton';
 
-const Topbar = () => {
+const Topbar = ({ toggleMainMenu }) => {
   const {
     config: { showBackButton, disableZooming },
   } = useStore();
 
   return (
     <StyledTopbar className="FIE_topbar">
-      <StyledHistoryButtonsWrapper className="FIE_topbar-buttons-wrapper">
-        <SaveButton />
+      <StyledHistoryButtonsWrapper
+        className="FIE_topbar-buttons-wrapper"
+        showBackButton={showBackButton}
+      >
+        <IconButton
+          className="FIE_tabs_toggle_btn"
+          size="lg"
+          color="basic"
+          onClick={() => toggleMainMenu(true)}
+        >
+          {(props) => <Menu {...props} />}
+        </IconButton>
+        {showBackButton ? <BackButton /> : <SaveButton />}
       </StyledHistoryButtonsWrapper>
 
       <StyledFlexCenterAlignedContainer
-        // style={{ backgroundColor: 'yellow' }}
         className="FIE_topbar-center-options"
+        showBackButton={showBackButton}
       >
-        <ImageDimensionsAndDisplayToggle />
+        <StyledZoomingButtons>
+          <ImageDimensionsAndDisplayToggle showBackButton={showBackButton} />
 
-        {!disableZooming && (
-          <>
-            <Separator />
-            <CanvasZooming />
-          </>
-        )}
+          {!disableZooming && (
+            <>
+              <Separator />
+              <CanvasZooming showBackButton={showBackButton} />
+            </>
+          )}
+        </StyledZoomingButtons>
       </StyledFlexCenterAlignedContainer>
 
       <StyledHistoryButtonsWrapper className="FIE_topbar-history-buttons">
-        <ResetButton margin="0" />
-        <UndoButton margin="0" />
-        <RedoButton margin="0" />
+        <StyledHistoryButtons>
+          <ResetButton margin="0" showBackButton={showBackButton} />
+          <UndoButton margin="0" showBackButton={showBackButton} />
+          <RedoButton margin="0" showBackButton={showBackButton} />
+        </StyledHistoryButtons>
 
-        {showBackButton ? <BackButton /> : <CloseButton />}
+        {showBackButton ? <SaveButton /> : <CloseButton />}
       </StyledHistoryButtonsWrapper>
     </StyledTopbar>
   );
 };
+
+Topbar.defaultProps = {
+  toggleMainMenu: () => {},
+};
+
+Topbar.propTypes = {
+  toggleMainMenu: PropTypes.func,
+};
+
 export default Topbar;

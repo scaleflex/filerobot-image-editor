@@ -16,10 +16,15 @@ import {
   StyledResizeWrapper,
   StyledResizeInput,
   StyledRatioLockIcon,
-  StyledXLabel,
 } from './Resize.styled';
 
-const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
+const Resize = ({
+  onChange,
+  currentSize,
+  hideResetButton,
+  alignment,
+  disableWrap,
+}) => {
   const {
     dispatch,
     originalImage,
@@ -134,7 +139,8 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
   return (
     <StyledResizeWrapper
       className="FIE_resize-tool-options"
-      alignLeft={alignLeft}
+      alignment={alignment}
+      disableWrap={disableWrap}
     >
       <StyledResizeInput
         className="FIE_resize-width-option"
@@ -145,11 +151,25 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
         title={t('resizeWidthTitle')}
         type="number"
         size="sm"
+        iconEnd="px"
         placeholder="Width"
-        noLeftMargin={alignLeft}
+        disableWrap={disableWrap}
         disabled={isManualChangeDisabled}
       />
-      <StyledXLabel className="FIE_resize-x-label">x</StyledXLabel>
+      <StyledRatioLockIcon
+        className="FIE_resize-ratio-locker"
+        title={t('toggleRatioLockTitle')}
+        onClick={isManualChangeDisabled ? undefined : toggleRatioLock}
+        color="basic"
+        size="sm"
+        disabled={isManualChangeDisabled}
+      >
+        {currentSize.ratioUnlocked || resize.ratioUnlocked ? (
+          <UnlockOutline size={16} color={theme.palette['icons-secondary']} />
+        ) : (
+          <LockOutline size={16} color={theme.palette['icons-secondary']} />
+        )}
+      </StyledRatioLockIcon>
       <StyledResizeInput
         className="FIE_resize-height-option"
         value={dimensions.height}
@@ -159,23 +179,11 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignLeft }) => {
         title={t('resizeHeightTitle')}
         type="number"
         size="sm"
+        iconEnd="px"
         placeholder="Height"
+        disableWrap={disableWrap}
         disabled={isManualChangeDisabled}
       />
-      <StyledRatioLockIcon
-        className="FIE_resize-ratio-locker"
-        title={t('toggleRatioLockTitle')}
-        onClick={isManualChangeDisabled ? undefined : toggleRatioLock}
-        color="link"
-        size="sm"
-        disabled={isManualChangeDisabled}
-      >
-        {currentSize.ratioUnlocked || resize.ratioUnlocked ? (
-          <UnlockOutline color={theme.palette['icons-secondary']} />
-        ) : (
-          <LockOutline color={theme.palette['icons-secondary']} />
-        )}
-      </StyledRatioLockIcon>
       {!hideResetButton && (
         <Button
           className="FIE_resize-reset-button"
@@ -197,11 +205,13 @@ Resize.defaultProps = {
   onChange: undefined,
   currentSize: {},
   hideResetButton: false,
-  alignLeft: false,
+  alignment: 'center',
+  disableWrap: false,
 };
 
 Resize.propTypes = {
-  alignLeft: PropTypes.bool,
+  disableWrap: PropTypes.bool,
+  alignment: PropTypes.string,
   hideResetButton: PropTypes.bool,
   onChange: PropTypes.func,
   currentSize: PropTypes.shape({

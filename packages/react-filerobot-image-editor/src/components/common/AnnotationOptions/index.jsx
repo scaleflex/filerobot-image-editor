@@ -17,6 +17,7 @@ import {
   StyledOptionPopupContent,
   StyledOptions,
   StyledIconWrapper,
+  StyledIconLabel,
 } from './AnnotationOptions.styled';
 import { POPPABLE_OPTIONS } from './AnnotationOptions.constants';
 import ColorInput from '../ColorInput';
@@ -112,8 +113,10 @@ const AnnotationOptions = ({
               key={option.name}
               title={t(option.titleKey)}
               onClick={(e) => toggleOptionPopup(e, option.name)}
+              active={currentOption === option.name}
             >
-              <option.Icon size={18} />
+              <option.Icon size={16} />
+              <StyledIconLabel>{t(option.titleKey)}</StyledIconLabel>
             </StyledIconWrapper>
           ),
       )}

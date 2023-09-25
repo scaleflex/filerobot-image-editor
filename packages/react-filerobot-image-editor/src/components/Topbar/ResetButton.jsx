@@ -10,7 +10,7 @@ import Modal from 'components/common/Modal';
 import { RESET } from 'actions';
 import { StyledHistoryButton } from './Topbar.styled';
 
-const ResetButton = ({ margin }) => {
+const ResetButton = ({ margin, showBackButton }) => {
   const {
     dispatch,
     isResetted = true,
@@ -43,13 +43,15 @@ const ResetButton = ({ margin }) => {
     <>
       <StyledHistoryButton
         className="FIE_topbar-reset-button"
-        color="link"
+        color="basic"
+        size="sm"
         onClick={isResetted ? undefined : openModal}
         disabled={isResetted || isBlockerError}
+        showBackButton={showBackButton}
         title={t('resetOperations')}
         margin={margin}
       >
-        <Revert size={12} />
+        <Revert />
       </StyledHistoryButton>
       {isModalOpened && (
         <Modal
@@ -71,10 +73,12 @@ const ResetButton = ({ margin }) => {
 
 ResetButton.defaultProps = {
   margin: undefined,
+  showBackButton: false,
 };
 
 ResetButton.propTypes = {
   margin: PropTypes.string,
+  showBackButton: PropTypes.bool,
 };
 
 export default ResetButton;

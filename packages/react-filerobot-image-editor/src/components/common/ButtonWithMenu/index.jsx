@@ -2,11 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ArrowLeftOutline from '@scaleflex/icons/arrow-left-outline';
-import Menu from '@scaleflex/ui/core/menu';
-import MenuItem, {
-  MenuItemIcon,
-  MenuItemLabel,
-} from '@scaleflex/ui/core/menu-item';
+import { MenuItemLabel } from '@scaleflex/ui/core/menu-item';
 
 /** Internal Dependencies */
 import {
@@ -14,14 +10,17 @@ import {
   StyledButtonWrapper,
   StyledMenuButton,
   StyledMenu,
+  StyledMenuItem,
+  StyledMenuIcon,
 } from './ButtonWithMenu.styled';
 
 let isFieButtonWithMenuMounted = true;
 
 const ButtonWithMenu = ({
-  t,
+  t = () => {},
   onClick,
   title,
+  label,
   color,
   menuFromBtn,
   menuItems,
@@ -34,7 +33,7 @@ const ButtonWithMenu = ({
   buttonRef,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const buttonSize = 'md';
+  const buttonSize = 'sm';
 
   const filteredMenuItems = menuItems.filter(Boolean);
   const hasMultipleMenuItems = filteredMenuItems.length > 1;
@@ -73,6 +72,14 @@ const ButtonWithMenu = ({
     }
   };
 
+  const getMainButtonLabel = () => {
+    if (label) return label;
+
+    if (hasMultipleMenuItems) return t('Download');
+
+    return t('Save as');
+  };
+
   useEffect(() => {
     isFieButtonWithMenuMounted = true;
 
@@ -97,7 +104,7 @@ const ButtonWithMenu = ({
           keepBorderRadius={!hasMultipleMenuItems}
           disabled={disabled}
         >
-          {hasMultipleMenuItems ? t('Download') : t('Save as')}
+          {getMainButtonLabel()}
         </StyledMainButton>
         {hasMultipleMenuItems && (
           <StyledMenuButton
@@ -123,7 +130,7 @@ const ButtonWithMenu = ({
           {menuItems.map(
             (item) =>
               item && (
-                <MenuItem
+                <StyledMenuItem
                   className={`${className}-menu-item`}
                   key={item.key}
                   active={item.isActive}
@@ -131,17 +138,17 @@ const ButtonWithMenu = ({
                   size={buttonSize}
                 >
                   {item.icon && (
-                    <MenuItemIcon size={buttonSize}>
+                    <StyledMenuIcon size={buttonSize}>
                       {typeof item.icon === 'string' ? (
                         // eslint-disable-next-line react/no-danger
                         <span dangerouslySetInnerHTML={{ __html: item.icon }} />
                       ) : (
                         <item.icon />
                       )}
-                    </MenuItemIcon>
+                    </StyledMenuIcon>
                   )}
                   <MenuItemLabel>{item.label}</MenuItemLabel>
-                </MenuItem>
+                </StyledMenuItem>
               ),
           )}
         </StyledMenu>
@@ -152,6 +159,7 @@ const ButtonWithMenu = ({
 
 ButtonWithMenu.defaultProps = {
   title: '',
+  label: '',
   color: 'primary',
   menuFromBtn: false,
   menuPosition: 'bottom',
@@ -164,11 +172,12 @@ ButtonWithMenu.defaultProps = {
 };
 
 ButtonWithMenu.propTypes = {
-  label: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired,
   menuItems: PropTypes.instanceOf(Array).isRequired,
   className: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   title: PropTypes.string,
+  label: PropTypes.string,
   color: PropTypes.string,
   menuFromBtn: PropTypes.bool,
   menuPosition: PropTypes.string,

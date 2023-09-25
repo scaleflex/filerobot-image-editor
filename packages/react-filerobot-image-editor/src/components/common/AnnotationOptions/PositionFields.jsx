@@ -1,8 +1,7 @@
 /** External Dependencies */
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import ArrowRightAlt from '@scaleflex/icons/arrow-right-alt';
-import Point from '@scaleflex/icons/point';
+import { ArrowRight, Point } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { POSITIONS } from 'utils/constants';
@@ -15,12 +14,15 @@ import {
 } from './AnnotationOptions.constants';
 
 const PositionFields = ({ annotation, updateAnnotation }) => {
+  const [position, setPosition] = useState(null);
+
   const { designLayer } = useStore();
 
   const changePosition = (newPositionStr) => {
     updateAnnotation(
       mapPositionStringToPoint(annotation, designLayer, newPositionStr),
     );
+    setPosition(newPositionStr);
   };
 
   const positionsLength = AVAILABLE_POSITIONS.length;
@@ -29,14 +31,14 @@ const PositionFields = ({ annotation, updateAnnotation }) => {
     <Fragment key={pos}>
       <StyledIconWrapper
         onClick={() => changePosition(pos)}
+        active={position === pos}
         secondaryIconColor
         addThinBorder
-        noMargin
       >
         {pos === POSITIONS.MIDDLE_CENTER ? (
           <Point />
         ) : (
-          <ArrowRightAlt
+          <ArrowRight
             style={{
               transform: `rotate(${posCssRotateDegFromRightSide[pos]}deg)`,
             }}

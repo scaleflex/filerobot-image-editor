@@ -7,7 +7,6 @@ import Label from '@scaleflex/ui/core/label';
 import restrictNumber from 'utils/restrictNumber';
 import ColorInput from 'components/common/ColorInput';
 import {
-  StyledHeadline,
   StyledTwoColumnsContainer,
   StyledColumn,
   StyledSpacedOptionFields,
@@ -35,7 +34,6 @@ const ShadowFields = ({ annotation, updateAnnotation, t }) => {
 
   return (
     <StyledSpacedOptionFields>
-      <StyledHeadline>{t('shadow')}</StyledHeadline>
       <StyledTwoColumnsContainer>
         <StyledColumn>
           <Label>{t('horizontal')}</Label>

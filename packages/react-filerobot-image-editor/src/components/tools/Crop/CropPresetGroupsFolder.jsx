@@ -1,18 +1,18 @@
 /** External Dependencies */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import MenuItem from '@scaleflex/ui/core/menu-item';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import CropPresetGroup from './CropPresetGroup';
+import { StyledMenuItem, StyledMenuItemIcon } from './Crop.styled';
 
 const CropPresetGroupsFolder = ({
   titleKey,
   Icon,
+  theme,
   groups,
   onItemSelect,
-  prefixIconDimensions,
   t,
 }) => {
   const {
@@ -30,20 +30,21 @@ const CropPresetGroupsFolder = ({
   };
 
   return (
-    <MenuItem
-      size="sm"
+    <StyledMenuItem
       list={[
         {
           content: t(titleKey),
           key: titleKey,
           active: titleKey === ratioFolderKey,
-          prefix:
-            Icon &&
-            (typeof Icon === 'string' ? ( // eslint-disable-next-line react/no-danger
-              <span dangerouslySetInnerHTML={{ __html: Icon }} />
-            ) : (
-              <Icon {...prefixIconDimensions} />
-            )),
+          prefix: Icon && (
+            <StyledMenuItemIcon>
+              {typeof Icon === 'string' ? ( // eslint-disable-next-line react/no-danger
+                <span dangerouslySetInnerHTML={{ __html: Icon }} />
+              ) : (
+                <Icon color={theme.palette['icon-primary']} />
+              )}
+            </StyledMenuItemIcon>
+          ),
           subList: groups.map(({ titleKey: groupTitleKey, items }) => ({
             content: (
               <CropPresetGroup
@@ -77,7 +78,8 @@ CropPresetGroupsFolder.propTypes = {
   groups: PropTypes.instanceOf(Array).isRequired,
   onItemSelect: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
-  prefixIconDimensions: PropTypes.instanceOf(Object).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  theme: PropTypes.object.isRequired,
   Icon: PropTypes.oneOfType([
     PropTypes.elementType,
     PropTypes.string,

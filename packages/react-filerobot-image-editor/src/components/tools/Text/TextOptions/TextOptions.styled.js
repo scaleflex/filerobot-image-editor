@@ -4,13 +4,11 @@ import Input from '@scaleflex/ui/core/input';
 import Select from '@scaleflex/ui/core/select';
 
 const StyledFontFamilySelect = styled(Select)`
-  width: 88px;
-  margin: 0 4px;
+  width: 160px;
 `;
 
 const StyledFontSizeInput = styled(Input)`
-  width: 70px;
-  margin: 0 4px;
+  width: 72px;
 `;
 
 export { StyledFontFamilySelect, StyledFontSizeInput };

@@ -1,8 +1,8 @@
 /** External Dependencies */
 import React from 'react';
-import RotationSlider from '@scaleflex/ui/core/rotation-slider';
 import RotationLeft from '@scaleflex/icons/rotation-left';
 import RotationRight from '@scaleflex/icons/rotation-right';
+import { Reset } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useDebouncedCallback, useStore } from 'hooks';
@@ -11,6 +11,11 @@ import restrictNumber from 'utils/restrictNumber';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import { TOOLS_IDS } from 'utils/constants';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
+import {
+  StyledRotationOptions,
+  StyledRotationSlider,
+  StyledRotateButton,
+} from './Rotate.styled';
 
 const RotateOptions = () => {
   const {
@@ -78,15 +83,23 @@ const RotateOptions = () => {
   }
 
   return (
-    <RotationSlider
-      className="FIE_rotate-slider"
-      min={-180}
-      max={180}
-      value={rotation}
-      angle={rotateConfig.angle || 90}
-      onChange={changeRotation}
-      style={{ marginBottom: 20 }}
-    />
+    <StyledRotationOptions>
+      <StyledRotationSlider
+        className="FIE_rotate-slider"
+        min={-180}
+        max={180}
+        value={rotation}
+        angle={rotateConfig.angle || 90}
+        onChange={changeRotation}
+      />
+      <StyledRotateButton
+        size="sm"
+        color="basic"
+        onClick={(e) => changeRotation(e, rotation + 90)}
+      >
+        <Reset />
+      </StyledRotateButton>
+    </StyledRotationOptions>
   );
 };
 

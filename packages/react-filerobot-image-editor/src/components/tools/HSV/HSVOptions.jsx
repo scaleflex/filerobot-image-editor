@@ -6,8 +6,7 @@ import Konva from 'konva';
 /** Internal Dependencies */
 import { useFinetune } from 'hooks';
 import Slider from 'components/common/Slider';
-import Label from '@scaleflex/ui/core/label';
-import { StyledSliderContainer } from './HSV.styled';
+import { StyledSliderContainer, StyledSliderLabel } from '../tools.styled';
 
 const DEFAULT_VALUE = {
   hue: 0,
@@ -32,7 +31,9 @@ const HSVOptions = ({ t }) => {
   return (
     <>
       <StyledSliderContainer className="FIE_hue-option-wrapper">
-        <Label className="FIE_hue-option-label">{t('hue')}</Label>
+        <StyledSliderLabel className="FIE_hue-option-label">
+          {t('hue')}
+        </StyledSliderLabel>
         <Slider
           className="FIE_hue-option"
           min={0}
@@ -44,7 +45,9 @@ const HSVOptions = ({ t }) => {
         />
       </StyledSliderContainer>
       <StyledSliderContainer className="FIE_saturation-option-wrapper">
-        <Label className="FIE_saturation-option-label">{t('saturation')}</Label>
+        <StyledSliderLabel className="FIE_saturation-option-label">
+          {t('saturation')}
+        </StyledSliderLabel>
         <Slider
           className="FIE_saturation-option"
           min={-2}
@@ -56,7 +59,9 @@ const HSVOptions = ({ t }) => {
         />
       </StyledSliderContainer>
       <StyledSliderContainer className="FIE_value-option-wrapper">
-        <Label className="FIE_value-option-label">{t('value')}</Label>
+        <StyledSliderLabel className="FIE_value-option-label">
+          {t('value')}
+        </StyledSliderLabel>
         <Slider
           className="FIE_value-option"
           min={-2}

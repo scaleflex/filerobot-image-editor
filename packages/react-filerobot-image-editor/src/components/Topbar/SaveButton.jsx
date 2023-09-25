@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { useEffect, useRef, useState } from 'react';
 import MenuItem from '@scaleflex/ui/core/menu-item';
-import SaveAs from '@scaleflex/icons/save-as';
+import { Image2 } from '@scaleflex/icons';
 import Label from '@scaleflex/ui/core/label';
 
 /** Internal Dependencies */
@@ -264,10 +264,10 @@ const SaveButton = () => {
       {isModalOpened && (
         <Modal
           className="FIE_save-modal"
-          title={t('saveAsModalLabel')}
+          title={t('saveAsModalTitle')}
           // eslint-disable-next-line react/no-unstable-nested-components
           Icon={(props) => (
-            <SaveAs color={theme.palette['accent-primary']} {...props} />
+            <Image2 color={theme.palette['accent-primary']} {...props} />
           )}
           isOpened={isModalOpened}
           onCancel={cancelModal}
@@ -283,8 +283,10 @@ const SaveButton = () => {
             value={imageFileInfo.name}
             onChange={changeFileName}
             size="sm"
-            placeholder={t('name')}
+            label={t('name')}
+            placeholder={t('imageName')}
             error={!imageFileInfo.name}
+            fullWidth
             focusOnMount
           />
           <StyledFileExtensionSelect
@@ -293,8 +295,10 @@ const SaveButton = () => {
               setImageFileInfo({ ...imageFileInfo, extension: ext })
             }
             value={imageFileInfo.extension}
+            label={t('format')}
             placeholder={t('extension')}
             size="sm"
+            fullWidth
           >
             {SUPPORTED_IMAGE_TYPES.map((ext) => (
               <MenuItem key={ext} value={ext}>
@@ -323,6 +327,8 @@ const SaveButton = () => {
               currentSize={imageFileInfo?.size || {}}
               hideResetButton
               alignLeft
+              disableWrap
+              alignment="space-between"
             />
           </StyledResizeOnSave>
         </Modal>

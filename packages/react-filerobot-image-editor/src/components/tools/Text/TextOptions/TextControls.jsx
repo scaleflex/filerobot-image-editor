@@ -160,17 +160,17 @@ const TextControls = ({ text, saveText, children }) => {
         <>
           <StyledIconWrapper
             className="FIE_text-bold-option"
-            aria-selected={(text.fontStyle || '').includes('bold')}
+            active={(text.fontStyle || '').includes('bold')}
             onClick={() => changeFontStyle('bold')}
           >
-            <FontBold />
+            <FontBold size={16} />
           </StyledIconWrapper>
           <StyledIconWrapper
             className="FIE_text-italic-option"
-            aria-selected={(text.fontStyle || '').includes('italic')}
+            active={(text.fontStyle || '').includes('italic')}
             onClick={() => changeFontStyle('italic')}
           >
-            <FontItalic />
+            <FontItalic size={16} />
           </StyledIconWrapper>
         </>
       )}

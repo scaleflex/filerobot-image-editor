@@ -35,7 +35,7 @@ export const AVAILABLE_TABS = [
   },
   {
     id: TABS_IDS.ANNOTATE,
-    labelKey: 'annotateTab',
+    labelKey: 'annotateTabLabel',
     icon: Annotate,
     hideFn: ({ useCloudimage }) => useCloudimage,
   },

@@ -1,26 +1,27 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Label from '@scaleflex/ui/core/label';
 
 /** Internal Dependencies */
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
+
 import { StyledSpinnerWrapper, StyledSpinner } from './Spinner.styled';
 
-const Spinner = ({ label }) => {
+const Spinner = ({ theme }) => {
   return (
     <StyledSpinnerWrapper className="FIE_spinner-wrapper">
-      <StyledSpinner className="FIE_spinner" />
-      {label && <Label className="FIE_spinner-label">{label}</Label>}
+      <StyledSpinner size={50} color={theme.palette[PC.AccentStateless]} />
     </StyledSpinnerWrapper>
   );
 };
 
 Spinner.defaultProps = {
-  label: '',
+  theme: {},
 };
 
 Spinner.propTypes = {
-  label: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  theme: PropTypes.object,
 };
 
 export default Spinner;

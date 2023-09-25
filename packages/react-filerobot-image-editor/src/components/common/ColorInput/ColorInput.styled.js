@@ -1,6 +1,6 @@
 /** External Dependencies */
 import styled from 'styled-components';
-import ColorPicker from '@scaleflex/ui/core/color-picker';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 
 const StyledPickerTrigger = styled.div.attrs(({ $color }) => ({
   style: {
@@ -12,15 +12,11 @@ const StyledPickerTrigger = styled.div.attrs(({ $color }) => ({
 }))`
   background: ${({ theme }) => theme.palette['icons-primary']};
   border-radius: 2px;
-  width: 24px;
-  height: 24px;
-  border: 2px solid ${({ theme }) => theme.palette['borders-strong']};
+  width: 28px;
+  height: 28px;
+  border: 1px solid ${({ theme }) => theme.palette[PC.BorderPrimaryStateless]};
   cursor: pointer;
   box-sizing: border-box;
 `;
 
-const StyledColorPicker = styled(ColorPicker)`
-  max-width: 212px;
-`;
-
-export { StyledPickerTrigger, StyledColorPicker };
+export { StyledPickerTrigger };

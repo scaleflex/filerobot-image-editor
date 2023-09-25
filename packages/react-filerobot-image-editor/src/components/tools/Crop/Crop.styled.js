@@ -1,7 +1,10 @@
 /** External Dependencies */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '@scaleflex/ui/core/button';
 import Label from '@scaleflex/ui/core/label';
+import { Accordion, MenuItem } from '@scaleflex/ui/core';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
+import { FontVariant as FV } from '@scaleflex/ui/utils/types/typography';
 
 const StyledOpenMenuButton = styled(Button)`
   margin: 0 0 0 6px;
@@ -9,8 +12,6 @@ const StyledOpenMenuButton = styled(Button)`
 `;
 
 const StyledMenuItemIcon = styled.div`
-  margin-right: 6px;
-
   svg,
   span {
     vertical-align: middle;
@@ -18,8 +19,60 @@ const StyledMenuItemIcon = styled.div`
 `;
 
 const StyledRatioDescription = styled(Label)`
-  margin-left: 4px;
   cursor: pointer;
+  ${({ theme: { typography } }) => typography.font[FV.InputSm]}
 `;
 
-export { StyledOpenMenuButton, StyledMenuItemIcon, StyledRatioDescription };
+const StyledMenu = styled.div`
+  min-width: 270px;
+  border-radius: 4px;
+  padding: 8px;
+  background-color: ${({ theme: { palette } }) =>
+    palette[PC.BackgroundStateless]};
+`;
+
+const StyledMenuItem = styled(MenuItem)`
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 4px;
+  padding: 8px 12px;
+`;
+
+const StyledMenuItemLabel = styled(Label)(
+  ({ theme }) => css`
+    color: ${theme.palette[PC.TextPrimary]};
+    ${theme.typography.font[FV.InputMd]};
+  `,
+);
+
+const StyledAccordion = styled(Accordion)(
+  ({ theme }) => css`
+    .SfxAccordionHeader-icon {
+      padding-left: 0;
+    }
+
+    .SfxAccordionHeader-label {
+      ${theme.typography.font[FV.LabelMedium]};
+      color: ${theme.palette[PC.TextPrimary]};
+    }
+
+    .SfxAccordionHeader-root {
+      display: flex;
+      flex-direction: row-reverse;
+      width: fit-content;
+      gap: 10px;
+    }
+  `,
+);
+
+export {
+  StyledOpenMenuButton,
+  StyledMenuItemIcon,
+  StyledRatioDescription,
+  StyledMenu,
+  StyledMenuItem,
+  StyledMenuItemLabel,
+  StyledAccordion,
+};

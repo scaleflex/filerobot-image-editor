@@ -1,15 +1,10 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Modal as LibModal,
-  ModalActions,
-  Button,
-  ModalContent,
-} from '@scaleflex/ui/core';
+import { Modal as LibModal, Button, ModalContent } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
-import { StyledModalTitle } from './Modal.styled';
+import { StyledModalTitle, StyledModalActions } from './Modal.styled';
 
 const style = { width: 300 };
 
@@ -23,8 +18,8 @@ const Modal = ({
   cancelLabel,
   isOpened,
   doneButtonStyle,
-  doneButtonColor = 'link',
-  cancelButtonColor = 'link',
+  doneButtonColor = 'basic',
+  cancelButtonColor = 'basic',
   children,
   areButtonsDisabled,
   zIndex,
@@ -53,7 +48,7 @@ const Modal = ({
         variant="with-icon"
       />
       {children && <ModalContent>{children}</ModalContent>}
-      <ModalActions align="center">
+      <StyledModalActions align="center">
         <Button
           color={cancelButtonColor}
           onClick={onCancel}
@@ -71,7 +66,7 @@ const Modal = ({
         >
           {doneLabel}
         </Button>
-      </ModalActions>
+      </StyledModalActions>
     </LibModal>
   );
 };
@@ -82,8 +77,8 @@ Modal.defaultProps = {
   doneLabel: 'Yes',
   cancelLabel: 'No',
   doneButtonStyle: undefined,
-  doneButtonColor: 'link',
-  cancelButtonColor: 'link',
+  doneButtonColor: 'basic',
+  cancelButtonColor: 'basic',
   children: undefined,
   areButtonsDisabled: false,
   zIndex: undefined,

@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { useState } from 'react';
-import Minus from '@scaleflex/icons/minus';
-import Plus from '@scaleflex/icons/plus';
+import PropTypes from 'prop-types';
+import { MinusOutline, PlusOutline } from '@scaleflex/icons';
 import Menu from '@scaleflex/ui/core/menu';
 import MenuItem, { MenuItemLabel } from '@scaleflex/ui/core/menu-item';
 
@@ -11,12 +11,16 @@ import { DEFAULT_ZOOM_FACTOR, TOOLS_IDS } from 'utils/constants';
 import { useStore } from 'hooks';
 import getZoomFitFactor from 'utils/getZoomFitFactor';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
-import { StyledSmallButton, StyledZoomPercentageLabel } from './Topbar.styled';
+import {
+  StyledSmallButton,
+  StyledZoomPercentageLabel,
+  StyledZoomingWrapper,
+} from './Topbar.styled';
 import { ZOOM_FACTORS_PRESETS } from './Topbar.constants';
 
 const MULTIPLY_ZOOM_FACTOR = 1.1;
 
-const CanvasZooming = () => {
+const CanvasZooming = ({ showBackButton }) => {
   const {
     dispatch,
     zoom = {},
@@ -88,15 +92,16 @@ const CanvasZooming = () => {
       : zoom.factor;
 
   return (
-    <div style={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
+    <StyledZoomingWrapper>
       <StyledSmallButton
         onClick={zoomOut}
-        color="link"
+        color="basic"
         title={t('zoomOutTitle')}
         disabled={isZoomDisabled}
+        showBackButton={showBackButton}
         className="FIE_topbar-zoom-out-btn"
       >
-        <Minus />
+        <MinusOutline />
       </StyledSmallButton>
       <StyledZoomPercentageLabel
         title={t('toggleZoomMenuTitle')}
@@ -112,12 +117,13 @@ const CanvasZooming = () => {
       </StyledZoomPercentageLabel>
       <StyledSmallButton
         onClick={zoomIn}
-        color="link"
+        color="basic"
         title={t('zoomInTitle')}
         disabled={isZoomDisabled}
+        showBackButton={showBackButton}
         className="FIE_topbar-zoom-in-btn"
       >
-        <Plus />
+        <PlusOutline />
       </StyledSmallButton>
       <Menu
         anchorEl={zoomingMenuAnchorEl}
@@ -135,8 +141,16 @@ const CanvasZooming = () => {
           </MenuItem>
         ))}
       </Menu>
-    </div>
+    </StyledZoomingWrapper>
   );
+};
+
+CanvasZooming.defaultProps = {
+  showBackButton: false,
+};
+
+CanvasZooming.propTypes = {
+  showBackButton: PropTypes.bool,
 };
 
 export default CanvasZooming;

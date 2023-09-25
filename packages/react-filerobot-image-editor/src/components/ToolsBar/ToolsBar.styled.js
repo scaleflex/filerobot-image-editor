@@ -1,13 +1,13 @@
 /** External Dependencies */
 import styled from 'styled-components';
 import Label from '@scaleflex/ui/core/label';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 
 const StyledToolsBar = styled.div`
-  padding: 8px 1px 0;
   width: fit-content;
   margin: 0 auto;
   max-width: 99.5%;
-  max-height: 92px;
+  max-height: 112px;
 
   [data-phone='true'] & {
     padding: 0;
@@ -17,7 +17,9 @@ const StyledToolsBar = styled.div`
 `;
 
 const StyledToolsBarItems = styled.div`
+  padding: 0 16px 16px 16px;
   display: flex;
+  gap: 12px;
   align-items: center;
   overflow-x: auto;
   [data-phone='true'] & {
@@ -31,10 +33,10 @@ const StyledToolsBarItemButton = styled.div(
     border-radius: 2px;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 8px 12px;
 
-    &:not(:last-child) {
-      margin-right: 8px;
+    svg {
+      color: ${theme.palette[PC.IconsPrimary]};
     }
 
     &,
@@ -48,6 +50,7 @@ const StyledToolsBarItemButton = styled.div(
 
     &[aria-selected='true'] {
       background: ${theme.palette['bg-primary-active']};
+      border-radius: 4px;
 
       * {
         color: ${theme.palette['accent-primary-active']};
@@ -58,6 +61,7 @@ const StyledToolsBarItemButton = styled.div(
 
 const StyledToolsBarItemButtonLabel = styled(Label)`
   margin-left: 6px;
+  color: ${({ theme: { palette } }) => palette[PC.TextPrimary]};
 `;
 
 const StyledToolsBarItemOptionsWrapper = styled.div`
@@ -67,9 +71,10 @@ const StyledToolsBarItemOptionsWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 24px;
 
   ${(props) => `
-      max-height: ${props.hasChildren ? '40px' : 0};
+      max-height: ${props.hasChildren ? '56px' : 0};
       margin: ${props.hasChildren ? '0 auto 8px' : 0};
     `};
 `;
