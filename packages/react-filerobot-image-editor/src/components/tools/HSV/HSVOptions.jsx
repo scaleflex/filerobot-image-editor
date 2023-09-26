@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 import Konva from 'konva';
 
 /** Internal Dependencies */
-import { useFinetune } from 'hooks';
+import { useFinetune, usePhoneScreen } from 'hooks';
 import Slider from 'components/common/Slider';
-import { StyledSliderContainer, StyledSliderLabel } from '../tools.styled';
+import {
+  StyledHSVOptions,
+  StyledSliderContainer,
+  StyledSliderLabel,
+} from '../tools.styled';
 
 const DEFAULT_VALUE = {
   hue: 0,
@@ -15,6 +19,7 @@ const DEFAULT_VALUE = {
 };
 
 const sliderStyle = { padding: 0 };
+const isPhoneScreen = usePhoneScreen();
 
 const HSVOptions = ({ t }) => {
   const [finetuneProps, setFinetuneProps] = useFinetune(
@@ -29,7 +34,7 @@ const HSVOptions = ({ t }) => {
   };
 
   return (
-    <>
+    <StyledHSVOptions isPhoneScreen={isPhoneScreen}>
       <StyledSliderContainer className="FIE_hue-option-wrapper">
         <StyledSliderLabel className="FIE_hue-option-label">
           {t('hue')}
@@ -72,7 +77,7 @@ const HSVOptions = ({ t }) => {
           style={sliderStyle}
         />
       </StyledSliderContainer>
-    </>
+    </StyledHSVOptions>
   );
 };
 

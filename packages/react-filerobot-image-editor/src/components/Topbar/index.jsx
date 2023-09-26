@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import Separator from 'components/common/Separator';
-import { useStore } from 'hooks';
+import { usePhoneScreen, useStore } from 'hooks';
 import { IconButton } from '@scaleflex/ui/core';
 import { Menu } from '@scaleflex/icons';
 import CloseButton from './CloseButton';
@@ -28,15 +28,17 @@ const Topbar = ({ toggleMainMenu }) => {
     config: { showBackButton, disableZooming },
   } = useStore();
 
+  const isPhoneScreen = usePhoneScreen(363);
+
   return (
-    <StyledTopbar className="FIE_topbar">
+    <StyledTopbar className="FIE_topbar" isPhoneScreen={isPhoneScreen}>
       <StyledHistoryButtonsWrapper
         className="FIE_topbar-buttons-wrapper"
         showBackButton={showBackButton}
       >
         <IconButton
           className="FIE_tabs_toggle_btn"
-          size="lg"
+          size={isPhoneScreen ? 'sm' : 'lg'}
           color="basic"
           onClick={() => toggleMainMenu(true)}
         >

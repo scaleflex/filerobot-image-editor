@@ -4,17 +4,21 @@ import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { SET_CROP, SET_RESIZE, ZOOM_CANVAS } from 'actions';
-import { useStore } from 'hooks';
+import { usePhoneScreen, useStore } from 'hooks';
 import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styled';
 import { DEFAULT_ZOOM_FACTOR, TOOLS_IDS } from 'utils/constants';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
 import getZoomFitFactor from 'utils/getZoomFitFactor';
 import { MoveDownOutline, MoveUpOutline } from '@scaleflex/icons';
 import { Menu } from '@scaleflex/ui/core';
-import { StyledOpenMenuButton, StyledMenu } from './Crop.styled';
 import { DEFAULT_CROP_PRESETS } from './Crop.constants';
 import CropPresetGroupsList from './CropPresetGroupsFolder';
 import CropPresetItem from './CropPresetItem';
+import {
+  StyledOpenMenuButton,
+  StyledMenu,
+  StyledToolsBarItemButtonWrapper,
+} from './Crop.styled';
 
 const CropPresetsOption = ({ anchorEl, onClose }) => {
   const {
@@ -28,6 +32,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
     theme,
   } = useStore();
   const cropConfig = config[TOOLS_IDS.CROP];
+  const isPhoneScreen = usePhoneScreen();
 
   const allPresets = useMemo(() => {
     const { presetsItems = [], presetsFolders = [] } = cropConfig;
@@ -117,16 +122,26 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
 
   return (
     <>
-      <StyledToolsBarItemButtonLabel className="FIE_crop-tool-label FIE_selected-crop-preset-label">
-        {t(toolTitleKey)}
-      </StyledToolsBarItemButtonLabel>
-      <StyledOpenMenuButton
-        className="FIE_crop-presets-opener-button"
-        color="link-secondary"
-        size="lg"
-      >
-        {anchorEl ? <MoveUpOutline size={10} /> : <MoveDownOutline size={10} />}
-      </StyledOpenMenuButton>
+      <StyledToolsBarItemButtonWrapper>
+        <StyledToolsBarItemButtonLabel
+          className="FIE_crop-tool-label FIE_selected-crop-preset-label"
+          isPhoneScreen={isPhoneScreen}
+        >
+          {t(toolTitleKey)}
+        </StyledToolsBarItemButtonLabel>
+        <StyledOpenMenuButton
+          className="FIE_crop-presets-opener-button"
+          color="link-secondary"
+          size="lg"
+        >
+          {anchorEl ? (
+            <MoveUpOutline size={10} />
+          ) : (
+            <MoveDownOutline size={10} />
+          )}
+        </StyledOpenMenuButton>
+      </StyledToolsBarItemButtonWrapper>
+
       <Menu
         className="FIE_crop-presets-menu"
         anchorEl={anchorEl}

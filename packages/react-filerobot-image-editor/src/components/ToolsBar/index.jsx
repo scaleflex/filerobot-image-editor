@@ -1,5 +1,6 @@
 /** External Depepdencneis */
 import React, { useCallback, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Depepdencneis */
 import { SELECT_TOOL } from 'actions';
@@ -9,7 +10,7 @@ import { useStore } from 'hooks';
 import { StyledToolsBar, StyledToolsBarItems } from './ToolsBar.styled';
 import ToolsBarItemOptionsWrapper from './ToolsBarItemOptionsWrapper';
 
-const ToolsBar = () => {
+const ToolsBar = ({ isPhoneScreen }) => {
   const {
     t,
     dispatch,
@@ -94,16 +95,27 @@ const ToolsBar = () => {
 
   return (
     <StyledToolsBar className="FIE_tools-bar-wrapper">
-      <ToolsBarItemOptionsWrapper>
+      <ToolsBarItemOptionsWrapper isPhoneScreen={isPhoneScreen}>
         {ToolOptionsComponent && <ToolOptionsComponent t={t} />}
       </ToolsBarItemOptionsWrapper>
       {items && (
-        <StyledToolsBarItems className="FIE_tools-bar">
+        <StyledToolsBarItems
+          className="FIE_tools-bar"
+          isPhoneScreen={isPhoneScreen}
+        >
           {items}
         </StyledToolsBarItems>
       )}
     </StyledToolsBar>
   );
+};
+
+ToolsBar.defaultProps = {
+  isPhoneScreen: false,
+};
+
+ToolsBar.propTypes = {
+  isPhoneScreen: PropTypes.bool,
 };
 
 export default ToolsBar;

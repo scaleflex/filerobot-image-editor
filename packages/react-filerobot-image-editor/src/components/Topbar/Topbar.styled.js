@@ -34,7 +34,7 @@ const StyledTopbar = styled.div`
     order: 4;
   }
 
-  @media (min-width: 760px) {
+  @media (min-width: 761px) {
     .FIE_tabs_toggle_btn {
       display: none;
     }
@@ -48,11 +48,17 @@ const StyledTopbar = styled.div`
       order: 2;
     }
   }
+
+  ${({ isPhoneScreen }) =>
+    isPhoneScreen &&
+    `
+   padding: 12px 12px 0px 3px !important;
+    gap: 12px;
+  `}
 `;
 
 const StyledHistoryButtonsWrapper = styled.div`
   display: flex;
-  gap: 12px;
   align-items: center;
   order: 1;
 `;

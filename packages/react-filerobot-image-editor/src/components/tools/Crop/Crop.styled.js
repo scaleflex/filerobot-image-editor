@@ -6,6 +6,10 @@ import { Accordion, MenuItem } from '@scaleflex/ui/core';
 import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 import { FontVariant as FV } from '@scaleflex/ui/utils/types/typography';
 
+const StyledToolsBarItemButtonWrapper = styled.div`
+  display: flex;
+`;
+
 const StyledOpenMenuButton = styled(Button)`
   margin: 0 0 0 6px;
   padding: 0;
@@ -68,6 +72,7 @@ const StyledAccordion = styled(Accordion)(
 );
 
 export {
+  StyledToolsBarItemButtonWrapper,
   StyledOpenMenuButton,
   StyledMenuItemIcon,
   StyledRatioDescription,

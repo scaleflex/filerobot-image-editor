@@ -1,14 +1,12 @@
 /** External Dependencies */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import ArrowLeftOutline from '@scaleflex/icons/arrow-left-outline';
 import { MenuItemLabel } from '@scaleflex/ui/core/menu-item';
 
 /** Internal Dependencies */
 import {
   StyledMainButton,
   StyledButtonWrapper,
-  StyledMenuButton,
   StyledMenu,
   StyledMenuItem,
   StyledMenuIcon,
@@ -25,7 +23,6 @@ const ButtonWithMenu = ({
   menuFromBtn,
   menuItems,
   menuPosition = 'bottom',
-  arrowColor,
   disabled = false,
   className,
   menuStyle,
@@ -101,22 +98,11 @@ const ButtonWithMenu = ({
           color={color}
           size={buttonSize}
           title={title}
-          keepBorderRadius={!hasMultipleMenuItems}
+          onClick={menuFromBtn || disabled ? undefined : openMenu}
           disabled={disabled}
         >
           {getMainButtonLabel()}
         </StyledMainButton>
-        {hasMultipleMenuItems && (
-          <StyledMenuButton
-            className={`${className}-menu-opener`}
-            color={color}
-            size={buttonSize}
-            onClick={menuFromBtn || disabled ? undefined : openMenu}
-            disabled={disabled}
-          >
-            <ArrowLeftOutline color={arrowColor} />
-          </StyledMenuButton>
-        )}
       </StyledButtonWrapper>
       {hasMultipleMenuItems && (
         <StyledMenu
@@ -165,7 +151,6 @@ ButtonWithMenu.defaultProps = {
   menuPosition: 'bottom',
   onClick: undefined,
   disabled: false,
-  arrowColor: undefined,
   menuStyle: undefined,
   wrapperStyle: undefined,
   buttonRef: undefined,
@@ -182,7 +167,6 @@ ButtonWithMenu.propTypes = {
   menuFromBtn: PropTypes.bool,
   menuPosition: PropTypes.string,
   disabled: PropTypes.bool,
-  arrowColor: PropTypes.string,
   menuStyle: PropTypes.instanceOf(Object),
   wrapperStyle: PropTypes.instanceOf(Object),
   buttonRef: PropTypes.instanceOf(Object),

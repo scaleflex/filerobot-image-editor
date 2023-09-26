@@ -374,7 +374,7 @@ const App = () => {
             {!showCanvasOnly &&
               (isPhoneScreen ? (
                 <StyledPhoneToolsAndTabs className="FIE_phone-tools-tabs-wrapper">
-                  <ToolsBar />
+                  <ToolsBar isPhoneScreen={isPhoneScreen} />
                   <Tabs selectTab={selectTab} chosenTabs={chosenTabs} />
                 </StyledPhoneToolsAndTabs>
               ) : (

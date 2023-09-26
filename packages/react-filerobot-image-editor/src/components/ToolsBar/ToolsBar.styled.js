@@ -1,7 +1,8 @@
 /** External Dependencies */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Label from '@scaleflex/ui/core/label';
 import { Color as PC } from '@scaleflex/ui/utils/types/palette';
+import { FontVariant as FV } from '@scaleflex/ui/utils/types/typography';
 
 const StyledToolsBar = styled.div`
   width: fit-content;
@@ -22,14 +23,20 @@ const StyledToolsBarItems = styled.div`
   gap: 12px;
   align-items: center;
   overflow-x: auto;
-  [data-phone='true'] & {
-    background: ${({ theme }) => theme.palette['bg-primary']};
-  }
+
+  ${({ isPhoneScreen }) =>
+    isPhoneScreen &&
+    `
+    justify-content: space-between;
+    padding: 12px;
+    gap: 8px;
+  `}
 `;
 
 const StyledToolsBarItemButton = styled.div(
-  ({ theme }) => `
+  ({ theme, isPhoneScreen }) => `
     display: flex;
+    gap: 6px;
     border-radius: 2px;
     align-items: center;
     justify-content: center;
@@ -45,24 +52,38 @@ const StyledToolsBarItemButton = styled.div(
     }
 
     &:hover {
-      background: ${theme.palette['bg-primary-active']};
+      ${!isPhoneScreen && `background: ${theme.palette['bg-primary-active']};`}
     }
 
     &[aria-selected='true'] {
-      background: ${theme.palette['bg-primary-active']};
+      ${!isPhoneScreen && `background: ${theme.palette['bg-primary-active']};`}
       border-radius: 4px;
 
       * {
         color: ${theme.palette['accent-primary-active']};
       }
     }
+
+    ${
+      isPhoneScreen &&
+      css`
+        display: flex;
+        flex-direction: column;
+        min-width: 52px;
+        min-height: 52px;
+        padding: 8px;
+        gap: 4px;
+      `
+    }
   `,
 );
 
-const StyledToolsBarItemButtonLabel = styled(Label)`
-  margin-left: 6px;
-  color: ${({ theme: { palette } }) => palette[PC.TextPrimary]};
-`;
+const StyledToolsBarItemButtonLabel = styled(Label)(
+  ({ theme, isPhoneScreen }) => css`
+    color: ${theme.palette[PC.TextPrimary]};
+    ${isPhoneScreen && theme.typography.font[FV.LabelExtraSmallUp]};
+  `,
+);
 
 const StyledToolsBarItemOptionsWrapper = styled.div`
   position: relative;
@@ -77,6 +98,14 @@ const StyledToolsBarItemOptionsWrapper = styled.div`
       max-height: ${props.hasChildren ? '56px' : 0};
       margin: ${props.hasChildren ? '0 auto 8px' : 0};
     `};
+
+  ${({ isPhoneScreen }) =>
+    isPhoneScreen &&
+    `
+    max-height: unset;
+    flex-direction: column;
+    gap: 8px;
+  `}
 `;
 
 export {
