@@ -5,11 +5,15 @@ export default {
   back: 'Back',
   loading: 'Loading...',
   resetOperations: 'Reset/delete all operations',
-  changesLoseConfirmation: 'All changes will be lost',
-  changesLoseConfirmationHint: 'Are you sure you want to continue?',
+  changesLoseWarningHint:
+    'If you press button “reset” your changes will lost. Would you like to continue?',
+  discardChangesWarningHint:
+    'If you close modal, your last change will not be saved.',
   cancel: 'Cancel',
   apply: 'Apply',
-  continue: 'Continue',
+  warning: 'Warning',
+  confirm: 'Confirm',
+  discardChanges: 'Discard changes',
   undoTitle: 'Undo last operation',
   redoTitle: 'Redo last operation',
   showImageTitle: 'Show original image',

@@ -1,15 +1,34 @@
 /** External Dependencies */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import modalTitle from '@scaleflex/ui/core/modal-title';
-import { ModalActions } from '@scaleflex/ui/core';
+import { Modal, ModalActions } from '@scaleflex/ui/core';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
+import { FontVariant as FV } from '@scaleflex/ui/utils/types/typography';
 
-const StyledModalTitle = styled(modalTitle)`
-  .SfxModalTitle-LabelPrimary {
-    font-size: 14px;
-    line-height: 16px;
-    font-weight: 500;
-  }
+const StyledModal = styled(Modal)`
+  width: ${({ width }) => width || '300px'};
+  max-width: unset;
 `;
+
+const StyledModalTitle = styled(modalTitle)(
+  ({ theme, isWarning }) => css`
+    padding-bottom: 0;
+
+    .SfxModalTitle-Icon {
+      background-color: ${isWarning && theme.palette[PC.Orange_0_1_Overlay]};
+    }
+
+    .SfxModalTitle-LabelPrimary {
+      margin-bottom: 24px;
+      ${theme.typography.font[FV.TitleH3]};
+    }
+
+    .SfxModalTitle-LabelSecondary {
+      ${theme.typography.font[FV.TextLarge]};
+      text-align: center;
+    }
+  `,
+);
 
 const StyledModalActions = styled(ModalActions)`
   gap: 12px;
@@ -22,4 +41,4 @@ const StyledModalActions = styled(ModalActions)`
   }
 `;
 
-export { StyledModalTitle, StyledModalActions };
+export { StyledModal, StyledModalTitle, StyledModalActions };

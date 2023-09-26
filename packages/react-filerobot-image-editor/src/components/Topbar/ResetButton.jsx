@@ -55,16 +55,17 @@ const ResetButton = ({ margin, showBackButton }) => {
       </StyledHistoryButton>
       {isModalOpened && (
         <Modal
-          title={t('changesLoseConfirmation')}
-          hint={t('changesLoseConfirmationHint')}
+          title={t('warning')}
+          hint={t('changesLoseWarningHint')}
           isOpened={isModalOpened}
           onCancel={cancelModal}
           onDone={dispatchReset}
           Icon={WarningIcon}
-          doneLabel={t('continue')}
+          doneLabel={t('confirm')}
+          doneButtonColor="warning-primary"
           cancelLabel={t('cancel')}
-          doneButtonColor="error"
-          doneButtonStyle={{ background: theme.palette.warning }}
+          width="400px"
+          isWarning
         />
       )}
     </>

@@ -1,12 +1,14 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal as LibModal, Button, ModalContent } from '@scaleflex/ui/core';
+import { Button, ModalContent } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
-import { StyledModalTitle, StyledModalActions } from './Modal.styled';
-
-const style = { width: 300 };
+import {
+  StyledModal,
+  StyledModalTitle,
+  StyledModalActions,
+} from './Modal.styled';
 
 const Modal = ({
   title,
@@ -24,6 +26,8 @@ const Modal = ({
   areButtonsDisabled,
   zIndex,
   className,
+  width,
+  isWarning,
 }) => {
   const onKeyUp = (e) => {
     if (e.key === 'Enter') {
@@ -32,16 +36,18 @@ const Modal = ({
   };
 
   return (
-    <LibModal
+    <StyledModal
       className={className}
       open={isOpened}
       onClose={onCancel}
-      style={{ ...style, zIndex }}
+      style={{ zIndex }}
       onKeyUp={onKeyUp}
+      width={width}
     >
       <StyledModalTitle
         icon={<Icon size={25} />}
         iconShadow
+        isWarning={isWarning}
         onClose={onCancel}
         primary={title}
         secondary={hint}
@@ -61,13 +67,14 @@ const Modal = ({
           color={doneButtonColor}
           onClick={onDone}
           size="md"
+          warning={isWarning}
           style={doneButtonStyle}
           disabled={areButtonsDisabled}
         >
           {doneLabel}
         </Button>
       </StyledModalActions>
-    </LibModal>
+    </StyledModal>
   );
 };
 
@@ -83,6 +90,8 @@ Modal.defaultProps = {
   areButtonsDisabled: false,
   zIndex: undefined,
   className: undefined,
+  width: '',
+  isWarning: false,
 };
 
 Modal.propTypes = {
@@ -101,6 +110,8 @@ Modal.propTypes = {
   areButtonsDisabled: PropTypes.bool,
   zIndex: PropTypes.number,
   className: PropTypes.string,
+  width: PropTypes.string,
+  isWarning: PropTypes.bool,
 };
 
 export default Modal;

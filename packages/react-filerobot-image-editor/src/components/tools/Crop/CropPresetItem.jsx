@@ -68,7 +68,8 @@ CropPresetItem.propTypes = {
   isActive: PropTypes.bool.isRequired,
   ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   disableManualResize: PropTypes.bool,
-  theme: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  theme: PropTypes.object.isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
   Icon: PropTypes.oneOfType([
