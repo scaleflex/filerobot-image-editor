@@ -5,7 +5,7 @@ import RotationRight from '@scaleflex/icons/rotation-right';
 import { Reset } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { useDebouncedCallback, useStore } from 'hooks';
+import { useDebouncedCallback, usePhoneScreen, useStore } from 'hooks';
 import { CHANGE_ROTATION, SET_RESIZE } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
@@ -25,6 +25,7 @@ const RotateOptions = () => {
     config,
   } = useStore();
   const rotateConfig = config[TOOLS_IDS.ROTATE];
+  const isPhoneScreen = usePhoneScreen();
 
   const changeRotation = useDebouncedCallback((_e, newRotation) => {
     const rotationAngle = restrictNumber(newRotation, -180, 180);
@@ -88,15 +89,18 @@ const RotateOptions = () => {
         className="FIE_rotate-slider"
         min={-180}
         max={180}
+        step={isPhoneScreen ? rotateConfig.angle / 3 : 1}
         value={rotation}
         angle={rotateConfig.angle || 90}
         onChange={changeRotation}
+        hideMarkText={isPhoneScreen}
       />
       <StyledRotateButton
         size="sm"
         color="basic"
         onClick={(e) => changeRotation(e, rotation + 90)}
       >
+        {/* TODO: update this icon to Rotate90 when release UI kit */}
         <Reset />
       </StyledRotateButton>
     </StyledRotationOptions>

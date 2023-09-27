@@ -104,7 +104,9 @@ const StyledToolsBarItemOptionsWrapper = styled.div`
     `
     max-height: unset;
     flex-direction: column;
+    padding: 0 12px 8px 12px;
     gap: 8px;
+    margin: 0;
   `}
 `;
 

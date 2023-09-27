@@ -7,14 +7,19 @@ import PropTypes from 'prop-types';
 import { useFinetune } from 'hooks';
 import restrictNumber from 'utils/restrictNumber';
 import Slider from 'components/common/Slider';
-import { StyledSliderContainer, StyledSliderLabel } from '../tools.styled';
+import {
+  StyledSliderContainer,
+  StyledSliderInput,
+  StyledSliderLabel,
+  StyledSliderWrapper,
+} from '../tools.styled';
 
 const MIN_VALUE = -1;
 const DEFAULT_VALUE = {
   brightness: 0,
 };
 const MAX_VALUE = 1;
-const sliderStyle = { width: 150, padding: 0 };
+const sliderStyle = { width: 150, padding: 0, margin: 0 };
 
 const BrightnessOptions = ({ t }) => {
   const [finetuneProps, setFinetuneProps] = useFinetune(
@@ -33,16 +38,22 @@ const BrightnessOptions = ({ t }) => {
       <StyledSliderLabel className="FIE_brightness-option-label">
         {t('brightness')}
       </StyledSliderLabel>
-      <Slider
-        className="FIE_brightness-option"
-        min={MIN_VALUE}
-        step={0.05}
-        max={MAX_VALUE}
-        width="124px"
-        value={finetuneProps.brightness ?? DEFAULT_VALUE.brightness}
-        onChange={changeValue}
-        style={sliderStyle}
-      />
+      <StyledSliderWrapper>
+        <Slider
+          className="FIE_brightness-option"
+          min={MIN_VALUE}
+          step={0.05}
+          max={MAX_VALUE}
+          width="124px"
+          value={finetuneProps.brightness ?? DEFAULT_VALUE.brightness}
+          onChange={changeValue}
+          style={sliderStyle}
+        />
+        <StyledSliderInput
+          value={finetuneProps.brightness ?? DEFAULT_VALUE.brightness}
+          onChange={({ target: { value } }) => changeValue(value)}
+        />
+      </StyledSliderWrapper>
     </StyledSliderContainer>
   );
 };
