@@ -93,6 +93,7 @@ export default {
   vertical: 'Vertical',
   blur: 'Blur',
   opacity: 'Opacity',
+  transparency: 'Transparency',
   position: 'Position',
   stroke: 'Stroke',
   saveAsModalTitle: 'Save as',

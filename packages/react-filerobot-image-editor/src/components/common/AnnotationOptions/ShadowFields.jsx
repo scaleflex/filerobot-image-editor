@@ -33,7 +33,8 @@ const ShadowFields = ({ annotation, updateAnnotation, t }) => {
   };
 
   return (
-    <StyledSpacedOptionFields>
+    <StyledSpacedOptionFields preventFlex>
+      <Label>{t('shadow')}</Label>
       <StyledTwoColumnsContainer>
         <StyledColumn>
           <Label>{t('horizontal')}</Label>

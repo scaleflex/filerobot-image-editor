@@ -7,6 +7,7 @@ const StyledSlider = styled(Slider)`
   width: ${({ width }) => width || '104px'};
   max-width: ${({ width }) => width || '104px'};
   user-select: none;
+  padding: 0;
   margin-bottom: ${({ noMargin }) => (noMargin ? '' : '16px')};
 
   .SfxSlider-annotation {

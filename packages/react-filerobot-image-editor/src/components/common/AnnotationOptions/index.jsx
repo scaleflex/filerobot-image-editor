@@ -8,7 +8,8 @@ import Stroke from '@scaleflex/icons/stroke';
 import Position from '@scaleflex/icons/position';
 
 /** Internal Dependencies */
-import { useStore } from 'hooks';
+import { usePhoneScreen, useStore } from 'hooks';
+import { Label } from '@scaleflex/ui/core';
 import OpacityField from './OpacityField';
 import StrokeFields from './StrokeFields';
 import ShadowFields from './ShadowFields';
@@ -17,7 +18,6 @@ import {
   StyledOptionPopupContent,
   StyledOptions,
   StyledIconWrapper,
-  StyledIconLabel,
 } from './AnnotationOptions.styled';
 import { POPPABLE_OPTIONS } from './AnnotationOptions.constants';
 import ColorInput from '../ColorInput';
@@ -40,6 +40,9 @@ const AnnotationOptions = ({
     config: { useCloudimage },
     t,
   } = useStore();
+
+  const isPhoneScreen = usePhoneScreen(320);
+
   const options = useMemo(
     () => [
       ...morePoppableOptionsPrepended,
@@ -93,9 +96,23 @@ const AnnotationOptions = ({
   const OptionPopupComponent =
     anchorEl && currentOption && optionsPopups[currentOption];
 
+  const renderPositionFields = () => (
+    <>
+      <Label>{t('position')}</Label>
+      <StyledOptionPopupContent position>
+        <OptionPopupComponent
+          annotation={annotation}
+          updateAnnotation={updateAnnotation}
+          {...rest}
+        />
+      </StyledOptionPopupContent>
+    </>
+  );
+
   return (
     <StyledOptions
       className={`FIE_annotations-options${className ? ` ${className}` : ''}`}
+      isPhoneScreen={isPhoneScreen}
     >
       {!hideFillOption && (
         <ColorInput
@@ -115,8 +132,7 @@ const AnnotationOptions = ({
               onClick={(e) => toggleOptionPopup(e, option.name)}
               active={currentOption === option.name}
             >
-              <option.Icon size={16} />
-              <StyledIconLabel>{t(option.titleKey)}</StyledIconLabel>
+              <option.Icon size={20} />
             </StyledIconWrapper>
           ),
       )}
@@ -129,11 +145,15 @@ const AnnotationOptions = ({
           position="top"
         >
           <StyledOptionPopupContent>
-            <OptionPopupComponent
-              annotation={annotation}
-              updateAnnotation={updateAnnotation}
-              {...rest}
-            />
+            {currentOption === POPPABLE_OPTIONS.POSITION ? (
+              renderPositionFields()
+            ) : (
+              <OptionPopupComponent
+                annotation={annotation}
+                updateAnnotation={updateAnnotation}
+                {...rest}
+              />
+            )}
           </StyledOptionPopupContent>
         </Menu>
       )}

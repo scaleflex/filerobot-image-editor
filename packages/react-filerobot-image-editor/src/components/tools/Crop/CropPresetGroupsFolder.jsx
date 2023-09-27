@@ -31,6 +31,7 @@ const CropPresetGroupsFolder = ({
 
   return (
     <StyledMenuItem
+      isListItem
       list={[
         {
           content: t(titleKey),

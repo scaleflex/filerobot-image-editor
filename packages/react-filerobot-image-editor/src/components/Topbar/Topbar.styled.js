@@ -27,7 +27,7 @@ const StyledTopbar = styled.div`
   ${({ isPhoneScreen }) =>
     isPhoneScreen &&
     `
-   padding: 12px 12px 0px 3px !important;
+    padding: 12px 12px 0px 3px !important;
     gap: 12px;
   `}
 `;
@@ -135,13 +135,19 @@ const StyledHistoryButtons = styled.div`
 
 const StyledZoomingButtons = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: ${({ isPhoneScreen }) =>
+    isPhoneScreen ? 'space-between' : 'center'};
 `;
 
 const StyledMenuIconButton = styled(IconButton)`
   @media (min-width: 761px) {
     display: none;
   }
+`;
+
+const StyledDimensionsButtons = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export {
@@ -164,4 +170,5 @@ export {
   StyledHistoryButtons,
   StyledZoomingButtons,
   StyledMenuIconButton,
+  StyledDimensionsButtons,
 };

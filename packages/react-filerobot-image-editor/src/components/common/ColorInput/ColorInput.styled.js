@@ -11,9 +11,9 @@ const StyledPickerTrigger = styled.div.attrs(({ $color }) => ({
   },
 }))`
   background: ${({ theme }) => theme.palette['icons-primary']};
-  border-radius: 2px;
-  width: 28px;
-  height: 28px;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
   border: 1px solid ${({ theme }) => theme.palette[PC.BorderPrimaryStateless]};
   cursor: pointer;
   box-sizing: border-box;

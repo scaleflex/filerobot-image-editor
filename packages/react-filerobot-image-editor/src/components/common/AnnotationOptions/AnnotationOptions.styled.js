@@ -12,6 +12,13 @@ const StyledOptions = styled.div`
   gap: 8px;
   flex-wrap: wrap;
 
+  ${({ isPhoneScreen }) =>
+    isPhoneScreen &&
+    `
+    max-width: 315px;
+    padding: 0;
+  `}
+
   svg {
     color: ${({ theme: { palette } }) => palette[PC.IconsPrimary]};
   }
@@ -19,11 +26,27 @@ const StyledOptions = styled.div`
 
 const StyledOptionPopupContent = styled.div`
   background: ${({ theme }) => theme.palette['bg-secondary']};
-  box-shadow: 0px 1px 2px ${({ theme }) => theme.palette['light-shadow']};
   border-radius: 4px;
-  display: grid;
-  grid-template-columns: repeat(4, auto);
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px;
   overflow: visible;
+
+  ${({ position }) =>
+    position &&
+    `
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    padding: 0;
+    margin-top: 8px;
+    box-shadow: 0px 1px 2px ${({ theme }) => theme.palette['light-shadow']};
+    `}
+
+  ${({ disablePadding }) =>
+    disablePadding &&
+    `
+      padding: 0;
+    `}
 
   * {
     font-family: 'Roboto', sans-serif;
@@ -31,7 +54,19 @@ const StyledOptionPopupContent = styled.div`
 `;
 
 const StyledSpacedOptionFields = styled.div`
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  ${({ preventFlex }) =>
+    preventFlex &&
+    `
+      display: block;
+  
+      Label {
+        margin-bottom: 8px;
+      }
+  `}
 `;
 
 const StyledTwoColumnsContainer = styled.div`
@@ -47,9 +82,9 @@ const StyledColumn = styled.div`
 `;
 
 const StyledIconWrapper = styled.div(
-  ({ theme, addThinBorder, secondaryIconColor, active }) => `
+  ({ theme, addThinBorder, secondaryIconColor, active, watermarkTool }) => `
     cursor: pointer;
-    padding: 8px 12px;
+    padding: ${watermarkTool ? '6px' : '8px 12px'};
     border-radius: 2px;
     display: flex;
     justify-content: center;

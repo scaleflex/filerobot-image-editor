@@ -42,6 +42,17 @@ const StyledMenuItem = styled(MenuItem)`
   align-items: center;
   border-radius: 4px;
   padding: 8px 12px;
+
+  ${({ isListItem }) =>
+    isListItem &&
+    `
+    padding: 0;
+
+    .SfxMenuItem-root {
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+  `}
 `;
 
 const StyledMenuItemLabel = styled(Label)(

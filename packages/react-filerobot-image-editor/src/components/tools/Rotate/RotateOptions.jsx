@@ -85,6 +85,8 @@ const RotateOptions = () => {
 
   return (
     <StyledRotationOptions>
+      {/* TODO: add this prop to slider when release UI kit */}
+      {/* showCurrentMarkText */}
       <StyledRotationSlider
         className="FIE_rotate-slider"
         min={-180}
@@ -93,7 +95,6 @@ const RotateOptions = () => {
         value={rotation}
         angle={rotateConfig.angle || 90}
         onChange={changeRotation}
-        hideMarkText={isPhoneScreen}
       />
       <StyledRotateButton
         size="sm"

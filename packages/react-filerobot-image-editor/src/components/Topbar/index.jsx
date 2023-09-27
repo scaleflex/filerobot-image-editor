@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
-import Separator from 'components/common/Separator';
 import { usePhoneScreen, useStore } from 'hooks';
 import { Menu } from '@scaleflex/icons';
 import CloseButton from './CloseButton';
@@ -12,24 +11,22 @@ import ResetButton from './ResetButton';
 import UndoButton from './UndoButton';
 import RedoButton from './RedoButton';
 import ImageDimensionsAndDisplayToggle from './ImageDimensionsAndDisplayToggle';
-import CanvasZooming from './CanvasZooming';
 import {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
   StyledMainButtonsWrapper,
   StyledHistoryButtonsWrapper,
   StyledHistoryButtons,
-  StyledZoomingButtons,
   StyledMenuIconButton,
 } from './Topbar.styled';
 import BackButton from './BackButton';
 
 const Topbar = ({ toggleMainMenu }) => {
   const {
-    config: { showBackButton, disableZooming },
+    config: { showBackButton },
   } = useStore();
 
-  const isPhoneScreen = usePhoneScreen(363);
+  const isPhoneScreen = usePhoneScreen(320);
 
   return (
     <StyledTopbar className="FIE_topbar" isPhoneScreen={isPhoneScreen}>
@@ -49,16 +46,10 @@ const Topbar = ({ toggleMainMenu }) => {
         className="FIE_topbar-center-options"
         showBackButton={showBackButton}
       >
-        <StyledZoomingButtons>
-          <ImageDimensionsAndDisplayToggle showBackButton={showBackButton} />
-
-          {!disableZooming && (
-            <>
-              <Separator />
-              <CanvasZooming showBackButton={showBackButton} />
-            </>
-          )}
-        </StyledZoomingButtons>
+        <ImageDimensionsAndDisplayToggle
+          showBackButton={showBackButton}
+          isPhoneScreen={isPhoneScreen}
+        />
       </StyledFlexCenterAlignedContainer>
 
       <StyledHistoryButtonsWrapper className="FIE_topbar-history-buttons">

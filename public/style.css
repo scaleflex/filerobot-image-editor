@@ -479,6 +479,7 @@ body {
   box-shadow: 0px 2px 41px 10px rgba(107, 130, 175, 0.1);
   border-radius: 8px;
   height: 600px;
+  max-height: 650px;
 }
 
 @keyframes rotate {

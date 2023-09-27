@@ -24,7 +24,7 @@ const TextSpacingsFields = ({
   };
 
   return (
-    <StyledSpacedOptionFields>
+    <StyledSpacedOptionFields preventFlex>
       <Label>{t('letterSpacing')}</Label>
       <Slider
         annotation="px"

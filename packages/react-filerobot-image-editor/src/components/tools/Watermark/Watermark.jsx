@@ -240,10 +240,7 @@ const Watermark = () => {
           </ImageControls>
         </StyledControlsWrapper>
       )}
-      <StyledWatermarkWrapper
-        className="FIE_watermark-add-wrapper"
-        noWrap={Boolean(watermark?.name)}
-      >
+      <StyledWatermarkWrapper className="FIE_watermark-add-wrapper" noWrap>
         <ButtonWithMenu
           className="FIE_watermark-add"
           color="secondary"

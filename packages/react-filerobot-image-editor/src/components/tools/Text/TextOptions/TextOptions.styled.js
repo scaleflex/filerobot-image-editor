@@ -11,4 +11,8 @@ const StyledFontSizeInput = styled(Input)`
   width: 72px;
 `;
 
-export { StyledFontFamilySelect, StyledFontSizeInput };
+const StyledToolsWrapper = styled.div`
+  display: flex;
+`;
+
+export { StyledFontFamilySelect, StyledFontSizeInput, StyledToolsWrapper };

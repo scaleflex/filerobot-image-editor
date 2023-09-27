@@ -4,13 +4,18 @@ import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import restrictNumber from 'utils/restrictNumber';
-import { StyledSpacedOptionFields } from './AnnotationOptions.styled';
+import { Label } from '@scaleflex/ui/core';
+import {
+  StyledSpacedOptionFields,
+  StyledIconLabel,
+  StyledOptionPopupContent,
+} from './AnnotationOptions.styled';
 import Slider from '../Slider';
 
 const MIN_PERCENTANGE = 0;
 const MAX_PERCENTANGE = 1;
 
-const OpacityField = ({ annotation, updateAnnotation }) => {
+const OpacityField = ({ annotation, updateAnnotation, t }) => {
   const { opacity } = annotation;
 
   const changeOpacity = (newOpactiy) => {
@@ -24,19 +29,24 @@ const OpacityField = ({ annotation, updateAnnotation }) => {
   };
 
   return (
-    <StyledSpacedOptionFields>
-      <Slider
-        annotation="%"
-        onChange={changeOpacity}
-        value={Math.round(opacity * 100)}
-        noMargin
-      />
-    </StyledSpacedOptionFields>
+    <StyledOptionPopupContent disablePadding>
+      <Label>{t('transparency')}</Label>
+      <StyledSpacedOptionFields>
+        <Slider
+          annotation="%"
+          onChange={changeOpacity}
+          value={Math.round(opacity * 100)}
+          noMargin
+        />
+        <StyledIconLabel>{`${Math.round(opacity * 100)}%`}</StyledIconLabel>
+      </StyledSpacedOptionFields>
+    </StyledOptionPopupContent>
   );
 };
 
 OpacityField.propTypes = {
   annotation: PropTypes.instanceOf(Object).isRequired,
+  t: PropTypes.func.isRequired,
   updateAnnotation: PropTypes.func.isRequired,
 };
 

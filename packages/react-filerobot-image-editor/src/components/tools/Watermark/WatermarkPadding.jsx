@@ -13,6 +13,7 @@ import {
   StyledIconLabel,
 } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
 import Slider from 'components/common/Slider';
+import { Label } from '@scaleflex/ui/core';
 
 const WatermarkPadding = ({ watermark, saveWatermark, t }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -38,8 +39,7 @@ const WatermarkPadding = ({ watermark, saveWatermark, t }) => {
         onClick={openOptionPopup}
         active={anchorEl}
       >
-        <Padding size={16} />
-        <StyledIconLabel>{t('paddings')}</StyledIconLabel>
+        <Padding size={20} />
       </StyledIconWrapper>
       <Menu
         className="FIE_watermark-padding-popup"
@@ -49,6 +49,7 @@ const WatermarkPadding = ({ watermark, saveWatermark, t }) => {
         position="top"
       >
         <StyledOptionPopupContent>
+          <Label>{t('padding')}</Label>
           <StyledSpacedOptionFields>
             <Slider
               annotation="px"
@@ -56,6 +57,7 @@ const WatermarkPadding = ({ watermark, saveWatermark, t }) => {
               value={currentPadding}
               noMargin
             />
+            <StyledIconLabel>{`${currentPadding}px`}</StyledIconLabel>
           </StyledSpacedOptionFields>
         </StyledOptionPopupContent>
       </Menu>

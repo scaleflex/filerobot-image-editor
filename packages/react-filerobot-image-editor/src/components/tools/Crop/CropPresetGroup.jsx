@@ -20,6 +20,7 @@ const CropPresetGroup = ({
     adjustments: {
       crop: { ratio: currentRatio, ratioGroupKey, ratioTitleKey },
     },
+    theme,
   } = useStore();
 
   const toggleExpand = () => {
@@ -63,6 +64,7 @@ const CropPresetGroup = ({
               height={height}
               ratio={newRatio}
               Icon={icon}
+              theme={theme}
               disableManualResize={disableManualResize}
               isActive={
                 currentRatio === newRatio &&

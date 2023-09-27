@@ -15,6 +15,7 @@ import { useStore } from 'hooks';
 import {
   StyledFontFamilySelect,
   StyledFontSizeInput,
+  StyledToolsWrapper,
 } from './TextOptions.styled';
 import {
   textOptionsPopupComponents,
@@ -156,25 +157,30 @@ const TextControls = ({ text, saveText, children }) => {
         size="sm"
         placeholder={t('size')}
       />
-      {!useCloudimage && (
-        <>
-          <StyledIconWrapper
-            className="FIE_text-bold-option"
-            active={(text.fontStyle || '').includes('bold')}
-            onClick={() => changeFontStyle('bold')}
-          >
-            <FontBold size={16} />
-          </StyledIconWrapper>
-          <StyledIconWrapper
-            className="FIE_text-italic-option"
-            active={(text.fontStyle || '').includes('italic')}
-            onClick={() => changeFontStyle('italic')}
-          >
-            <FontItalic size={16} />
-          </StyledIconWrapper>
-        </>
-      )}
-      {children}
+
+      <StyledToolsWrapper>
+        {!useCloudimage && (
+          <>
+            <StyledIconWrapper
+              className="FIE_text-bold-option"
+              active={(text.fontStyle || '').includes('bold')}
+              onClick={() => changeFontStyle('bold')}
+              watermarkTool
+            >
+              <FontBold size={20} />
+            </StyledIconWrapper>
+            <StyledIconWrapper
+              className="FIE_text-italic-option"
+              active={(text.fontStyle || '').includes('italic')}
+              onClick={() => changeFontStyle('italic')}
+              watermarkTool
+            >
+              <FontItalic size={20} />
+            </StyledIconWrapper>
+          </>
+        )}
+        {children}
+      </StyledToolsWrapper>
     </AnnotationOptions>
   );
 };
