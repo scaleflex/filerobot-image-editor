@@ -40,8 +40,8 @@ const TabsDrawer = ({ toggleMainMenu, chosenTabs, selectTab }) => {
       </DrawerHeader>
       <DrawerBody>
         {chosenTabs.map(({ id, icon, labelKey }) => (
-          <DrawerList key={`${id}`}>
-            <DrawerItem key={id}>
+          <DrawerList key={id}>
+            <DrawerItem>
               <TabItem
                 key={id}
                 id={id}
@@ -67,8 +67,7 @@ TabsDrawer.defaultProps = {
 TabsDrawer.propTypes = {
   selectTab: PropTypes.func,
   toggleMainMenu: PropTypes.func,
-  // eslint-disable-next-line react/forbid-prop-types
-  chosenTabs: PropTypes.array,
+  chosenTabs: PropTypes.instanceOf(Array),
 };
 
 export default TabsDrawer;

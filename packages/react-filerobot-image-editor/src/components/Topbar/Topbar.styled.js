@@ -24,31 +24,6 @@ const StyledTopbar = styled.div`
     padding: 6px 6px 4px 6px;
   }
 
-  .FIE_topbar-history-buttons {
-    order: 3;
-  }
-
-  .FIE_topbar-center-options {
-    display: block;
-    width: 100%;
-    order: 4;
-  }
-
-  @media (min-width: 761px) {
-    .FIE_tabs_toggle_btn {
-      display: none;
-    }
-
-    .FIE_topbar-center-options {
-      display: flex;
-      width: fit-content;
-    }
-
-    .FIE_topbar-center-options {
-      order: 2;
-    }
-  }
-
   ${({ isPhoneScreen }) =>
     isPhoneScreen &&
     `
@@ -57,10 +32,16 @@ const StyledTopbar = styled.div`
   `}
 `;
 
-const StyledHistoryButtonsWrapper = styled.div`
+const StyledMainButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
   order: 1;
+`;
+
+const StyledHistoryButtonsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  order: 3;
 `;
 
 const StyledHistoryButton = styled(IconButton)`
@@ -96,13 +77,20 @@ const StyledSmallButton = styled(IconButton)`
 const StyledFlexCenterAlignedContainer = styled.div`
   width: ${({ showBackButton }) => (showBackButton ? '318px' : '384px')};
   height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 12px;
-  order: 2;
+  display: block;
+  width: 100%;
+  order: 4;
   ${({ reverseDirection }) =>
     reverseDirection ? 'flex-direction: row-reverse' : ''};
+
+  @media (min-width: 761px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    order: 2;
+  }
 `;
 
 const StyledZoomPercentageLabel = styled(Label)`
@@ -150,6 +138,12 @@ const StyledZoomingButtons = styled.div`
   justify-content: center;
 `;
 
+const StyledMenuIconButton = styled(IconButton)`
+  @media (min-width: 761px) {
+    display: none;
+  }
+`;
+
 export {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
@@ -165,7 +159,9 @@ export {
   StyledQualityWrapper,
   StyledResizeOnSave,
   StyledDimensionsLabel,
+  StyledMainButtonsWrapper,
   StyledHistoryButtonsWrapper,
   StyledHistoryButtons,
   StyledZoomingButtons,
+  StyledMenuIconButton,
 };

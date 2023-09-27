@@ -44,8 +44,7 @@ Tabs.defaultProps = {
 
 Tabs.propTypes = {
   selectTab: PropTypes.func,
-  // eslint-disable-next-line react/forbid-prop-types
-  chosenTabs: PropTypes.array,
+  chosenTabs: PropTypes.instanceOf(Array),
 };
 
 export default Tabs;

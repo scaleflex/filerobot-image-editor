@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 /** Internal Dependencies */
 import Separator from 'components/common/Separator';
 import { usePhoneScreen, useStore } from 'hooks';
-import { IconButton } from '@scaleflex/ui/core';
 import { Menu } from '@scaleflex/icons';
 import CloseButton from './CloseButton';
 import SaveButton from './SaveButton';
@@ -17,9 +16,11 @@ import CanvasZooming from './CanvasZooming';
 import {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
+  StyledMainButtonsWrapper,
   StyledHistoryButtonsWrapper,
   StyledHistoryButtons,
   StyledZoomingButtons,
+  StyledMenuIconButton,
 } from './Topbar.styled';
 import BackButton from './BackButton';
 
@@ -32,20 +33,17 @@ const Topbar = ({ toggleMainMenu }) => {
 
   return (
     <StyledTopbar className="FIE_topbar" isPhoneScreen={isPhoneScreen}>
-      <StyledHistoryButtonsWrapper
-        className="FIE_topbar-buttons-wrapper"
-        showBackButton={showBackButton}
-      >
-        <IconButton
+      <StyledMainButtonsWrapper className="FIE_topbar-buttons-wrapper">
+        <StyledMenuIconButton
           className="FIE_tabs_toggle_btn"
           size={isPhoneScreen ? 'sm' : 'lg'}
           color="basic"
           onClick={() => toggleMainMenu(true)}
         >
           {(props) => <Menu {...props} />}
-        </IconButton>
+        </StyledMenuIconButton>
         {showBackButton ? <BackButton /> : <SaveButton />}
-      </StyledHistoryButtonsWrapper>
+      </StyledMainButtonsWrapper>
 
       <StyledFlexCenterAlignedContainer
         className="FIE_topbar-center-options"

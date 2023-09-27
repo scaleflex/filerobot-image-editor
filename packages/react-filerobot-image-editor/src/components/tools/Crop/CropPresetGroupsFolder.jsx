@@ -78,8 +78,7 @@ CropPresetGroupsFolder.propTypes = {
   groups: PropTypes.instanceOf(Array).isRequired,
   onItemSelect: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.instanceOf(Object).isRequired,
   Icon: PropTypes.oneOfType([
     PropTypes.elementType,
     PropTypes.string,

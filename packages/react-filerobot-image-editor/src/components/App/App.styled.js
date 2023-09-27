@@ -20,12 +20,6 @@ const StyledAppWrapper = styled.div.attrs(({ $size = {} }) => ({
   position: relative;
   min-height: 250px;
   background: ${({ theme }) => theme.palette['bg-secondary']};
-
-  .FIE_tabs {
-    @media (max-width: 760px) {
-      display: none;
-    }
-  }
 `;
 
 const StyledMainContent = styled.div`

@@ -19,6 +19,10 @@ const StyledTabs = styled.div`
     display: flex;
     padding: 0;
   }
+
+  @media (max-width: 760px) {
+    display: none !important;
+  }
 `;
 
 const StyledTabItem = styled.div(

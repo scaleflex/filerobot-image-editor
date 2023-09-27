@@ -20,8 +20,7 @@ Spinner.defaultProps = {
 };
 
 Spinner.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  theme: PropTypes.object,
+  theme: PropTypes.instanceOf(Object),
 };
 
 export default Spinner;
