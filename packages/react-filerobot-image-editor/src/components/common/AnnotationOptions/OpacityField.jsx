@@ -17,6 +17,7 @@ const MAX_PERCENTANGE = 1;
 
 const OpacityField = ({ annotation, updateAnnotation, t }) => {
   const { opacity } = annotation;
+  const opacityValue = Math.round(opacity * 100);
 
   const changeOpacity = (newOpactiy) => {
     updateAnnotation({
@@ -35,10 +36,10 @@ const OpacityField = ({ annotation, updateAnnotation, t }) => {
         <Slider
           annotation="%"
           onChange={changeOpacity}
-          value={Math.round(opacity * 100)}
+          value={opacityValue}
           noMargin
         />
-        <StyledIconLabel>{`${Math.round(opacity * 100)}%`}</StyledIconLabel>
+        <StyledIconLabel>{`${opacityValue}%`}</StyledIconLabel>
       </StyledSpacedOptionFields>
     </StyledOptionPopupContent>
   );

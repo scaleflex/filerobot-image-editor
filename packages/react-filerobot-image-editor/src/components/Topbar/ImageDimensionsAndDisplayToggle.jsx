@@ -11,7 +11,7 @@ import Separator from 'components/common/Separator';
 import {
   StyledSmallButton,
   StyledDimensionsLabel,
-  StyledZoomingButtons,
+  StyledImageOptionsButtons,
   StyledDimensionsButtons,
 } from './Topbar.styled';
 import CanvasZooming from './CanvasZooming';
@@ -69,7 +69,7 @@ const ImageDimensionsAndDisplayToggle = ({ showBackButton, isPhoneScreen }) => {
   );
 
   return (
-    <StyledZoomingButtons isPhoneScreen={isPhoneScreen}>
+    <StyledImageOptionsButtons isPhoneScreen={isPhoneScreen}>
       <StyledDimensionsLabel title={t('imageDimensionsHoverTitle')}>
         {`${dimensions.width} x ${dimensions.height} px`}
       </StyledDimensionsLabel>
@@ -92,7 +92,7 @@ const ImageDimensionsAndDisplayToggle = ({ showBackButton, isPhoneScreen }) => {
           </>
         )}
       </StyledDimensionsButtons>
-    </StyledZoomingButtons>
+    </StyledImageOptionsButtons>
   );
 };
 

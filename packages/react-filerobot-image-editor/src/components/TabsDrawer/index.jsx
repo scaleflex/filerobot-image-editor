@@ -25,6 +25,7 @@ const TabsDrawer = ({ toggleMainMenu, chosenTabs, selectTab }) => {
 
   return (
     <StyledDrawer
+      className="FIE_tabs-drawer"
       open={showTabsMenu}
       onClose={() => toggleMainMenu(false)}
       disablePortal

@@ -1,6 +1,8 @@
 /** External Dependencies */
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { usePhoneScreen, useStore } from 'hooks';
+import { Label } from '@scaleflex/ui/core';
 import Menu from '@scaleflex/ui/core/menu';
 import Transparency from '@scaleflex/icons/transparency';
 import Shadow from '@scaleflex/icons/shadow';
@@ -8,8 +10,6 @@ import Stroke from '@scaleflex/icons/stroke';
 import Position from '@scaleflex/icons/position';
 
 /** Internal Dependencies */
-import { usePhoneScreen, useStore } from 'hooks';
-import { Label } from '@scaleflex/ui/core';
 import OpacityField from './OpacityField';
 import StrokeFields from './StrokeFields';
 import ShadowFields from './ShadowFields';

@@ -133,7 +133,7 @@ const StyledHistoryButtons = styled.div`
   gap: 6px;
 `;
 
-const StyledZoomingButtons = styled.div`
+const StyledImageOptionsButtons = styled.div`
   display: flex;
   justify-content: ${({ isPhoneScreen }) =>
     isPhoneScreen ? 'space-between' : 'center'};
@@ -168,7 +168,7 @@ export {
   StyledMainButtonsWrapper,
   StyledHistoryButtonsWrapper,
   StyledHistoryButtons,
-  StyledZoomingButtons,
+  StyledImageOptionsButtons,
   StyledMenuIconButton,
   StyledDimensionsButtons,
 };
