@@ -7,8 +7,11 @@ import { SELECT_TOOL } from 'actions';
 import { TABS_TOOLS, TOOLS_ITEMS } from 'components/tools/tools.constants';
 import { TABS_IDS } from 'utils/constants';
 import { useStore } from 'hooks';
+import Carousel from 'components/common/Carousel';
 import { StyledToolsBar, StyledToolsBarItems } from './ToolsBar.styled';
 import ToolsBarItemOptionsWrapper from './ToolsBarItemOptionsWrapper';
+
+const style = { maxWidth: '100%', width: '100%' };
 
 const ToolsBar = ({ isPhoneScreen }) => {
   const {
@@ -103,7 +106,9 @@ const ToolsBar = ({ isPhoneScreen }) => {
           className="FIE_tools-bar"
           isPhoneScreen={isPhoneScreen}
         >
-          {items}
+          <Carousel className="FIE_tools" style={style}>
+            {items}
+          </Carousel>
         </StyledToolsBarItems>
       )}
     </StyledToolsBar>

@@ -17,6 +17,7 @@ import PositionFields from './PositionFields';
 import {
   StyledOptionPopupContent,
   StyledOptions,
+  StyledOptionsWrapper,
   StyledIconWrapper,
 } from './AnnotationOptions.styled';
 import { POPPABLE_OPTIONS } from './AnnotationOptions.constants';
@@ -121,21 +122,26 @@ const AnnotationOptions = ({
           colorFor="fill"
         />
       )}
+
       {children}
-      {options.map(
-        (option) =>
-          option && (
-            <StyledIconWrapper
-              className="FIE_annotation-option-triggerer"
-              key={option.name}
-              title={t(option.titleKey)}
-              onClick={(e) => toggleOptionPopup(e, option.name)}
-              active={currentOption === option.name}
-            >
-              <option.Icon size={20} />
-            </StyledIconWrapper>
-          ),
-      )}
+
+      <StyledOptionsWrapper>
+        {options.map(
+          (option) =>
+            option && (
+              <StyledIconWrapper
+                className="FIE_annotation-option-triggerer"
+                key={option.name}
+                title={t(option.titleKey)}
+                onClick={(e) => toggleOptionPopup(e, option.name)}
+                active={currentOption === option.name}
+              >
+                <option.Icon size={20} />
+              </StyledIconWrapper>
+            ),
+        )}
+      </StyledOptionsWrapper>
+
       {OptionPopupComponent && (
         <Menu
           className="FIE_annotation-option-popup"

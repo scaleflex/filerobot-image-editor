@@ -109,4 +109,7 @@ export default {
   addImageTitle: 'Select image to add...',
   mutualizedFailedToLoadImg: 'Failed to load image.',
   tabsMenu: 'Menu',
+  download: 'Download',
+  width: 'Width',
+  height: 'Height',
 };

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { MenuItemLabel } from '@scaleflex/ui/core/menu-item';
 
 /** Internal Dependencies */
+import { useStore } from 'hooks';
 import {
   StyledMainButton,
   StyledButtonWrapper,
@@ -15,7 +16,6 @@ import {
 let isFieButtonWithMenuMounted = true;
 
 const ButtonWithMenu = ({
-  t = () => {},
   onClick,
   title,
   label,
@@ -29,6 +29,8 @@ const ButtonWithMenu = ({
   wrapperStyle,
   buttonRef,
 }) => {
+  const { t } = useStore();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const buttonSize = 'sm';
 
@@ -72,9 +74,9 @@ const ButtonWithMenu = ({
   const getMainButtonLabel = () => {
     if (label) return label;
 
-    if (hasMultipleMenuItems) return t('Download');
+    if (hasMultipleMenuItems) return t('download');
 
-    return t('Save as');
+    return t('saveAs');
   };
 
   useEffect(() => {
@@ -157,7 +159,6 @@ ButtonWithMenu.defaultProps = {
 };
 
 ButtonWithMenu.propTypes = {
-  t: PropTypes.func.isRequired,
   menuItems: PropTypes.instanceOf(Array).isRequired,
   className: PropTypes.string.isRequired,
   onClick: PropTypes.func,

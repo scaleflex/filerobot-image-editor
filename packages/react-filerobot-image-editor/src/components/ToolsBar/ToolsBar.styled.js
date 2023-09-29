@@ -22,7 +22,7 @@ const StyledToolsBarItems = styled.div`
   display: flex;
   gap: 12px;
   align-items: center;
-  overflow-x: auto;
+  overflow: hidden;
 
   ${({ isPhoneScreen }) =>
     isPhoneScreen &&

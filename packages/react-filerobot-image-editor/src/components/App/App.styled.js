@@ -44,12 +44,25 @@ const StyledCanvasAndTools = styled.div`
   flex-direction: column;
 `;
 
-const StyledPhoneToolsAndTabs = styled.div`
-  width: 100%;
-  flex-grow: 1;
+const StyledTabs = styled.div`
+  min-width: 104px;
+  height: 100%;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  gap: 16px;
+  overflow-y: auto;
+  max-height: 100%;
+  box-shadow: 6px 8px 12px 0px rgba(146, 166, 188, 0.14);
+
+  [data-phone='true'] & {
+    display: flex;
+    padding: 0;
+  }
+
+  @media (max-width: 760px) {
+    display: none !important;
+  }
 `;
 
 const StyledDrawer = styled(Drawer)`
@@ -63,12 +76,16 @@ const StyledDrawer = styled(Drawer)`
   .SfxDrawer-item {
     padding: 0;
   }
+
+  @media (min-width: 761px) {
+    display: none;
+  }
 `;
 
 export {
   StyledAppWrapper,
   StyledMainContent,
   StyledCanvasAndTools,
-  StyledPhoneToolsAndTabs,
+  StyledTabs,
   StyledDrawer,
 };

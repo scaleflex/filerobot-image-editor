@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   DrawerBody,
   DrawerHeader,
-  DrawerItem,
   DrawerList,
 } from '@scaleflex/ui/core/drawer';
 import { Menu } from '@scaleflex/icons';
@@ -13,15 +12,10 @@ import { Button } from '@scaleflex/ui/core';
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import { StyledDrawer } from 'components/App/App.styled';
-import TabItem from 'components/Tabs/TabItem';
+import Tabs from 'components/Tabs';
 
-const TabsDrawer = ({ toggleMainMenu, chosenTabs, selectTab }) => {
-  const {
-    config: { defaultTabId },
-    t,
-    tabId = null,
-    showTabsMenu,
-  } = useStore();
+const TabsDrawer = ({ toggleMainMenu }) => {
+  const { t, showTabsMenu } = useStore();
 
   return (
     <StyledDrawer
@@ -40,35 +34,20 @@ const TabsDrawer = ({ toggleMainMenu, chosenTabs, selectTab }) => {
         </Button>
       </DrawerHeader>
       <DrawerBody>
-        {chosenTabs.map(({ id, icon, labelKey }) => (
-          <DrawerList key={id}>
-            <DrawerItem>
-              <TabItem
-                key={id}
-                id={id}
-                label={t(labelKey)}
-                Icon={icon}
-                isSelected={tabId ? tabId === id : defaultTabId === id}
-                onClick={selectTab}
-              />
-            </DrawerItem>
-          </DrawerList>
-        ))}
+        <DrawerList>
+          <Tabs toggleMainMenu={toggleMainMenu} isDrawer />
+        </DrawerList>
       </DrawerBody>
     </StyledDrawer>
   );
 };
 
 TabsDrawer.defaultProps = {
-  selectTab: () => {},
   toggleMainMenu: () => {},
-  chosenTabs: [],
 };
 
 TabsDrawer.propTypes = {
-  selectTab: PropTypes.func,
   toggleMainMenu: PropTypes.func,
-  chosenTabs: PropTypes.instanceOf(Array),
 };
 
 export default TabsDrawer;

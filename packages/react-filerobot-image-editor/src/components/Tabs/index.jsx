@@ -1,50 +1,90 @@
 /** External Dependencies */
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { DrawerItem } from '@scaleflex/ui/core/drawer';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
+import { SELECT_TAB } from 'actions';
 import TabItem from './TabItem';
-import { StyledTabs } from './Tabs.styled';
+import { AVAILABLE_TABS } from './Tabs.constants';
 
-const Tabs = ({ selectTab, chosenTabs }) => {
+const Tabs = ({ toggleMainMenu, isDrawer }) => {
   const {
     t,
     tabId = null,
-    config: { defaultTabId },
+    dispatch,
+    config: { defaultTabId, tabsIds, useCloudimage },
   } = useStore();
 
   const currentTabId = tabId || defaultTabId;
+
+  const selectTab = useCallback((newTabId) => {
+    dispatch({
+      type: SELECT_TAB,
+      payload: {
+        tabId: newTabId,
+      },
+    });
+
+    toggleMainMenu(false);
+  }, []);
+
+  const chosenTabs = useMemo(() => {
+    let tabs = [];
+    if (Object.keys(tabsIds).length > 0) {
+      AVAILABLE_TABS.forEach((tab) => {
+        const index = tabsIds.indexOf(tab.id);
+        if (index !== -1) {
+          tabs[index] = tab;
+        }
+      });
+    } else {
+      tabs = AVAILABLE_TABS;
+    }
+
+    return (tabs.length > 0 ? tabs : AVAILABLE_TABS).filter(
+      ({ hideFn }) => !hideFn || !hideFn({ useCloudimage }),
+    );
+  }, [tabsIds]);
 
   // If only 1 tab is needed then no need to have the tabs sidebar.
   if (chosenTabs.length === 1) {
     return null;
   }
 
+  const tabItems = ({ id, labelKey, icon }) => (
+    <TabItem
+      key={id}
+      id={id}
+      label={t(labelKey)}
+      Icon={icon}
+      isSelected={currentTabId === id}
+      onClick={selectTab}
+    />
+  );
+
   return (
-    <StyledTabs className="FIE_tabs">
-      {chosenTabs.map(({ id, labelKey, icon }) => (
-        <TabItem
-          key={id}
-          id={id}
-          label={t(labelKey)}
-          Icon={icon}
-          isSelected={currentTabId === id}
-          onClick={selectTab}
-        />
-      ))}
-    </StyledTabs>
+    <>
+      {chosenTabs.map((tab) =>
+        isDrawer ? (
+          <DrawerItem key={tab.id}>{tabItems(tab)}</DrawerItem>
+        ) : (
+          tabItems(tab)
+        ),
+      )}
+    </>
   );
 };
 
 Tabs.defaultProps = {
-  selectTab: () => {},
-  chosenTabs: [],
+  toggleMainMenu: () => {},
+  isDrawer: false,
 };
 
 Tabs.propTypes = {
-  selectTab: PropTypes.func,
-  chosenTabs: PropTypes.instanceOf(Array),
+  toggleMainMenu: PropTypes.func,
+  isDrawer: PropTypes.bool,
 };
 
 export default Tabs;

@@ -24,6 +24,17 @@ const StyledOptions = styled.div`
   }
 `;
 
+const StyledOptionsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -4px;
+  gap: 4px;
+
+  .FIE_annotation-option-triggerer {
+    padding: 6px;
+  }
+`;
+
 const StyledOptionPopupContent = styled.div`
   background: ${({ theme }) => theme.palette['bg-secondary']};
   border-radius: 4px;
@@ -63,7 +74,7 @@ const StyledSpacedOptionFields = styled.div`
     `
       display: block;
   
-      Label {
+      label {
         margin-bottom: 8px;
       }
   `}
@@ -133,6 +144,7 @@ export {
   StyledIconWrapper,
   StyledSpacedOptionFields,
   StyledOptions,
+  StyledOptionsWrapper,
   StyledOptionPopupContent,
   StyledIconLabel,
 };

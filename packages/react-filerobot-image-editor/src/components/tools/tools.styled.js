@@ -10,7 +10,7 @@ const StyledHSVOptions = styled.div`
   gap: 10px;
 
   .SfxSlider-root {
-    min-width: 150px;
+    min-width: 100px;
   }
 
   ${({ isPhoneScreen }) =>

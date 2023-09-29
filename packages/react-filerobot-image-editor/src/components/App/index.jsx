@@ -1,12 +1,5 @@
 /** External Dependencies */
-import React, {
-  memo,
-  useCallback,
-  useEffect,
-  useState,
-  useRef,
-  useMemo,
-} from 'react';
+import React, { memo, useCallback, useEffect, useState, useRef } from 'react';
 
 /** Internal Dependencies */
 import MainCanvas from 'components/MainCanvas';
@@ -16,7 +9,6 @@ import Tabs from 'components/Tabs';
 import ToolsBar from 'components/ToolsBar';
 import {
   HIDE_LOADER,
-  SELECT_TAB,
   SET_FEEDBACK,
   SET_ORIGINAL_IMAGE,
   SET_SHOWN_TABS_MENU,
@@ -37,13 +29,12 @@ import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
 import finetunesStrsToClasses from 'utils/finetunesStrsToClasses';
 import filterStrToClass from 'utils/filterStrToClass';
 import isSameImage from 'utils/isSameImage';
-import { AVAILABLE_TABS } from 'components/Tabs/Tabs.constants';
 import TabsDrawer from 'components/TabsDrawer';
 import {
   StyledAppWrapper,
   StyledMainContent,
+  StyledTabs,
   StyledCanvasAndTools,
-  StyledPhoneToolsAndTabs,
 } from './App.styled';
 
 const App = () => {
@@ -60,7 +51,6 @@ const App = () => {
   } = useStore();
   const {
     loadableDesignState,
-    tabsIds,
     useCloudimage,
     cloudimage,
     source,
@@ -313,24 +303,6 @@ const App = () => {
     haveNotSavedChangesRef.current = haveNotSavedChanges;
   }, [haveNotSavedChanges]);
 
-  const chosenTabs = useMemo(() => {
-    let tabs = [];
-    if (Object.keys(tabsIds).length > 0) {
-      AVAILABLE_TABS.forEach((tab) => {
-        const index = tabsIds.indexOf(tab.id);
-        if (index !== -1) {
-          tabs[index] = tab;
-        }
-      });
-    } else {
-      tabs = AVAILABLE_TABS;
-    }
-
-    return (tabs.length > 0 ? tabs : AVAILABLE_TABS).filter(
-      ({ hideFn }) => !hideFn || !hideFn({ useCloudimage }),
-    );
-  }, [tabsIds]);
-
   const toggleMainMenu = (open) => {
     dispatch({
       type: SET_SHOWN_TABS_MENU,
@@ -340,17 +312,6 @@ const App = () => {
     });
   };
 
-  const selectTab = useCallback((newTabId) => {
-    dispatch({
-      type: SELECT_TAB,
-      payload: {
-        tabId: newTabId,
-      },
-    });
-
-    toggleMainMenu(false);
-  }, []);
-
   return (
     <StyledAppWrapper
       className={ROOT_CONTAINER_CLASS_NAME}
@@ -358,28 +319,22 @@ const App = () => {
       ref={pluginRootRef}
       $size={rootSize}
     >
-      <TabsDrawer
-        toggleMainMenu={toggleMainMenu}
-        selectTab={selectTab}
-        chosenTabs={chosenTabs}
-      />
-      {!showCanvasOnly && <Topbar toggleMainMenu={toggleMainMenu} />}
+      {!showCanvasOnly && (
+        <>
+          <TabsDrawer toggleMainMenu={toggleMainMenu} />
+          <Topbar toggleMainMenu={toggleMainMenu} />
+        </>
+      )}
       {originalImage && feedback.duration !== 0 && (
         <StyledMainContent className="FIE_main-container">
           {!isPhoneScreen && !showCanvasOnly && (
-            <Tabs selectTab={selectTab} chosenTabs={chosenTabs} />
+            <StyledTabs className="FIE_tabs">
+              <Tabs toggleMainMenu={toggleMainMenu} />
+            </StyledTabs>
           )}
           <StyledCanvasAndTools className="FIE_editor-content">
             {isLoadingGlobally ? <Spinner theme={theme} /> : <MainCanvas />}
-            {!showCanvasOnly &&
-              (isPhoneScreen ? (
-                <StyledPhoneToolsAndTabs className="FIE_phone-tools-tabs-wrapper">
-                  <ToolsBar isPhoneScreen={isPhoneScreen} />
-                  <Tabs selectTab={selectTab} chosenTabs={chosenTabs} />
-                </StyledPhoneToolsAndTabs>
-              ) : (
-                <ToolsBar />
-              ))}
+            {!showCanvasOnly && <ToolsBar isPhoneScreen={isPhoneScreen} />}
           </StyledCanvasAndTools>
         </StyledMainContent>
       )}

@@ -253,7 +253,6 @@ const SaveButton = () => {
       <ButtonWithMenu
         className="FIE_topbar-save"
         color="primary"
-        t={t}
         onClick={triggerSaveHandler}
         menuPosition="bottom"
         menuItems={menuItems}
