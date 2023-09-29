@@ -21,6 +21,13 @@ Types of changes:
 
 ---
 
+<!-- ## v4.6.0 - 2023-xx-xx
+
+### Improved
+
+- major design improvements & changes that improves the user interface & experience.
+
+-->
 
 ## v4.5.2 - 2023-09-08
 
