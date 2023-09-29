@@ -67,6 +67,7 @@ const getInitialAppState = (config = {}) => {
     isResetted: true,
     haveNotSavedChanges: false,
     latestColors: {},
+    showTabsMenu: false,
   };
 };
 

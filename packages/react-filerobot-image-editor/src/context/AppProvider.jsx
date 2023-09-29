@@ -1,7 +1,7 @@
 /** External Dependencies */
-import  React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '@scaleflex/ui/theme/hooks/use-theme';
+import { useTheme } from '@scaleflex/ui/theme/hooks';
 
 /** Internal Dependencies */
 import { useAppReducer } from 'hooks';

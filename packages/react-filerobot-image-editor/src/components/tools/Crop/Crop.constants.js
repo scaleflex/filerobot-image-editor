@@ -11,14 +11,14 @@ import toPrecisedFloat from 'utils/toPrecisedFloat';
 
 export const DEFAULT_CROP_PRESETS = [
   {
-    titleKey: 'original',
-    ratio: ORIGINAL_CROP,
-    icon: ImageOutline,
-  },
-  {
     titleKey: 'custom',
     ratio: CUSTOM_CROP,
     icon: Custom,
+  },
+  {
+    titleKey: 'Original',
+    ratio: ORIGINAL_CROP,
+    icon: ImageOutline,
   },
   {
     titleKey: 'landscape',

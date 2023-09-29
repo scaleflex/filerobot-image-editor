@@ -1,13 +1,14 @@
 /** External Dependencies */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Label from '@scaleflex/ui/core/label';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
+import { FontVariant as FV } from '@scaleflex/ui/utils/types/typography';
 
 const StyledToolsBar = styled.div`
-  padding: 8px 1px 0;
   width: fit-content;
   margin: 0 auto;
   max-width: 99.5%;
-  max-height: 92px;
+  max-height: 112px;
 
   [data-phone='true'] & {
     padding: 0;
@@ -17,24 +18,32 @@ const StyledToolsBar = styled.div`
 `;
 
 const StyledToolsBarItems = styled.div`
+  padding: 0 16px 16px 16px;
   display: flex;
+  gap: 12px;
   align-items: center;
-  overflow-x: auto;
-  [data-phone='true'] & {
-    background: ${({ theme }) => theme.palette['bg-primary']};
-  }
+  overflow: hidden;
+
+  ${({ isPhoneScreen }) =>
+    isPhoneScreen &&
+    `
+    justify-content: space-between;
+    padding: 12px;
+    gap: 8px;
+  `}
 `;
 
 const StyledToolsBarItemButton = styled.div(
-  ({ theme }) => `
+  ({ theme, isPhoneScreen }) => `
     display: flex;
+    gap: 6px;
     border-radius: 2px;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 8px 12px;
 
-    &:not(:last-child) {
-      margin-right: 8px;
+    svg {
+      color: ${theme.palette[PC.IconsPrimary]};
     }
 
     &,
@@ -43,22 +52,38 @@ const StyledToolsBarItemButton = styled.div(
     }
 
     &:hover {
-      background: ${theme.palette['bg-primary-active']};
+      ${!isPhoneScreen && `background: ${theme.palette['bg-primary-active']};`}
     }
 
     &[aria-selected='true'] {
-      background: ${theme.palette['bg-primary-active']};
+      ${!isPhoneScreen && `background: ${theme.palette['bg-primary-active']};`}
+      border-radius: 4px;
 
       * {
         color: ${theme.palette['accent-primary-active']};
       }
     }
+
+    ${
+      isPhoneScreen &&
+      css`
+        display: flex;
+        flex-direction: column;
+        min-width: 52px;
+        min-height: 52px;
+        padding: 8px;
+        gap: 4px;
+      `
+    }
   `,
 );
 
-const StyledToolsBarItemButtonLabel = styled(Label)`
-  margin-left: 6px;
-`;
+const StyledToolsBarItemButtonLabel = styled(Label)(
+  ({ theme, isPhoneScreen }) => css`
+    color: ${theme.palette[PC.TextPrimary]};
+    ${isPhoneScreen && theme.typography.font[FV.LabelExtraSmallUp]};
+  `,
+);
 
 const StyledToolsBarItemOptionsWrapper = styled.div`
   position: relative;
@@ -67,11 +92,22 @@ const StyledToolsBarItemOptionsWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 24px;
 
   ${(props) => `
-      max-height: ${props.hasChildren ? '40px' : 0};
+      max-height: ${props.hasChildren ? '56px' : 0};
       margin: ${props.hasChildren ? '0 auto 8px' : 0};
     `};
+
+  ${({ isPhoneScreen }) =>
+    isPhoneScreen &&
+    `
+    max-height: unset;
+    flex-direction: column;
+    padding: 0 12px 8px 12px;
+    gap: 8px;
+    margin: 0;
+  `}
 `;
 
 export {

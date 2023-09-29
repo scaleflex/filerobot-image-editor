@@ -1,16 +1,21 @@
 /** External Dependencies */
 import React from 'react';
-import RotationSlider from '@scaleflex/ui/core/rotation-slider';
 import RotationLeft from '@scaleflex/icons/rotation-left';
 import RotationRight from '@scaleflex/icons/rotation-right';
+import { Rotate90 } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { useDebouncedCallback, useStore } from 'hooks';
+import { useDebouncedCallback, usePhoneScreen, useStore } from 'hooks';
 import { CHANGE_ROTATION, SET_RESIZE } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import { TOOLS_IDS } from 'utils/constants';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
+import {
+  StyledRotationOptions,
+  StyledRotationSlider,
+  StyledRotateButton,
+} from './Rotate.styled';
 
 const RotateOptions = () => {
   const {
@@ -20,6 +25,7 @@ const RotateOptions = () => {
     config,
   } = useStore();
   const rotateConfig = config[TOOLS_IDS.ROTATE];
+  const isPhoneScreen = usePhoneScreen();
 
   const changeRotation = useDebouncedCallback((_e, newRotation) => {
     const rotationAngle = restrictNumber(newRotation, -180, 180);
@@ -78,15 +84,25 @@ const RotateOptions = () => {
   }
 
   return (
-    <RotationSlider
-      className="FIE_rotate-slider"
-      min={-180}
-      max={180}
-      value={rotation}
-      angle={rotateConfig.angle || 90}
-      onChange={changeRotation}
-      style={{ marginBottom: 20 }}
-    />
+    <StyledRotationOptions>
+      <StyledRotationSlider
+        className="FIE_rotate-slider"
+        showCurrentMarkText
+        min={-180}
+        max={180}
+        step={isPhoneScreen ? rotateConfig.angle / 3 : 1}
+        value={rotation}
+        angle={rotateConfig.angle || 90}
+        onChange={changeRotation}
+      />
+      <StyledRotateButton
+        size="sm"
+        color="basic"
+        onClick={(e) => changeRotation(e, rotation + 90)}
+      >
+        <Rotate90 width={15} />
+      </StyledRotateButton>
+    </StyledRotationOptions>
   );
 };
 

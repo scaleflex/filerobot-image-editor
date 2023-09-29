@@ -1,14 +1,13 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import AlignCenter from '@scaleflex/icons/align-center';
-import AlignLeft from '@scaleflex/icons/align-left';
 
 /** Internal Dependencies */
 import {
   StyledSpacedOptionFields,
   StyledIconWrapper,
 } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
+import { TextAlignCenter, TextAlignLeft } from '@scaleflex/icons';
 
 const rightAlignmentCssTransform = { transform: 'scaleX(-1)' };
 
@@ -26,21 +25,21 @@ const TextAlignmentFields = ({
     <StyledSpacedOptionFields>
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('left')}
-        aria-selected={align === 'left'}
+        active={align === 'left'}
       >
-        <AlignLeft />
+        <TextAlignLeft />
       </StyledIconWrapper>
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('center')}
-        aria-selected={align === 'center'}
+        active={align === 'center'}
       >
-        <AlignCenter />
+        <TextAlignCenter />
       </StyledIconWrapper>
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('right')}
-        aria-selected={align === 'right'}
+        active={align === 'right'}
       >
-        <AlignLeft style={rightAlignmentCssTransform} />
+        <TextAlignLeft style={rightAlignmentCssTransform} />
       </StyledIconWrapper>
     </StyledSpacedOptionFields>
   );

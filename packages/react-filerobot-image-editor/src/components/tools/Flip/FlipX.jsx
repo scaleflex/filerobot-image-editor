@@ -7,7 +7,7 @@ import { FlipX as FlipXIcon } from '@scaleflex/icons/flip-x';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { FLIP_DIRECTIONS, TOOLS_IDS } from 'utils/constants';
 import { TOGGLE_FLIP } from 'actions';
-import { useStore } from 'hooks';
+import { usePhoneScreen, useStore } from 'hooks';
 
 const xFlipReverseSideStyle = {
   transform: 'scaleX(-1)',
@@ -19,11 +19,16 @@ const FlipX = ({ selectTool, isSelected, t }) => {
     adjustments: { isFlippedX },
   } = useStore();
 
+  const isPhoneScreen = usePhoneScreen(320);
+
   const { reverseLabelOfCurrXFlipDir, reverseIconOfCurrXFlipDir } = useMemo(
     () => ({
       reverseLabelOfCurrXFlipDir: isFlippedX ? t('unFlipX') : t('flipX'),
       reverseIconOfCurrXFlipDir: () => (
-        <FlipXIcon style={isFlippedX ? xFlipReverseSideStyle : undefined} />
+        <FlipXIcon
+          size={isPhoneScreen ? 20 : 16}
+          style={isFlippedX ? xFlipReverseSideStyle : undefined}
+        />
       ),
     }),
     [isFlippedX],

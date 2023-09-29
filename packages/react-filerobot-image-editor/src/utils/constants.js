@@ -83,7 +83,7 @@ export const DEFAULT_ENABLED_ANCHORS = [
   'bottom-right',
 ];
 
-export const ORIGINAL_CROP = 'original';
+export const ORIGINAL_CROP = 'Crop';
 export const CUSTOM_CROP = 'custom';
 export const ELLIPSE_CROP = 'ellipse';
 

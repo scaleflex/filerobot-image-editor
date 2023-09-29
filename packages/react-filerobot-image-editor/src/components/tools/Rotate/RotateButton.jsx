@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { RotationLeftOutline as RotateIcon } from '@scaleflex/icons/rotation-left-outline';
+import { RotationLeft as RotateIcon } from '@scaleflex/icons/rotation-left';
 
 /** Internal Dependencies */
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';

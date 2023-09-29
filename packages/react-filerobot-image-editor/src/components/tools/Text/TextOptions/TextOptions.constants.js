@@ -1,5 +1,5 @@
 /** External Dependencies */
-import AlignCenter from '@scaleflex/icons/align-center';
+import { TextAlignCenter } from '@scaleflex/icons';
 import Spacing from '@scaleflex/icons/spacing';
 
 /** Internal Dependencies */
@@ -13,7 +13,7 @@ export const TEXT_POPPABLE_OPTIONS = [
   {
     titleKey: 'textAlignment',
     name: TEXT_ALIGNMENT,
-    Icon: AlignCenter,
+    Icon: TextAlignCenter,
   },
   {
     titleKey: 'textSpacings',

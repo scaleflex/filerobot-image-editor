@@ -10,7 +10,7 @@ const Separator = ({ height, width }) => (
 );
 
 Separator.defaultProps = {
-  height: '11px',
+  height: '24px',
   width: '1px',
 };
 

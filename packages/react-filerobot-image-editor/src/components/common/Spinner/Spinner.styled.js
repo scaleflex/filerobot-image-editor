@@ -1,22 +1,14 @@
 /** External Dependencies */
+import { Loading } from '@scaleflex/icons';
 import styled, { keyframes } from 'styled-components';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 
 const spin = keyframes`
-  0% {
-    transform: rotate(0);
-    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-  }
-  50% {
-    transform: rotate(900deg);
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  100% {
-    transform: rotate(1800deg);
-  }
+  to { transform: rotate(360deg); }
 `;
 
 const StyledSpinnerWrapper = styled.div`
-  background: rgba(0, 0, 0, 0.25);
+  background: ${({ theme: { palette } }) => palette[PC.BackgroundStateless]};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,30 +20,10 @@ const StyledSpinnerWrapper = styled.div`
   left: 0;
   flex-direction: column;
   user-select: none;
-
-  label {
-    color: #ffffff;
-  }
 `;
 
-const StyledSpinner = styled.div`
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-
-  :after {
-    content: ' ';
-    display: block;
-    border-radius: 50%;
-    width: 0;
-    height: 0;
-    margin: 8px;
-    box-sizing: border-box;
-    border: 32px solid #fff;
-    border-color: #fff transparent #fff transparent;
-    animation: ${spin} 1.2s infinite;
-  }
+const StyledSpinner = styled(Loading)`
+  animation: ${spin} 1.2s infinite;
 `;
 
 export { StyledSpinnerWrapper, StyledSpinner };

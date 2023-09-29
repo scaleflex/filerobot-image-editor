@@ -1,5 +1,6 @@
 /** External Dependencies */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 
 const StyledCarouselWrapper = styled.div`
   max-width: 680px;
@@ -23,42 +24,46 @@ const StyledCarouselItem = styled.li`
   user-select: none;
 `;
 
-const arrowsCommonStyles = `
+const arrowsCommonStyles = css`
   position: absolute;
   top: 0;
   height: 100%;
-  width: 30px;
+  width: 60px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
+
+  svg {
+    color: ${({ theme: { palette } }) => palette[PC.IconsSecondary]};
+  }
 `;
 
 const StyledPrevArrowWrapper = styled.div`
   ${arrowsCommonStyles}
   left: 0;
+  justify-content: flex-start;
   background: linear-gradient(
     90deg,
     #ffffff 1.56%,
-    rgba(255, 255, 255, 0.93) 70%,
+    rgba(255, 255, 255, 0.89) 52.4%,
+    rgba(255, 255, 255, 0.532165) 76.04%,
     rgba(255, 255, 255, 0) 100%
   );
-
-  svg {
-    transform: scaleX(-1);
-  }
 `;
 
 const StyledNextArrowWrapper = styled.div`
   ${arrowsCommonStyles}
+  right: 0;
+  justify-content: flex-end;
   background: linear-gradient(
     270deg,
     #ffffff 1.56%,
-    rgba(255, 255, 255, 0.93) 70%,
+    rgba(255, 255, 255, 0.89) 52.4%,
+    rgba(255, 255, 255, 0.532165) 76.04%,
     rgba(255, 255, 255, 0) 100%
   );
-  right: 0;
 `;
 
 export {

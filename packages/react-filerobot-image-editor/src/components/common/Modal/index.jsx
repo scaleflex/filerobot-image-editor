@@ -1,17 +1,14 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Modal as LibModal,
-  ModalActions,
-  Button,
-  ModalContent,
-} from '@scaleflex/ui/core';
+import { Button, ModalContent } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
-import { StyledModalTitle } from './Modal.styled';
-
-const style = { width: 300 };
+import {
+  StyledModal,
+  StyledModalTitle,
+  StyledModalActions,
+} from './Modal.styled';
 
 const Modal = ({
   title,
@@ -23,12 +20,14 @@ const Modal = ({
   cancelLabel,
   isOpened,
   doneButtonStyle,
-  doneButtonColor = 'link',
-  cancelButtonColor = 'link',
+  doneButtonColor = 'basic',
+  cancelButtonColor = 'basic',
   children,
   areButtonsDisabled,
   zIndex,
   className,
+  width,
+  isWarning,
 }) => {
   const onKeyUp = (e) => {
     if (e.key === 'Enter') {
@@ -37,23 +36,25 @@ const Modal = ({
   };
 
   return (
-    <LibModal
+    <StyledModal
       className={className}
       open={isOpened}
       onClose={onCancel}
-      style={{ ...style, zIndex }}
+      style={{ zIndex }}
       onKeyUp={onKeyUp}
+      width={width}
     >
       <StyledModalTitle
         icon={<Icon size={25} />}
         iconShadow
+        isWarning={isWarning}
         onClose={onCancel}
         primary={title}
         secondary={hint}
         variant="with-icon"
       />
       {children && <ModalContent>{children}</ModalContent>}
-      <ModalActions align="center">
+      <StyledModalActions align="center">
         <Button
           color={cancelButtonColor}
           onClick={onCancel}
@@ -66,13 +67,14 @@ const Modal = ({
           color={doneButtonColor}
           onClick={onDone}
           size="md"
+          warning={isWarning}
           style={doneButtonStyle}
           disabled={areButtonsDisabled}
         >
           {doneLabel}
         </Button>
-      </ModalActions>
-    </LibModal>
+      </StyledModalActions>
+    </StyledModal>
   );
 };
 
@@ -82,12 +84,14 @@ Modal.defaultProps = {
   doneLabel: 'Yes',
   cancelLabel: 'No',
   doneButtonStyle: undefined,
-  doneButtonColor: 'link',
-  cancelButtonColor: 'link',
+  doneButtonColor: 'basic',
+  cancelButtonColor: 'basic',
   children: undefined,
   areButtonsDisabled: false,
   zIndex: undefined,
   className: undefined,
+  width: '',
+  isWarning: false,
 };
 
 Modal.propTypes = {
@@ -106,6 +110,8 @@ Modal.propTypes = {
   areButtonsDisabled: PropTypes.bool,
   zIndex: PropTypes.number,
   className: PropTypes.string,
+  width: PropTypes.string,
+  isWarning: PropTypes.bool,
 };
 
 export default Modal;

@@ -2,73 +2,111 @@
 import styled from 'styled-components';
 import Button from '@scaleflex/ui/core/button';
 import IconButton from '@scaleflex/ui/core/icon-button';
-import Input from '@scaleflex/ui/core/input';
 import Label from '@scaleflex/ui/core/label';
-import Select from '@scaleflex/ui/core/select';
+import { CrossButton, InputGroup, SelectGroup } from '@scaleflex/ui/core';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
+import { FontVariant as FV } from '@scaleflex/ui/utils/types/typography';
 
 const StyledTopbar = styled.div`
-  padding: 12px 12px 8px 12px;
+  padding: 16px;
   box-sizing: border-box;
   position: relative;
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
   align-items: center;
   justify-content: space-between;
-  ${({ reverseDirection }) =>
-    reverseDirection ? 'flex-direction: row-reverse' : ''};
+  border-bottom: 1px solid
+    ${({ theme: { palette } }) => palette[PC.BordersSecondary]};
 
   [data-phone='true'] & {
     padding: 6px 6px 4px 6px;
   }
-  overflow: auto;
+
+  ${({ isPhoneScreen }) =>
+    isPhoneScreen &&
+    `
+    padding: 12px 12px 0px 3px !important;
+    gap: 12px;
+  `}
+`;
+
+const StyledMainButtonsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  order: 1;
 `;
 
 const StyledHistoryButtonsWrapper = styled.div`
   display: flex;
-  margin: 0 4px;
-  column-gap: 4px;
   align-items: center;
+  order: 3;
 `;
 
 const StyledHistoryButton = styled(IconButton)`
   margin: ${({ margin }) => margin ?? '0 4px'};
+
+  svg {
+    color: ${({ theme: { palette }, buttonIconPrimaryColor }) =>
+      buttonIconPrimaryColor
+        ? palette[PC.IconsPrimary]
+        : palette[PC.IconsMuted]};
+  }
+`;
+
+const StyledZoomingWrapper = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 16px;
-  height: 16px;
-  padding: 2px;
+  gap: 2px;
 `;
 
 const StyledDimensionsLabel = styled(Label)`
   flex-shrink: 0;
+  color: ${({ theme: { palette } }) => palette[PC.TextPlaceholder]};
+  ${({ theme: { typography } }) => typography.font[FV.LabelMedium]};
 `;
 
 const StyledSmallButton = styled(IconButton)`
-  width: 20px;
-  height: 20px;
-  margin: 0 ${(props) => props.horizontalMargin ?? '4px'};
-  padding: 4px;
+  padding: 9px;
+
+  svg {
+    color: ${({ theme: { palette }, showBackButton }) =>
+      showBackButton ? palette[PC.IconsPrimary] : palette[PC.IconsMuted]};
+  }
 `;
 
 const StyledFlexCenterAlignedContainer = styled.div`
-  display: flex;
-  align-items: center;
+  width: ${({ showBackButton }) => (showBackButton ? '318px' : '384px')};
+  height: 32px;
+  gap: 12px;
+  display: block;
+  width: 100%;
+  order: 4;
   ${({ reverseDirection }) =>
     reverseDirection ? 'flex-direction: row-reverse' : ''};
+
+  @media (min-width: 761px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    order: 2;
+  }
 `;
 
 const StyledZoomPercentageLabel = styled(Label)`
   cursor: pointer;
+  color: ${({ theme: { palette } }) => palette[PC.TextPrimary]};
+  ${({ theme: { typography } }) => typography.font[FV.InputMd]};
 `;
 
 const StyledBackButtonLabel = styled.span`
-  font-size: 11px;
-  line-height: 12px;
+  ${({ theme: { typography } }) => typography.font[FV.ButtonMdEmphasis]};
 `;
 
-const StyledCloseOrBackButton = styled(IconButton)`
-  padding: 0;
+const StyledCloseButton = styled(CrossButton)`
+  padding: 9px 0 9px 9px;
   z-index: 111;
 `;
 
@@ -76,38 +114,63 @@ const StyledSaveButton = styled(Button)`
   padding: 4px 12px;
 `;
 
-const StyledFileNameInput = styled(Input)`
-  width: 200px;
-`;
+const StyledFileNameInput = styled(InputGroup)``;
 
-const StyledFileExtensionSelect = styled(Select)`
-  width: 60px;
-  margin-left: 4px;
+const StyledFileExtensionSelect = styled(SelectGroup)`
+  margin-top: 16px;
 `;
 
 const StyledQualityWrapper = styled.div`
   width: 100%;
-  margin-top: 8px;
+  margin-top: 16px;
 `;
 
 const StyledResizeOnSave = styled.div`
-  margin-top: 8px;
+  margin-top: 16px;
   width: 100%;
+`;
+
+const StyledHistoryButtons = styled.div`
+  display: flex;
+  gap: 6px;
+`;
+
+const StyledImageOptionsButtons = styled.div`
+  display: flex;
+  justify-content: ${({ isPhoneScreen }) =>
+    isPhoneScreen ? 'space-between' : 'center'};
+`;
+
+const StyledMenuIconButton = styled(IconButton)`
+  @media (min-width: 761px) {
+    display: none;
+  }
+`;
+
+const StyledDimensionsButtons = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
   StyledHistoryButton,
+  StyledZoomingWrapper,
   StyledSmallButton,
   StyledZoomPercentageLabel,
   StyledBackButtonLabel,
-  StyledCloseOrBackButton,
+  StyledCloseButton,
   StyledSaveButton,
   StyledFileNameInput,
   StyledFileExtensionSelect,
   StyledQualityWrapper,
   StyledResizeOnSave,
   StyledDimensionsLabel,
+  StyledMainButtonsWrapper,
   StyledHistoryButtonsWrapper,
+  StyledHistoryButtons,
+  StyledImageOptionsButtons,
+  StyledMenuIconButton,
+  StyledDimensionsButtons,
 };

@@ -1,20 +1,63 @@
 /** External Dependencies */
 import styled from 'styled-components';
 import Label from '@scaleflex/ui/core/label';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 
 const StyledOptions = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 8px;
+  padding: 8px 16px;
+  margin-top: 4px;
+  gap: 8px;
   flex-wrap: wrap;
+
+  ${({ isPhoneScreen }) =>
+    isPhoneScreen &&
+    `
+    max-width: 315px;
+    padding: 0;
+  `}
+
+  svg {
+    color: ${({ theme: { palette } }) => palette[PC.IconsPrimary]};
+  }
+`;
+
+const StyledOptionsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -4px;
+  gap: 4px;
+
+  .FIE_annotation-option-triggerer {
+    padding: 6px;
+  }
 `;
 
 const StyledOptionPopupContent = styled.div`
   background: ${({ theme }) => theme.palette['bg-secondary']};
-  box-shadow: 0px 1px 2px ${({ theme }) => theme.palette['light-shadow']};
-  border-radius: 2px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px;
   overflow: visible;
+
+  ${({ position }) =>
+    position &&
+    `
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    padding: 0;
+    margin-top: 8px;
+    box-shadow: 0px 1px 2px ${({ theme }) => theme.palette['light-shadow']};
+    `}
+
+  ${({ disablePadding }) =>
+    disablePadding &&
+    `
+      padding: 0;
+    `}
 
   * {
     font-family: 'Roboto', sans-serif;
@@ -22,12 +65,19 @@ const StyledOptionPopupContent = styled.div`
 `;
 
 const StyledSpacedOptionFields = styled.div`
-  padding: 8px 12px;
-`;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-const StyledHeadline = styled(Label)`
-  font-weight: 500;
-  margin-bottom: 12px;
+  ${({ preventFlex }) =>
+    preventFlex &&
+    `
+      display: block;
+  
+      label {
+        margin-bottom: 8px;
+      }
+  `}
 `;
 
 const StyledTwoColumnsContainer = styled.div`
@@ -43,11 +93,14 @@ const StyledColumn = styled.div`
 `;
 
 const StyledIconWrapper = styled.div(
-  ({ theme, addThinBorder, noMargin, secondaryIconColor }) => `
+  ({ theme, addThinBorder, secondaryIconColor, active, watermarkTool }) => `
     cursor: pointer;
-    padding: 3px 6px;
-    margin: ${noMargin ? 0 : '0 4px'};
-    display: inline-block;
+    padding: ${watermarkTool ? '6px' : '8px 12px'};
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
 
     svg {
       vertical-align: middle;
@@ -56,17 +109,23 @@ const StyledIconWrapper = styled.div(
 
     ${
       addThinBorder
-        ? `border: 0.5px solid ${theme.palette['borders-secondary']}`
+        ? `border: 0.5px solid ${theme.palette['borders-secondary']};
+        padding: 9px 9px;`
         : ''
     };
-    color: ${secondaryIconColor ? '#959DA8' : ''};
+    color: ${secondaryIconColor ? theme.palette[PC.IconsSecondary] : ''};
 
-    &[aria-selected='true'] {
-      background: ${theme.palette['bg-primary-active']};
+    ${
+      active &&
+      `
+      border-radius: 4px;
+      border-color: ${theme.palette[PC.AccentStateless]};
+      background-color: ${theme.palette[PC.BackgroundActive]};
 
-      * {
-        color: ${theme.palette['accent-primary-active']};
-      }
+        * {
+          color: ${theme.palette[PC.AccentStateless]};
+        }
+      `
     }
 
     :hover {
@@ -75,12 +134,17 @@ const StyledIconWrapper = styled.div(
   `,
 );
 
+const StyledIconLabel = styled(Label)`
+  color: ${({ theme: { palette } }) => palette[PC.TextPrimary]};
+`;
+
 export {
-  StyledHeadline,
   StyledTwoColumnsContainer,
   StyledColumn,
   StyledIconWrapper,
   StyledSpacedOptionFields,
   StyledOptions,
+  StyledOptionsWrapper,
   StyledOptionPopupContent,
+  StyledIconLabel,
 };

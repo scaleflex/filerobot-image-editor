@@ -1,15 +1,19 @@
 /** External Depepdencneis */
 import React, { useCallback, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Depepdencneis */
 import { SELECT_TOOL } from 'actions';
 import { TABS_TOOLS, TOOLS_ITEMS } from 'components/tools/tools.constants';
 import { TABS_IDS } from 'utils/constants';
 import { useStore } from 'hooks';
+import Carousel from 'components/common/Carousel';
 import { StyledToolsBar, StyledToolsBarItems } from './ToolsBar.styled';
 import ToolsBarItemOptionsWrapper from './ToolsBarItemOptionsWrapper';
 
-const ToolsBar = () => {
+const style = { maxWidth: '100%', width: '100%' };
+
+const ToolsBar = ({ isPhoneScreen }) => {
   const {
     t,
     dispatch,
@@ -94,16 +98,33 @@ const ToolsBar = () => {
 
   return (
     <StyledToolsBar className="FIE_tools-bar-wrapper">
-      <ToolsBarItemOptionsWrapper>
+      <ToolsBarItemOptionsWrapper isPhoneScreen={isPhoneScreen}>
         {ToolOptionsComponent && <ToolOptionsComponent t={t} />}
       </ToolsBarItemOptionsWrapper>
       {items && (
-        <StyledToolsBarItems className="FIE_tools-bar">
-          {items}
+        <StyledToolsBarItems
+          className="FIE_tools-bar"
+          isPhoneScreen={isPhoneScreen}
+        >
+          {currentTabId !== TABS_IDS.WATERMARK ? (
+            <Carousel className="FIE_tools" style={style}>
+              {items}
+            </Carousel>
+          ) : (
+            items
+          )}
         </StyledToolsBarItems>
       )}
     </StyledToolsBar>
   );
+};
+
+ToolsBar.defaultProps = {
+  isPhoneScreen: false,
+};
+
+ToolsBar.propTypes = {
+  isPhoneScreen: PropTypes.bool,
 };
 
 export default ToolsBar;

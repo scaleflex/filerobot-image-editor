@@ -69,16 +69,16 @@ const NodeControls = () => {
       top={position.top}
     >
       {/* {selectionsLength === 1 && (
-        <IconButton color="link" size="sm" onClick={changeAnnotationOrder}>
+        <IconButton color="basic" size="sm" onClick={changeAnnotationOrder}>
           <LayerOrder />
         </IconButton>
       )} */}
       {selectionsIds[0] !== WATERMARK_ANNOTATION_ID && (
-        <IconButton color="link" size="sm" onClick={duplicateSelectedNodes}>
+        <IconButton color="basic" size="sm" onClick={duplicateSelectedNodes}>
           <Duplicate />
         </IconButton>
       )}
-      <IconButton color="link" size="sm" onClick={removeSelectedNodes}>
+      <IconButton color="basic" size="sm" onClick={removeSelectedNodes}>
         <DeleteOutline />
       </IconButton>
     </StyledNodeControls>

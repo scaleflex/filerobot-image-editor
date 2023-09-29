@@ -3,6 +3,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
+import { usePhoneScreen } from 'hooks';
 import {
   StyledToolsBarItemButton,
   StyledToolsBarItemButtonLabel,
@@ -17,6 +18,8 @@ const ToolsBarItemButton = ({
   children,
   className,
 }) => {
+  const isPhoneScreen = usePhoneScreen(320);
+
   const handleClick = (e) => {
     onClick(id, e);
   };
@@ -26,10 +29,13 @@ const ToolsBarItemButton = ({
       className={className}
       onClick={handleClick}
       aria-selected={isSelected}
+      isPhoneScreen={isPhoneScreen}
     >
-      <Icon size={16} />
+      <Icon size={isPhoneScreen ? 20 : 16} />
       {label && (
-        <StyledToolsBarItemButtonLabel>{label}</StyledToolsBarItemButtonLabel>
+        <StyledToolsBarItemButtonLabel isPhoneScreen={isPhoneScreen}>
+          {label}
+        </StyledToolsBarItemButtonLabel>
       )}
       {children}
     </StyledToolsBarItemButton>

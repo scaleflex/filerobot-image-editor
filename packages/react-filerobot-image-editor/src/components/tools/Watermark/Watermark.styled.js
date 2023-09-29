@@ -6,9 +6,10 @@ const StyledWatermarkWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 8px;
   overflow: hidden;
 
-  ${({ noWrap }) => (noWrap ? 'margin-left: 4px; flex-wrap: nowrap;' : '')};
+  ${({ noWrap }) => (noWrap ? 'flex-wrap: nowrap;' : '')};
 `;
 
 const StyledControlsWrapper = styled.div`
@@ -17,13 +18,14 @@ const StyledControlsWrapper = styled.div`
 
 const StyledWatermarkGalleryItem = styled.div(
   ({ theme }) => `
-    padding: 4px;
-    border: 1px solid ${theme.palette['borders-primary']};
+    padding: 6px 4px;
+    border: 1px solid ${theme.palette['borders-secondary']};
     width: fit-content;
     height: 32px;
     border-radius: 2px;
     overflow: hidden;
     cursor: pointer;
+    border-radius: 4px;
 
     :hover {
       background: ${theme.palette['bg-primary-active']};

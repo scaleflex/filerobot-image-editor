@@ -208,6 +208,14 @@ const Watermark = () => {
     }
   }, [selectionsIds]);
 
+  const addWatermarkLabel = () => {
+    if (isPhoneScreen) return t('plus');
+
+    if (menuItems[0]) return t('addWatermark');
+
+    return t('addTextWatermark');
+  };
+
   const renderWatermarkPadding = () => (
     <WatermarkPadding
       watermark={watermark}
@@ -240,18 +248,16 @@ const Watermark = () => {
           </ImageControls>
         </StyledControlsWrapper>
       )}
-      <StyledWatermarkWrapper
-        className="FIE_watermark-add-wrapper"
-        noWrap={Boolean(watermark?.name)}
-      >
+      <StyledWatermarkWrapper className="FIE_watermark-add-wrapper" noWrap>
         <ButtonWithMenu
           className="FIE_watermark-add"
           color="secondary"
-          label={menuItems[0] ? t('addWatermark') : t('addTextWatermark')}
+          label={addWatermarkLabel()}
           title={t('addWatermarkTitle')}
           menuPosition="top"
           menuItems={menuItems}
           menuFromBtn
+          noMargin
         />
         <WatermarksGallery
           selectWatermark={addImgWatermark}

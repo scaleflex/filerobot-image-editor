@@ -1,22 +1,34 @@
 /** External Dependencies */
 import React, { useCallback, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { DrawerItem } from '@scaleflex/ui/core/drawer';
 
 /** Internal Dependencies */
-import { SELECT_TAB } from 'actions';
 import { useStore } from 'hooks';
+import { SELECT_TAB } from 'actions';
 import TabItem from './TabItem';
 import { AVAILABLE_TABS } from './Tabs.constants';
-import { StyledTabs } from './Tabs.styled';
 
-const Tabs = () => {
+const Tabs = ({ toggleMainMenu, isDrawer }) => {
   const {
     t,
-    dispatch,
     tabId = null,
-    config: { tabsIds, defaultTabId, useCloudimage },
+    dispatch,
+    config: { defaultTabId, tabsIds, useCloudimage },
   } = useStore();
 
   const currentTabId = tabId || defaultTabId;
+
+  const selectTab = useCallback((newTabId) => {
+    dispatch({
+      type: SELECT_TAB,
+      payload: {
+        tabId: newTabId,
+      },
+    });
+
+    toggleMainMenu(false);
+  }, []);
 
   const chosenTabs = useMemo(() => {
     let tabs = [];
@@ -36,34 +48,43 @@ const Tabs = () => {
     );
   }, [tabsIds]);
 
-  const selectTab = useCallback((newTabId) => {
-    dispatch({
-      type: SELECT_TAB,
-      payload: {
-        tabId: newTabId,
-      },
-    });
-  }, []);
-
   // If only 1 tab is needed then no need to have the tabs sidebar.
   if (chosenTabs.length === 1) {
     return null;
   }
 
-  return (
-    <StyledTabs className="FIE_tabs">
-      {chosenTabs.map(({ id, labelKey, icon }) => (
-        <TabItem
-          key={id}
-          id={id}
-          label={t(labelKey)}
-          Icon={icon}
-          isSelected={currentTabId === id}
-          onClick={selectTab}
-        />
-      ))}
-    </StyledTabs>
+  const tabItems = ({ id, labelKey, icon }) => (
+    <TabItem
+      key={id}
+      id={id}
+      label={t(labelKey)}
+      Icon={icon}
+      isSelected={currentTabId === id}
+      onClick={selectTab}
+    />
   );
+
+  return (
+    <>
+      {chosenTabs.map((tab) =>
+        isDrawer ? (
+          <DrawerItem key={tab.id}>{tabItems(tab)}</DrawerItem>
+        ) : (
+          tabItems(tab)
+        ),
+      )}
+    </>
+  );
+};
+
+Tabs.defaultProps = {
+  toggleMainMenu: () => {},
+  isDrawer: false,
+};
+
+Tabs.propTypes = {
+  toggleMainMenu: PropTypes.func,
+  isDrawer: PropTypes.bool,
 };
 
 export default Tabs;

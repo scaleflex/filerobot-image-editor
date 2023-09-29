@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React, { Children, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Arrow from '@scaleflex/icons/arrow';
+import { ArrowLeftOutline, ArrowRightOutline } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useResizeObserver } from 'hooks';
@@ -118,7 +118,7 @@ const Carousel = ({ children, style, className }) => {
           className="FIE_carousel-prev-button"
           onClick={scrollToPrev}
         >
-          <Arrow />
+          <ArrowLeftOutline />
         </StyledPrevArrowWrapper>
       )}
       <StyledCarousel className={`${className}-items`} ref={carouselRef}>
@@ -136,7 +136,7 @@ const Carousel = ({ children, style, className }) => {
           className="FIE_carousel-next-button"
           onClick={scrollToNext}
         >
-          <Arrow />
+          <ArrowRightOutline />
         </StyledNextArrowWrapper>
       )}
     </StyledCarouselWrapper>

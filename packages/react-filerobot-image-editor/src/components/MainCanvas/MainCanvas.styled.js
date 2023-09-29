@@ -6,10 +6,10 @@ const CanvasContainer = styled.div`
   width: 100%;
   position: relative;
   // backup for flex-grow, 94px, 12px = toolsbar's maxheight, app container padding.
-  height: calc(100% - 94px - 12px);
-  background: ${({ theme }) => theme.palette['bg-primary']};
+  height: calc(100% - 112px - 16px);
   overflow: hidden;
   min-height: 250px;
+  padding: 16px;
   flex-grow: 1;
 `;
 
@@ -26,7 +26,7 @@ const StyledOrignalImage = styled.img`
 
 const StyledCanvasNode = styled(Stage)`
   outline: none;
-  background: ${({ theme }) => theme.palette['bg-secondary']};
+  background: ${({ theme }) => theme.palette['bg-hover']};
 `;
 
 export { CanvasContainer, StyledOrignalImage, StyledCanvasNode };

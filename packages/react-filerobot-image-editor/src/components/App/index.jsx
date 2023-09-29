@@ -11,6 +11,7 @@ import {
   HIDE_LOADER,
   SET_FEEDBACK,
   SET_ORIGINAL_IMAGE,
+  SET_SHOWN_TABS_MENU,
   SHOW_LOADER,
   UPDATE_STATE,
 } from 'actions';
@@ -28,11 +29,12 @@ import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
 import finetunesStrsToClasses from 'utils/finetunesStrsToClasses';
 import filterStrToClass from 'utils/filterStrToClass';
 import isSameImage from 'utils/isSameImage';
+import TabsDrawer from 'components/TabsDrawer';
 import {
   StyledAppWrapper,
   StyledMainContent,
+  StyledTabs,
   StyledCanvasAndTools,
-  StyledPhoneToolsAndTabs,
 } from './App.styled';
 
 const App = () => {
@@ -44,6 +46,7 @@ const App = () => {
     originalImage,
     shownImageDimensions,
     t,
+    theme,
     feedback = {},
   } = useStore();
   const {
@@ -62,6 +65,8 @@ const App = () => {
     updateStateFnRef,
     noCrossOrigin,
   } = config;
+
+  const showTabsDrawer = window.matchMedia('(max-width: 760px)').matches;
 
   const [observeResize, unobserveElement] = useResizeObserver();
   const [rootSize, setRootSize] = useState({
@@ -300,6 +305,15 @@ const App = () => {
     haveNotSavedChangesRef.current = haveNotSavedChanges;
   }, [haveNotSavedChanges]);
 
+  const toggleMainMenu = (open) => {
+    dispatch({
+      type: SET_SHOWN_TABS_MENU,
+      payload: {
+        opened: open,
+      },
+    });
+  };
+
   return (
     <StyledAppWrapper
       className={ROOT_CONTAINER_CLASS_NAME}
@@ -307,22 +321,22 @@ const App = () => {
       ref={pluginRootRef}
       $size={rootSize}
     >
-      {isLoadingGlobally && <Spinner label={t('loading')} />}
-      {!showCanvasOnly && <Topbar />}
+      {!showCanvasOnly && (
+        <>
+          {showTabsDrawer && <TabsDrawer toggleMainMenu={toggleMainMenu} />}
+          <Topbar toggleMainMenu={toggleMainMenu} />
+        </>
+      )}
       {originalImage && feedback.duration !== 0 && (
         <StyledMainContent className="FIE_main-container">
-          {!isPhoneScreen && !showCanvasOnly && <Tabs />}
+          {!showCanvasOnly && !showTabsDrawer && (
+            <StyledTabs className="FIE_tabs">
+              <Tabs toggleMainMenu={toggleMainMenu} />
+            </StyledTabs>
+          )}
           <StyledCanvasAndTools className="FIE_editor-content">
-            <MainCanvas />
-            {!showCanvasOnly &&
-              (isPhoneScreen ? (
-                <StyledPhoneToolsAndTabs className="FIE_phone-tools-tabs-wrapper">
-                  <ToolsBar />
-                  <Tabs />
-                </StyledPhoneToolsAndTabs>
-              ) : (
-                <ToolsBar />
-              ))}
+            {isLoadingGlobally ? <Spinner theme={theme} /> : <MainCanvas />}
+            {!showCanvasOnly && <ToolsBar isPhoneScreen={isPhoneScreen} />}
           </StyledCanvasAndTools>
         </StyledMainContent>
       )}
