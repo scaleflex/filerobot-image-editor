@@ -66,6 +66,8 @@ const App = () => {
     noCrossOrigin,
   } = config;
 
+  const showTabsDrawer = window.matchMedia('(max-width: 760px)').matches;
+
   const [observeResize, unobserveElement] = useResizeObserver();
   const [rootSize, setRootSize] = useState({
     width: undefined,
@@ -321,13 +323,13 @@ const App = () => {
     >
       {!showCanvasOnly && (
         <>
-          <TabsDrawer toggleMainMenu={toggleMainMenu} />
+          {showTabsDrawer && <TabsDrawer toggleMainMenu={toggleMainMenu} />}
           <Topbar toggleMainMenu={toggleMainMenu} />
         </>
       )}
       {originalImage && feedback.duration !== 0 && (
         <StyledMainContent className="FIE_main-container">
-          {!showCanvasOnly && (
+          {!showCanvasOnly && !showTabsDrawer && (
             <StyledTabs className="FIE_tabs">
               <Tabs toggleMainMenu={toggleMainMenu} />
             </StyledTabs>

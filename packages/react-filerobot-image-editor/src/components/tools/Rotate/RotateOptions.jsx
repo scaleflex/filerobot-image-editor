@@ -2,7 +2,7 @@
 import React from 'react';
 import RotationLeft from '@scaleflex/icons/rotation-left';
 import RotationRight from '@scaleflex/icons/rotation-right';
-import { Reset } from '@scaleflex/icons';
+import { Rotate90 } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useDebouncedCallback, usePhoneScreen, useStore } from 'hooks';
@@ -85,10 +85,9 @@ const RotateOptions = () => {
 
   return (
     <StyledRotationOptions>
-      {/* TODO: add this prop to slider when release UI kit */}
-      {/* showCurrentMarkText */}
       <StyledRotationSlider
         className="FIE_rotate-slider"
+        showCurrentMarkText
         min={-180}
         max={180}
         step={isPhoneScreen ? rotateConfig.angle / 3 : 1}
@@ -101,8 +100,7 @@ const RotateOptions = () => {
         color="basic"
         onClick={(e) => changeRotation(e, rotation + 90)}
       >
-        {/* TODO: update this icon to Rotate90 when release UI kit */}
-        <Reset />
+        <Rotate90 width={15} />
       </StyledRotateButton>
     </StyledRotationOptions>
   );

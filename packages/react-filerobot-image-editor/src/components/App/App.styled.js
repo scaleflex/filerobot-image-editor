@@ -59,10 +59,6 @@ const StyledTabs = styled.div`
     display: flex;
     padding: 0;
   }
-
-  @media (max-width: 760px) {
-    display: none !important;
-  }
 `;
 
 const StyledDrawer = styled(Drawer)`
@@ -75,10 +71,6 @@ const StyledDrawer = styled(Drawer)`
   .SfxDrawer-list,
   .SfxDrawer-item {
     padding: 0;
-  }
-
-  @media (min-width: 761px) {
-    display: none;
   }
 `;
 
