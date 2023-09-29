@@ -2,7 +2,7 @@
   "npmClient": "yarn",
   "useWorkspaces": true,
   "packages": ["packages/*"],
-  "version": "4.5.1",
+  "version": "4.5.2",
   "command": {
     "version": {
       "message": "Chore(Release): publish new version %s🔥🚀"

@@ -22,12 +22,12 @@ Types of changes:
 ---
 
 
-<!-- ## v4.5.2 - 2023-xx-xx
+## v4.5.2 - 2023-09-08
 
 ### Fixed
 
 - Docs. react-konva proper version that works with react 17.
-- Can't draw an ellipse inside polygon or rectangle
+- Can't draw an ellipse inside polygon or rectangle [Issue #366](https://github.com/scaleflex/filerobot-image-editor/issues/366)
 - changing save button label causing shifting problem
 
 ### Added
@@ -37,7 +37,7 @@ Types of changes:
 ### Improved
 
 - If the watermark image is not loaded due to some reason and user tries to add it as watermark, feedback error will be shown.
--->
+
 
 ## v4.5.1 - 2023-06-26
 
