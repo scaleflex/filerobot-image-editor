@@ -112,4 +112,5 @@ export default {
   download: 'Download',
   width: 'Width',
   height: 'Height',
+  plus: '+',
 };

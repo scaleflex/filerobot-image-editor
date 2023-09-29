@@ -8,7 +8,7 @@ import { REDO } from 'actions';
 import { useStore } from 'hooks';
 import { StyledHistoryButton } from './Topbar.styled';
 
-const RedoButton = ({ margin, showBackButton }) => {
+const RedoButton = ({ margin, buttonIconPrimaryColor }) => {
   const { dispatch, hasRedo = false, t } = useStore();
   const dispatchRedo = useCallback(() => {
     dispatch({ type: REDO });
@@ -21,7 +21,7 @@ const RedoButton = ({ margin, showBackButton }) => {
       size="sm"
       onClick={hasRedo ? dispatchRedo : undefined}
       disabled={!hasRedo}
-      showBackButton={showBackButton}
+      buttonIconPrimaryColor={buttonIconPrimaryColor}
       title={t('redoTitle')}
       margin={margin}
     >
@@ -32,12 +32,12 @@ const RedoButton = ({ margin, showBackButton }) => {
 
 RedoButton.defaultProps = {
   margin: undefined,
-  showBackButton: false,
+  buttonIconPrimaryColor: false,
 };
 
 RedoButton.propTypes = {
   margin: PropTypes.string,
-  showBackButton: PropTypes.bool,
+  buttonIconPrimaryColor: PropTypes.bool,
 };
 
 export default RedoButton;

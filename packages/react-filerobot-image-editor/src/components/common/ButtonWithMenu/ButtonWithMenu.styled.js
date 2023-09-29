@@ -8,7 +8,7 @@ const StyledButtonWrapper = styled.div`
   height: 22px;
   display: flex;
   align-items: center;
-  margin-left: 12px;
+  margin-left: ${({ noMargin }) => (noMargin ? '0' : '12px')};
   flex-shrink: 0;
 `;
 

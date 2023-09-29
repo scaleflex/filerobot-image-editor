@@ -28,6 +28,7 @@ const ButtonWithMenu = ({
   menuStyle,
   wrapperStyle,
   buttonRef,
+  noMargin,
 }) => {
   const { t } = useStore();
 
@@ -94,6 +95,7 @@ const ButtonWithMenu = ({
         onClick={disabled ? undefined : handleButtonClick}
         style={wrapperStyle}
         ref={buttonRef}
+        noMargin={noMargin}
       >
         <StyledMainButton
           className={`${className}-button`}
@@ -150,6 +152,7 @@ ButtonWithMenu.defaultProps = {
   label: '',
   color: 'primary',
   menuFromBtn: false,
+  noMargin: false,
   menuPosition: 'bottom',
   onClick: undefined,
   disabled: false,
@@ -166,6 +169,7 @@ ButtonWithMenu.propTypes = {
   label: PropTypes.string,
   color: PropTypes.string,
   menuFromBtn: PropTypes.bool,
+  noMargin: PropTypes.bool,
   menuPosition: PropTypes.string,
   disabled: PropTypes.bool,
   menuStyle: PropTypes.instanceOf(Object),

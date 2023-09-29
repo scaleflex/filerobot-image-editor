@@ -106,9 +106,13 @@ const ToolsBar = ({ isPhoneScreen }) => {
           className="FIE_tools-bar"
           isPhoneScreen={isPhoneScreen}
         >
-          <Carousel className="FIE_tools" style={style}>
-            {items}
-          </Carousel>
+          {currentTabId !== TABS_IDS.WATERMARK ? (
+            <Carousel className="FIE_tools" style={style}>
+              {items}
+            </Carousel>
+          ) : (
+            items
+          )}
         </StyledToolsBarItems>
       )}
     </StyledToolsBar>

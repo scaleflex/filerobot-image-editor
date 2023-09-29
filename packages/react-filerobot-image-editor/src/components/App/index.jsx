@@ -327,7 +327,7 @@ const App = () => {
       )}
       {originalImage && feedback.duration !== 0 && (
         <StyledMainContent className="FIE_main-container">
-          {!isPhoneScreen && !showCanvasOnly && (
+          {!showCanvasOnly && (
             <StyledTabs className="FIE_tabs">
               <Tabs toggleMainMenu={toggleMainMenu} />
             </StyledTabs>
