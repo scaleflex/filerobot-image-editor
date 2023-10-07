@@ -43,6 +43,8 @@ const StyledMenuItem = styled(MenuItem)`
   border-radius: 4px;
   padding: 8px 12px;
 
+  ${({ isAccordion }) => isAccordion && `padding-left: 22px;`}
+
   ${({ isListItem }) =>
     isListItem &&
     `
@@ -69,7 +71,7 @@ const StyledAccordion = styled(Accordion)(
     }
 
     .SfxAccordionHeader-label {
-      ${theme.typography.font[FV.LabelMedium]};
+      ${theme.typography.font[FV.LabelMediumEmphasis]};
       color: ${theme.palette[PC.TextPrimary]};
     }
 

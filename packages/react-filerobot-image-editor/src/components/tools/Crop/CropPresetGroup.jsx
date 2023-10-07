@@ -65,6 +65,7 @@ const CropPresetGroup = ({
               ratio={newRatio}
               Icon={icon}
               theme={theme}
+              isAccordion
               disableManualResize={disableManualResize}
               isActive={
                 currentRatio === newRatio &&

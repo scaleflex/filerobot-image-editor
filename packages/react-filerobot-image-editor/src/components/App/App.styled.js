@@ -20,6 +20,12 @@ const StyledAppWrapper = styled.div.attrs(({ $size = {} }) => ({
   position: relative;
   min-height: 250px;
   background: ${({ theme }) => theme.palette['bg-secondary']};
+
+  ${({ showTabsDrawer }) =>
+    showTabsDrawer &&
+    `
+      overflow: unset;
+  `}
 `;
 
 const StyledMainContent = styled.div`
@@ -42,6 +48,12 @@ const StyledCanvasAndTools = styled.div`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+
+  ${({ showTabsDrawer }) =>
+    showTabsDrawer &&
+    `
+     overflow-y: unset;
+  `}
 `;
 
 const StyledTabs = styled.div`

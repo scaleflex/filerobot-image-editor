@@ -318,6 +318,7 @@ const App = () => {
     <StyledAppWrapper
       className={ROOT_CONTAINER_CLASS_NAME}
       data-phone={isPhoneScreen}
+      showTabsDrawer={showTabsDrawer}
       ref={pluginRootRef}
       $size={rootSize}
     >
@@ -334,7 +335,10 @@ const App = () => {
               <Tabs toggleMainMenu={toggleMainMenu} />
             </StyledTabs>
           )}
-          <StyledCanvasAndTools className="FIE_editor-content">
+          <StyledCanvasAndTools
+            className="FIE_editor-content"
+            showTabsDrawer={showTabsDrawer}
+          >
             {isLoadingGlobally ? <Spinner theme={theme} /> : <MainCanvas />}
             {!showCanvasOnly && <ToolsBar isPhoneScreen={isPhoneScreen} />}
           </StyledCanvasAndTools>

@@ -70,7 +70,6 @@ export default {
   resizeWidthTitle: 'Width in pixels',
   resizeHeightTitle: 'Height in pixels',
   toggleRatioLockTitle: 'Toggle ratio lock',
-  reset: 'Reset',
   resetSize: 'Reset to original image size',
   rotateTool: 'Rotate',
   textTool: 'Text',

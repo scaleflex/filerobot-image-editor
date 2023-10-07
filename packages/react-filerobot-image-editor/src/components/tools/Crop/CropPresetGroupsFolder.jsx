@@ -1,6 +1,7 @@
 /** External Dependencies */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
@@ -64,6 +65,19 @@ const CropPresetGroupsFolder = ({
             key: groupTitleKey,
             disableHover: true,
           })),
+          subMenuProps: {
+            style: { backgroundColor: theme.palette[PC.BackgroundStateless] },
+            popperOptions: {
+              modifiers: [
+                {
+                  name: 'offset',
+                  options: {
+                    offset: [0, 10],
+                  },
+                },
+              ],
+            },
+          },
         },
       ]}
     />

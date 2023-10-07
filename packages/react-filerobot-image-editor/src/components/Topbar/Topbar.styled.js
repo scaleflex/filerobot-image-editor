@@ -79,7 +79,6 @@ const StyledSmallButton = styled(IconButton)`
 const StyledFlexCenterAlignedContainer = styled.div`
   width: ${({ showBackButton }) => (showBackButton ? '318px' : '384px')};
   height: 32px;
-  gap: 12px;
   display: block;
   width: 100%;
   order: 4;
@@ -137,6 +136,7 @@ const StyledHistoryButtons = styled.div`
 
 const StyledImageOptionsButtons = styled.div`
   display: flex;
+  gap: 12px;
   justify-content: ${({ isPhoneScreen }) =>
     isPhoneScreen ? 'space-between' : 'center'};
 `;
@@ -149,6 +149,7 @@ const StyledMenuIconButton = styled(IconButton)`
 
 const StyledDimensionsButtons = styled.div`
   display: flex;
+  gap: 12px;
   align-items: center;
 `;
 

@@ -1,7 +1,6 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@scaleflex/ui/core/button';
 import LockOutline from '@scaleflex/icons/lock-outline';
 import UnlockOutline from '@scaleflex/icons/unlock-outline';
 
@@ -12,10 +11,12 @@ import { useStore } from 'hooks';
 import getProperDimensions from 'utils/getProperDimensions';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import getZoomFitFactor from 'utils/getZoomFitFactor';
+import { Reset } from '@scaleflex/icons';
 import {
   StyledResizeWrapper,
   StyledResizeInput,
   StyledRatioLockIcon,
+  StyledResetButton,
 } from './Resize.styled';
 
 const Resize = ({
@@ -187,17 +188,17 @@ const Resize = ({
         disabled={isManualChangeDisabled}
       />
       {!hideResetButton && (
-        <Button
+        <StyledResetButton
           className="FIE_resize-reset-button"
           size="sm"
+          color="basic"
           onClick={
             isOriginalSize || isManualChangeDisabled ? undefined : resetResize
           }
           disabled={isOriginalSize || isManualChangeDisabled}
-          title={t('resetSize')}
         >
-          {t('reset')}
-        </Button>
+          <Reset />
+        </StyledResetButton>
       )}
     </StyledResizeWrapper>
   );
