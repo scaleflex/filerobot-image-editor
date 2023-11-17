@@ -8,7 +8,7 @@ import { useStore } from 'hooks';
 import { StyledHistoryButton } from './Topbar.styled';
 import ConfirmationModal from './ConfirmationModal';
 
-const ResetButton = ({ margin, buttonIconPrimaryColor }) => {
+const ResetButton = ({ margin }) => {
   const { isResetted = true, feedback, t } = useStore();
 
   const isBlockerError = feedback.duration === 0;
@@ -20,7 +20,6 @@ const ResetButton = ({ margin, buttonIconPrimaryColor }) => {
         color="basic"
         size="sm"
         disabled={isResetted || isBlockerError}
-        buttonIconPrimaryColor={buttonIconPrimaryColor}
         title={t('resetOperations')}
         margin={margin}
       >
@@ -32,12 +31,10 @@ const ResetButton = ({ margin, buttonIconPrimaryColor }) => {
 
 ResetButton.defaultProps = {
   margin: undefined,
-  buttonIconPrimaryColor: false,
 };
 
 ResetButton.propTypes = {
   margin: PropTypes.string,
-  buttonIconPrimaryColor: PropTypes.bool,
 };
 
 export default ResetButton;

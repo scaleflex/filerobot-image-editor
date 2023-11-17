@@ -314,14 +314,8 @@ const App = () => {
     });
   };
 
-  return (
-    <StyledAppWrapper
-      className={ROOT_CONTAINER_CLASS_NAME}
-      data-phone={isPhoneScreen}
-      showTabsDrawer={showTabsDrawer}
-      ref={pluginRootRef}
-      $size={rootSize}
-    >
+  const renderContent = () => (
+    <>
       {!showCanvasOnly && (
         <>
           {showTabsDrawer && <TabsDrawer toggleMainMenu={toggleMainMenu} />}
@@ -339,11 +333,23 @@ const App = () => {
             className="FIE_editor-content"
             showTabsDrawer={showTabsDrawer}
           >
-            {isLoadingGlobally ? <Spinner theme={theme} /> : <MainCanvas />}
+            <MainCanvas />
             {!showCanvasOnly && <ToolsBar isPhoneScreen={isPhoneScreen} />}
           </StyledCanvasAndTools>
         </StyledMainContent>
       )}
+    </>
+  );
+
+  return (
+    <StyledAppWrapper
+      className={ROOT_CONTAINER_CLASS_NAME}
+      data-phone={isPhoneScreen}
+      showTabsDrawer={showTabsDrawer}
+      ref={pluginRootRef}
+      $size={rootSize}
+    >
+      {isLoadingGlobally ? <Spinner theme={theme} /> : renderContent()}
       <FeedbackPopup />
     </StyledAppWrapper>
   );

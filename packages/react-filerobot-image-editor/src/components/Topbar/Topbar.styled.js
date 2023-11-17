@@ -48,10 +48,8 @@ const StyledHistoryButton = styled(IconButton)`
   margin: ${({ margin }) => margin ?? '0 4px'};
 
   svg {
-    color: ${({ theme: { palette }, buttonIconPrimaryColor }) =>
-      buttonIconPrimaryColor
-        ? palette[PC.IconsPrimary]
-        : palette[PC.IconsMuted]};
+    color: ${({ theme: { palette }, disabled }) =>
+      !disabled ? palette[PC.IconsPrimary] : palette[PC.IconsMuted]};
   }
 `;
 

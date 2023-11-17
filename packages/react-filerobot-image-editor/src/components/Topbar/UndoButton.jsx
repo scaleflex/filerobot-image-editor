@@ -8,7 +8,7 @@ import { UNDO } from 'actions';
 import { useStore } from 'hooks';
 import { StyledHistoryButton } from './Topbar.styled';
 
-const UndoButton = ({ margin, buttonIconPrimaryColor }) => {
+const UndoButton = ({ margin }) => {
   const { dispatch, hasUndo = false, t, feedback } = useStore();
   const isBlockerError = feedback.duration === 0;
   const dispatchUndo = useCallback(() => {
@@ -22,7 +22,6 @@ const UndoButton = ({ margin, buttonIconPrimaryColor }) => {
       size="sm"
       onClick={hasUndo ? dispatchUndo : undefined}
       disabled={!hasUndo || isBlockerError}
-      buttonIconPrimaryColor={buttonIconPrimaryColor}
       title={t('undoTitle')}
       margin={margin}
     >
@@ -33,12 +32,10 @@ const UndoButton = ({ margin, buttonIconPrimaryColor }) => {
 
 UndoButton.defaultProps = {
   margin: undefined,
-  buttonIconPrimaryColor: false,
 };
 
 UndoButton.propTypes = {
   margin: PropTypes.string,
-  buttonIconPrimaryColor: PropTypes.bool,
 };
 
 export default UndoButton;

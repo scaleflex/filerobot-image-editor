@@ -44,6 +44,7 @@ const SaveButton = () => {
     isLoadingGlobally,
     haveNotSavedChanges,
     feedback,
+    hasUndo,
     t,
     adjustments: { crop } = {},
     config: {
@@ -258,7 +259,7 @@ const SaveButton = () => {
         menuItems={menuItems}
         menuStyle={saveButtonMenuStyle}
         wrapperStyle={saveButtonWrapperStyle}
-        disabled={isLoadingGlobally || isBlockerError}
+        disabled={isLoadingGlobally || !hasUndo || isBlockerError}
       />
       {isModalOpened && (
         <Modal

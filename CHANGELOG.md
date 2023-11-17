@@ -26,6 +26,7 @@ Types of changes:
 ### Improved
 
 - major design improvements & changes that improves the user interface & experience.
+- Save button is disabled till having first change.
 
 -->
 
