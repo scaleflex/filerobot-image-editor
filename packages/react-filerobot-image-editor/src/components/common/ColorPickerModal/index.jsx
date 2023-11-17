@@ -10,6 +10,8 @@ import ColorPickerIcon from '@scaleflex/icons/color-picker';
 import { useStore } from 'hooks';
 import Styled from './ColorPickerModal.styled';
 
+const modalStyles = { zIndex: 1301 };
+
 const ColorPickerModal = ({
   hideModalTitle,
   defaultColor = '',
@@ -25,7 +27,12 @@ const ColorPickerModal = ({
   }
 
   return (
-    <Styled.ColorPickerModal onClose={onClose} open={open} fullWidth>
+    <Styled.ColorPickerModal
+      onClose={onClose}
+      open={open}
+      fullWidth
+      modalStyles={modalStyles}
+    >
       {!hideModalTitle && (
         <ModalTitle
           onClose={onClose}
@@ -42,9 +49,6 @@ const ColorPickerModal = ({
             onChange={onChange}
             pinnedColors={pinnedColors}
             defaultColor={defaultColor}
-            containerProps={{
-              style: { width: '100px' },
-            }}
             showTransparentColor
           />
         </Styled.ColorPickerWrap>

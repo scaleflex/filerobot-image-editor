@@ -30,7 +30,7 @@ const StyledRatioDescription = styled(Label)`
 const StyledMenu = styled.div`
   min-width: 270px;
   border-radius: 4px;
-  padding: 8px;
+  overflow: hidden;
   background-color: ${({ theme: { palette } }) =>
     palette[PC.BackgroundStateless]};
 `;
@@ -41,20 +41,11 @@ const StyledMenuItem = styled(MenuItem)`
   justify-content: flex-start;
   align-items: center;
   border-radius: 4px;
-  padding: 8px 12px;
+  padding: 8px 16px;
 
-  ${({ isAccordion }) => isAccordion && `padding-left: 22px;`}
+  ${({ isAccordion }) => isAccordion && 'padding-left: 22px;'}
 
-  ${({ isListItem }) =>
-    isListItem &&
-    `
-    padding: 0;
-
-    .SfxMenuItem-root {
-      padding: 8px 12px;
-      border-radius: 4px;
-    }
-  `}
+  ${({ isListItem }) => isListItem && 'padding: 0;'}
 `;
 
 const StyledMenuItemLabel = styled(Label)(

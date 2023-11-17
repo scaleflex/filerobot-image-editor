@@ -22,14 +22,14 @@ const StyledTopbar = styled.div`
 
   [data-phone='true'] & {
     padding: 6px 6px 4px 6px;
-  }
 
-  ${({ isPhoneScreen }) =>
-    isPhoneScreen &&
-    `
-    padding: 12px 12px 0px 3px !important;
-    gap: 12px;
-  `}
+    ${({ isPhoneScreen }) =>
+      isPhoneScreen &&
+      `
+      padding: 12px 12px 0px;
+      gap: 12px;
+    `}
+  }
 `;
 
 const StyledMainButtonsWrapper = styled.div`

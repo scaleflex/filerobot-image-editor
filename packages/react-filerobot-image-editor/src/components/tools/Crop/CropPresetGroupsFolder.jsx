@@ -67,16 +67,6 @@ const CropPresetGroupsFolder = ({
           })),
           subMenuProps: {
             style: { backgroundColor: theme.palette[PC.BackgroundStateless] },
-            popperOptions: {
-              modifiers: [
-                {
-                  name: 'offset',
-                  options: {
-                    offset: [0, 10],
-                  },
-                },
-              ],
-            },
           },
         },
       ]}
