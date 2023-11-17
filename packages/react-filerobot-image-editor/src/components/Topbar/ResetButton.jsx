@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Revert from '@scaleflex/icons/revert';
+import Reset from '@scaleflex/icons/reset';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
@@ -24,7 +24,7 @@ const ResetButton = ({ margin, buttonIconPrimaryColor }) => {
         title={t('resetOperations')}
         margin={margin}
       >
-        <Revert />
+        <Reset />
       </StyledHistoryButton>
     </ConfirmationModal>
   );

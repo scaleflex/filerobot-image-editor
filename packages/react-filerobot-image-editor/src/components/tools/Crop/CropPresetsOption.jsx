@@ -149,6 +149,17 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
         onClose={onClose}
         open={Boolean(anchorEl)}
         position="top"
+        popperOptions={{
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, 4],
+              },
+            },
+          ],
+        }}
+        maxHeight="100%"
       >
         <StyledMenu>{allPresets.map(renderPreset)}</StyledMenu>
       </Menu>

@@ -40,7 +40,7 @@ const StyledSliderWrapper = styled.div`
 
 const StyledSliderInput = styled(Input)`
   display: inline-block;
-  width: 32px;
+  width: 40px;
   height: 28px;
   padding: 6px 2px;
   margin-left: 10px;

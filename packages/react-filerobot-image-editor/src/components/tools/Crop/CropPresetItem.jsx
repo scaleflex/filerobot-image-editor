@@ -17,6 +17,7 @@ const CropPresetItem = ({
   onClick,
   Icon,
   isActive,
+  isAccordion,
   theme,
   width,
   height,
@@ -32,7 +33,11 @@ const CropPresetItem = ({
     });
 
   return (
-    <StyledMenuItem active={isActive} onClick={handleOnClick}>
+    <StyledMenuItem
+      active={isActive}
+      onClick={handleOnClick}
+      isAccordion={isAccordion}
+    >
       {Icon && (
         <StyledMenuItemIcon>
           {typeof Icon === 'string' ? (
@@ -58,6 +63,7 @@ CropPresetItem.defaultProps = {
   width: undefined,
   height: undefined,
   disableManualResize: false,
+  isAccordion: false,
 };
 
 CropPresetItem.propTypes = {
@@ -68,6 +74,7 @@ CropPresetItem.propTypes = {
   isActive: PropTypes.bool.isRequired,
   ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   disableManualResize: PropTypes.bool,
+  isAccordion: PropTypes.bool,
   theme: PropTypes.instanceOf(Object).isRequired,
   width: PropTypes.number,
   height: PropTypes.number,

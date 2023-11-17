@@ -5,7 +5,6 @@ import { Color as PC } from '@scaleflex/ui/utils/types/palette/color';
 import { Menu, MenuItem, MenuItemIcon } from '@scaleflex/ui/core';
 
 const StyledButtonWrapper = styled.div`
-  height: 22px;
   display: flex;
   align-items: center;
   margin-left: ${({ noMargin }) => (noMargin ? '0' : '12px')};

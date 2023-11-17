@@ -9,7 +9,7 @@ const StyledResizeWrapper = styled.div`
   display: flex;
   justify-content: ${({ alignment }) => alignment || 'center'};
   align-items: flex-end;
-  gap: 12px;
+  gap: 3px;
   flex-wrap: ${({ disableWrap }) => (disableWrap ? 'no-wrap' : 'wrap')};
 `;
 
@@ -31,4 +31,13 @@ const StyledRatioLockIcon = styled(IconButton)`
   }
 `;
 
-export { StyledResizeWrapper, StyledResizeInput, StyledRatioLockIcon };
+const StyledResetButton = styled(IconButton)`
+  margin-left: 12px;
+`;
+
+export {
+  StyledResizeWrapper,
+  StyledResizeInput,
+  StyledRatioLockIcon,
+  StyledResetButton,
+};

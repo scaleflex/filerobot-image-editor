@@ -18,7 +18,7 @@ const StyledToolsBar = styled.div`
 `;
 
 const StyledToolsBarItems = styled.div`
-  padding: 0 16px 16px 16px;
+  padding: 8px 16px 16px 16px;
   display: flex;
   gap: 12px;
   align-items: center;
