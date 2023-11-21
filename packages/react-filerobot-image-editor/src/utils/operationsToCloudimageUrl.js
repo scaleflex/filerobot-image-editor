@@ -37,9 +37,7 @@ const generateCropQuery = (
     const [yPlace, xPlace] = lockCropAreaAt.split('-');
     const gravity = `${EDITOR_TO_CLOUDIMG_POSITIONS[yPlace]}${EDITOR_TO_CLOUDIMG_POSITIONS[xPlace]}`;
     return `gravity=${gravity}&aspect_ratio=${toPrecisedFloat(
-      ellipseQuery || typeof crop.ratio === 'string'
-        ? width / height
-        : crop.ratio,
+      typeof crop.ratio === 'string' ? width / height : crop.ratio,
       2,
     )}${ellipseQuery}`;
   }
