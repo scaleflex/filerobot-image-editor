@@ -34,10 +34,12 @@ const generateCropQuery = (
       : '';
 
   if (lockCropAreaAt) {
-    const [yPlace, xPlace] = lockCropAreaAt;
+    const [yPlace, xPlace] = lockCropAreaAt.split('-');
     const gravity = `${EDITOR_TO_CLOUDIMG_POSITIONS[yPlace]}${EDITOR_TO_CLOUDIMG_POSITIONS[xPlace]}`;
     return `gravity=${gravity}&aspect_ratio=${toPrecisedFloat(
-      ellipseQuery ? width / height : crop.ratio,
+      ellipseQuery || typeof crop.ratio === 'string'
+        ? width / height
+        : crop.ratio,
       2,
     )}${ellipseQuery}`;
   }

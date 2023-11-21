@@ -1,8 +1,10 @@
 {
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "packages": ["packages/*"],
-  "version": "4.6.1-beta.0",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "4.6.0-beta.1",
   "command": {
     "version": {
       "message": "Chore(Release): publish new version %s🔥🚀"
