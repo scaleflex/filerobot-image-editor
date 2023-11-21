@@ -26,7 +26,7 @@ const cdnCodeWrapper = getElementById('cdn-code-wrapper');
 const copyButtons = document.querySelectorAll('.copy-button');
 const accordions = document.querySelectorAll('[data-accordion]');
 
-let useCloudimage = true;
+let useCloudimage = false;
 const { TABS } = FilerobotImageEditor;
 
 const EXAMPLE_CODE_TABS = {
@@ -36,7 +36,6 @@ const EXAMPLE_CODE_TABS = {
 };
 
 const DEFAULT_IMAGES_SRCS = [
-  'https://fyeonxrm.filerobot.com/v7/0.Ahmed/Markings-on-a-Measuring-Tape.webp?vh=8969de',
   'https://scaleflex.cloudimg.io/v7/demo/river.png?w=100',
   'https://scaleflex.cloudimg.io/v7/demo/spencer-davis-unsplash.jpg?w=100',
   'https://scaleflex.cloudimg.io/v7/demo/damian-markutt-unsplash.jpg?w=100',
@@ -62,8 +61,7 @@ const IMG_EDITOR_TABS = {
 
 const pluginConfig = {
   ...config,
-  source:
-    'https://fyeonxrm.filerobot.com/v7/0.Ahmed/Markings-on-a-Measuring-Tape.webp?vh=8969de',
+  source: 'https://scaleflex.cloudimg.io/v7/demo/river.png',
   tabsIds: selectedTabs,
   defaultTabId: TABS.ADJUST,
   defaultToolId: null,
@@ -71,7 +69,6 @@ const pluginConfig = {
   cloudimage: {
     token: 'demo',
     version: 'v7',
-    dontPrefixUrl: true,
   },
 };
 
