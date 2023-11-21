@@ -33,6 +33,7 @@ const useTransformedImgData = () => {
       defaultSavedImageType,
       useCloudimage,
       cloudimage,
+      [TOOLS_IDS.CROP]: cropConfig,
     },
   } = state;
 
@@ -43,6 +44,7 @@ const useTransformedImgData = () => {
       designState,
       shownImageDimensions,
       originalImage,
+      cropConfig,
     );
     const mappedCropBox = mapCropBox(
       {
@@ -130,12 +132,14 @@ const useTransformedImgData = () => {
     const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(extension);
 
     const mappedCropBox = mapCropBox(
-      {
-        x: crop.x || clipX,
-        y: crop.y || clipY,
-        width: crop.width || clipWidth,
-        height: crop.height || clipHeight,
-      },
+      crop.noEffect
+        ? { x: 0, y: 0 }
+        : {
+            x: crop.x || clipX,
+            y: crop.y || clipY,
+            width: crop.width || clipWidth,
+            height: crop.height || clipHeight,
+          },
       shownImageDimensions,
       preparedCanvas.attrs,
     );

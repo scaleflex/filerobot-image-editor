@@ -40,7 +40,6 @@ const ButtonWithMenu = ({
 
   const openMenu = (e) => {
     if (isFieButtonWithMenuMounted) {
-      e.stopPropagation();
       setAnchorEl(e.currentTarget);
     }
   };
@@ -92,7 +91,6 @@ const ButtonWithMenu = ({
     <>
       <StyledButtonWrapper
         className={`${className}-wrapper`}
-        onClick={disabled ? undefined : handleButtonClick}
         style={wrapperStyle}
         ref={buttonRef}
         noMargin={noMargin}
@@ -102,7 +100,7 @@ const ButtonWithMenu = ({
           color={color}
           size={buttonSize}
           title={title}
-          onClick={menuFromBtn || disabled ? undefined : openMenu}
+          onClick={disabled ? undefined : handleButtonClick}
           disabled={disabled}
         >
           {getMainButtonLabel()}

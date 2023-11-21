@@ -23,6 +23,7 @@ const CropPresetItem = ({
   height,
   t,
   disableManualResize,
+  noEffect,
 }) => {
   const handleOnClick = (e) =>
     onClick(e, ratio, {
@@ -30,6 +31,7 @@ const CropPresetItem = ({
       width,
       height,
       disableManualResize,
+      noEffect,
     });
 
   return (
@@ -64,6 +66,7 @@ CropPresetItem.defaultProps = {
   height: undefined,
   disableManualResize: false,
   isAccordion: false,
+  noEffect: false,
 };
 
 CropPresetItem.propTypes = {
@@ -83,6 +86,7 @@ CropPresetItem.propTypes = {
     PropTypes.string,
     PropTypes.instanceOf(HTMLElement),
   ]),
+  noEffect: PropTypes.bool,
 };
 
 export default CropPresetItem;

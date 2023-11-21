@@ -1,22 +1,48 @@
 /** Internal Dependencies */
-import { ELLIPSE_CROP, TOOLS_IDS, WATERMARK_ANNOTATION_ID } from './constants';
+import {
+  EDITOR_TO_CLOUDIMG_POSITIONS,
+  ELLIPSE_CROP,
+  TOOLS_IDS,
+  WATERMARK_ANNOTATION_ID,
+} from './constants';
 import getImageSealingParams from './getImageSealingParams';
 import mapCropBox from './mapCropBox';
 import mapNumber from './mapNumber';
 import toPrecisedFloat from './toPrecisedFloat';
 
-const generateCropQuery = (crop, previewDimensions, originalDimensions) => {
+const generateCropQuery = (
+  crop,
+  previewDimensions,
+  originalDimensions,
+  cropConfig,
+) => {
+  if (crop.noEffect) {
+    // if the ratio contains = means it might be a complete crop query (func=face) then use it as it's otherwise assign the ratio to gravity.
+    return crop.ratio.includes('=') ? crop.ratio : `gravity=${crop.ratio}`;
+  }
+
+  const { lockCropAreaAt } = cropConfig || {};
   const { x, y, width, height } = mapCropBox(
     crop,
     previewDimensions,
     originalDimensions,
   );
 
-  return `tl_px=${x},${y}&br_px=${x + width},${y + height}${
+  const ellipseQuery =
     crop.ratio === ELLIPSE_CROP
       ? `&radius=${Math.max(width, height)}&force_format=png`
-      : ''
-  }`;
+      : '';
+
+  if (lockCropAreaAt) {
+    const [yPlace, xPlace] = lockCropAreaAt;
+    const gravity = `${EDITOR_TO_CLOUDIMG_POSITIONS[yPlace]}${EDITOR_TO_CLOUDIMG_POSITIONS[xPlace]}`;
+    return `gravity=${gravity}&aspect_ratio=${toPrecisedFloat(
+      ellipseQuery ? width / height : crop.ratio,
+      2,
+    )}${ellipseQuery}`;
+  }
+
+  return `tl_px=${x},${y}&br_px=${x + width},${y + height}${ellipseQuery}`;
 };
 
 const generateResizeQuery = ({ width, height } = {}) =>
@@ -28,8 +54,8 @@ const generateFlipQuery = (isFlippedX, isFlippedY) =>
   `flip=${isFlippedX ? 'x' : ''}${isFlippedY ? 'y' : ''}`;
 
 const generateWatermarkQuery = (
-  watermarkAnnotation = {},
   previewDimensions,
+  watermarkAnnotation = {},
   crop = {},
 ) => {
   const {
@@ -139,6 +165,7 @@ const operationsToCloudimageUrl = (
   operations,
   previewDimensions,
   originalImage,
+  cropConfig,
 ) => {
   const {
     token,
@@ -173,7 +200,7 @@ const operationsToCloudimageUrl = (
     (crop.y || crop.y === 0)
   ) {
     operationsQueries.push(
-      generateCropQuery(crop, previewDimensions, originalImage),
+      generateCropQuery(crop, previewDimensions, originalImage, cropConfig),
     );
   }
 
@@ -198,8 +225,8 @@ const operationsToCloudimageUrl = (
   if (annotations[WATERMARK_ANNOTATION_ID]) {
     operationsQueries.push(
       generateWatermarkQuery(
-        annotations[WATERMARK_ANNOTATION_ID],
         previewDimensions,
+        annotations[WATERMARK_ANNOTATION_ID],
         crop,
       ),
     );

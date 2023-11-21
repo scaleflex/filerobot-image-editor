@@ -35,8 +35,15 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
   const isPhoneScreen = usePhoneScreen();
 
   const allPresets = useMemo(() => {
-    const { presetsItems = [], presetsFolders = [] } = cropConfig;
-    return [...presetsFolders, ...DEFAULT_CROP_PRESETS, ...presetsItems];
+    const {
+      presetsItems = [],
+      presetsFolders = [],
+      lockCropAreaAt,
+    } = cropConfig;
+    const defaultPresets = lockCropAreaAt
+      ? DEFAULT_CROP_PRESETS.filter((item) => !item.hide?.({ lockCropAreaAt }))
+      : DEFAULT_CROP_PRESETS;
+    return [...presetsFolders, ...defaultPresets, ...presetsItems];
   }, [cropConfig]);
 
   const changeCropRatio = (e, newCropRatio, cropProps) => {
@@ -47,6 +54,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
       ratioTitleKey: cropProps.ratioTitleKey,
       ratioGroupKey: cropProps.ratioGroupKey,
       ratioFolderKey: cropProps.ratioFolderKey,
+      noEffect: cropProps.noEffect,
     };
 
     dispatch({
@@ -86,6 +94,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
     groups,
     icon: Icon,
     disableManualResize,
+    noEffect,
   }) =>
     groups ? (
       <CropPresetGroupsList
@@ -115,6 +124,7 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
         height={height}
         onClick={changeCropRatio}
         disableManualResize={disableManualResize}
+        noEffect={noEffect}
       />
     );
 

@@ -134,18 +134,19 @@ const DesignLayer = () => {
     // As elliptical crop isn't applied while in crop tool.
     const isCroppingAndNotSaving =
       isCurrentlyCropping && !designLayerRef.current?.attrs?.isSaving;
-    const clipBox = isCroppingAndNotSaving
-      ? {
-          ...imageDimensions,
-          x: 0,
-          y: 0,
-        }
-      : {
-          width: crop.width || imageDimensions.width,
-          height: crop.height || imageDimensions.height,
-          x: crop.x || 0,
-          y: crop.y || 0,
-        };
+    const clipBox =
+      isCroppingAndNotSaving || crop.noEffect
+        ? {
+            ...imageDimensions,
+            x: 0,
+            y: 0,
+          }
+        : {
+            width: crop.width || imageDimensions.width,
+            height: crop.height || imageDimensions.height,
+            x: crop.x || 0,
+            y: crop.y || 0,
+          };
     cropImage(ctx, { ratio: crop.ratio, ...clipBox }, isCroppingAndNotSaving);
     if (designLayerRef.current) {
       designLayerRef.current.setAttrs({

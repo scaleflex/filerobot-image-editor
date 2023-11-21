@@ -59,6 +59,10 @@ const NodesTransformer = () => {
     }
   };
 
+  const enabledAnchors = useCloudimage
+    ? ['top-left', 'bottom-left', 'top-right', 'bottom-right']
+    : undefined;
+
   // ALT is used to center scaling
   // SHIFT is used to scaling with keeping ratio
   return (
@@ -83,6 +87,7 @@ const NodesTransformer = () => {
       onMouseLeave={changePointerIconToDraw}
       onDblClick={enableTextContentChangeOnDblClick}
       onDblTap={enableTextContentChangeOnDblClick}
+      enabledAnchors={enabledAnchors}
       flipEnabled
       shouldOverdrawWholeArea
     />

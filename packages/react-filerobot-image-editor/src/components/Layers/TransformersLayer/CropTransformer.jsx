@@ -13,9 +13,14 @@ import {
   ORIGINAL_CROP,
   TOOLS_IDS,
 } from 'utils/constants';
-import { boundDragging, boundResizing } from './cropAreaBounding';
+import { boundDragging, boundResizing } from './TransformersLayer.utils';
+import TextNode from '../DesignLayer/AnnotationNodes/TextNode';
 
 let isFirstRenderCropUpdated = false;
+const noEffectTextDimensions = {
+  width: 200,
+  height: 100,
+};
 
 const CropTransformer = () => {
   const {
@@ -34,6 +39,7 @@ const CropTransformer = () => {
   const tmpImgNodeRef = useRef();
   const shownImageDimensionsRef = useRef();
   const cropConfig = config[TOOLS_IDS.CROP];
+  const { lockCropAreaAt } = cropConfig || {};
   const cropRatio = crop.ratio || cropConfig.ratio;
   const isCustom = cropRatio === CUSTOM_CROP;
   const isEllipse = cropRatio === ELLIPSE_CROP;
@@ -167,9 +173,10 @@ const CropTransformer = () => {
   }
 
   const enabledAnchors =
-    isCustom || isEllipse
+    (lockCropAreaAt && []) ||
+    (isCustom || isEllipse
       ? undefined
-      : ['top-left', 'bottom-left', 'top-right', 'bottom-right'];
+      : ['top-left', 'bottom-left', 'top-right', 'bottom-right']);
 
   const saveCropFromEvent = (e, noHistory = false) => {
     if (!e.target) {
@@ -223,10 +230,10 @@ const CropTransformer = () => {
     scaleX: 1,
     scaleY: 1,
     globalCompositeOperation: 'destination-out',
-    onDragEnd: saveCropFromEvent,
-    onDragMove: limitDragging,
-    onTransformEnd: saveCropFromEvent,
-    draggable: true,
+    onDragEnd: lockCropAreaAt ? undefined : saveCropFromEvent,
+    onDragMove: lockCropAreaAt ? undefined : limitDragging,
+    onTransformEnd: lockCropAreaAt ? undefined : saveCropFromEvent,
+    draggable: !lockCropAreaAt,
   };
 
   // ALT is used to center scaling
@@ -256,7 +263,32 @@ const CropTransformer = () => {
           }}
         />
       ) : (
-        <Rect {...cropShapeProps} width={width} height={height} />
+        <Rect
+          {...cropShapeProps}
+          width={crop.noEffect ? 0 : width}
+          height={crop.noEffect ? 0 : height}
+        />
+      )}
+      {crop.noEffect && (
+        <TextNode
+          name="Text"
+          id="no-preview-text-node"
+          text={t('cropItemNoEffect')}
+          x={shownImageDimensions.width / 2 - noEffectTextDimensions.width / 2}
+          y={
+            shownImageDimensions.height / 2 - noEffectTextDimensions.height / 2
+          }
+          fontSize={20}
+          fill="#ffffff"
+          stroke="#ff0000"
+          strokeWidth={0.2}
+          shadowColor="#ff0000"
+          shadowBlur={10}
+          annotationEvents={{}}
+          align="center"
+          width={noEffectTextDimensions.width}
+          height={noEffectTextDimensions.height}
+        />
       )}
       <Transformer
         centeredScaling={false}

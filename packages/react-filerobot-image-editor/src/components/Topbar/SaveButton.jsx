@@ -58,6 +58,7 @@ const SaveButton = () => {
       defaultSavedImageQuality = DEFAULT_SAVE_QUALITY,
       useCloudimage,
       moreSaveOptions,
+      disableSaveIfNoChanges,
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -142,6 +143,10 @@ const SaveButton = () => {
   };
 
   const triggerSaveHandler = () => {
+    if (disableSaveIfNoChanges && !hasUndo) {
+      return;
+    }
+
     if (useCloudimage) {
       const transformedCloudimageData = transformImgFn(imageFileInfo);
       const onSaveFn = optionSaveFnRef.current || onSave;
@@ -256,10 +261,16 @@ const SaveButton = () => {
         color="primary"
         onClick={triggerSaveHandler}
         menuPosition="bottom"
+        menuFromBtn
         menuItems={menuItems}
         menuStyle={saveButtonMenuStyle}
         wrapperStyle={saveButtonWrapperStyle}
-        disabled={isLoadingGlobally || !hasUndo || isBlockerError}
+        disabled={
+          isLoadingGlobally ||
+          (disableSaveIfNoChanges && !hasUndo) ||
+          isBlockerError
+        }
+        noMargin
       />
       {isModalOpened && (
         <Modal

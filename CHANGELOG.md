@@ -28,6 +28,11 @@ Types of changes:
 - major design improvements & changes that improves the user interface & experience.
 - Save button is disabled till having first change.
 
+### Added
+
+- `disableSaveIfNoChanges`
+- Crop.`noEffect`, Crop.`lockCropAreaAt`
+
 -->
 
 ## v4.5.2 - 2023-09-08

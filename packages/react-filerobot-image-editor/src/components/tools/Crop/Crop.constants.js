@@ -14,6 +14,7 @@ export const DEFAULT_CROP_PRESETS = [
     titleKey: 'custom',
     ratio: CUSTOM_CROP,
     icon: Custom,
+    hide: ({ lockCropAreaAt } = {}) => lockCropAreaAt,
   },
   {
     titleKey: 'Original',

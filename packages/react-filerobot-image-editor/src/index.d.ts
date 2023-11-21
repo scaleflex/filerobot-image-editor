@@ -132,6 +132,7 @@ type cropPresetItem = {
   descriptionKey?: string;
   icon?: string | HTMLElement | FunctionComponent;
   disableManualResize?: boolean;
+  noEffect?: boolean;
 };
 
 type cropPresetGroup = {
@@ -283,6 +284,7 @@ export interface FilerobotImageEditorConfig {
     presetsItems?: cropPresetItem[];
     presetsFolders?: cropPresetFolder[];
     autoResize?: boolean;
+    lockCropAreaAt?: 'top-left' |  'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
   };
   // TABS_IDS
   tabsIds?: availableTabs[] | [];
@@ -346,6 +348,7 @@ export interface FilerobotImageEditorConfig {
   useZoomPresetsMenu?: boolean;
   disableZooming?: boolean;
   noCrossOrigin?: boolean;
+  disableSaveIfNoChanges?: boolean;
 }
 
 declare const FilerobotImageEditor: FunctionComponent<FilerobotImageEditorConfig>;

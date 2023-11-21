@@ -83,6 +83,7 @@ export default {
     autoResize: false,
     presetsItems: [],
     presetsFolders: [],
+    lockCropAreaAt: null,
   },
   [TOOLS_IDS.ROTATE]: {
     angle: 60,
@@ -130,4 +131,5 @@ export default {
   useZoomPresetsMenu: true,
   disableZooming: false,
   noCrossOrigin: false,
+  disableSaveIfNoChanges: false,
 };

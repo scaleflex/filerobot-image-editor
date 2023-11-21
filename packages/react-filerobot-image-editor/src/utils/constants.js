@@ -114,3 +114,19 @@ export const FEEDBACK_STATUSES = {
   WARNING: 'warning',
   ERROR: 'error',
 };
+
+export const EDITOR_TO_CLOUDIMG_POSITIONS = {
+  top: 'north',
+  bottom: 'south',
+  left: 'west',
+  center: 'center',
+  right: 'east',
+};
+
+export const CLOUDIMG_TO_EDITOR_POSITIONS = {
+  north: 'top',
+  south: 'bottom',
+  west: 'left',
+  center: 'center',
+  east: 'right',
+};

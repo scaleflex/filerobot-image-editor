@@ -13,6 +13,32 @@ export const boundDragging = (newDimensions, allowedArea) => {
   };
 };
 
+export const getPositionByPlaceLabel = (
+  position,
+  allowedArea,
+  currentDimensions,
+) => {
+  const [yPlace, xPlace] = position.split('-');
+  const newPosition = {
+    x: 0,
+    y: 0,
+  };
+
+  if (yPlace === 'center') {
+    newPosition.y = allowedArea.height / 2 - currentDimensions.height / 2;
+  } else if (yPlace === 'bottom') {
+    newPosition.y = allowedArea.height - currentDimensions.height;
+  }
+
+  if (xPlace === 'center') {
+    newPosition.x = allowedArea.width / 2 - currentDimensions.width / 2;
+  } else if (xPlace === 'right') {
+    newPosition.x = allowedArea.width - currentDimensions.width;
+  }
+
+  return newPosition;
+};
+
 export const boundResizing = (
   oldDimensions,
   newDimensions,
@@ -27,6 +53,7 @@ export const boundResizing = (
     height: toPrecisedFloat(allowedArea.height * allowedArea.scaledBy),
   };
   const boundedDimensions = { ...newDimensions };
+
   if (newDimensions.x < scaledAllowedArea.x) {
     boundedDimensions.x = scaledAllowedArea.x;
     boundedDimensions.width =
@@ -53,7 +80,7 @@ export const boundResizing = (
   }
 
   if (
-    ratio &&
+    typeof ratio === 'number' &&
     !compareRatios(boundedDimensions.width / boundedDimensions.height, ratio)
   ) {
     const ratioedBoundedWidth = boundedDimensions.height * ratio;
@@ -83,7 +110,7 @@ export const boundResizing = (
     boundedDimensions.x = oldDimensions.x;
     boundedDimensions.y = oldDimensions.y;
 
-    if (ratio) {
+    if (typeof ratio === 'number') {
       boundedDimensions.height = boundedDimensions.width / ratio;
     }
   }
@@ -102,9 +129,20 @@ export const boundResizing = (
     boundedDimensions.x = oldDimensions.x;
     boundedDimensions.y = oldDimensions.y;
 
-    if (ratio) {
+    if (typeof ratio === 'number') {
       boundedDimensions.width = boundedDimensions.height * ratio;
     }
+  }
+
+  if (typeof cropRestrictions.lockCropAreaAt === 'string') {
+    const { x, y } = getPositionByPlaceLabel(
+      cropRestrictions.lockCropAreaAt,
+      scaledAllowedArea,
+      boundedDimensions,
+    );
+
+    boundedDimensions.x = x;
+    boundedDimensions.y = y;
   }
 
   return boundedDimensions;

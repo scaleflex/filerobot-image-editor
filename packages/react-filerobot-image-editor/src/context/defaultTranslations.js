@@ -112,4 +112,5 @@ export default {
   width: 'Width',
   height: 'Height',
   plus: '+',
+  cropItemNoEffect: 'No preview available for this crop item',
 };

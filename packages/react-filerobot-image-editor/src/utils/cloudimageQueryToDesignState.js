@@ -1,5 +1,10 @@
 import Konva from 'konva';
-import { ELLIPSE_CROP, TOOLS_IDS, WATERMARK_ANNOTATION_ID } from './constants';
+import {
+  CLOUDIMG_TO_EDITOR_POSITIONS,
+  ELLIPSE_CROP,
+  TOOLS_IDS,
+  WATERMARK_ANNOTATION_ID,
+} from './constants';
 import deepMerge from './deepMerge';
 import mapNumber from './mapNumber';
 import { finetuneNameToParamInfo } from './operationsToCloudimageUrl';
@@ -10,6 +15,7 @@ const propertyToOperation = (
   shownImageDimensions = {},
   originalImage = {},
 ) => {
+  const lockCropAreaAt = CLOUDIMG_TO_EDITOR_POSITIONS[value];
   switch (operation) {
     case 'wat_text':
       return { watermark: { text: value.replaceAll('+', ' ') } };
@@ -87,6 +93,10 @@ const propertyToOperation = (
         crop: {
           ratio: ELLIPSE_CROP,
         },
+      };
+    case 'gravity':
+      return {
+        crop: lockCropAreaAt ? { lockCropAreaAt } : { noEffect: true },
       };
     case 'w':
       return {
@@ -181,6 +191,9 @@ const cloudimageQueryToDesignState = (
               width: (cropX2 || 0) - crop.x,
               height: (cropY2 || 0) - crop.y,
             },
+          },
+          cropConfig: {
+            lockCropAreaAt: crop.lockCropAreaAt,
           },
         }
       : {}),

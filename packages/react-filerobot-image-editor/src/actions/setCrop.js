@@ -17,6 +17,7 @@ const setCrop = (state, payload) => {
     ratioTitleKey: payload.ratioTitleKey ?? oldCrop.ratioTitleKey,
     ratioGroupKey: payload.ratioGroupKey,
     ratioFolderKey: payload.ratioFolderKey,
+    noEffect: payload.noEffect,
   };
 
   if (

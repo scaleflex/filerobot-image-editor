@@ -49,6 +49,7 @@ const CropPresetGroup = ({
           descriptionKey,
           icon,
           disableManualResize,
+          noEffect,
         }) => {
           const newRatio = ratio ?? toPrecisedFloat(width / height);
 
@@ -72,6 +73,7 @@ const CropPresetGroup = ({
                 ratioTitleKey === titleKey &&
                 ratioGroupKey === groupTitleKey
               }
+              noEffect={noEffect}
             />
           );
         },

@@ -3,7 +3,7 @@ import React, { memo, useCallback, useEffect, useState, useRef } from 'react';
 
 /** Internal Dependencies */
 import MainCanvas from 'components/MainCanvas';
-import { ROOT_CONTAINER_CLASS_NAME } from 'utils/constants';
+import { ROOT_CONTAINER_CLASS_NAME, TOOLS_IDS } from 'utils/constants';
 import Topbar from 'components/Topbar';
 import Tabs from 'components/Tabs';
 import ToolsBar from 'components/ToolsBar';
@@ -228,13 +228,21 @@ const App = () => {
       cloudimage?.loadableQuery &&
       !cloudimageQueryLoaded.current
     ) {
+      const { cropConfig, ...newDesignState } = cloudimageQueryToDesignState(
+        cloudimage.loadableQuery,
+        shownImageDimensions,
+        originalImage,
+      );
       dispatch({
         type: UPDATE_STATE,
-        payload: cloudimageQueryToDesignState(
-          cloudimage.loadableQuery,
-          shownImageDimensions,
-          originalImage,
-        ),
+        payload: {
+          ...newDesignState,
+          config: {
+            [TOOLS_IDS.CROP]: {
+              ...cropConfig,
+            },
+          },
+        },
       });
       cloudimageQueryLoaded.current = true;
     }
@@ -349,7 +357,8 @@ const App = () => {
       ref={pluginRootRef}
       $size={rootSize}
     >
-      {isLoadingGlobally ? <Spinner theme={theme} /> : renderContent()}
+      {isLoadingGlobally && <Spinner theme={theme} />}
+      {renderContent()}
       <FeedbackPopup />
     </StyledAppWrapper>
   );

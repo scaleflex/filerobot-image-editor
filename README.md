@@ -116,8 +116,8 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 **Compatability table (installed version of react should meet the opposite react-konva version in the table).**
 
-| react & react-dom versions |    react-konva version    |
-| -------------------------- | -------------------       |
+| react & react-dom versions | react-konva version       |
+| -------------------------- | ------------------------- |
 | v17.x.x                    | >= v17.0.1-1 <= v17.0.2-6 |
 | v18.x.x                    | v18.x.x                   |
 
@@ -884,23 +884,26 @@ The available options for crop tool,
     autoResize: false,
     presetsItems: [],
     presetsFolders: [],
+    lockCropAreaAt: null, // 'top-left'
 }
 ```
 
 The available options for crop tool,
 
-| Property             | Type                                             | Default (possible values)                                  | Description                                                                                                                                                                                                                         |
-| -------------------- | ------------------------------------------------ | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`minWidth`**       | number                                           | 14                                                         | Minimum width (in px) of the possible crop area                                                                                                                                                                                     |
-| **`minHeight`**      | number                                           | 14                                                         | Minimum height (in px) of the possible crop area                                                                                                                                                                                    |
-| **`maxWidth`**       | number                                           | null                                                       | Maximum width (in px) of the possible crop area                                                                                                                                                                                     |
-| **`maxHeight`**      | number                                           | null                                                       | Maximum height (in px) of the possible crop area                                                                                                                                                                                    |
-| **`ratio`**          | string \| number                                 | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area                                                                                                                                                                                                      |
-| **`ratioTitleKey`**  | string                                           | same as provided/default crop's `ratio`                    | The title's translation key of the crop's ratio selected that will be shown initially besides the crop's tool icon                                                                                                                  |
-| **`noPresets`**      | boolean                                          | false                                                      | hides the crop presets if `true`                                                                                                                                                                                                    |
-| **`autoResize`**     | boolean                                          | false                                                      | if `true` and the chosen crop preset item has both width & height then the original image will be croped and then apply resizing for the cropped image with the width & height, otherwise cropping without resizing will be applied |
-| **`presetsItems`**   | array of [`CropPresetItem`](#croppresetitem)     | []                                                         | Crop presets items to extend with the default ones provided in the plugin, will be shown in the first menu of the crop presets                                                                                                      |
-| **`presetsFolders`** | array of [`CropPresetFolder`](#croppresetfolder) | []                                                         | Crop presets folder to be shown as item with sublist on hovering opens another list with the provided crop presets groups that contains different crop items                                                                        |
+| Property             | Type                                                       | Default (possible values)                                  | Description                                                                                                                                                                                                                         |
+| -------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`minWidth`**       | number                                                     | 14                                                         | Minimum width (in px) of the possible crop area                                                                                                                                                                                     |
+| **`minHeight`**      | number                                                     | 14                                                         | Minimum height (in px) of the possible crop area                                                                                                                                                                                    |
+| **`maxWidth`**       | number                                                     | null                                                       | Maximum width (in px) of the possible crop area                                                                                                                                                                                     |
+| **`maxHeight`**      | number                                                     | null                                                       | Maximum height (in px) of the possible crop area                                                                                                                                                                                    |
+| **`ratio`**          | string \| number                                           | 'original' ('original' \| 'ellipse' \| 'custom' \| number) | Default ratio of the crop area                                                                                                                                                                                                      |
+| **`ratioTitleKey`**  | string                                                     | same as provided/default crop's `ratio`                    | The title's translation key of the crop's ratio selected that will be shown initially besides the crop's tool icon                                                                                                                  |
+| **`noPresets`**      | boolean                                                    | false                                                      | hides the crop presets if `true`                                                                                                                                                                                                    |
+| **`autoResize`**     | boolean                                                    | false                                                      | if `true` and the chosen crop preset item has both width & height then the original image will be croped and then apply resizing for the cropped image with the width & height, otherwise cropping without resizing will be applied |
+| **`presetsItems`**   | array of [`CropPresetItem`](#croppresetitem)               | []                                                         | Crop presets items to extend with the default ones provided in the plugin, will be shown in the first menu of the crop presets                                                                                                      |
+| **`presetsFolders`** | array of [`CropPresetFolder`](#croppresetfolder)           | []                                                         | Crop presets folder to be shown as item with sublist on hovering opens another list with the provided crop presets groups that contains different crop items                                                                        |
+| **`presetsItems`**   | array of [`CropPresetItem`](#croppresetitem)               | []                                                         | Crop presets items to extend with the default ones provided in the plugin, will be shown in the first menu of the crop presets                                                                                                      |
+| **`lockCropAreaAt`** | string of `y-x` => `top/center/bottom`-`left/center/right` | null                                                       | Defines a fixed position for the crop area, and locks it (no user operations will be allowed)                                                                                                                                       |
 
 ##### **CropPresetFolder**:
 
@@ -940,6 +943,7 @@ The available options for crop tool,
 | **`height`**              | number **_Required if no `ratio` provided_**            | undefined                                          | The height of crop preset item used in tandem with width for calculating the proper preset item's ratio (`ratio = width / height`)                                                        |
 | **`icon`**                | HTML Element \| string \| React Function component      | undefined                                          | An icon prefixed to the crop preset item's title                                                                                                                                          |
 | **`disableManualResize`** | boolean                                                 | false                                              | If `true` the resize inputs will be disabled if the user selected this crop preset item and `autoResize` must be `true` otherwise it won't affect                                         |
+| **`noEffect`**            | boolean                                                 | false                                              | If `true` A warning text will be shown on the canvas in crop tab only and the crop won't affect the image it's just added as a selected option and handle should be done from your side   |
 
 > NOTE: `titleKey` of each object must be unique between the other objects in the same array.
 
@@ -1232,6 +1236,20 @@ If `true`, there will be no zooming functionality available in the plugin & UI r
 <u>Default:</u> false
 
 If `true`, `crossOrigin=Anonymous` property with its value won't be used in the original image (image to be edited) loading request -- not recommended --.
+
+> Disabling the usage of crossOrigin might cause some issues with applying filters or saving the image so it is not recommended to provide it `true` unless you know what you are doing.
+
+> If u face strange behavior with CORS on chromium based browser, please check this issue [#319](https://github.com/scaleflex/filerobot-image-editor/issues/319) might be useful for you.
+
+#### `disableSaveIfNoChanges`
+
+<u>Type:</u> `Boolean`
+
+<u>Supported version:</u> +v4.6.0
+
+<u>Default:</u> false
+
+If `true`, the save button will be disabled till the user does a change on the image, otherwise on loading the editor without having any user's functionality then it will be disabled and user won't be able to save.
 
 > Disabling the usage of crossOrigin might cause some issues with applying filters or saving the image so it is not recommended to provide it `true` unless you know what you are doing.
 

@@ -167,17 +167,19 @@ const config = {
     // maxWidth: 700,
     // maxHeight: 300,
     // noPresets: false, // Hiding crop presets
-    // ratio: 4 / 100, // ORIGINAL_CROP, ELLIPSE_CROP, CUSTOM_CROP, ratio's number (10 / 4, 5 / 10...etc.)
+    // ratio: 1 / 2, // ORIGINAL_CROP, ELLIPSE_CROP, CUSTOM_CROP, ratio's number (10 / 4, 5 / 10...etc.)
     // ratioTitleKey: 'custom',
     // minWidth: 200,
     // minHeight: 300,
     // autoResize: false,
+    // lockCropAreaAt: 'center-center',
     presetsItems: [
       {
         titleKey: 'classicTv',
         descriptionKey: '4:3',
         ratio: toPrecisedFloat(4 / 3),
         icon: CropClassicTv,
+        // noEffect: true,
         // disableManualResize: false,
       },
       {

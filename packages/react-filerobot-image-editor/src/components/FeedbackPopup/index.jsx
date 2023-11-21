@@ -14,8 +14,8 @@ const defaultAnchorOrigin = {
 };
 
 const ERROR_TO_ROBOT_STATUS = {
-  [FEEDBACK_STATUSES.ERROR]: 'sad',
-  [FEEDBACK_STATUSES.WARNING]: 'worried',
+  [FEEDBACK_STATUSES.ERROR]: 'error',
+  [FEEDBACK_STATUSES.WARNING]: 'warning',
 };
 
 const FeedbackPopup = ({ anchorOrigin }) => {
