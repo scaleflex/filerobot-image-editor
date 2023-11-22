@@ -39,8 +39,12 @@ const CropTransformer = () => {
   const tmpImgNodeRef = useRef();
   const shownImageDimensionsRef = useRef();
   const cropConfig = config[TOOLS_IDS.CROP];
-  const { lockCropAreaAt } = cropConfig || {};
-  const cropRatio = crop.ratio || cropConfig.ratio;
+  const cropSettings = {
+    ...cropConfig,
+    lockCropAreaAt: crop.lockCropAreaAt ?? cropConfig?.lockCropAreaAt,
+  };
+  const { lockCropAreaAt } = cropSettings;
+  const cropRatio = crop.ratio || cropSettings.ratio;
   const isCustom = cropRatio === CUSTOM_CROP;
   const isEllipse = cropRatio === ELLIPSE_CROP;
 
@@ -106,7 +110,7 @@ const CropTransformer = () => {
         attrs,
         { ...imageDimensions, abstractX: 0, abstractY: 0 },
         isCustom || isEllipse ? false : getProperCropRatio(),
-        cropConfig,
+        cropSettings,
       ),
       true,
     );
@@ -147,7 +151,7 @@ const CropTransformer = () => {
     ) {
       saveBoundedCropWithLatestConfig(crop.width, crop.height);
     }
-  }, [cropConfig, shownImageDimensions.width, shownImageDimensions.height]);
+  }, [cropSettings, shownImageDimensions.width, shownImageDimensions.height]);
 
   useEffect(() => {
     if (shownImageDimensions) {
@@ -173,7 +177,7 @@ const CropTransformer = () => {
   }
 
   const enabledAnchors =
-    (lockCropAreaAt && []) ||
+    ((lockCropAreaAt || crop.noEffect) && []) ||
     (isCustom || isEllipse
       ? undefined
       : ['top-left', 'bottom-left', 'top-right', 'bottom-right']);
@@ -215,7 +219,7 @@ const CropTransformer = () => {
       { ...unscaledImgDimensions, x: 0, y: 0 },
       { ...unscaledImgDimensions, abstractX: 0, abstractY: 0 },
       isCustom || isEllipse ? false : getProperCropRatio(),
-      cropConfig,
+      cropSettings,
     );
   } else {
     attrs = crop;
@@ -313,7 +317,7 @@ const CropTransformer = () => {
             absNewBox,
             shownImageDimensionsRef.current,
             isCustom || isEllipse ? false : getProperCropRatio(),
-            cropConfig,
+            cropSettings,
           )
         }
       />

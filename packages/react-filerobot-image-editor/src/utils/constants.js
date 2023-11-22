@@ -124,9 +124,13 @@ export const EDITOR_TO_CLOUDIMG_POSITIONS = {
 };
 
 export const CLOUDIMG_TO_EDITOR_POSITIONS = {
-  north: 'top',
-  south: 'bottom',
-  west: 'left',
-  center: 'center',
-  east: 'right',
+  northwest: 'top-left',
+  northcenter: 'top-center',
+  northeast: 'top-right',
+  centerwest: 'center-left',
+  centercenter: 'center-center',
+  centereast: 'center-right',
+  southwest: 'bottom-left',
+  southcenter: 'bottom-center',
+  southeast: 'bottom-right',
 };

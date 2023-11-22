@@ -96,7 +96,19 @@ const propertyToOperation = (
       };
     case 'gravity':
       return {
-        crop: lockCropAreaAt ? { lockCropAreaAt } : { noEffect: true },
+        crop: lockCropAreaAt
+          ? { lockCropAreaAt, width: null, height: null }
+          : {
+              noEffect: true,
+              ratio: value,
+              ratioTitleKey: value,
+              width: null,
+              height: null,
+            },
+      };
+    case 'aspect_ratio':
+      return {
+        crop: { ratio: Number(value) },
       };
     case 'w':
       return {
@@ -182,18 +194,15 @@ const cloudimageQueryToDesignState = (
     designState;
   const validDesignState = {
     ...unPreparedDesignState,
-    ...(cropX2 && cropY2 && crop
+    ...((cropX2 && cropY2 && crop) || crop?.noEffect || crop?.lockCropAreaAt
       ? {
           adjustments: {
             ...unPreparedDesignState.adjustments,
             crop: {
-              ...crop,
               width: (cropX2 || 0) - crop.x,
               height: (cropY2 || 0) - crop.y,
+              ...crop,
             },
-          },
-          cropConfig: {
-            lockCropAreaAt: crop.lockCropAreaAt,
           },
         }
       : {}),

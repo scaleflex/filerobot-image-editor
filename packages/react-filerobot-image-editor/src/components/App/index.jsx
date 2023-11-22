@@ -228,21 +228,13 @@ const App = () => {
       cloudimage?.loadableQuery &&
       !cloudimageQueryLoaded.current
     ) {
-      const { cropConfig, ...newDesignState } = cloudimageQueryToDesignState(
-        cloudimage.loadableQuery,
-        shownImageDimensions,
-        originalImage,
-      );
       dispatch({
         type: UPDATE_STATE,
-        payload: {
-          ...newDesignState,
-          config: {
-            [TOOLS_IDS.CROP]: {
-              ...cropConfig,
-            },
-          },
-        },
+        payload: cloudimageQueryToDesignState(
+          cloudimage.loadableQuery,
+          shownImageDimensions,
+          originalImage,
+        ),
       });
       cloudimageQueryLoaded.current = true;
     }

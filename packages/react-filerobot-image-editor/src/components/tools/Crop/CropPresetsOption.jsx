@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { SET_CROP, SET_RESIZE, ZOOM_CANVAS } from 'actions';
 import { usePhoneScreen, useStore } from 'hooks';
 import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styled';
-import { DEFAULT_ZOOM_FACTOR, TOOLS_IDS } from 'utils/constants';
+import { DEFAULT_ZOOM_FACTOR, ORIGINAL_CROP, TOOLS_IDS } from 'utils/constants';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
 import getZoomFitFactor from 'utils/getZoomFitFactor';
 import { MoveDownOutline, MoveUpOutline } from '@scaleflex/icons';
@@ -25,12 +25,13 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
     dispatch,
     t,
     adjustments: {
-      crop: { ratio: currentRatio, ratioTitleKey, ratioFolderKey } = {},
+      crop: { ratio: appliedRatio, ratioTitleKey, ratioFolderKey } = {},
     } = {},
     shownImageDimensions,
     config,
     theme,
   } = useStore();
+  const currentRatio = appliedRatio || ORIGINAL_CROP; // we consider original as default one if no ratio has been set.
   const cropConfig = config[TOOLS_IDS.CROP];
   const isPhoneScreen = usePhoneScreen();
 

@@ -77,7 +77,7 @@ export default {
     height: null,
     maxWidth: null,
     maxHeight: null,
-    ratio: 'Crop',
+    ratio: null,
     ratioTitleKey: undefined,
     noPresets: false,
     autoResize: false,
