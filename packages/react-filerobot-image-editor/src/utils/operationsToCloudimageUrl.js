@@ -8,6 +8,7 @@ import {
 import getImageSealingParams from './getImageSealingParams';
 import mapCropBox from './mapCropBox';
 import mapNumber from './mapNumber';
+import rgbaToHexWithOpacity from './rgbaToHexa';
 import toPrecisedFloat from './toPrecisedFloat';
 
 const generateCropQuery = (
@@ -70,25 +71,25 @@ const generateWatermarkQuery = (
   } = watermarkAnnotation;
   const scaledWidth = previewDimensions.width * previewDimensions.scaledBy;
   const scaledHeight = previewDimensions.height * previewDimensions.scaledBy;
-  const queryParams = `wat=1&wat_gravity=absolute&wat_opacity=${opacity}&wat_pos=${Math.floor(
+  const queryParams = `wat=1&wat_gravity=absolute&wat_pos=${Math.floor(
     ((x - (crop.x || 0)) / scaledWidth) * 100,
     2,
   )}p,${Math.floor(((y - (crop.y || 0)) / scaledHeight) * 100, 2)}p`;
 
   if (watermarkAnnotation.name === TOOLS_IDS.TEXT) {
+    const { hex, opacity: colorOpacity } = rgbaToHexWithOpacity(watermark.fill);
     return `${queryParams}&wat_text=${watermark.text.replaceAll(
       '\n',
       '',
-    )}&wat_font=${watermark.fontFamily}&wat_color=${watermark.fill.replace(
-      '#',
-      '',
-    )}&wat_fontsize=${watermark.fontSize}max`;
+    )}&wat_font=${watermark.fontFamily}&wat_color=${hex}&wat_opacity=${
+      colorOpacity ?? opacity
+    }&wat_fontsize=${watermark.fontSize}max`;
   }
 
   const imgSrc = watermark.image?.src || watermark.image;
   const watermarkUrl = !imgSrc.startsWith('blob:') && imgSrc;
 
-  return `${queryParams}&wat_scale=${toPrecisedFloat(
+  return `${queryParams}&wat_opacity=${opacity}&wat_scale=${toPrecisedFloat(
     ((width * scaleX) / scaledWidth) * 100,
     2,
   )}p,${toPrecisedFloat(((height * scaleY) / scaledHeight) * 100, 2)}p${

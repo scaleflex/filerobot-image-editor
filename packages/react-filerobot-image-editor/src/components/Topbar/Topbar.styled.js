@@ -103,7 +103,7 @@ const StyledBackButtonLabel = styled.span`
 `;
 
 const StyledCloseButton = styled(CrossButton)`
-  padding: 9px 0 9px 9px;
+  padding: 9px;
   z-index: 111;
 `;
 

@@ -29,7 +29,7 @@ const WatermarkPadding = ({ watermark, saveWatermark, t }) => {
     saveWatermark({ padding: restrictNumber(newPadding, 0, 100) });
   };
 
-  const currentPadding = watermark.padding;
+  const currentPadding = watermark.padding || 0;
 
   return (
     <>
