@@ -82,7 +82,7 @@ const generateWatermarkQuery = (
       '\n',
       '',
     )}&wat_font=${watermark.fontFamily}&wat_color=${hex}&wat_opacity=${
-      colorOpacity ?? opacity
+      colorOpacity ?? opacity ?? 1
     }&wat_fontsize=${watermark.fontSize}max`;
   }
 
