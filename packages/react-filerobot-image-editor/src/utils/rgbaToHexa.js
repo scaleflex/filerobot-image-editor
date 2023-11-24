@@ -1,5 +1,16 @@
 const rgbaToHexWithOpacity = (rgba = '') => {
+  const defaultHexColor = { hex: '000000', opacity: 1 };
+  if (!rgba) {
+    return defaultHexColor;
+  }
+  if (rgba.startsWith('#')) {
+    return { hex: rgba.replace('#', ''), opacity: 1 };
+  }
+
   let [r, g, b, opacity] = rgba.split(',');
+  if (!r || !g || !b) {
+    return defaultHexColor;
+  }
   r = parseFloat(r.replace(/rgba?\(/, '').trim()).toString(16);
   g = parseFloat(g.trim()).toString(16);
   b = parseFloat(b.trim()).toString(16);
