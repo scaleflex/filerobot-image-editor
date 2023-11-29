@@ -21,7 +21,7 @@ Types of changes:
 
 ---
 
-<!-- ## v4.6.0 - 2023-11-29
+## v4.6.0 - 2023-11-29
 
 ### Improved
 
@@ -31,8 +31,8 @@ Types of changes:
 
 ### Added
 
-- `disableSaveIfNoChanges`
-- Crop.`noEffect`, Crop.`lockCropAreaAt` -->
+- Added `disableSaveIfNoChanges` for disabling save button if no changes there yet.
+- Crop.`noEffect`, Crop.`lockCropAreaAt`
 
 
 ## v4.5.2 - 2023-09-08
