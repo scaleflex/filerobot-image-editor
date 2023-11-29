@@ -16,6 +16,9 @@ const getInitialAppState = (config = {}) => {
     loadedConfigPrepared.filter = filterStrToClass(loadedConfigPrepared.filter);
   }
 
+  const hasLoadableDesignState =
+    Boolean(config.loadableDesignState) ||
+    Boolean(config.useCloudimage && config.cloudimage?.loadableQuery);
   return {
     // --- Start of design states ---
     imgSrc:
@@ -64,7 +67,7 @@ const getInitialAppState = (config = {}) => {
      */
     pastDesignStates: [],
     futureDesignStates: [],
-    isResetted: true,
+    isResetted: !hasLoadableDesignState ?? true,
     haveNotSavedChanges: false,
     latestColors: {},
     showTabsMenu: false,

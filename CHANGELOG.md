@@ -21,19 +21,19 @@ Types of changes:
 
 ---
 
-<!-- ## v4.6.0 - 2023-xx-xx
+<!-- ## v4.6.0 - 2023-11-29
 
 ### Improved
 
 - major design improvements & changes that improves the user interface & experience.
 - Save button is disabled till having first change.
+- Reset button is available/enabled if any of `config.loadableDesignState` or `config.cloudimage.loadableQuery` has value.
 
 ### Added
 
 - `disableSaveIfNoChanges`
-- Crop.`noEffect`, Crop.`lockCropAreaAt`
+- Crop.`noEffect`, Crop.`lockCropAreaAt` -->
 
--->
 
 ## v4.5.2 - 2023-09-08
 

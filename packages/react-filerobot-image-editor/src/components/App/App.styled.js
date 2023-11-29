@@ -57,7 +57,7 @@ const StyledCanvasAndTools = styled.div`
 `;
 
 const StyledTabs = styled.div`
-  min-width: 104px;
+  min-width: 108px;
   height: 100%;
   padding: 16px;
   display: flex;
@@ -78,7 +78,6 @@ const StyledDrawer = styled(Drawer)`
   width: 92px;
   height: 100%;
   padding: 12px;
-  gap: 12px;
 
   .SfxDrawer-list,
   .SfxDrawer-item {
