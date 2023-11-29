@@ -31,8 +31,8 @@ Types of changes:
 
 ### Added
 
-- Added `disableSaveIfNoChanges` for disabling save button if no changes there yet.
-- Crop.`noEffect`, Crop.`lockCropAreaAt`
+- `disableSaveIfNoChanges` property for disabling save button if no changes there yet.
+- Crop.`noEffect`, Crop.`lockCropAreaAt` properties for giving more customization to crop functionality.
 
 
 ## v4.5.2 - 2023-09-08
