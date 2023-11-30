@@ -25,6 +25,7 @@ import {
   StyledFileNameInput,
   StyledQualityWrapper,
   StyledResizeOnSave,
+  StyledResizeOnSaveLabel,
 } from './Topbar.styled';
 
 const sliderStyle = { marginBottom: 16 };
@@ -262,6 +263,7 @@ const SaveButton = () => {
         onClick={triggerSaveHandler}
         menuPosition="bottom"
         menuFromBtn
+        label={menuItems.length > 0 ? t('saveAs') : t('save')}
         menuItems={menuItems}
         menuStyle={saveButtonMenuStyle}
         wrapperStyle={saveButtonWrapperStyle}
@@ -332,7 +334,7 @@ const SaveButton = () => {
             </StyledQualityWrapper>
           )}
           <StyledResizeOnSave className="FIE_save-resize-wrapper">
-            <Label>{t('resize')}</Label>
+            <StyledResizeOnSaveLabel>{t('resize')}</StyledResizeOnSaveLabel>
             <Resize
               onChange={resizeImageFile}
               currentSize={imageFileInfo?.size || {}}

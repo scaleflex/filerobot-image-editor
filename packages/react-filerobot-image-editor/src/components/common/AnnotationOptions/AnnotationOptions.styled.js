@@ -110,7 +110,7 @@ const StyledIconWrapper = styled.div(
     ${
       addThinBorder
         ? `border: 0.5px solid ${theme.palette['borders-secondary']};
-        padding: 9px 9px;`
+        padding: 8px 8px;`
         : ''
     };
     color: ${secondaryIconColor ? theme.palette[PC.IconsSecondary] : ''};

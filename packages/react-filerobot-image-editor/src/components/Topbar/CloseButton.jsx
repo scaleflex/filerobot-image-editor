@@ -13,9 +13,13 @@ const CloseButton = () => {
     config: { onClose },
   } = useStore();
 
+  if (typeof onClose !== 'function') {
+    return null;
+  }
+
   return (
     <>
-      {onClose && <Separator />}
+      <Separator />
       <ConfirmationModal>
         <StyledCloseButton
           className="FIE_topbar-close-button"

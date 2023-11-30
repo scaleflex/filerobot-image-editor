@@ -38,10 +38,11 @@ const StyledMainButtonsWrapper = styled.div`
   order: 1;
 `;
 
-const StyledHistoryButtonsWrapper = styled.div`
+const StyledControlButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
   order: 3;
+  gap: 4px;
 `;
 
 const StyledHistoryButton = styled(IconButton)`
@@ -66,7 +67,7 @@ const StyledDimensionsLabel = styled(Label)`
 `;
 
 const StyledSmallButton = styled(IconButton)`
-  padding: 9px;
+  padding: 8px;
 
   svg {
     color: ${({ theme: { palette }, showBackButton }) =>
@@ -103,7 +104,7 @@ const StyledBackButtonLabel = styled.span`
 `;
 
 const StyledCloseButton = styled(CrossButton)`
-  padding: 9px;
+  padding: 8px;
   z-index: 111;
 `;
 
@@ -125,6 +126,10 @@ const StyledQualityWrapper = styled.div`
 const StyledResizeOnSave = styled.div`
   margin-top: 16px;
   width: 100%;
+`;
+
+const StyledResizeOnSaveLabel = styled(Label)`
+  margin-bottom: 4px;
 `;
 
 const StyledHistoryButtons = styled.div`
@@ -167,9 +172,10 @@ export {
   StyledResizeOnSave,
   StyledDimensionsLabel,
   StyledMainButtonsWrapper,
-  StyledHistoryButtonsWrapper,
+  StyledControlButtonsWrapper,
   StyledHistoryButtons,
   StyledImageOptionsButtons,
   StyledMenuIconButton,
   StyledDimensionsButtons,
+  StyledResizeOnSaveLabel,
 };

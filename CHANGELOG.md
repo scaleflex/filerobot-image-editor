@@ -21,6 +21,13 @@ Types of changes:
 
 ---
 
+## v4.6.1 - 2023-11-30
+
+### Improved
+
+- Top & Tools bars Design spaces polishing & improvements.
+- enhancing the default label of save button to be save as if there are multiple/more save options, or save if no more saving options.
+
 ## v4.6.0 - 2023-11-29
 
 ### Improved

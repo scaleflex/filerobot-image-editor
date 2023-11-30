@@ -71,14 +71,6 @@ const ButtonWithMenu = ({
     }
   };
 
-  const getMainButtonLabel = () => {
-    if (label) return label;
-
-    if (hasMultipleMenuItems) return t('download');
-
-    return t('saveAs');
-  };
-
   useEffect(() => {
     isFieButtonWithMenuMounted = true;
 
@@ -103,7 +95,7 @@ const ButtonWithMenu = ({
           onClick={disabled ? undefined : handleButtonClick}
           disabled={disabled}
         >
-          {getMainButtonLabel()}
+          {label || t('saveAs')}
         </StyledMainButton>
       </StyledButtonWrapper>
       {hasMultipleMenuItems && (

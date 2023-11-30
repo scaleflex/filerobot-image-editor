@@ -15,7 +15,7 @@ import {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
   StyledMainButtonsWrapper,
-  StyledHistoryButtonsWrapper,
+  StyledControlButtonsWrapper,
   StyledHistoryButtons,
   StyledMenuIconButton,
 } from './Topbar.styled';
@@ -52,15 +52,15 @@ const Topbar = ({ toggleMainMenu }) => {
         />
       </StyledFlexCenterAlignedContainer>
 
-      <StyledHistoryButtonsWrapper className="FIE_topbar-history-buttons">
-        <StyledHistoryButtons>
+      <StyledControlButtonsWrapper>
+        <StyledHistoryButtons className="FIE_topbar-history-buttons">
           <ResetButton margin="0" showBackButton={showBackButton} />
           <UndoButton margin="0" showBackButton={showBackButton} />
           <RedoButton margin="0" showBackButton={showBackButton} />
         </StyledHistoryButtons>
 
         {showBackButton ? <SaveButton /> : <CloseButton />}
-      </StyledHistoryButtonsWrapper>
+      </StyledControlButtonsWrapper>
     </StyledTopbar>
   );
 };
