@@ -21,6 +21,12 @@ Types of changes:
 
 ---
 
+## v4.6.2 - 2023-11-30
+
+### Fixed
+
+- Issue of React is undefined in some cases while opening the color picker.
+
 ## v4.6.1 - 2023-11-30
 
 ### Improved

@@ -1,5 +1,5 @@
 import PT from 'prop-types';
-import {
+import React, {
   Button,
   ColorPicker,
   ModalContent,
@@ -80,7 +80,6 @@ ColorPickerModal.propTypes = {
   onChange: PT.func,
   open: PT.bool,
   hideModalTitle: PT.bool,
-  // eslint-disable-next-line react/forbid-prop-types
   pinnedColors: PT.array,
   onClose: PT.func,
 };
