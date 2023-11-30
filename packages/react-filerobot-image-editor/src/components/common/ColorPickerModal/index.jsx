@@ -1,5 +1,6 @@
+import React from 'react';
 import PT from 'prop-types';
-import React, {
+import {
   Button,
   ColorPicker,
   ModalContent,
@@ -80,7 +81,7 @@ ColorPickerModal.propTypes = {
   onChange: PT.func,
   open: PT.bool,
   hideModalTitle: PT.bool,
-  pinnedColors: PT.array,
+  pinnedColors: PT.arrayOf(PT.string),
   onClose: PT.func,
 };
 
