@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filerobot Image Editor Demo</title>
+    <meta
+      name="description"
+      content="The Filerobot Image Editor is the easiest way to integrate an easy-to-use image editor in your web application. Integrated with few lines of code, your users will be able to apply basic transformations like resize, crop, flip, finetune, annotate, watermark and various filters to any image."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.scaleflex.it/plugins/js-cloudimage-responsive/4.8.5/js-cloudimage-responsive.min.css?vh=a076ef&func=proxy"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    
+    <script type="module" crossorigin src="./assets/index.adac94a2.js"></script>
+    <link rel="stylesheet" href="./assets/index.c7479884.css">
+  </head>
+
+  <body>
+    <section class="content-wrapper">
+      <header class="header">
+        <div class="header-logo">
+          <a href=" https://scaleflex.com/" target="_blank">
+            <img
+              src="./assets/scaleflex-logo.9408c3ca.svg"
+              alt="scaleflex logo"
+            />
+          </a>
+          <a
+            class="img-editor"
+            href="https://scaleflex.github.io/filerobot-image-editor/"
+          >
+            Image Editor
+          </a>
+        </div>
+        <div class="navbar">
+          <a
+            class="stars"
+            href="https://github.com/scaleflex/filerobot-image-editor/stargazers"
+            target="_blank"
+          >
+            <img class="star" src="./assets/git-stars.08c27c24.svg" alt="star" />
+            <img
+              class="stars-label"
+              src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?color=fff&label=Star&logo=none&style=flat&labelColor=fff"
+              alt="star-img"
+            />
+          </a>
+          <a
+            class="git-hub"
+            href="https://github.com/scaleflex/filerobot-image-editor"
+            target="_blank"
+          >
+            <img src="./assets/github-logo.7fb6b207.svg" alt="github-icon" />
+            <p>GitHub</p>
+          </a>
+        </div>
+      </header>
+
+      <div class="content">
+        <div>
+          <h1 class="content-title">
+            Edit, Resize, and Filter
+            <span>any images for <span class="colored-text">Free</span></span>
+          </h1>
+        </div>
+        <div class="content-text container">
+          <p>
+            The <strong>Filerobot Image Editor</strong> is the easiest way to
+            integrate an on-the-shelf and easy-to-use image editor in your web
+            application, <strong>for free</strong>. Integrated with few lines of
+            code, look forward to effortless image transformations! Your users
+            can resize, crop, rotate, and add various filters to any image - all
+            from within their browser!
+          </p>
+        </div>
+        <div class="view-button">
+          <a
+            class="transition-filled-button"
+            target="_blank"
+            href="https://github.com/scaleflex/filerobot-image-editor"
+          >
+            View on GitHub
+          </a>
+          <p>Test it out below</p>
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAA+CAYAAAAxgtvTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAALaSURBVHgB1VhdUhpBEO6ZZTFVMRU8QcwJxCfL8gUeo5UUnEA8geYEmBvoCdQToDFI3iAPFpFUBTyB3AAqQCqyu9PpXiBFISELTD/ke2B/mOpvvq9nZmdaXdc6Jw6ojcfAO8hurzXBMhT/FKvdHDiQp9tKP/A+SBCFuL7rHBdr3VbpWy8PlqAmX5SqrXV03DO+l7ItxEBN7+Hj3Y8MSKF4202SZQ82LXsCtmwZEhWlUaHeSsQ9t6wQKrtbq+9hDkQiWIZER22Y3Vxr910vjQpSojlhJZyTm6/doyjtI1s0Dk68cdy6CTD7dvtFZVbbyBaN4w1NPg6uHX1WIDKwTcDgnhswVyvDWS8Gykd9Vj4WVvAHHhyghjwnX4Rgb2e1YQAvVvpuXoSA4bv+Mc2P3LSEWyHgSWgQT+POUxVWCBh+3D+hS2YyF9YIRipi/diRCAEjZvxzrdQhSOKm1i1fVzup0bNVBQxj4Ip2KBkxAge9Sw1qHyTBy3nxO77ie+sKGIjmS+D30mIEgLqhAJNiBEaZpjawLkbgmqABWm+IEfx6Bm3yKQGSoJGEfJVJ8hj+T4Lhkt0WI4h74RBtihEYFUugpAIVqCQC3ssRaNigFbUhRkA7jCTtlxoggdGJaPRs/4vmuCm6VMQI6Dywr9BcgQQm7WFYVUD25OkMdzn+LgaWEJ56AHKPxns9/t6aAjPYl55Plh6sKBj0HjP9wN+c/M+KAu69QTgVKZzQqMlNjpxxLKWgFB44VJ6KWGkRAq4rGTQXItZwOeET7aT/1W6hUfS59vMwQJPzZlgzwtylhOJtKwlurMxDMoo1c+VgENwtgOeno/oe2aJh8HKA6uDdztryH5PBytg7GwUP9/w05mFO/DUHFCwMrrVTMSY4Bs/L7i3Q8xk5UCn+5eA8kfYWtGWqAq6VOkoXQgLAUw36Ja3zid2t51mYE1OTTLL4lNik7UFDU2Rl8D5AXEjBbxfXcbpUn+UDAAAAAElFTkSuQmCC" alt="arrow-shape" />
+        </div>
+        <div class="img-table container">
+          <div id="config-wrapper" class="config-table">
+            <h4>Images</h4>
+            <div class="img-container">
+              <div class="uploaded-imgs-wrapper"></div>
+              <input
+                class="add-img"
+                type="file"
+                accept="image/*"
+                name="image"
+                id="add-image"
+              />
+            </div>
+            <h5>Tabs</h5>
+            <div class="tools-checkboxs">
+              <div class="tabs-left-column">
+                <div class="checkbox-wrapper">
+                  <label class="checkbox-container" for="crop">
+                    Adjust
+                    <input
+                      id="crop"
+                      value="adjust"
+                      type="checkbox"
+                      name="Crop"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
+                <div>
+                  <label class="checkbox-container" for="finetune">
+                    Finetune
+                    <input
+                      id="finetune"
+                      value="finetune"
+                      type="checkbox"
+                      name="Finetune"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
+                <div id="filter-wrapper">
+                  <label
+                    id="filter-label"
+                    class="checkbox-container"
+                    for="filter"
+                  >
+                    Filters
+                    <input
+                      id="filter"
+                      value="filter"
+                      type="checkbox"
+                      name="Filters"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
+              </div>
+              <div class="tabs-right-column">
+                <div>
+                  <label class="checkbox-container" for="watermark">
+                    Watermark
+                    <input
+                      id="watermark"
+                      value="watermark"
+                      type="checkbox"
+                      name="Watermark"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
+                <div id="annotate-wrapper">
+                  <label
+                    id="annotate-label"
+                    class="checkbox-container"
+                    for="annotate"
+                  >
+                    Draw
+                    <input
+                      id="annotate"
+                      value="annotate"
+                      type="checkbox"
+                      name="Annotate"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
+                <div>
+                  <label class="checkbox-container" for="resize">
+                    Resize
+                    <input
+                      id="resize"
+                      value="resize"
+                      type="checkbox"
+                      name="Resize"
+                      checked />
+                    <span class="checkmark"></span></label
+                  ><br />
+                </div>
+              </div>
+            </div>
+            <div class="mode-content">
+              <h4>Mode</h4>
+              <select id="mode-options">
+                <option class="mode-options" value="Download">Download</option>
+                <option value="Cloudimage">CloudImage</option>
+              </select>
+            </div>
+          </div>
+          <div class="editor-container" id="editor_container">
+            <div class="plugin-spinner">
+              <img class="loading" src="./assets/loading.6c6f3aa1.svg" alt="loading" />
+            </div>
+          </div>
+        </div>
+        <div class="blue-blur-ellipse"></div>
+        <div class="cyan-blur-ellipse"></div>
+      </div>
+    </section>
+
+    <section class="filerobot-features container-fluid">
+      <div class="filerobot-title">
+        Highlights of the Filerobot Image Editor
+      </div>
+      <div class="filerobot-features-content">
+        <div>
+          <img
+            ci-src="https://scaleflex.cloudimg.io/v7/demo/add+resize.jpg?vh=e022a7"
+            alt="image-resize-mode-img"
+          />
+          <h3>Crop & resize effortlessly</h3>
+          <p>
+            Cropping and resizing has never been easier. Adjust the framing,
+            size, and focus point of your image for optimal impact on delivery.
+          </p>
+        </div>
+        <div>
+          <img
+            ci-src="https://scaleflex.cloudimg.io/v7/demo/add+watermark.jpg?vh=74bcf8"
+            alt="watermark-img"
+          />
+          <h3>Add watermark easily</h3>
+          <p>
+            Want to protect your images? Place a discrete logo, an image, or a
+            simple text line as a watermark. Placement and orientation are up to
+            you.
+          </p>
+        </div>
+        <div>
+          <img
+            ci-src="https://scaleflex.cloudimg.io/v7/demo/add+annotation.jpg?vh=537263"
+            alt="add-annotation-img"
+          />
+          <h3>Annotate seamlessly</h3>
+          <p>
+            Enrich and collaborate directly on your media to keep track of
+            changes and ideas in one place.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="usage">
+      <div class="usage-title">
+        <h3>Ready to get started?</h3>
+        <p class="container">
+          The implementation example allows you to edit an image and instantly
+          download the result. For more integration options, head over to the
+          documentation
+          <span class="documentation">
+            the documentation (<span class="colored-text">
+              <a
+                href="https://github.com/scaleflex/filerobot-image-editor/#filerobot-image-editor-fie"
+                target="_blank"
+              >
+                here
+              </a> </span
+            >).
+          </span>
+        </p>
+      </div>
+      <div class="version-buttons container">
+        <p id="js-code-tab" class="version-button" selected-tab>JS version</p>
+        <p id="react-code-tab" class="version-button">React version</p>
+        <p id="cdn-code-tab" class="version-button">CDN version</p>
+        <div class="copy-button mobile-copy-button">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAwCAYAAAB9sggoAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGwSURBVHgB7ZlBasJAFED/18muBY+QI/QIZldKBZdCFXKEQHVd3bfgDZpCka6Kiy66szeoN1BvEGhXNeb3VxE0aTU/cVIX8xYhTD6Tl+HPhPmDwNRanQkQ2bAGcQoxiCBAoACSDxKx3EHwYYW9N7+fjE8J1huevVBqAgeGAMefau5klVOxzoZIUeavBIQ6XyqrWzo7Ca1R1fUyyW2NmBWR/Ty4m0FGEikB2UeuBDpY5t0qHzdGriLpQo8YT55ytHDyyOkRY4aD/jiPnDaxvHJaxfLIaRfLKqdAB7xkXLQ67mbT1/Jl5PMfxFvLnS6s9/OG57w+9adQiBiiXSa6jzdTooFspZTLd13QKUa8fiFiisCosv5D/MVBxV4eb500cZfNdpX1R7tiCkn+LBytmJ7kF1K7ut6aKIT4cBRiPIvdWMvM5JgUIybFiEkxYlKMmBQjJsWISTFiUoyYFCMmxYhJ2dq+zUvo15pt0A0t6xa0Mya+r6xCAeAeqR9KQ65NcdgY/gUKVBj6vz1JUTPSCxfubCt2MsMD1dtbIuCSUZftb6BgzHIhZa8YRtEUCgb5CPIbVB654TdZizYAAAAASUVORK5CYII=" alt="copy-icon" />
+          <p id="copt-text">Copy</p>
+        </div>
+      </div>
+      <div class="js-version-code container">
+        <div class="copy-button copy-wrapper">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAwCAYAAAB9sggoAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGwSURBVHgB7ZlBasJAFED/18muBY+QI/QIZldKBZdCFXKEQHVd3bfgDZpCka6Kiy66szeoN1BvEGhXNeb3VxE0aTU/cVIX8xYhTD6Tl+HPhPmDwNRanQkQ2bAGcQoxiCBAoACSDxKx3EHwYYW9N7+fjE8J1huevVBqAgeGAMefau5klVOxzoZIUeavBIQ6XyqrWzo7Ca1R1fUyyW2NmBWR/Ty4m0FGEikB2UeuBDpY5t0qHzdGriLpQo8YT55ytHDyyOkRY4aD/jiPnDaxvHJaxfLIaRfLKqdAB7xkXLQ67mbT1/Jl5PMfxFvLnS6s9/OG57w+9adQiBiiXSa6jzdTooFspZTLd13QKUa8fiFiisCosv5D/MVBxV4eb500cZfNdpX1R7tiCkn+LBytmJ7kF1K7ut6aKIT4cBRiPIvdWMvM5JgUIybFiEkxYlKMmBQjJsWISTFiUoyYFCMmxYhJ2dq+zUvo15pt0A0t6xa0Mya+r6xCAeAeqR9KQ65NcdgY/gUKVBj6vz1JUTPSCxfubCt2MsMD1dtbIuCSUZftb6BgzHIhZa8YRtEUCgb5CPIbVB654TdZizYAAAAASUVORK5CYII=" alt="copy-icon" />
+          <p id="copt-text">Copy</p>
+        </div>
+        <pre><code id="js-code-wrapper" class="versions-text" >
+            <span class="red">import</span> <span class="dark-red">FilerobotImageEditor</span> <span class="red">from</span> 'filerobot-image-editor';
+
+            <span class="red">const</span> { TABS, TOOLS } = FilerobotImageEditor;
+            <span class="red">const</span> config = {
+              <span class="blue">source</span>: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+              <span class="light-blue">onSave</span>: (editedImageObject, designState) => console.<span class="light-blue">log</span>('saved', editedImageObject, designState),
+              <span class="blue">annotationsCommon</span>: {
+                fill: '#ff0000'
+              },
+              <span class="blue">Text</span>: { text: 'Filerobot...' },
+              <span class="blue">Rotate</span>: { angle: 90, componentType: 'slider' },
+              <span class="blue">tabsIds</span>: [<span class="blue">TABS.ADJUST</span>,<span class="blue">TABS.ANNOTATE</span>,<span class="blue">TABS.WATERMARK</span>], <span class="gray">// or ['Adjust', 'Annotate', 'Watermark']</span>
+              <span class="blue">defaultTabId</span>: TABS.ANNOTATE, // or 'Annotate'
+              <span class="blue">defaultToolId</span>: TOOLS.TEXT, // or 'Text'
+            };
+
+            <span class="gray">// Assuming we have a div with id="editor_container"</span>
+            <span class="red">const</span> filerobotImageEditor = <span class="red">new</span> <span class="dark-red">FilerobotImageEditor</span>(
+              document.<span class="light-blue">querySelector</span>('#editor_container'),
+              config
+            );
+
+            filerobotImageEditor.<span class="light-blue">render</span>({
+              onClose: (closingReason) => {
+                console.<span class="light-blue">log</span>('Closing reason', closingReason);
+                filerobotImageEditor.<span class="light-blue">terminate</span>();
+              }
+            });
+          </code></pre>
+      </div>
+
+      <div class="react-version-code container">
+        <div class="copy-button copy-wrapper">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAwCAYAAAB9sggoAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGwSURBVHgB7ZlBasJAFED/18muBY+QI/QIZldKBZdCFXKEQHVd3bfgDZpCka6Kiy66szeoN1BvEGhXNeb3VxE0aTU/cVIX8xYhTD6Tl+HPhPmDwNRanQkQ2bAGcQoxiCBAoACSDxKx3EHwYYW9N7+fjE8J1huevVBqAgeGAMefau5klVOxzoZIUeavBIQ6XyqrWzo7Ca1R1fUyyW2NmBWR/Ty4m0FGEikB2UeuBDpY5t0qHzdGriLpQo8YT55ytHDyyOkRY4aD/jiPnDaxvHJaxfLIaRfLKqdAB7xkXLQ67mbT1/Jl5PMfxFvLnS6s9/OG57w+9adQiBiiXSa6jzdTooFspZTLd13QKUa8fiFiisCosv5D/MVBxV4eb500cZfNdpX1R7tiCkn+LBytmJ7kF1K7ut6aKIT4cBRiPIvdWMvM5JgUIybFiEkxYlKMmBQjJsWISTFiUoyYFCMmxYhJ2dq+zUvo15pt0A0t6xa0Mya+r6xCAeAeqR9KQ65NcdgY/gUKVBj6vz1JUTPSCxfubCt2MsMD1dtbIuCSUZftb6BgzHIhZa8YRtEUCgb5CPIbVB654TdZizYAAAAASUVORK5CYII=" alt="copy-icon" />
+          <p id="copt-text">Copy</p>
+        </div>
+        <pre><code id="react-code-wrapper" class="versions-text" style="display: none;">
+          <span class="red">import</span> <span class="dark-red">React</span>, { useState } <span class="red">from</span> 'react';
+          <span class="red">import</span> <span class="dark-red">FilerobotImageEditor</span>, { <span class="blue">TABS</span>, <span class="blue">TOOLS</span>} <span class="red">from</span> 'react-filerobot-image-editor';
+
+          <span class="red">function</span> <span class="dark-red">App</span>() {
+            <span class="red">const</span> [isImgEditorShown, setIsImgEditorShown] = <span class="light-blue">useState</span>(<span class="blue">false</span>);
+
+            <span class="red">const</span> <span class="light-blue">openImgEditor</span> = () => {
+              setIsImgEditorShown(<span class="blue">true</span>);
+            };
+
+            <span class="red">const</span> <span class="light-blue">closeImgEditor </span> = () => {
+              setIsImgEditorShown(<span class="blue">false</span>);
+            };
+
+            <span class="red">return</span> (
+              <span class="green">&lt;div></span>
+              <span class="green"> &lt;button</span> onClick={openImgEditor}>Open Filerobot image editor&lt;/button>
+                      {isImgEditorShown && (
+                      &lt;FilerobotImageEditor
+                          source="https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg"
+                          onSave={(editedImageObject, designState) => console.log('saved', editedImageObject, designState)}
+                          onClose={closeImgEditor}
+                          annotationsCommon={{
+                            fill: '#ff0000'
+                          }}
+                          Text={{ text: 'Filerobot...' }}
+                          Rotate={{ angle: 90, componentType: 'slider' }}
+                          tabsIds={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]} // or {['Adjust', 'Annotate', 'Watermark']}
+                          defaultTabId={TABS.ANNOTATE} // or 'Annotate'
+                          defaultToolId={TOOLS.TEXT} // or 'Text'
+                        />
+                      )}
+                &lt;/div>
+            );
+          }
+          </code></pre>
+      </div>
+
+      <div class="CDN-version-code container">
+        <div class="copy-button copy-wrapper">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAwCAYAAAB9sggoAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGwSURBVHgB7ZlBasJAFED/18muBY+QI/QIZldKBZdCFXKEQHVd3bfgDZpCka6Kiy66szeoN1BvEGhXNeb3VxE0aTU/cVIX8xYhTD6Tl+HPhPmDwNRanQkQ2bAGcQoxiCBAoACSDxKx3EHwYYW9N7+fjE8J1huevVBqAgeGAMefau5klVOxzoZIUeavBIQ6XyqrWzo7Ca1R1fUyyW2NmBWR/Ty4m0FGEikB2UeuBDpY5t0qHzdGriLpQo8YT55ytHDyyOkRY4aD/jiPnDaxvHJaxfLIaRfLKqdAB7xkXLQ67mbT1/Jl5PMfxFvLnS6s9/OG57w+9adQiBiiXSa6jzdTooFspZTLd13QKUa8fiFiisCosv5D/MVBxV4eb500cZfNdpX1R7tiCkn+LBytmJ7kF1K7ut6aKIT4cBRiPIvdWMvM5JgUIybFiEkxYlKMmBQjJsWISTFiUoyYFCMmxYhJ2dq+zUvo15pt0A0t6xa0Mya+r6xCAeAeqR9KQ65NcdgY/gUKVBj6vz1JUTPSCxfubCt2MsMD1dtbIuCSUZftb6BgzHIhZa8YRtEUCgb5CPIbVB654TdZizYAAAAASUVORK5CYII=" alt="copy-icon" />
+          <p id="copt-text">Copy</p>
+        </div>
+        <pre><code id="cdn-code-wrapper" class="versions-text" style="display: none;"  >
+          <span class="gray"> //after importing the plugin/library from CDN</span>
+            <span class="red">const</span> config = {
+              <span class="blue">source</span>: 'https://scaleflex.airstore.io/demo/stephen-walker-unsplash.jpg',
+              <span class="light-blue">onSave</span>: (editedImageObject, designState) => console.<span class="light-blue">log</span>('saved', editedImageObject, designState),
+              <span class="blue">annotationsCommon</span>: {
+                fill: '#ff0000'
+              },
+              <span class="blue">Text</span>: { text: 'Filerobot...' },
+              <span class="blue">Rotate</span>: { angle: 90, componentType: 'slider' },
+              <span class="blue">tabsIds</span>: [<span class="blue">window.FilerobotImageEditor.TABS.ADJUST</span>,<span class="blue">window.FilerobotImageEditor.TABS.ANNOTATE</span>,<span class="blue">window.FilerobotImageEditor.TABS.WATERMARK</span>], <span class="gray">// or ['Adjust', 'Annotate', 'Watermark']</span>
+              <span class="blue">defaultTabId</span>: window.FilerobotImageEditor.TABS.ANNOTATE, // or 'Annotate'
+              <span class="blue">defaultToolId</span>: window.FilerobotImageEditor.TOOLS.TEXT, // or 'Text'
+            };
+
+            <span class="gray">// Assuming we have a div with id="editor_container"</span>
+            <span class="red">const</span> filerobotImageEditor = <span class="red">new</span> <span class="dark-red">window.FilerobotImageEditor</span>(
+              document.<span class="light-blue">querySelector</span>('#editor_container'),
+              config
+            );
+
+            window.FilerobotImageEditor.<span class="light-blue">render</span>({
+              onClose: (closingReason) => {
+                console.<span class="light-blue">log</span>('Closing reason', closingReason);
+                window.FilerobotImageEditor.<span class="light-blue">terminate</span>();
+              }
+            });
+          </code></pre>
+      </div>
+
+      <div class="adapters container">
+        <h4>Bridges/Adapters</h4>
+        <div class="adapters-options">
+          <p class="adapter-react-option">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAErSURBVHgBrZRBTsJAFIb/99omJm44Ap5A9krEG8iiGmNAegLxBu0J9AYimmhkoZ7ARjRxZ71Bj9AFK6ftc1pslIiChW/55uWb92beDLAEaFqwftPvgPgQkJpOqXwmBkIIlFLey74T/ippXJ1VU9O6FaCGP3cm99E+8H5IMkFimq/FzrNb+BJxEUws62FeQYZA3Pr1ZXcs1GwM+l0Gn+D/RMZIreWVMPERylF5XzV2ODsLXVsVJTGYtziGWcUCiC6AsQTYXIkDLILQG/tNJ9LDVVpEkvp5O4L0HGUQhMO91l0uebbbp1SqmnRyYjlWzcyMOdET6w13270Jia9fppGobb08ozWJUuD4yW65RWTqV7A5uGjohY6A1knG70lIQn0B99ZI9XzHib7nfwDex2T6SIrXyQAAAABJRU5ErkJggg==" alt="Ellipse" />
+            React
+          </p>
+          <p class="adapter-js-option">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAErSURBVHgBrZRBTsJAFIb/99omJm44Ap5A9krEG8iiGmNAegLxBu0J9AYimmhkoZ7ARjRxZ71Bj9AFK6ftc1pslIiChW/55uWb92beDLAEaFqwftPvgPgQkJpOqXwmBkIIlFLey74T/ippXJ1VU9O6FaCGP3cm99E+8H5IMkFimq/FzrNb+BJxEUws62FeQYZA3Pr1ZXcs1GwM+l0Gn+D/RMZIreWVMPERylF5XzV2ODsLXVsVJTGYtziGWcUCiC6AsQTYXIkDLILQG/tNJ9LDVVpEkvp5O4L0HGUQhMO91l0uebbbp1SqmnRyYjlWzcyMOdET6w13270Jia9fppGobb08ozWJUuD4yW65RWTqV7A5uGjohY6A1knG70lIQn0B99ZI9XzHib7nfwDex2T6SIrXyQAAAABJRU5ErkJggg==" alt="Ellipse" />
+            Vanilla JS
+          </p>
+          <p class="adapter-angular-option">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGvSURBVHgBrVRBTgJBEOyeWWOMF7yZoMge14v4An2CPwBfAL5AeIH+QHiB8AL4AZgY19uuAtEjB4gQmG27Z4EEBYHETjaT6ZmpqequWYB/CFyWTAbPOdQ6y8sZAEpIjghbgNQyBkqfrheuBDkM/LTj4COfyMDfVxc7x15pNlULABqbAkAAIRHd9M3woJPyUD4y5pxzFbuZoHjU9m9/MTl+9wM+nCaCyiAaFnrueW8ZiaPAvwTNbFmmXNQ9Ob23IMm3lwIi3gmDbspzYU0kA59rBg/Modc3X66VoxDzlpaBa9gguq5X5qEhbPb1zpWSWogMQe24XgM2DEVUsyPoC+U4k3ScphZsEYQQ2pEJzLvDPkhsB2LmhVfOZGIZIIqkzUNFOjO9/UmF0kpxIxfJtm9jJnEzTAQNK4cgsiaStiWC5lpZYjTrKbbEh3tatSBiGGEjC/tqry4dWwWQar/mxbHTqbX+3LFyUGuocyLNX8hL1UhNKjvjsS3gSO9mNFgJl7EeKHVOvOICyBxIUZHdm4WVgT2iqGTZzzLLtkmBSVEOQZ0Rxr8CjB9lbRCNyj/f1TeiG73illN/BQAAAABJRU5ErkJggg==" alt="Ellipse" />
+            Angular
+          </p>
+          <p class="adapter-vue-option">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGvSURBVHgBrVRBTgJBEOyeWWOMF7yZoMge14v4An2CPwBfAL5AeIH+QHiB8AL4AZgY19uuAtEjB4gQmG27Z4EEBYHETjaT6ZmpqequWYB/CFyWTAbPOdQ6y8sZAEpIjghbgNQyBkqfrheuBDkM/LTj4COfyMDfVxc7x15pNlULABqbAkAAIRHd9M3woJPyUD4y5pxzFbuZoHjU9m9/MTl+9wM+nCaCyiAaFnrueW8ZiaPAvwTNbFmmXNQ9Ob23IMm3lwIi3gmDbspzYU0kA59rBg/Modc3X66VoxDzlpaBa9gguq5X5qEhbPb1zpWSWogMQe24XgM2DEVUsyPoC+U4k3ScphZsEYQQ2pEJzLvDPkhsB2LmhVfOZGIZIIqkzUNFOjO9/UmF0kpxIxfJtm9jJnEzTAQNK4cgsiaStiWC5lpZYjTrKbbEh3tatSBiGGEjC/tqry4dWwWQar/mxbHTqbX+3LFyUGuocyLNX8hL1UhNKjvjsS3gSO9mNFgJl7EeKHVOvOICyBxIUZHdm4WVgT2iqGTZzzLLtkmBSVEOQZ0Rxr8CjB9lbRCNyj/f1TeiG73illN/BQAAAABJRU5ErkJggg==" alt="Ellipse" />
+            Vue
+          </p>
+          <p class="adapter-web-option">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGvSURBVHgBrVRBTgJBEOyeWWOMF7yZoMge14v4An2CPwBfAL5AeIH+QHiB8AL4AZgY19uuAtEjB4gQmG27Z4EEBYHETjaT6ZmpqequWYB/CFyWTAbPOdQ6y8sZAEpIjghbgNQyBkqfrheuBDkM/LTj4COfyMDfVxc7x15pNlULABqbAkAAIRHd9M3woJPyUD4y5pxzFbuZoHjU9m9/MTl+9wM+nCaCyiAaFnrueW8ZiaPAvwTNbFmmXNQ9Ob23IMm3lwIi3gmDbspzYU0kA59rBg/Modc3X66VoxDzlpaBa9gguq5X5qEhbPb1zpWSWogMQe24XgM2DEVUsyPoC+U4k3ScphZsEYQQ2pEJzLvDPkhsB2LmhVfOZGIZIIqkzUNFOjO9/UmF0kpxIxfJtm9jJnEzTAQNK4cgsiaStiWC5lpZYjTrKbbEh3tatSBiGGEjC/tqry4dWwWQar/mxbHTqbX+3LFyUGuocyLNX8hL1UhNKjvjsS3gSO9mNFgJl7EeKHVOvOICyBxIUZHdm4WVgT2iqGTZzzLLtkmBSVEOQZ0Rxr8CjB9lbRCNyj/f1TeiG73illN/BQAAAABJRU5ErkJggg==" alt="Ellipse" />
+            react-native
+          </p>
+        </div>
+      </div>
+      <div class="legend-content container">
+        <p class="legend-title">Legend:</p>
+        <p class="complete-feature">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAErSURBVHgBrZRBTsJAFIb/99omJm44Ap5A9krEG8iiGmNAegLxBu0J9AYimmhkoZ7ARjRxZ71Bj9AFK6ftc1pslIiChW/55uWb92beDLAEaFqwftPvgPgQkJpOqXwmBkIIlFLey74T/ippXJ1VU9O6FaCGP3cm99E+8H5IMkFimq/FzrNb+BJxEUws62FeQYZA3Pr1ZXcs1GwM+l0Gn+D/RMZIreWVMPERylF5XzV2ODsLXVsVJTGYtziGWcUCiC6AsQTYXIkDLILQG/tNJ9LDVVpEkvp5O4L0HGUQhMO91l0uebbbp1SqmnRyYjlWzcyMOdET6w13270Jia9fppGobb08ozWJUuD4yW65RWTqV7A5uGjohY6A1knG70lIQn0B99ZI9XzHib7nfwDex2T6SIrXyQAAAABJRU5ErkJggg==" alt="Ellipse" />
+          completed features
+        </p>
+        <p class="progress-feature">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAARCAYAAADUryzEAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEmSURBVHgBpZPLTcNAEIa/3YgTQqIEUwEpASrAXHicCB1ABZAKwBUknBBwSSqAElKCS4jEEYz5d7zEEXIiO/kl2/uY+WZ2dgxbyv1fKJ85Yocrfkg13Y/LczwTvnhyl3w0AsqRjHcZaZiyTp4xn9y6a0FtWju/NzqXDCk4sC/kymwQbM3nD8AeD3r3VwVV2rk7516gY4ME2ypbvJ05UFsogCIkpJ8GX28F6yCDlGTVhNRr0qernG4kyHOyEcCdMYvDxLOlAiCno6zwlWYBMKWr6sILUMSCtI+eLK69YOhjb2etnF9V8J51LIJk1mCLzTf1eNnQE45HvnXM6gcbxNWJbuK02l6O8KJ2ddyxTiHyBTc1n4YzOhn0OFRGSbSay3GqZ2yduKRfGY1ab2XkOvEAAAAASUVORK5CYII=" alt="half-circle-img" />
+          in progress features
+        </p>
+        <p class="to-do-feature">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGvSURBVHgBrVRBTgJBEOyeWWOMF7yZoMge14v4An2CPwBfAL5AeIH+QHiB8AL4AZgY19uuAtEjB4gQmG27Z4EEBYHETjaT6ZmpqequWYB/CFyWTAbPOdQ6y8sZAEpIjghbgNQyBkqfrheuBDkM/LTj4COfyMDfVxc7x15pNlULABqbAkAAIRHd9M3woJPyUD4y5pxzFbuZoHjU9m9/MTl+9wM+nCaCyiAaFnrueW8ZiaPAvwTNbFmmXNQ9Ob23IMm3lwIi3gmDbspzYU0kA59rBg/Modc3X66VoxDzlpaBa9gguq5X5qEhbPb1zpWSWogMQe24XgM2DEVUsyPoC+U4k3ScphZsEYQQ2pEJzLvDPkhsB2LmhVfOZGIZIIqkzUNFOjO9/UmF0kpxIxfJtm9jJnEzTAQNK4cgsiaStiWC5lpZYjTrKbbEh3tatSBiGGEjC/tqry4dWwWQar/mxbHTqbX+3LFyUGuocyLNX8hL1UhNKjvjsS3gSO9mNFgJl7EeKHVOvOICyBxIUZHdm4WVgT2iqGTZzzLLtkmBSVEOQZ0Rxr8CjB9lbRCNyj/f1TeiG73illN/BQAAAABJRU5ErkJggg==" alt="Ellipse" />
+          to do features
+        </p>
+      </div>
+      <div class="explore-button">
+        <a
+          class="transition-filled-button"
+          href="https://github.com/scaleflex/filerobot-image-editor"
+          target="_blank"
+        >
+          Explore Documentation
+        </a>
+      </div>
+    </section>
+
+    <section class="questions">
+      <h3>Any questions?</h3>
+      <p>
+        Contact us at <span>hello@filerobot.com</span>, our experts will be
+        happy to help!
+      </p>
+      <a
+        class="transition-filled-button"
+        href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+        target="_blank"
+      >
+        Submit GitHub issue
+      </a>
+      <div class="cyan-blur-ellipse"></div>
+    </section>
+
+    <section class="footer container-fluid">
+      <div class="accordion-wrapper">
+        <div>
+          <div class="filerobot-accordion">
+            <button data-accordion="2">Info</button>
+            <img
+              data-accordion="2"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAYCAYAAACMcW/9AAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAICSURBVHgBzdZNTiJBFMDx90ozmc0kzA06MjNsmd0sC2cQMxHC0p16AzyBeAL0BOIJJEqMQoLlziVLMUE5QusSTZfvlRC/aPob/Sck/VHd/NLp7mqET9jiUmlLA1R4GRHqndPDTeQVKWUK5r+tm1EP9w2lTgbwQS0Winta4/rLbYTcRpn/n0WcP6P11Gi7rcHZUK1mA2bcJOQoWxByD56RXApBHMhCsQIzbArSJOiXnbQDNdb4XoEZ5IVE7ewLGqDcBtANXU0a64UEcPY77WaFrihu0prtNsxgC6UaJJAf5FmrafY/PfX5Mj1QzssH6l2odb3TPtqAD0Ca/x8vyOWyhY7BWu4HQ1cP73JKKRtmiHwF5XxiB3o4zIV914ZBwlsolyQ2LBImQTkpyyn8YrBZcC8QNgrSFTout7RSp1ft2pQhttYPOdU+7kKCSG5u2s5B/6phLWS+04fBH5chXxHFqpX+2aOxl5AQ0hNqsNe9EyudIStIcMMCrlo/ft0S9gISQPqCGmy/pzywdA/h8kI6Azf93nncyKfzB0j+K1ZQYM3jhFWaHaw4kaPzBkv+XSnjnHj7xRWg4EguMJTzM+VOLhySExAi1W50tRC/aXHg/6jwSC7UFR3ncxaDqEguEpTzxkZHcpGhnPuUGw+SiwU6TuZLO/SyNVMufXDvqtZhFWLqEUFBI72D0M6HAAAAAElFTkSuQmCC"
+              alt="down-arrow"
+            />
+          </div>
+          <div class="accordion-content" data-accordion-content="2">
+            <div class="footer-info-content">
+              <a
+                href="https://github.com/scaleflex/filerobot-image-editor"
+                target="_blank"
+              >
+                View GitHub
+              </a>
+              <a
+                href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+                target="_blank"
+              >
+                Current Issues
+              </a>
+              <a
+                href="https://github.com/scaleflex/filerobot-image-editor#user-content-contents"
+                target="_blank"
+              >
+                Documentation
+              </a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="filerobot-accordion">
+            <button data-accordion="1">Filerobot</button>
+            <img
+              data-accordion="1"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAYCAYAAACMcW/9AAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAICSURBVHgBzdZNTiJBFMDx90ozmc0kzA06MjNsmd0sC2cQMxHC0p16AzyBeAL0BOIJJEqMQoLlziVLMUE5QusSTZfvlRC/aPob/Sck/VHd/NLp7mqET9jiUmlLA1R4GRHqndPDTeQVKWUK5r+tm1EP9w2lTgbwQS0Winta4/rLbYTcRpn/n0WcP6P11Gi7rcHZUK1mA2bcJOQoWxByD56RXApBHMhCsQIzbArSJOiXnbQDNdb4XoEZ5IVE7ewLGqDcBtANXU0a64UEcPY77WaFrihu0prtNsxgC6UaJJAf5FmrafY/PfX5Mj1QzssH6l2odb3TPtqAD0Ca/x8vyOWyhY7BWu4HQ1cP73JKKRtmiHwF5XxiB3o4zIV914ZBwlsolyQ2LBImQTkpyyn8YrBZcC8QNgrSFTout7RSp1ft2pQhttYPOdU+7kKCSG5u2s5B/6phLWS+04fBH5chXxHFqpX+2aOxl5AQ0hNqsNe9EyudIStIcMMCrlo/ft0S9gISQPqCGmy/pzywdA/h8kI6Azf93nncyKfzB0j+K1ZQYM3jhFWaHaw4kaPzBkv+XSnjnHj7xRWg4EguMJTzM+VOLhySExAi1W50tRC/aXHg/6jwSC7UFR3ncxaDqEguEpTzxkZHcpGhnPuUGw+SiwU6TuZLO/SyNVMufXDvqtZhFWLqEUFBI72D0M6HAAAAAElFTkSuQmCC"
+              alt="down-arrow"
+            />
+          </div>
+          <div class="accordion-content" data-accordion-content="1">
+            <div class="footer-filerobot-content">
+              <a
+                href="https://scaleflex.cloudimg.io/v7/plugins/filerobot-widget/demo/index.html?vh=d6c246&func=proxy&fmaw_path=/"
+                target="_blank"
+              >
+                Filerobot Media Asset Widget
+              </a>
+              <a
+                href="https://scaleflex.github.io/filerobot-image-editor/"
+                target="_blank"
+              >
+                Filerobot Image Editor
+              </a>
+              <a
+                href="https://scaleflex.github.io/js-cloudimage-responsive/"
+                target="_blank"
+              >
+                Cloudimage Responsive
+              </a>
+              <a
+                href="https://scaleflex.github.io/js-cloudimage-360-view/"
+                target="_blank"
+              >
+                Cloudimage 360 view
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar">
+        <a
+          class="stars"
+          href="https://github.com/scaleflex/filerobot-image-editor/stargazers"
+          target="_blank"
+        >
+          <img class="star" src="./assets/git-stars.08c27c24.svg" alt="star" />
+          <img
+            class="stars-label"
+            src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?color=fff&label=Star&logo=none&style=flat&labelColor=fff"
+            alt="star-img"
+          />
+        </a>
+        <a
+          class="git-hub"
+          href="https://github.com/scaleflex/filerobot-image-editor"
+          target="_blank"
+        >
+          <img src="./assets/github-logo.7fb6b207.svg" alt="github-icon" />
+          <p>GitHub</p>
+        </a>
+      </div>
+      <div class="footer-logo">
+        <a href="https://www.scaleflex.com/en/home" target="_blank">
+          <img src="./assets/scaleflex-logo.9408c3ca.svg" alt="scaleflex logo" />
+        </a>
+        <p>
+          Made with ❤ by the
+          <span>
+            <a href=" https://scaleflex.com/en/home" target="_blank"
+              >Scaleflex</a
+            >
+          </span>
+          team, the guys behind
+          <span>
+            <a href=" https://cloudimage.io/en/home" target="_blank"
+              >Cloudimage.io</a
+            ></span
+          >. Powered by
+          <span>
+            <a href="https://filerobot.com/en/home" target="_blank"
+              >Filerobot</a
+            ></span
+          >. All rights reserved.
+        </p>
+        <div class="footer-blur-circle"></div>
+      </div>
+      <div class="footer-wrapper">
+        <div class="footer-info">
+          <h4>Info</h4>
+          <div class="footer-info-content">
+            <a
+              href="https://github.com/scaleflex/filerobot-image-editor"
+              target="_blank"
+            >
+              View GitHub
+            </a>
+            <a
+              href="https://github.com/scaleflex/filerobot-image-editor/issues/new"
+              target="_blank"
+            >
+              Current Issues
+            </a>
+            <a
+              href=" https://github.com/scaleflex/filerobot-image-editor#user-content-contents"
+              target="_blank"
+            >
+              Documentation
+            </a>
+          </div>
+        </div>
+        <div class="footer-filerobot">
+          <h4>Filerobot UI Family</h4>
+          <div class="footer-filerobot-content">
+            <a
+              href="https://scaleflex.cloudimg.io/v7/plugins/filerobot-widget/demo/index.html?vh=d6c246&func=proxy&fmaw_path=/"
+              target="_blank"
+            >
+              Filerobot Media Asset Widget
+            </a>
+            <a
+              href="https://scaleflex.github.io/filerobot-image-editor/"
+              target="_blank"
+            >
+              Filerobot Image Editor
+            </a>
+            <a
+              href="https://scaleflex.github.io/js-cloudimage-responsive/"
+              target="_blank"
+            >
+              Cloudimage Responsive
+            </a>
+            <a
+              href="https://scaleflex.github.io/js-cloudimage-360-view"
+              target="_blank"
+            >
+              Cloudimage 360 view
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <script src="https://cdn.scaleflex.it/plugins/js-cloudimage-responsive/4.8.5/js-cloudimage-responsive.min.js"></script>
+    <script src="https://cdn.scaleflex.it/filerobot/js-cloudimage-responsive/lazysizes.min.js"></script>
+    <script>
+      const ciResponsive = new window.CIResponsive({
+        token: 'scaleflex',
+        baseURL: 'https://scaleflex.cloudimg.io/v7/demo/',
+        params: 'org_if_sml=1&version=16.04.2020',
+        lazyLoading: true,
+        exactSize: false,
+        limitFactor: 10,
+        apiVersion: 'v7',
+        lowQualityPreview: {
+          minImgWidth: 180,
+        },
+      });
+    </script>
+  </body>
+</html>
