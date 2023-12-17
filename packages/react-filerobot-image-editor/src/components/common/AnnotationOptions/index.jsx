@@ -117,6 +117,7 @@ const AnnotationOptions = ({
     >
       {!hideFillOption && (
         <ColorInput
+          type={annotation.name}
           color={annotation.fill}
           onChange={changeAnnotationFill}
           colorFor="fill"

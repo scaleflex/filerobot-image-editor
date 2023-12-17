@@ -4,24 +4,29 @@ import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
-import { SET_LATEST_COLOR } from 'actions';
+import { SET_LATEST_COLOR, SET_LATEST_TEXT_COLOR } from 'actions';
 import ColorPickerModal from '../ColorPickerModal';
 import { StyledPickerTrigger } from './ColorInput.styled';
 
 const pinnedColorsKey = 'FIE_pinnedColors';
 
 // colorFor is used to save the latest color for a specific purpose (e.g. fill/shadow/stroke)
-const ColorInput = ({ onChange, color, colorFor }) => {
+const ColorInput = ({ onChange, color, colorFor, type }) => {
   const {
     selectionsIds = [],
     config: { annotationsCommon = {} },
     dispatch,
     latestColors = {},
+    latestTextColors = {},
   } = useStore();
-  const latestColor = latestColors[colorFor];
+  let latestColor = latestColors[colorFor];
+  let latestTextColor = latestTextColors[colorFor]
   const [anchorEl, setAnchorEl] = useState();
   const [currentColor, setCurrentColor] = useState(
     () => latestColor || color || annotationsCommon.fill,
+  );
+  const [currentTextColor, setCurrentTextColor] = useState(
+    () => latestTextColor || color || annotationsCommon.fill,
   );
   const [pinnedColors, setPinnedColors] = useState(
     window?.localStorage
@@ -47,19 +52,38 @@ const ColorInput = ({ onChange, color, colorFor }) => {
   };
 
   const changeColor = (_newColorHex, rgba, newPinnedColors) => {
-    setCurrentColor(rgba);
+
+    if (type === 'Text') {
+      setCurrentTextColor(rgba);
+    } else {
+      setCurrentColor(rgba);
+    }
+
     onChange(rgba);
     changePinnedColors(newPinnedColors);
 
-    if (latestColor !== rgba) {
-      dispatch({
-        type: SET_LATEST_COLOR,
-        payload: {
-          latestColors: {
-            [colorFor]: rgba,
+    if (type === 'Text') {
+      if (latestTextColor !== rgba) {
+        dispatch({
+          type: SET_LATEST_TEXT_COLOR,
+          payload: {
+            latestTextColors: {
+              [colorFor]: rgba,
+            },
           },
-        },
-      });
+        });
+      }
+    } else {
+      if (latestColor !== rgba) {
+        dispatch({
+          type: SET_LATEST_COLOR,
+          payload: {
+            latestColors: {
+              [colorFor]: rgba,
+            },
+          },
+        });
+      }
     }
   };
 
@@ -68,9 +92,15 @@ const ColorInput = ({ onChange, color, colorFor }) => {
   };
 
   useEffect(() => {
-    const colorToSet = (selectionsIds.length === 0 && latestColor) || color;
-    setCurrentColor(colorToSet);
-    onChange(colorToSet);
+    if (type === 'Text') {
+      const colorToSet = (selectionsIds.length === 0 && latestTextColor) || color;
+      setCurrentTextColor(colorToSet);
+      onChange(colorToSet);
+    } else {
+      const colorToSet = (selectionsIds.length === 0 && latestColor) || color;
+      setCurrentColor(colorToSet);
+      onChange(colorToSet);
+    }
   }, [color, selectionsIds]);
 
   return (
@@ -78,13 +108,13 @@ const ColorInput = ({ onChange, color, colorFor }) => {
       <StyledPickerTrigger
         className="FIE_color-picker-triggerer"
         onClick={togglePicker}
-        $color={currentColor}
+        $color={type === 'Text' ? currentTextColor : currentColor}
         onChange={onChange}
       />
       <ColorPickerModal
         hideModalTitle
         onChange={changeColor}
-        defaultColor={currentColor}
+        defaultColor={type === 'Text' ? currentTextColor : currentColor}
         pinnedColors={pinnedColors}
         open={Boolean(anchorEl)}
         onClose={togglePicker}
