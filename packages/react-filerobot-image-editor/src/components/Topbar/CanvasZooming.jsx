@@ -35,11 +35,13 @@ const CanvasZooming = ({ showBackButton }) => {
   } = useStore();
   const isBlockerError = feedback.duration === 0;
   const [zoomingMenuAnchorEl, setZoomingMenuAnchorEl] = useState(null);
-  const saveZoom = (zoomFactor) => {
+
+  const saveZoom = (zoomFactor, isAbsoluteZoom) => {
     dispatch({
       type: ZOOM_CANVAS,
       payload: {
         factor: zoomFactor,
+        isAbsoluteZoom,
       },
     });
   };
@@ -57,7 +59,7 @@ const CanvasZooming = ({ showBackButton }) => {
       (crop.width && crop.height && crop) || shownImageDimensions,
       usedAsOrgDimens,
     );
-    saveZoom(fitCanvasFactor || DEFAULT_ZOOM_FACTOR);
+    saveZoom(fitCanvasFactor || DEFAULT_ZOOM_FACTOR, true);
   };
 
   const zoomOut = () => {
@@ -74,11 +76,14 @@ const CanvasZooming = ({ showBackButton }) => {
       toggleZoomingMenu();
       return;
     }
-    const helperFactorToAchieveSelected = Math.min(
-      (factor * originalImage.width) / shownImageDimensions.width,
-      (factor * originalImage.height) / shownImageDimensions.height,
-    );
-    saveZoom(helperFactorToAchieveSelected);
+    const factorToAchieveSelected =
+      resize.width || resize.height
+        ? factor
+        : Math.min(
+            (factor * originalImage.width) / shownImageDimensions.width,
+            (factor * originalImage.height) / shownImageDimensions.height,
+          );
+    saveZoom(factorToAchieveSelected, true);
     toggleZoomingMenu();
   };
 

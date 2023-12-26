@@ -3,15 +3,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LockOutline from '@scaleflex/icons/lock-outline';
 import UnlockOutline from '@scaleflex/icons/unlock-outline';
+import { Reset } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { SET_RESIZE, ZOOM_CANVAS } from 'actions';
-import restrictNumber from 'utils/restrictNumber';
 import { useStore } from 'hooks';
 import getProperDimensions from 'utils/getProperDimensions';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import getZoomFitFactor from 'utils/getZoomFitFactor';
-import { Reset } from '@scaleflex/icons';
+import restrictNumber from 'utils/restrictNumber';
+import { DEFAULT_ZOOM_FACTOR } from 'utils/constants';
 import {
   StyledResizeWrapper,
   StyledResizeInput,
@@ -38,6 +39,13 @@ const Resize = ({
 
   const changeResize = (e) => {
     const { name, value } = e.target;
+    if (parseFloat(value) < 1) {
+      return;
+    }
+    const maxResizeNumber = Math.min(
+      originalImage.width * 10,
+      originalImage.height * 10,
+    );
 
     const originalImgSizeAfterRotation = getSizeAfterRotation(
       originalImage.width,
@@ -45,7 +53,7 @@ const Resize = ({
       rotation,
     );
     const newResize = {
-      [name]: restrictNumber(value, 1),
+      [name]: value ? restrictNumber(value, 0, maxResizeNumber) : value,
     };
     const isHeight = name === 'height';
     const secondDimensionName = isHeight ? 'width' : 'height';
@@ -75,18 +83,21 @@ const Resize = ({
       type: SET_RESIZE,
       payload: newResize,
     });
+
     // Fit if there was no resized width/height before for avoiding jumping on change resize
-    // as we are simulating zoom relattive to original image dimensions but not applying the real original image dimensions
-    if (!resize.width || !resize.height) {
-      const dimensUsedInFit =
-        (crop.width && crop.height && crop) || shownImageDimensions;
-      dispatch({
-        type: ZOOM_CANVAS,
-        payload: {
-          factor: getZoomFitFactor(dimensUsedInFit, newResize),
-        },
-      });
-    }
+    // as we are simulating zoom relative to original image dimensions but not applying the real original image dimensions
+    const dimensUsedInFit =
+      (crop.width && crop.height && crop) || shownImageDimensions;
+    dispatch({
+      type: ZOOM_CANVAS,
+      payload: {
+        factor:
+          newResize.width && newResize.height
+            ? getZoomFitFactor(dimensUsedInFit, newResize)
+            : DEFAULT_ZOOM_FACTOR,
+        isAbsoluteZoom: true,
+      },
+    });
   };
 
   const toggleRatioLock = () => {
@@ -107,8 +118,8 @@ const Resize = ({
     dispatch({
       type: SET_RESIZE,
       payload: {
-        width: null,
-        height: null,
+        width: undefined,
+        height: undefined,
         ratioUnlocked: false,
       },
     });
@@ -124,7 +135,8 @@ const Resize = ({
   };
 
   const isOriginalSize =
-    (!resize.width && !resize.height) ||
+    (typeof resize.width === 'undefined' &&
+      typeof resize.height === 'undefined') ||
     (originalImage.width === resize.width &&
       originalImage.height === resize.height);
 
@@ -137,6 +149,10 @@ const Resize = ({
   );
 
   const isManualChangeDisabled = resize.manualChangeDisabled;
+  const isEmptyEditedWidth =
+    typeof resize.width !== 'undefined' && !resize.width;
+  const isEmptyEditedHeight =
+    typeof resize.height !== 'undefined' && !resize.height;
   return (
     <StyledResizeWrapper
       className="FIE_resize-tool-options"
@@ -145,7 +161,7 @@ const Resize = ({
     >
       <StyledResizeInput
         className="FIE_resize-width-option"
-        value={dimensions.width}
+        value={isEmptyEditedWidth ? '' : dimensions.width}
         name="width"
         onChange={isManualChangeDisabled ? undefined : changeResize}
         inputMode="numeric"
@@ -174,7 +190,7 @@ const Resize = ({
       </StyledRatioLockIcon>
       <StyledResizeInput
         className="FIE_resize-height-option"
-        value={dimensions.height}
+        value={isEmptyEditedHeight ? '' : dimensions.height}
         name="height"
         onChange={isManualChangeDisabled ? undefined : changeResize}
         inputMode="numeric"

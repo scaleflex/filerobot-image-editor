@@ -21,6 +21,25 @@ Types of changes:
 
 ---
 
+<!-- ## v4.7.0 - 2023-xx-xx
+
+### Fixed
+
+- Zooming behavior in some cases specially applying from zooming factors menu.
+- Cropping area continually jumps on doing flip and then getting back to crop.
+
+### Improved
+
+- Resizing fields are more UX friendly.
+- Auto fitting the image on resizing by auto zooming.
+- Restrict the resizing expand to 10x.
+
+### Added
+
+- `onUploadWatermarkImgClick` used for customizing the image watermark adding.
+- `hideTextWatermark` hides the add text watermark option and its possibility.
+-  -->
+
 ## v4.6.3 - 2023-11-30
 
 ### Fixed

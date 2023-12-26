@@ -271,6 +271,10 @@ export interface FilerobotImageEditorConfig {
   // [TOOLS_IDS.WATERMARK]
   Watermark?: {
     gallery?: string[] | [];
+    onUploadWatermarkImgClick?: (loadAndSetWatermarkImg: (imgUrl, revokeObjectUrl) => void) => Promise<{ url: string, revokeObjectUrl?: boolean }> | void
+    textScalingRatio?: number,
+    imageScalingRatio?: number,
+    hideTextWatermark?: boolean;
   };
   // [TOOLS_IDS.CROP]
   Crop?: {

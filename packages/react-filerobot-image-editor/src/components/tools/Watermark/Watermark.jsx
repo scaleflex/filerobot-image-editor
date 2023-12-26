@@ -124,25 +124,6 @@ const Watermark = () => {
     });
   };
 
-  const menuItems = [
-    !config.useCloudimage && {
-      key: 'upload-watermark',
-      label: t('uploadWatermark'),
-      icon: UploadOutline,
-      onClick: () => {
-        if (uploadImgInput.current) {
-          uploadImgInput.current.click();
-        }
-      },
-    },
-    {
-      key: 'add-text-watermark',
-      label: t('addWatermarkAsText'),
-      icon: Text,
-      onClick: addTextWatermark,
-    },
-  ];
-
   const setFeedback = (errorMsg) => {
     dispatch({
       type: SET_FEEDBACK,
@@ -155,27 +136,55 @@ const Watermark = () => {
     });
   };
 
+  const loadAndSetWatermarkImg = (imgUrl, revokeObjectUrl) => {
+    if (!imgUrl) {
+      return;
+    }
+    setIsLoading(true);
+    const img = new Image();
+    img.onload = () => {
+      addImgWatermark(img);
+      if (revokeObjectUrl) {
+        URL.revokeObjectURL(imgUrl);
+      }
+      setIsLoading(false);
+    };
+    img.onerror = () => {
+      setFeedback(t('uploadImageError'));
+      if (revokeObjectUrl) {
+        URL.revokeObjectURL(imgUrl);
+      }
+      setIsLoading(false);
+    };
+    img.src = imgUrl;
+  };
+
   const importWatermarkImg = (e) => {
     if (e.target.files) {
-      setIsLoading(true);
-
       const imgFile = e.target.files[0];
       if (imgFile.type.startsWith('image/')) {
-        const img = new Image();
-        img.onload = () => {
-          addImgWatermark(img);
-          URL.revokeObjectURL(imgFile);
-          setIsLoading(false);
-        };
-        img.onerror = () => {
-          setFeedback(t('uploadImageError'));
-          setIsLoading(false);
-        };
-        img.src = URL.createObjectURL(imgFile);
+        loadAndSetWatermarkImg(URL.createObjectURL(imgFile), true);
       }
     }
-
     e.target.value = '';
+  };
+
+  const handleUploadWatermarkClick = () => {
+    if (typeof watermarkConfig.onUploadWatermarkImgClick === 'function') {
+      const res = watermarkConfig.onUploadWatermarkImgClick(
+        loadAndSetWatermarkImg,
+      );
+      if (res instanceof Promise) {
+        res.then(({ url, revokeObjectUrl = false } = {}) =>
+          loadAndSetWatermarkImg(url, revokeObjectUrl),
+        );
+      }
+      return;
+    }
+
+    if (uploadImgInput.current) {
+      uploadImgInput.current.click();
+    }
   };
 
   useEffect(() => {
@@ -207,6 +216,22 @@ const Watermark = () => {
       });
     }
   }, [selectionsIds]);
+
+  const menuItems = [
+    (!config.useCloudimage ||
+      typeof watermarkConfig.onUploadWatermarkImgClick === 'function') && {
+      key: 'upload-watermark',
+      label: t('uploadWatermark'),
+      icon: UploadOutline,
+      onClick: handleUploadWatermarkClick,
+    },
+    !watermarkConfig.hideTextWatermark && {
+      key: 'add-text-watermark',
+      label: t('addWatermarkAsText'),
+      icon: Text,
+      onClick: addTextWatermark,
+    },
+  ];
 
   const addWatermarkLabel = () => {
     if (isPhoneScreen) return t('plus');

@@ -54,7 +54,7 @@ const WatermarksGallery = ({ selectWatermark, style }) => {
         >
           <img
             src={watermarkUrl}
-            alt={watermarkUrl}
+            alt="Failed to load."
             crossOrigin="Anonymous"
             draggable={false}
           />

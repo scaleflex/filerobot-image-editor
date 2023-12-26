@@ -69,6 +69,8 @@ export default {
     gallery: [],
     textScalingRatio: 0.5,
     imageScalingRatio: 0.5,
+    hideTextWatermark: false,
+    onUploadWatermarkImgClick: undefined,
   },
   [TOOLS_IDS.CROP]: {
     minWidth: MIN_CROP.WIDTH,

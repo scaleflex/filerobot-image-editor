@@ -267,6 +267,23 @@ const config = {
     ],
   },
   [TOOLS.WATERMARK]: {
+    // onUploadWatermarkImgClick: (loadAndSetWatermarkImg) => {
+    //   console.log(
+    //     'u could use the following function,',
+    //     loadAndSetWatermarkImg,
+    //   );
+    //   return new Promise((resolve, reject) => {
+    //     console.log('Simulating image upload for 2 seconds...');
+
+    //     setTimeout(() => {
+    //       resolve({
+    //         url: 'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/PNG/SCALEFLEX+LOGO+-+Color+Dark+text.png?vh=45cac1',
+    //         revokeObjectUrl: true,
+    //       });
+    //     }, 2000);
+    //   });
+    // },
+    // hideTextWatermark: true,
     gallery: [
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/PNG/SCALEFLEX+LOGO+-+Color+Dark+text.png?vh=45cac1',
       'https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGOTYPE+WITH+SCALEFLEX-01-01.png?vh=76c5a7',

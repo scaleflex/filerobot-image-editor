@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { Ellipse, Image, Rect, Transformer } from 'react-konva';
 import Konva from 'konva';
 
@@ -39,10 +39,13 @@ const CropTransformer = () => {
   const tmpImgNodeRef = useRef();
   const shownImageDimensionsRef = useRef();
   const cropConfig = config[TOOLS_IDS.CROP];
-  const cropSettings = {
-    ...cropConfig,
-    lockCropAreaAt: crop.lockCropAreaAt ?? cropConfig?.lockCropAreaAt,
-  };
+  const cropSettings = useMemo(
+    () => ({
+      ...cropConfig,
+      lockCropAreaAt: crop.lockCropAreaAt ?? cropConfig?.lockCropAreaAt,
+    }),
+    [crop.lockCropAreaAt, cropConfig],
+  );
   const { lockCropAreaAt } = cropSettings;
   const cropRatio = crop.ratio || cropSettings.ratio;
   const isCustom = cropRatio === CUSTOM_CROP;

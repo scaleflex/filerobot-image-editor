@@ -1,5 +1,12 @@
 /** External Dependencies */
-import React, { memo, useCallback, useEffect, useMemo, useState, useRef } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import Konva from 'konva';
 import { useStrictMode } from 'react-konva';
