@@ -9,7 +9,11 @@ import Carousel from 'components/common/Carousel';
 import { SET_FEEDBACK } from 'actions';
 import { StyledWatermarkGalleryItem } from './Watermark.styled';
 
-const WatermarksGallery = ({ selectWatermark, style }) => {
+const WatermarksGallery = ({
+  addImgWatermark,
+  loadAndSetWatermarkImg,
+  style,
+}) => {
   const { config, annotations, dispatch, t } = useStore();
 
   const currentWatermarkUrl = useMemo(
@@ -33,7 +37,7 @@ const WatermarksGallery = ({ selectWatermark, style }) => {
         return;
       }
 
-      selectWatermark(watermarkImgEl);
+      addImgWatermark(watermarkImgEl);
     }
   };
 
@@ -45,21 +49,31 @@ const WatermarksGallery = ({ selectWatermark, style }) => {
 
   return (
     <Carousel className="FIE_watermark-gallery" style={style}>
-      {gallery.map((watermarkUrl) => (
-        <StyledWatermarkGalleryItem
-          className="FIE_watermark-selected-item"
-          onClick={getWatermarkImgAndSelect}
-          key={watermarkUrl}
-          aria-selected={watermarkUrl === currentWatermarkUrl}
-        >
-          <img
-            src={watermarkUrl}
-            alt="Failed to load."
-            crossOrigin="Anonymous"
-            draggable={false}
-          />
-        </StyledWatermarkGalleryItem>
-      ))}
+      {gallery.map((watermark) => {
+        const watermarkUrl = watermark?.url || watermark;
+        const previewUrl = watermark?.previewUrl || watermarkUrl;
+        const isSameUrl = watermarkUrl === previewUrl;
+
+        return (
+          <StyledWatermarkGalleryItem
+            className="FIE_watermark-selected-item"
+            onClick={(e) =>
+              isSameUrl
+                ? getWatermarkImgAndSelect(e)
+                : loadAndSetWatermarkImg(watermarkUrl)
+            }
+            key={watermarkUrl}
+            aria-selected={watermarkUrl === currentWatermarkUrl}
+          >
+            <img
+              src={previewUrl}
+              alt="Failed to load."
+              crossOrigin="Anonymous"
+              draggable={false}
+            />
+          </StyledWatermarkGalleryItem>
+        );
+      })}
     </Carousel>
   );
 };
@@ -69,7 +83,8 @@ WatermarksGallery.defaultProps = {
 };
 
 WatermarksGallery.propTypes = {
-  selectWatermark: PropTypes.func.isRequired,
+  addImgWatermark: PropTypes.func.isRequired,
+  loadAndSetWatermarkImg: PropTypes.func.isRequired,
   style: PropTypes.instanceOf(Object),
 };
 

@@ -270,7 +270,7 @@ export interface FilerobotImageEditorConfig {
   Rotate?: rotateAnnotation;
   // [TOOLS_IDS.WATERMARK]
   Watermark?: {
-    gallery?: string[] | [];
+    gallery?: string[] | ({ url: string, previewUrl: string })[] | [];
     onUploadWatermarkImgClick?: (loadAndSetWatermarkImg: (imgUrl, revokeObjectUrl) => void) => Promise<{ url: string, revokeObjectUrl?: boolean }> | void
     textScalingRatio?: number,
     imageScalingRatio?: number,

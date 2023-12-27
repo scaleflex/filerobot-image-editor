@@ -150,7 +150,7 @@ const Watermark = () => {
       setIsLoading(false);
     };
     img.onerror = () => {
-      setFeedback(t('uploadImageError'));
+      setFeedback(t('mutualizedFailedToLoadImg'));
       if (revokeObjectUrl) {
         URL.revokeObjectURL(imgUrl);
       }
@@ -285,7 +285,8 @@ const Watermark = () => {
           noMargin
         />
         <WatermarksGallery
-          selectWatermark={addImgWatermark}
+          loadAndSetWatermarkImg={loadAndSetWatermarkImg}
+          addImgWatermark={addImgWatermark}
           style={
             isPhoneScreen && Boolean(watermark?.name)
               ? { width: '55%' }

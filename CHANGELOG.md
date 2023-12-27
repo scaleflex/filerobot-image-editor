@@ -42,6 +42,7 @@ Types of changes:
 
 - `onUploadWatermarkImgClick` used for customizing the image watermark adding.
 - `hideTextWatermark` hides the add text watermark option and its possibility.
+- Support for preview urls of watermark images to load faster and avoid loading images for previewing only.
 -  -->
 
 ## v4.6.3 - 2023-11-30
