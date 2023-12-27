@@ -88,7 +88,7 @@ const NodesTransformer = () => {
       onDblClick={enableTextContentChangeOnDblClick}
       onDblTap={enableTextContentChangeOnDblClick}
       enabledAnchors={enabledAnchors}
-      flipEnabled
+      flipEnabled={!useCloudimage}
       shouldOverdrawWholeArea
     />
   );

@@ -88,12 +88,13 @@ const Resize = ({
     // as we are simulating zoom relative to original image dimensions but not applying the real original image dimensions
     const dimensUsedInFit =
       (crop.width && crop.height && crop) || shownImageDimensions;
+    const updatedResize = { ...resize, ...newResize };
     dispatch({
       type: ZOOM_CANVAS,
       payload: {
         factor:
-          newResize.width && newResize.height
-            ? getZoomFitFactor(dimensUsedInFit, newResize)
+          updatedResize.width && updatedResize.height
+            ? getZoomFitFactor(dimensUsedInFit, updatedResize)
             : DEFAULT_ZOOM_FACTOR,
         isAbsoluteZoom: true,
       },
@@ -183,9 +184,9 @@ const Resize = ({
         disabled={isManualChangeDisabled}
       >
         {currentSize.ratioUnlocked || resize.ratioUnlocked ? (
-          <UnlockOutline size={16} color={theme.palette['icons-secondary']} />
+          <UnlockOutline size={16} color={theme.palette.success} />
         ) : (
-          <LockOutline size={16} color={theme.palette['icons-secondary']} />
+          <LockOutline size={16} color={theme.palette.error} />
         )}
       </StyledRatioLockIcon>
       <StyledResizeInput

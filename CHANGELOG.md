@@ -27,12 +27,16 @@ Types of changes:
 
 - Zooming behavior in some cases specially applying from zooming factors menu.
 - Cropping area continually jumps on doing flip and then getting back to crop.
+- some improper issue happen with zooming behavior on zooming-in from phone/touch screens.
 
 ### Improved
 
 - Resizing fields are more UX friendly.
 - Auto fitting the image on resizing by auto zooming.
 - Restrict the resizing expand to 10x.
+- Avoid flipping watermarks if `useCloudimage` is `true`.
+- Colorizing the ratio lock of resize tab to be more clear & visible to the user.
+- Replace alt text of invalid loaded watermark image.
 
 ### Added
 
