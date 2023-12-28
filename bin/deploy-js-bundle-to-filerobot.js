@@ -32,6 +32,7 @@ const generateSassKey = () =>
         );
         return null;
       }
+      console.log('Generated SASS Key.');
       return res.key;
     })
     .catch(
