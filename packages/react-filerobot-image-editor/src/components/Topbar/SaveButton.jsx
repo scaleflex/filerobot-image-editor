@@ -60,6 +60,7 @@ const SaveButton = () => {
       useCloudimage,
       moreSaveOptions,
       disableSaveIfNoChanges,
+      removeSaveButton,
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -233,6 +234,10 @@ const SaveButton = () => {
       isFieSaveMounted = false;
     };
   }, []);
+
+  if (removeSaveButton) {
+    return null;
+  }
 
   const menuItems =
     Array.isArray(moreSaveOptions) && moreSaveOptions.length > 0

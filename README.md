@@ -1259,6 +1259,16 @@ If `true`, the save button will be disabled till the user does a change on the i
 
 > If u face strange behavior with CORS on chromium based browser, please check this issue [#319](https://github.com/scaleflex/filerobot-image-editor/issues/319) might be useful for you.
 
+#### `removeSaveButton`
+
+<u>Type:</u> `Boolean`
+
+<u>Supported version:</u> +v4.7.1
+
+<u>Default:</u> false
+
+If `true`, the save button get removed from the editor.
+
 ### Callbacks
 
 #### `onBeforeSave`

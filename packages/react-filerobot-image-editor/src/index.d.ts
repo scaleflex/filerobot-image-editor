@@ -353,6 +353,7 @@ export interface FilerobotImageEditorConfig {
   disableZooming?: boolean;
   noCrossOrigin?: boolean;
   disableSaveIfNoChanges?: boolean;
+  removeSaveButton?: boolean;
 }
 
 declare const FilerobotImageEditor: FunctionComponent<FilerobotImageEditorConfig>;

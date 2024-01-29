@@ -380,6 +380,7 @@ const config = {
   // useZoomPresetsMenu: true,
   // disableZooming: true,
   // noCrossOrigin: false,
+  // removeSaveButton: true,
 };
 
 export default config;

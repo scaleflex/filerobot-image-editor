@@ -134,4 +134,5 @@ export default {
   disableZooming: false,
   noCrossOrigin: false,
   disableSaveIfNoChanges: false,
+  removeSaveButton: false,
 };
