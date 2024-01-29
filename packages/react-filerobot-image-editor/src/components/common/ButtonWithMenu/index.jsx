@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItemLabel } from '@scaleflex/ui/core/menu-item';
 
@@ -12,8 +12,6 @@ import {
   StyledMenuItem,
   StyledMenuIcon,
 } from './ButtonWithMenu.styled';
-
-let isFieButtonWithMenuMounted = true;
 
 const ButtonWithMenu = ({
   onClick,
@@ -31,6 +29,7 @@ const ButtonWithMenu = ({
   noMargin,
 }) => {
   const { t } = useStore();
+  const isMounted = useRef(true);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const buttonSize = 'sm';
@@ -39,13 +38,13 @@ const ButtonWithMenu = ({
   const hasMultipleMenuItems = filteredMenuItems.length > 1;
 
   const openMenu = (e) => {
-    if (isFieButtonWithMenuMounted) {
+    if (isMounted.current) {
       setAnchorEl(e.currentTarget);
     }
   };
 
   const closeMenu = () => {
-    if (isFieButtonWithMenuMounted) {
+    if (isMounted.current) {
       setAnchorEl(null);
     }
   };
@@ -72,10 +71,10 @@ const ButtonWithMenu = ({
   };
 
   useEffect(() => {
-    isFieButtonWithMenuMounted = true;
+    isMounted.current = true;
 
     return () => {
-      isFieButtonWithMenuMounted = false;
+      isMounted.current = false;
     };
   }, []);
 
