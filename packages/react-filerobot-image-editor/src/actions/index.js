@@ -36,7 +36,7 @@ import enableTextContentEdit, {
 import setResize, { SET_RESIZE } from './setResize';
 import setSaved, { SET_SAVED } from './setSaved';
 import updateState, { UPDATE_STATE } from './updateState';
-import setLatestColor, { SET_LATEST_COLOR } from './setLatestColor';
+import setLatestColor, { SET_LATEST_COLOR, SET_LATEST_TEXT_COLOR, setLatestTextColor } from './setLatestColor';
 import setShowTabsMenu, { SET_SHOWN_TABS_MENU } from './setShowTabsMenu';
 
 export default {
@@ -55,6 +55,7 @@ export default {
   [SET_SHOWN_IMAGE_DIMENSIONS]: setShownImageDimensions,
   [ENABLE_TEXT_CONTENT_EDIT]: enableTextContentEdit,
   [SET_LATEST_COLOR]: setLatestColor,
+  [SET_LATEST_TEXT_COLOR]: setLatestTextColor,
   [SET_SHOWN_TABS_MENU]: setShowTabsMenu,
   // Start of Design actions...
   [ADD_FILTER]: addFilter,
@@ -90,6 +91,7 @@ export {
   SET_SHOWN_IMAGE_DIMENSIONS,
   ENABLE_TEXT_CONTENT_EDIT,
   SET_LATEST_COLOR,
+  SET_LATEST_TEXT_COLOR,
   SET_SHOWN_TABS_MENU,
   // Start of Design actions...
   ADD_FILTER,
