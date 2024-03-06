@@ -53,7 +53,7 @@ const cropFolderPresets = [
         ],
       },
       {
-        titleKey: 'twitter',
+        titleKey: 'x',
         items: [
           {
             titleKey: 'profilePhoto',
