@@ -70,6 +70,7 @@
     "vite": "^2.8.6"
   },
   "scripts": {
+    "prepare": "npm run build:packages",
     "fix": "prettier-eslint \"packages/**/src/**/*.(js|jsx)\"",
     "dev": "vite",
     "dev:force-prebundle-deps": "vite --force",
