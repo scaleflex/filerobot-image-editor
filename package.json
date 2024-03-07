@@ -27,7 +27,8 @@
     "annotate"
   ],
   "files": [
-    "lib"
+    "lib",
+    "packages"
   ],
   "devDependencies": {
     "@babel/cli": "^7.21.5",
