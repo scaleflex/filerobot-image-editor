@@ -42,6 +42,48 @@
 
 </p>
 
+# Setup for ACER employees
+
+## Importing to other projects
+
+This repository workspace contains a `prepare` script that will build versions of all packages that can be imported directly via relative filesystem paths.
+
+The importing module should simply specify this in its `package.json`:
+
+```json
+{
+  "dependencies": {
+    // ...
+    "filerobot-image-editor-root": "github:ACERposS/filerobot-image-editor.git"
+    // ...
+  }
+}
+```
+
+Following that your component can simply
+
+```js
+import ImageEditor from 'filerobot-image-editor-root/packages/react-filerobot-image-editor';
+```
+
+## Editing this package
+
+For those needing to develop this module in future, you will need to use a flag when initialising the repository to ignore unmatched dependencies:
+
+    npm i --force
+
+This will also run `npm run build:packages` implicitly. Use this command to rebuild modules after any code changes.
+
+You can also `pnpm link /path/to/this/repo` from the directory of an importing module in order to develop against a live copy.
+
+
+
+
+
+[Original README follows:]
+
+---------------------------
+
 # Filerobot Image Editor (FIE)
 
 The Filerobot Image Editor is the easiest way to integrate an easy-to-use image editor in your web application. Integrated with few lines of code, your users will be able to apply basic transformations like resize, crop, flip, finetune, annotate, watermark and various filters to any image.
