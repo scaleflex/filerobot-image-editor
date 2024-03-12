@@ -74,7 +74,21 @@ For those needing to develop this module in future, you will need to use a flag 
 
 This will also run `npm run build:packages` implicitly. Use this command to rebuild modules after any code changes.
 
-You can also `pnpm link /path/to/this/repo` from the directory of an importing module in order to develop against a live copy.
+## Live development
+
+You can also `pnpm link /path/to/this/repo` from the directory of an importing module in order to develop against a live copy. To enable HMR you will need to configure your bundler to watch the output directory of the `react-filerobot-image-editor` package.
+
+If using Vite you can add this to its configuration:
+
+```json
+server: {
+  watch: { ignored: [
+    '!**/node_modules/filerobot-image-editor-root/**'
+  ] },
+},
+```
+
+From there, execute this repository's `npm run dev:watch` script in a separate terminal **before** executing the importing project's build/watch scripts.
 
 
 
