@@ -42,6 +42,6 @@
   },
   "scripts": {
     "build:lib": "rimraf lib && cross-env BABEL_ENV=production NODE_ENV=production babel src -d lib --config-file ../../babel.config.json -D",
-    "build:lib:watch": "rimraf lib && cross-env BABEL_ENV=production NODE_ENV=production babel src -d lib --config-file ../../babel.config.json -D --watch"
+    "build:lib:watch": "rimraf lib && cross-env BABEL_ENV=development NODE_ENV=development babel src -d lib --config-file ../../babel.config.json -D --watch"
   }
 }
