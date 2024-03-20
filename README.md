@@ -1,46 +1,4 @@
-<p align="center">
-	<a href="https://github.com/scaleflex/filerobot-image-editor/blob/master/LICENSE">
-		<img src="https://img.shields.io/npm/l/filerobot-image-editor?style=for-the-badge" alt="License (MIT)" />
-	</a>
-	<a href="#installation">
-		<img src="https://img.shields.io/npm/v/filerobot-image-editor/latest?label=Version&style=for-the-badge&logo=npm" alt="Version" />
-	</a>
-	<a href="#">
-		<img alt="GitHub stars" src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?style=for-the-badge&logo=github" />
-	</a>
-	<a href="#installation">
-		<img src="https://img.shields.io/npm/dt/filerobot-image-editor?style=for-the-badge&logo=npm" alt="Downloads"/>
-	</a>
-	<a href="https://www.scaleflex.com/">
-		<img alt="Built with love by Scaleflex team" src="https://img.shields.io/badge/%3C%2F%3E%20w%2F%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg?style=for-the-badge" />
-	</a>
-	<br />
-	<a href="#installation">
-		<img alt="Typescript types" src="https://img.shields.io/badge/types-included-blue?style=for-the-badge&logo=typescript" />
-	</a>
-	<a href="https://github.com/scaleflex/filerobot-image-editor/issues?q=is%3Aissue+is%3Aclosed">
-		<img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed-raw/scaleflex/filerobot-image-editor?style=for-the-badge&logo=github" />
-	</a>
-	<a href="https://github.com/scaleflex/filerobot-image-editor/issues">
-		<img alt="GitHub open issues" src="https://img.shields.io/github/issues-raw/scaleflex/filerobot-image-editor?style=for-the-badge&color=red&logo=github" />
-	</a>
-	<br />
-	<br />
-	<a href="https://www.filerobot.com/en/home#gh-dark-mode-only" />
-	<img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+BLACK+BG.png?vh=619469" alt="Filerobot dark mode Logo" width="300px" />
-  </a>
-  <a href="https://www.filerobot.com/en/home#gh-light-mode-only">
-    <img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+WHITE+BG.png?vh=7ae33c" alt="Filerobot white mode Logo" width="300px">
-  </a>
-	<br />
-	<br />
-	<a href="https://scaleflex.github.io/filerobot-image-editor/">Editor Preview</a>
-  •
-	<a href="https://www.filerobot.com/en/home">Learn more about Filerobot</a>
-  •
-	<a href="https://codesandbox.io/s/holy-resonance-j0n5z">CodeSandbox</a>
 
-</p>
 
 # Setup for ACER employees
 
@@ -121,6 +79,50 @@ From there, execute this repository's `npm run dev:watch` script in a separate t
 [Original README follows:]
 
 ---------------------------
+
+<p align="center">
+	<a href="https://github.com/scaleflex/filerobot-image-editor/blob/master/LICENSE">
+		<img src="https://img.shields.io/npm/l/filerobot-image-editor?style=for-the-badge" alt="License (MIT)" />
+	</a>
+	<a href="#installation">
+		<img src="https://img.shields.io/npm/v/filerobot-image-editor/latest?label=Version&style=for-the-badge&logo=npm" alt="Version" />
+	</a>
+	<a href="#">
+		<img alt="GitHub stars" src="https://img.shields.io/github/stars/scaleflex/filerobot-image-editor?style=for-the-badge&logo=github" />
+	</a>
+	<a href="#installation">
+		<img src="https://img.shields.io/npm/dt/filerobot-image-editor?style=for-the-badge&logo=npm" alt="Downloads"/>
+	</a>
+	<a href="https://www.scaleflex.com/">
+		<img alt="Built with love by Scaleflex team" src="https://img.shields.io/badge/%3C%2F%3E%20w%2F%20%E2%99%A5%20by-the%20Scaleflex%20team-6986fa.svg?style=for-the-badge" />
+	</a>
+	<br />
+	<a href="#installation">
+		<img alt="Typescript types" src="https://img.shields.io/badge/types-included-blue?style=for-the-badge&logo=typescript" />
+	</a>
+	<a href="https://github.com/scaleflex/filerobot-image-editor/issues?q=is%3Aissue+is%3Aclosed">
+		<img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed-raw/scaleflex/filerobot-image-editor?style=for-the-badge&logo=github" />
+	</a>
+	<a href="https://github.com/scaleflex/filerobot-image-editor/issues">
+		<img alt="GitHub open issues" src="https://img.shields.io/github/issues-raw/scaleflex/filerobot-image-editor?style=for-the-badge&color=red&logo=github" />
+	</a>
+	<br />
+	<br />
+	<a href="https://www.filerobot.com/en/home#gh-dark-mode-only" />
+	<img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+BLACK+BG.png?vh=619469" alt="Filerobot dark mode Logo" width="300px" />
+  </a>
+  <a href="https://www.filerobot.com/en/home#gh-light-mode-only">
+    <img src="https://assets.scaleflex.com/Marketing/Logos/Filerobot+Logos/Logo+with+Scaleflex/LOGO+WITH+SCALEFLEX+ON+WHITE+BG.png?vh=7ae33c" alt="Filerobot white mode Logo" width="300px">
+  </a>
+	<br />
+	<br />
+	<a href="https://scaleflex.github.io/filerobot-image-editor/">Editor Preview</a>
+  •
+	<a href="https://www.filerobot.com/en/home">Learn more about Filerobot</a>
+  •
+	<a href="https://codesandbox.io/s/holy-resonance-j0n5z">CodeSandbox</a>
+
+</p>
 
 # Filerobot Image Editor (FIE)
 
