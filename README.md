@@ -54,16 +54,40 @@ The importing module should simply specify this in its `package.json`:
 {
   "dependencies": {
     // ...
-    "filerobot-image-editor-root": "github:ACERposS/filerobot-image-editor.git"
+    "filerobot-image-editor-root": "github:acerorg/NAP-ICTL-2025_filerobot-image-editor.git"
     // ...
   }
 }
 ```
 
-Following that your component can simply
+Following that your component can simply import the editor component via:
 
 ```js
 import ImageEditor from 'filerobot-image-editor-root/packages/react-filerobot-image-editor';
+```
+
+or import the editor store in order to dispatch actions through it:
+
+```js
+import { useStore as useEditorStore } from 'filerobot-image-editor-root/packages/react-filerobot-image-editor';
+
+// (in your component's render logic:)
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+const { dispatch: editorDispatch } = useEditorStore();
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+editorDispatch({
+  type: "ADD_FILTER",
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  payload: { filter: filterFn },
+})
+```
+
+or import individual modules from within this repository via path as needed:
+
+```js
+import ValenciaFilter from 'filerobot-image-editor-root/packages/react-filerobot-image-editor/lib/custom/filters/Valencia';
 ```
 
 ## Editing this package
