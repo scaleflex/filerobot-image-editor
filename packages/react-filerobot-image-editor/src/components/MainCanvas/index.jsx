@@ -2,7 +2,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
 /** Internal Dependencies */
-import { DesignLayer, TransformersLayer } from 'components/Layers';
+import {
+  DesignLayer,
+  TransformersLayer,
+  BackgroundLayer,
+} from 'components/Layers';
 import { AppProviderOverridenValue } from 'context';
 import { SET_CANVAS_SIZE } from 'actions';
 import { useResizeObserver, useStore } from 'hooks';
@@ -43,6 +47,7 @@ const MainCanvas = () => {
       )}
       <CanvasNode>
         <AppProviderOverridenValue overridingValue={providedAppContext}>
+          <BackgroundLayer />
           <DesignLayer />
           <TransformersLayer />
         </AppProviderOverridenValue>
