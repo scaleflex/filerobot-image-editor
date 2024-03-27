@@ -428,7 +428,7 @@ const CropTransformer = () => {
         enabledAnchors={enabledAnchors}
         ignoreStroke={false}
         anchorStroke={guideLineColor}
-        anchorFill={theme.palette['access-primary']}
+        anchorFill={theme.palette['accent-primary-active']}
         anchorStrokeWidth={2}
         borderStroke={guideLineColor}
         borderStrokeWidth={1}
