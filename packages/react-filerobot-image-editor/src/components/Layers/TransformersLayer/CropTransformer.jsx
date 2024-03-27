@@ -37,10 +37,10 @@ const makeCropGuideProps =
     const { x, y, width: w, height: h } = attrs;
 
     const points = [
-      HorV === 'V' ? x + (x + w) * perc : x, // left
-      HorV === 'V' ? y : y + (y + h) * perc, // top
-      HorV === 'V' ? x + (x + w) * perc : x + w, // right
-      HorV === 'V' ? y + h : y + (y + h) * perc, // bottom
+      HorV === 'V' ? x + w * perc : x, // left
+      HorV === 'V' ? y : y + h * perc, // top
+      HorV === 'V' ? x + w * perc : x + w, // right
+      HorV === 'V' ? y + h : y + h * perc, // bottom
     ];
 
     return {
