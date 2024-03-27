@@ -23,8 +23,9 @@ const noEffectTextDimensions = {
 };
 
 // properties generator to configure crop guide line components
-const makeCropGuideProps =
-  (imageDimensions, cropRatio, cropSettings, sx, sy, sw, sh, color) =>
+const cropGuidePropsForConfig =
+  (imageDimensions, cropRatio, cropSettings, color) =>
+  (sx, sy, sw, sh) =>
   (ref, HorV, perc) => {
     let attrs = { x: sx, y: sy, width: sw, height: sh };
     attrs = boundResizing(
@@ -122,6 +123,13 @@ const CropTransformer = () => {
     cropRatio === ORIGINAL_CROP
       ? originalImage.width / originalImage.height
       : cropRatio;
+
+  const cropGuidePropsForArea = cropGuidePropsForConfig(
+    shownImageDimensions,
+    getProperCropRatio(),
+    cropSettings,
+    guideLineColor,
+  );
 
   const saveCrop = ({ width, height, x, y }, noHistory) => {
     const newCrop = {
@@ -313,16 +321,7 @@ const CropTransformer = () => {
     draggable: !lockCropAreaAt,
   };
 
-  const guideProps = makeCropGuideProps(
-    shownImageDimensions,
-    getProperCropRatio(),
-    cropSettings,
-    x,
-    y,
-    width,
-    height,
-    guideLineColor,
-  );
+  const cropGuidePropsForLine = cropGuidePropsForArea(x, y, width, height);
 
   // ALT is used to center scaling
   return (
@@ -357,12 +356,12 @@ const CropTransformer = () => {
             width={crop.noEffect ? 0 : width}
             height={crop.noEffect ? 0 : height}
           />
-          <Line {...guideProps(cropGuideRefVL, 'V', 0.25)} />
-          <Line {...guideProps(cropGuideRefVC, 'V', 0.5)} />
-          <Line {...guideProps(cropGuideRefVR, 'V', 0.75)} />
-          <Line {...guideProps(cropGuideRefHT, 'H', 0.25)} />
-          <Line {...guideProps(cropGuideRefHC, 'H', 0.5)} />
-          <Line {...guideProps(cropGuideRefHB, 'H', 0.75)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefVL, 'V', 0.25)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefVC, 'V', 0.5)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefVR, 'V', 0.75)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefHT, 'H', 0.25)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefHC, 'H', 0.5)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefHB, 'H', 0.75)} />
         </>
       )}
       {crop.noEffect && (
