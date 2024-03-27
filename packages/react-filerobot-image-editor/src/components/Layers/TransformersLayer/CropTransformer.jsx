@@ -26,7 +26,7 @@ const noEffectTextDimensions = {
 const cropGuidePropsForConfig =
   (imageDimensions, cropRatio, cropSettings, color) =>
   (sx, sy, sw, sh) =>
-  (ref, HorV, perc) => {
+  (ref, HorV, perc, positionOnly) => {
     let attrs = { x: sx, y: sy, width: sw, height: sh };
     attrs = boundResizing(
       attrs,
@@ -45,18 +45,22 @@ const cropGuidePropsForConfig =
     ];
 
     return {
-      ref,
-      points,
       x: 0,
       y: 0,
       width: 1,
       height: 1,
-      fillEnabled: false,
-      stroke: color,
-      strokeWidth: 1,
-      scaleX: 1,
-      scaleY: 1,
-      draggable: false,
+      points,
+      ...(!positionOnly
+        ? {
+            ref,
+            fillEnabled: false,
+            stroke: color,
+            strokeWidth: 1,
+            scaleX: 1,
+            scaleY: 1,
+            draggable: false,
+          }
+        : {}),
     };
   };
 
