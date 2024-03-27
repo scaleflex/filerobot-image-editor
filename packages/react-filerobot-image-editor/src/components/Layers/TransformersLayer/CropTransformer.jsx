@@ -274,11 +274,48 @@ const CropTransformer = () => {
     );
   };
 
+  const updateCropGuides = (newAttrs) => {
+    const cropGuidePropsForLine = cropGuidePropsForArea(
+      newAttrs.x,
+      newAttrs.y,
+      newAttrs.width,
+      newAttrs.height,
+    );
+
+    if (cropGuideRefVL.current) {
+      cropGuideRefVL.current.setAttrs(
+        cropGuidePropsForLine(cropGuideRefVL.current, 'V', 0.33, true),
+      );
+    }
+    if (cropGuideRefVR.current) {
+      cropGuideRefVR.current.setAttrs(
+        cropGuidePropsForLine(cropGuideRefVR.current, 'V', 0.67, true),
+      );
+    }
+    if (cropGuideRefHT.current) {
+      cropGuideRefHT.current.setAttrs(
+        cropGuidePropsForLine(cropGuideRefHT.current, 'H', 0.33, true),
+      );
+    }
+    if (cropGuideRefHB.current) {
+      cropGuideRefHB.current.setAttrs(
+        cropGuidePropsForLine(cropGuideRefHB.current, 'H', 0.67, true),
+      );
+    }
+  };
+
   const limitDragging = (e) => {
     const currentCropShape = e.target;
-    currentCropShape.setAttrs(
-      boundDragging(currentCropShape.attrs, shownImageDimensionsRef.current),
+    const newAttrs = boundDragging(
+      currentCropShape.attrs,
+      shownImageDimensionsRef.current,
     );
+    currentCropShape.setAttrs(newAttrs);
+    updateCropGuides({
+      width: crop.width,
+      height: crop.height,
+      ...newAttrs,
+    });
   };
 
   let attrs;
