@@ -1,6 +1,6 @@
 /** External Dependencies */
-import React, { useEffect, useRef, useMemo } from 'react';
-import { Ellipse, Image, Rect, Transformer } from 'react-konva';
+import React, { useEffect, useCallback, useRef, useMemo } from 'react';
+import { Ellipse, Image, Rect, Line, Transformer } from 'react-konva';
 import Konva from 'konva';
 
 /** Internal Dependencies */
@@ -22,6 +22,48 @@ const noEffectTextDimensions = {
   height: 100,
 };
 
+// properties generator to configure crop guide line components
+const cropGuidePropsForConfig =
+  (imageDimensions, cropRatio, cropSettings, color) =>
+  (sx, sy, sw, sh) =>
+  (ref, HorV, perc, positionOnly) => {
+    let attrs = { x: sx, y: sy, width: sw, height: sh };
+    attrs = boundResizing(
+      attrs,
+      attrs,
+      { ...imageDimensions, abstractX: 0, abstractY: 0 },
+      cropRatio,
+      cropSettings,
+    );
+    const { x, y, width: w, height: h } = attrs;
+
+    const points = [
+      HorV === 'V' ? x + w * perc : x, // left
+      HorV === 'V' ? y : y + h * perc, // top
+      HorV === 'V' ? x + w * perc : x + w, // right
+      HorV === 'V' ? y + h : y + h * perc, // bottom
+    ];
+
+    return {
+      x: 0,
+      y: 0,
+      width: 1,
+      height: 1,
+      points,
+      ...(!positionOnly
+        ? {
+            ref,
+            fillEnabled: false,
+            stroke: color,
+            strokeWidth: 1,
+            scaleX: 1,
+            scaleY: 1,
+            draggable: false,
+          }
+        : {}),
+    };
+  };
+
 const CropTransformer = () => {
   const {
     dispatch,
@@ -35,6 +77,10 @@ const CropTransformer = () => {
     t,
   } = useStore();
   const cropShapeRef = useRef();
+  const cropGuideRefVL = useRef();
+  const cropGuideRefVR = useRef();
+  const cropGuideRefHT = useRef();
+  const cropGuideRefHB = useRef();
   const cropTransformerRef = useRef();
   const tmpImgNodeRef = useRef();
   const shownImageDimensionsRef = useRef();
@@ -51,10 +97,37 @@ const CropTransformer = () => {
   const isCustom = cropRatio === CUSTOM_CROP;
   const isEllipse = cropRatio === ELLIPSE_CROP;
 
+  const affectedNodes = useCallback(
+    () =>
+      [
+        cropShapeRef.current,
+        cropGuideRefVL.current,
+        cropGuideRefVR.current,
+        cropGuideRefHT.current,
+        cropGuideRefHB.current,
+      ].filter((v) => v),
+    [
+      cropShapeRef.current,
+      cropGuideRefVL.current,
+      cropGuideRefVR.current,
+      cropGuideRefHT.current,
+      cropGuideRefHB.current,
+    ],
+  );
+
+  const guideLineColor = theme.palette['accent-primary'];
+
   const getProperCropRatio = () =>
     cropRatio === ORIGINAL_CROP
       ? originalImage.width / originalImage.height
       : cropRatio;
+
+  const cropGuidePropsForArea = cropGuidePropsForConfig(
+    shownImageDimensions,
+    getProperCropRatio(),
+    cropSettings,
+    guideLineColor,
+  );
 
   const saveCrop = ({ width, height, x, y }, noHistory) => {
     const newCrop = {
@@ -95,7 +168,7 @@ const CropTransformer = () => {
 
   const saveBoundedCropWithLatestConfig = (cropWidth, cropHeight) => {
     if (cropTransformerRef.current && cropShapeRef.current) {
-      cropTransformerRef.current.nodes([cropShapeRef.current]);
+      cropTransformerRef.current.nodes(affectedNodes());
     }
 
     const imageDimensions = shownImageDimensionsRef.current;
@@ -124,7 +197,7 @@ const CropTransformer = () => {
       if (tmpImgNodeRef.current) {
         tmpImgNodeRef.current.cache();
       }
-      cropTransformerRef.current.nodes([cropShapeRef.current]);
+      cropTransformerRef.current.nodes(affectedNodes());
     }
 
     return () => {
@@ -132,7 +205,7 @@ const CropTransformer = () => {
         tmpImgNodeRef.current.clearCache();
       }
     };
-  }, [designLayer, originalImage, shownImageDimensions]);
+  }, [designLayer, originalImage, shownImageDimensions, affectedNodes()]);
 
   useEffect(() => {
     if (shownImageDimensionsRef.current) {
@@ -201,11 +274,48 @@ const CropTransformer = () => {
     );
   };
 
+  const updateCropGuides = (newAttrs) => {
+    const cropGuidePropsForLine = cropGuidePropsForArea(
+      newAttrs.x,
+      newAttrs.y,
+      newAttrs.width,
+      newAttrs.height,
+    );
+
+    if (cropGuideRefVL.current) {
+      cropGuideRefVL.current.setAttrs(
+        cropGuidePropsForLine(cropGuideRefVL.current, 'V', 0.33, true),
+      );
+    }
+    if (cropGuideRefVR.current) {
+      cropGuideRefVR.current.setAttrs(
+        cropGuidePropsForLine(cropGuideRefVR.current, 'V', 0.67, true),
+      );
+    }
+    if (cropGuideRefHT.current) {
+      cropGuideRefHT.current.setAttrs(
+        cropGuidePropsForLine(cropGuideRefHT.current, 'H', 0.33, true),
+      );
+    }
+    if (cropGuideRefHB.current) {
+      cropGuideRefHB.current.setAttrs(
+        cropGuidePropsForLine(cropGuideRefHB.current, 'H', 0.67, true),
+      );
+    }
+  };
+
   const limitDragging = (e) => {
     const currentCropShape = e.target;
-    currentCropShape.setAttrs(
-      boundDragging(currentCropShape.attrs, shownImageDimensionsRef.current),
+    const newAttrs = boundDragging(
+      currentCropShape.attrs,
+      shownImageDimensionsRef.current,
     );
+    currentCropShape.setAttrs(newAttrs);
+    updateCropGuides({
+      width: crop.width,
+      height: crop.height,
+      ...newAttrs,
+    });
   };
 
   let attrs;
@@ -228,10 +338,13 @@ const CropTransformer = () => {
     attrs = crop;
   }
 
-  const { x = 0, y = 0, width, height } = attrs;
+  let { x = 0, y = 0 } = attrs;
+  const { width, height } = attrs;
+  x = isFlippedX ? shownImageDimensions.width - x - width : x;
+  y = isFlippedY ? shownImageDimensions.height - y - height : y;
   const cropShapeProps = {
-    x: isFlippedX ? shownImageDimensions.width - x - width : x,
-    y: isFlippedY ? shownImageDimensions.height - y - height : y,
+    x,
+    y,
     ref: cropShapeRef,
     fill: '#FFFFFF',
     scaleX: 1,
@@ -242,6 +355,8 @@ const CropTransformer = () => {
     onTransformEnd: lockCropAreaAt ? undefined : saveCropFromEvent,
     draggable: !lockCropAreaAt,
   };
+
+  const cropGuidePropsForLine = cropGuidePropsForArea(x, y, width, height);
 
   // ALT is used to center scaling
   return (
@@ -270,11 +385,17 @@ const CropTransformer = () => {
           }}
         />
       ) : (
-        <Rect
-          {...cropShapeProps}
-          width={crop.noEffect ? 0 : width}
-          height={crop.noEffect ? 0 : height}
-        />
+        <>
+          <Rect
+            {...cropShapeProps}
+            width={crop.noEffect ? 0 : width}
+            height={crop.noEffect ? 0 : height}
+          />
+          <Line {...cropGuidePropsForLine(cropGuideRefVL, 'V', 0.33)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefVR, 'V', 0.67)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefHT, 'H', 0.33)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefHB, 'H', 0.67)} />
+        </>
       )}
       {crop.noEffect && (
         <TextNode
@@ -301,17 +422,17 @@ const CropTransformer = () => {
         centeredScaling={false}
         flipEnabled={false}
         rotateEnabled={false}
-        nodes={cropShapeRef.current ? [cropShapeRef.current] : []}
-        anchorSize={14}
-        anchorCornerRadius={7}
+        nodes={affectedNodes()}
+        anchorSize={12}
+        anchorCornerRadius={6}
         enabledAnchors={enabledAnchors}
         ignoreStroke={false}
-        anchorStroke={theme.palette['accent-primary']}
-        anchorFill={theme.palette['access-primary']}
+        anchorStroke={guideLineColor}
+        anchorFill={theme.palette['accent-primary-active']}
         anchorStrokeWidth={2}
-        borderStroke={theme.palette['accent-primary']}
-        borderStrokeWidth={2}
-        borderDash={[4]}
+        borderStroke={guideLineColor}
+        borderStrokeWidth={1}
+        borderDash={0}
         keepRatio={!isCustom || !isEllipse}
         ref={cropTransformerRef}
         boundBoxFunc={(absOldBox, absNewBox) =>

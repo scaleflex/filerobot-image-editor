@@ -1,5 +1,5 @@
 /** Internal Dependencies */
-import FilerobotImageEditor from 'components/AssemblyPoint';
+import AssemblyPoint from 'components/AssemblyPoint';
 import { TABS_IDS, TOOLS_IDS } from 'utils/constants';
 
 import ThemeProvider from '@scaleflex/ui/theme';
@@ -29,4 +29,4 @@ export {
   TOOLS_IDS as TOOLS,
 };
 
-export default FilerobotImageEditor;
+export default AssemblyPoint;
