@@ -74,10 +74,8 @@ const CropTransformer = () => {
   } = useStore();
   const cropShapeRef = useRef();
   const cropGuideRefVL = useRef();
-  const cropGuideRefVC = useRef();
   const cropGuideRefVR = useRef();
   const cropGuideRefHT = useRef();
-  const cropGuideRefHC = useRef();
   const cropGuideRefHB = useRef();
   const cropTransformerRef = useRef();
   const tmpImgNodeRef = useRef();
@@ -100,19 +98,15 @@ const CropTransformer = () => {
       [
         cropShapeRef.current,
         cropGuideRefVL.current,
-        cropGuideRefVC.current,
         cropGuideRefVR.current,
         cropGuideRefHT.current,
-        cropGuideRefHC.current,
         cropGuideRefHB.current,
       ].filter((v) => v),
     [
       cropShapeRef.current,
       cropGuideRefVL.current,
-      cropGuideRefVC.current,
       cropGuideRefVR.current,
       cropGuideRefHT.current,
-      cropGuideRefHC.current,
       cropGuideRefHB.current,
     ],
   );
@@ -356,12 +350,10 @@ const CropTransformer = () => {
             width={crop.noEffect ? 0 : width}
             height={crop.noEffect ? 0 : height}
           />
-          <Line {...cropGuidePropsForLine(cropGuideRefVL, 'V', 0.25)} />
-          <Line {...cropGuidePropsForLine(cropGuideRefVC, 'V', 0.5)} />
-          <Line {...cropGuidePropsForLine(cropGuideRefVR, 'V', 0.75)} />
-          <Line {...cropGuidePropsForLine(cropGuideRefHT, 'H', 0.25)} />
-          <Line {...cropGuidePropsForLine(cropGuideRefHC, 'H', 0.5)} />
-          <Line {...cropGuidePropsForLine(cropGuideRefHB, 'H', 0.75)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefVL, 'V', 0.33)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefVR, 'V', 0.67)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefHT, 'H', 0.33)} />
+          <Line {...cropGuidePropsForLine(cropGuideRefHB, 'H', 0.67)} />
         </>
       )}
       {crop.noEffect && (
