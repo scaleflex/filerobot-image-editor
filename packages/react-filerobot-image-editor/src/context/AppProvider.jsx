@@ -52,6 +52,10 @@ const AppProvider = ({ children, config = {} }) => {
     [config, state],
   );
 
+  if (process.env.NODE_ENV === 'development') {
+    console.info(`PROVIDE APP CONTEXT & CONFIG:`, config);
+  }
+
   return (
     <AppContext.Provider value={providedValue}>{children}</AppContext.Provider>
   );

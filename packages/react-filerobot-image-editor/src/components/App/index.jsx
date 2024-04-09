@@ -49,6 +49,11 @@ const App = () => {
     theme,
     feedback = {},
   } = useStore();
+
+  if (process.env.NODE_ENV === 'development') {
+    console.info(`LOAD APP W. CONFIG:`, config);
+  }
+
   const {
     loadableDesignState,
     useCloudimage,
