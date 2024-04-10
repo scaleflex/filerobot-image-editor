@@ -74,11 +74,7 @@
     "rimraf": "^5.0.0",
     "rollup-plugin-uglify": "^6.0.4",
     "source-map-explorer": "^2.5.2",
-    "styled-components": "^5.3.11",
     "vite": "^2.8.6"
-  },
-  "peerDependencies": {
-    "styled-components": ">=5.3.5"
   },
   "scripts": {
     "prepare": "npm run build:packages",
