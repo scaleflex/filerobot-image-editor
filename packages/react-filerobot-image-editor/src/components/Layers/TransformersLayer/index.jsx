@@ -6,6 +6,7 @@ import { Layer } from 'react-konva';
 import { useStore } from 'hooks';
 import { TOOLS_IDS, TRANSFORMERS_LAYER_ID } from 'utils/constants';
 import CropTransformer from './CropTransformer';
+import RectFocusTransformer from './RectFocusTransformer';
 import NodesTransformer from './NodesTransformer';
 
 const TransformersLayer = () => {
