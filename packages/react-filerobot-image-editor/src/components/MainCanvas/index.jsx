@@ -38,7 +38,7 @@ const MainCanvas = () => {
 
   return (
     <CanvasContainer className="FIE_canvas-container" ref={canvasContainerRef}>
-      {!providedAppContext.textIdOfEditableContent && <NodeControls />}
+      {/* {!providedAppContext.textIdOfEditableContent && <NodeControls />} */}
       {providedAppContext.isShowOriginalImage && (
         <StyledOrignalImage
           className="FIE_original-image-compare"
