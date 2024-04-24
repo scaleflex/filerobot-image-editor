@@ -11,7 +11,7 @@ import {
 import { useStore } from 'hooks';
 import { CHANGE_POINTER_ICON, ENABLE_TEXT_CONTENT_EDIT } from 'actions';
 
-const NodesTransformer = () => {
+const RectFocusTransformer = () => {
   const {
     selectionsIds = [],
     theme,
@@ -90,9 +90,9 @@ const NodesTransformer = () => {
       onDblClick={enableTextContentChangeOnDblClick}
       onDblTap={enableTextContentChangeOnDblClick}
       enabledAnchors={enabledAnchors}
-      shouldOverdrawWholeArea
+      shouldOverdrawWholeArea={false}
     />
   );
 };
 
-export default NodesTransformer;
+export default RectFocusTransformer;
