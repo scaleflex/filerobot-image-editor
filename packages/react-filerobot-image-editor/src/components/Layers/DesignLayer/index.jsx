@@ -14,11 +14,14 @@ import getCenterRotatedPoint from 'utils/getCenterRotatedPoint';
 import AnnotationNodes from './AnnotationNodes';
 import PreviewGroup from './PreviewGroup';
 
+const DESIGN_IMAGE_LAYER_ID = 'FIE_design-image-layer';
+
 const CANVAS_TO_IMG_SPACING = getProperImageToCanvasSpacing();
 const MIN_SPACED_WIDTH = 10; // As sometimes the spaced width is less than that and it might be hard to view the image initially.
 
 const DesignLayer = () => {
   const designLayerRef = useRef();
+  const blurToolBgLayerRef = useRef();
   const {
     initialCanvasWidth,
     initialCanvasHeight,
@@ -148,13 +151,18 @@ const DesignLayer = () => {
             y: crop.y || 0,
           };
     cropImage(ctx, { ratio: crop.ratio, ...clipBox }, isCroppingAndNotSaving);
+
+    const clipAttrs = {
+      clipX: clipBox.x,
+      clipY: clipBox.y,
+      clipWidth: clipBox.width,
+      clipHeight: clipBox.height,
+    };
     if (designLayerRef.current) {
-      designLayerRef.current.setAttrs({
-        clipX: clipBox.x,
-        clipY: clipBox.y,
-        clipWidth: clipBox.width,
-        clipHeight: clipBox.height,
-      });
+      designLayerRef.current.setAttrs(clipAttrs);
+    }
+    if (blurToolBgLayerRef.current) {
+      blurToolBgLayerRef.current.setAttrs(clipAttrs);
     }
   };
 
@@ -250,10 +258,10 @@ const DesignLayer = () => {
     (isCurrentlyCropping ? 1 : resizedY) *
     scaleAfterRotation;
 
-  return (
+  return (<>
     <Layer
-      id={DESIGN_LAYER_ID}
-      ref={designLayerRef}
+      id={DESIGN_IMAGE_LAYER_ID}
+      ref={blurToolBgLayerRef}
       xPadding={xPoint}
       yPadding={yPoint}
       offsetX={scaledSpacedOriginalImg.width / 2}
@@ -279,10 +287,25 @@ const DesignLayer = () => {
         ref={imageNodeRef}
         {...finetunesProps}
       />
+    </Layer>
+    <Layer
+      id={DESIGN_LAYER_ID}
+      ref={designLayerRef}
+      xPadding={xPoint}
+      yPadding={yPoint}
+      offsetX={scaledSpacedOriginalImg.width / 2}
+      offsetY={scaledSpacedOriginalImg.height / 2}
+      x={(scaledSpacedOriginalImg.width * resizedX) / 2 + xPoint}
+      y={(scaledSpacedOriginalImg.height * resizedY) / 2 + yPoint}
+      scaleX={finalScaleX}
+      scaleY={finalScaleY}
+      rotation={isCurrentlyCropping ? 0 : rotation}
+      clipFunc={clipFunc}
+    >
       <AnnotationNodes />
       <PreviewGroup ref={previewGroupRef} />
     </Layer>
-  );
+  </>);
 };
 
 export default DesignLayer;
