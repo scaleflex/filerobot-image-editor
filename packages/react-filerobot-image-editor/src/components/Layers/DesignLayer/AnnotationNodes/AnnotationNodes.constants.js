@@ -1,6 +1,7 @@
 /** Internal Dependencies */
 import { TOOLS_IDS } from 'utils/constants';
-import RectNode from './RectNode';
+// import RectNode from './RectNode';
+import RectNode from './RectMaskNode';  // :NOTE: rect is now "line blur" tool
 import EllipseNode from './EllipseNode';
 import PolygonNode from './PolygonNode';
 import TextNode from './TextNode';
