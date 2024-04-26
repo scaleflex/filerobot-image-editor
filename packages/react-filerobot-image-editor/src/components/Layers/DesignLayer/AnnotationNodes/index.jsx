@@ -13,10 +13,18 @@ const AnnotationNodes = () => {
     originalImage,
     shownImageDimensions,
     annotations = {}, selectionsIds = [],
+    finetunes = [],
+    finetunesProps = {},
+    filter = null,
   } = useStore();
   const allAnnotations = Object.values(annotations);
 
   const annotationEvents = useAnnotationEvents();
+
+  const finetunesAndFilter = useMemo(
+    () => (filter ? [...finetunes, filter] : finetunes),
+    [finetunes, filter],
+  );
 
   // inject blurred background image to canvas when magic 'blur' annotation is active
   // if (allAnnotations.find(a => a.id === MAGIC_BLUR_ANNOTATION_ID) !== undefined) {
@@ -30,12 +38,13 @@ const AnnotationNodes = () => {
       y: 0,
       width: shownImageDimensions.width,
       height: shownImageDimensions.height,
-      filters: [Konva.Filters.Blur],
+      filters: [Konva.Filters.Blur].concat(...finetunesAndFilter),
       blurRadius: 10,
       scaleX: 1,
       scaleY: 1,
       listening: false,
       draggable: false,
+      ...finetunesProps,
     });
   }
 
@@ -49,7 +58,7 @@ const AnnotationNodes = () => {
           selectionsIds={selectionsIds}
         />
       )),
-    [allAnnotations, annotationEvents, selectionsIds],
+    [allAnnotations, annotationEvents, selectionsIds, finetunesAndFilter],
   );
 };
 
