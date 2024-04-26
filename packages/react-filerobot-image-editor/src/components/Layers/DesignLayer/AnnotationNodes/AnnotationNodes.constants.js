@@ -2,7 +2,8 @@
 import { TOOLS_IDS } from 'utils/constants';
 // import RectNode from './RectNode';
 import RectNode from './RectMaskNode';  // :NOTE: rect is now "line blur" tool
-import EllipseNode from './EllipseNode';
+// import EllipseNode from './EllipseNode';
+import EllipseNode from './EllipseMaskNode'; // :NOTE: ellipse is now "circle blur" tool
 import PolygonNode from './PolygonNode';
 import TextNode from './TextNode';
 import ImageNode from './ImageNode';
