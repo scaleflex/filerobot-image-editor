@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Image } from 'react-konva';
 
@@ -29,6 +29,7 @@ const ImageNode = ({
   opacity,
   ...otherProps
 }) => {
+  // track image data for loading
   const [imgElement, setImgElement] = useState(null);
   useEffect(() => {
     if (typeof image === 'string') {
@@ -42,6 +43,21 @@ const ImageNode = ({
   }
 
   const finalImg = isImgElement ? image : imgElement;
+
+  // trigger the image to cache itself, thus applying filter buffers
+  // to output pixel data.
+  const tmpImgNodeRef = useRef();
+
+  useEffect(() => {
+    if (tmpImgNodeRef.current) {
+      tmpImgNodeRef.current.cache();
+    }
+    return () => {
+      if (tmpImgNodeRef.current) {
+        tmpImgNodeRef.current.clearCache();
+      }
+    };
+  }, [finalImg]);
 
   return (
     <Image
@@ -66,6 +82,7 @@ const ImageNode = ({
       {...otherProps}
       {...annotationEvents}
       {...otherProps}
+      ref={tmpImgNodeRef}
     />
   );
 };

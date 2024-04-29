@@ -6,6 +6,7 @@ import { Layer } from 'react-konva';
 import { useStore } from 'hooks';
 import { TOOLS_IDS, TRANSFORMERS_LAYER_ID } from 'utils/constants';
 import CropTransformer from './CropTransformer';
+import RectFocusTransformer from './RectFocusTransformer';
 import NodesTransformer from './NodesTransformer';
 
 const TransformersLayer = () => {
@@ -17,8 +18,11 @@ const TransformersLayer = () => {
       x={shownImageDimensions.abstractX || 0}
       y={shownImageDimensions.abstractY || 0}
     >
-      <NodesTransformer />
       {toolId === TOOLS_IDS.CROP && <CropTransformer />}
+      {toolId === TOOLS_IDS.RECT && <RectFocusTransformer />}
+      {toolId !== TOOLS_IDS.RECT && toolId !== TOOLS_IDS.CROP && (
+        <NodesTransformer />
+      )}
     </Layer>
   );
 };
