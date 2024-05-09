@@ -21,6 +21,16 @@ Types of changes:
 
 ---
 
+## v4.7.1 - 2024-01-29
+
+### Fixed
+
+- Save button menu options weren't open sometimes.
+
+### Added
+
+- `removeSaveButton` used for showing/removing the save button.
+
 ## v4.7.0 - 2023-12-28
 
 ### Fixed
