@@ -21,6 +21,30 @@ Types of changes:
 
 ---
 
+## v4.8.0 - 2024-05-14
+
+### Fixed
+
+- An issue related to exported `loadableDesignState` which contained wrong finetune's names.
+- Default save modal's resize inputs layout on Mozilla firefox browser ([#446](https://github.com/scaleflex/filerobot-image-editor/issues/446)).
+- HSV sliders go outside of the layout on small screens sometimes ([#437](https://github.com/scaleflex/filerobot-image-editor/issues/437)).
+- Cancel button for color picker doesn't revert to the proper color ([#435](https://github.com/scaleflex/filerobot-image-editor/issues/435)).
+- Issue related to zooming using touch screen that happens sometimes.
+- Theme's typography issue related to @scaleflex/ui package.
+
+### Improved
+
+- Update all the main dependencies (konva, scaleflex/ui & scaleflex/icons) ([#461](https://github.com/scaleflex/filerobot-image-editor/issues/461)).
+- Supporting the new state of undo/redo/reset operations in `onModify` callback ([#444](https://github.com/scaleflex/filerobot-image-editor/issues/444)).
+- Avoid applying the default value of the finetune's tools on moving to any of them as it is not needed since no difference in results ([#445](https://github.com/scaleflex/filerobot-image-editor/issues/445)).
+- Some UI improvements related to annotations tool ([#426](https://github.com/scaleflex/filerobot-image-editor/issues/426)).
+- Destroying the cloned canvas on saving the current one, expected to improve the repeated savings performance & avoid memory issues.
+- Watermark images sizing and integration onto canvas in cloudimage mode.
+
+### Added
+
+- `resetOnImageSourceChange` ([#357](https://github.com/scaleflex/filerobot-image-editor/issues/357)) - for resetting the image editor design data on changing the current original image source to edit.
+
 ## v4.7.1 - 2024-01-29
 
 ### Fixed

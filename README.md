@@ -567,7 +567,7 @@ If `true` then the saved image's type will always be `png` type if the user made
 
 Fires [`onClose`](#onclose) callback after handling save & triggering [`onSave`](#onsave) if `true`.
 
-#### `loadableDesignState` _Experimental_
+#### `loadableDesignState`
 
 <u>Type:</u> `object`
 
@@ -1268,6 +1268,16 @@ If `true`, the save button will be disabled till the user does a change on the i
 <u>Default:</u> false
 
 If `true`, the save button get removed from the editor.
+
+#### `resetOnImageSourceChange`
+
+<u>Type:</u> `Boolean`
+
+<u>Supported version:</u> +v4.8.0
+
+<u>Default:</u> false
+
+If `true`, the editor will reset its design state & saved data on providing a new original image [source](#source).
 
 ### Callbacks
 
