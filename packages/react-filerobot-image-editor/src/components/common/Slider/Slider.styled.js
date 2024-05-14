@@ -10,10 +10,6 @@ const StyledSlider = styled(Slider)`
   padding: 0;
   margin-bottom: ${({ noMargin }) => (noMargin ? '' : '16px')};
 
-  .SfxSlider-annotation {
-    display: none;
-  }
-
   .SfxSlider-thumb {
     background-color: ${({ theme: { palette } }) =>
       palette[PC.AccentStateless]};

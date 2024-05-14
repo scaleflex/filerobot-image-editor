@@ -10,6 +10,8 @@ const Slider = ({ onChange, ...props }) => {
     <StyledSlider
       annotation=""
       onChange={(_e, val) => (onChange ? onChange(val) : undefined)}
+      hideAnnotation
+      labelTooltip="auto"
       {...props}
     />
   );

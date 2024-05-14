@@ -67,13 +67,13 @@ const StyledOptionPopupContent = styled.div`
 const StyledSpacedOptionFields = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 
   ${({ preventFlex }) =>
     preventFlex &&
     `
       display: block;
-  
+
       label {
         margin-bottom: 8px;
       }

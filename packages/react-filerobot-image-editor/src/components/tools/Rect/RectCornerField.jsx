@@ -33,6 +33,7 @@ const RectCornerField = ({
         value={cornerRadius}
         min={MIN_VALUE}
         max={MAX_VALUE}
+        noMargin
       />
     </StyledSpacedOptionFields>
   );

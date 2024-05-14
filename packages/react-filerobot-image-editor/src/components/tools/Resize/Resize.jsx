@@ -20,13 +20,7 @@ import {
   StyledResetButton,
 } from './Resize.styled';
 
-const Resize = ({
-  onChange,
-  currentSize,
-  hideResetButton,
-  alignment,
-  disableWrap,
-}) => {
+const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
   const {
     dispatch,
     originalImage,
@@ -158,7 +152,6 @@ const Resize = ({
     <StyledResizeWrapper
       className="FIE_resize-tool-options"
       alignment={alignment}
-      disableWrap={disableWrap}
     >
       <StyledResizeInput
         className="FIE_resize-width-option"
@@ -172,7 +165,6 @@ const Resize = ({
         size="sm"
         iconEnd="px"
         placeholder="Width"
-        disableWrap={disableWrap}
         disabled={isManualChangeDisabled}
       />
       <StyledRatioLockIcon
@@ -201,7 +193,6 @@ const Resize = ({
         size="sm"
         iconEnd="px"
         placeholder="Height"
-        disableWrap={disableWrap}
         disabled={isManualChangeDisabled}
       />
       {!hideResetButton && (
@@ -226,11 +217,9 @@ Resize.defaultProps = {
   currentSize: {},
   hideResetButton: false,
   alignment: 'center',
-  disableWrap: false,
 };
 
 Resize.propTypes = {
-  disableWrap: PropTypes.bool,
   alignment: PropTypes.string,
   hideResetButton: PropTypes.bool,
   onChange: PropTypes.func,

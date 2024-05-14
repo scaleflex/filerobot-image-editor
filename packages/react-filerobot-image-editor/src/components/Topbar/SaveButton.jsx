@@ -345,7 +345,6 @@ const SaveButton = () => {
               currentSize={imageFileInfo?.size || {}}
               hideResetButton
               alignLeft
-              disableWrap
               alignment="space-between"
             />
           </StyledResizeOnSave>
