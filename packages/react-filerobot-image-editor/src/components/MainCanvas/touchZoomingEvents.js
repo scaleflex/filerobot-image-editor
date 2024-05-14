@@ -1,3 +1,5 @@
+import { DEFAULT_ZOOM_FACTOR } from 'utils/constants';
+
 function getDistance(p1, p2) {
   return Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2);
 }
@@ -47,13 +49,15 @@ export const zoomOnTouchesMove = (e, saveZoomFn) => {
     lastDist = dist;
   }
 
+  const currentZoomFactor = stageCanvas.attrs.zoomFactor || DEFAULT_ZOOM_FACTOR;
+
   // local coordinates of center point
   const pointTo = {
-    x: (newCenter.x - stageCanvas.x()) / stageCanvas.scaleX(),
-    y: (newCenter.y - stageCanvas.y()) / stageCanvas.scaleX(),
+    x: (newCenter.x - stageCanvas.x()) / currentZoomFactor,
+    y: (newCenter.y - stageCanvas.y()) / currentZoomFactor,
   };
 
-  const scale = stageCanvas.scaleX() * (dist / lastDist);
+  const scale = (currentZoomFactor || DEFAULT_ZOOM_FACTOR) * (dist / lastDist);
 
   // calculate new position of the stageCanvas
   const dx = newCenter.x - lastCenter.x;
