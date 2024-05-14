@@ -69,12 +69,15 @@ const generateWatermarkQuery = (
     scaleY = 1,
     ...watermark
   } = watermarkAnnotation;
+  const mainImageRatio = previewDimensions.width / previewDimensions.height;
   const scaledWidth = previewDimensions.width * previewDimensions.scaledBy;
   const scaledHeight = previewDimensions.height * previewDimensions.scaledBy;
+  const scaledX = x * previewDimensions.scaledBy;
+  const scaledY = y * previewDimensions.scaledBy;
   const queryParams = `wat=1&wat_gravity=absolute&wat_pos=${Math.floor(
-    ((x - (crop.x || 0)) / scaledWidth) * 100,
+    ((scaledX - (crop.x || 0)) / scaledWidth) * 100,
     2,
-  )}p,${Math.floor(((y - (crop.y || 0)) / scaledHeight) * 100, 2)}p`;
+  )}p,${Math.floor(((scaledY - (crop.y || 0)) / scaledHeight) * 100, 2)}p`;
 
   if (watermarkAnnotation.name === TOOLS_IDS.TEXT) {
     const { hex, opacity: colorOpacity } = rgbaToHexWithOpacity(watermark.fill);
@@ -88,11 +91,15 @@ const generateWatermarkQuery = (
 
   const imgSrc = watermark.image?.src || watermark.image;
   const watermarkUrl = !imgSrc.startsWith('blob:') && imgSrc;
-
-  return `${queryParams}&wat_opacity=${opacity}&wat_scale=${toPrecisedFloat(
-    ((width * scaleX) / scaledWidth) * 100,
+  const watermarkRatio = width / height;
+  const watermarkScale = toPrecisedFloat(
+    (watermarkRatio > mainImageRatio
+      ? (width * scaleX) / scaledWidth
+      : (height * scaleY) / scaledHeight) * 100,
     2,
-  )}p,${toPrecisedFloat(((height * scaleY) / scaledHeight) * 100, 2)}p${
+  );
+
+  return `${queryParams}&wat_opacity=${opacity}&wat_scale=${watermarkScale}p${
     watermarkUrl ? `&wat_url=${encodeURIComponent(watermarkUrl)}` : ''
   }`;
 };

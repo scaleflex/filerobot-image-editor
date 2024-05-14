@@ -80,27 +80,26 @@ const Watermark = () => {
   };
 
   const addImgWatermark = (loadedImg) => {
-    const imgRatio = loadedImg.width / loadedImg.height;
-    const newImgDimensions = {};
-    if (layerHeight > layerWidth) {
-      const newImgScale =
-        (layerHeight * watermarkImageRatio) / loadedImg.height;
-      newImgDimensions.height = loadedImg.height * newImgScale;
-      newImgDimensions.width = newImgDimensions.height * imgRatio;
-    } else {
-      const newImgScale = (layerWidth * watermarkImageRatio) / loadedImg.width;
-      newImgDimensions.width = loadedImg.width * newImgScale;
-      newImgDimensions.height = newImgDimensions.width / imgRatio;
-    }
+    const imgWidth = loadedImg.naturalWidth || loadedImg.width;
+    const imgHeight = loadedImg.naturalHeight || loadedImg.height;
+    const newImgScale =
+      layerHeight > layerWidth
+        ? (layerHeight * watermarkImageRatio) / imgHeight
+        : (layerWidth * watermarkImageRatio) / imgWidth;
+    const x = layerCropX + layerWidth / 2 - (imgWidth * newImgScale) / 2;
+    const y = layerCropY + layerHeight / 2 - (imgHeight * newImgScale) / 2;
 
     const scaledWatermarkImg = {
       ...config.annotationsCommon,
       ...config[TOOLS_IDS.IMAGE],
-      ...newImgDimensions,
+      scaleX: newImgScale,
+      scaleY: newImgScale,
       padding: 1,
       image: loadedImg,
-      x: layerCropX + layerWidth / 2 - newImgDimensions.width / 2,
-      y: layerCropY + layerHeight / 2 - newImgDimensions.height / 2,
+      width: imgWidth,
+      height: imgHeight,
+      x,
+      y,
       id: WATERMARK_ANNOTATION_ID,
       name: TOOLS_IDS.IMAGE,
       replaceCurrent: true,
