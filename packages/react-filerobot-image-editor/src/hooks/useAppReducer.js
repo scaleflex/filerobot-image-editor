@@ -7,6 +7,15 @@ import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 
 let timeout;
 
+const applyModifyFn = (onModify, newState) => {
+  timeout = setTimeout(() => {
+    clearTimeout(timeout);
+    if (typeof onModify === 'function' && newState) {
+      onModify(newState);
+    }
+  });
+};
+
 /**
  * A normal react useReducer wrapped inside our own UNDO/REDO Reducer as middleware
  * for updating the UNDO/REDO states automatically
@@ -26,6 +35,7 @@ const useAppReducer = (reducer, initialState, passedConfig = {}) => {
     const newPresentState = reducer(state, action) || initialStateWithUndoRedo;
 
     if ([UNDO, REDO, RESET].includes(action.type)) {
+      applyModifyFn(passedConfig.onModify, newPresentState);
       return newPresentState;
     }
 
@@ -43,12 +53,7 @@ const useAppReducer = (reducer, initialState, passedConfig = {}) => {
         haveNotSavedChanges: true,
       };
 
-      timeout = setTimeout(() => {
-        clearTimeout(timeout);
-        if (typeof passedConfig.onModify === 'function') {
-          passedConfig.onModify(newState);
-        }
-      });
+      applyModifyFn(passedConfig.onModify, newState);
 
       return newState;
     }
