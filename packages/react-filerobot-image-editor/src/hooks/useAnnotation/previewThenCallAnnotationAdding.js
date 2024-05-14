@@ -56,6 +56,9 @@ const previewThenCallAnnotationAdding = (
   };
 
   const updateAnnotationPreview = (preparedBoundingRect, isShiftKeyPressed) => {
+    if (!latestAnnotationProps) {
+      return;
+    }
     const transformedAnnotation = dimensToProperAnnotationDimens(
       preparedBoundingRect,
       latestAnnotationProps.name,

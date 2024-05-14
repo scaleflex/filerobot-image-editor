@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { memo } from 'react';
+import React, { useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import ThemeProvider from '@scaleflex/ui/theme';
 
@@ -8,16 +8,11 @@ import App from 'components/App';
 import { AppProvider } from 'context';
 import defaultConfig from 'context/defaultConfig';
 import deepMerge from 'utils/deepMerge';
+import assignFinetuneNamesToKonva from 'utils/assignFinetuneNamesToKonva';
 import { FontsFaces, OverrideDefaultStyles } from './globalStyles';
 
 const AssemblyPoint = (props) => {
-  const { img, source, useCloudimage, cloudimage } = props;
-  // TODO: Remove this property from here after PROD. release
-  if (img) {
-    throw new Error(
-      '`img` is renamed to `source` please consider renaming it from your configurations.',
-    );
-  }
+  const { source, useCloudimage, cloudimage } = props;
   if (
     !source ||
     (typeof source !== 'string' && !(source instanceof HTMLImageElement))
@@ -33,6 +28,10 @@ const AssemblyPoint = (props) => {
       );
     }
   }
+
+  useEffect(() => {
+    assignFinetuneNamesToKonva();
+  }, [])
 
   const defaultAndProvidedConfigMerged = deepMerge(defaultConfig, props);
 
@@ -52,8 +51,6 @@ const AssemblyPoint = (props) => {
 AssemblyPoint.defaultProps = {
   useCloudimage: false,
   cloudimage: {},
-  // TODO: Remove this property from here after PROD. release
-  img: undefined,
 };
 
 AssemblyPoint.propTypes = {
@@ -63,13 +60,6 @@ AssemblyPoint.propTypes = {
     PropTypes.instanceOf(SVGImageElement),
     PropTypes.instanceOf(ImageBitmap),
   ]).isRequired,
-  // TODO: Remove this property from here after PROD. release
-  img: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(HTMLImageElement),
-    PropTypes.instanceOf(SVGImageElement),
-    PropTypes.instanceOf(ImageBitmap),
-  ]),
   useCloudimage: PropTypes.bool,
   cloudimage: PropTypes.instanceOf(Object),
 };

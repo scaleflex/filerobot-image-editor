@@ -230,6 +230,7 @@ const useTransformedImgData = () => {
     designLayer.setAttr('isSaving', false);
     dispatch({ type: SET_SAVED });
     imgNode.clearCache();
+    preparedCanvas.destroy();
 
     Konva.pixelRatio = previewPixelRatio;
 
