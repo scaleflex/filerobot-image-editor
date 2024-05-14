@@ -3,12 +3,13 @@ import React, { memo, useCallback, useEffect, useState, useRef } from 'react';
 
 /** Internal Dependencies */
 import MainCanvas from 'components/MainCanvas';
-import { ROOT_CONTAINER_CLASS_NAME, TOOLS_IDS } from 'utils/constants';
+import { ROOT_CONTAINER_CLASS_NAME } from 'utils/constants';
 import Topbar from 'components/Topbar';
 import Tabs from 'components/Tabs';
 import ToolsBar from 'components/ToolsBar';
 import {
   HIDE_LOADER,
+  RESET,
   SET_FEEDBACK,
   SET_ORIGINAL_IMAGE,
   SET_SHOWN_TABS_MENU,
@@ -29,6 +30,7 @@ import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
 import finetunesStrsToClasses from 'utils/finetunesStrsToClasses';
 import filterStrToClass from 'utils/filterStrToClass';
 import isSameImage from 'utils/isSameImage';
+import useUpdateEffect from 'hooks/useUpdateEffect';
 import TabsDrawer from 'components/TabsDrawer';
 import {
   StyledAppWrapper,
@@ -64,6 +66,7 @@ const App = () => {
     getCurrentImgDataFnRef,
     updateStateFnRef,
     noCrossOrigin,
+    resetOnImageSourceChange,
   } = config;
 
   const showTabsDrawer = window.matchMedia('(max-width: 760px)').matches;
@@ -75,7 +78,6 @@ const App = () => {
   });
   const isPhoneScreen = usePhoneScreen();
   const pluginRootRef = useRef(null);
-  const isFirstRender = useRef(true);
   const cloudimageQueryLoaded = useRef(false);
   const imageBeingLoadedSrc = useRef(null);
   // Hacky solution, For being used in beforeunload event
@@ -191,29 +193,30 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    if (
-      !isFirstRender.current &&
-      source &&
-      !isSameImage(source, originalImage)
-    ) {
+  useUpdateEffect(() => {
+    if (source && !isSameImage(source, originalImage)) {
       cloudimageQueryLoaded.current = false;
       handleLoading(() => [loadAndSetOriginalImage(source)]);
     }
+
+    if (resetOnImageSourceChange) {
+      dispatch({
+        type: RESET,
+        payload: { config },
+      });
+    }
   }, [source]);
 
-  useEffect(() => {
-    if (!isFirstRender.current) {
-      const newImgSrc = loadableDesignState?.imgSrc;
-      if (newImgSrc && !isSameImage(newImgSrc, originalImage)) {
-        handleLoading(() => [
-          loadAndSetOriginalImage(newImgSrc).then(
-            updateDesignStateWithLoadableOne,
-          ),
-        ]);
-      } else {
-        updateDesignStateWithLoadableOne();
-      }
+  useUpdateEffect(() => {
+    const newImgSrc = loadableDesignState?.imgSrc;
+    if (newImgSrc && !isSameImage(newImgSrc, originalImage)) {
+      handleLoading(() => [
+        loadAndSetOriginalImage(newImgSrc).then(
+          updateDesignStateWithLoadableOne,
+        ),
+      ]);
+    } else {
+      updateDesignStateWithLoadableOne();
     }
   }, [loadableDesignState]);
 
@@ -268,7 +271,6 @@ const App = () => {
     ];
 
     handleLoading(initialRequestsPromisesFn);
-    isFirstRender.current = false;
 
     if (window && !avoidChangesNotSavedAlertOnLeave) {
       window.addEventListener('beforeunload', promptDialogIfHasChangeNotSaved);

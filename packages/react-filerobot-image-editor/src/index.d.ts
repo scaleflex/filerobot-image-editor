@@ -354,6 +354,7 @@ export interface FilerobotImageEditorConfig {
   noCrossOrigin?: boolean;
   disableSaveIfNoChanges?: boolean;
   removeSaveButton?: boolean;
+  resetOnImageSourceChange?: boolean;
 }
 
 declare const FilerobotImageEditor: FunctionComponent<FilerobotImageEditorConfig>;

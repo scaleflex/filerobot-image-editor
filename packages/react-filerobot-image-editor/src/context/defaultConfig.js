@@ -135,4 +135,5 @@ export default {
   noCrossOrigin: false,
   disableSaveIfNoChanges: false,
   removeSaveButton: false,
+  resetOnImageSourceChange: false,
 };

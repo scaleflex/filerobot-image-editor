@@ -352,7 +352,7 @@ const config = {
   // onClose: () => console.log('Act closing 👅'), // if we have value then close button will be shown unless showBackButton is true then if onClose has value the back button will be shown otherwise nothing will be shown.
   // tabsIds: [TABS.ADJUST, TABS.WATERMARK],
   // savingPixelRatio: 4,
-  // previewPixelRatio: window.devicePixelRatio,
+  previewPixelRatio: window.devicePixelRatio * 4,
   // defaultTabId: TABS.ADJUST,
   // defaultToolId: TOOLS.CROP,
   // showBackButton: true,
@@ -381,6 +381,8 @@ const config = {
   // disableZooming: true,
   // noCrossOrigin: false,
   // removeSaveButton: true,
+  // disableSaveIfNoChanges: true,
+  resetOnImageSourceChange: true,
 };
 
 export default config;
