@@ -20,6 +20,7 @@ const ColorPickerModal = ({
   open,
   pinnedColors,
   onClose,
+  onApply,
 }) => {
   const { t } = useStore();
 
@@ -59,7 +60,7 @@ const ColorPickerModal = ({
         <Button color="basic" onClick={onClose}>
           {t('cancel')}
         </Button>
-        <Button color="primary" onClick={onClose}>
+        <Button color="primary" onClick={onApply}>
           {t('apply')}
         </Button>
       </Styled.ModalActions>
@@ -74,6 +75,7 @@ ColorPickerModal.defaultProps = {
   open: false,
   hideModalTitle: false,
   onClose: () => {},
+  onApply: () => {},
 };
 
 ColorPickerModal.propTypes = {
@@ -83,6 +85,7 @@ ColorPickerModal.propTypes = {
   hideModalTitle: PT.bool,
   pinnedColors: PT.arrayOf(PT.string),
   onClose: PT.func,
+  onApply: PT.func,
 };
 
 export default ColorPickerModal;

@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
@@ -28,6 +28,7 @@ const ColorInput = ({ onChange, color, colorFor }) => {
       ? JSON.parse(localStorage.getItem(pinnedColorsKey) || '[]')
       : [],
   );
+  const initialColor = useRef(currentColor);
 
   const changePinnedColors = (newPinnedColors) => {
     if (!window?.localStorage) {
@@ -67,6 +68,11 @@ const ColorInput = ({ onChange, color, colorFor }) => {
     setAnchorEl(anchorEl ? null : e.currentTarget);
   };
 
+  const closePicker = (e) => {
+    onChange(initialColor.current || currentColor);
+    togglePicker(e);
+  };
+
   useEffect(() => {
     const colorToSet = (selectionsIds.length === 0 && latestColor) || color;
     setCurrentColor(colorToSet);
@@ -87,7 +93,8 @@ const ColorInput = ({ onChange, color, colorFor }) => {
         defaultColor={currentColor}
         pinnedColors={pinnedColors}
         open={Boolean(anchorEl)}
-        onClose={togglePicker}
+        onClose={closePicker}
+        onApply={togglePicker}
       />
     </>
   );
