@@ -27,6 +27,7 @@ Types of changes:
 
 - If crop area is changed on the canvas, and then resized again to the original image's dimensions doesn't consider the dimensions properly.
 - Improving the `getCurrentImgDataFnRef` property by adding default values to some of the needed params inside to avoid rare issues.
+- `onModify` fn. wasn't called on changing the crop to the original area.
 
 ## v4.8.0 - 2024-05-14
 
