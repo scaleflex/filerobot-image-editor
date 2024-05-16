@@ -24,8 +24,8 @@ const useTransformedImgData = () => {
     designLayer,
     shownImageDimensions,
     originalImage,
-    resize,
-    adjustments: { crop, rotation = 0, isFlippedX, isFlippedY },
+    resize = {},
+    adjustments: { crop = {}, rotation = 0, isFlippedX, isFlippedY } = {},
     config: {
       savingPixelRatio,
       previewPixelRatio,
