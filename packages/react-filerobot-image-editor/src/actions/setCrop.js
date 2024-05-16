@@ -1,4 +1,3 @@
-import { ORIGINAL_CROP } from 'utils/constants';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
 
 export const SET_CROP = 'SET_CROP';
