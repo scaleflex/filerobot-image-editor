@@ -53,6 +53,7 @@ const deploy = (sassKey, uploadToSubFolder) => {
   console.log(
     `[Deploying]: Request to sub-folder (${uploadToSubFolder}) started... `,
   );
+  // TODO: The fetch fails while deploying, need to check why?
   fetch(uploadEndpoint, {
     method: 'POST',
     body: formData,
