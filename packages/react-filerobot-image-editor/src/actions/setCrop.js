@@ -20,24 +20,26 @@ const setCrop = (state, payload) => {
     noEffect: payload.noEffect,
   };
 
-  if (
-    oldCrop.x === newCrop.x &&
-    oldCrop.y === newCrop.y &&
-    (oldCrop.width === newCrop.width ||
-      (newCrop.width === toPrecisedFloat(state.shownImageDimensions.width) &&
-        !oldCrop.width !== null &&
-        newCrop.ratio !== ORIGINAL_CROP)) &&
-    (oldCrop.height === newCrop.height ||
-      (newCrop.height === toPrecisedFloat(state.shownImageDimensions.height) &&
-        oldCrop.height !== null &&
-        newCrop.ratio !== ORIGINAL_CROP)) &&
-    oldCrop.ratio === newCrop.ratio &&
-    oldCrop.ratioTitleKey === newCrop.ratioTitleKey &&
-    oldCrop.ratioGroupKey === newCrop.ratioGroupKey &&
-    oldCrop.ratioFolderKey === newCrop.ratioFolderKey
-  ) {
-    return state;
-  }
+  // Disabled as it wasn't allow to revert the crop area to the original image dimensions if changed before,
+  // let's remove this if no other issues arisen while being commented.
+  // if (
+  //   oldCrop.x === newCrop.x &&
+  //   oldCrop.y === newCrop.y &&
+  //   (oldCrop.width === newCrop.width ||
+  //     (newCrop.width === toPrecisedFloat(state.shownImageDimensions.width) &&
+  //       !oldCrop.width !== null &&
+  //       newCrop.ratio !== ORIGINAL_CROP)) &&
+  //   (oldCrop.height === newCrop.height ||
+  //     (newCrop.height === toPrecisedFloat(state.shownImageDimensions.height) &&
+  //       oldCrop.height !== null &&
+  //       newCrop.ratio !== ORIGINAL_CROP)) &&
+  //   oldCrop.ratio === newCrop.ratio &&
+  //   oldCrop.ratioTitleKey === newCrop.ratioTitleKey &&
+  //   oldCrop.ratioGroupKey === newCrop.ratioGroupKey &&
+  //   oldCrop.ratioFolderKey === newCrop.ratioFolderKey
+  // ) {
+  //   return state;
+  // }
 
   return {
     ...state,

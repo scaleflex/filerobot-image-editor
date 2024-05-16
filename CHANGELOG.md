@@ -16,10 +16,17 @@ Types of changes:
 - `Improved` for improvements done in existing functionality.
 
 > Date format: YYYY-MM-DD
-> If we have some "Breaking changes" we can mark it in message by `**BREAKING**` preffix, like:
+> If we have some "Breaking changes" we can mark it in message by `**BREAKING**` prefix, like:
 > `- **BREAKING**: Some message`
 
 ---
+
+## v4.8.1 - 2024-05-xx
+
+### Fixed
+
+- If crop area is changed on the canvas, and then resized again to the original image's dimensions doesn't consider the dimensions properly.
+- Improving the `getCurrentImgDataFnRef` property by adding default values to some of the needed params inside to avoid rare issues.
 
 ## v4.8.0 - 2024-05-14
 
