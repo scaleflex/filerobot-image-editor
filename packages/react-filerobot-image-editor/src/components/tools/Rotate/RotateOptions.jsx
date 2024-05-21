@@ -85,6 +85,13 @@ const RotateOptions = () => {
 
   return (
     <StyledRotationOptions>
+      <StyledRotateButton
+        size="sm"
+        color="basic"
+        onClick={(e) => changeRotation(e, rotation - 90)}
+      >
+        <Rotate90 width={15} />
+      </StyledRotateButton>
       <StyledRotationSlider
         className="FIE_rotate-slider"
         showCurrentMarkText
@@ -100,7 +107,7 @@ const RotateOptions = () => {
         color="basic"
         onClick={(e) => changeRotation(e, rotation + 90)}
       >
-        <Rotate90 width={15} />
+        <Rotate90 width={15} style={{ transform: 'scaleX(-1)' }} />
       </StyledRotateButton>
     </StyledRotationOptions>
   );

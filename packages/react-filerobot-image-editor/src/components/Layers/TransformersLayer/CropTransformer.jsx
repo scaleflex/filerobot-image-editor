@@ -58,8 +58,8 @@ const CropTransformer = () => {
 
   const saveCrop = ({ width, height, x, y }, noHistory) => {
     const newCrop = {
-      x: isFlippedX ? shownImageDimensions.width - x - width : x,
-      y: isFlippedY ? shownImageDimensions.height - y - height : y,
+      x,
+      y,
       width,
       height,
     };
@@ -230,8 +230,8 @@ const CropTransformer = () => {
 
   const { x = 0, y = 0, width, height } = attrs;
   const cropShapeProps = {
-    x: isFlippedX ? shownImageDimensions.width - x - width : x,
-    y: isFlippedY ? shownImageDimensions.height - y - height : y,
+    x,
+    y,
     ref: cropShapeRef,
     fill: '#FFFFFF',
     scaleX: 1,

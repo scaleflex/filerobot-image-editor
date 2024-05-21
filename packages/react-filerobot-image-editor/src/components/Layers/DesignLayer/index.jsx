@@ -221,8 +221,7 @@ const DesignLayer = () => {
   const xPointAfterCrop =
     xPointToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.width
-      ? (isFlippedX ? -1 : 1) *
-        (imageDimensions.width / 2 -
+      ? (imageDimensions.width / 2 -
           crop.x -
           crop.width / 2 +
           cropCenterRotatedPoint.x) *
@@ -232,8 +231,7 @@ const DesignLayer = () => {
   const yPointAfterCrop =
     yPointToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.height
-      ? (isFlippedY ? -1 : 1) *
-        (imageDimensions.height / 2 -
+      ? (imageDimensions.height / 2 -
           crop.y -
           crop.height / 2 +
           cropCenterRotatedPoint.y) *
@@ -244,14 +242,8 @@ const DesignLayer = () => {
 
   const yPoint = isCurrentlyCropping ? yPointNoResizeNoCrop : yPointAfterCrop;
 
-  const finalScaleX =
-    (isFlippedX ? -1 : 1) *
-    (isCurrentlyCropping ? 1 : resizedX) *
-    scaleAfterRotation;
-  const finalScaleY =
-    (isFlippedY ? -1 : 1) *
-    (isCurrentlyCropping ? 1 : resizedY) *
-    scaleAfterRotation;
+  const finalScaleX = (isCurrentlyCropping ? 1 : resizedX) * scaleAfterRotation;
+  const finalScaleY = (isCurrentlyCropping ? 1 : resizedY) * scaleAfterRotation;
 
   return (
     <Layer
@@ -294,6 +286,8 @@ const DesignLayer = () => {
         listening={false}
         filters={finetunesAndFilter}
         ref={imageNodeRef}
+        scaleX={isFlippedX ? -1 : 1}
+        scaleY={isFlippedY ? -1 : 1}
         {...finetunesProps}
       />
       <AnnotationNodes />

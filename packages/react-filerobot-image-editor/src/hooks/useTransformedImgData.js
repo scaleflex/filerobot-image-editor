@@ -25,7 +25,7 @@ const useTransformedImgData = () => {
     shownImageDimensions,
     originalImage,
     resize = {},
-    adjustments: { crop = {}, rotation = 0, isFlippedX, isFlippedY } = {},
+    adjustments: { crop = {}, rotation = 0 } = {},
     config: {
       savingPixelRatio,
       previewPixelRatio,
@@ -88,8 +88,8 @@ const useTransformedImgData = () => {
     const preparedCanvas = designLayer.getStage().clone({
       width: originalImage.width,
       height: originalImage.height,
-      scaleX: isFlippedX ? -1 : 1,
-      scaleY: isFlippedY ? -1 : 1,
+      scaleX: 1,
+      scaleY: 1,
     });
 
     const [preparedDesignLayer] = preparedCanvas.children; // children[0] = Design layer
@@ -159,8 +159,7 @@ const useTransformedImgData = () => {
     });
 
     if (size.width) {
-      const newScaleX =
-        (isFlippedX ? -1 : 1) * (size.width / preparedCanvas.width());
+      const newScaleX = size.width / preparedCanvas.width();
       preparedCanvas.setAttrs({
         scaleX: newScaleX,
         width: size.width,
@@ -168,8 +167,7 @@ const useTransformedImgData = () => {
       });
     }
     if (size.height) {
-      const newScaleY =
-        (isFlippedY ? -1 : 1) * (size.height / preparedCanvas.height());
+      const newScaleY = size.height / preparedCanvas.height();
       preparedCanvas.setAttrs({
         scaleY: newScaleY,
         height: size.height,

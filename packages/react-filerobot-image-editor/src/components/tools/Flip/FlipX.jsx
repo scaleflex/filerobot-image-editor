@@ -21,17 +21,22 @@ const FlipX = ({ selectTool, isSelected, t }) => {
 
   const isPhoneScreen = usePhoneScreen(320);
 
+  const getFlipIcon = useCallback(
+    () => (
+      <FlipXIcon
+        size={isPhoneScreen ? 20 : 16}
+        style={isFlippedX ? xFlipReverseSideStyle : undefined}
+      />
+    ),
+    [isFlippedX, isPhoneScreen],
+  );
+
   const { reverseLabelOfCurrXFlipDir, reverseIconOfCurrXFlipDir } = useMemo(
     () => ({
       reverseLabelOfCurrXFlipDir: isFlippedX ? t('unFlipX') : t('flipX'),
-      reverseIconOfCurrXFlipDir: () => (
-        <FlipXIcon
-          size={isPhoneScreen ? 20 : 16}
-          style={isFlippedX ? xFlipReverseSideStyle : undefined}
-        />
-      ),
+      reverseIconOfCurrXFlipDir: getFlipIcon,
     }),
-    [isFlippedX],
+    [isFlippedX, getFlipIcon],
   );
 
   const toggleFlipX = useCallback(() => {
