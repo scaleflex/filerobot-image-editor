@@ -38,6 +38,7 @@ import setSaved, { SET_SAVED } from './setSaved';
 import updateState, { UPDATE_STATE } from './updateState';
 import setLatestColor, { SET_LATEST_COLOR } from './setLatestColor';
 import setShowTabsMenu, { SET_SHOWN_TABS_MENU } from './setShowTabsMenu';
+import setSaving, { SET_SAVING } from './setSaving';
 
 export default {
   [SET_ORIGINAL_IMAGE]: setOriginalImage,
@@ -56,6 +57,7 @@ export default {
   [ENABLE_TEXT_CONTENT_EDIT]: enableTextContentEdit,
   [SET_LATEST_COLOR]: setLatestColor,
   [SET_SHOWN_TABS_MENU]: setShowTabsMenu,
+  [SET_SAVING]: setSaving,
   // Start of Design actions...
   [ADD_FILTER]: addFilter,
   [SET_FINETUNE]: setFinetune,
@@ -91,6 +93,7 @@ export {
   ENABLE_TEXT_CONTENT_EDIT,
   SET_LATEST_COLOR,
   SET_SHOWN_TABS_MENU,
+  SET_SAVING,
   // Start of Design actions...
   ADD_FILTER,
   SET_FINETUNE,

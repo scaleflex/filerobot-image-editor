@@ -136,4 +136,6 @@ export default {
   disableSaveIfNoChanges: false,
   removeSaveButton: false,
   resetOnImageSourceChange: false,
+  backgroundColor: undefined,
+  backgroundImage: undefined,
 };

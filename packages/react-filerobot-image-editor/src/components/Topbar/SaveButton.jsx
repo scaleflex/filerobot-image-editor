@@ -14,7 +14,7 @@ import {
   SUPPORTED_IMAGE_TYPES,
   DEFAULT_SAVE_QUALITY,
 } from 'utils/constants';
-import { HIDE_LOADER, SET_FEEDBACK, SHOW_LOADER } from 'actions';
+import { SET_FEEDBACK, SET_SAVING } from 'actions';
 import Modal from 'components/common/Modal';
 import Slider from 'components/common/Slider';
 import restrictNumber from 'utils/restrictNumber';
@@ -88,13 +88,17 @@ const SaveButton = () => {
       transformedData.designState,
     );
 
-    const hideLoadingSpinner = () => {
-      dispatch({ type: HIDE_LOADER });
+    const finalizeSaving = () => {
+      dispatch({
+        type: SET_SAVING,
+        payload: { isSaving: false },
+      });
     };
+
     if (savingResult instanceof Promise) {
-      savingResult.finally(hideLoadingSpinner);
+      savingResult.finally(finalizeSaving);
     } else {
-      hideLoadingSpinner();
+      finalizeSaving();
     }
 
     optionSaveFnRef.current = null;
@@ -104,7 +108,7 @@ const SaveButton = () => {
   };
 
   const startSaving = () => {
-    dispatch({ type: SHOW_LOADER });
+    dispatch({ type: SET_SAVING, payload: { isSaving: true } });
     setIsModalOpened(false);
     setTimeout(handleSave, 3);
   };

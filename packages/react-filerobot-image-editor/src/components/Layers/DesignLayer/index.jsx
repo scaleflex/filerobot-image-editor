@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, Layer } from 'react-konva';
+import { Image, Layer, Rect } from 'react-konva';
 
 /** Internal Dependencies */
 import getDimensionsMinimalRatio from 'utils/getDimensionsMinimalRatio';
@@ -33,7 +33,10 @@ const DesignLayer = () => {
     filter = null,
     adjustments: { rotation = 0, crop = {}, isFlippedX, isFlippedY } = {},
     resize,
+    isSaving,
+    config = {},
   } = useStore();
+  const { backgroundColor, backgroundImage } = config;
   const imageNodeRef = useRef();
   const previewGroupRef = useRef();
   const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
@@ -265,6 +268,20 @@ const DesignLayer = () => {
       rotation={isCurrentlyCropping ? 0 : rotation}
       clipFunc={clipFunc}
     >
+      {!isSaving && (
+        <Rect
+          x={isFlippedX ? scaledSpacedOriginalImg.width : 0}
+          y={isFlippedY ? scaledSpacedOriginalImg.height : 0}
+          fill={backgroundColor}
+          fillPatternImage={backgroundImage}
+          fillPatternRepeat="repeat"
+          width={scaledSpacedOriginalImg.width}
+          height={scaledSpacedOriginalImg.height}
+          listening={false}
+          scaleX={isFlippedX ? -1 : 1}
+          scaleY={isFlippedY ? -1 : 1}
+        />
+      )}
       <Image
         id={IMAGE_NODE_ID}
         image={originalImage}

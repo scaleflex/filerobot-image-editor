@@ -355,6 +355,8 @@ export interface FilerobotImageEditorConfig {
   disableSaveIfNoChanges?: boolean;
   removeSaveButton?: boolean;
   resetOnImageSourceChange?: boolean;
+  backgroundColor?: string;
+  backgroundImage?: HTMLImageElement;
 }
 
 declare const FilerobotImageEditor: FunctionComponent<FilerobotImageEditorConfig>;

@@ -1279,6 +1279,28 @@ If `true`, the save button get removed from the editor.
 
 If `true`, the editor will reset its design state & saved data on providing a new original image [source](#source).
 
+#### `backgroundColor`
+
+<u>Type:</u> `String`
+
+<u>Supported version:</u> +vx.x.x
+
+<u>Default:</u> undefined
+
+The color used as background for the canvas while the image is being edited and won't be considered in the final saved image.
+
+#### `backgroundImage`
+
+<u>Type:</u> `HTMLImageElement`
+
+<u>Supported version:</u> +vx.x.x
+
+<u>Default:</u> undefined
+
+An image that will be shown as background image of the canvas and will be repeated (x & y) and it will be disregarded on saving.
+
+> Note: if provided both `backgroundImage` & `backgroundColor`, the priority will be for `backgroundColor`.
+
 ### Callbacks
 
 #### `onBeforeSave`
@@ -1292,7 +1314,7 @@ If `true`, the editor will reset its design state & saved data on providing a ne
 This function will be fired once the user clicks save button and before triggering the default saving behavior...
 
 > If the function returned `false` then the default saving behavior implemented in the plugin won't be triggered.
->
+
 > This function doesn't work in ([`cloudimage mode`](#usecloudimage) & [`moreSaveOptions`](#moresaveoptions)) and the [`onSave`](#onsave) is fired directly.
 
 #### `onSave`
