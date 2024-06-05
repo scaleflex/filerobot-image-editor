@@ -26,7 +26,7 @@ Types of changes:
 
 Added
 - Rotate anti-clockwise button in rotation.
-- `backgroundColor` & `backgroundImage` params to be added as background for the canvas
+- `previewBgColor` & `previewBgImage` params to be added as background for the canvas
 Fixed
 - Resize issue on unlocking the ratio lock. -->
 
@@ -60,7 +60,7 @@ Fixed
 
 ### Added
 
-- `resetOnImageSourceChange` ([#357](https://github.com/scaleflex/filerobot-image-editor/issues/357)) - for resetting the image editor design data on changing the current original image source to edit.
+- `resetOnSourceChange` ([#357](https://github.com/scaleflex/filerobot-image-editor/issues/357)) - for resetting the image editor design data on changing the current original image source to edit.
 
 ## v4.7.1 - 2024-01-29
 

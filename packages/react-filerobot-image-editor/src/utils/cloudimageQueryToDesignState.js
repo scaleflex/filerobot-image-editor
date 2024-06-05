@@ -13,7 +13,7 @@ const propertyToOperation = (
   operation,
   value,
   shownImageDimensions = {},
-  originalImage = {},
+  originalSource = {},
 ) => {
   const lockCropAreaAt = CLOUDIMG_TO_EDITOR_POSITIONS[value];
   switch (operation) {
@@ -55,14 +55,14 @@ const propertyToOperation = (
           x: mapNumber(
             parseFloat(x),
             0,
-            originalImage.width,
+            originalSource.width,
             0,
             shownImageDimensions.width,
           ),
           y: mapNumber(
             parseFloat(y),
             0,
-            originalImage.height,
+            originalSource.height,
             0,
             shownImageDimensions.height,
           ),
@@ -75,14 +75,14 @@ const propertyToOperation = (
         cropX2: mapNumber(
           parseFloat(x),
           0,
-          originalImage.width,
+          originalSource.width,
           0,
           shownImageDimensions.width,
         ),
         cropY2: mapNumber(
           parseFloat(y),
           0,
-          originalImage.height,
+          originalSource.height,
           0,
           shownImageDimensions.height,
         ),
@@ -171,7 +171,7 @@ const propertyToOperation = (
 const cloudimageQueryToDesignState = (
   cloudimageQuery,
   shownImageDimensions,
-  originalImage,
+  originalSource,
 ) => {
   if (!cloudimageQuery) {
     return null;
@@ -184,7 +184,7 @@ const cloudimageQueryToDesignState = (
       operation,
       value,
       shownImageDimensions,
-      originalImage,
+      originalSource,
     );
     if (operationDesignStateObject) {
       designState = deepMerge(designState, operationDesignStateObject, true);

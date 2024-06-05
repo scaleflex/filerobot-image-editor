@@ -4,14 +4,15 @@ import { useReducer } from 'react';
 /** Internal Dependencies */
 import { REDO, RESET, UNDO } from 'actions';
 import extractCurrentDesignState from 'utils/extractCurrentDesignState';
+import isFunction from 'utils/isFunction';
 
 let timeout;
 
-const applyModifyFn = (onModify, newState) => {
+const applyCallbackFn = (callback, newState) => {
   timeout = setTimeout(() => {
     clearTimeout(timeout);
-    if (typeof onModify === 'function' && newState) {
-      onModify(newState);
+    if (isFunction(callback) && newState) {
+      callback(newState);
     }
   });
 };
@@ -35,7 +36,19 @@ const useAppReducer = (reducer, initialState, passedConfig = {}) => {
     const newPresentState = reducer(state, action) || initialStateWithUndoRedo;
 
     if ([UNDO, REDO, RESET].includes(action.type)) {
-      applyModifyFn(passedConfig.onModify, newPresentState);
+      let actionCallback;
+      if (action.type === UNDO) {
+        actionCallback = passedConfig.onUndo;
+      }
+      if (action.type === REDO) {
+        actionCallback = passedConfig.onRedo;
+      }
+      if (action.type === RESET) {
+        actionCallback = passedConfig.onReset;
+      }
+
+      applyCallbackFn(passedConfig.onModify, newPresentState);
+      applyCallbackFn(actionCallback, newPresentState);
       return newPresentState;
     }
 
@@ -53,7 +66,7 @@ const useAppReducer = (reducer, initialState, passedConfig = {}) => {
         haveNotSavedChanges: true,
       };
 
-      applyModifyFn(passedConfig.onModify, newState);
+      applyCallbackFn(passedConfig.onModify, newState);
 
       return newState;
     }

@@ -11,6 +11,9 @@ import toPrecisedFloat from 'react-filerobot-image-editor/src/utils/toPrecisedFl
 const { TOOLS } = FilerobotImageEditor;
 
 // const saveFnRef = {};
+// const img = new Image()
+// img.src = 'https://assets.filerobot.com/scaleflex/assets/chess-bg.png?vh=34'
+
 const cropFolderPresets = [
   {
     titleKey: 'socialMedia', // will be translated into Social Media as backend contains this translation key
@@ -382,9 +385,9 @@ const config = {
   // noCrossOrigin: false,
   // removeSaveButton: true,
   // disableSaveIfNoChanges: true,
-  resetOnImageSourceChange: true,
-  // backgroundColor: 'gray',
-  // backgroundImage: new Image(),
+  resetOnSourceChange: false,
+  // previewBgColor: 'gray',
+  // previewBgImage: img,
 };
 
 export default config;

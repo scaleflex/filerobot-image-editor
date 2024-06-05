@@ -1,6 +1,5 @@
 /** External Dependencies */
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { MinusOutline, PlusOutline } from '@scaleflex/icons';
 import Menu from '@scaleflex/ui/core/menu';
 import MenuItem, { MenuItemLabel } from '@scaleflex/ui/core/menu-item';
@@ -15,12 +14,12 @@ import {
   StyledSmallButton,
   StyledZoomPercentageLabel,
   StyledZoomingWrapper,
-} from './Topbar.styled';
-import { ZOOM_FACTORS_PRESETS } from './Topbar.constants';
+} from './ZoomButtons.styled';
+import { ZOOM_FACTORS_PRESETS } from './ZoomButtons.constants';
 
 const MULTIPLY_ZOOM_FACTOR = 1.1;
 
-const CanvasZooming = ({ showBackButton }) => {
+const ZoomButtons = (props) => {
   const {
     dispatch,
     zoom = {},
@@ -29,9 +28,9 @@ const CanvasZooming = ({ showBackButton }) => {
     t,
     shownImageDimensions,
     resize,
-    originalImage,
+    originalSource,
     adjustments: { crop },
-    config: { useZoomPresetsMenu },
+    config: { useZoomPresetsMenu, showBackButton },
   } = useStore();
   const isBlockerError = feedback.duration === 0;
   const [zoomingMenuAnchorEl, setZoomingMenuAnchorEl] = useState(null);
@@ -80,8 +79,8 @@ const CanvasZooming = ({ showBackButton }) => {
       resize.width || resize.height
         ? factor
         : Math.min(
-            (factor * originalImage.width) / shownImageDimensions.width,
-            (factor * originalImage.height) / shownImageDimensions.height,
+            (factor * originalSource.width) / shownImageDimensions.width,
+            (factor * originalSource.height) / shownImageDimensions.height,
           );
     saveZoom(factorToAchieveSelected, true);
     toggleZoomingMenu();
@@ -89,22 +88,23 @@ const CanvasZooming = ({ showBackButton }) => {
 
   const isZoomDisabled = toolId === TOOLS_IDS.CROP || isBlockerError;
   const previewToRealImgFactor =
-    originalImage && !resize.width && !resize.height
+    originalSource && !resize.width && !resize.height
       ? Math.min(
-          (shownImageDimensions.width * zoom.factor) / originalImage.width,
-          (shownImageDimensions.height * zoom.factor) / originalImage.height,
+          (shownImageDimensions.width * zoom.factor) / originalSource.width,
+          (shownImageDimensions.height * zoom.factor) / originalSource.height,
         )
       : zoom.factor;
 
   return (
-    <StyledZoomingWrapper>
+    <StyledZoomingWrapper className="FIE_buttons-zoom-btns" {...props}>
       <StyledSmallButton
         onClick={zoomOut}
         color="basic"
         title={t('zoomOutTitle')}
         disabled={isZoomDisabled}
+        // TODO: Check about showBackButton
         showBackButton={showBackButton}
-        className="FIE_topbar-zoom-out-btn"
+        className="FIE_buttons-zoom-out-btn"
       >
         <MinusOutline />
       </StyledSmallButton>
@@ -116,17 +116,18 @@ const CanvasZooming = ({ showBackButton }) => {
             : (useZoomPresetsMenu && toggleZoomingMenu) || fitCanvas
         }
         aria-disabled={isZoomDisabled}
-        className="FIE_topbar-zoom-label"
+        className="FIE_zoom_buttons-zoom-label"
       >
-        {`${toPrecisedFloat(previewToRealImgFactor * 100, 0)}%`}
+        {`${toPrecisedFloat(previewToRealImgFactor * 100, 0) || '100'}%`}
       </StyledZoomPercentageLabel>
       <StyledSmallButton
         onClick={zoomIn}
         color="basic"
         title={t('zoomInTitle')}
         disabled={isZoomDisabled}
+        // TODO: Check about showBackButton
         showBackButton={showBackButton}
-        className="FIE_topbar-zoom-in-btn"
+        className="FIE_buttons-zoom-in-btn"
       >
         <PlusOutline />
       </StyledSmallButton>
@@ -135,7 +136,7 @@ const CanvasZooming = ({ showBackButton }) => {
         onClose={toggleZoomingMenu}
         open={Boolean(zoomingMenuAnchorEl)}
         position="bottom"
-        className="FIE_topbar-zoom-menu"
+        className="FIE_buttons-zoom-menu"
       >
         {ZOOM_FACTORS_PRESETS.map(({ factor, labelKey, label }) => (
           <MenuItem
@@ -150,12 +151,4 @@ const CanvasZooming = ({ showBackButton }) => {
   );
 };
 
-CanvasZooming.defaultProps = {
-  showBackButton: false,
-};
-
-CanvasZooming.propTypes = {
-  showBackButton: PropTypes.bool,
-};
-
-export default CanvasZooming;
+export default ZoomButtons;

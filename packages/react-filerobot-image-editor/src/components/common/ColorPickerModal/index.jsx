@@ -14,13 +14,13 @@ import Styled from './ColorPickerModal.styled';
 const modalStyles = { zIndex: 1301 };
 
 const ColorPickerModal = ({
-  hideModalTitle,
+  hideModalTitle = false,
   defaultColor = '',
-  onChange,
-  open,
-  pinnedColors,
-  onClose,
-  onApply,
+  onChange = () => {},
+  open = false,
+  pinnedColors = [],
+  onClose = () => {},
+  onApply = () => {},
 }) => {
   const { t } = useStore();
 
@@ -66,16 +66,6 @@ const ColorPickerModal = ({
       </Styled.ModalActions>
     </Styled.ColorPickerModal>
   );
-};
-
-ColorPickerModal.defaultProps = {
-  defaultColor: '',
-  pinnedColors: [],
-  onChange: () => {},
-  open: false,
-  hideModalTitle: false,
-  onClose: () => {},
-  onApply: () => {},
 };
 
 ColorPickerModal.propTypes = {

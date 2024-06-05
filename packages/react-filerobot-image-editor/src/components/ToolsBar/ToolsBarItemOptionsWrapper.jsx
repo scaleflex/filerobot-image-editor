@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 /** Internal Dependencies */
 import { StyledToolsBarItemOptionsWrapper } from './ToolsBar.styled';
 
-const ToolsBarItemOptionsWrapper = ({ children, isPhoneScreen }) => (
+const ToolsBarItemOptionsWrapper = ({ children, isPhoneScreen = false }) => (
   <StyledToolsBarItemOptionsWrapper
     className="FIE_tool-options-wrapper"
     hasChildren={Boolean(children)}
@@ -14,11 +14,6 @@ const ToolsBarItemOptionsWrapper = ({ children, isPhoneScreen }) => (
     {children}
   </StyledToolsBarItemOptionsWrapper>
 );
-
-ToolsBarItemOptionsWrapper.defaultProps = {
-  children: undefined,
-  isPhoneScreen: false,
-};
 
 ToolsBarItemOptionsWrapper.propTypes = {
   children: PropTypes.node,

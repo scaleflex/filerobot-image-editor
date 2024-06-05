@@ -20,10 +20,15 @@ import {
   StyledResetButton,
 } from './Resize.styled';
 
-const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
+const Resize = ({
+  onChange,
+  currentSize = {},
+  hideResetButton = false,
+  alignment = 'center',
+}) => {
   const {
     dispatch,
-    originalImage,
+    originalSource,
     resize,
     shownImageDimensions,
     adjustments: { crop, rotation = 0 },
@@ -35,7 +40,7 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
     ((currentSize.width || currentSize.height) && currentSize) || resize,
     crop,
     shownImageDimensions,
-    originalImage,
+    originalSource,
     rotation,
   );
 
@@ -45,13 +50,13 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
       return;
     }
     const maxResizeNumber = Math.min(
-      originalImage.width * 10,
-      originalImage.height * 10,
+      originalSource.width * 10,
+      originalSource.height * 10,
     );
 
     const originalImgSizeAfterRotation = getSizeAfterRotation(
-      originalImage.width,
-      originalImage.height,
+      originalSource.width,
+      originalSource.height,
       rotation,
     );
 
@@ -144,8 +149,8 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
   const isOriginalSize =
     (typeof resize.width === 'undefined' &&
       typeof resize.height === 'undefined') ||
-    (originalImage.width === resize.width &&
-      originalImage.height === resize.height);
+    (originalSource.width === resize.width &&
+      originalSource.height === resize.height);
 
   const isManualChangeDisabled = resize.manualChangeDisabled;
   const isEmptyEditedWidth =
@@ -214,13 +219,6 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
       )}
     </StyledResizeWrapper>
   );
-};
-
-Resize.defaultProps = {
-  onChange: undefined,
-  currentSize: {},
-  hideResetButton: false,
-  alignment: 'center',
 };
 
 Resize.propTypes = {

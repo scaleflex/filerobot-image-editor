@@ -23,7 +23,7 @@ const useTransformedImgData = () => {
     dispatch,
     designLayer,
     shownImageDimensions,
-    originalImage,
+    originalSource,
     resize = {},
     adjustments: { crop = {}, rotation = 0 } = {},
     config: {
@@ -43,7 +43,7 @@ const useTransformedImgData = () => {
       cloudimage,
       designState,
       shownImageDimensions,
-      originalImage,
+      originalSource,
       cropConfig,
     );
     const mappedCropBox = mapCropBox(
@@ -54,7 +54,7 @@ const useTransformedImgData = () => {
         height: crop.height,
       },
       shownImageDimensions,
-      originalImage,
+      originalSource,
     );
 
     const imageData = {
@@ -86,8 +86,8 @@ const useTransformedImgData = () => {
     designLayer.setAttr('isSaving', true);
 
     const preparedCanvas = designLayer.getStage().clone({
-      width: originalImage.width,
-      height: originalImage.height,
+      width: originalSource.width,
+      height: originalSource.height,
       scaleX: 1,
       scaleY: 1,
     });
@@ -95,7 +95,7 @@ const useTransformedImgData = () => {
     const [preparedDesignLayer] = preparedCanvas.children; // children[0] = Design layer
     preparedCanvas.children[1].destroy(); // children[1] = Transformers layer, which is not needed anymore
     const imgNode = preparedCanvas.findOne(`#${IMAGE_NODE_ID}`);
-    imgNode.cache();
+    imgNode?.cache();
 
     const preparedDesignLayerScale = {
       x: preparedCanvas.width() / shownImageDimensions.width,
@@ -119,7 +119,7 @@ const useTransformedImgData = () => {
     } = {
       ...((!currentImgFileInfo.name || !currentImgFileInfo.extension) &&
         getFileFullName(
-          originalImage.name,
+          originalSource.name,
           forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
             ? 'png'
             : SUPPORTED_IMAGE_TYPES.includes(
@@ -175,7 +175,7 @@ const useTransformedImgData = () => {
       });
     }
 
-    // As jpg doesn't support quality proeprty but it still same as jpeg,
+    // As jpg doesn't support quality property but it still same as jpeg,
     // then we convert mime to image/jpeg and name the file with .jpg
     const finalOptions = {
       mimeType: `image/${extension === 'jpg' ? 'jpeg' : extension}`,
@@ -227,7 +227,7 @@ const useTransformedImgData = () => {
     // Reseting isSaving to false so we get everything back to normal if user wants to continue editing after saving.
     designLayer.setAttr('isSaving', false);
     dispatch({ type: SET_SAVED });
-    imgNode.clearCache();
+    imgNode?.clearCache();
     preparedCanvas.destroy();
 
     Konva.pixelRatio = previewPixelRatio;

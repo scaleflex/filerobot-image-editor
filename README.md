@@ -441,7 +441,7 @@ const { TABS, TOOLS } = VanillaFilerobotImageEditor;
 
 <u>Supported version:</u> +v4.0.0
 
-<u>Default:</u> `Adjust`
+<u>Default:</u> `null`
 
 The default opened tab once the user opens the plugin.
 
@@ -451,7 +451,7 @@ The default opened tab once the user opens the plugin.
 
 <u>Supported version:</u> +v4.0.0
 
-<u>Default:</u> first tool of the default opened tab.
+<u>Default:</u> `first tool of the default opened tab if found`.
 
 The default opened tool once the user opens the plugin, and must be one of the tools related to the opened tab.
 
@@ -1269,7 +1269,7 @@ If `true`, the save button will be disabled till the user does a change on the i
 
 If `true`, the save button get removed from the editor.
 
-#### `resetOnImageSourceChange`
+#### `resetOnSourceChange`
 
 <u>Type:</u> `Boolean`
 
@@ -1279,7 +1279,7 @@ If `true`, the save button get removed from the editor.
 
 If `true`, the editor will reset its design state & saved data on providing a new original image [source](#source).
 
-#### `backgroundColor`
+#### `previewBgColor`
 
 <u>Type:</u> `String`
 
@@ -1289,7 +1289,7 @@ If `true`, the editor will reset its design state & saved data on providing a ne
 
 The color used as background for the canvas while the image is being edited and won't be considered in the final saved image.
 
-#### `backgroundImage`
+#### `previewBgImage`
 
 <u>Type:</u> `HTMLImageElement`
 
@@ -1299,7 +1299,7 @@ The color used as background for the canvas while the image is being edited and 
 
 An image that will be shown as background image of the canvas and will be repeated (x & y) and it will be disregarded on saving.
 
-> Note: if provided both `backgroundImage` & `backgroundColor`, the priority will be for `backgroundColor`.
+> Note: if provided both `previewBgImage` & `previewBgColor`, the priority will be for `previewBgColor`.
 
 ### Callbacks
 
@@ -1355,6 +1355,9 @@ Triggered once the user clicks either close/cancel button or back button, if not
 
 - _`closingReason`_: A string value showcases the place/reason the plugin closed.
 - _`haveNotSavedChanges`_: A boolean value, true means the user has clicked the close button before saving latest changes otherwise he closed after saving.
+
+#### `onBack`
+<!-- Speciailized for back button -->
 
 <hr />
 

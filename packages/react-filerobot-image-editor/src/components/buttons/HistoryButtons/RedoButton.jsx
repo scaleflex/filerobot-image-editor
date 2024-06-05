@@ -1,14 +1,13 @@
 /** External Dependencies */
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import Redo from '@scaleflex/icons/redo';
 
 /** Internal Dependencies */
 import { REDO } from 'actions';
 import { useStore } from 'hooks';
-import { StyledHistoryButton } from './Topbar.styled';
+import { StyledHistoryButton } from './HistoryButtons.styled';
 
-const RedoButton = ({ margin }) => {
+const RedoButton = (props) => {
   const { dispatch, hasRedo = false, t } = useStore();
   const dispatchRedo = useCallback(() => {
     dispatch({ type: REDO });
@@ -16,25 +15,17 @@ const RedoButton = ({ margin }) => {
 
   return (
     <StyledHistoryButton
-      className="FIE_topbar-redo-button"
+      className="FIE_buttons-redo-btn"
       color="basic"
       size="sm"
       onClick={hasRedo ? dispatchRedo : undefined}
       disabled={!hasRedo}
       title={t('redoTitle')}
-      margin={margin}
+      {...props}
     >
       <Redo />
     </StyledHistoryButton>
   );
-};
-
-RedoButton.defaultProps = {
-  margin: undefined,
-};
-
-RedoButton.propTypes = {
-  margin: PropTypes.string,
 };
 
 export default RedoButton;

@@ -9,6 +9,17 @@ const MIN_ZOOM_FACTOR = 0.03;
 const MAX_ZOOM_FACTOR = 60;
 
 const zoomCanvas = (state, payload) => {
+  if (payload.resetZoom) {
+    return {
+      ...state,
+      zoom: {
+        factor: DEFAULT_ZOOM_FACTOR,
+        x: null,
+        y: null,
+      },
+    };
+  }
+
   const newZoomFactor = restrictNumber(
     parseFloat(payload.factor).toFixed(2),
     MIN_ZOOM_FACTOR,

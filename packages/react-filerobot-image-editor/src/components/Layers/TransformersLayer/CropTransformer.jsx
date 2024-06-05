@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React, { useEffect, useRef, useMemo } from 'react';
-import { Ellipse, Image, Rect, Transformer } from 'react-konva';
+import { Ellipse, Rect, Transformer } from 'react-konva';
 import Konva from 'konva';
 
 /** Internal Dependencies */
@@ -15,6 +15,7 @@ import {
 } from 'utils/constants';
 import { boundDragging, boundResizing } from './TransformersLayer.utils';
 import TextNode from '../DesignLayer/AnnotationNodes/TextNode';
+import LayerBackground from '../LayersBackground';
 
 let isFirstRenderCropUpdated = false;
 const noEffectTextDimensions = {
@@ -27,7 +28,7 @@ const CropTransformer = () => {
     dispatch,
     theme,
     designLayer,
-    originalImage,
+    originalSource,
     shownImageDimensions,
     adjustments: { crop = {}, isFlippedX, isFlippedY } = {},
     resize = {},
@@ -53,7 +54,7 @@ const CropTransformer = () => {
 
   const getProperCropRatio = () =>
     cropRatio === ORIGINAL_CROP
-      ? originalImage.width / originalImage.height
+      ? originalSource.width / originalSource.height
       : cropRatio;
 
   const saveCrop = ({ width, height, x, y }, noHistory) => {
@@ -132,7 +133,7 @@ const CropTransformer = () => {
         tmpImgNodeRef.current.clearCache();
       }
     };
-  }, [designLayer, originalImage, shownImageDimensions]);
+  }, [designLayer, originalSource, shownImageDimensions]);
 
   useEffect(() => {
     if (shownImageDimensionsRef.current) {
@@ -246,18 +247,17 @@ const CropTransformer = () => {
   // ALT is used to center scaling
   return (
     <>
-      <Image
-        image={originalImage}
-        x={isFlippedX ? shownImageDimensions.width : 0}
-        y={isFlippedY ? shownImageDimensions.height : 0}
+      <LayerBackground
         width={shownImageDimensions.width}
         height={shownImageDimensions.height}
-        filters={[Konva.Filters.Blur, Konva.Filters.Brighten]}
-        blurRadius={10}
-        brightness={-0.3}
-        scaleX={isFlippedX ? -1 : 1}
-        scaleY={isFlippedY ? -1 : 1}
-        ref={tmpImgNodeRef}
+        imageNodeRef={tmpImgNodeRef}
+        bgX={isFlippedX ? shownImageDimensions.width : 0}
+        bgY={isFlippedY ? shownImageDimensions.height : 0}
+        customFilters={[Konva.Filters.Blur, Konva.Filters.Brighten]}
+        customFinetuneProps={{
+          blurRadius: 10,
+          brightness: -0.3,
+        }}
       />
       {isEllipse ? (
         <Ellipse

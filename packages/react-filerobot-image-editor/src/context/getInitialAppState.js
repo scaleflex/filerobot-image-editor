@@ -70,8 +70,9 @@ const getInitialAppState = (config = {}) => {
     isResetted: !hasLoadableDesignState ?? true,
     haveNotSavedChanges: false,
     latestColors: {},
-    showTabsMenu: false,
+    showTabsNavbar: false,
     isSaving: false,
+    allOriginalSources: [],
   };
 };
 

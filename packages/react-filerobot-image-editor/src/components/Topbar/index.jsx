@@ -1,41 +1,50 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Menu } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { usePhoneScreen, useStore } from 'hooks';
-import { Menu } from '@scaleflex/icons';
-import CloseButton from './CloseButton';
-import SaveButton from './SaveButton';
-import ResetButton from './ResetButton';
-import UndoButton from './UndoButton';
-import RedoButton from './RedoButton';
+import { usePhoneScreen, useStore, useToggleTabsNavbar } from 'hooks';
+import {
+  CloseButton,
+  BackButton,
+  SaveButton,
+  HistoryButtons,
+} from 'components/buttons';
+import Separator from 'components/common/Separator';
 import ImageDimensionsAndDisplayToggle from './ImageDimensionsAndDisplayToggle';
 import {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
   StyledMainButtonsWrapper,
   StyledControlButtonsWrapper,
-  StyledHistoryButtons,
   StyledMenuIconButton,
 } from './Topbar.styled';
-import BackButton from './BackButton';
 
-const Topbar = ({ toggleMainMenu }) => {
+const Topbar = ({ onMainMenuButtonClick, ...props }) => {
+  const toggleTabsNavbar = useToggleTabsNavbar();
   const {
     config: { showBackButton },
   } = useStore();
 
   const isPhoneScreen = usePhoneScreen(320);
 
+  const handleOnMainMenuBtnClick = (event) => {
+    if (typeof onMainMenuButtonClick === 'function') {
+      onMainMenuButtonClick(event);
+    } else {
+      toggleTabsNavbar(true);
+    }
+  };
+
   return (
-    <StyledTopbar className="FIE_topbar" isPhoneScreen={isPhoneScreen}>
+    <StyledTopbar className="FIE_topbar" isPhoneScreen={isPhoneScreen} {...props}>
       <StyledMainButtonsWrapper className="FIE_topbar-buttons-wrapper">
         <StyledMenuIconButton
-          className="FIE_tabs_toggle_btn"
+          className="FIE_topbar-tabs-navbar-toggle_btn"
           size={isPhoneScreen ? 'sm' : 'lg'}
           color="basic"
-          onClick={() => toggleMainMenu(true)}
+          onClick={handleOnMainMenuBtnClick}
         >
           {(props) => <Menu {...props} />}
         </StyledMenuIconButton>
@@ -46,31 +55,27 @@ const Topbar = ({ toggleMainMenu }) => {
         className="FIE_topbar-center-options"
         showBackButton={showBackButton}
       >
-        <ImageDimensionsAndDisplayToggle
-          showBackButton={showBackButton}
-          isPhoneScreen={isPhoneScreen}
-        />
+        <ImageDimensionsAndDisplayToggle />
       </StyledFlexCenterAlignedContainer>
 
       <StyledControlButtonsWrapper>
-        <StyledHistoryButtons className="FIE_topbar-history-buttons">
-          <ResetButton margin="0" showBackButton={showBackButton} />
-          <UndoButton margin="0" showBackButton={showBackButton} />
-          <RedoButton margin="0" showBackButton={showBackButton} />
-        </StyledHistoryButtons>
+        <HistoryButtons />
 
-        {showBackButton ? <SaveButton /> : <CloseButton />}
+        {showBackButton
+          ? <SaveButton />
+          : (
+            <>
+              <Separator />
+              <CloseButton />
+            </>
+          )}
       </StyledControlButtonsWrapper>
     </StyledTopbar>
   );
 };
 
-Topbar.defaultProps = {
-  toggleMainMenu: () => {},
-};
-
 Topbar.propTypes = {
-  toggleMainMenu: PropTypes.func,
+  onMainMenuButtonClick: PropTypes.func,
 };
 
 export default Topbar;

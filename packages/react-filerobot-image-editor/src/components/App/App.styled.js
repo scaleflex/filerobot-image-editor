@@ -1,5 +1,4 @@
 /** External Dependencies */
-import { Drawer } from '@scaleflex/ui/core';
 import styled from 'styled-components';
 
 const StyledAppWrapper = styled.div.attrs(({ $size = {} }) => ({
@@ -56,39 +55,4 @@ const StyledCanvasAndTools = styled.div`
   `}
 `;
 
-const StyledTabs = styled.div`
-  min-width: 108px;
-  height: 100%;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  overflow-y: auto;
-  max-height: 100%;
-  box-shadow: 6px 8px 12px 0px rgba(146, 166, 188, 0.14);
-
-  [data-phone='true'] & {
-    display: flex;
-    padding: 0;
-  }
-`;
-
-const StyledDrawer = styled(Drawer)`
-  transition: transform 200ms ease-in-out;
-  width: 92px;
-  height: 100%;
-  padding: 12px;
-
-  .SfxDrawer-list,
-  .SfxDrawer-item {
-    padding: 0;
-  }
-`;
-
-export {
-  StyledAppWrapper,
-  StyledMainContent,
-  StyledCanvasAndTools,
-  StyledTabs,
-  StyledDrawer,
-};
+export { StyledAppWrapper, StyledMainContent, StyledCanvasAndTools };

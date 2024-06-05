@@ -92,8 +92,8 @@ export default {
     componentType: 'slider', // slider | buttons
   },
   tabsIds: [],
-  defaultTabId: TABS_IDS.ADJUST,
-  defaultToolId: TOOLS_IDS.CROP,
+  defaultTabId: null,
+  defaultToolId: null,
   onClose: undefined,
   onSave: undefined,
   onBeforeSave: undefined,
@@ -135,7 +135,7 @@ export default {
   noCrossOrigin: false,
   disableSaveIfNoChanges: false,
   removeSaveButton: false,
-  resetOnImageSourceChange: false,
-  backgroundColor: undefined,
-  backgroundImage: undefined,
+  resetOnSourceChange: false,
+  previewBgColor: undefined,
+  previewBgImage: undefined,
 };

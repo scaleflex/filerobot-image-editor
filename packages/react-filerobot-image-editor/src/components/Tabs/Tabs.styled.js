@@ -4,6 +4,23 @@ import Label from '@scaleflex/ui/core/label';
 import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 import { FontVariant as FV } from '@scaleflex/ui/utils/types/typography';
 
+const StyledTabs = styled.div`
+  min-width: 108px;
+  height: 100%;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  max-height: 100%;
+  box-shadow: 6px 8px 12px 0px rgba(146, 166, 188, 0.14);
+
+  [data-phone='true'] & {
+    display: flex;
+    padding: 0;
+  }
+`;
+
 const StyledTabItem = styled.div(
   ({ theme }) => `
     width: 72px;
@@ -63,4 +80,4 @@ const StyledTabItemLabel = styled(Label)(
 `,
 );
 
-export { StyledTabItem, StyledTabItemLabel };
+export { StyledTabs, StyledTabItem, StyledTabItemLabel };

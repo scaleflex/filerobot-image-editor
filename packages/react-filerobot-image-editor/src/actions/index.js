@@ -22,7 +22,7 @@ import setCrop, { SET_CROP } from './setCrop';
 import changeRotation, { CHANGE_ROTATION } from './changeRotation';
 import zoomCanvas, { ZOOM_CANVAS } from './zoomCanvas';
 import setCanvasSize, { SET_CANVAS_SIZE } from './setCanvasSize';
-import setOriginalImage, { SET_ORIGINAL_IMAGE } from './setOriginalImage';
+import setOriginalSource, { SET_ORIGINAL_SOURCE } from './setOriginalSource';
 import setShownImageDimensions, {
   SET_SHOWN_IMAGE_DIMENSIONS,
 } from './setShownImageDimensions';
@@ -37,11 +37,12 @@ import setResize, { SET_RESIZE } from './setResize';
 import setSaved, { SET_SAVED } from './setSaved';
 import updateState, { UPDATE_STATE } from './updateState';
 import setLatestColor, { SET_LATEST_COLOR } from './setLatestColor';
-import setShowTabsMenu, { SET_SHOWN_TABS_MENU } from './setShowTabsMenu';
+import toggleTabsNavbar, { TOGGLE_TABS_NAVBAR } from './toggleTabsNavbar';
 import setSaving, { SET_SAVING } from './setSaving';
+import replaceAnnotations, { REPLACE_ANNOTATIONS } from './replaceAnnotations';
 
 export default {
-  [SET_ORIGINAL_IMAGE]: setOriginalImage,
+  [SET_ORIGINAL_SOURCE]: setOriginalSource,
   [SET_FEEDBACK]: setFeedback,
   [SHOW_LOADER]: showLoader,
   [HIDE_LOADER]: hideLoader,
@@ -56,12 +57,13 @@ export default {
   [SET_SHOWN_IMAGE_DIMENSIONS]: setShownImageDimensions,
   [ENABLE_TEXT_CONTENT_EDIT]: enableTextContentEdit,
   [SET_LATEST_COLOR]: setLatestColor,
-  [SET_SHOWN_TABS_MENU]: setShowTabsMenu,
+  [TOGGLE_TABS_NAVBAR]: toggleTabsNavbar,
   [SET_SAVING]: setSaving,
   // Start of Design actions...
   [ADD_FILTER]: addFilter,
   [SET_FINETUNE]: setFinetune,
   [SET_ANNOTATION]: setAnnotation,
+  [REPLACE_ANNOTATIONS]: replaceAnnotations,
   [SET_CROP]: setCrop,
   [CHANGE_ROTATION]: changeRotation,
   [TOGGLE_FLIP]: toggleFlip,
@@ -77,7 +79,7 @@ export default {
 };
 
 export {
-  SET_ORIGINAL_IMAGE,
+  SET_ORIGINAL_SOURCE,
   SET_FEEDBACK,
   SHOW_LOADER,
   HIDE_LOADER,
@@ -92,12 +94,13 @@ export {
   SET_SHOWN_IMAGE_DIMENSIONS,
   ENABLE_TEXT_CONTENT_EDIT,
   SET_LATEST_COLOR,
-  SET_SHOWN_TABS_MENU,
+  TOGGLE_TABS_NAVBAR,
   SET_SAVING,
   // Start of Design actions...
   ADD_FILTER,
   SET_FINETUNE,
   SET_ANNOTATION,
+  REPLACE_ANNOTATIONS,
   SET_CROP,
   CHANGE_ROTATION,
   TOGGLE_FLIP,

@@ -57,10 +57,6 @@ const AppProvider = ({ children, config = {} }) => {
   );
 };
 
-AppProvider.defaultProps = {
-  config: {},
-};
-
 AppProvider.propTypes = {
   children: PropTypes.node.isRequired,
   config: PropTypes.instanceOf(Object),

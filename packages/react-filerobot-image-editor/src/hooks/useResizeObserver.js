@@ -43,13 +43,9 @@ const useResizeObserver = (onResize = () => {}) => {
     }
   }, []);
 
-  const unobserveElement = useCallback((element, newOnResizeCallback) => {
+  const unobserveElement = useCallback((element) => {
     if (resizeObserver.current && element) {
       resizeObserver.current.unobserve(element);
-
-      if (newOnResizeCallback) {
-        onResizeCallback.current = newOnResizeCallback;
-      }
     }
   }, []);
 

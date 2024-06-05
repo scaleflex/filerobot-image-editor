@@ -172,7 +172,7 @@ const operationsToCloudimageUrl = (
   cloudimage,
   operations,
   previewDimensions,
-  originalImage,
+  originalSource,
   cropConfig,
 ) => {
   const {
@@ -208,13 +208,13 @@ const operationsToCloudimageUrl = (
     (crop.y || crop.y === 0)
   ) {
     operationsQueries.push(
-      generateCropQuery(crop, previewDimensions, originalImage, cropConfig),
+      generateCropQuery(crop, previewDimensions, originalSource, cropConfig),
     );
   }
 
   if (resize.width || resize.height) {
     operationsQueries.push(
-      generateResizeQuery({ ...originalImage, ...resize }),
+      generateResizeQuery({ ...originalSource, ...resize }),
     );
   }
 

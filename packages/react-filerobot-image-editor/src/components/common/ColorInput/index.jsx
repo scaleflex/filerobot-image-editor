@@ -100,10 +100,6 @@ const ColorInput = ({ onChange, color, colorFor }) => {
   );
 };
 
-ColorInput.defaultProps = {
-  color: undefined,
-};
-
 ColorInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   colorFor: PropTypes.string.isRequired,

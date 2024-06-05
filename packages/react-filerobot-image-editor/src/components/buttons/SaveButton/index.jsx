@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import MenuItem from '@scaleflex/ui/core/menu-item';
 import { Image2 } from '@scaleflex/icons';
 import Label from '@scaleflex/ui/core/label';
@@ -26,7 +27,7 @@ import {
   StyledQualityWrapper,
   StyledResizeOnSave,
   StyledResizeOnSaveLabel,
-} from './Topbar.styled';
+} from './SaveButton.styled';
 
 const sliderStyle = { marginBottom: 16 };
 const saveButtonWrapperStyle = { minWidth: 67, width: 'fit-content' }; // 67px same width as tabs bar
@@ -34,13 +35,19 @@ const saveButtonMenuStyle = { marginLeft: 12 };
 
 let isFieSaveMounted = true;
 
-const SaveButton = () => {
+const SaveButton = ({
+  onSave,
+  defaultName,
+  saveLabel,
+  modalProps = {},
+  ...props
+}) => {
   const state = useStore();
   const optionSaveFnRef = useRef();
   const {
     theme,
     dispatch,
-    originalImage,
+    originalSource,
     resize,
     isLoadingGlobally,
     haveNotSavedChanges,
@@ -52,7 +59,7 @@ const SaveButton = () => {
       onClose,
       closeAfterSave,
       onBeforeSave,
-      onSave,
+      onSave: configOnSave,
       forceToPngInEllipticalCrop,
       defaultSavedImageName,
       defaultSavedImageType,
@@ -82,7 +89,7 @@ const SaveButton = () => {
 
   const handleSave = () => {
     const transformedData = transformImgFn(imageFileInfo, false, true);
-    const onSaveFn = optionSaveFnRef.current || onSave;
+    const onSaveFn = optionSaveFnRef.current || onSave || configOnSave;
     const savingResult = onSaveFn(
       transformedData.imageData,
       transformedData.designState,
@@ -114,10 +121,12 @@ const SaveButton = () => {
   };
 
   const validateInfoThenSave = () => {
-    const onSaveFn = optionSaveFnRef.current || onSave;
+    const onSaveFn = optionSaveFnRef.current || onSave || configOnSave;
     if (typeof onSaveFn !== 'function') {
-      throw new Error('Please provide onSave function handler.');
+      console.error('Please provide onSave function handler.');
+      return;
     }
+
     if (!imageFileInfo.name || !imageFileInfo.extension) {
       dispatch({
         type: SET_FEEDBACK,
@@ -155,7 +164,7 @@ const SaveButton = () => {
 
     if (useCloudimage) {
       const transformedCloudimageData = transformImgFn(imageFileInfo);
-      const onSaveFn = optionSaveFnRef.current || onSave;
+      const onSaveFn = optionSaveFnRef.current || onSave || configOnSave;
       onSaveFn(
         transformedCloudimageData.imageData,
         transformedCloudimageData.designState,
@@ -190,7 +199,7 @@ const SaveButton = () => {
       optionSaveFnRef.current = saveFn;
       fnToTrigger();
     } else {
-      throw new Error(
+      console.error(
         'onSave function callback is required as an argument to the passed function.',
       );
     }
@@ -198,7 +207,7 @@ const SaveButton = () => {
 
   const setFileNameAndExtension = () => {
     const { name, extension } = getFileFullName(
-      defaultSavedImageName || originalImage.name,
+      defaultSavedImageName || originalSource.name || defaultName,
       forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
         ? 'png'
         : SUPPORTED_IMAGE_TYPES.includes(
@@ -210,13 +219,13 @@ const SaveButton = () => {
   };
 
   useEffect(() => {
-    if (originalImage) {
+    if (originalSource) {
       setFileNameAndExtension();
     }
-  }, [originalImage]);
+  }, [originalSource]);
 
   useEffect(() => {
-    if (originalImage && (!imageFileInfo.name || !imageFileInfo.extension)) {
+    if (originalSource && (!imageFileInfo.name || !imageFileInfo.extension)) {
       setFileNameAndExtension();
     }
   }, [isModalOpened]);
@@ -267,12 +276,12 @@ const SaveButton = () => {
   return (
     <>
       <ButtonWithMenu
-        className="FIE_topbar-save"
+        className="FIE_buttons-save-btn"
         color="primary"
         onClick={triggerSaveHandler}
         menuPosition="bottom"
         menuFromBtn
-        label={menuItems.length > 0 ? t('saveAs') : t('save')}
+        label={saveLabel || (menuItems.length > 0 ? t('saveAs') : t('save'))}
         menuItems={menuItems}
         menuStyle={saveButtonMenuStyle}
         wrapperStyle={saveButtonWrapperStyle}
@@ -282,14 +291,15 @@ const SaveButton = () => {
           isBlockerError
         }
         noMargin
+        {...props}
       />
       {isModalOpened && (
         <Modal
           className="FIE_save-modal"
           title={t('saveAsModalTitle')}
           // eslint-disable-next-line react/no-unstable-nested-components
-          Icon={(props) => (
-            <Image2 color={theme.palette['accent-primary']} {...props} />
+          Icon={(iconProps) => (
+            <Image2 color={theme.palette['accent-primary']} {...iconProps} />
           )}
           isOpened={isModalOpened}
           onCancel={cancelModal}
@@ -299,6 +309,7 @@ const SaveButton = () => {
           doneButtonColor="primary"
           areButtonsDisabled={isLoadingGlobally}
           zIndex={11110}
+          {...modalProps}
         >
           <StyledFileNameInput
             className="FIE_save-file-name-input"
@@ -356,6 +367,13 @@ const SaveButton = () => {
       )}
     </>
   );
+};
+
+SaveButton.propTypes = {
+  onSave: PropTypes.func,
+  modalProps: PropTypes.instanceOf(Object),
+  defaultName: PropTypes.string,
+  saveLabel: PropTypes.string,
 };
 
 export default SaveButton;

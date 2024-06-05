@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, Layer, Rect } from 'react-konva';
+import { Layer } from 'react-konva';
 
 /** Internal Dependencies */
 import getDimensionsMinimalRatio from 'utils/getDimensionsMinimalRatio';
@@ -13,6 +13,7 @@ import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import getCenterRotatedPoint from 'utils/getCenterRotatedPoint';
 import AnnotationNodes from './AnnotationNodes';
 import PreviewGroup from './PreviewGroup';
+import LayersBackground from '../LayersBackground';
 
 const CANVAS_TO_IMG_SPACING = getProperImageToCanvasSpacing();
 const MIN_SPACED_WIDTH = 10; // As sometimes the spaced width is less than that and it might be hard to view the image initially.
@@ -27,42 +28,35 @@ const DesignLayer = () => {
     dispatch,
     toolId,
     canvasScale,
-    originalImage = {},
-    finetunes = [],
-    finetunesProps = {},
-    filter = null,
-    adjustments: { rotation = 0, crop = {}, isFlippedX, isFlippedY } = {},
+    originalSource = {},
+    adjustments: { rotation = 0, crop = {} } = {},
     resize,
-    isSaving,
-    config = {},
   } = useStore();
-  const { backgroundColor, backgroundImage } = config;
   const imageNodeRef = useRef();
   const previewGroupRef = useRef();
   const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
 
-  const finetunesAndFilter = useMemo(
-    () => (filter ? [...finetunes, filter] : finetunes),
-    [finetunes, filter],
-  );
-
   const spacedOriginalImg = useMemo(() => {
     const spacedWidth = Math.max(
       MIN_SPACED_WIDTH,
-      originalImage.width - CANVAS_TO_IMG_SPACING,
+      originalSource.width - CANVAS_TO_IMG_SPACING,
     );
-    const imgRatio = originalImage.width / originalImage.height;
+    const imgRatio = originalSource.width / originalSource.height;
 
     return {
       width: spacedWidth,
       height: spacedWidth / imgRatio,
     };
-  }, [originalImage]);
+  }, [originalSource]);
 
   const originalImgSizeAfterRotation = useMemo(
     () =>
-      getSizeAfterRotation(originalImage.width, originalImage.height, rotation),
-    [originalImage, rotation],
+      getSizeAfterRotation(
+        originalSource.width,
+        originalSource.height,
+        rotation,
+      ),
+    [originalSource, rotation],
   );
 
   const originalImgInitialScale = useMemo(
@@ -70,10 +64,10 @@ const DesignLayer = () => {
       getDimensionsMinimalRatio(
         initialCanvasWidth,
         initialCanvasHeight,
-        originalImage.width,
-        originalImage.height,
+        originalSource.width,
+        originalSource.height,
       ),
-    [originalImage, initialCanvasWidth, initialCanvasHeight],
+    [originalSource, initialCanvasWidth, initialCanvasHeight],
   );
 
   const scaledSpacedOriginalImg = useMemo(
@@ -184,14 +178,14 @@ const DesignLayer = () => {
     : 1;
 
   useEffect(() => {
-    if (originalImage) {
+    if (originalSource) {
       cacheImageNode();
     }
 
     return () => {
       imageNodeRef.current?.clearCache();
     };
-  }, [originalImage]);
+  }, [originalSource]);
 
   useEffect(() => {
     if (imageDimensions) {
@@ -260,35 +254,11 @@ const DesignLayer = () => {
       rotation={isCurrentlyCropping ? 0 : rotation}
       clipFunc={clipFunc}
     >
-      {!isSaving && (
-        <Rect
-          x={isFlippedX ? scaledSpacedOriginalImg.width : 0}
-          y={isFlippedY ? scaledSpacedOriginalImg.height : 0}
-          fill={backgroundColor}
-          fillPatternImage={backgroundImage}
-          fillPatternRepeat="repeat"
-          width={scaledSpacedOriginalImg.width}
-          height={scaledSpacedOriginalImg.height}
-          listening={false}
-          scaleX={isFlippedX ? -1 : 1}
-          scaleY={isFlippedY ? -1 : 1}
-        />
-      )}
-      <Image
-        id={IMAGE_NODE_ID}
-        image={originalImage}
+      <LayersBackground
         width={scaledSpacedOriginalImg.width}
         height={scaledSpacedOriginalImg.height}
-        offsetX={scaledSpacedOriginalImg.width / 2}
-        offsetY={scaledSpacedOriginalImg.height / 2}
-        x={scaledSpacedOriginalImg.width / 2}
-        y={scaledSpacedOriginalImg.height / 2}
-        listening={false}
-        filters={finetunesAndFilter}
-        ref={imageNodeRef}
-        scaleX={isFlippedX ? -1 : 1}
-        scaleY={isFlippedY ? -1 : 1}
-        {...finetunesProps}
+        imageNodeRef={imageNodeRef}
+        originalSourceId={IMAGE_NODE_ID}
       />
       <AnnotationNodes />
       <PreviewGroup ref={previewGroupRef} />

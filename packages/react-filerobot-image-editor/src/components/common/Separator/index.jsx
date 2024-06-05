@@ -5,14 +5,9 @@ import PropTypes from 'prop-types';
 /** Internal Dependencies */
 import { StyledSeparator } from './Separator.styled';
 
-const Separator = ({ height, width }) => (
+const Separator = ({ height = '24px', width = '1px' }) => (
   <StyledSeparator height={height} width={width} />
 );
-
-Separator.defaultProps = {
-  height: '24px',
-  width: '1px',
-};
 
 Separator.propTypes = {
   height: PropTypes.string,

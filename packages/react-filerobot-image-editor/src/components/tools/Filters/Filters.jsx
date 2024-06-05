@@ -10,7 +10,7 @@ import { AVAILABLE_FILTERS } from './Filters.constants';
 const style = { maxWidth: '100%', width: '100%' };
 
 const Filters = () => {
-  const { originalImage } = useStore();
+  const { originalSource } = useStore();
   const [appliedFilter, applyFilter] = useFilter();
 
   return (
@@ -22,7 +22,7 @@ const Filters = () => {
           filterFn={filter.filterFn}
           applyFilter={applyFilter}
           isActive={appliedFilter === filter.filterFn}
-          image={originalImage}
+          image={originalSource}
         />
       ))}
     </Carousel>

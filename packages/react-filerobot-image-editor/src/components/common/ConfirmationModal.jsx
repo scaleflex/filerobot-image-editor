@@ -2,6 +2,7 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Warning } from '@scaleflex/icons';
+import { useTheme } from '@scaleflex/ui/theme/hooks';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
@@ -9,10 +10,14 @@ import { RESET } from 'actions';
 import Modal from 'components/common/Modal';
 import { CLOSING_REASONS } from 'utils/constants';
 
-const ConfirmationModal = ({ children, isReset }) => {
+const WarningIcon = () => {
+  const theme = useTheme();
+  return <Warning color={theme.palette.warning} size={25} />;
+};
+
+const ConfirmationModal = ({ children, isReset = false }) => {
   const {
     t,
-    theme,
     config,
     dispatch,
     isResetted = true,
@@ -21,8 +26,6 @@ const ConfirmationModal = ({ children, isReset }) => {
   } = useStore();
 
   const [isModalOpened, setIsModalOpened] = useState(false);
-
-  const WarningIcon = () => <Warning color={theme.palette.warning} size={25} />;
 
   //   Hacky solution for avoiding (zoom & image info) components go to right if we have no close button.
   if (typeof onClose !== 'function' && !isReset) {
@@ -76,10 +79,6 @@ const ConfirmationModal = ({ children, isReset }) => {
       )}
     </>
   );
-};
-
-ConfirmationModal.defaultProps = {
-  isReset: false,
 };
 
 ConfirmationModal.propTypes = {

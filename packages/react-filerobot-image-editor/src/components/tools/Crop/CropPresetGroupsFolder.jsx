@@ -66,7 +66,7 @@ const CropPresetGroupsFolder = ({
             disableHover: true,
           })),
           subMenuProps: {
-            style: { backgroundColor: theme.palette[PC.BackgroundStateless] },
+            style: { previewBgColor: theme.palette[PC.BackgroundStateless] },
           },
         },
       ]}

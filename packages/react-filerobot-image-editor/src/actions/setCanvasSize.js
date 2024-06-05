@@ -19,13 +19,13 @@ const setCanvasSize = (state, payload) => {
   // const restrictedWidth = restrictNumber(
   //   payload.canvasWidth,
   //   0,
-  //   state.originalImage.width
+  //   state.originalSource.width
   // );
 
   // const restrictedHeight = restrictNumber(
   //   payload.canvasHeight,
   //   0,
-  //   state.originalImage.height
+  //   state.originalSource.height
   // );
 
   const {
@@ -33,25 +33,25 @@ const setCanvasSize = (state, payload) => {
     initialCanvasHeight = payload.canvasHeight,
   } = state;
 
-  const originalImageInitialScale = getDimensionsMinimalRatio(
+  const originalSourceInitialScale = getDimensionsMinimalRatio(
     state.initialCanvasWidth,
     state.initialCanvasHeight,
-    state.originalImage.width,
-    state.originalImage.height,
+    state.originalSource.width,
+    state.originalSource.height,
   );
-  const originalImageInitialResizedWidth =
-    originalImageInitialScale * state.originalImage.width;
-  const originalImageInitialResizedHeight =
-    originalImageInitialScale * state.originalImage.height;
+  const originalSourceInitialResizedWidth =
+    originalSourceInitialScale * state.originalSource.width;
+  const originalSourceInitialResizedHeight =
+    originalSourceInitialScale * state.originalSource.height;
 
   let scale = 1;
   if (
     initialCanvasWidth !== payload.canvasWidth ||
     initialCanvasHeight !== payload.canvasHeight
   ) {
-    const widthScale = payload.canvasWidth / originalImageInitialResizedWidth;
+    const widthScale = payload.canvasWidth / originalSourceInitialResizedWidth;
     const heightScale =
-      payload.canvasHeight / originalImageInitialResizedHeight;
+      payload.canvasHeight / originalSourceInitialResizedHeight;
     scale = Math.min(widthScale, heightScale);
   }
 

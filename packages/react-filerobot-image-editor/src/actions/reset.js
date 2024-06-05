@@ -8,7 +8,11 @@ const reset = (state, payload) => {
   const resettedDesignState = extractCurrentDesignState(
     {
       ...payload.config,
-      imgSrc: state.imgSrc,
+      imgSrc:
+        (state.allOriginalSources[0] || state.originalSource).src ||
+        state.imgSrc,
+      bgColor: (state.allOriginalSources[0] || state.originalSource).bgColor,
+      originalSource: state.allOriginalSources[0] || state.originalSource,
     },
     true,
   );

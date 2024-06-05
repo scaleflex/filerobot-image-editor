@@ -60,13 +60,13 @@
     "lerna-update-wizard": "1.1.2",
     "prettier": "^2.8.8",
     "prettier-eslint-cli": "^7.1.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-konva": "18.2.7",
     "rimraf": "^5.0.0",
     "rollup-plugin-uglify": "^6.0.4",
     "source-map-explorer": "^2.5.2",
-    "styled-components": "5.3.10",
+    "styled-components": "^5.3.10",
     "vite": "^2.8.6"
   },
   "scripts": {

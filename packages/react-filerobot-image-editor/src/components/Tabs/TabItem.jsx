@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 /** Internal Dependencies */
 import { StyledTabItem, StyledTabItemLabel } from './Tabs.styled';
 
-const TabItem = ({ id, label, Icon, isSelected, onClick }) => {
+const TabItem = ({ id, label, Icon, isSelected = false, onClick }) => {
   const handleClick = useCallback(() => {
     if (typeof onClick === 'function') {
       onClick(id);
@@ -26,12 +26,6 @@ const TabItem = ({ id, label, Icon, isSelected, onClick }) => {
       )}
     </StyledTabItem>
   );
-};
-
-TabItem.defaultProps = {
-  isSelected: false,
-  onClick: undefined,
-  label: undefined,
 };
 
 TabItem.propTypes = {

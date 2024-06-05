@@ -1,53 +1,47 @@
 /** External Dependencies */
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   DrawerBody,
   DrawerHeader,
   DrawerList,
+  DrawerItem,
 } from '@scaleflex/ui/core/drawer';
 import { Menu } from '@scaleflex/icons';
 import { Button } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
-import { useStore } from 'hooks';
-import { StyledDrawer } from 'components/App/App.styled';
-import Tabs from 'components/Tabs';
+import { useStore, useToggleTabsNavbar } from 'hooks';
+import Tabs from 'components/Tabs/Tabs';
+import { StyledTabsDrawer } from './TabsDrawer.styled';
 
-const TabsDrawer = ({ toggleMainMenu }) => {
-  const { t, showTabsMenu } = useStore();
+const TabsDrawer = (props) => {
+  const toggleTabsNavbar = useToggleTabsNavbar();
+  const { t, showTabsNavbar } = useStore();
 
   return (
-    <StyledDrawer
+    <StyledTabsDrawer
       className="FIE_tabs-drawer"
-      open={showTabsMenu}
-      onClose={() => toggleMainMenu(false)}
+      open={showTabsNavbar}
+      onClose={() => toggleTabsNavbar(false)}
       disablePortal
+      {...props}
     >
       <DrawerHeader>
         <Button
           color="link-basic-secondary"
           startIcon={<Menu />}
-          onClick={() => toggleMainMenu(false)}
+          onClick={() => toggleTabsNavbar(false)}
         >
           {t('tabsMenu')}
         </Button>
       </DrawerHeader>
       <DrawerBody>
         <DrawerList>
-          <Tabs toggleMainMenu={toggleMainMenu} isDrawer />
+          <Tabs TabItemWrapper={DrawerItem} />
         </DrawerList>
       </DrawerBody>
-    </StyledDrawer>
+    </StyledTabsDrawer>
   );
-};
-
-TabsDrawer.defaultProps = {
-  toggleMainMenu: () => {},
-};
-
-TabsDrawer.propTypes = {
-  toggleMainMenu: PropTypes.func,
 };
 
 export default TabsDrawer;

@@ -143,10 +143,6 @@ const Carousel = ({ children, style, className }) => {
   );
 };
 
-Carousel.defaultProps = {
-  style: null,
-};
-
 Carousel.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string.isRequired,

@@ -1,19 +1,45 @@
 /** External Dependencies */
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { DesignLayer, TransformersLayer } from 'components/Layers';
-import { AppProviderOverridenValue } from 'context';
+import { AppProviderOverriddenValue } from 'context';
 import { SET_CANVAS_SIZE } from 'actions';
-import { useResizeObserver, useStore } from 'hooks';
+import { useResizeObserver, useStore, useLoadMainSource } from 'hooks';
 import NodeControls from 'components/NodeControls';
+import FeedbackPopup from 'components/FeedbackPopup';
+import Spinner from 'components/common/Spinner';
 import CanvasNode from './CanvasNode';
-import { CanvasContainer, StyledOrignalImage } from './MainCanvas.styled';
+import { CanvasContainer, StyledOriginalImage } from './MainCanvas.styled';
 
-const MainCanvas = () => {
-  const [observeResize] = useResizeObserver();
-  const providedAppContext = useStore();
+const MainCanvas = ({
+  onPluginRootResize,
+  pluginRootRef,
+  source,
+  previewBgColor,
+  previewBgImage,
+  resetOnSourceChange,
+  ...props
+}) => {
+  const [observeResize, unobserveElement] = useResizeObserver();
+  const currentAppContextData = useStore();
   const canvasContainerRef = useRef(null);
+  useLoadMainSource({
+    sourceToLoad: source,
+    resetOnSourceChange,
+    onPluginRootResize,
+    pluginRootRef,
+  });
+
+  const providedAppContext = useMemo(
+    () => ({
+      ...currentAppContextData,
+      previewBgColor: previewBgColor || currentAppContextData.previewBgColor,
+      previewBgImage: previewBgImage || currentAppContextData.previewBgImage,
+    }),
+    [currentAppContextData, previewBgColor, previewBgImage],
+  );
 
   const setNewCanvasSize = useCallback(
     ({ width: containerWidth, height: containerHeight }) => {
@@ -29,26 +55,78 @@ const MainCanvas = () => {
   );
 
   useEffect(() => {
-    observeResize(canvasContainerRef.current, setNewCanvasSize);
-  }, []);
+    if (providedAppContext.originalSource) {
+      observeResize(canvasContainerRef.current, setNewCanvasSize);
+    }
 
-  return (
-    <CanvasContainer className="FIE_canvas-container" ref={canvasContainerRef}>
+    return () => {
+      if (canvasContainerRef.current) {
+        unobserveElement(canvasContainerRef.current);
+      }
+    };
+  }, [providedAppContext.originalSource]);
+
+  const renderCanvasContent = () => (
+    <>
       {!providedAppContext.textIdOfEditableContent && <NodeControls />}
-      {providedAppContext.isShowOriginalImage && (
-        <StyledOrignalImage
-          className="FIE_original-image-compare"
-          src={providedAppContext.originalImage.src}
-        />
-      )}
+      {providedAppContext.isShowOriginalImage &&
+        providedAppContext.originalSource?.src && (
+          <StyledOriginalImage
+            className="FIE_original-image-compare"
+            src={providedAppContext.originalSource.src}
+          />
+        )}
       <CanvasNode>
-        <AppProviderOverridenValue overridingValue={providedAppContext}>
+        <AppProviderOverriddenValue overridingValue={providedAppContext}>
           <DesignLayer />
           <TransformersLayer />
-        </AppProviderOverridenValue>
+        </AppProviderOverriddenValue>
       </CanvasNode>
-    </CanvasContainer>
+    </>
   );
+
+  const isFixedAndCanvasHidableError =
+    providedAppContext.feedback.duration === 0;
+
+  return (
+    <>
+      <Spinner />
+      <CanvasContainer
+        className="FIE_canvas-container"
+        ref={canvasContainerRef}
+        {...props}
+      >
+        {!isFixedAndCanvasHidableError &&
+          Boolean(providedAppContext.originalSource) &&
+          renderCanvasContent()}
+      </CanvasContainer>
+      <FeedbackPopup />
+    </>
+  );
+};
+
+MainCanvas.propTypes = {
+  source: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(HTMLImageElement),
+    PropTypes.instanceOf(SVGImageElement),
+    PropTypes.instanceOf(ImageBitmap),
+    PropTypes.shape({
+      width: PropTypes.number,
+      height: PropTypes.number,
+      bgColor: PropTypes.string,
+      src: PropTypes.string,
+    }),
+  ]),
+  onPluginRootResize: PropTypes.func,
+  pluginRootRef: PropTypes.instanceOf(Object),
+  previewBgColor: PropTypes.string,
+  previewBgImage: PropTypes.oneOfType([
+    PropTypes.instanceOf(HTMLImageElement),
+    PropTypes.instanceOf(SVGImageElement),
+    PropTypes.instanceOf(ImageBitmap),
+  ]),
+  resetOnSourceChange: PropTypes.bool,
 };
 
 export default MainCanvas;

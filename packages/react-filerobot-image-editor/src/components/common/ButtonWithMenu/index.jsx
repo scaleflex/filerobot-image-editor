@@ -17,8 +17,8 @@ const ButtonWithMenu = ({
   onClick,
   title,
   label,
-  color,
-  menuFromBtn,
+  color = 'primary',
+  menuFromBtn = false,
   menuItems,
   menuPosition = 'bottom',
   disabled = false,
@@ -134,20 +134,6 @@ const ButtonWithMenu = ({
       )}
     </>
   );
-};
-
-ButtonWithMenu.defaultProps = {
-  title: '',
-  label: '',
-  color: 'primary',
-  menuFromBtn: false,
-  noMargin: false,
-  menuPosition: 'bottom',
-  onClick: undefined,
-  disabled: false,
-  menuStyle: undefined,
-  wrapperStyle: undefined,
-  buttonRef: undefined,
 };
 
 ButtonWithMenu.propTypes = {

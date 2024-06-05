@@ -38,6 +38,13 @@ module.exports = {
       2,
       { namedComponents: 'arrow-function' },
     ],
+    'react/require-default-props': 'off',
+    'no-restricted-exports': [
+      'error',
+      {
+        restrictDefaultExports: { defaultFrom: false },
+      },
+    ],
   },
   settings: {
     'import/resolver': {

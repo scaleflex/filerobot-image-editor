@@ -16,18 +16,18 @@ const Modal = ({
   Icon,
   onDone,
   onCancel,
-  doneLabel,
-  cancelLabel,
-  isOpened,
+  doneLabel = 'Yes',
+  cancelLabel = 'No',
+  isOpened = false,
   doneButtonStyle,
   doneButtonColor = 'basic',
   cancelButtonColor = 'basic',
   children,
-  areButtonsDisabled,
+  areButtonsDisabled = false,
   zIndex,
   className,
   width,
-  isWarning,
+  isWarning = false,
 }) => {
   const onKeyUp = (e) => {
     if (e.key === 'Enter') {
@@ -76,22 +76,6 @@ const Modal = ({
       </StyledModalActions>
     </StyledModal>
   );
-};
-
-Modal.defaultProps = {
-  hint: '',
-  isOpened: false,
-  doneLabel: 'Yes',
-  cancelLabel: 'No',
-  doneButtonStyle: undefined,
-  doneButtonColor: 'basic',
-  cancelButtonColor: 'basic',
-  children: undefined,
-  areButtonsDisabled: false,
-  zIndex: undefined,
-  className: undefined,
-  width: '',
-  isWarning: false,
 };
 
 Modal.propTypes = {

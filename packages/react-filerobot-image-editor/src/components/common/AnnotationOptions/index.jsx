@@ -25,13 +25,13 @@ import ColorInput from '../ColorInput';
 
 const AnnotationOptions = ({
   children,
-  morePoppableOptionsPrepended,
-  moreOptionsPopupComponentsObj,
-  morePoppableOptionsAppended,
+  morePoppableOptionsPrepended = [],
+  moreOptionsPopupComponentsObj = {},
+  morePoppableOptionsAppended = [],
   annotation,
   updateAnnotation,
-  hideFillOption,
-  hidePositionField,
+  hideFillOption = false,
+  hidePositionField = false,
   className,
   ...rest
 }) => {
@@ -165,16 +165,6 @@ const AnnotationOptions = ({
       )}
     </StyledOptions>
   );
-};
-
-AnnotationOptions.defaultProps = {
-  children: undefined,
-  morePoppableOptionsPrepended: [],
-  moreOptionsPopupComponentsObj: {},
-  morePoppableOptionsAppended: [],
-  hideFillOption: false,
-  hidePositionField: false,
-  className: undefined,
 };
 
 AnnotationOptions.propTypes = {

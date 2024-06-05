@@ -113,4 +113,5 @@ export default {
   height: 'Height',
   plus: '+',
   cropItemNoEffect: 'No preview available for this crop item',
+  px: 'px',
 };
