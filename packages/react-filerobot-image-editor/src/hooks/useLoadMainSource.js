@@ -153,6 +153,7 @@ const useLoadMainSource = ({
             noCrossOrigin,
             width: imgToLoad?.width,
             height: imgToLoad?.height,
+            id: imgToLoad?.id,
           })
             .then(setNewOriginalSource)
             .catch((err) => {
@@ -202,7 +203,15 @@ const useLoadMainSource = ({
   useUpdateEffect(() => {
     if (source && !isSameSource(source, originalSource)) {
       cloudimageQueryLoaded.current = false;
-      handleLoading(() => [loadAndSetOriginalSource(source)]);
+      const isSrcLinkNotChanged =
+        (source?.src || source) === originalSource?.src;
+
+      // Don't show the spinner as it is not really needed in-case we are changing the width/height...etc. to avoid giving a feeling of jumping effect.
+      if (isSrcLinkNotChanged) {
+        loadAndSetOriginalSource(source);
+      } else {
+        handleLoading(() => [loadAndSetOriginalSource(source)]);
+      }
 
       if (resetOnSourceChange) {
         dispatch({

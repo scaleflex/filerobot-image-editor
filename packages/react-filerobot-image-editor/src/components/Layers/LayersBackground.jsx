@@ -68,6 +68,7 @@ const LayersBackground = ({
           offsetY={backgroundY}
           x={backgroundX}
           y={backgroundY}
+          opacity={originalSource.opacity ?? 1}
           listening={false}
           fill={originalSource.bgColor}
           filters={finetunesAndFilter}
