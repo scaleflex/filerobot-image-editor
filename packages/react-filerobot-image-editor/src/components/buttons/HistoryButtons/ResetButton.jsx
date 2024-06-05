@@ -5,7 +5,7 @@ import Reset from '@scaleflex/icons/reset';
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import { StyledHistoryButton } from './HistoryButtons.styled';
-import ConfirmationModal from '../../common/ConfirmationModal';
+import { ResetConfirmationModal } from '../../common/ConfirmationModals';
 
 const ResetButton = (props) => {
   const { isResetted = true, feedback, t } = useStore();
@@ -13,7 +13,7 @@ const ResetButton = (props) => {
   const isBlockerError = feedback.duration === 0;
 
   return (
-    <ConfirmationModal isReset>
+    <ResetConfirmationModal>
       <StyledHistoryButton
         className="FIE_buttons-reset-btn"
         color="basic"
@@ -24,7 +24,7 @@ const ResetButton = (props) => {
       >
         <Reset />
       </StyledHistoryButton>
-    </ConfirmationModal>
+    </ResetConfirmationModal>
   );
 };
 

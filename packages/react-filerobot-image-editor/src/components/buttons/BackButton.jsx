@@ -8,7 +8,8 @@ import { FontVariant as FV } from '@scaleflex/ui/utils/types/typography';
 
 /** Internal Dependencies */
 import { usePhoneScreen, useStore } from 'hooks';
-import ConfirmationModal from 'components/common/ConfirmationModal';
+import { DiscardConfirmationModal } from 'components/common/ConfirmationModals';
+import { CLOSING_REASONS } from 'utils/constants';
 
 const StyledBackButtonLabel = styled.span`
   ${({ theme: { typography } }) => typography.font[FV.ButtonMdEmphasis]};
@@ -28,7 +29,10 @@ const BackButton = ({ onBack, backLabel, ...props }) => {
   }
 
   return (
-    <ConfirmationModal>
+    <DiscardConfirmationModal
+      onDiscard={onBackFn}
+      discardReason={CLOSING_REASONS.BACK_BUTTON}
+    >
       <Button
         className="FIE_buttons-back-btn"
         color="link-secondary"
@@ -43,7 +47,7 @@ const BackButton = ({ onBack, backLabel, ...props }) => {
           </StyledBackButtonLabel>
         )}
       </Button>
-    </ConfirmationModal>
+    </DiscardConfirmationModal>
   );
 };
 

@@ -11,3 +11,5 @@ export { default as Separator } from './Separator';
 export { default as Slider } from './Slider';
 
 export { default as Spinner } from './Spinner';
+
+export * from './ConfirmationModals';

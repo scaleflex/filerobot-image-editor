@@ -38,7 +38,11 @@ const Topbar = ({ onMainMenuButtonClick, ...props }) => {
   };
 
   return (
-    <StyledTopbar className="FIE_topbar" isPhoneScreen={isPhoneScreen} {...props}>
+    <StyledTopbar
+      className="FIE_topbar"
+      isPhoneScreen={isPhoneScreen}
+      {...props}
+    >
       <StyledMainButtonsWrapper className="FIE_topbar-buttons-wrapper">
         <StyledMenuIconButton
           className="FIE_topbar-tabs-navbar-toggle_btn"
@@ -46,7 +50,7 @@ const Topbar = ({ onMainMenuButtonClick, ...props }) => {
           color="basic"
           onClick={handleOnMainMenuBtnClick}
         >
-          {(props) => <Menu {...props} />}
+          {(iconProps) => <Menu {...iconProps} />}
         </StyledMenuIconButton>
         {showBackButton ? <BackButton /> : <SaveButton />}
       </StyledMainButtonsWrapper>
@@ -61,14 +65,11 @@ const Topbar = ({ onMainMenuButtonClick, ...props }) => {
       <StyledControlButtonsWrapper>
         <HistoryButtons />
 
-        {showBackButton
-          ? <SaveButton />
-          : (
-            <>
-              <Separator />
-              <CloseButton />
-            </>
-          )}
+        {showBackButton ? (
+          <SaveButton />
+        ) : (
+          <CloseButton prefix={<Separator />} />
+        )}
       </StyledControlButtonsWrapper>
     </StyledTopbar>
   );

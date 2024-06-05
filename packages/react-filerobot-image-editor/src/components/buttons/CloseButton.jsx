@@ -7,14 +7,15 @@ import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
-import ConfirmationModal from '../common/ConfirmationModal';
+import { CLOSING_REASONS } from 'utils/constants';
+import { DiscardConfirmationModal } from '../common/ConfirmationModals';
 
 const StyledCloseButton = styled(CrossButton)`
   padding: 8px;
   z-index: 111;
 `;
 
-const CloseButton = ({ onClose, ...props }) => {
+const CloseButton = ({ onClose, prefix, ...props }) => {
   const {
     config: { onClose: configOnClose },
   } = useStore();
@@ -25,20 +26,27 @@ const CloseButton = ({ onClose, ...props }) => {
   }
 
   return (
-    <ConfirmationModal>
-      <StyledCloseButton
-        className="FIE_buttons-close-btn"
-        color="basic"
-        size="md"
-        {...props}
+    <>
+      {prefix}
+      <DiscardConfirmationModal
+        onDiscard={onCloseFn}
+        discardReason={CLOSING_REASONS.CLOSE_BUTTON}
       >
-        <CrossOutline />
-      </StyledCloseButton>
-    </ConfirmationModal>
+        <StyledCloseButton
+          className="FIE_buttons-close-btn"
+          color="basic"
+          size="md"
+          {...props}
+        >
+          <CrossOutline />
+        </StyledCloseButton>
+      </DiscardConfirmationModal>
+    </>
   );
 };
 
 CloseButton.propTypes = {
+  prefix: PropTypes.node,
   onClose: PropTypes.func,
 };
 
