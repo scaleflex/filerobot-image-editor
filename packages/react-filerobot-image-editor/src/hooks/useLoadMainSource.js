@@ -153,7 +153,7 @@ const useLoadMainSource = ({
             noCrossOrigin,
             width: imgToLoad?.width,
             height: imgToLoad?.height,
-            id: imgToLoad?.id,
+            key: imgToLoad?.key,
           })
             .then(setNewOriginalSource)
             .catch((err) => {

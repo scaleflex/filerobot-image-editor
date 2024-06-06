@@ -23,6 +23,8 @@ const extractCurrentDesignState = (state, useStateAsConfig) => {
     annotations: state.annotations || initialAppState.annotations,
     resize: state.resize || initialAppState.resize,
     originalSource: state.originalSource || initialAppState.originalSource,
+    presentOriginalSources:
+      state.presentOriginalSources || initialAppState.presentOriginalSources,
   };
 };
 

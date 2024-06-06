@@ -9,7 +9,7 @@ const setOriginalSource = (state, payload) => {
     feedback: {},
     presentOriginalSources: {
       ...state.presentOriginalSources,
-      [payload.originalSource.id]: payload.originalSource,
+      [payload.originalSource.key || 'default']: payload.originalSource,
     },
     originalSource: payload.originalSource,
     imgSrc: payload.originalSource.src,
