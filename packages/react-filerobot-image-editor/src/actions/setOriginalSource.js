@@ -7,7 +7,10 @@ const setOriginalSource = (state, payload) => {
     ...state,
     isDesignState: !isFirstTimeToAddSource && !payload.dismissHistory,
     feedback: {},
-    allOriginalSources: [...state.allOriginalSources, payload.originalSource],
+    presentOriginalSources: {
+      ...state.presentOriginalSources,
+      [payload.originalSource.id]: payload.originalSource,
+    },
     originalSource: payload.originalSource,
     imgSrc: payload.originalSource.src,
     bgColor: payload.originalSource.bgColor,

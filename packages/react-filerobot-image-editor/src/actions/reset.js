@@ -5,14 +5,15 @@ import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 export const RESET = 'RESET';
 
 const reset = (state, payload) => {
+  const firstOriginalSource =
+    state.pastDesignStates[0]?.originalSource || state.originalSource;
+
   const resettedDesignState = extractCurrentDesignState(
     {
       ...payload.config,
-      imgSrc:
-        (state.allOriginalSources[0] || state.originalSource).src ||
-        state.imgSrc,
-      bgColor: (state.allOriginalSources[0] || state.originalSource).bgColor,
-      originalSource: state.allOriginalSources[0] || state.originalSource,
+      imgSrc: firstOriginalSource.src || state.imgSrc,
+      bgColor: firstOriginalSource.bgColor,
+      originalSource: firstOriginalSource,
     },
     true,
   );

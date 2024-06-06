@@ -72,7 +72,7 @@ const getInitialAppState = (config = {}) => {
     latestColors: {},
     showTabsNavbar: false,
     isSaving: false,
-    allOriginalSources: [],
+    presentOriginalSources: {},
   };
 };
 
