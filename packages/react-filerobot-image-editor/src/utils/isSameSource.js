@@ -1,13 +1,8 @@
 const isSameSource = (source1, source2) =>
   source1 &&
   source2 &&
-  (((source1 instanceof HTMLImageElement || typeof source1 === 'object') &&
-    (!source1.key || source1.key === source2.key) &&
-    source1.src === source2.src &&
-    source1.width === source2.width &&
-    source1.height === source2.height &&
-    source1.bgColor === source2.bgColor &&
-    source1.opacity === source2.opacity) ||
-    (source1?.src || source1) === source2.src);
+  ((source1 instanceof HTMLImageElement && source1 === source2) ||
+    (typeof source1 === 'object' &&
+      Object.keys(source1).every((key) => source1[key] === source2[key])));
 
 export default isSameSource;

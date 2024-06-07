@@ -17,6 +17,10 @@ const ConfirmationModal = ({
   children,
   eventName = 'onClick',
   onEventName,
+  onClick,
+  icon,
+  doneButtonLabel,
+  doneButtonColor = 'warning-primary',
   onConfirm,
   title,
   hint,
@@ -31,6 +35,10 @@ const ConfirmationModal = ({
 
   const openModal = () => {
     setIsModalOpened(true);
+
+    if (typeof onClick === 'function') {
+      onClick();
+    }
   };
 
   const handleConfirmation = () => {
@@ -58,9 +66,9 @@ const ConfirmationModal = ({
           isOpened={isModalOpened}
           onCancel={cancelModal}
           onDone={handleConfirmation}
-          Icon={WarningIcon}
-          doneLabel={t('confirm')}
-          doneButtonColor="warning-primary"
+          Icon={icon || WarningIcon}
+          doneLabel={doneButtonLabel || t('confirm')}
+          doneButtonColor={doneButtonColor}
           cancelLabel={t('cancel')}
           width="400px"
           isWarning
@@ -76,7 +84,11 @@ ConfirmationModal.propTypes = {
   hint: PropTypes.string,
   eventName: PropTypes.string,
   onEventName: PropTypes.func,
+  onClick: PropTypes.func,
   onConfirm: PropTypes.func,
+  doneButtonLabel: PropTypes.string,
+  doneButtonColor: PropTypes.string,
+  icon: PropTypes.elementType,
 };
 
 export default ConfirmationModal;
