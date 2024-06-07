@@ -28,10 +28,20 @@ const Modal = ({
   className,
   width,
   isWarning = false,
+  isError = false,
 }) => {
   const onKeyUp = (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
       onDone(e);
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      e.stopPropagation();
+      onCancel(e);
     }
   };
 
@@ -48,6 +58,7 @@ const Modal = ({
         icon={<Icon size={25} />}
         iconShadow
         isWarning={isWarning}
+        isError={isError}
         onClose={onCancel}
         primary={title}
         secondary={hint}
@@ -96,6 +107,7 @@ Modal.propTypes = {
   className: PropTypes.string,
   width: PropTypes.string,
   isWarning: PropTypes.bool,
+  isError: PropTypes.bool,
 };
 
 export default Modal;
