@@ -76,7 +76,7 @@ const useAnnotations = () => {
     [],
   );
 
-  const getAnnotationElement = useCallback(
+  const getAnnotationElementById = useCallback(
     (annotationId) => designLayer.findOne(`#${annotationId}`),
     [designLayer],
   );
@@ -90,7 +90,7 @@ const useAnnotations = () => {
       replaceAnnotations,
       setAnnotation,
       duplicateAnnotations,
-      getAnnotationElement,
+      getAnnotationElementById,
     }),
     [
       annotations,
@@ -100,7 +100,7 @@ const useAnnotations = () => {
       selectedAnnotations,
       setAnnotation,
       duplicateAnnotations,
-      getAnnotationElement,
+      getAnnotationElementById,
     ],
   );
 };
