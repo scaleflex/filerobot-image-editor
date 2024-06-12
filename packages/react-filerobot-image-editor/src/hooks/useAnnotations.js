@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import {
+  CLEAR_ANNOTATIONS_SELECTIONS,
   DUPLICATE_ANNOTATIONS,
   REMOVE_ANNOTATIONS,
   REPLACE_ANNOTATIONS,
@@ -16,10 +17,6 @@ const useAnnotations = () => {
 
   const selectAnnotation = useCallback(
     (annotationId, allowSelectMultiple = false) => {
-      if (!annotationId) {
-        return;
-      }
-
       dispatch({
         type: SELECT_ANNOTATION,
         payload: {
@@ -30,6 +27,10 @@ const useAnnotations = () => {
     },
     [],
   );
+
+  const deselectAnnotations = useCallback(() => {
+    dispatch({ type: CLEAR_ANNOTATIONS_SELECTIONS });
+  }, []);
 
   const removeAnnotations = useCallback((annotationIds = [], options = {}) => {
     if (!Array.isArray(annotationIds) || annotationIds.length === 0) {
@@ -86,6 +87,7 @@ const useAnnotations = () => {
       annotations,
       selectedAnnotations,
       selectAnnotation,
+      deselectAnnotations,
       removeAnnotations,
       replaceAnnotations,
       setAnnotation,
@@ -95,6 +97,7 @@ const useAnnotations = () => {
     [
       annotations,
       selectAnnotation,
+      deselectAnnotations,
       removeAnnotations,
       replaceAnnotations,
       selectedAnnotations,

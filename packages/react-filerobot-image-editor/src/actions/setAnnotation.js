@@ -1,3 +1,5 @@
+import { EVENTS } from 'utils/constants';
+import emitCustomEvent from 'utils/emitCustomEvent';
 import randomId from 'utils/randomId';
 
 export const SET_ANNOTATION = 'SET_ANNOTATION';
@@ -30,22 +32,29 @@ const setAnnotation = (state, payload = {}) => {
     existedAnnotation &&
     !Object.keys(newAnnotation).some(
       (key) =>
-        (newAnnotation[key] || newAnnotation[key] === 0) &&
+        typeof newAnnotation[key] !== 'undefined' &&
         newAnnotation[key] !== existedAnnotation[key],
     )
   ) {
     return state;
   }
 
+  const addedAnnotation = {
+    ...(replaceCurrent ? {} : existedAnnotation),
+    ...newAnnotation,
+  };
+
+  emitCustomEvent(
+    existedAnnotation ? EVENTS.ANNOTATION_EDITED : EVENTS.ANNOTATION_ADDED,
+    addedAnnotation,
+  );
+
   return {
     ...state,
     isDesignState: !dismissHistory, // not stored in state, used in reducer to consider in undo/redo stacks
     annotations: {
       ...state.annotations,
-      [annotationId]: {
-        ...(replaceCurrent ? {} : existedAnnotation),
-        ...newAnnotation,
-      },
+      [annotationId]: addedAnnotation,
     },
   };
 };

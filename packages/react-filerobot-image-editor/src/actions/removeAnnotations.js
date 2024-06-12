@@ -1,3 +1,6 @@
+import { EVENTS } from 'utils/constants';
+import emitCustomEvent from 'utils/emitCustomEvent';
+
 export const REMOVE_ANNOTATIONS = 'REMOVE_ANNOTATIONS';
 
 const removeAnnotations = (state, payload) => {
@@ -17,6 +20,8 @@ const removeAnnotations = (state, payload) => {
       delete annotations[id];
     }
   });
+
+  emitCustomEvent(EVENTS.ANNOTATIONS_REMOVED, payload.annotationsIds);
 
   return {
     ...state,

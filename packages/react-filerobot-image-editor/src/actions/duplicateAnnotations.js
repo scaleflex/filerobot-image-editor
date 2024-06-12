@@ -1,4 +1,6 @@
 /** Internal Dependencies */
+import { EVENTS } from 'utils/constants';
+import emitCustomEvent from 'utils/emitCustomEvent';
 import randomId from 'utils/randomId';
 
 export const DUPLICATE_ANNOTATIONS = 'DUPLICATE_ANNOTATIONS';
@@ -17,6 +19,11 @@ const duplicateAnnotations = (state, payload) => {
         y: annotation.y + 20,
       };
     }
+  });
+
+  emitCustomEvent(EVENTS.ANNOTATIONS_DUPLICATED, {
+    duplicated: duplicatedAnnotations,
+    originalIds: payload.annotationsIds,
   });
 
   return {

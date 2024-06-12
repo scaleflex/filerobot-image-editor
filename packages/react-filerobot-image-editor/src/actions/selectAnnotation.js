@@ -1,3 +1,6 @@
+import { EVENTS } from 'utils/constants';
+import emitCustomEvent from 'utils/emitCustomEvent';
+
 export const SELECT_ANNOTATION = 'SELECT_ANNOTATION';
 
 const selectAnnotation = (state, payload) => {
@@ -22,6 +25,8 @@ const selectAnnotation = (state, payload) => {
   } else {
     newSelectionsIds = [payload.annotationId];
   }
+
+  emitCustomEvent(EVENTS.ANNOTATIONS_SELECTED, newSelectionsIds);
 
   return {
     ...state,

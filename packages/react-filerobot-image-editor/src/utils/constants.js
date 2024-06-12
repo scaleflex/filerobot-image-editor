@@ -134,3 +134,13 @@ export const CLOUDIMG_TO_EDITOR_POSITIONS = {
   southcenter: 'bottom-center',
   southeast: 'bottom-right',
 };
+
+export const EVENTS = {
+  ANNOTATION_ADDED: 'fie-annotation-added',
+  ANNOTATION_EDITED: 'fie-annotation-edited',
+  ANNOTATIONS_DUPLICATED: 'fie-annotations-duplicated',
+  ANNOTATIONS_REMOVED: 'fie-annotations-removed',
+  ANNOTATIONS_REPLACED: 'fie-annotations-replaced',
+  ANNOTATIONS_SELECTED: 'fie-annotations-selected',
+  ANNOTATIONS_DESELECTED: 'fie-annotations-deselected',
+};

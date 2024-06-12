@@ -1,4 +1,6 @@
+import { EVENTS } from 'utils/constants';
 import deepMerge from 'utils/deepMerge';
+import emitCustomEvent from 'utils/emitCustomEvent';
 
 export const REPLACE_ANNOTATIONS = 'REPLACE_ANNOTATIONS';
 
@@ -15,12 +17,16 @@ const replaceAnnotations = (state, payload = {}) => {
     return state;
   }
 
+  const replacedAnnotations = applyDeepMerge
+    ? deepMerge(state.annotations, newAnnotations, considerArrayInDeepMerge)
+    : newAnnotations;
+
+  emitCustomEvent(EVENTS.ANNOTATIONS_REPLACED, replacedAnnotations);
+
   return {
     ...state,
     isDesignState: !dismissHistory, // not stored in state, used in reducer to consider in undo/redo stacks
-    annotations: applyDeepMerge
-      ? deepMerge(state.annotations, newAnnotations, considerArrayInDeepMerge)
-      : newAnnotations,
+    annotations: replacedAnnotations,
   };
 };
 
