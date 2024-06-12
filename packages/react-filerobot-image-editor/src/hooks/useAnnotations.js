@@ -5,9 +5,13 @@ import {
   SELECT_ANNOTATION,
 } from 'actions';
 import useStore from './useStore';
+import useSelectedAnnotations from './useSelectedAnnotations';
+import useSetAnnotation from './useSetAnnotation';
 
 const useAnnotations = () => {
   const { dispatch, annotations = {} } = useStore();
+  const setAnnotation = useSetAnnotation();
+  const selectedAnnotations = useSelectedAnnotations();
 
   const selectAnnotation = useCallback(
     (annotationId, allowSelectMultiple = false) => {
@@ -56,11 +60,20 @@ const useAnnotations = () => {
   return useMemo(
     () => ({
       annotations,
+      selectedAnnotations,
       selectAnnotation,
       removeAnnotations,
       replaceAnnotations,
+      setAnnotation,
     }),
-    [annotations, selectAnnotation, removeAnnotations, replaceAnnotations],
+    [
+      annotations,
+      selectAnnotation,
+      removeAnnotations,
+      replaceAnnotations,
+      selectedAnnotations,
+      setAnnotation,
+    ],
   );
 };
 

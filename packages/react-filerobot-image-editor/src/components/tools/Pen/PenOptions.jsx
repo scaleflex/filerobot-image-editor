@@ -3,12 +3,12 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
-import { useAnnotation, useStore } from 'hooks';
+import { useAnnotation, useSetAnnotation, useStore } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
 import randomId from 'utils/randomId';
-import { SELECT_ANNOTATION, SET_ANNOTATION } from 'actions';
+import { SELECT_ANNOTATION } from 'actions';
 import getElemDocumentCoords from 'utils/getElemDocumentCoords';
 
 const eventsOptions = {
@@ -17,6 +17,7 @@ const eventsOptions = {
 
 const PenOptions = ({ t }) => {
   const { dispatch, designLayer, previewGroup, config } = useStore();
+  const setAnnotation = useSetAnnotation();
   const [pen, savePenDebounced, savePenNoDebounce] = useAnnotation(
     {
       ...config.annotationsCommon,
@@ -63,19 +64,19 @@ const PenOptions = ({ t }) => {
         getPointerPosition(),
       );
 
-      dispatch({
-        type: SET_ANNOTATION,
-        payload: {
-          id: updatedPen.current.id,
-          points: updatedPen.current.points,
-          dismissHistory: true,
-        },
+      setAnnotation({
+        id: updatedPen.current.id,
+        points: updatedPen.current.points,
+        dismissHistory: true,
       });
     }
   }, [getPointerPosition]);
 
   const handlePointerUp = useCallback(() => {
-    if (updatedPen.current.id && config[TOOLS_IDS.PEN].selectAnnotationAfterDrawing) { 
+    if (
+      updatedPen.current.id &&
+      config[TOOLS_IDS.PEN].selectAnnotationAfterDrawing
+    ) {
       dispatch({
         type: SELECT_ANNOTATION,
         payload: {

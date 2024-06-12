@@ -2,27 +2,22 @@
 import { useMemo, useCallback } from 'react';
 
 /** Internal Dependencies */
-import { SET_ANNOTATION, SELECT_ANNOTATION, SELECT_TOOL } from 'actions';
+import { SELECT_ANNOTATION, SELECT_TOOL } from 'actions';
 import { TOOLS_IDS, TABS_IDS, WATERMARK_ANNOTATION_ID } from 'utils/constants';
 import useStore from './useStore';
+import useSetAnnotation from './useSetAnnotation';
 
 const useAnnotationEvents = () => {
   const { tabId, dispatch } = useStore();
+  const setAnnotation = useSetAnnotation();
 
   const isAnnotationEventsDisabled = useMemo(
     () => tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK,
     [tabId],
   );
 
-  const updateAnnotation = useCallback((annotationProps) => {
-    dispatch({
-      type: SET_ANNOTATION,
-      payload: annotationProps,
-    });
-  }, []);
-
   const updatePositionOnDragEnd = useCallback((e) => {
-    updateAnnotation({
+    setAnnotation({
       id: e.target.id(),
       x: e.target.x(),
       y: e.target.y(),
@@ -51,7 +46,7 @@ const useAnnotationEvents = () => {
   }, []);
 
   const updateAnnotationTransform = useCallback((e) => {
-    updateAnnotation(getAnnotationTransformProps(e));
+    setAnnotation(getAnnotationTransformProps(e));
   }, []);
 
   const updateTextAnnotationOnTransform = useCallback((e) => {

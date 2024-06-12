@@ -7,11 +7,23 @@ const setAnnotation = (state, payload = {}) => {
   const {
     dismissHistory = false,
     replaceCurrent = false,
-    ...newAnnotation
+    ...newAnnotationData
   } = payload;
-  const annotationId = newAnnotation.id ?? randomId(newAnnotation.name);
+  const annotationId = newAnnotationData.id ?? randomId(newAnnotationData.name);
+
+  let newAnnotation = { ...newAnnotationData, id: annotationId };
 
   const existedAnnotation = state.annotations[annotationId];
+
+  if (payload.onAnnotationAdd === 'function') {
+    const moreAnnotationData = payload.onAnnotationAdd(newAnnotation, {
+      existedAnnotation,
+      state,
+    });
+
+    newAnnotation = { ...newAnnotation, ...moreAnnotationData };
+  }
+
   // If annotation not changed don't update it.
   if (
     existedAnnotation &&

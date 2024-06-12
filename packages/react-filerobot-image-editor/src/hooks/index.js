@@ -33,3 +33,9 @@ export { default as useToggleTabsNavbar } from './useToggleTabsNavbar';
 export { default as useDispatch } from './useDispatch';
 
 export { default as useAnnotations } from './useAnnotations';
+
+export { default as useSelectedAnnotations } from './useSelectedAnnotations';
+
+export { default as useAnnotationPositioning } from './useAnnotationPositioning';
+
+export { default as useSetAnnotation } from './useSetAnnotation';

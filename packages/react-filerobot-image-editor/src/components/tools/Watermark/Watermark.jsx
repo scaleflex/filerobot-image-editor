@@ -6,14 +6,13 @@ import UploadOutline from '@scaleflex/icons/upload-outline';
 /** Internal Dependencies */
 import {
   SELECT_ANNOTATION,
-  SET_ANNOTATION,
   SET_FEEDBACK,
   CLEAR_ANNOTATIONS_SELECTIONS,
 } from 'actions';
 import ButtonWithMenu from 'components/common/ButtonWithMenu';
 import TextControls from 'components/tools/Text/TextOptions/TextControls';
 import ImageControls from 'components/tools/Image/ImageControls';
-import { usePhoneScreen, useStore } from 'hooks';
+import { usePhoneScreen, useSetAnnotation, useStore } from 'hooks';
 import { FEEDBACK_STATUSES, TOOLS_IDS } from 'utils/constants';
 import HiddenUploadInput from 'components/common/HiddenUploadInput';
 import {
@@ -27,6 +26,7 @@ const WATERMARK_IMG_RATIO_FROM_ORIGINAL = 0.33;
 const WATERMARK_ANNOTATION_ID = 'watermark';
 
 const Watermark = () => {
+  const setAnnotation = useSetAnnotation();
   const {
     annotations,
     shownImageDimensions,
@@ -73,10 +73,7 @@ const Watermark = () => {
       replaceCurrent: true,
     };
 
-    dispatch({
-      type: SET_ANNOTATION,
-      payload: textWatermark,
-    });
+    setAnnotation(textWatermark);
   };
 
   const addImgWatermark = (loadedImg) => {
@@ -105,21 +102,15 @@ const Watermark = () => {
       replaceCurrent: true,
     };
 
-    dispatch({
-      type: SET_ANNOTATION,
-      payload: scaledWatermarkImg,
-    });
+    setAnnotation(scaledWatermarkImg);
   };
 
   const updateWatermarkOptions = (newOptions) => {
-    dispatch({
-      type: SET_ANNOTATION,
-      payload: {
-        ...(typeof newOptions === 'function'
-          ? newOptions(watermark)
-          : newOptions),
-        id: WATERMARK_ANNOTATION_ID,
-      },
+    setAnnotation({
+      ...(typeof newOptions === 'function'
+        ? newOptions(watermark)
+        : newOptions),
+      id: WATERMARK_ANNOTATION_ID,
     });
   };
 

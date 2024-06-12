@@ -245,7 +245,7 @@ const useLoadMainSource = ({
     const initialRequestsPromisesFn = () => [
       loadAndSetOriginalSource(loadableDesignState?.imgSrc || source),
       ...(useBackendTranslations
-        ? [getBackendTranslations(language, translations)]
+        ? [getBackendTranslations(translations, language)]
         : []),
     ];
 
