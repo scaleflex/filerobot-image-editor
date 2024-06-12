@@ -7,6 +7,7 @@ const setAnnotation = (state, payload = {}) => {
   const {
     dismissHistory = false,
     replaceCurrent = false,
+    onAnnotationAdd,
     ...newAnnotationData
   } = payload;
   const annotationId = newAnnotationData.id ?? randomId(newAnnotationData.name);
@@ -15,8 +16,8 @@ const setAnnotation = (state, payload = {}) => {
 
   const existedAnnotation = state.annotations[annotationId];
 
-  if (payload.onAnnotationAdd === 'function') {
-    const moreAnnotationData = payload.onAnnotationAdd(newAnnotation, {
+  if (onAnnotationAdd === 'function') {
+    const moreAnnotationData = onAnnotationAdd(newAnnotation, {
       existedAnnotation,
       state,
     });
