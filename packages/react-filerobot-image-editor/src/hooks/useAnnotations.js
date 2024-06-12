@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import {
+  DUPLICATE_ANNOTATIONS,
   REMOVE_ANNOTATIONS,
   REPLACE_ANNOTATIONS,
   SELECT_ANNOTATION,
@@ -9,7 +10,7 @@ import useSelectedAnnotations from './useSelectedAnnotations';
 import useSetAnnotation from './useSetAnnotation';
 
 const useAnnotations = () => {
-  const { dispatch, annotations = {} } = useStore();
+  const { dispatch, annotations = {}, designLayer } = useStore();
   const setAnnotation = useSetAnnotation();
   const selectedAnnotations = useSelectedAnnotations();
 
@@ -30,7 +31,7 @@ const useAnnotations = () => {
     [],
   );
 
-  const removeAnnotations = useCallback((annotationIds = []) => {
+  const removeAnnotations = useCallback((annotationIds = [], options = {}) => {
     if (!Array.isArray(annotationIds) || annotationIds.length === 0) {
       return;
     }
@@ -38,6 +39,7 @@ const useAnnotations = () => {
     dispatch({
       type: REMOVE_ANNOTATIONS,
       payload: {
+        ...options,
         annotationsIds: annotationIds,
       },
     });
@@ -57,6 +59,28 @@ const useAnnotations = () => {
     });
   }, []);
 
+  const duplicateAnnotations = useCallback(
+    (annotationIds = [], options = {}) => {
+      if (!Array.isArray(annotationIds) || annotationIds.length === 0) {
+        return;
+      }
+
+      dispatch({
+        type: DUPLICATE_ANNOTATIONS,
+        payload: {
+          ...options,
+          annotationsIds: annotationIds,
+        },
+      });
+    },
+    [],
+  );
+
+  const getAnnotationElement = useCallback(
+    (annotationId) => designLayer.findOne(`#${annotationId}`),
+    [designLayer],
+  );
+
   return useMemo(
     () => ({
       annotations,
@@ -65,6 +89,8 @@ const useAnnotations = () => {
       removeAnnotations,
       replaceAnnotations,
       setAnnotation,
+      duplicateAnnotations,
+      getAnnotationElement,
     }),
     [
       annotations,
@@ -73,6 +99,8 @@ const useAnnotations = () => {
       replaceAnnotations,
       selectedAnnotations,
       setAnnotation,
+      duplicateAnnotations,
+      getAnnotationElement,
     ],
   );
 };
