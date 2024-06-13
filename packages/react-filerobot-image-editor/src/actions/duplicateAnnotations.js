@@ -21,7 +21,7 @@ const duplicateAnnotations = (state, payload) => {
     }
   });
 
-  emitCustomEvent(EVENTS.ANNOTATIONS_DUPLICATED, {
+  emitCustomEvent(EVENTS.ANNOTATIONS_DUPLICATE, {
     duplicated: duplicatedAnnotations,
     originalIds: payload.annotationsIds,
   });

@@ -136,11 +136,11 @@ export const CLOUDIMG_TO_EDITOR_POSITIONS = {
 };
 
 export const EVENTS = {
-  ANNOTATION_ADDED: 'fie-annotation-added',
-  ANNOTATION_EDITED: 'fie-annotation-edited',
-  ANNOTATIONS_DUPLICATED: 'fie-annotations-duplicated',
-  ANNOTATIONS_REMOVED: 'fie-annotations-removed',
-  ANNOTATIONS_REPLACED: 'fie-annotations-replaced',
-  ANNOTATIONS_SELECTED: 'fie-annotations-selected',
-  ANNOTATIONS_DESELECTED: 'fie-annotations-deselected',
+  ANNOTATION_ADD: 'fie-annotation-add',
+  ANNOTATION_EDIT: 'fie-annotation-edit',
+  ANNOTATIONS_DUPLICATE: 'fie-annotations-duplicate',
+  ANNOTATIONS_REMOVE: 'fie-annotations-remove',
+  ANNOTATIONS_REPLACE: 'fie-annotations-replace',
+  ANNOTATIONS_SELECT: 'fie-annotations-select',
+  ANNOTATIONS_DESELECT: 'fie-annotations-deselect',
 };

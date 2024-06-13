@@ -21,7 +21,9 @@ const removeAnnotations = (state, payload) => {
     }
   });
 
-  emitCustomEvent(EVENTS.ANNOTATIONS_REMOVED, payload.annotationsIds);
+  emitCustomEvent(EVENTS.ANNOTATIONS_REMOVE, {
+    ids: payload.annotationsIds,
+  });
 
   return {
     ...state,

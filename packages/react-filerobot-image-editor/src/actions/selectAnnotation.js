@@ -26,7 +26,9 @@ const selectAnnotation = (state, payload) => {
     newSelectionsIds = [payload.annotationId];
   }
 
-  emitCustomEvent(EVENTS.ANNOTATIONS_SELECTED, newSelectionsIds);
+  emitCustomEvent(EVENTS.ANNOTATIONS_SELECT, {
+    ids: newSelectionsIds,
+  });
 
   return {
     ...state,

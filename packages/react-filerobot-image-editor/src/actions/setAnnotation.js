@@ -39,14 +39,14 @@ const setAnnotation = (state, payload = {}) => {
     return state;
   }
 
-  const addedAnnotation = {
+  const annotation = {
     ...(replaceCurrent ? {} : existedAnnotation),
     ...newAnnotation,
   };
 
   emitCustomEvent(
-    existedAnnotation ? EVENTS.ANNOTATION_EDITED : EVENTS.ANNOTATION_ADDED,
-    addedAnnotation,
+    existedAnnotation ? EVENTS.ANNOTATION_EDIT : EVENTS.ANNOTATION_ADD,
+    { annotation },
   );
 
   return {
@@ -54,7 +54,7 @@ const setAnnotation = (state, payload = {}) => {
     isDesignState: !dismissHistory, // not stored in state, used in reducer to consider in undo/redo stacks
     annotations: {
       ...state.annotations,
-      [annotationId]: addedAnnotation,
+      [annotationId]: annotation,
     },
   };
 };

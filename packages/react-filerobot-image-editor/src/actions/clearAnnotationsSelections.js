@@ -8,7 +8,7 @@ const clearAnnotationsSelections = (state) => {
     return state;
   }
 
-  emitCustomEvent(EVENTS.ANNOTATIONS_DESELECTED);
+  emitCustomEvent(EVENTS.ANNOTATIONS_DESELECT);
 
   return {
     ...state,

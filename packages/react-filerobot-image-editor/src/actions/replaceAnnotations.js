@@ -10,7 +10,7 @@ const replaceAnnotations = (state, payload = {}) => {
     dismissHistory = false,
     applyDeepMerge = false,
     considerArrayInDeepMerge = false,
-    ...newAnnotations
+    newAnnotations,
   } = payload;
 
   if (!newAnnotations) {
@@ -21,7 +21,9 @@ const replaceAnnotations = (state, payload = {}) => {
     ? deepMerge(state.annotations, newAnnotations, considerArrayInDeepMerge)
     : newAnnotations;
 
-  emitCustomEvent(EVENTS.ANNOTATIONS_REPLACED, replacedAnnotations);
+  emitCustomEvent(EVENTS.ANNOTATIONS_REPLACE, {
+    annotations: replacedAnnotations,
+  });
 
   return {
     ...state,
