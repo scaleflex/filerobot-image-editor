@@ -119,5 +119,4 @@ const ToolsBar = (props) => {
   );
 };
 
-
 export default ToolsBar;

@@ -1,17 +1,16 @@
 /** External Dependencies */
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from '@scaleflex/ui/core/menu-item';
 import FontBold from '@scaleflex/icons/font-bold';
 import FontItalic from '@scaleflex/icons/font-italic';
 
 /** Internal Dependencies */
-import { TOOLS_IDS, TRANSFORMERS_LAYER_ID } from 'utils/constants';
+import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import { StyledIconWrapper } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
-import { ENABLE_TEXT_CONTENT_EDIT } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
-import { useStore } from 'hooks';
+import { useStore, useTextAnnotationEditing } from 'hooks';
 import {
   StyledFontFamilySelect,
   StyledFontSizeInput,
@@ -21,14 +20,11 @@ import {
   textOptionsPopupComponents,
   TEXT_POPPABLE_OPTIONS,
 } from './TextOptions.constants';
-import {
-  activateTextChange,
-  deactivateTextChange,
-} from './handleTextChangeArea';
 
 const TextControls = ({ text, saveText, children }) => {
-  const { dispatch, textIdOfEditableContent, designLayer, t, config } =
-    useStore();
+  const { designLayer, t, config } = useStore();
+  useTextAnnotationEditing();
+
   const { useCloudimage } = config;
   const { fonts = [], onFontChange } = config[TOOLS_IDS.TEXT];
 
@@ -77,44 +73,6 @@ const TextControls = ({ text, saveText, children }) => {
     },
     [text],
   );
-
-  const disableTextEdit = useCallback(() => {
-    dispatch({
-      type: ENABLE_TEXT_CONTENT_EDIT,
-      payload: {
-        textIdOfEditableContent: null,
-      },
-    });
-  }, []);
-
-  const changeTextContent = useCallback((newContent) => {
-    changeTextProps({
-      target: {
-        name: 'text',
-        value: newContent,
-      },
-    });
-    disableTextEdit();
-  }, []);
-
-  useEffect(() => {
-    let transformer;
-    if (textIdOfEditableContent && text.id === textIdOfEditableContent) {
-      const canvasStage = designLayer.getStage();
-      [transformer] = canvasStage.findOne(`#${TRANSFORMERS_LAYER_ID}`).children;
-      activateTextChange(
-        textIdOfEditableContent,
-        canvasStage,
-        transformer,
-        changeTextContent,
-        disableTextEdit,
-      );
-    }
-
-    return () => {
-      if (transformer && textIdOfEditableContent) deactivateTextChange();
-    };
-  }, [textIdOfEditableContent]);
 
   return (
     <AnnotationOptions

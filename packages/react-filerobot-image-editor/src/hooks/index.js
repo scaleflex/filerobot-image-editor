@@ -39,3 +39,7 @@ export { default as useSelectedAnnotations } from './useSelectedAnnotations';
 export { default as useAnnotationPositioning } from './useAnnotationPositioning';
 
 export { default as useSetAnnotation } from './useSetAnnotation';
+
+export { default as useSelectTool } from './useSelectTool';
+
+export { default as useTextAnnotationEditing } from './useTextAnnotationEditing';

@@ -4,16 +4,26 @@ import { useMemo, useCallback } from 'react';
 /** Internal Dependencies */
 import { SELECT_ANNOTATION, SELECT_TOOL } from 'actions';
 import { TOOLS_IDS, TABS_IDS, WATERMARK_ANNOTATION_ID } from 'utils/constants';
+import isAnnotationTool from 'utils/isAnnotationTool';
 import useStore from './useStore';
 import useSetAnnotation from './useSetAnnotation';
 
 const useAnnotationEvents = () => {
-  const { tabId, dispatch } = useStore();
+  const {
+    tabId,
+    toolId,
+    dispatch,
+    config: { keepAnnotationEventsEnabled = false },
+  } = useStore();
   const setAnnotation = useSetAnnotation();
 
   const isAnnotationEventsDisabled = useMemo(
-    () => tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK,
-    [tabId],
+    () =>
+      !keepAnnotationEventsEnabled &&
+      tabId !== TABS_IDS.ANNOTATE &&
+      tabId !== TABS_IDS.WATERMARK &&
+      !isAnnotationTool(toolId),
+    [tabId, toolId],
   );
 
   const updatePositionOnDragEnd = useCallback((e) => {

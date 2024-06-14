@@ -18,11 +18,11 @@ const setAnnotation = (state, payload = {}) => {
 
   const existedAnnotation = state.annotations[annotationId];
 
-  if (onAnnotationAdd === 'function') {
-    const moreAnnotationData = onAnnotationAdd(newAnnotation, {
-      existedAnnotation,
-      state,
-    });
+  if (
+    (replaceCurrent || !existedAnnotation) &&
+    typeof onAnnotationAdd === 'function'
+  ) {
+    const moreAnnotationData = onAnnotationAdd(newAnnotation, state);
 
     newAnnotation = { ...newAnnotation, ...moreAnnotationData };
   }
@@ -54,7 +54,7 @@ const setAnnotation = (state, payload = {}) => {
     isDesignState: !dismissHistory, // not stored in state, used in reducer to consider in undo/redo stacks
     annotations: {
       ...state.annotations,
-      [annotationId]: annotation,
+      [annotation.id]: annotation,
     },
   };
 };

@@ -24,6 +24,7 @@ import {
   TOOLS_IDS,
 } from 'utils/constants';
 import { useStore } from 'hooks';
+import isAnnotationTool from 'utils/isAnnotationTool';
 import { endTouchesZooming, zoomOnTouchesMove } from './touchZoomingEvents';
 import { StyledCanvasNode } from './MainCanvas.styled';
 
@@ -48,19 +49,21 @@ const CanvasNode = ({ children }) => {
   const defaultZoomFactor = DEFAULT_ZOOM_FACTOR;
   const isZoomEnabled = !disableZooming && toolId !== TOOLS_IDS.CROP;
   const [isPanningEnabled, setIsPanningEnabled] = useState(
-    tabId !== TABS_IDS.ANNOTATE &&
-      tabId !== TABS_IDS.WATERMARK &&
+    () =>
+      ((tabId !== TABS_IDS.ANNOTATE && tabId !== TABS_IDS.WATERMARK) ||
+        !isAnnotationTool(toolId)) &&
       zoom.factor > defaultZoomFactor,
   );
 
   const cursorStyle = useMemo(
     () => ({
       cursor:
-        pointerCssIcon === POINTER_ICONS.DEFAULT && tabId === TABS_IDS.ANNOTATE
+        pointerCssIcon === POINTER_ICONS.DEFAULT &&
+        (tabId === TABS_IDS.ANNOTATE || isAnnotationTool(toolId))
           ? POINTER_ICONS.DRAW
           : pointerCssIcon,
     }),
-    [tabId, pointerCssIcon],
+    [tabId, toolId, pointerCssIcon],
   );
 
   const saveZoom = (newZoomProps) => {
@@ -132,7 +135,8 @@ const CanvasNode = ({ children }) => {
 
   const resetPanningAbility = () =>
     setIsPanningEnabled(
-      tabId !== TABS_IDS.ANNOTATE || tabId === TABS_IDS.WATERMARK,
+      (tabId !== TABS_IDS.ANNOTATE && !isAnnotationTool(toolId)) ||
+        tabId === TABS_IDS.WATERMARK,
     );
 
   const endTouchesZoomingEnablePanning = () => {
@@ -141,7 +145,7 @@ const CanvasNode = ({ children }) => {
 
   const mapKeyboardKeys = (e) => {
     if (
-      (e.code === 'Space' || e.key === 'Control') &&
+      (e.key === ' ' || e.key === 'Control') &&
       !e.repeat &&
       zoom.factor > defaultZoomFactor &&
       isZoomEnabled
@@ -158,7 +162,7 @@ const CanvasNode = ({ children }) => {
   };
 
   const revertKeyboardKeysEffect = (e) => {
-    if (e.code === 'Space') {
+    if (e.key === ' ' || e.key === 'Control') {
       e.preventDefault();
       resetPanningAbility();
     }
@@ -171,18 +175,10 @@ const CanvasNode = ({ children }) => {
   };
 
   useEffect(() => {
-    dispatch({
-      type: CHANGE_POINTER_ICON,
-      payload: {
-        pointerCssIcon: POINTER_ICONS[isPanningEnabled ? 'DRAG' : 'DEFAULT'],
-      },
-    });
-  }, [isPanningEnabled]);
-
-  useEffect(() => {
     setIsPanningEnabled(
       tabId !== TABS_IDS.ANNOTATE &&
         tabId !== TABS_IDS.WATERMARK &&
+        !isAnnotationTool(toolId) &&
         zoom.factor > defaultZoomFactor,
     );
 
@@ -203,6 +199,15 @@ const CanvasNode = ({ children }) => {
       }
     };
   }, [tabId, zoom.factor, defaultZoomFactor]);
+
+  useEffect(() => {
+    dispatch({
+      type: CHANGE_POINTER_ICON,
+      payload: {
+        pointerCssIcon: POINTER_ICONS[isPanningEnabled ? 'DRAG' : 'DEFAULT'],
+      },
+    });
+  }, [isPanningEnabled]);
 
   // Zoom panning is done by dragging mouse except in annotate tab,
   // it's done by toggling panning through mouse right click (enable/disable) then drag mouse.

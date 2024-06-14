@@ -23,12 +23,14 @@ Types of changes:
 
 <!-- Improved
 - FlipX & FlipY behaviors, now the flip is only related to the edited image but everything else is keeping its state without flipping.
+- Add text on clicking outside.
 
 Added
 - Rotate anti-clockwise button in rotation.
 - `previewBgColor` & `previewBgImage` params to be added as background for the canvas
 Fixed
-- Resize issue on unlocking the ratio lock. -->
+- Resize issue on unlocking the ratio lock.
+- `keepAnnotationEventsEnabled` -->
 
 ## v4.8.1 - 2024-05-16
 

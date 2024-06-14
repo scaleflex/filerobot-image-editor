@@ -6,7 +6,7 @@ import { SELECT_ANNOTATION } from 'actions';
 import randomId from 'utils/randomId';
 import debounce from 'utils/debounce';
 import { TOOLS_IDS } from 'utils/constants';
-import { useSetAnnotation, useStore } from 'hooks';
+import { useSelectTool, useSetAnnotation, useStore } from 'hooks';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
 import useDebouncedCallback from '../useDebouncedCallback';
 
@@ -20,6 +20,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     selectionsIds = [],
     config,
   } = useStore();
+  const selectTool = useSelectTool();
   const annotationDefaults = {
     ...config.annotationsCommon,
     ...config[annotations[selectionsIds[0]]?.name || annotation.name],
@@ -110,6 +111,18 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
         neverSave: false,
       };
     });
+  }, []);
+
+  useEffect(() => {
+    if (tmpAnnotation.name) {
+      selectTool(tmpAnnotation.name, true);
+    }
+  }, [tmpAnnotation.name]);
+
+  useEffect(() => {
+    return () => {
+      selectTool(null);
+    };
   }, []);
 
   useEffect(() => {
