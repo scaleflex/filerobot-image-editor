@@ -2,7 +2,7 @@
 import { useMemo, useCallback } from 'react';
 
 /** Internal Dependencies */
-import { SELECT_ANNOTATION, SELECT_TOOL } from 'actions';
+import { SELECT_ANNOTATION } from 'actions';
 import { TOOLS_IDS, TABS_IDS, WATERMARK_ANNOTATION_ID } from 'utils/constants';
 import isAnnotationTool from 'utils/isAnnotationTool';
 import useStore from './useStore';
@@ -78,16 +78,8 @@ const useAnnotationEvents = () => {
       type: SELECT_ANNOTATION,
       payload: {
         annotationId: e.target.id(),
-        multiple,
-      },
-    });
-    // TODO: Remove this once we implement the possibility to select annotation
-    // while any annotation tool is opened without changing the tool.
-    dispatch({
-      type: SELECT_TOOL,
-      payload: {
         toolId: e.target.name(),
-        keepSelections: multiple,
+        multiple,
       },
     });
   }, []);

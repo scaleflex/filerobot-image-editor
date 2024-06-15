@@ -10,7 +10,7 @@ import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import { StyledIconWrapper } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
 import restrictNumber from 'utils/restrictNumber';
-import { useStore, useTextAnnotationEditing } from 'hooks';
+import { useStore } from 'hooks';
 import {
   StyledFontFamilySelect,
   StyledFontSizeInput,
@@ -23,7 +23,6 @@ import {
 
 const TextControls = ({ text, saveText, children }) => {
   const { designLayer, t, config } = useStore();
-  useTextAnnotationEditing();
 
   const { useCloudimage } = config;
   const { fonts = [], onFontChange } = config[TOOLS_IDS.TEXT];

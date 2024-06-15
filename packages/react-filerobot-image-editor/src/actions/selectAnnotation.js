@@ -33,6 +33,7 @@ const selectAnnotation = (state, payload) => {
   return {
     ...state,
     selectionsIds: newSelectionsIds,
+    toolId: payload.toolId || state.toolId,
   };
 };
 

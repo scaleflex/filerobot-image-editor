@@ -135,21 +135,22 @@ const activateTextChange = (
   textarea.addEventListener('keydown', (event) => {
     // hide on enter
     // but don't hide on shift + enter
-    if (event.key === 'Enter' && !event.shiftKey) {
-      const textContent = textarea.value;
-      deactivateTextChange();
-      editFinishCallback(textContent);
+    if (event.key === 'Enter') {
+      if (!event.shiftKey) {
+        const textContent = textarea.value;
+        deactivateTextChange();
+        editFinishCallback(textContent);
+      }
+
+      return;
     }
+
     // on esc do not set value back to node
     if (event.key === 'Escape') {
       deactivateTextChange();
-    }
-  });
-
-  textarea.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' || event.key === 'Escape') {
       return;
     }
+
     const scale = textNode.getAbsoluteScale().x;
     setTextareaWidth(textNode.width() * scale);
     textarea.style.height = 'auto';

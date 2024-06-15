@@ -19,6 +19,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     annotations,
     selectionsIds = [],
     config,
+    toolId,
   } = useStore();
   const selectTool = useSelectTool();
   const annotationDefaults = {
@@ -114,16 +115,12 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
   }, []);
 
   useEffect(() => {
-    if (tmpAnnotation.name) {
+    const shouldChangeTool =
+      tmpAnnotation.name && tmpAnnotation.name !== toolId;
+    if (shouldChangeTool) {
       selectTool(tmpAnnotation.name, true);
     }
   }, [tmpAnnotation.name]);
-
-  useEffect(() => {
-    return () => {
-      selectTool(null);
-    };
-  }, []);
 
   useEffect(() => {
     const { shouldSave, neverSave, ...savableAnnotation } = tmpAnnotation;
