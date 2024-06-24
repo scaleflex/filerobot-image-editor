@@ -1,5 +1,5 @@
 /** External Dependencies */
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Transformer } from 'react-konva';
 
 /** Internal Dependencies */
@@ -10,6 +10,9 @@ import {
 } from 'utils/constants';
 import { useStore } from 'hooks';
 import { CHANGE_POINTER_ICON, ENABLE_TEXT_CONTENT_EDIT } from 'actions';
+import debounce from 'utils/debounce';
+
+let isUnMounted = false;
 
 const NodesTransformer = () => {
   const {
@@ -19,16 +22,22 @@ const NodesTransformer = () => {
     dispatch,
     config: { useCloudimage },
   } = useStore();
+  const [selections, setSelections] = useState([]);
 
-  const selections = useMemo(
-    () =>
-      designLayer?.findOne
+  const updateSelectionNodes = debounce(() => {
+    if (isUnMounted) {
+      return;
+    }
+
+    const newSelections =
+      designLayer?.findOne && selectionsIds.length > 0
         ? selectionsIds
             .map((selectionId) => designLayer.findOne(`#${selectionId}`))
             .filter(Boolean)
-        : [],
-    [selectionsIds],
-  );
+        : [];
+
+    setSelections(newSelections);
+  }, 30);
 
   const changePointerIconToMove = () => {
     dispatch({
@@ -58,6 +67,18 @@ const NodesTransformer = () => {
       });
     }
   };
+
+  useEffect(() => {
+    isUnMounted = false;
+
+    return () => {
+      isUnMounted = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    updateSelectionNodes();
+  }, [selectionsIds]);
 
   const enabledAnchors = useCloudimage
     ? ['top-left', 'bottom-left', 'top-right', 'bottom-right']

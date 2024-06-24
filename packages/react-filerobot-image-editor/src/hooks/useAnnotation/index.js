@@ -2,9 +2,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /** Internal Dependencies */
-import { SELECT_ANNOTATION } from 'actions';
 import randomId from 'utils/randomId';
-import debounce from 'utils/debounce';
 import { TOOLS_IDS } from 'utils/constants';
 import { useSelectTool, useSetAnnotation, useStore } from 'hooks';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
@@ -14,7 +12,6 @@ import useDebouncedCallback from '../useDebouncedCallback';
 const useAnnotation = (annotation = {}, enablePreview = true) => {
   const setAnnotation = useSetAnnotation();
   const {
-    dispatch,
     previewGroup,
     annotations,
     selectionsIds = [],
@@ -36,17 +33,9 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
 
   const saveAnnotation = useCallback((annotationData) => {
     const { fonts, onFontChange, ...savableAnnotationData } = annotationData;
-    setAnnotation(savableAnnotationData);
-    if (savableAnnotationData.id && annotation.name !== TOOLS_IDS.PEN) {
-      debounce(() => {
-        dispatch({
-          type: SELECT_ANNOTATION,
-          payload: {
-            annotationId: savableAnnotationData.id,
-          },
-        });
-      }, 30)();
-    }
+    const selectOnSet =
+      savableAnnotationData.id && annotation.name !== TOOLS_IDS.PEN;
+    setAnnotation({ ...savableAnnotationData, selectOnSet });
   }, []);
 
   const updateTmpAnnotation = useDebouncedCallback((updatesObjOrFn) => {

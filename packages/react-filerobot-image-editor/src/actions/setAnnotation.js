@@ -9,6 +9,7 @@ const setAnnotation = (state, payload = {}) => {
   const {
     dismissHistory = false,
     replaceCurrent = false,
+    selectOnSet = false,
     onAnnotationAdd,
     ...newAnnotationData
   } = payload;
@@ -56,6 +57,7 @@ const setAnnotation = (state, payload = {}) => {
       ...state.annotations,
       [annotation.id]: annotation,
     },
+    selectionsIds: selectOnSet ? [annotation.id] : state.selectionsIds,
   };
 };
 
