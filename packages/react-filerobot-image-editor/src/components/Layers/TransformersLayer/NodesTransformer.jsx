@@ -37,7 +37,7 @@ const NodesTransformer = () => {
         : [];
 
     setSelections(newSelections);
-  }, 30);
+  }, 5);
 
   const changePointerIconToMove = () => {
     dispatch({

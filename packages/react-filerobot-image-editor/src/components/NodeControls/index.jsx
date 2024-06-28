@@ -33,7 +33,7 @@ const NodeControls = () => {
         (nodesTransformer.y() + nodesTransformer.height()) *
         nodesTransformer.scaleY(),
     });
-  }, 0);
+  }, 10);
 
   useEffect(() => {
     updatePosition();
