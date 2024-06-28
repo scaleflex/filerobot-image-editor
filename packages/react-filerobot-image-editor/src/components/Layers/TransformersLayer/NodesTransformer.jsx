@@ -77,7 +77,9 @@ const NodesTransformer = () => {
   }, []);
 
   useEffect(() => {
-    updateSelectionNodes();
+    if (!isUnMounted) {
+      updateSelectionNodes();
+    }
   }, [selectionsIds]);
 
   const enabledAnchors = useCloudimage

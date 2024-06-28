@@ -389,6 +389,7 @@ const config = {
   resetOnSourceChange: false,
   // previewBgColor: 'gray',
   // previewBgImage: img,
+  // textContentRegex: /]]>/,
 };
 
 export default config;

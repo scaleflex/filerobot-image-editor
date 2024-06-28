@@ -2,7 +2,7 @@
 import { useCallback, useEffect } from 'react';
 
 /** Internal dependencies */
-import { ENABLE_TEXT_CONTENT_EDIT } from 'actions';
+import { ENABLE_TEXT_CONTENT_EDIT, SET_FEEDBACK } from 'actions';
 import {
   activateTextChange,
   deactivateTextChange,
@@ -12,7 +12,13 @@ import useStore from './useStore';
 import useSetAnnotation from './useSetAnnotation';
 
 const useTextAnnotationEditing = () => {
-  const { dispatch, textIdOfEditableContent, designLayer } = useStore();
+  const {
+    dispatch,
+    textIdOfEditableContent,
+    designLayer,
+    t,
+    config: { textContentRegex },
+  } = useStore();
   const setAnnotation = useSetAnnotation();
 
   const disableTextEdit = useCallback(() => {
@@ -26,8 +32,20 @@ const useTextAnnotationEditing = () => {
 
   const changeTextContent = useCallback(
     (newContent) => {
-      if (!newContent && newContent !== 0) {
-        return;
+      if (
+        (!newContent && newContent !== 0) ||
+        textContentRegex.test(newContent)
+      ) {
+        dispatch({
+          type: SET_FEEDBACK,
+          payload: {
+            feedback: {
+              message: t('invalidTextContent'),
+            },
+          },
+        });
+
+        return false;
       }
 
       setAnnotation({
@@ -35,8 +53,9 @@ const useTextAnnotationEditing = () => {
         text: newContent,
       });
       disableTextEdit();
+      return true;
     },
-    [setAnnotation, disableTextEdit, textIdOfEditableContent],
+    [setAnnotation, disableTextEdit, textIdOfEditableContent, textContentRegex],
   );
 
   useEffect(() => {

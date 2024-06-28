@@ -7,9 +7,10 @@ let disableTextEditCallback;
 const handleOutsideClick = (e) => {
   if (e.target !== textarea) {
     const textValue = textarea.value;
-    // eslint-disable-next-line no-use-before-define
-    deactivateTextChange();
-    editFinishCallback(textValue);
+    if (editFinishCallback(textValue)) {
+      // eslint-disable-next-line no-use-before-define
+      deactivateTextChange();
+    }
   }
 };
 
@@ -138,8 +139,9 @@ const activateTextChange = (
     if (event.key === 'Enter') {
       if (!event.shiftKey) {
         const textContent = textarea.value;
-        deactivateTextChange();
-        editFinishCallback(textContent);
+        if (editFinishCallback(textContent)) {
+          deactivateTextChange();
+        }
       }
 
       return;

@@ -114,4 +114,5 @@ export default {
   plus: '+',
   cropItemNoEffect: 'No preview available for this crop item',
   px: 'px',
+  invalidTextContent: 'Invalid text content',
 };

@@ -30,7 +30,7 @@ Added
 - `previewBgColor` & `previewBgImage` params to be added as background for the canvas
 Fixed
 - Resize issue on unlocking the ratio lock.
-- `keepAnnotationEventsEnabled` -->
+- `keepAnnotationEventsEnabled`, `textContentRegex` -->
 
 ## v4.8.1 - 2024-05-16
 
