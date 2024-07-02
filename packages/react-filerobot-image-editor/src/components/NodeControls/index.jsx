@@ -13,7 +13,13 @@ import debounce from 'utils/debounce';
 import { StyledNodeControls } from './NodeControls.styled';
 
 const NodeControls = () => {
-  const { selectionsIds = [], designLayer, annotations, dispatch } = useStore();
+  const {
+    selectionsIds = [],
+    designLayer,
+    annotations,
+    dispatch,
+    config = {},
+  } = useStore();
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const nodesTransformer = useMemo(
     () => designLayer?.getStage()?.findOne(`#${NODES_TRANSFORMER_ID}`),
@@ -49,6 +55,7 @@ const NodeControls = () => {
       type: DUPLICATE_ANNOTATIONS,
       payload: {
         annotationsIds: selectionsIds,
+        onAnnotationAdd: config.onAnnotationAdd,
       },
     });
   };

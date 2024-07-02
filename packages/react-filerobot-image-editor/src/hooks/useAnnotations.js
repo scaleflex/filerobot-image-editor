@@ -11,7 +11,12 @@ import useSelectedAnnotations from './useSelectedAnnotations';
 import useSetAnnotation from './useSetAnnotation';
 
 const useAnnotations = () => {
-  const { dispatch, annotations = {}, designLayer } = useStore();
+  const {
+    dispatch,
+    annotations = {},
+    designLayer,
+    config: { onAnnotationAdd } = {},
+  } = useStore();
   const setAnnotation = useSetAnnotation();
   const selectedAnnotations = useSelectedAnnotations();
 
@@ -71,10 +76,11 @@ const useAnnotations = () => {
         payload: {
           ...options,
           annotationsIds: annotationIds,
+          onAnnotationAdd,
         },
       });
     },
-    [],
+    [onAnnotationAdd],
   );
 
   const getAnnotationElementById = useCallback(

@@ -41,7 +41,7 @@ const DiscardConfirmationModal = ({
       title={t('discardChanges')}
       hint={t('discardChangesWarningHint')}
       eventName={eventName}
-      onEventName={isResetted && discardWithReason}
+      onEventName={isResetted ? discardWithReason : undefined}
       onConfirm={discardWithReason}
     >
       {children}

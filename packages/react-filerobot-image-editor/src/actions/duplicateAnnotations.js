@@ -6,8 +6,9 @@ import randomId from 'utils/randomId';
 export const DUPLICATE_ANNOTATIONS = 'DUPLICATE_ANNOTATIONS';
 
 const duplicateAnnotations = (state, payload) => {
-  const { annotations } = state;
+  const { onAnnotationAdd, annotations } = state;
   const duplicatedAnnotations = {};
+  const hasOnAnnotationAddFn = typeof onAnnotationAdd === 'function';
   payload.annotationsIds.forEach((id) => {
     const annotation = annotations[id];
     if (annotation) {
@@ -18,6 +19,17 @@ const duplicateAnnotations = (state, payload) => {
         x: annotation.x + 20,
         y: annotation.y + 20,
       };
+
+      if (hasOnAnnotationAddFn) {
+        const moreAnnotationData = onAnnotationAdd(
+          duplicatedAnnotations[clonedAnnotationId],
+          state,
+        );
+        duplicatedAnnotations[clonedAnnotationId] = {
+          ...duplicatedAnnotations[clonedAnnotationId],
+          ...moreAnnotationData,
+        };
+      }
     }
   });
 
