@@ -31,13 +31,14 @@ const NodeControls = () => {
     if (!nodesTransformer) {
       return;
     }
+    const anchor =
+      selectionsLength === 1
+        ? designLayer.getStage()?.findOne(`#${selectionsIds[0]}`)
+        : nodesTransformer;
+    const anchorPosition = anchor.getAbsolutePosition();
     setPosition({
-      left:
-        (nodesTransformer.x() + nodesTransformer.width() / 2) *
-        nodesTransformer.scaleX(),
-      top:
-        (nodesTransformer.y() + nodesTransformer.height()) *
-        nodesTransformer.scaleY(),
+      left: (anchorPosition.x + anchor.width() / 2) * anchor.scaleX(),
+      top: (anchorPosition.y + anchor.height()) * anchor.scaleY(),
     });
   }, 10);
 

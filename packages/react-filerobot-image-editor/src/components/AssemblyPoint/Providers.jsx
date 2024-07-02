@@ -28,15 +28,13 @@ const AssemblyPointProviders = ({ children, ...configProps }) => {
   const defaultAndProvidedConfigMerged = deepMerge(defaultConfig, configProps);
 
   return (
-    <React.StrictMode>
-      <ThemeProvider theme={defaultAndProvidedConfigMerged.theme}>
-        <FontsFaces />
-        <OverrideDefaultStyles />
-        <AppProvider config={defaultAndProvidedConfigMerged}>
-          {children}
-        </AppProvider>
-      </ThemeProvider>
-    </React.StrictMode>
+    <ThemeProvider theme={defaultAndProvidedConfigMerged.theme}>
+      <FontsFaces />
+      <OverrideDefaultStyles />
+      <AppProvider config={defaultAndProvidedConfigMerged}>
+        {children}
+      </AppProvider>
+    </ThemeProvider>
   );
 };
 
