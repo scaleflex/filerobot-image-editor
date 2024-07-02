@@ -28,13 +28,15 @@ const NodeControls = () => {
   const selectionsLength = selectionsIds.length;
 
   const updatePosition = debounce(() => {
-    if (!nodesTransformer) {
-      return;
-    }
     const anchor =
       selectionsLength === 1
         ? designLayer.getStage()?.findOne(`#${selectionsIds[0]}`)
         : nodesTransformer;
+
+    if (!anchor) {
+      return;
+    }
+
     const anchorPosition = anchor.getAbsolutePosition();
     setPosition({
       left: (anchorPosition.x + anchor.width() / 2) * anchor.scaleX(),
