@@ -198,7 +198,7 @@ const CanvasNode = ({ children }) => {
         canvasContainer.removeEventListener('keyup', revertKeyboardKeysEffect);
       }
     };
-  }, [tabId, zoom.factor, defaultZoomFactor]);
+  }, [tabId, toolId, zoom.factor, defaultZoomFactor]);
 
   useEffect(() => {
     dispatch({
