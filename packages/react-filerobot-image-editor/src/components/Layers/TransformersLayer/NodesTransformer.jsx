@@ -68,6 +68,26 @@ const NodesTransformer = () => {
     }
   };
 
+  const getAnchors = (textAnnotations) => {
+    if (!textAnnotations[0]) {
+      return undefined;
+    }
+
+    const isAutoWidth = textAnnotations.some(
+      ({ attrs: { autoWidth } }) => autoWidth,
+    );
+    const isAutoHeight = textAnnotations.some(
+      ({ attrs: { autoHeight } }) => autoHeight,
+    );
+
+    return !isAutoWidth && !isAutoHeight
+      ? undefined
+      : [
+          ...(isAutoWidth ? [] : ['middle-right', 'middle-left']),
+          ...(isAutoHeight ? [] : ['top-center', 'bottom-center']),
+        ];
+  };
+
   useEffect(() => {
     isUnMounted = false;
 
@@ -82,9 +102,13 @@ const NodesTransformer = () => {
     }
   }, [selectionsIds]);
 
+  const textAnnotations = selections.filter(
+    ({ attrs: { name } = {} } = {}) => name === TOOLS_IDS.TEXT,
+  );
+
   const enabledAnchors = useCloudimage
     ? ['top-left', 'bottom-left', 'top-right', 'bottom-right']
-    : undefined;
+    : getAnchors(textAnnotations);
 
   // ALT is used to center scaling
   // SHIFT is used to scaling with keeping ratio
@@ -111,12 +135,7 @@ const NodesTransformer = () => {
       onDblClick={enableTextContentChangeOnDblClick}
       onDblTap={enableTextContentChangeOnDblClick}
       enabledAnchors={enabledAnchors}
-      flipEnabled={
-        !useCloudimage &&
-        !selections.some(
-          ({ attrs: { name } = {} } = {}) => name === TOOLS_IDS.TEXT,
-        )
-      }
+      flipEnabled={!useCloudimage && !textAnnotations[0]}
       shouldOverdrawWholeArea
     />
   );

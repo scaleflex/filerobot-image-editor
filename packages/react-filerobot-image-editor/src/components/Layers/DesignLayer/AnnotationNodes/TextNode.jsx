@@ -33,6 +33,8 @@ const TextNode = ({
   letterSpacing,
   lineHeight,
   align,
+  autoWidth = false,
+  autoHeight = false,
   ...otherProps
 }) => (
   <Text
@@ -59,8 +61,10 @@ const TextNode = ({
     align={align}
     x={x}
     y={y}
-    width={width}
-    height={height}
+    width={autoWidth ? undefined : width}
+    height={autoHeight ? undefined : height}
+    autoWidth={autoWidth}
+    autoHeight={autoHeight}
     {...annotationEvents}
     {...otherProps}
   />
