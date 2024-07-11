@@ -34,7 +34,7 @@ const useTextAnnotationEditing = () => {
     (newContent) => {
       if (
         (!newContent && newContent !== 0) ||
-        textContentRegex.test(newContent)
+        (textContentRegex && textContentRegex.test(newContent))
       ) {
         dispatch({
           type: SET_FEEDBACK,
