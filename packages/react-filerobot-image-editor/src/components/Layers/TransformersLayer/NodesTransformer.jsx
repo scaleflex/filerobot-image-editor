@@ -111,7 +111,12 @@ const NodesTransformer = () => {
       onDblClick={enableTextContentChangeOnDblClick}
       onDblTap={enableTextContentChangeOnDblClick}
       enabledAnchors={enabledAnchors}
-      flipEnabled={!useCloudimage}
+      flipEnabled={
+        !useCloudimage &&
+        !selections.some(
+          ({ attrs: { name } = {} } = {}) => name === TOOLS_IDS.TEXT,
+        )
+      }
       shouldOverdrawWholeArea
     />
   );
