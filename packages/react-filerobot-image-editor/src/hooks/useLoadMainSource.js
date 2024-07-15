@@ -182,9 +182,11 @@ const useLoadMainSource = ({
   const handleLoading = (loadingPromisesFn = () => []) => {
     dispatch({ type: SHOW_LOADER });
 
-    return Promise.all(loadingPromisesFn()).finally(() => {
-      dispatch({ type: HIDE_LOADER });
-    });
+    return Promise.all(loadingPromisesFn())
+      .catch(() => {})
+      .finally(() => {
+        dispatch({ type: HIDE_LOADER });
+      });
   };
 
   const updateDesignStateWithLoadableOne = () => {

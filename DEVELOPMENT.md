@@ -1,5 +1,11 @@
 # Dev. notes for developers in-case of contribution
 
+#### JS Bundle
+1- yarn build:packages
+2- yarn build:js-bundle
+
+> cause the js bundle uses the transpiled version of react package.
+
 #### Glossary
 - $reactPackage === packages/react-filerobot-image-editor/
 - 
