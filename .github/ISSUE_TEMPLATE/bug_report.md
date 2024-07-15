@@ -7,13 +7,13 @@ assignees: ''
 
 ---
 
-**Describe the bug**
+**Describe the bug (required)**
 A clear and concise description of what the bug is.
 
-**Codesandbox demo**
+**Codesandbox demo (required)**
 Provide an example link that produces the issue on any instant cloud development (ex. codesandbox).
 
-**To Reproduce**
+**To Reproduce (required)**
 Steps to reproduce the behavior:
 1. Go to '...'
 2. Click on '....'
