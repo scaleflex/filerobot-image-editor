@@ -58,11 +58,11 @@ const ImageNode = ({
       shadowColor={shadowColor}
       shadowOpacity={shadowOpacity}
       image={finalImg}
-      x={x}
-      y={y}
+      x={x || 0}
+      y={y || 0}
       width={width}
       height={height}
-      opacity={opacity}
+      opacity={opacity || 0}
       {...otherProps}
       {...annotationEvents}
       {...otherProps}
