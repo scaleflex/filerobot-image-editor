@@ -24,6 +24,7 @@ Types of changes:
 <!-- Improved
 - FlipX & FlipY behaviors, now the flip is only related to the edited image but everything else is keeping its state without flipping.
 - Add text on clicking outside.
+- Avoid facing issue with filters/fintune if using nav of bootstrap due to the `display: none` set in the wrapper element.
 
 Added
 - Rotate anti-clockwise button in rotation.

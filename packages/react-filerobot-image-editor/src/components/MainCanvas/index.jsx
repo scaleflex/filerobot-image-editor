@@ -43,6 +43,10 @@ const MainCanvas = ({
 
   const setNewCanvasSize = useCallback(
     ({ width: containerWidth, height: containerHeight }) => {
+      if (!containerWidth || !containerHeight) {
+        return;
+      }
+
       providedAppContext.dispatch({
         type: SET_CANVAS_SIZE,
         payload: {
