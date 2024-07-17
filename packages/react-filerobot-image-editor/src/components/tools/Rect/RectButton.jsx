@@ -7,7 +7,7 @@ import { CropLandscape as RectIcon } from '@scaleflex/icons/crop-landscape';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const RectButton = ({ selectTool, isSelected, t }) => (
+const RectButton = ({ selectTool, isSelected = false, t }) => (
   <ToolsBarItemButton
     className="FIE_rect-tool-button"
     id={TOOLS_IDS.RECT}
@@ -17,10 +17,6 @@ const RectButton = ({ selectTool, isSelected, t }) => (
     isSelected={isSelected}
   />
 );
-
-RectButton.defaultProps = {
-  isSelected: false,
-};
 
 RectButton.propTypes = {
   selectTool: PropTypes.func.isRequired,

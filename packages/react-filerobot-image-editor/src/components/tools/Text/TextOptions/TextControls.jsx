@@ -142,10 +142,6 @@ const TextControls = ({ text, saveText, children }) => {
   );
 };
 
-TextControls.defaultProps = {
-  children: null,
-};
-
 TextControls.propTypes = {
   text: PropTypes.instanceOf(Object).isRequired,
   saveText: PropTypes.func.isRequired,

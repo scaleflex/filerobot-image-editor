@@ -7,7 +7,7 @@ import { Text as TextIcon } from '@scaleflex/icons/text';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const TextButton = ({ selectTool, isSelected, t }) => (
+const TextButton = ({ selectTool, isSelected = false, t }) => (
   <ToolsBarItemButton
     className="FIE_text-tool-button"
     id={TOOLS_IDS.TEXT}
@@ -17,10 +17,6 @@ const TextButton = ({ selectTool, isSelected, t }) => (
     isSelected={isSelected}
   />
 );
-
-TextButton.defaultProps = {
-  isSelected: false,
-};
 
 TextButton.propTypes = {
   selectTool: PropTypes.func.isRequired,

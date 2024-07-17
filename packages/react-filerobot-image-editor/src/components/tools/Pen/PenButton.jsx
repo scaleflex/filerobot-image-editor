@@ -7,7 +7,7 @@ import { Annotation as PenIcon } from '@scaleflex/icons/annotation';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const PenButton = ({ selectTool, isSelected, t }) => (
+const PenButton = ({ selectTool, isSelected = false, t }) => (
   <ToolsBarItemButton
     className="FIE_pen-tool-button"
     id={TOOLS_IDS.PEN}
@@ -17,10 +17,6 @@ const PenButton = ({ selectTool, isSelected, t }) => (
     isSelected={isSelected}
   />
 );
-
-PenButton.defaultProps = {
-  isSelected: false,
-};
 
 PenButton.propTypes = {
   selectTool: PropTypes.func.isRequired,
