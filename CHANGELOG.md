@@ -25,6 +25,8 @@ Types of changes:
 - FlipX & FlipY behaviors, now the flip is only related to the edited image but everything else is keeping its state without flipping.
 - Add text on clicking outside.
 - Avoid facing issue with filters/fintune if using nav of bootstrap due to the `display: none` set in the wrapper element.
+- Replaced the prop-types deprecated defaultProps with default JS params.
+- The canvas text content's textarea to meet the same shape rendered on the canvas (ex. text overflow).
 
 Added
 - Rotate anti-clockwise button in rotation.

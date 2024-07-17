@@ -14,6 +14,9 @@ const handleOutsideClick = (e) => {
   }
 };
 
+// Used to make sure we are replicating the same behavior of canvas's text (ex. overflow happens for canvas but doesn't happen in text area).
+const DIMENSION_SAFETY_FACTOR = 1;
+
 const deactivateTextChange = () => {
   if (textarea) {
     textarea.remove(textarea);
@@ -68,12 +71,16 @@ const activateTextChange = (
   textarea.style.position = 'absolute';
   textarea.style.top = `${textPosition.y}px`;
   textarea.style.left = `${textPosition.x}px`;
-  textarea.style.width = `${textNode.width() - textNode.padding() * 2}px`;
-  textarea.style.height = `${textNode.height() - textNode.padding() * 2 + 5}px`;
-  textarea.style.maxWidth = `${textNode.width() - textNode.padding() * 2}px`;
-  textarea.style.maxHeight = `${
-    textNode.height() - textNode.padding() * 2 + 5
-  }px`;
+  const width = Math.ceil(
+    textNode.width() + DIMENSION_SAFETY_FACTOR - textNode.padding() * 2,
+  );
+  const height = Math.ceil(
+    textNode.height() + DIMENSION_SAFETY_FACTOR - textNode.padding() * 2 + 5,
+  );
+  textarea.style.width = `${width}px`;
+  textarea.style.height = `${height}px`;
+  textarea.style.maxWidth = `${width}px`;
+  textarea.style.maxHeight = `${height}px`;
   textarea.style.fontSize = `${textNode.fontSize()}px`;
   textarea.style.border = '1px solid rgba(0, 0, 0, 0.5)';
   textarea.style.padding = '0px';
