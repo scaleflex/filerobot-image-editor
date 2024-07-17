@@ -1,5 +1,5 @@
+/** Internal Dependencies */
 import { TOOLS_IDS } from 'utils/constants';
-
 import useStore from './useStore';
 import useAnnotation from './useAnnotation';
 
