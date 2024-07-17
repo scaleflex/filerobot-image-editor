@@ -11,10 +11,10 @@ import {
 
 const ToolsBarItemButton = ({
   id,
-  label,
+  label = '',
   onClick,
   Icon,
-  isSelected,
+  isSelected = false,
   children,
   className,
 }) => {
@@ -40,13 +40,6 @@ const ToolsBarItemButton = ({
       {children}
     </StyledToolsBarItemButton>
   );
-};
-
-ToolsBarItemButton.defaultProps = {
-  isSelected: false,
-  id: undefined,
-  children: null,
-  label: '',
 };
 
 ToolsBarItemButton.propTypes = {

@@ -7,7 +7,7 @@ import { RotationLeft as RotateIcon } from '@scaleflex/icons/rotation-left';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const RotateButton = ({ selectTool, isSelected, t }) => (
+const RotateButton = ({ selectTool, isSelected = false, t }) => (
   <ToolsBarItemButton
     className="FIE_rotate-tool-button"
     id={TOOLS_IDS.ROTATE}
@@ -17,10 +17,6 @@ const RotateButton = ({ selectTool, isSelected, t }) => (
     isSelected={isSelected}
   />
 );
-
-RotateButton.defaultProps = {
-  isSelected: false,
-};
 
 RotateButton.propTypes = {
   selectTool: PropTypes.func.isRequired,

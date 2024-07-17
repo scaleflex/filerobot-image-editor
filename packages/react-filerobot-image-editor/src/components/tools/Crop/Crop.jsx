@@ -10,7 +10,7 @@ import { TOOLS_IDS } from 'utils/constants';
 import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styled';
 import CropPresetsOption from './CropPresetsOption';
 
-const Crop = ({ selectTool, isSelected }) => {
+const Crop = ({ selectTool, isSelected = false }) => {
   const { config, t } = useStore();
   const [anchorEl, setAnchorEl] = useState();
 
@@ -40,10 +40,6 @@ const Crop = ({ selectTool, isSelected }) => {
       )}
     </ToolsBarItemButton>
   );
-};
-
-Crop.defaultProps = {
-  isSelected: false,
 };
 
 Crop.propTypes = {

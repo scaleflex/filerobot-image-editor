@@ -13,7 +13,7 @@ const xFlipReverseSideStyle = {
   transform: 'scaleX(-1)',
 };
 
-const FlipX = ({ selectTool, isSelected, t }) => {
+const FlipX = ({ selectTool, isSelected = false, t }) => {
   const {
     dispatch,
     adjustments: { isFlippedX },
@@ -63,10 +63,6 @@ const FlipX = ({ selectTool, isSelected, t }) => {
       isSelected={isSelected}
     />
   );
-};
-
-FlipX.defaultProps = {
-  isSelected: false,
 };
 
 FlipX.propTypes = {

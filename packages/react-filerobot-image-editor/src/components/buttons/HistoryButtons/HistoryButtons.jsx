@@ -1,3 +1,6 @@
+/** External Dependencies */
+import React from 'react';
+
 /** Internal dependencies */
 import { StyledHistoryButtons } from './HistoryButtons.styled';
 import RedoButton from './RedoButton';
