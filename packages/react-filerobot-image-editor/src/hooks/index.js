@@ -43,3 +43,5 @@ export { default as useSetAnnotation } from './useSetAnnotation';
 export { default as useSelectTool } from './useSelectTool';
 
 export { default as useTextAnnotationEditing } from './useTextAnnotationEditing';
+
+export { default as useImageScaled } from './useImageScaled';

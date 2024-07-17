@@ -42,7 +42,10 @@ const useAnnotationEvents = () => {
       y: e.target.y(),
     };
 
-    if (e.target.name() === TOOLS_IDS.TEXT) {
+    if (
+      e.target.name() === TOOLS_IDS.TEXT ||
+      e.target.name() === TOOLS_IDS.IMAGE
+    ) {
       transformProps.width = e.target.width() * e.target.scaleX();
       transformProps.height = e.target.height() * e.target.scaleY();
       transformProps.scaleX = 1;
@@ -60,7 +63,10 @@ const useAnnotationEvents = () => {
   }, []);
 
   const updateTextAnnotationOnTransform = useCallback((e) => {
-    if (e.target.name() === TOOLS_IDS.TEXT) {
+    if (
+      e.target.name() === TOOLS_IDS.TEXT ||
+      e.target.name() === TOOLS_IDS.IMAGE
+    ) {
       e.target.setAttrs(getAnnotationTransformProps(e));
     }
   });
