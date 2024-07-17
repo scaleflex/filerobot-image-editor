@@ -3,7 +3,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Images, UploadOutline } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { useAnnotation, useStore } from 'hooks';
+import { useImageScaled, useStore } from 'hooks';
 import { FEEDBACK_STATUSES, TOOLS_IDS } from 'utils/constants';
 import { SET_FEEDBACK } from 'actions';
 import HiddenUploadInput from 'components/common/HiddenUploadInput';
@@ -11,56 +11,19 @@ import ButtonWithMenu from 'components/common/ButtonWithMenu';
 import ImageControls from './ImageControls';
 import ImagesGallery from './ImagesGallery';
 
-const ADDED_IMG_SPACING_PERCENT = 0.15;
-
 const ImageOptions = () => {
   const [isLoading, setIsLoading] = useState();
   const [galleryAnchorEl, setGalleryAnchorEl] = useState(null);
   const uploadImgsInput = useRef();
   const menuItemsBtnRef = useRef();
-  const {
-    shownImageDimensions,
-    dispatch,
-    adjustments: { crop = {} },
-    t,
-    config = {},
-  } = useStore();
+  const { dispatch, t, config = {} } = useStore();
+  const { image, saveImage, addImgScaled } = useImageScaled();
   const imageConfig = config[TOOLS_IDS.IMAGE];
   const isUploadEnabled = !imageConfig.disableUpload;
   const isGalleryEnabled =
     Array.isArray(imageConfig.gallery) && imageConfig.gallery.length > 0;
-  const [image, saveImage, addNewImage] = useAnnotation(
-    {
-      name: TOOLS_IDS.IMAGE,
-      opacity: 1,
-    },
-    false,
-  );
 
   const requestedImgsCount = useRef(0);
-
-  const addImgScaled = (loadedImg) => {
-    const layerWidth = crop.width || shownImageDimensions.width;
-    const layerHeight = crop.height || shownImageDimensions.height;
-    const layerCropX = crop.x || 0;
-    const layerCropY = crop.y || 0;
-
-    const newImgRatio = Math.min(
-      1,
-      layerWidth /
-        (loadedImg.width + loadedImg.width * ADDED_IMG_SPACING_PERCENT),
-      layerHeight /
-        (loadedImg.height + loadedImg.height * ADDED_IMG_SPACING_PERCENT),
-    );
-
-    addNewImage({
-      image: loadedImg,
-      x: layerCropX + layerWidth / 2 - (loadedImg.width * newImgRatio) / 2,
-      y: layerCropY + layerHeight / 2 - (loadedImg.height * newImgRatio) / 2,
-      width: loadedImg.width * newImgRatio,
-      height: loadedImg.height * newImgRatio,
-    });
-  };
 
   const hideLoaderAfterDone = (filesLength) => {
     requestedImgsCount.current += 1;

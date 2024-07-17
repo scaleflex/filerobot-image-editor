@@ -36,7 +36,8 @@ const ImageNode = ({
     }
   }, [image]);
 
-  const isImgElement = image instanceof HTMLImageElement;
+  const isImgElement =
+    image instanceof HTMLImageElement || image instanceof HTMLCanvasElement;
   if (!isImgElement && !imgElement) {
     return null;
   }
@@ -81,6 +82,7 @@ ImageNode.propTypes = {
   image: PropTypes.oneOfType([
     PropTypes.instanceOf(HTMLImageElement),
     PropTypes.instanceOf(SVGImageElement),
+    PropTypes.instanceOf(HTMLCanvasElement),
     // PropTypes.instanceOf(HTMLVideoElement),
     PropTypes.instanceOf(ImageBitmap),
     PropTypes.string,
