@@ -47,6 +47,8 @@ const useImageScaled = (
     updateAnnotation(loadedImg, addNewImage, newAnnotationData);
   };
 
+  // updates the annotation image with overwriting the original image with the new one
+  // if we don't add like this, the original image of the previous image will show.
   const updateImageScaled = (loadedImg, newAnnotationData) => {
     updateAnnotation(loadedImg, saveImage, {
       ...newAnnotationData,
