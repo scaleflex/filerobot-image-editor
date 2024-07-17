@@ -2,7 +2,6 @@ import { TOOLS_IDS } from 'utils/constants';
 
 import useStore from './useStore';
 import useAnnotation from './useAnnotation';
-import useSelectedAnnotations from './useSelectedAnnotations';
 
 const ADDED_IMG_SPACING_PERCENT = 0.15;
 
@@ -22,7 +21,6 @@ const useImageScaled = (
     },
     false,
   );
-  const { updateFirstSelectedAnnotation } = useSelectedAnnotations();
 
   const updateAnnotation = (loadedImg, func, newAnnotationData = {}) => {
     const layerWidth = crop.width || shownImageDimensions.width;
@@ -50,7 +48,7 @@ const useImageScaled = (
   };
 
   const updateImageScaled = (loadedImg, newAnnotationData) => {
-    updateAnnotation(loadedImg, updateFirstSelectedAnnotation, {
+    updateAnnotation(loadedImg, saveImage, {
       ...newAnnotationData,
       originalImage: loadedImg,
     });
