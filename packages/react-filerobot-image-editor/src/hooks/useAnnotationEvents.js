@@ -62,7 +62,7 @@ const useAnnotationEvents = () => {
     setAnnotation(getAnnotationTransformProps(e));
   }, []);
 
-  const updateTextAnnotationOnTransform = useCallback((e) => {
+  const updateTextAndImageAnnotationOnTransform = useCallback((e) => {
     if (
       e.target.name() === TOOLS_IDS.TEXT ||
       e.target.name() === TOOLS_IDS.IMAGE
@@ -95,7 +95,7 @@ const useAnnotationEvents = () => {
       isAnnotationEventsDisabled
         ? {}
         : {
-            onTransform: updateTextAnnotationOnTransform,
+            onTransform: updateTextAndImageAnnotationOnTransform,
             onTransformEnd: updateAnnotationTransform,
             onDragEnd: updatePositionOnDragEnd,
             onClick: selectAnnotationOnClick,
