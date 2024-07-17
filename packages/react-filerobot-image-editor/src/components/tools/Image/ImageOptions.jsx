@@ -3,7 +3,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Images, UploadOutline } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import { useAnnotation, useImageScaled, useStore } from 'hooks';
+import { useImageScaled, useStore } from 'hooks';
 import { FEEDBACK_STATUSES, TOOLS_IDS } from 'utils/constants';
 import { SET_FEEDBACK } from 'actions';
 import HiddenUploadInput from 'components/common/HiddenUploadInput';
@@ -17,18 +17,11 @@ const ImageOptions = () => {
   const uploadImgsInput = useRef();
   const menuItemsBtnRef = useRef();
   const { dispatch, t, config = {} } = useStore();
-  const { addImgScaled } = useImageScaled();
+  const { image, saveImage, addImgScaled } = useImageScaled();
   const imageConfig = config[TOOLS_IDS.IMAGE];
   const isUploadEnabled = !imageConfig.disableUpload;
   const isGalleryEnabled =
     Array.isArray(imageConfig.gallery) && imageConfig.gallery.length > 0;
-  const [image, saveImage] = useAnnotation(
-    {
-      name: TOOLS_IDS.IMAGE,
-      opacity: 1,
-    },
-    false,
-  );
 
   const requestedImgsCount = useRef(0);
 

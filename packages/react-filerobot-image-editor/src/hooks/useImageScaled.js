@@ -14,7 +14,7 @@ const useImageScaled = (
     shownImageDimensions,
     adjustments: { crop = {} },
   } = useStore();
-  const [, , addNewImage] = useAnnotation(
+  const [image, saveImage, addNewImage] = useAnnotation(
     {
       name: TOOLS_IDS.IMAGE,
       opacity: 1,
@@ -56,7 +56,7 @@ const useImageScaled = (
     });
   };
 
-  return { addImgScaled, updateImageScaled };
+  return { image, saveImage, addImgScaled, updateImageScaled };
 };
 
 export default useImageScaled;
