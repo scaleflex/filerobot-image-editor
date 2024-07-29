@@ -9,21 +9,21 @@ import nodesCommonPropTypes from '../nodesCommonPropTypes';
 const LineNode = ({
   id,
   name,
-  scaleX,
-  scaleY,
-  rotation,
-  annotationEvents,
+  scaleX = 1,
+  scaleY = 1,
+  rotation = 0,
+  annotationEvents = {},
   points,
-  lineCap,
-  stroke,
-  strokeWidth,
+  lineCap = 'butt',
+  stroke = '#000000',
+  strokeWidth = 1,
   shadowOffsetX,
   shadowOffsetY,
   shadowBlur,
   shadowColor,
   shadowOpacity,
   tension,
-  opacity,
+  opacity = 1,
   ...otherProps
 }) => (
   <Line
@@ -50,15 +50,6 @@ const LineNode = ({
     {...otherProps}
   />
 );
-
-LineNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  stroke: '#000000',
-  strokeWidth: 1,
-  lineCap: 'butt', // butt/round/square
-  annotationEvents: {},
-  tension: undefined,
-};
 
 LineNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

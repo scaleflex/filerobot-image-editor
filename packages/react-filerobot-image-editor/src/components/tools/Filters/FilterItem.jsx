@@ -82,10 +82,6 @@ const FilterItem = ({
   );
 };
 
-FilterItem.defaultProps = {
-  filterFn: undefined,
-};
-
 FilterItem.propTypes = {
   image: PropTypes.instanceOf(HTMLImageElement).isRequired,
   filterLabel: PropTypes.string.isRequired,

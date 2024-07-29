@@ -13,11 +13,11 @@ const ImageNode = ({
   image,
   x,
   y,
-  width,
-  height,
-  scaleX,
-  scaleY,
-  rotation,
+  width = 0,
+  height = 0,
+  scaleX = 1,
+  scaleY = 1,
+  rotation = 0,
   annotationEvents,
   stroke,
   strokeWidth,
@@ -26,7 +26,7 @@ const ImageNode = ({
   shadowBlur,
   shadowColor,
   shadowOpacity,
-  opacity,
+  opacity = 1,
   ...otherProps
 }) => {
   const [imgElement, setImgElement] = useState(null);
@@ -69,12 +69,6 @@ const ImageNode = ({
       {...otherProps}
     />
   );
-};
-
-ImageNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  width: 0,
-  height: 0,
 };
 
 ImageNode.propTypes = {

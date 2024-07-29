@@ -9,14 +9,14 @@ import nodesCommonPropTypes from '../nodesCommonPropTypes';
 const EllipseNode = ({
   id,
   name,
-  fill,
+  fill = '#000000',
   x,
   y,
-  radiusX,
-  radiusY,
-  scaleX,
-  scaleY,
-  rotation,
+  radiusX = 0,
+  radiusY = 0,
+  scaleX = 1,
+  scaleY = 1,
+  rotation = 0,
   annotationEvents,
   stroke,
   strokeWidth,
@@ -25,7 +25,7 @@ const EllipseNode = ({
   shadowBlur,
   shadowColor,
   shadowOpacity,
-  opacity,
+  opacity = 1,
   ...otherProps
 }) => (
   <Ellipse
@@ -53,13 +53,6 @@ const EllipseNode = ({
     {...otherProps}
   />
 );
-
-EllipseNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  fill: '#000',
-  radiusX: 0,
-  radiusY: 0,
-};
 
 EllipseNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

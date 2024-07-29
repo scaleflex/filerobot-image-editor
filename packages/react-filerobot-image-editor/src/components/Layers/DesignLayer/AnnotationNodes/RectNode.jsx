@@ -12,11 +12,11 @@ const RectNode = ({
   fill,
   x,
   y,
-  width,
-  height,
-  scaleX,
-  scaleY,
-  rotation,
+  width = 0,
+  height = 0,
+  scaleX = 1,
+  scaleY = 1,
+  rotation = 0,
   annotationEvents,
   stroke,
   strokeWidth,
@@ -25,8 +25,8 @@ const RectNode = ({
   shadowBlur,
   shadowColor,
   shadowOpacity,
-  opacity,
-  cornerRadius,
+  opacity = 1,
+  cornerRadius = 0,
   ...otherProps
 }) => (
   <Rect
@@ -53,14 +53,6 @@ const RectNode = ({
     {...otherProps}
   />
 );
-
-RectNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  fill: '#000',
-  cornerRadius: 0,
-  width: 0,
-  height: 0,
-};
 
 RectNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

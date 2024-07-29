@@ -7,7 +7,7 @@ import { Brightness as BrightnessIcon } from '@scaleflex/icons/brightness';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const Brightness = ({ selectTool, isSelected, t }) => (
+const Brightness = ({ selectTool, isSelected = false, t }) => (
   <ToolsBarItemButton
     className="FIE_brightness-tool-button"
     id={TOOLS_IDS.BRIGHTNESS}
@@ -17,10 +17,6 @@ const Brightness = ({ selectTool, isSelected, t }) => (
     isSelected={isSelected}
   />
 );
-
-Brightness.defaultProps = {
-  isSelected: false,
-};
 
 Brightness.propTypes = {
   selectTool: PropTypes.func.isRequired,

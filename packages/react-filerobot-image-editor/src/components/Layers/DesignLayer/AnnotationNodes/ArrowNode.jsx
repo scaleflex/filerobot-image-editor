@@ -12,20 +12,20 @@ const ArrowNode = ({
   fill,
   pointerLength,
   pointerWidth,
-  scaleX,
-  scaleY,
-  rotation,
+  scaleX = 1,
+  scaleY = 1,
+  rotation = 0,
   annotationEvents,
   points,
-  lineCap,
-  stroke,
-  strokeWidth,
+  lineCap = 'butt',
+  stroke = '#000000',
+  strokeWidth = 6,
   shadowOffsetX,
   shadowOffsetY,
   shadowBlur,
   shadowColor,
   shadowOpacity,
-  opacity,
+  opacity = 1,
   ...otherProps
 }) => (
   <Arrow
@@ -53,16 +53,6 @@ const ArrowNode = ({
     {...otherProps}
   />
 );
-
-ArrowNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  stroke: '#000000',
-  strokeWidth: 6,
-  fill: undefined,
-  lineCap: 'butt',
-  pointerLength: undefined,
-  pointerWidth: undefined,
-};
 
 ArrowNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

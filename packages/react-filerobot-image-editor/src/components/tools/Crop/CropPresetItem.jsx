@@ -17,13 +17,13 @@ const CropPresetItem = ({
   onClick,
   Icon,
   isActive,
-  isAccordion,
+  isAccordion = false,
   theme,
   width,
   height,
   t,
-  disableManualResize,
-  noEffect,
+  disableManualResize = false,
+  noEffect = false,
 }) => {
   const handleOnClick = (e) =>
     onClick(e, ratio, {
@@ -58,15 +58,6 @@ const CropPresetItem = ({
       )}
     </StyledMenuItem>
   );
-};
-
-CropPresetItem.defaultProps = {
-  Icon: undefined,
-  width: undefined,
-  height: undefined,
-  disableManualResize: false,
-  isAccordion: false,
-  noEffect: false,
 };
 
 CropPresetItem.propTypes = {

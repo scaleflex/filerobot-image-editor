@@ -16,19 +16,6 @@ const nodesCommonPropTypes = {
     shadowOpacity: PropTypes.number,
     opacity: PropTypes.number,
   },
-  defaults: {
-    rotation: 0,
-    scaleX: 1,
-    scaleY: 1,
-    stroke: undefined,
-    strokeWidth: undefined,
-    shadowOffsetX: undefined,
-    shadowOffsetY: undefined,
-    shadowBlur: undefined,
-    shadowColor: undefined,
-    shadowOpacity: undefined,
-    opacity: 1,
-  },
 };
 
 export default nodesCommonPropTypes;

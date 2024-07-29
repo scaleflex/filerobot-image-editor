@@ -9,14 +9,14 @@ import nodesCommonPropTypes from '../nodesCommonPropTypes';
 const PolygonNode = ({
   id,
   name,
-  fill,
+  fill = '#000000',
   x,
   y,
   radius,
-  scaleX,
-  scaleY,
-  rotation,
-  sides,
+  scaleX = 1,
+  scaleY = 1,
+  rotation = 0,
+  sides = 3,
   annotationEvents,
   stroke,
   strokeWidth,
@@ -25,7 +25,7 @@ const PolygonNode = ({
   shadowBlur,
   shadowColor,
   shadowOpacity,
-  opacity,
+  opacity = 1,
   ...otherProps
 }) => (
   <RegularPolygon
@@ -53,12 +53,6 @@ const PolygonNode = ({
     {...otherProps}
   />
 );
-
-PolygonNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  fill: '#000',
-  sides: 3,
-};
 
 PolygonNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

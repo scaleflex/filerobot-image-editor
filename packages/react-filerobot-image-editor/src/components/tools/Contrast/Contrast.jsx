@@ -7,7 +7,7 @@ import { Contrast as ContrastIcon } from '@scaleflex/icons/contrast';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const Contrast = ({ selectTool, isSelected, t }) => (
+const Contrast = ({ selectTool, isSelected = false, t }) => (
   <ToolsBarItemButton
     className="FIE_contrast-tool-button"
     id={TOOLS_IDS.CONTRAST}
@@ -17,10 +17,6 @@ const Contrast = ({ selectTool, isSelected, t }) => (
     isSelected={isSelected}
   />
 );
-
-Contrast.defaultProps = {
-  isSelected: false,
-};
 
 Contrast.propTypes = {
   selectTool: PropTypes.func.isRequired,

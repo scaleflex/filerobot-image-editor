@@ -78,10 +78,6 @@ const WatermarksGallery = ({
   );
 };
 
-WatermarksGallery.defaultProps = {
-  style: undefined,
-};
-
 WatermarksGallery.propTypes = {
   addImgWatermark: PropTypes.func.isRequired,
   loadAndSetWatermarkImg: PropTypes.func.isRequired,

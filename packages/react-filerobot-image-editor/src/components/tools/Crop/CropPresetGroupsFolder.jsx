@@ -74,10 +74,6 @@ const CropPresetGroupsFolder = ({
   );
 };
 
-CropPresetGroupsFolder.defaultProps = {
-  Icon: undefined,
-};
-
 CropPresetGroupsFolder.propTypes = {
   titleKey: PropTypes.string.isRequired,
   groups: PropTypes.instanceOf(Array).isRequired,

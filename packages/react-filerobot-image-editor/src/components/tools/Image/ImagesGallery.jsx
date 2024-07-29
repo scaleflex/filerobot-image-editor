@@ -6,7 +6,12 @@ import Popper from '@scaleflex/ui/core/popper';
 /** Internal Dependencies */
 import { StyledImagesGallery, StyledImageWrapper } from './Image.styled';
 
-const ImagesGallery = ({ gallery, anchorEl, onClose, onSelect }) => (
+const ImagesGallery = ({
+  gallery = [],
+  anchorEl = null,
+  onClose,
+  onSelect,
+}) => (
   <Popper
     className="FIE_image-tool-gallery"
     anchorEl={anchorEl}
@@ -32,10 +37,6 @@ const ImagesGallery = ({ gallery, anchorEl, onClose, onSelect }) => (
     </StyledImagesGallery>
   </Popper>
 );
-ImagesGallery.defaultProps = {
-  gallery: [],
-  anchorEl: null,
-};
 
 ImagesGallery.propTypes = {
   onClose: PropTypes.func.isRequired,
