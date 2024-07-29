@@ -61,6 +61,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
           radiusX,
           radiusY,
           points,
+          image,
           originalImage,
           text,
           scaleX,
