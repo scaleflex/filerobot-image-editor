@@ -185,7 +185,7 @@ const useLoadMainSource = ({
     return Promise.all(loadingPromisesFn())
       .catch(() => {})
       .finally(() => {
-        dispatch({ type: HIDE_LOADER });
+        setTimeout(() => dispatch({ type: HIDE_LOADER }), 0);
       });
   };
 
@@ -206,6 +206,9 @@ const useLoadMainSource = ({
     if (source && !isSameSource(source, originalSource)) {
       cloudimageQueryLoaded.current = false;
       const isSrcLinkNotChanged =
+        (typeof originalSource?.src === 'undefined' &&
+          typeof source?.src === 'undefined' &&
+          typeof source !== 'string') ||
         (source?.src || source) === originalSource?.src;
 
       // Don't show the spinner as it is not really needed in-case we are changing the width/height...etc. to avoid giving a feeling of jumping effect.
