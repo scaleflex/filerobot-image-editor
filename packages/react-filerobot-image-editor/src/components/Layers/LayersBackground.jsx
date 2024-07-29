@@ -15,6 +15,7 @@ const LayersBackground = ({
   customFinetuneProps,
   customFilters,
   originalSourceId,
+  customSource,
 }) => {
   const {
     originalSource,
@@ -30,6 +31,7 @@ const LayersBackground = ({
       previewBgImage: configPreviewBgImage,
     } = {},
   } = useStore();
+  const source = customSource || originalSource;
 
   const currentPreviewBgColor = previewBgColor || configPreviewBgColor;
   const currentPreviewBgImage = previewBgImage || configPreviewBgImage;
@@ -60,7 +62,7 @@ const LayersBackground = ({
           {...usedFinetuneProps}
         />
       )}
-      {originalSource.bgColor && (
+      {source.bgColor && (
         <Rect
           width={width}
           height={height}
@@ -68,17 +70,17 @@ const LayersBackground = ({
           offsetY={backgroundY}
           x={backgroundX}
           y={backgroundY}
-          opacity={originalSource.opacity ?? 1}
+          opacity={source.opacity ?? 1}
           listening={false}
-          fill={originalSource.bgColor}
+          fill={source.bgColor}
           filters={finetunesAndFilter}
           {...usedFinetuneProps}
         />
       )}
-      {originalSource.src && (
+      {source.src && (
         <Image
           id={originalSourceId}
-          image={originalSource}
+          image={source}
           width={width}
           height={height}
           offsetX={backgroundX}
@@ -106,6 +108,13 @@ LayersBackground.propTypes = {
   originalSourceId: PropTypes.string,
   bgX: PropTypes.number,
   bgY: PropTypes.number,
+  customSource: PropTypes.oneOfType([
+    PropTypes.instanceOf(HTMLImageElement),
+    PropTypes.shape({
+      bgColor: PropTypes.string,
+      src: PropTypes.string,
+    }),
+  ]),
 };
 
 export default LayersBackground;

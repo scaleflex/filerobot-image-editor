@@ -30,11 +30,20 @@ Types of changes:
 
 Added
 - Rotate anti-clockwise button in rotation.
-- `previewBgColor` & `previewBgImage` params to be added as background for the canvas
+- `previewBgColor` & `previewBgImage` params to be added as background for the canvas  -- to be added --
+- `tabsToolsIds` ==FORM==> TABS_TOOLS  -- to be added --
+- `tools` ==FORM==> TOOLS_ITEMS -- to be added -- the tool id should be the tool's name and used in the tab also.(to be checked)
+- `keepAnnotationEventsEnabled`, `textContentRegex`  -- to be added --
+
 Fixed
 - Resize issue on unlocking the ratio lock.
-- `keepAnnotationEventsEnabled`, `textContentRegex`
-- Backend translations endpoint -->
+- Backend translations endpoint
+
+NOTES:
+- {toolId === TOOLS_IDS.CROP && <CropTransformer />} when adding CropTransformer as child of TransformersLayer to be opened only while opening crop tab or to do any conditional render to avoid showing the crop transformer all the time unless needed.
+- annotationNamesToNodeComponents should use the tool's name
+- -->
+
 
 ## v4.8.1 - 2024-05-16
 

@@ -17,10 +17,6 @@ const ImageControls = ({ image, saveImage, children, t }) => (
   </AnnotationOptions>
 );
 
-ImageControls.defaultProps = {
-  children: null,
-};
-
 ImageControls.propTypes = {
   image: PropTypes.instanceOf(Object).isRequired,
   saveImage: PropTypes.func.isRequired,

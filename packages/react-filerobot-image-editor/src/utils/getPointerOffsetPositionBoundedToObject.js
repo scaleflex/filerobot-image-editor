@@ -13,7 +13,7 @@ const getPointerOffsetPositionBoundedToObject = (
   previewGroup = {},
   relativeToObject = {},
 ) => {
-  const designLayer = previewGroup.parent;
+  const designLayer = previewGroup?.parent;
   const canvas = designLayer.getStage();
   const canvasZoomFactor = canvas.attrs.zoomFactor;
   const pos = designLayer.getRelativePointerPosition();
@@ -24,13 +24,13 @@ const getPointerOffsetPositionBoundedToObject = (
         pos.x,
         0,
         relativeToObject.width / (canvas.scaleX() / canvasZoomFactor),
-      ) + designLayer.attrs.xPadding,
+      ) + (designLayer?.attrs.xPadding || 0),
     offsetY:
       restrictNumber(
         pos.y,
         0,
         relativeToObject.height / (canvas.scaleY() / canvasZoomFactor),
-      ) + designLayer.attrs.yPadding,
+      ) + (designLayer?.attrs.yPadding || 0),
   };
 };
 

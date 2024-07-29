@@ -143,4 +143,8 @@ export const EVENTS = {
   ANNOTATIONS_REPLACE: 'fie-annotations-replace',
   ANNOTATIONS_SELECT: 'fie-annotations-select',
   ANNOTATIONS_DESELECT: 'fie-annotations-deselect',
+  DESIGN_UNDO: 'fie-design-undo',
+  DESIGN_REDO: 'fie-design-redo',
+  DESIGN_RESET: 'fie-design-reset',
+  DESIGN_UPDATE: 'fie-design-modify',
 };

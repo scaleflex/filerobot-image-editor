@@ -9,18 +9,18 @@ import nodesCommonPropTypes from '../nodesCommonPropTypes';
 const TextNode = ({
   id,
   name,
-  text,
-  fontFamily,
-  fontSize,
+  text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet tortor quis odio facilisis, id aliquet nulla facilisis. Etiam tincidunt tempor odio nec placerat.',
+  fontFamily = 'Arial',
+  fontSize = 14,
   fontStyle,
-  fill,
+  fill = '#000',
   x,
   y,
-  width,
-  height,
-  scaleX,
-  scaleY,
-  rotation,
+  width = 0,
+  height = 0,
+  scaleX = 1,
+  scaleY = 1,
+  rotation = 0,
   annotationEvents,
   stroke,
   strokeWidth,
@@ -29,10 +29,10 @@ const TextNode = ({
   shadowBlur,
   shadowColor,
   shadowOpacity,
-  opacity,
+  opacity = 1,
   letterSpacing,
   lineHeight,
-  align,
+  align = 'left',
   autoWidth = false,
   autoHeight = false,
   ...otherProps
@@ -69,19 +69,6 @@ const TextNode = ({
     {...otherProps}
   />
 );
-
-TextNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet tortor quis odio facilisis, id aliquet nulla facilisis. Etiam tincidunt tempor odio nec placerat.',
-  fontFamily: 'Arial',
-  fontSize: 14,
-  fill: '#000',
-  width: 0,
-  height: 0,
-  letterSpacing: undefined,
-  lineHeight: undefined,
-  align: 'left',
-};
 
 TextNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

@@ -25,6 +25,7 @@ const extractCurrentDesignState = (state, useStateAsConfig) => {
     originalSource: state.originalSource || initialAppState.originalSource,
     presentOriginalSources:
       state.presentOriginalSources || initialAppState.presentOriginalSources,
+    extra: state.extra || initialAppState.extra,
   };
 };
 

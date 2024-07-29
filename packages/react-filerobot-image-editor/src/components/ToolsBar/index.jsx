@@ -1,5 +1,6 @@
 /** External Depepdencneis */
 import React, { useCallback, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 /** Internal Depepdencneis */
 import { SELECT_TOOL } from 'actions';
@@ -12,7 +13,7 @@ import ToolsBarItemOptionsWrapper from './ToolsBarItemOptionsWrapper';
 
 const style = { maxWidth: '100%', width: '100%' };
 
-const ToolsBar = (props) => {
+const ToolsBar = ({ toolsIds, tools, selectedToolId, ...props }) => {
   const isPhoneScreen = usePhoneScreen();
   const {
     t,
@@ -21,16 +22,26 @@ const ToolsBar = (props) => {
     toolId,
     annotations,
     selectionsIds = [],
-    config: { defaultTabId, defaultToolId, useCloudimage },
+    config: {
+      defaultTabId,
+      defaultToolId,
+      useCloudimage,
+      tabsToolsIds = TABS_TOOLS,
+      tools: configTools = TOOLS_ITEMS,
+    },
   } = useStore();
   const currentTabId = tabId || defaultTabId;
   const currentToolId =
-    toolId || defaultToolId || TABS_TOOLS[currentTabId]?.[0];
+    selectedToolId ||
+    toolId ||
+    defaultToolId ||
+    tabsToolsIds[currentTabId]?.[0];
 
-  const tabTools = useMemo(
-    () => TABS_TOOLS[currentTabId] || [],
-    [currentTabId],
+  const tabToolsIds = useMemo(
+    () => toolsIds || tabsToolsIds[currentTabId] || [],
+    [toolsIds, tabsToolsIds, currentTabId],
   );
+  const availableTools = tools || configTools;
 
   const selectTool = useCallback((newToolId) => {
     dispatch({
@@ -43,22 +54,25 @@ const ToolsBar = (props) => {
 
   const items = useMemo(
     () =>
-      tabTools.map((id) => {
-        const { Item, hideFn } = TOOLS_ITEMS[id];
+      tabToolsIds.map((id) => {
+        const { Item, hideFn } = availableTools?.[id] || {};
 
         return (
           Item &&
-          (!hideFn || !hideFn({ useCloudimage })) && (
+          (!hideFn || !hideFn({ useCloudimage })) &&
+          (typeof Item === 'function' ? (
             <Item
               key={id}
               selectTool={selectTool}
               t={t}
               isSelected={currentToolId === id}
             />
-          )
+          ) : (
+            Item
+          ))
         );
       }),
-    [tabTools, currentToolId],
+    [tabToolsIds, currentToolId],
   );
 
   const ToolOptionsComponent = useMemo(() => {
@@ -70,7 +84,7 @@ const ToolsBar = (props) => {
       const selectionsLength = selectionsIds.length;
       if (selectionsLength === 1) {
         const selectedAnnotation = annotations[selectionsIds[0]];
-        return TOOLS_ITEMS[selectedAnnotation.name]?.ItemOptions;
+        return availableTools[selectedAnnotation.name]?.ItemOptions;
       }
       if (selectionsLength > 1) {
         return null;
@@ -80,12 +94,19 @@ const ToolsBar = (props) => {
     return (
       currentTabId &&
       currentToolId &&
-      TABS_TOOLS[currentTabId].includes(currentToolId) &&
-      (!TOOLS_ITEMS[toolId]?.hideFn ||
-        !TOOLS_ITEMS[toolId]?.hideFn({ useCloudimage })) &&
-      TOOLS_ITEMS[toolId]?.ItemOptions
+      tabToolsIds.includes(currentToolId) &&
+      (!availableTools[toolId]?.hideFn ||
+        !availableTools[toolId]?.hideFn({ useCloudimage })) &&
+      availableTools[toolId]?.ItemOptions
     );
-  }, [currentTabId, currentToolId, annotations, selectionsIds]);
+  }, [
+    availableTools,
+    tabToolsIds,
+    currentTabId,
+    currentToolId,
+    annotations,
+    selectionsIds,
+  ]);
 
   useEffect(() => {
     if (!toolId && currentToolId) {
@@ -117,6 +138,12 @@ const ToolsBar = (props) => {
       )}
     </StyledToolsBar>
   );
+};
+
+ToolsBar.propTypes = {
+  toolsIds: PropTypes.instanceOf(Array),
+  tools: PropTypes.instanceOf(Object),
+  selectedToolId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default ToolsBar;

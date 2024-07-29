@@ -43,12 +43,17 @@ const previewThenCallAnnotationAdding = (
       shadowBlur: 1,
       shadowOpacity: 0.7,
     });
-    previewGroup.add(textAnnotationWrappedRect);
+    if (previewGroup) {
+      previewGroup.add(textAnnotationWrappedRect);
+    }
   };
 
   const previewAnnotation = (preparedAnnotation) => {
     shownAnnotationPreview = getNewAnnotationPreview(preparedAnnotation);
-    previewGroup.add(shownAnnotationPreview);
+    if (previewGroup) {
+      previewGroup.add(shownAnnotationPreview);
+    }
+
     if (preparedAnnotation.name === TOOLS_IDS.TEXT) {
       wrapTextBoundsPreviewByRect(preparedAnnotation);
     }

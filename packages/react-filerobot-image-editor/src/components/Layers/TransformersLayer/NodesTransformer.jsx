@@ -14,7 +14,7 @@ import debounce from 'utils/debounce';
 
 let isUnMounted = false;
 
-const NodesTransformer = () => {
+const NodesTransformer = (props) => {
   const {
     selectionsIds = [],
     theme,
@@ -137,6 +137,7 @@ const NodesTransformer = () => {
       enabledAnchors={enabledAnchors}
       flipEnabled={!useCloudimage && !textAnnotations[0]}
       shouldOverdrawWholeArea
+      {...props}
     />
   );
 };

@@ -106,6 +106,8 @@ const filerobotImageEditor = new FilerobotImageEditor(
   pluginConfig,
 );
 
+window.test = filerobotImageEditor
+
 filerobotImageEditor.render({
   onSave,
   useCloudimage,

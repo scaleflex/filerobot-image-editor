@@ -8,9 +8,9 @@ import { SELECT_TAB } from 'actions';
 import TabItem from './TabItem';
 import useTabs from './hooks/useTabs';
 
-const Tabs = ({ onTabSelect, TabItemWrapper = Fragment }) => {
+const Tabs = ({ onTabSelect, tabsIds, TabItemWrapper = Fragment }) => {
   const toggleTabsNavbar = useToggleTabsNavbar();
-  const chosenTabs = useTabs();
+  const chosenTabs = useTabs(tabsIds);
   const {
     t,
     tabId = null,
@@ -62,6 +62,7 @@ const Tabs = ({ onTabSelect, TabItemWrapper = Fragment }) => {
 Tabs.propTypes = {
   onTabSelect: PropTypes.func,
   TabItemWrapper: PropTypes.elementType,
+  tabsIds: PropTypes.instanceOf(Array),
 };
 
 export default Tabs;

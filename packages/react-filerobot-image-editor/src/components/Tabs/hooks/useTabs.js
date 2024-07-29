@@ -5,10 +5,12 @@ import { useMemo } from 'react';
 import { useStore } from 'hooks';
 import { AVAILABLE_TABS } from '../Tabs.constants';
 
-const useTabs = () => {
+const useTabs = (customTabsIds) => {
   const {
-    config: { tabsIds, useCloudimage },
+    config: { tabsIds: configTabsIds, useCloudimage },
   } = useStore();
+
+  const tabsIds = customTabsIds || configTabsIds;
 
   const chosenTabs = useMemo(() => {
     let tabs = [];

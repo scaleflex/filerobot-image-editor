@@ -5,6 +5,8 @@ import { useReducer } from 'react';
 import { REDO, RESET, UNDO } from 'actions';
 import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 import isFunction from 'utils/isFunction';
+import emitCustomEvent from 'utils/emitCustomEvent';
+import { EVENTS } from 'utils/constants';
 
 let timeout;
 
@@ -23,6 +25,7 @@ const applyCallbackFn = (callback, newState) => {
  *
  */
 // TODO: maybe? make another reducer/context for design state and having the undo/redo to it only.
+// TODO: Maybe we remove onModify, onUndo, onRedo, onReset functions since we are having the event emitter?
 const useAppReducer = (reducer, initialState, passedConfig = {}) => {
   const initialStateWithUndoRedo = {
     ...initialState,
@@ -39,16 +42,21 @@ const useAppReducer = (reducer, initialState, passedConfig = {}) => {
       let actionCallback;
       if (action.type === UNDO) {
         actionCallback = passedConfig.onUndo;
+        emitCustomEvent(EVENTS.DESIGN_UNDO, newPresentState);
       }
       if (action.type === REDO) {
         actionCallback = passedConfig.onRedo;
+        emitCustomEvent(EVENTS.DESIGN_REDO, newPresentState);
       }
       if (action.type === RESET) {
         actionCallback = passedConfig.onReset;
+        emitCustomEvent(EVENTS.DESIGN_RESET, newPresentState);
       }
 
+      emitCustomEvent(EVENTS.DESIGN_UPDATE, newPresentState);
       applyCallbackFn(passedConfig.onModify, newPresentState);
       applyCallbackFn(actionCallback, newPresentState);
+
       return newPresentState;
     }
 
@@ -66,6 +74,7 @@ const useAppReducer = (reducer, initialState, passedConfig = {}) => {
         haveNotSavedChanges: true,
       };
 
+      emitCustomEvent(EVENTS.DESIGN_UPDATE, newState);
       applyCallbackFn(passedConfig.onModify, newState);
 
       return newState;

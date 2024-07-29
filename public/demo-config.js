@@ -8,7 +8,7 @@ import CropCinemaScope from '@scaleflex/icons/crop-cinema-scope';
 import FilerobotImageEditor from 'filerobot-image-editor/src';
 import toPrecisedFloat from 'react-filerobot-image-editor/src/utils/toPrecisedFloat';
 
-const { TOOLS } = FilerobotImageEditor;
+const { TABS, TOOLS } = FilerobotImageEditor;
 
 // const saveFnRef = {};
 // const img = new Image()
@@ -390,6 +390,21 @@ const config = {
   // previewBgColor: 'gray',
   // previewBgImage: img,
   // textContentRegex: /]]>/,
+  // tabsToolsIds: {
+  //   [TABS.ADJUST]: [
+  //     TOOLS.CROP,
+  //     TOOLS.ROTATE,
+  //     // TOOLS.FLIP_X,
+  //     // TOOLS.FLIP_Y,
+  //   ],
+  // },
+  // tools: {
+  //   [TOOLS.CROP]: {
+  //     id: TOOLS.CROP,
+  //     Item: <div>CROP OPTIONS</div>, // or text, in the demo the JSX won't work since we don't transform it so possible to use 'text instead'.
+  //     hideFn: () => false
+  //   }
+  // },
 };
 
 export default config;

@@ -4,6 +4,10 @@ const getBoundingRectUnScaled = (
   previewGroup,
 ) => {
   const boundingRect = {};
+  if (!previewGroup) {
+    return boundingRect;
+  }
+
   const parentAttrs = previewGroup.parent.attrs;
   boundingRect.x =
     Math.min(pointerOffsets.offsetX, pointerDown.startedX) -

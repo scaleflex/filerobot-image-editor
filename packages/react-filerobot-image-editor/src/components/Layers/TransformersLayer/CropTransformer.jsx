@@ -15,7 +15,7 @@ import {
 } from 'utils/constants';
 import { boundDragging, boundResizing } from './TransformersLayer.utils';
 import TextNode from '../DesignLayer/AnnotationNodes/TextNode';
-import LayerBackground from '../LayersBackground';
+import LayersBackground from '../LayersBackground';
 
 let isFirstRenderCropUpdated = false;
 const noEffectTextDimensions = {
@@ -23,7 +23,7 @@ const noEffectTextDimensions = {
   height: 100,
 };
 
-const CropTransformer = () => {
+const CropTransformer = (props) => {
   const {
     dispatch,
     theme,
@@ -247,7 +247,7 @@ const CropTransformer = () => {
   // ALT is used to center scaling
   return (
     <>
-      <LayerBackground
+      <LayersBackground
         width={shownImageDimensions.width}
         height={shownImageDimensions.height}
         imageNodeRef={tmpImgNodeRef}
@@ -323,6 +323,7 @@ const CropTransformer = () => {
             cropSettings,
           )
         }
+        {...props}
       />
     </>
   );

@@ -20,7 +20,7 @@ import {
   StyledToolsBarItemButtonWrapper,
 } from './Crop.styled';
 
-const CropPresetsOption = ({ anchorEl, onClose }) => {
+const CropPresetsOption = ({ anchorEl = null, onClose }) => {
   const {
     dispatch,
     t,
@@ -176,10 +176,6 @@ const CropPresetsOption = ({ anchorEl, onClose }) => {
       </Menu>
     </>
   );
-};
-
-CropPresetsOption.defaultProps = {
-  anchorEl: null,
 };
 
 CropPresetsOption.propTypes = {
