@@ -15,8 +15,8 @@ const useSetAnnotation = () => {
       dispatch({
         type: SET_ANNOTATION,
         payload: {
-          ...annotationPayload,
           applyDimensionsMappingToOriginal: isUpdatedFromCanvas,
+          ...annotationPayload,
           onAnnotationAdd: config.onAnnotationAdd,
         },
       });
