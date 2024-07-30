@@ -33,7 +33,7 @@ const useImageScaled = (
       layerHeight / (loadedImg.height + loadedImg.height * padding),
     );
 
-    func({
+    const newAnnotation = {
       name: TOOLS_IDS.IMAGE,
       image: loadedImg,
       x: layerCropX + layerWidth / 2 - (loadedImg.width * newImgRatio) / 2,
@@ -41,7 +41,10 @@ const useImageScaled = (
       width: loadedImg.width * newImgRatio,
       height: loadedImg.height * newImgRatio,
       ...newAnnotationData,
-    });
+    };
+
+    func(newAnnotation);
+    return newAnnotation;
   };
 
   const addImgScaled = (loadedImg, newAnnotationData) => {
@@ -51,10 +54,11 @@ const useImageScaled = (
   // updates the annotation image with overwriting the original image with the new one
   // if we don't add like this, the original image of the previous image will show.
   const updateImageScaled = (loadedImg, newAnnotationData) => {
-    updateAnnotation(loadedImg, saveImage, {
+    const newAnnotation = updateAnnotation(loadedImg, saveImage, {
       ...newAnnotationData,
       originalImage: loadedImg,
     });
+    return newAnnotation;
   };
 
   return { image, saveImage, addImgScaled, updateImageScaled };
