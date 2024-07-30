@@ -12,7 +12,7 @@ const StyledHistoryButton = styled(IconButton)`
 
   svg {
     color: ${({ theme: { palette }, disabled }) =>
-      !disabled ? palette[PC.IconsPrimary] : palette[PC.IconsMuted]};
+      !disabled ? palette[PC.IconsPrimary] : palette[PC.BordersDisabled]};
   }
 `;
 
