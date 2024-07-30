@@ -84,7 +84,7 @@ const ToolsBar = ({ toolsIds, tools, selectedToolId, ...props }) => {
       const selectionsLength = selectionsIds.length;
       if (selectionsLength === 1) {
         const selectedAnnotation = annotations[selectionsIds[0]];
-        return availableTools[selectedAnnotation.name]?.ItemOptions;
+        return availableTools[selectedAnnotation?.name]?.ItemOptions;
       }
       if (selectionsLength > 1) {
         return null;

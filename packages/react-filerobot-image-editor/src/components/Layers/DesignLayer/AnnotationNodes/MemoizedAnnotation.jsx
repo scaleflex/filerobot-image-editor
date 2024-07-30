@@ -2,6 +2,9 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
+/** Internal Dependencies */
+import { useMapDimensions } from 'hooks';
+
 const MemoizedAnnotation = ({
   annotation,
   annotationEvents,
@@ -9,16 +12,22 @@ const MemoizedAnnotation = ({
   annotationNamesToNodeComponents,
   ...props
 }) => {
+  const { mapDimensionsToPreview } = useMapDimensions();
   const AnnotationComponent =
     annotationNamesToNodeComponents?.[annotation?.name];
   if (!AnnotationComponent) return null;
+
+  const annotationWithMappedDimensions = {
+    ...annotation,
+    ...mapDimensionsToPreview(annotation),
+  };
 
   return (
     <AnnotationComponent
       key={annotation.id}
       annotationEvents={annotationEvents}
       draggable={selectionsIds.includes(annotation.id)}
-      {...annotation}
+      {...annotationWithMappedDimensions}
       {...props}
     />
   );

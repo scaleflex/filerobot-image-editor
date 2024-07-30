@@ -6,7 +6,7 @@ import { ArrowRight, Point } from '@scaleflex/icons';
 /** Internal Dependencies */
 import { POSITIONS } from 'utils/constants';
 import mapPositionStringToPoint from 'utils/mapPositionStringToPoint';
-import { useStore } from 'hooks';
+import { useMapDimensions, useStore } from 'hooks';
 import { StyledIconWrapper } from './AnnotationOptions.styled';
 import {
   AVAILABLE_POSITIONS,
@@ -15,12 +15,18 @@ import {
 
 const PositionFields = ({ annotation, updateAnnotation }) => {
   const [position, setPosition] = useState(null);
+  const { mapDimensionsToPreview } = useMapDimensions();
 
   const { designLayer } = useStore();
 
   const changePosition = (newPositionStr) => {
     updateAnnotation(
-      mapPositionStringToPoint(annotation, designLayer, newPositionStr),
+      mapPositionStringToPoint(
+        annotation,
+        designLayer,
+        newPositionStr,
+        mapDimensionsToPreview,
+      ),
     );
     setPosition(newPositionStr);
   };

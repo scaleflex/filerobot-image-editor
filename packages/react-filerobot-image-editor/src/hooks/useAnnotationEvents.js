@@ -27,11 +27,13 @@ const useAnnotationEvents = () => {
   );
 
   const updatePositionOnDragEnd = useCallback((e) => {
-    setAnnotation({
+    const newPosition = {
       id: e.target.id(),
       x: e.target.x(),
       y: e.target.y(),
-    });
+    };
+
+    setAnnotation(newPosition, true);
   }, []);
 
   const getAnnotationTransformProps = useCallback((e) => {
@@ -59,7 +61,7 @@ const useAnnotationEvents = () => {
   }, []);
 
   const updateAnnotationTransform = useCallback((e) => {
-    setAnnotation(getAnnotationTransformProps(e));
+    setAnnotation(getAnnotationTransformProps(e), true);
   }, []);
 
   const updateTextAndImageAnnotationOnTransform = useCallback((e) => {

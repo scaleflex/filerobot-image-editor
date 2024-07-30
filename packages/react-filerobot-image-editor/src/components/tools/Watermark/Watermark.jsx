@@ -73,7 +73,7 @@ const Watermark = () => {
       replaceCurrent: true,
     };
 
-    setAnnotation(textWatermark);
+    setAnnotation(textWatermark, true);
   };
 
   const addImgWatermark = (loadedImg) => {
@@ -102,16 +102,19 @@ const Watermark = () => {
       replaceCurrent: true,
     };
 
-    setAnnotation(scaledWatermarkImg);
+    setAnnotation(scaledWatermarkImg, true);
   };
 
   const updateWatermarkOptions = (newOptions) => {
-    setAnnotation({
-      ...(typeof newOptions === 'function'
-        ? newOptions(watermark)
-        : newOptions),
-      id: WATERMARK_ANNOTATION_ID,
-    });
+    setAnnotation(
+      {
+        ...(typeof newOptions === 'function'
+          ? newOptions(watermark)
+          : newOptions),
+        id: WATERMARK_ANNOTATION_ID,
+      },
+      true,
+    );
   };
 
   const setFeedback = (errorMsg) => {

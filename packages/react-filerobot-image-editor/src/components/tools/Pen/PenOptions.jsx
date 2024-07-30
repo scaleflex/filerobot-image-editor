@@ -64,11 +64,14 @@ const PenOptions = ({ t }) => {
         getPointerPosition(),
       );
 
-      setAnnotation({
-        id: updatedPen.current.id,
-        points: updatedPen.current.points,
-        dismissHistory: true,
-      });
+      setAnnotation(
+        {
+          id: updatedPen.current.id,
+          points: updatedPen.current.points,
+          dismissHistory: true,
+        },
+        true,
+      );
     }
   }, [getPointerPosition]);
 

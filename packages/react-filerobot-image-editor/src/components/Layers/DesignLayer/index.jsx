@@ -9,14 +9,17 @@ import DesignLayerWrapper from './DesignLayerWrapper';
 import { ANNOTATION_NAMES_TO_COMPONENT } from './AnnotationNodes/AnnotationNodes.constants';
 
 const DesignLayer = () => {
-  const { annotations } = useStore();
+  const {
+    annotations,
+    config: { annotationComponents = ANNOTATION_NAMES_TO_COMPONENT },
+  } = useStore();
   const previewGroupRef = useRef();
 
   return (
     <DesignLayerWrapper previewGroupRef={previewGroupRef}>
       <AnnotationNodes
         annotations={annotations}
-        annotationNamesToNodeComponents={ANNOTATION_NAMES_TO_COMPONENT}
+        annotationNamesToNodeComponents={annotationComponents}
       />
       <PreviewGroup ref={previewGroupRef} />
     </DesignLayerWrapper>

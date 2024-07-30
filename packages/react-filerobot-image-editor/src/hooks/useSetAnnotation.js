@@ -11,11 +11,12 @@ const useSetAnnotation = () => {
   const { config = {} } = useStore();
 
   const setAnnotation = useCallback(
-    (annotationPayload) => {
+    (annotationPayload, isUpdatedFromCanvas = false) => {
       dispatch({
         type: SET_ANNOTATION,
         payload: {
           ...annotationPayload,
+          applyDimensionsMappingToOriginal: isUpdatedFromCanvas,
           onAnnotationAdd: config.onAnnotationAdd,
         },
       });
