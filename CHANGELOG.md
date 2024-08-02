@@ -28,6 +28,10 @@ Types of changes:
 - Replaced the prop-types deprecated defaultProps with default JS params.
 - The canvas text content's textarea to meet the same shape rendered on the canvas (ex. text overflow).
 
+Changed
+- removed defaultToolId and made it undefined by default.
+- renamed originalImage to originalSource.
+
 Added
 - Rotate anti-clockwise button in rotation.
 - `previewBgColor` & `previewBgImage` params to be added as background for the canvas  -- to be added --
