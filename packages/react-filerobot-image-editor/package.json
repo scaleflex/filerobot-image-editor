@@ -29,8 +29,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.17.2",
-    "@scaleflex/icons": "2.8.3",
-    "@scaleflex/ui": "2.9.1",
+    "@scaleflex/icons": "2.10.13",
+    "@scaleflex/ui": "2.10.13",
     "konva": "9.3.6",
     "prop-types": "15.7.2"
   },
