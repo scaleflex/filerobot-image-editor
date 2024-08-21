@@ -1,10 +1,17 @@
 /** External Dependencies */
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Text } from 'react-konva';
 
 /** Internal Dependencies */
+import { useStore } from 'hooks';
 import nodesCommonPropTypes from '../nodesCommonPropTypes';
+
+const useEditableTextId = () => {
+  const { textIdOfEditableContent } = useStore();
+
+  return useMemo(() => textIdOfEditableContent, [textIdOfEditableContent]);
+};
 
 const TextNode = ({
   id,
@@ -35,40 +42,46 @@ const TextNode = ({
   align = 'left',
   autoWidth = false,
   autoHeight = false,
+  visible,
   ...otherProps
-}) => (
-  <Text
-    id={id}
-    name={name}
-    rotation={rotation}
-    scaleX={scaleX}
-    scaleY={scaleY}
-    stroke={stroke}
-    strokeWidth={strokeWidth}
-    shadowOffsetX={shadowOffsetX}
-    shadowOffsetY={shadowOffsetY}
-    shadowBlur={shadowBlur}
-    shadowColor={shadowColor}
-    shadowOpacity={shadowOpacity}
-    opacity={opacity || 0}
-    fill={fill}
-    text={text}
-    fontFamily={fontFamily}
-    fontStyle={fontStyle}
-    fontSize={fontSize || 1}
-    letterSpacing={letterSpacing || 0}
-    lineHeight={lineHeight || 1}
-    align={align}
-    x={x || 0}
-    y={y || 0}
-    width={autoWidth ? undefined : width}
-    height={autoHeight ? undefined : height}
-    autoWidth={autoWidth}
-    autoHeight={autoHeight}
-    {...annotationEvents}
-    {...otherProps}
-  />
-);
+}) => {
+  const editableTextId = useEditableTextId();
+
+  return (
+    <Text
+      id={id}
+      name={name}
+      rotation={rotation}
+      scaleX={scaleX}
+      scaleY={scaleY}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
+      shadowOffsetX={shadowOffsetX}
+      shadowOffsetY={shadowOffsetY}
+      shadowBlur={shadowBlur}
+      shadowColor={shadowColor}
+      shadowOpacity={shadowOpacity}
+      opacity={opacity || 0}
+      fill={fill}
+      text={text}
+      fontFamily={fontFamily}
+      fontStyle={fontStyle}
+      fontSize={fontSize || 1}
+      letterSpacing={letterSpacing || 0}
+      lineHeight={lineHeight || 1}
+      align={align}
+      x={x || 0}
+      y={y || 0}
+      width={autoWidth ? undefined : width}
+      height={autoHeight ? undefined : height}
+      autoWidth={autoWidth}
+      autoHeight={autoHeight}
+      visible={editableTextId ? false : visible}
+      {...annotationEvents}
+      {...otherProps}
+    />
+  );
+};
 
 TextNode.propTypes = {
   ...nodesCommonPropTypes.definitions,
