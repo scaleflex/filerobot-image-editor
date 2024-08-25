@@ -19,16 +19,22 @@ const setAnnotation = (state, payload = {}) => {
   } = payload;
   const annotationId = newAnnotationData.id ?? randomId(newAnnotationData.name);
 
-  let newAnnotation = { ...newAnnotationData, id: annotationId };
-
   const existedAnnotation = state.annotations[annotationId] || {};
+  const isNewAnnotation = Object.keys(existedAnnotation).length === 0;
+
+  let newAnnotation = {
+    ...newAnnotationData,
+    ...(isNewAnnotation && {
+      order: state.annotationIds.length,
+    }),
+    id: annotationId,
+  };
 
   if (
-    (replaceCurrent || Object.keys(existedAnnotation) === 0) &&
+    (replaceCurrent || isNewAnnotation) &&
     typeof onAnnotationAdd === 'function'
   ) {
     const moreAnnotationData = onAnnotationAdd(newAnnotation, state);
-
     newAnnotation = { ...newAnnotation, ...moreAnnotationData };
   }
 
@@ -96,6 +102,9 @@ const setAnnotation = (state, payload = {}) => {
   return {
     ...state,
     isDesignState: !dismissHistory, // not stored in state, used in reducer to consider in undo/redo stacks
+    annotationIds: isNewAnnotation
+      ? [...state.annotationIds, annotation.id]
+      : state.annotationIds,
     annotations: {
       ...state.annotations,
       [annotation.id]: annotation,

@@ -4,7 +4,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /** Internal Dependencies */
 import randomId from 'utils/randomId';
 import { TOOLS_IDS } from 'utils/constants';
-import { useSelectTool, useSetAnnotation, useStore } from 'hooks';
+import {
+  useSelectTool,
+  useSetAnnotation,
+  useStore,
+  useUpdateEffect,
+} from 'hooks';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
 import useDebouncedCallback from '../useDebouncedCallback';
 
@@ -19,14 +24,16 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     toolId,
   } = useStore();
   const selectTool = useSelectTool();
+  const selectedAnnotationName = annotations[selectionsIds[0]]?.name;
   const annotationDefaults = {
     ...config.annotationsCommon,
-    ...config[annotations[selectionsIds[0]]?.name || annotation.name],
+    ...config[annotation.name || selectedAnnotationName],
   };
   const [tmpAnnotation, setTmpAnnotation] = useState(() => ({
     ...annotationDefaults,
     ...annotation,
-    ...annotations[selectionsIds[0]],
+    ...(selectedAnnotationName === annotation.name &&
+      annotations[selectionsIds[0]]),
   }));
   const annotationBeforeSelection = useRef();
   const canvas = previewGroup?.getStage();
@@ -53,6 +60,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     (currentAnnotation, newAnnotationName) => {
       if (currentAnnotation.name === newAnnotationName) {
         const {
+          id,
           x,
           y,
           width,
@@ -69,6 +77,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
           rotation,
           place,
           gravity,
+          order,
           ...dimensionlessProps
         } = currentAnnotation;
 
@@ -84,7 +93,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
         ...annotation,
       };
     },
-    [],
+    [annotationDefaults, annotation],
   );
 
   const saveAnnotationNoDebounce = useCallback((newAnnotationData) => {
@@ -114,7 +123,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     }
   }, [tmpAnnotation.name]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     const { shouldSave, neverSave, ...savableAnnotation } = tmpAnnotation;
     const selection =
       selectionsIds.length === 1 && annotations[selectionsIds[0]];
@@ -126,7 +135,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     }
   }, [tmpAnnotation]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // setTimeout to make the state changes after the annotation is drawn not before.
     setTimeout(() => {
       if (selectionsIds.length === 1) {

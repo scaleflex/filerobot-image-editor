@@ -7,6 +7,7 @@ import { useAnnotationEvents, useStore, useTextAnnotationEditing } from 'hooks';
 import MemoizedAnnotation from './MemoizedAnnotation';
 
 const AnnotationNodes = ({
+  annotationIds,
   annotations,
   annotationNamesToNodeComponents,
   ...props
@@ -17,21 +18,22 @@ const AnnotationNodes = ({
 
   return useMemo(
     () =>
-      Object.values(annotations).map((annotation) => (
+      annotationIds.map((annotationId) => (
         <MemoizedAnnotation
-          key={annotation.id}
-          annotation={annotation}
+          key={annotationId}
+          annotation={annotations[annotationId]}
           annotationEvents={annotationEvents}
           selectionsIds={selectionsIds}
           annotationNamesToNodeComponents={annotationNamesToNodeComponents}
           {...props}
         />
       )),
-    [annotations, annotationEvents, selectionsIds],
+    [annotationIds, annotations, annotationEvents, selectionsIds],
   );
 };
 
 AnnotationNodes.propTypes = {
+  annotationIds: PropTypes.instanceOf(Array).isRequired,
   annotations: PropTypes.instanceOf(Object).isRequired,
   annotationNamesToNodeComponents: PropTypes.instanceOf(Object).isRequired,
 };

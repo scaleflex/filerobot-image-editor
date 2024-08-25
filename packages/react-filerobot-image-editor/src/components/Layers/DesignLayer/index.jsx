@@ -10,6 +10,7 @@ import { ANNOTATION_NAMES_TO_COMPONENT } from './AnnotationNodes/AnnotationNodes
 
 const DesignLayer = () => {
   const {
+    annotationIds,
     annotations,
     config: { annotationComponents = ANNOTATION_NAMES_TO_COMPONENT },
   } = useStore();
@@ -18,6 +19,7 @@ const DesignLayer = () => {
   return (
     <DesignLayerWrapper previewGroupRef={previewGroupRef}>
       <AnnotationNodes
+        annotationIds={annotationIds}
         annotations={annotations}
         annotationNamesToNodeComponents={annotationComponents}
       />

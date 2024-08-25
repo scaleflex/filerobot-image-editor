@@ -58,6 +58,7 @@ const deploy = (sassKey, uploadToSubFolder) => {
     method: 'POST',
     body: formData,
     headers: {
+      'Content-Type': 'multipart/form-data',
       'X-Filerobot-Key': sassKey,
     },
   })

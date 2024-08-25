@@ -20,6 +20,7 @@ const extractCurrentDesignState = (state, useStateAsConfig) => {
     finetunesProps: state.finetunesProps || initialAppState.finetunesProps,
     filter: state.filter || initialAppState.filter,
     adjustments: state.adjustments || initialAppState.adjustments,
+    annotationIds: state.annotationIds || initialAppState.annotationIds,
     annotations: state.annotations || initialAppState.annotations,
     resize: state.resize || initialAppState.resize,
     originalSource: state.originalSource || initialAppState.originalSource,

@@ -4,7 +4,9 @@ import emitCustomEvent from 'utils/emitCustomEvent';
 export const REMOVE_ANNOTATIONS = 'REMOVE_ANNOTATIONS';
 
 const removeAnnotations = (state, payload) => {
-  const { annotations } = state;
+  const { annotations, annotationIds } = state;
+  const newAnnotations = { ...annotations };
+  let newAnnotationIds = annotationIds;
   let newSelectionsIds = state.selectionsIds;
 
   payload.annotationsIds.forEach((id) => {
@@ -12,12 +14,15 @@ const removeAnnotations = (state, payload) => {
       (selectionId) => selectionId !== id,
     );
 
-    if (state.designLayer && annotations[id]) {
+    if (state.designLayer && newAnnotations[id]) {
       const annotationNode = state.designLayer.findOne(`#${id}`);
       if (annotationNode) {
         annotationNode.destroy();
       }
-      delete annotations[id];
+      delete newAnnotations[id];
+      newAnnotationIds = newAnnotationIds.filter(
+        (annotationId) => id !== annotationId,
+      );
     }
   });
 
@@ -28,8 +33,9 @@ const removeAnnotations = (state, payload) => {
   return {
     ...state,
     // not stored in state, used in reducer to consider in undo/redo stacks
-    isDesignState: payload.isDesignState || true,
-    annotations,
+    isDesignState: !payload.dismissHistory,
+    annotationIds: newAnnotationIds,
+    annotations: newAnnotations,
     selectionsIds: [],
   };
 };

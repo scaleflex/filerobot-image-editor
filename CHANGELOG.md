@@ -43,6 +43,7 @@ Added
 Fixed
 - Resize issue on unlocking the ratio lock.
 - Backend translations endpoint
+- Undo/Redo for deleted shapes.
 
 NOTES:
 - {toolId === TOOLS_IDS.CROP && <CropTransformer />} when adding CropTransformer as child of TransformersLayer to be opened only while opening crop tab or to do any conditional render to avoid showing the crop transformer all the time unless needed.

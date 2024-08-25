@@ -1,24 +1,20 @@
 /** External Dependencies */
-import React, { useCallback } from 'react';
 import Redo from '@scaleflex/icons/redo';
 
 /** Internal Dependencies */
-import { REDO } from 'actions';
-import { useStore } from 'hooks';
+import { useManageHistoryState, useStore } from 'hooks';
 import { StyledHistoryButton } from './HistoryButtons.styled';
 
 const RedoButton = (props) => {
-  const { dispatch, hasRedo = false, t } = useStore();
-  const dispatchRedo = useCallback(() => {
-    dispatch({ type: REDO });
-  }, []);
+  const { t } = useStore();
+  const { redo, hasRedo } = useManageHistoryState();
 
   return (
     <StyledHistoryButton
       className="FIE_buttons-redo-btn"
       color="basic"
       size="sm"
-      onClick={hasRedo ? dispatchRedo : undefined}
+      onClick={hasRedo ? redo : undefined}
       disabled={!hasRedo}
       title={t('redoTitle')}
       {...props}

@@ -1,25 +1,21 @@
 /** External Dependencies */
-import React, { useCallback } from 'react';
 import Undo from '@scaleflex/icons/undo';
 
 /** Internal Dependencies */
-import { UNDO } from 'actions';
-import { useStore } from 'hooks';
+import { useManageHistoryState, useStore } from 'hooks';
 import { StyledHistoryButton } from './HistoryButtons.styled';
 
 const UndoButton = (props) => {
-  const { dispatch, hasUndo = false, t, feedback } = useStore();
+  const { t, feedback } = useStore();
+  const { hasUndo, undo } = useManageHistoryState();
   const isBlockerError = feedback.duration === 0;
-  const dispatchUndo = useCallback(() => {
-    dispatch({ type: UNDO });
-  }, []);
 
   return (
     <StyledHistoryButton
       className="FIE_buttons-undo-btn"
       color="basic"
       size="sm"
-      onClick={hasUndo ? dispatchUndo : undefined}
+      onClick={hasUndo ? undo : undefined}
       disabled={!hasUndo || isBlockerError}
       title={t('undoTitle')}
       {...props}

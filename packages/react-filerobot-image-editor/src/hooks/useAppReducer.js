@@ -8,11 +8,8 @@ import isFunction from 'utils/isFunction';
 import emitCustomEvent from 'utils/emitCustomEvent';
 import { EVENTS } from 'utils/constants';
 
-let timeout;
-
 const applyCallbackFn = (callback, newState) => {
-  timeout = setTimeout(() => {
-    clearTimeout(timeout);
+  setTimeout(() => {
     if (isFunction(callback) && newState) {
       callback(newState);
     }

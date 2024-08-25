@@ -50,7 +50,7 @@ const NodeControls = () => {
 
   if (selectionsLength === 0 || !nodesTransformer) return null;
 
-  // TODO: Implemenet annotation ordering.
+  // TODO: Connect annotation ordering with useAnnotationOrdering hook.
   // const changeAnnotationOrder = () => {};
 
   const duplicateSelectedNodes = () => {

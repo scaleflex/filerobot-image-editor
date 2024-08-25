@@ -40,6 +40,13 @@ import setLatestColor, { SET_LATEST_COLOR } from './setLatestColor';
 import toggleTabsNavbar, { TOGGLE_TABS_NAVBAR } from './toggleTabsNavbar';
 import setSaving, { SET_SAVING } from './setSaving';
 import replaceAnnotations, { REPLACE_ANNOTATIONS } from './replaceAnnotations';
+import injectIntoLastState, {
+  INJECT_INTO_LAST_STATE,
+} from './injectIntoLastState';
+import updateExtraState, { UPDATE_EXTRA_STATE } from './updateExtraState';
+import updateAnnotationIds, {
+  UPDATE_ANNOTATION_IDS,
+} from './updateAnnotationIds';
 
 export default {
   [SET_ORIGINAL_SOURCE]: setOriginalSource,
@@ -70,12 +77,15 @@ export default {
   [SET_RESIZE]: setResize,
   [REMOVE_ANNOTATIONS]: removeAnnotations,
   [DUPLICATE_ANNOTATIONS]: duplicateAnnotations,
+  [UPDATE_ANNOTATION_IDS]: updateAnnotationIds,
   // End of Design actions.
   [UNDO]: undo,
   [REDO]: redo,
   [RESET]: reset,
   [SET_SAVED]: setSaved,
   [UPDATE_STATE]: updateState,
+  [UPDATE_EXTRA_STATE]: updateExtraState,
+  [INJECT_INTO_LAST_STATE]: injectIntoLastState,
 };
 
 export {
@@ -107,10 +117,13 @@ export {
   SET_RESIZE,
   REMOVE_ANNOTATIONS,
   DUPLICATE_ANNOTATIONS,
+  UPDATE_ANNOTATION_IDS,
   // End of Design actions.
   UNDO,
   REDO,
   RESET,
   SET_SAVED,
   UPDATE_STATE,
+  UPDATE_EXTRA_STATE,
+  INJECT_INTO_LAST_STATE,
 };

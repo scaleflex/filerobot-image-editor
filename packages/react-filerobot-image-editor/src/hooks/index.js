@@ -49,3 +49,7 @@ export { default as useImageScaled } from './useImageScaled';
 export { default as useUpdateState } from './useUpdateState';
 
 export { default as useMapDimensions } from './useMapDimensions';
+
+export { default as useManageHistoryState } from './useManageHistoryState';
+
+export { default as useAnnotationOrdering } from './useAnnotationOrdering';

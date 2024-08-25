@@ -3,22 +3,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
-import { useStore } from 'hooks';
-import { RESET } from 'actions';
+import { useManageHistoryState, useStore } from 'hooks';
 import ConfirmationModal from './ConfirmationModal';
 
 const ResetConfirmationModal = ({ children, eventName = 'onClick' }) => {
-  const { t, config, dispatch } = useStore();
-
-  const dispatchReset = () => {
-    dispatch({ type: RESET, payload: { config } });
-  };
+  const { t } = useStore();
+  const { reset } = useManageHistoryState();
 
   return (
     <ConfirmationModal
       title={t('warning')}
       hint={t('discardChangesWarningHint')}
-      onConfirm={dispatchReset}
+      onConfirm={reset}
       eventName={eventName}
     >
       {children}

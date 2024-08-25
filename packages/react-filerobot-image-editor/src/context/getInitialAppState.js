@@ -42,6 +42,7 @@ const getInitialAppState = (config = {}) => {
       isFlippedY: false,
       rotation: 0,
     },
+    annotationIds: [],
     annotations: {},
     resize: {},
     // --- End of design states ---
