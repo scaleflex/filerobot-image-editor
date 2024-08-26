@@ -46,6 +46,7 @@ const TextNode = ({
   ...otherProps
 }) => {
   const editableTextId = useEditableTextId();
+  const isBeingEdited = editableTextId === id;
 
   return (
     <Text
@@ -76,7 +77,7 @@ const TextNode = ({
       height={autoHeight ? undefined : height}
       autoWidth={autoWidth}
       autoHeight={autoHeight}
-      visible={editableTextId ? false : visible}
+      visible={isBeingEdited ? false : visible}
       {...annotationEvents}
       {...otherProps}
     />
