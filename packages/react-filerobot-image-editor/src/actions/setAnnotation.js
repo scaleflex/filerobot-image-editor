@@ -21,9 +21,6 @@ const setAnnotation = (state, payload = {}) => {
 
   let newAnnotation = {
     ...newAnnotationData,
-    ...(isNewAnnotation && {
-      order: state.annotationIds.length,
-    }),
     id: annotationId,
   };
 

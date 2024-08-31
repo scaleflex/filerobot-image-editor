@@ -77,7 +77,6 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
           rotation,
           place,
           gravity,
-          order,
           ...dimensionlessProps
         } = currentAnnotation;
 

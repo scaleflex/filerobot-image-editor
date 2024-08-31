@@ -9,6 +9,8 @@ const duplicateAnnotations = (state, payload) => {
   const { onAnnotationAdd, annotations } = state;
   const duplicatedAnnotations = {};
   const hasOnAnnotationAddFn = typeof onAnnotationAdd === 'function';
+  const duplicatedAnnotationIds = [];
+
   payload.annotationsIds.forEach((id) => {
     const annotation = annotations[id];
     if (annotation) {
@@ -16,13 +18,14 @@ const duplicateAnnotations = (state, payload) => {
       duplicatedAnnotations[clonedAnnotationId] = {
         ...annotation,
         id: clonedAnnotationId,
+        label: `${annotation.label} - Copy`,
         x: annotation.x + 20,
         y: annotation.y + 20,
       };
 
       if (hasOnAnnotationAddFn) {
         const moreAnnotationData = onAnnotationAdd(
-          duplicatedAnnotations[clonedAnnotationId],
+          { ...duplicatedAnnotations[clonedAnnotationId], isDuplicated: true },
           state,
         );
         duplicatedAnnotations[clonedAnnotationId] = {
@@ -30,6 +33,8 @@ const duplicateAnnotations = (state, payload) => {
           ...moreAnnotationData,
         };
       }
+
+      duplicatedAnnotationIds.push(clonedAnnotationId);
     }
   });
 
@@ -42,6 +47,7 @@ const duplicateAnnotations = (state, payload) => {
     ...state,
     // not stored in state, used in reducer to consider in undo/redo stacks
     isDesignState: !payload.dismissHistory,
+    annotationIds: [...state.annotationIds, ...duplicatedAnnotationIds],
     annotations: {
       ...annotations,
       ...duplicatedAnnotations,
