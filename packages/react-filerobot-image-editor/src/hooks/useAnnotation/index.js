@@ -42,7 +42,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     const { fonts, onFontChange, ...savableAnnotationData } = annotationData;
     const selectOnSet =
       savableAnnotationData.id && annotation.name !== TOOLS_IDS.PEN;
-    setAnnotation({ ...savableAnnotationData, selectOnSet }, true);
+    setAnnotation({ ...savableAnnotationData, selectOnSet });
   }, []);
 
   const updateTmpAnnotation = useDebouncedCallback((updatesObjOrFn) => {

@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Layer } from 'react-konva';
+import { Group, Layer } from 'react-konva';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
@@ -8,14 +8,10 @@ import getDimensionsMinimalRatio from 'utils/getDimensionsMinimalRatio';
 import cropImage from 'utils/cropImage';
 import { DESIGN_LAYER_ID, IMAGE_NODE_ID, TOOLS_IDS } from 'utils/constants';
 import { SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
-import getProperImageToCanvasSpacing from 'utils/getProperImageToCanvasSpacing';
 import { useStore } from 'hooks';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import getCenterRotatedPoint from 'utils/getCenterRotatedPoint';
 import LayersBackground from '../LayersBackground';
-
-const CANVAS_TO_IMG_SPACING = getProperImageToCanvasSpacing();
-const MIN_SPACED_WIDTH = 10; // As sometimes the spaced width is less than that and it might be hard to view the image initially.
 
 const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
   const designLayerRef = useRef();
@@ -35,19 +31,6 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
   } = useStore();
   const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
 
-  const spacedOriginalImg = useMemo(() => {
-    const spacedWidth = Math.max(
-      MIN_SPACED_WIDTH,
-      originalSource.width - CANVAS_TO_IMG_SPACING,
-    );
-    const imgRatio = originalSource.width / originalSource.height;
-
-    return {
-      width: spacedWidth,
-      height: spacedWidth / imgRatio,
-    };
-  }, [originalSource]);
-
   const originalImgSizeAfterRotation = useMemo(
     () =>
       getSizeAfterRotation(
@@ -58,7 +41,7 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
     [originalSource, rotation],
   );
 
-  const originalImgInitialScale = useMemo(
+  const originalSourceInitialScale = useMemo(
     () =>
       getDimensionsMinimalRatio(
         initialCanvasWidth,
@@ -69,41 +52,41 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
     [originalSource, initialCanvasWidth, initialCanvasHeight],
   );
 
-  const scaledSpacedOriginalImg = useMemo(
+  const scaledOriginalSource = useMemo(
     () => ({
-      width: spacedOriginalImg.width * originalImgInitialScale,
-      height: spacedOriginalImg.height * originalImgInitialScale,
+      width: originalSource.width * originalSourceInitialScale,
+      height: originalSource.height * originalSourceInitialScale,
     }),
-    [spacedOriginalImg, originalImgInitialScale],
+    [originalSource, originalSourceInitialScale],
   );
 
   const resizedX =
     resize.width && !isCurrentlyCropping
       ? resize.width /
         (crop.width ??
-          scaledSpacedOriginalImg.width ??
+          scaledOriginalSource.width ??
           originalImgSizeAfterRotation.width)
       : 1;
   const resizedY =
     resize.height && !isCurrentlyCropping
       ? resize.height /
         (crop.height ??
-          scaledSpacedOriginalImg.height ??
+          scaledOriginalSource.height ??
           originalImgSizeAfterRotation.height)
       : 1;
 
   const xPointToCenterImgInCanvas =
     canvasWidth / (2 * canvasScale) -
-    (scaledSpacedOriginalImg.width * resizedX) / 2;
+    (scaledOriginalSource.width * resizedX) / 2;
 
   const yPointToCenterImgInCanvas =
     canvasHeight / (2 * canvasScale) -
-    (scaledSpacedOriginalImg.height * resizedY) / 2;
+    (scaledOriginalSource.height * resizedY) / 2;
 
   const xPointNoResizeNoCrop =
-    canvasWidth / (2 * canvasScale) - scaledSpacedOriginalImg.width / 2;
+    canvasWidth / (2 * canvasScale) - scaledOriginalSource.width / 2;
   const yPointNoResizeNoCrop =
-    canvasHeight / (2 * canvasScale) - scaledSpacedOriginalImg.height / 2;
+    canvasHeight / (2 * canvasScale) - scaledOriginalSource.height / 2;
 
   const imageDimensions = useMemo(
     () => ({
@@ -111,9 +94,10 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
       y: Math.round(yPointToCenterImgInCanvas),
       abstractX: Math.round(xPointNoResizeNoCrop),
       abstractY: Math.round(yPointNoResizeNoCrop),
-      width: scaledSpacedOriginalImg.width,
-      height: scaledSpacedOriginalImg.height,
+      width: scaledOriginalSource.width,
+      height: scaledOriginalSource.height,
       scaledBy: canvasScale,
+      originalSourceInitialScale,
     }),
     [
       canvasScale,
@@ -121,7 +105,8 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
       yPointToCenterImgInCanvas,
       xPointNoResizeNoCrop,
       yPointNoResizeNoCrop,
-      scaledSpacedOriginalImg,
+      scaledOriginalSource,
+      originalSourceInitialScale,
     ],
   );
 
@@ -150,6 +135,7 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
         clipY: clipBox.y,
         clipWidth: clipBox.width,
         clipHeight: clipBox.height,
+        originalSourceInitialScale,
       });
     }
   };
@@ -200,12 +186,13 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
   }, [imageDimensions]);
 
   if (
-    !xPointToCenterImgInCanvas ||
-    !yPointToCenterImgInCanvas ||
+    (!xPointToCenterImgInCanvas && xPointToCenterImgInCanvas !== 0) ||
+    (!yPointToCenterImgInCanvas && yPointToCenterImgInCanvas !== 0) ||
     !imageDimensions
   ) {
     return null;
   }
+
   const cropCenterRotatedPoint = getCenterRotatedPoint(
     crop.x,
     crop.y,
@@ -238,24 +225,16 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
   const finalScaleX = (isCurrentlyCropping ? 1 : resizedX) * scaleAfterRotation;
   const finalScaleY = (isCurrentlyCropping ? 1 : resizedY) * scaleAfterRotation;
 
-  if (
-    !xPointToCenterImgInCanvas ||
-    !yPointToCenterImgInCanvas ||
-    !imageDimensions
-  ) {
-    return null;
-  }
-
   return (
     <Layer
       id={DESIGN_LAYER_ID}
       ref={designLayerRef}
       xPadding={xPoint}
       yPadding={yPoint}
-      offsetX={scaledSpacedOriginalImg.width / 2}
-      offsetY={scaledSpacedOriginalImg.height / 2}
-      x={(scaledSpacedOriginalImg.width * resizedX) / 2 + xPoint}
-      y={(scaledSpacedOriginalImg.height * resizedY) / 2 + yPoint}
+      offsetX={scaledOriginalSource.width / 2}
+      offsetY={scaledOriginalSource.height / 2}
+      x={(scaledOriginalSource.width * resizedX) / 2 + xPoint}
+      y={(scaledOriginalSource.height * resizedY) / 2 + yPoint}
       scaleX={finalScaleX}
       scaleY={finalScaleY}
       rotation={isCurrentlyCropping ? 0 : rotation}
@@ -263,12 +242,21 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
       {...props}
     >
       <LayersBackground
-        width={scaledSpacedOriginalImg.width}
-        height={scaledSpacedOriginalImg.height}
+        width={scaledOriginalSource.width}
+        height={scaledOriginalSource.height}
         imageNodeRef={imageNodeRef}
         originalSourceId={IMAGE_NODE_ID}
       />
-      {children}
+      {children && (
+        <Group
+          xPadding={xPoint}
+          yPadding={yPoint}
+          scaleX={originalSourceInitialScale}
+          scaleY={originalSourceInitialScale}
+        >
+          {children}
+        </Group>
+      )}
     </Layer>
   );
 };

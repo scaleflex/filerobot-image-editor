@@ -27,6 +27,9 @@ Types of changes:
 - Avoid facing issue with filters/fintune if using nav of bootstrap due to the `display: none` set in the wrapper element.
 - Replaced the prop-types deprecated defaultProps with default JS params.
 - The canvas text content's textarea to meet the same shape rendered on the canvas (ex. text overflow).
+- Annotation dimensions to be relative to the original source.
+- Removed the padding space between canvas and image.
+- In Crop, original background preview is now considering more properties of the edited image.
 
 Changed
 - removed defaultToolId and made it undefined by default.
@@ -39,6 +42,7 @@ Added
 - `tools` ==FORM==> TOOLS_ITEMS -- to be added -- the tool id should be the tool's name and used in the tab also.(to be checked)
 - `keepAnnotationEventsEnabled`, `textContentRegex`  -- to be added --
 - `annotationComponents`  -- to be added --
+- Support creating a design (background color, width & height) instead of editing image only.
 
 Fixed
 - Resize issue on unlocking the ratio lock.

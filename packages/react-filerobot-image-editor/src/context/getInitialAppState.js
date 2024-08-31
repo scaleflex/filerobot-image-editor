@@ -1,5 +1,10 @@
 /** Internal Dependencies */
-import { DEFAULT_ZOOM_FACTOR, POINTER_ICONS, TOOLS_IDS } from 'utils/constants';
+import {
+  DEFAULT_ZOOM_FACTOR,
+  ORIGINAL_CROP,
+  POINTER_ICONS,
+  TOOLS_IDS,
+} from 'utils/constants';
 import filterStrToClass from 'utils/filterStrToClass';
 import finetunesStrsToClasses from 'utils/finetunesStrsToClasses';
 
@@ -30,7 +35,7 @@ const getInitialAppState = (config = {}) => {
     filter: null,
     adjustments: {
       crop: {
-        ratio: config[TOOLS_IDS.CROP].ratio,
+        ratio: config[TOOLS_IDS.CROP].ratio || ORIGINAL_CROP,
         ratioTitleKey:
           config[TOOLS_IDS.CROP].ratioTitleKey ?? config[TOOLS_IDS.CROP].ratio,
         width: null,

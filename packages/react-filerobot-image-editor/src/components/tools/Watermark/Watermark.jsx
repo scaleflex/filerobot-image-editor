@@ -29,6 +29,7 @@ const Watermark = () => {
   const setAnnotation = useSetAnnotation();
   const {
     annotations,
+    originalSource,
     shownImageDimensions,
     selectionsIds,
     config,
@@ -46,10 +47,16 @@ const Watermark = () => {
     [annotations[WATERMARK_ANNOTATION_ID]],
   );
 
-  const layerWidth = crop.width || shownImageDimensions.width;
-  const layerHeight = crop.height || shownImageDimensions.height;
-  const layerCropX = crop.x || 0;
-  const layerCropY = crop.y || 0;
+  const layerWidth =
+    crop.width / shownImageDimensions.originalSourceInitialScale ||
+    originalSource.width;
+  const layerHeight =
+    crop.height / shownImageDimensions.originalSourceInitialScale ||
+    originalSource.height;
+  const layerCropX =
+    crop.x / shownImageDimensions.originalSourceInitialScale || 0;
+  const layerCropY =
+    crop.y / shownImageDimensions.originalSourceInitialScale || 0;
   const watermarkTextRatio =
     watermarkConfig.textScalingRatio || WATERMARK_IMG_RATIO_FROM_ORIGINAL;
   const watermarkImageRatio =
@@ -73,7 +80,7 @@ const Watermark = () => {
       replaceCurrent: true,
     };
 
-    setAnnotation(textWatermark, true);
+    setAnnotation(textWatermark);
   };
 
   const addImgWatermark = (loadedImg) => {
@@ -102,19 +109,16 @@ const Watermark = () => {
       replaceCurrent: true,
     };
 
-    setAnnotation(scaledWatermarkImg, true);
+    setAnnotation(scaledWatermarkImg);
   };
 
   const updateWatermarkOptions = (newOptions) => {
-    setAnnotation(
-      {
-        ...(typeof newOptions === 'function'
-          ? newOptions(watermark)
-          : newOptions),
-        id: WATERMARK_ANNOTATION_ID,
-      },
-      true,
-    );
+    setAnnotation({
+      ...(typeof newOptions === 'function'
+        ? newOptions(watermark)
+        : newOptions),
+      id: WATERMARK_ANNOTATION_ID,
+    });
   };
 
   const setFeedback = (errorMsg) => {

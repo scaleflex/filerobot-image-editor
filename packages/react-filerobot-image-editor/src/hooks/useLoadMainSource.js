@@ -9,7 +9,6 @@ import {
   SET_ORIGINAL_SOURCE,
   SHOW_LOADER,
   UPDATE_STATE,
-  ZOOM_CANVAS,
 } from 'actions';
 import loadImage from 'utils/loadImage';
 import {
@@ -23,6 +22,7 @@ import finetunesStrsToClasses from 'utils/finetunesStrsToClasses';
 import filterStrToClass from 'utils/filterStrToClass';
 import isSameSource from 'utils/isSameSource';
 import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
+import { DEFAULT_ZOOM_FACTOR } from 'utils/constants';
 
 const useLoadMainSource = ({
   sourceToLoad,
@@ -66,14 +66,24 @@ const useLoadMainSource = ({
   const haveNotSavedChangesRef = useRef(haveNotSavedChanges);
   const transformImgFn = useTransformedImgData();
 
-  const setNewOriginalSource = useCallback((newSource) => {
-    dispatch({
-      type: SET_ORIGINAL_SOURCE,
-      payload: {
-        originalSource: newSource,
-      },
-    });
-  }, []);
+  const setNewOriginalSource = useCallback(
+    (newSource) => {
+      dispatch({
+        type: SET_ORIGINAL_SOURCE,
+        payload: {
+          originalSource: newSource,
+          ...(!resetOnSourceChange && {
+            zoom: {
+              factor: DEFAULT_ZOOM_FACTOR,
+              x: null,
+              y: null,
+            },
+          }),
+        },
+      });
+    },
+    [resetOnSourceChange],
+  );
 
   const setOriginalSourceIfDimensionsFound = (newSource) => {
     if (newSource?.width && newSource.height) {
@@ -223,11 +233,6 @@ const useLoadMainSource = ({
           type: RESET,
           payload: { config },
         });
-      } else {
-        dispatch({
-          type: ZOOM_CANVAS,
-          payload: { resetZoom: true },
-        });
       }
     }
   }, [source]);
@@ -295,7 +300,7 @@ const useLoadMainSource = ({
     if (
       Object.keys(shownImageDimensions || {}).length > 0 &&
       !Object.keys(shownImageDimensions).some(
-        (k) => !shownImageDimensions[k],
+        (k) => !shownImageDimensions[k] && shownImageDimensions[k] !== 0,
       ) &&
       originalSource &&
       useCloudimage &&

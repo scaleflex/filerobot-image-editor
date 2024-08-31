@@ -1,7 +1,6 @@
 /** Internal Dependencies */
 import { TOOLS_IDS } from 'utils/constants';
-import getElemDocumentCoords from 'utils/getElemDocumentCoords';
-import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
+import getPointerOffsetPosition from 'utils/getPointerOffsetPosition';
 import getBoundingRectUnScaled from './getBoundingRectUnScaled';
 import getNewAnnotationPreview, {
   dimensToProperAnnotationDimens,
@@ -30,8 +29,6 @@ const previewThenCallAnnotationAdding = (
   previewGroup,
   callbkAfterPreview,
 ) => {
-  const getCanvasBoundingRect = () => getElemDocumentCoords(canvas.content);
-
   const wrapTextBoundsPreviewByRect = (textAnnotation) => {
     textAnnotationWrappedRect = getNewAnnotationPreview({
       ...textAnnotation,
@@ -80,10 +77,7 @@ const previewThenCallAnnotationAdding = (
   };
 
   const updatePreviewWithBoundedDimens = (e) => {
-    const pointerOffsets = getPointerOffsetPositionBoundedToObject(
-      previewGroup,
-      getCanvasBoundingRect(),
-    );
+    const pointerOffsets = getPointerOffsetPosition(previewGroup);
 
     updateAnnotationPreview(
       getBoundingRectUnScaled(pointerOffsets, pointerDown, previewGroup),
@@ -101,10 +95,7 @@ const previewThenCallAnnotationAdding = (
     if (e.evt.touches?.length > 1) {
       return;
     }
-    const pointerOffsets = getPointerOffsetPositionBoundedToObject(
-      previewGroup,
-      getCanvasBoundingRect(),
-    );
+    const pointerOffsets = getPointerOffsetPosition(previewGroup);
 
     if (pointerDown.isOutOfCanvas) {
       document.removeEventListener(
@@ -213,10 +204,7 @@ const previewThenCallAnnotationAdding = (
       return;
     }
     destroyShownPreview();
-    const pointerOffsets = getPointerOffsetPositionBoundedToObject(
-      previewGroup,
-      getCanvasBoundingRect(),
-    );
+    const pointerOffsets = getPointerOffsetPosition(previewGroup);
 
     // The dimensions are relative to the canvas.
     pointerDown.startedX = pointerOffsets.offsetX;

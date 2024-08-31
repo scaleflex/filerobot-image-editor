@@ -13,14 +13,11 @@ const useSelectedAnnotations = () => {
   const firstSelectedAnnotation = annotations[firstSelectedAnnotationId];
 
   const updateFirstSelectedAnnotation = useCallback(
-    (newAnnotationData, isUpdatedFromCanvas) => {
-      setAnnotation(
-        {
-          id: firstSelectedAnnotationId,
-          ...newAnnotationData,
-        },
-        isUpdatedFromCanvas,
-      );
+    (newAnnotationData) => {
+      setAnnotation({
+        id: firstSelectedAnnotationId,
+        ...newAnnotationData,
+      });
     },
     [firstSelectedAnnotationId],
   );

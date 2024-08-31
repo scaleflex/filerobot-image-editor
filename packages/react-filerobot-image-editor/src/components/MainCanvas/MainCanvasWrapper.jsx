@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { AppProviderOverriddenValue } from 'context';
 import { SET_CANVAS_SIZE } from 'actions';
 import { useResizeObserver, useStore, useLoadMainSource } from 'hooks';
-import NodeControls from 'components/NodeControls';
 import FeedbackPopup from 'components/FeedbackPopup';
 import Spinner from 'components/common/Spinner';
 import CanvasNode from './CanvasNode';
@@ -72,7 +71,6 @@ const MainCanvasWrapper = ({
 
   const renderCanvasContent = () => (
     <>
-      {!providedAppContext.textIdOfEditableContent && <NodeControls />}
       {providedAppContext.isShowOriginalImage &&
         providedAppContext.originalSource?.src && (
           <StyledOriginalImage

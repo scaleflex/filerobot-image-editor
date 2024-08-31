@@ -5,7 +5,7 @@ import restrictNumber from 'utils/restrictNumber';
 
 export const ZOOM_CANVAS = 'ZOOM_CANVAS';
 
-const MIN_ZOOM_FACTOR = 0.03;
+const MIN_ZOOM_FACTOR = 0.1;
 const MAX_ZOOM_FACTOR = 60;
 
 const zoomCanvas = (state, payload) => {

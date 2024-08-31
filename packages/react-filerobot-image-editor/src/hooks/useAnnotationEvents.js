@@ -33,7 +33,7 @@ const useAnnotationEvents = () => {
       y: e.target.y(),
     };
 
-    setAnnotation(newPosition, true);
+    setAnnotation(newPosition);
   }, []);
 
   const getAnnotationTransformProps = useCallback((e) => {
@@ -61,7 +61,7 @@ const useAnnotationEvents = () => {
   }, []);
 
   const updateAnnotationTransform = useCallback((e) => {
-    setAnnotation(getAnnotationTransformProps(e), true);
+    setAnnotation(getAnnotationTransformProps(e));
   }, []);
 
   const updateTextAndImageAnnotationOnTransform = useCallback((e) => {

@@ -32,7 +32,7 @@ const TextControls = ({ text, saveText, children }) => {
       const { name, value, type } = e.target;
       saveText((latestText) => ({
         id: latestText.id,
-        [name]: type === 'number' ? restrictNumber(value, 1, 500) : value,
+        [name]: type === 'number' ? restrictNumber(value, 1) : value,
       }));
     },
     [saveText],

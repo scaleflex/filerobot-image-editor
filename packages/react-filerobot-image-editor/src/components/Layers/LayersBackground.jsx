@@ -13,7 +13,7 @@ const LayersBackground = ({
   bgY,
   imageNodeRef,
   customFinetuneProps,
-  customFilters,
+  customFilters = [],
   originalSourceId,
   customSource,
 }) => {
@@ -37,13 +37,20 @@ const LayersBackground = ({
   const currentPreviewBgImage = previewBgImage || configPreviewBgImage;
 
   const finetunesAndFilter = useMemo(
-    () => customFilters || (filter ? [...finetunes, filter] : finetunes),
+    () =>
+      filter
+        ? [...finetunes, filter, ...customFilters]
+        : [...finetunes, ...customFilters],
     [customFilters, finetunes, filter],
   );
 
   const backgroundX = bgX || width / 2;
   const backgroundY = bgY || height / 2;
-  const usedFinetuneProps = customFinetuneProps || finetunesProps;
+  const usedFinetuneProps = {
+    ...finetunesProps,
+    ...customFinetuneProps,
+  };
+
   return (
     <>
       {!isSaving && (currentPreviewBgColor || currentPreviewBgImage) && (

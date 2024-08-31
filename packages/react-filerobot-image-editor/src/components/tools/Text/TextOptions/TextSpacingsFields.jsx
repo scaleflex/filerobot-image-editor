@@ -9,7 +9,7 @@ import { StyledSpacedOptionFields } from 'components/common/AnnotationOptions/An
 import Slider from 'components/common/Slider';
 
 const MIN_VALUE = 0;
-const MAX_VALUE = 100;
+const MAX_VALUE = 1000;
 const SLIDER_STEP = 1;
 
 const TextSpacingsFields = ({
@@ -32,10 +32,10 @@ const TextSpacingsFields = ({
         onChange={(val) => updateValue('letterSpacing', val)}
         value={letterSpacing}
         step={SLIDER_STEP}
+        max={MAX_VALUE}
       />
       <Label>{t('lineHeight')}</Label>
       <Slider
-        annotation="px"
         isActive={Boolean(lineHeight)}
         onChange={(val) => updateValue('lineHeight', val)}
         value={lineHeight}

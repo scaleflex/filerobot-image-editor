@@ -251,12 +251,12 @@ const CropTransformer = (props) => {
         width={shownImageDimensions.width}
         height={shownImageDimensions.height}
         imageNodeRef={tmpImgNodeRef}
-        bgX={isFlippedX ? shownImageDimensions.width : 0}
-        bgY={isFlippedY ? shownImageDimensions.height : 0}
+        bgX={isFlippedX ? shownImageDimensions.width / 2 : 0}
+        bgY={isFlippedY ? shownImageDimensions.height / 2 : 0}
         customFilters={[Konva.Filters.Blur, Konva.Filters.Brighten]}
         customFinetuneProps={{
           blurRadius: 10,
-          brightness: -0.3,
+          brightness: -0.15,
         }}
       />
       {isEllipse ? (

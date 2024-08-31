@@ -8,9 +8,10 @@ import {
   POINTER_ICONS,
   TOOLS_IDS,
 } from 'utils/constants';
-import { useStore } from 'hooks';
+import { useEditableTextId, useStore } from 'hooks';
 import { CHANGE_POINTER_ICON, ENABLE_TEXT_CONTENT_EDIT } from 'actions';
 import debounce from 'utils/debounce';
+import NodeControls from 'components/NodeControls';
 
 let isUnMounted = false;
 
@@ -22,6 +23,7 @@ const NodesTransformer = (props) => {
     dispatch,
     config: { useCloudimage },
   } = useStore();
+  const editableTextId = useEditableTextId();
   const [selections, setSelections] = useState([]);
 
   const updateSelectionNodes = debounce(() => {
@@ -110,6 +112,10 @@ const NodesTransformer = (props) => {
     ? ['top-left', 'bottom-left', 'top-right', 'bottom-right']
     : getAnchors(textAnnotations);
 
+  if (editableTextId) {
+    return null;
+  }
+
   // ALT is used to center scaling
   // SHIFT is used to scaling with keeping ratio
   return (
@@ -118,7 +124,7 @@ const NodesTransformer = (props) => {
       centeredScaling={false}
       rotationSnaps={[0, 45, 90, 135, 180, 225, 270, 315]}
       nodes={selections}
-      rotateAnchorOffset={30}
+      rotateAnchorOffset={50}
       anchorSize={14}
       anchorCornerRadius={7}
       padding={selections.length === 1 ? selections[0].attrs.padding ?? 1 : 1}
@@ -138,7 +144,9 @@ const NodesTransformer = (props) => {
       flipEnabled={!useCloudimage && !textAnnotations[0]}
       shouldOverdrawWholeArea
       {...props}
-    />
+    >
+      <NodeControls />
+    </Transformer>
   );
 };
 

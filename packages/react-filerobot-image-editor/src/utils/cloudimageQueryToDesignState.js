@@ -192,6 +192,15 @@ const cloudimageQueryToDesignState = (
   });
   const { cropX2, cropY2, crop, watermark, ...unPreparedDesignState } =
     designState;
+
+  if (designState.adjustments?.isFlippedX) {
+    crop.x = shownImageDimensions.width - (cropX2 || 0);
+  }
+
+  if (designState.adjustments?.isFlippedY) {
+    crop.y = shownImageDimensions.height - (cropY2 || 0);
+  }
+
   const validDesignState = {
     ...unPreparedDesignState,
     ...((cropX2 && cropY2 && crop) || crop?.noEffect || crop?.lockCropAreaAt
@@ -199,8 +208,8 @@ const cloudimageQueryToDesignState = (
           adjustments: {
             ...unPreparedDesignState.adjustments,
             crop: {
-              width: (cropX2 || 0) - crop.x,
-              height: (cropY2 || 0) - crop.y,
+              width: cropX2 || 0,
+              height: cropY2 || 0,
               ...crop,
             },
           },

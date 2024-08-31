@@ -78,10 +78,7 @@ const ZoomButtons = (props) => {
     const factorToAchieveSelected =
       resize.width || resize.height
         ? factor
-        : Math.min(
-            (factor * originalSource.width) / shownImageDimensions.width,
-            (factor * originalSource.height) / shownImageDimensions.height,
-          );
+        : factor / shownImageDimensions.originalSourceInitialScale;
     saveZoom(factorToAchieveSelected, true);
     toggleZoomingMenu();
   };
@@ -89,10 +86,7 @@ const ZoomButtons = (props) => {
   const isZoomDisabled = toolId === TOOLS_IDS.CROP || isBlockerError;
   const previewToRealImgFactor =
     originalSource && !resize.width && !resize.height
-      ? Math.min(
-          (shownImageDimensions.width * zoom.factor) / originalSource.width,
-          (shownImageDimensions.height * zoom.factor) / originalSource.height,
-        )
+      ? shownImageDimensions.originalSourceInitialScale * zoom.factor
       : zoom.factor;
 
   return (

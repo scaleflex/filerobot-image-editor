@@ -10,6 +10,7 @@ const useImageScaled = (
   moreImageAnnotation = {},
 ) => {
   const {
+    originalSource,
     shownImageDimensions,
     adjustments: { crop = {} },
   } = useStore();
@@ -23,10 +24,16 @@ const useImageScaled = (
   );
 
   const updateAnnotation = (loadedImg, func, newAnnotationData = {}) => {
-    const layerWidth = crop.width || shownImageDimensions.width;
-    const layerHeight = crop.height || shownImageDimensions.height;
-    const layerCropX = crop.x || 0;
-    const layerCropY = crop.y || 0;
+    const layerWidth =
+      crop.width / shownImageDimensions.originalSourceInitialScale ||
+      originalSource.width;
+    const layerHeight =
+      crop.height / shownImageDimensions.originalSourceInitialScale ||
+      originalSource.height;
+    const layerCropX =
+      crop.x / shownImageDimensions.originalSourceInitialScale || 0;
+    const layerCropY =
+      crop.y / shownImageDimensions.originalSourceInitialScale || 0;
     const newImgRatio = Math.min(
       1,
       layerWidth / (loadedImg.width + loadedImg.width * padding),

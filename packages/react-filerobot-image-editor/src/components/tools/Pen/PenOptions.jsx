@@ -6,10 +6,9 @@ import PropTypes from 'prop-types';
 import { useAnnotation, useSetAnnotation, useStore } from 'hooks';
 import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
-import getPointerOffsetPositionBoundedToObject from 'utils/getPointerOffsetPositionBoundedToObject';
+import getPointerOffsetPosition from 'utils/getPointerOffsetPosition';
 import randomId from 'utils/randomId';
 import { SELECT_ANNOTATION } from 'actions';
-import getElemDocumentCoords from 'utils/getElemDocumentCoords';
 
 const eventsOptions = {
   passive: true,
@@ -34,11 +33,7 @@ const PenOptions = ({ t }) => {
   });
 
   const getPointerPosition = useCallback(() => {
-    const canvasBoundingRect = getElemDocumentCoords(canvasRef.current.content);
-    const pos = getPointerOffsetPositionBoundedToObject(
-      previewGroup,
-      canvasBoundingRect,
-    );
+    const pos = getPointerOffsetPosition(previewGroup);
 
     return [
       pos.offsetX - (designLayer.attrs.xPadding || 0),
@@ -64,14 +59,11 @@ const PenOptions = ({ t }) => {
         getPointerPosition(),
       );
 
-      setAnnotation(
-        {
-          id: updatedPen.current.id,
-          points: updatedPen.current.points,
-          dismissHistory: true,
-        },
-        true,
-      );
+      setAnnotation({
+        id: updatedPen.current.id,
+        points: updatedPen.current.points,
+        dismissHistory: true,
+      });
     }
   }, [getPointerPosition]);
 

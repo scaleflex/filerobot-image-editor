@@ -32,7 +32,8 @@
     "@scaleflex/icons": "2.10.13",
     "@scaleflex/ui": "2.10.13",
     "konva": "9.3.6",
-    "prop-types": "15.7.2"
+    "prop-types": "15.7.2",
+    "react-konva-utils": "1.0.6"
   },
   "peerDependencies": {
     "react": ">=17.0.0",

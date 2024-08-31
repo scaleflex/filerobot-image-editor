@@ -1,8 +1,6 @@
 /** Internal dependencies */
 import { EVENTS } from 'utils/constants';
 import emitCustomEvent from 'utils/emitCustomEvent';
-import getProperDimensions from 'utils/getProperDimensions';
-import mapDimensions from 'utils/mapDimensions';
 import randomId from 'utils/randomId';
 
 export const SET_ANNOTATION = 'SET_ANNOTATION';
@@ -14,7 +12,6 @@ const setAnnotation = (state, payload = {}) => {
     replaceCurrent = false,
     selectOnSet = false,
     onAnnotationAdd,
-    applyDimensionsMappingToOriginal = true,
     ...newAnnotationData
   } = payload;
   const annotationId = newAnnotationData.id ?? randomId(newAnnotationData.name);
@@ -50,49 +47,10 @@ const setAnnotation = (state, payload = {}) => {
     return state;
   }
 
-  let annotation = {
+  const annotation = {
     ...(replaceCurrent ? {} : existedAnnotation),
     ...newAnnotation,
   };
-
-  if (applyDimensionsMappingToOriginal) {
-    const canvasDimensions = getProperDimensions(
-      state.resize,
-      state.adjustments.crop,
-      state.shownImageDimensions,
-      state.originalSource,
-      state.adjustments.rotation,
-    );
-
-    const dimensionsToMap = {
-      x: newAnnotation.x !== existedAnnotation.x && newAnnotation.x,
-      y: newAnnotation.y !== existedAnnotation.y && newAnnotation.y,
-      width:
-        newAnnotation.width !== existedAnnotation.width && newAnnotation.width,
-      height:
-        newAnnotation.height !== existedAnnotation.height &&
-        newAnnotation.height,
-      radiusX:
-        newAnnotation.radiusX !== existedAnnotation.radiusX &&
-        newAnnotation.radiusX,
-      radiusY:
-        newAnnotation.radiusY !== existedAnnotation.radiusY &&
-        newAnnotation.radiusY,
-      // NOTE: NOT APPLIED TO RADIUS AS IT'S NOT CLEAR WHICH DIMENSION TO MAP TO (HEIGHT/WIDTH)? AND NOT NEEDED YET.
-      // radius:
-      //   newAnnotation.radius !== existedAnnotation.radius &&
-      //   newAnnotation.radius,
-    };
-
-    annotation = {
-      ...annotation,
-      ...mapDimensions({
-        dimensions: dimensionsToMap,
-        oldMapDimensions: state.shownImageDimensions,
-        newMapDimensions: canvasDimensions,
-      }),
-    };
-  }
 
   emitCustomEvent(
     existedAnnotation ? EVENTS.ANNOTATION_EDIT : EVENTS.ANNOTATION_ADD,

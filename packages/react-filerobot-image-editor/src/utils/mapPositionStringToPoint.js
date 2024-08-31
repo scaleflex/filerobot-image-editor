@@ -2,12 +2,7 @@
 import { POSITIONS } from './constants';
 import getSizeAfterRotation from './getSizeAfterRotation';
 
-const mapPositionStringToPoint = (
-  annotation,
-  designLayer,
-  position,
-  mapToPreviewDimensionsFn,
-) => {
+const mapPositionStringToPoint = (annotation, designLayer, position) => {
   const {
     width,
     height,
@@ -23,22 +18,24 @@ const mapPositionStringToPoint = (
     height: height || radiusY * 2,
   };
 
-  const { width: annotationWidth, height: annotationHeight } =
-    typeof mapToPreviewDimensionsFn === 'function'
-      ? mapToPreviewDimensionsFn(dimensions)
-      : dimensions;
+  const { width: annotationWidth, height: annotationHeight } = dimensions;
 
   const scaledRotatedAnnotationSize = getSizeAfterRotation(
     annotationWidth * scaleX,
     annotationHeight * scaleY,
     rotation,
   );
-  const {
+  let {
     clipWidth: designLayerWidth,
     clipHeight: designLayerHeight,
     clipX: designLayerX = 0,
     clipY: designLayerY = 0,
   } = designLayer.attrs;
+  const { originalSourceInitialScale } = designLayer.attrs;
+  designLayerWidth /= originalSourceInitialScale;
+  designLayerHeight /= originalSourceInitialScale;
+  designLayerX /= originalSourceInitialScale;
+  designLayerY /= originalSourceInitialScale;
 
   const xAxisMapping = {
     left: designLayerX + scaledRotatedAnnotationSize.offsetLeft + padding,

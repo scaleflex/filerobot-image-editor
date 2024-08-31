@@ -11,12 +11,14 @@ import mapNumber from './mapNumber';
 import rgbaToHexWithOpacity from './rgbaToHexa';
 import toPrecisedFloat from './toPrecisedFloat';
 
-const generateCropQuery = (
+const generateCropQuery = ({
   crop,
   previewDimensions,
   originalDimensions,
   cropConfig,
-) => {
+  isFlippedX,
+  isFlippedY,
+}) => {
   if (crop.noEffect) {
     // if the ratio contains = means it might be a complete crop query (func=face) then use it as it's otherwise assign the ratio to gravity.
     return crop.ratio.includes('=') ? crop.ratio : `gravity=${crop.ratio}`;
@@ -43,7 +45,11 @@ const generateCropQuery = (
     )}${ellipseQuery}`;
   }
 
-  return `tl_px=${x},${y}&br_px=${x + width},${y + height}${ellipseQuery}`;
+  const tlX = isFlippedX ? originalDimensions.width - (x + width) : x;
+  const tlY = isFlippedY ? originalDimensions.height - (y + height) : y;
+  return `tl_px=${tlX},${tlY}&br_px=${(isFlippedX ? tlX : x) + width},${
+    (isFlippedY ? tlY : y) + height
+  }${ellipseQuery}`;
 };
 
 const generateResizeQuery = ({ width, height } = {}) =>
@@ -55,7 +61,7 @@ const generateFlipQuery = (isFlippedX, isFlippedY) =>
   `flip=${isFlippedX ? 'x' : ''}${isFlippedY ? 'y' : ''}`;
 
 const generateWatermarkQuery = (
-  previewDimensions,
+  originalSource,
   watermarkAnnotation = {},
   crop = {},
 ) => {
@@ -69,15 +75,11 @@ const generateWatermarkQuery = (
     scaleY = 1,
     ...watermark
   } = watermarkAnnotation;
-  const mainImageRatio = previewDimensions.width / previewDimensions.height;
-  const scaledWidth = previewDimensions.width * previewDimensions.scaledBy;
-  const scaledHeight = previewDimensions.height * previewDimensions.scaledBy;
-  const scaledX = x * previewDimensions.scaledBy;
-  const scaledY = y * previewDimensions.scaledBy;
+  const mainImageRatio = originalSource.width / originalSource.height;
   const queryParams = `wat=1&wat_gravity=absolute&wat_pos=${Math.floor(
-    ((scaledX - (crop.x || 0)) / scaledWidth) * 100,
+    ((x - (crop.x || 0)) / originalSource.width) * 100,
     2,
-  )}p,${Math.floor(((scaledY - (crop.y || 0)) / scaledHeight) * 100, 2)}p`;
+  )}p,${Math.floor(((y - (crop.y || 0)) / originalSource.height) * 100, 2)}p`;
 
   if (watermarkAnnotation.name === TOOLS_IDS.TEXT) {
     const { hex, opacity: colorOpacity } = rgbaToHexWithOpacity(watermark.fill);
@@ -94,8 +96,8 @@ const generateWatermarkQuery = (
   const watermarkRatio = width / height;
   const watermarkScale = toPrecisedFloat(
     (watermarkRatio > mainImageRatio
-      ? (width * scaleX) / scaledWidth
-      : (height * scaleY) / scaledHeight) * 100,
+      ? (width * scaleX) / originalSource.width
+      : (height * scaleY) / originalSource.height) * 100,
     2,
   );
 
@@ -208,13 +210,24 @@ const operationsToCloudimageUrl = (
     (crop.y || crop.y === 0)
   ) {
     operationsQueries.push(
-      generateCropQuery(crop, previewDimensions, originalSource, cropConfig),
+      generateCropQuery({
+        crop,
+        previewDimensions,
+        originalDimensions: originalSource,
+        cropConfig,
+        isFlippedX,
+        isFlippedY,
+      }),
     );
   }
 
   if (resize.width || resize.height) {
     operationsQueries.push(
-      generateResizeQuery({ ...originalSource, ...resize }),
+      generateResizeQuery({
+        width: originalSource?.width,
+        height: originalSource?.height,
+        ...resize,
+      }),
     );
   }
 
@@ -233,7 +246,7 @@ const operationsToCloudimageUrl = (
   if (annotations[WATERMARK_ANNOTATION_ID]) {
     operationsQueries.push(
       generateWatermarkQuery(
-        previewDimensions,
+        originalSource,
         annotations[WATERMARK_ANNOTATION_ID],
         crop,
       ),
