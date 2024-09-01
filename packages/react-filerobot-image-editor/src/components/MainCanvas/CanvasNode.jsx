@@ -23,7 +23,7 @@ import {
   TABS_IDS,
   TOOLS_IDS,
 } from 'utils/constants';
-import { useStore } from 'hooks';
+import { useEditableTextId, useStore } from 'hooks';
 import isAnnotationTool from 'utils/isAnnotationTool';
 import { endTouchesZooming, zoomOnTouchesMove } from './touchZoomingEvents';
 import { StyledCanvasNode } from './MainCanvas.styled';
@@ -45,6 +45,7 @@ const CanvasNode = ({ children }) => {
     zoom = {},
     config: { previewPixelRatio, disableZooming },
   } = useStore();
+  const editableTextId = useEditableTextId();
   Konva.pixelRatio = previewPixelRatio;
   const defaultZoomFactor = DEFAULT_ZOOM_FACTOR;
   const isZoomEnabled = !disableZooming && toolId !== TOOLS_IDS.CROP;
@@ -169,7 +170,7 @@ const CanvasNode = ({ children }) => {
   };
 
   const focusCanvasOnEnter = () => {
-    if (canvasRef.current) {
+    if (canvasRef.current && !editableTextId) {
       canvasRef.current.container().focus();
     }
   };
@@ -198,7 +199,7 @@ const CanvasNode = ({ children }) => {
         canvasContainer.removeEventListener('keyup', revertKeyboardKeysEffect);
       }
     };
-  }, [tabId, toolId, zoom.factor, defaultZoomFactor]);
+  }, [tabId, toolId, zoom.factor, defaultZoomFactor, editableTextId]);
 
   useEffect(() => {
     dispatch({
