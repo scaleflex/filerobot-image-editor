@@ -50,7 +50,7 @@ const setAnnotation = (state, payload = {}) => {
   };
 
   emitCustomEvent(
-    existedAnnotation ? EVENTS.ANNOTATION_EDIT : EVENTS.ANNOTATION_ADD,
+    isNewAnnotation ? EVENTS.ANNOTATION_ADD : EVENTS.ANNOTATION_EDIT,
     { annotation },
   );
 
