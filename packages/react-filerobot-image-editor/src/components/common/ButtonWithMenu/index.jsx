@@ -27,12 +27,12 @@ const ButtonWithMenu = ({
   wrapperStyle,
   buttonRef,
   noMargin,
+  buttonSize = 'sm',
 }) => {
   const { t } = useStore();
   const isMounted = useRef(true);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const buttonSize = 'sm';
 
   const filteredMenuItems = menuItems.filter(Boolean);
   const hasMultipleMenuItems = filteredMenuItems.length > 1;
@@ -150,6 +150,7 @@ ButtonWithMenu.propTypes = {
   menuStyle: PropTypes.instanceOf(Object),
   wrapperStyle: PropTypes.instanceOf(Object),
   buttonRef: PropTypes.instanceOf(Object),
+  buttonSize: PropTypes.string,
 };
 
 export default ButtonWithMenu;
