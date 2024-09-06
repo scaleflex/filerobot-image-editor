@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '@scaleflex/ui/core/button';
 import { Color as PC } from '@scaleflex/ui/utils/types/palette/color';
 import { Menu, MenuItem, MenuItemIcon } from '@scaleflex/ui/core';
+import { Arrow } from '@scaleflex/icons';
 
 const StyledButtonWrapper = styled.div`
   display: flex;
@@ -32,10 +33,16 @@ const StyledMenuIcon = styled(MenuItemIcon)`
   align-items: center;
 `;
 
+const StyledArrow = styled(Arrow)`
+  margin-top: ${({ buttonSize }) => buttonSize === 'md' && '1px'};
+  transform: ${({ open }) => (open ? `rotate(-90deg)` : `rotate(90deg)`)};
+`;
+
 export {
   StyledButtonWrapper,
   StyledMainButton,
   StyledMenu,
   StyledMenuItem,
   StyledMenuIcon,
+  StyledArrow,
 };

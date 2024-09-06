@@ -11,6 +11,7 @@ import {
   StyledMenu,
   StyledMenuItem,
   StyledMenuIcon,
+  StyledArrow,
 } from './ButtonWithMenu.styled';
 
 const ButtonWithMenu = ({
@@ -93,6 +94,15 @@ const ButtonWithMenu = ({
           title={title}
           onClick={disabled ? undefined : handleButtonClick}
           disabled={disabled}
+          endIcon={
+            menuItems.length > 0 && (
+              <StyledArrow
+                open={Boolean(anchorEl)}
+                buttonSize={buttonSize}
+                size={buttonSize === 'md' ? 12 : 10}
+              />
+            )
+          }
         >
           {label || t('saveAs')}
         </StyledMainButton>
