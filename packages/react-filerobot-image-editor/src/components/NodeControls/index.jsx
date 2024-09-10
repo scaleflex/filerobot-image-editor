@@ -8,11 +8,7 @@ import Duplicate from '@scaleflex/icons/duplicate';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
-import {
-  DUPLICATE_ANNOTATIONS,
-  REMOVE_ANNOTATIONS,
-  SELECT_ANNOTATION,
-} from 'actions';
+import { DUPLICATE_ANNOTATIONS, REMOVE_ANNOTATIONS } from 'actions';
 import { WATERMARK_ANNOTATION_ID } from 'utils/constants';
 import { StyledNodeControls } from './NodeControls.styled';
 
@@ -25,24 +21,12 @@ const NodeControls = () => {
   // TODO: Connect annotation ordering with useAnnotationOrdering hook.
   // const changeAnnotationOrder = () => {};
 
-  const selectNode = (annotationId) => {
-    dispatch({
-      type: SELECT_ANNOTATION,
-      payload: {
-        annotationId,
-      },
-    });
-  };
-
   const duplicateSelectedNodes = () => {
     dispatch({
       type: DUPLICATE_ANNOTATIONS,
       payload: {
         annotationsIds: selectionsIds,
-        onAnnotationAdd: (clonedAnnotation, ...params) => {
-          selectNode(clonedAnnotation.id);
-          config.onAnnotationAdd?.(clonedAnnotation, ...params);
-        },
+        onAnnotationAdd: config.onAnnotationAdd,
       },
     });
   };

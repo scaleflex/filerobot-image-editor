@@ -47,6 +47,7 @@ const duplicateAnnotations = (state, payload) => {
   return {
     ...state,
     // not stored in state, used in reducer to consider in undo/redo stacks
+    selectionsIds: duplicatedAnnotationIds,
     isDesignState: !payload.dismissHistory,
     annotationIds: [...state.annotationIds, ...duplicatedAnnotationIds],
     annotations: {
