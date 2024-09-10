@@ -76,7 +76,10 @@ const useAnnotations = () => {
         payload: {
           ...options,
           annotationsIds: annotationIds,
-          onAnnotationAdd,
+          onAnnotationAdd: (clonedAnnotation, ...params) => {
+            selectAnnotation(clonedAnnotation.id);
+            onAnnotationAdd?.(clonedAnnotation, ...params);
+          },
         },
       });
     },
