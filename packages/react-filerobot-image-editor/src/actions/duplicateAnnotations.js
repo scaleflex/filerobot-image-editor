@@ -6,7 +6,8 @@ import randomId from 'utils/randomId';
 export const DUPLICATE_ANNOTATIONS = 'DUPLICATE_ANNOTATIONS';
 
 const duplicateAnnotations = (state, payload) => {
-  const { onAnnotationAdd, annotations } = state;
+  const { annotations } = state;
+  const { onAnnotationAdd } = payload;
   const duplicatedAnnotations = {};
   const hasOnAnnotationAddFn = typeof onAnnotationAdd === 'function';
   const duplicatedAnnotationIds = [];
@@ -46,6 +47,7 @@ const duplicateAnnotations = (state, payload) => {
   return {
     ...state,
     // not stored in state, used in reducer to consider in undo/redo stacks
+    selectionsIds: duplicatedAnnotationIds,
     isDesignState: !payload.dismissHistory,
     annotationIds: [...state.annotationIds, ...duplicatedAnnotationIds],
     annotations: {
