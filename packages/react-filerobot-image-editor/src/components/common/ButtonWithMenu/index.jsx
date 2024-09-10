@@ -99,7 +99,7 @@ const ButtonWithMenu = ({
               <StyledArrow
                 open={Boolean(anchorEl)}
                 buttonSize={buttonSize}
-                size={buttonSize === 'md' ? 12 : 10}
+                size={buttonSize === 'md' ? 14 : 10}
               />
             )
           }

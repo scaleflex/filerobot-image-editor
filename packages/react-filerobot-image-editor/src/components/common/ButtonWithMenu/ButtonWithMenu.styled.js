@@ -16,6 +16,10 @@ const StyledMainButton = styled(Button)`
   flex-grow: 1;
   justify-content: center;
   align-items: center;
+
+  .SfxButton-EndIcon {
+    margin-left: 7px;
+  }
 `;
 
 const StyledMenu = styled(Menu)`
