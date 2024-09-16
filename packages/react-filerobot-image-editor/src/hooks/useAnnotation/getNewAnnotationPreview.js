@@ -3,6 +3,7 @@ import Konva from 'konva';
 
 /** Internal Dependencies */
 import { TOOLS_IDS } from 'utils/constants';
+import { FormattedText } from 'custom/shapes/FormattedText';
 
 const annotationsNamesToKonvaClasses = {
   [TOOLS_IDS.RECT]: Konva.Rect,
@@ -10,7 +11,7 @@ const annotationsNamesToKonvaClasses = {
   [TOOLS_IDS.POLYGON]: Konva.RegularPolygon,
   [TOOLS_IDS.LINE]: Konva.Line,
   [TOOLS_IDS.IMAGE]: Konva.Image,
-  [TOOLS_IDS.TEXT]: Konva.Text,
+  [TOOLS_IDS.TEXT]: FormattedText,
   [TOOLS_IDS.ARROW]: Konva.Arrow,
 };
 
@@ -22,18 +23,32 @@ export const NO_WIDTH_HEIGHT_ANNOTATIONS = [
   TOOLS_IDS.POLYGON,
 ];
 
-const getNewAnnotationPreview = (annotation) =>
-  new annotationsNamesToKonvaClasses[annotation.name]({
-    ...annotation,
-    opacity: annotation.opacity ?? 0.7,
-    x: annotation.x ?? 0,
-    y: annotation.y ?? 0,
-    width: Math.abs(annotation.width) || 0,
-    height: Math.abs(annotation.height) || 0,
-    ...(ANNOTATIONS_WITH_POINTS.includes(annotation.name)
-      ? { stroke: annotation.stroke || '#000000' }
-      : {}),
-  });
+const getNewAnnotationPreview = (
+  annotation,
+  customAnnotationsNamesToKonvaClasses,
+) => {
+  // TODO: Split this and make it provided from outside?
+  const annotationToKonvaShape = {
+    ...annotationsNamesToKonvaClasses,
+    ...customAnnotationsNamesToKonvaClasses,
+  };
+
+  if (annotationToKonvaShape[annotation.name]) {
+    return new annotationToKonvaShape[annotation.name]({
+      ...annotation,
+      opacity: annotation.opacity ?? 0.7,
+      x: annotation.x ?? 0,
+      y: annotation.y ?? 0,
+      width: Math.abs(annotation.width) || 0,
+      height: Math.abs(annotation.height) || 0,
+      ...(ANNOTATIONS_WITH_POINTS.includes(annotation.name)
+        ? { stroke: annotation.stroke || '#000000' }
+        : {}),
+    });
+  }
+
+  return {};
+};
 
 // If we are changing width/height we have to update the X/Y for avoiding moving the annotation from current place.
 export const dimensToProperAnnotationDimens = (

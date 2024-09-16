@@ -9,8 +9,7 @@ import FontItalic from '@scaleflex/icons/font-italic';
 import { TOOLS_IDS } from 'utils/constants';
 import AnnotationOptions from 'components/common/AnnotationOptions';
 import { StyledIconWrapper } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
-import restrictNumber from 'utils/restrictNumber';
-import { useStore } from 'hooks';
+import { useStore, useTextAnnotationEditing } from 'hooks';
 import {
   StyledFontFamilySelect,
   StyledFontSizeInput,
@@ -21,28 +20,33 @@ import {
   TEXT_POPPABLE_OPTIONS,
 } from './TextOptions.constants';
 
-const TextControls = ({ text, saveText, children }) => {
+const TextControls = ({ text: tmpTextAnnotation, saveText, children }) => {
   const { designLayer, t, config } = useStore();
+  const { updateTextFormats, currentTextAnnotation } =
+    useTextAnnotationEditing(true);
+  const text = {
+    ...tmpTextAnnotation,
+    ...currentTextAnnotation,
+  };
 
   const { useCloudimage } = config;
   const { fonts = [], onFontChange } = config[TOOLS_IDS.TEXT];
 
-  const changeTextProps = useCallback(
-    (e) => {
-      const { name, value, type } = e.target;
-      saveText((latestText) => ({
-        id: latestText.id,
-        [name]: type === 'number' ? restrictNumber(value, 1) : value,
-      }));
-    },
-    [saveText],
-  );
+  const updateTargetTextFormats = (newUpdates = {}) => {
+    if (currentTextAnnotation?.id) {
+      updateTextFormats(newUpdates);
+      return;
+    }
+
+    saveText((latestText) => ({
+      id: latestText.id,
+      ...newUpdates,
+    }));
+  };
 
   const changeFontFamily = useCallback(
     (newFontFamily) => {
-      changeTextProps({
-        target: { name: 'fontFamily', value: newFontFamily },
-      });
+      updateTargetTextFormats({ fontFamily: newFontFamily });
       if (
         text.fontFamily !== newFontFamily &&
         typeof onFontChange === 'function'
@@ -51,44 +55,26 @@ const TextControls = ({ text, saveText, children }) => {
         onFontChange(newFontFamily, reRenderCanvasFn);
       }
     },
-    [changeTextProps, text, designLayer],
-  );
-
-  const changeFontStyle = useCallback(
-    (newStyle) => {
-      let fontStyle = text.fontStyle?.replace('normal', '').split(' ') || [];
-      if (Object.keys(fontStyle).length > 0 && fontStyle.includes(newStyle)) {
-        fontStyle = fontStyle.filter((style) => style !== newStyle);
-      } else {
-        fontStyle.push(newStyle);
-      }
-
-      changeTextProps({
-        target: {
-          name: 'fontStyle',
-          value: fontStyle.join(' ').trim() || 'normal',
-        },
-      });
-    },
-    [text],
+    [text, designLayer],
   );
 
   return (
     <AnnotationOptions
       className="FIE_text-tool-options"
       annotation={text}
-      updateAnnotation={saveText}
+      updateAnnotation={updateTargetTextFormats}
       morePoppableOptionsPrepended={!useCloudimage ? TEXT_POPPABLE_OPTIONS : []}
       moreOptionsPopupComponentsObj={
         !useCloudimage ? textOptionsPopupComponents : {}
       }
       t={t}
+      showTransparentColor={false}
     >
       {Array.isArray(fonts) && fonts.length > 1 && (
         <StyledFontFamilySelect
           className="FIE_text-font-family-option"
           onChange={changeFontFamily}
-          value={text.fontFamily}
+          value={text.fontFamily?.toLowerCase()}
           placeholder={t('fontFamily')}
           size="sm"
         >
@@ -97,7 +83,7 @@ const TextControls = ({ text, saveText, children }) => {
             <MenuItem
               className="FIE_text-font-family-item"
               key={fontFamily.value ?? fontFamily}
-              value={fontFamily.value ?? fontFamily}
+              value={(fontFamily.value ?? fontFamily)?.toLowerCase()}
             >
               {fontFamily.label ?? fontFamily}
             </MenuItem>
@@ -108,7 +94,9 @@ const TextControls = ({ text, saveText, children }) => {
         className="FIE_text-size-option"
         value={text.fontSize || ''}
         name="fontSize"
-        onChange={changeTextProps}
+        onChange={(e) =>
+          updateTargetTextFormats({ fontSize: parseFloat(e.target.value) })
+        }
         inputMode="numeric"
         type="number"
         size="sm"
@@ -120,16 +108,24 @@ const TextControls = ({ text, saveText, children }) => {
           <>
             <StyledIconWrapper
               className="FIE_text-bold-option"
-              active={(text.fontStyle || '').includes('bold')}
-              onClick={() => changeFontStyle('bold')}
+              active={text.fontWeight === 'bold'}
+              onClick={() =>
+                updateTargetTextFormats({
+                  fontWeight: text.fontWeight === 'bold' ? 'normal' : 'bold',
+                })
+              }
               watermarkTool
             >
               <FontBold size={20} />
             </StyledIconWrapper>
             <StyledIconWrapper
               className="FIE_text-italic-option"
-              active={(text.fontStyle || '').includes('italic')}
-              onClick={() => changeFontStyle('italic')}
+              active={text.fontStyle === 'italic'}
+              onClick={() =>
+                updateTargetTextFormats({
+                  fontStyle: text.fontStyle === 'italic' ? 'normal' : 'italic',
+                })
+              }
               watermarkTool
             >
               <FontItalic size={20} />

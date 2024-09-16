@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 /** Internal Dependencies */
 import { DesignLayer, TransformersLayer } from 'components/Layers';
 import MainCanvasWrapper from './MainCanvasWrapper';
+import 'custom/shapes/FormattedText';
 
 const MainCanvas = ({
   onPluginRootResize,

@@ -28,25 +28,32 @@ const previewThenCallAnnotationAdding = (
   annotation,
   previewGroup,
   callbkAfterPreview,
+  customAnnotationsNamesToKonvaClasses,
 ) => {
   const wrapTextBoundsPreviewByRect = (textAnnotation) => {
-    textAnnotationWrappedRect = getNewAnnotationPreview({
-      ...textAnnotation,
-      name: TOOLS_IDS.RECT,
-      fill: '',
-      stroke: '#000000',
-      strokeWidth: 2,
-      shadowColor: '#ffffff',
-      shadowBlur: 1,
-      shadowOpacity: 0.7,
-    });
+    textAnnotationWrappedRect = getNewAnnotationPreview(
+      {
+        ...textAnnotation,
+        name: TOOLS_IDS.RECT,
+        fill: '',
+        stroke: '#000000',
+        strokeWidth: 2,
+        shadowColor: '#ffffff',
+        shadowBlur: 1,
+        shadowOpacity: 0.7,
+      },
+      customAnnotationsNamesToKonvaClasses,
+    );
     if (previewGroup) {
       previewGroup.add(textAnnotationWrappedRect);
     }
   };
 
   const previewAnnotation = (preparedAnnotation) => {
-    shownAnnotationPreview = getNewAnnotationPreview(preparedAnnotation);
+    shownAnnotationPreview = getNewAnnotationPreview(
+      preparedAnnotation,
+      customAnnotationsNamesToKonvaClasses,
+    );
     if (previewGroup) {
       previewGroup.add(shownAnnotationPreview);
     }

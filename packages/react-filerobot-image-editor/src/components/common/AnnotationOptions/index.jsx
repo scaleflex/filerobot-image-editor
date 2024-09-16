@@ -33,6 +33,7 @@ const AnnotationOptions = ({
   hideFillOption = false,
   hidePositionField = false,
   className,
+  showTransparentColor,
   ...rest
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -120,6 +121,7 @@ const AnnotationOptions = ({
           color={annotation.fill}
           onChange={changeAnnotationFill}
           colorFor="fill"
+          showTransparentColor={showTransparentColor}
         />
       )}
 
@@ -176,6 +178,7 @@ AnnotationOptions.propTypes = {
   morePoppableOptionsAppended: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   moreOptionsPopupComponentsObj: PropTypes.instanceOf(Object),
   hidePositionField: PropTypes.bool,
+  showTransparentColor: PropTypes.bool,
   className: PropTypes.string,
 };
 

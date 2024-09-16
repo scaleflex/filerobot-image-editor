@@ -13,6 +13,7 @@ const DesignLayer = () => {
     annotationIds,
     annotations,
     config: { annotationComponents = ANNOTATION_NAMES_TO_COMPONENT },
+    shownImageDimensions: { originalSourceInitialScale } = {},
   } = useStore();
   const previewGroupRef = useRef();
 
@@ -22,6 +23,7 @@ const DesignLayer = () => {
         annotationIds={annotationIds}
         annotations={annotations}
         annotationNamesToNodeComponents={annotationComponents}
+        originalSourceInitialScale={originalSourceInitialScale}
       />
       <PreviewGroup ref={previewGroupRef} />
     </DesignLayerWrapper>

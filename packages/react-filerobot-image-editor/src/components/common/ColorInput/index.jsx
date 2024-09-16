@@ -11,9 +11,8 @@ import { StyledPickerTrigger } from './ColorInput.styled';
 const pinnedColorsKey = 'FIE_pinnedColors';
 
 // colorFor is used to save the latest color for a specific purpose (e.g. fill/shadow/stroke)
-const ColorInput = ({ onChange, color, colorFor }) => {
+const ColorInput = ({ onChange, color, colorFor, showTransparentColor }) => {
   const {
-    selectionsIds = [],
     config: { annotationsCommon = {} },
     dispatch,
     latestColors = {},
@@ -74,10 +73,8 @@ const ColorInput = ({ onChange, color, colorFor }) => {
   };
 
   useEffect(() => {
-    const colorToSet = (selectionsIds.length === 0 && latestColor) || color;
-    setCurrentColor(colorToSet);
-    onChange(colorToSet);
-  }, [color, selectionsIds]);
+    setCurrentColor(color);
+  }, [color]);
 
   return (
     <>
@@ -95,6 +92,7 @@ const ColorInput = ({ onChange, color, colorFor }) => {
         open={Boolean(anchorEl)}
         onClose={closePicker}
         onApply={togglePicker}
+        showTransparentColor={showTransparentColor}
       />
     </>
   );
@@ -104,6 +102,7 @@ ColorInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   colorFor: PropTypes.string.isRequired,
   color: PropTypes.string,
+  showTransparentColor: PropTypes.bool,
 };
 
 export default ColorInput;

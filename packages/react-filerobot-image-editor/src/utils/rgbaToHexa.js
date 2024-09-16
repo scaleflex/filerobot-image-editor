@@ -8,7 +8,11 @@ const rgbaToHexWithOpacity = (rgba = '') => {
   }
 
   let [r, g, b, opacity] = rgba.split(',');
-  if (!r || !g || !b) {
+  if (
+    typeof r === 'undefined' ||
+    typeof g === 'undefined' ||
+    typeof b === 'undefined'
+  ) {
     return defaultHexColor;
   }
   r = parseFloat(r.replace(/rgba?\(/, '').trim()).toString(16);

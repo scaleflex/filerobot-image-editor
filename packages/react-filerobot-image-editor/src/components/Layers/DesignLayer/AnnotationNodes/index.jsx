@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
-import { useAnnotationEvents, useStore, useTextAnnotationEditing } from 'hooks';
+import { useAnnotationEvents, useStore } from 'hooks';
 import MemoizedAnnotation from './MemoizedAnnotation';
 
 const AnnotationNodes = ({
@@ -14,7 +14,6 @@ const AnnotationNodes = ({
 }) => {
   const { selectionsIds = [] } = useStore();
   const annotationEvents = useAnnotationEvents();
-  useTextAnnotationEditing();
 
   return useMemo(
     () =>

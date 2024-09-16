@@ -105,6 +105,7 @@ const StyledIconWrapper = styled.div(
     svg {
       vertical-align: middle;
       margin: 0 auto;
+      color: ${theme.palette[PC.IconsPrimary]};
     }
 
     ${

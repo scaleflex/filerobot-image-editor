@@ -1,12 +1,14 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Group, Text } from 'react-konva';
+import { Group } from 'react-konva';
 
 /** Internal Dependencies */
 import { useEditableTextId } from 'hooks';
 import nodesCommonPropTypes from '../../nodesCommonPropTypes';
 import TextNodeContentTextarea from './TextNodeContentTextarea';
+
+const FormattedText = 'FormattedText';
 
 const TextNode = ({
   id,
@@ -39,6 +41,8 @@ const TextNode = ({
   autoHeight = false,
   visible,
   padding,
+  fontWeight,
+  originalSourceInitialScale,
   ...otherProps
 }) => {
   const editableTextId = useEditableTextId();
@@ -48,7 +52,7 @@ const TextNode = ({
   const textY = y || 0;
 
   const textNode = (
-    <Text
+    <FormattedText
       id={id}
       name={name}
       scaleX={scaleX}
@@ -65,9 +69,10 @@ const TextNode = ({
       text={text}
       fontFamily={fontFamily}
       fontStyle={fontStyle}
+      fontWeight={fontWeight}
       fontSize={fontSize || 1}
       letterSpacing={letterSpacing || 0}
-      lineHeight={lineHeight || 1}
+      lineHeight={typeof lineHeight !== 'number' ? 1 : lineHeight}
       align={align}
       x={isBeingEdited ? 0 : textX}
       y={isBeingEdited ? 0 : textY}
@@ -77,6 +82,7 @@ const TextNode = ({
       height={autoHeight ? undefined : height}
       autoWidth={autoWidth}
       autoHeight={autoHeight}
+      scaleFormatDimensionsBy={originalSourceInitialScale}
       {...annotationEvents}
       {...otherProps}
     />
@@ -85,6 +91,7 @@ const TextNode = ({
     <Group x={textX} y={textY} rotation={rotation}>
       {textNode}
       <TextNodeContentTextarea
+        id={id}
         text={text}
         fill={fill}
         opacity={opacity}
@@ -110,9 +117,23 @@ TextNode.propTypes = {
   annotationEvents: PropTypes.instanceOf(Object).isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
-  text: PropTypes.string,
+  text: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        fontFamily: PropTypes.string,
+        fontStyle: PropTypes.string,
+        fontWeight: PropTypes.string,
+        fontSize: PropTypes.number,
+        fill: PropTypes.string,
+        letterSpacing: PropTypes.number,
+        baselineShift: PropTypes.number,
+      }),
+    ),
+  ]).isRequired,
   fontFamily: PropTypes.string,
   fontStyle: PropTypes.string,
+  fontWeight: PropTypes.string,
   fontSize: PropTypes.number,
   fill: PropTypes.string,
   letterSpacing: PropTypes.number,

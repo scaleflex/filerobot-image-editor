@@ -21,6 +21,7 @@ const ColorPickerModal = ({
   pinnedColors = [],
   onClose = () => {},
   onApply = () => {},
+  showTransparentColor = true,
 }) => {
   const { t } = useStore();
 
@@ -51,7 +52,7 @@ const ColorPickerModal = ({
             onChange={onChange}
             pinnedColors={pinnedColors}
             defaultColor={defaultColor}
-            showTransparentColor
+            showTransparentColor={showTransparentColor}
           />
         </Styled.ColorPickerWrap>
       </ModalContent>
@@ -76,6 +77,7 @@ ColorPickerModal.propTypes = {
   pinnedColors: PT.arrayOf(PT.string),
   onClose: PT.func,
   onApply: PT.func,
+  showTransparentColor: PT.bool,
 };
 
 export default ColorPickerModal;

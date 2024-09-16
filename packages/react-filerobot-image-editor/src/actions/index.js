@@ -47,6 +47,9 @@ import updateExtraState, { UPDATE_EXTRA_STATE } from './updateExtraState';
 import updateAnnotationIds, {
   UPDATE_ANNOTATION_IDS,
 } from './updateAnnotationIds';
+import setSelectedTextPart, {
+  SET_SELECTED_TEXT_PART,
+} from './setSelectedTextPart';
 
 export default {
   [SET_ORIGINAL_SOURCE]: setOriginalSource,
@@ -86,6 +89,7 @@ export default {
   [UPDATE_STATE]: updateState,
   [UPDATE_EXTRA_STATE]: updateExtraState,
   [INJECT_INTO_LAST_STATE]: injectIntoLastState,
+  [SET_SELECTED_TEXT_PART]: setSelectedTextPart,
 };
 
 export {
@@ -126,4 +130,5 @@ export {
   UPDATE_STATE,
   UPDATE_EXTRA_STATE,
   INJECT_INTO_LAST_STATE,
+  SET_SELECTED_TEXT_PART,
 };

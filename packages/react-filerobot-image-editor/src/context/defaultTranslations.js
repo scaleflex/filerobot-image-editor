@@ -115,4 +115,5 @@ export default {
   cropItemNoEffect: 'No preview available for this crop item',
   px: 'px',
   invalidTextContent: 'Invalid text content',
+  baselineShift: 'Baseline shift',
 };

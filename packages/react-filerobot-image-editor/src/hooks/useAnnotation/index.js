@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /** Internal Dependencies */
 import randomId from 'utils/randomId';
-import { TOOLS_IDS } from 'utils/constants';
+import { ALLOWED_TEXT_PART_FORMATS, TOOLS_IDS } from 'utils/constants';
 import {
   useSelectTool,
   useSetAnnotation,
@@ -12,6 +12,17 @@ import {
 } from 'hooks';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
 import useDebouncedCallback from '../useDebouncedCallback';
+
+const getTextPartSharedFormats = (dimensionlessProps) => {
+  const textFormatDimensionlessProps = {};
+  ALLOWED_TEXT_PART_FORMATS.forEach((key) => {
+    if (dimensionlessProps[key] !== 'undefined') {
+      textFormatDimensionlessProps[key] = dimensionlessProps[key];
+    }
+  });
+
+  return textFormatDimensionlessProps;
+};
 
 // TODO: Imporve the logic and separate the selected annotation options from handling preview and options before draw.
 const useAnnotation = (annotation = {}, enablePreview = true) => {
@@ -23,6 +34,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     config,
     toolId,
   } = useStore();
+  const { moreAnnotationPreviewClasses } = config;
   const selectTool = useSelectTool();
   const selectedAnnotationName = annotations[selectionsIds[0]]?.name;
   const annotationDefaults = {
@@ -80,9 +92,27 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
           ...dimensionlessProps
         } = currentAnnotation;
 
-        return {
+        const preparedAnnotation = {
           ...annotationDefaults,
           ...annotation,
+        };
+
+        if (
+          Array.isArray(preparedAnnotation.text) &&
+          preparedAnnotation.text.length > 0
+        ) {
+          const textPartSharedFormats =
+            getTextPartSharedFormats(dimensionlessProps);
+          preparedAnnotation.text = preparedAnnotation.text.map((textPart) => ({
+            ...textPart,
+            style: {
+              ...textPart.style,
+              ...textPartSharedFormats,
+            },
+          }));
+        }
+        return {
+          ...preparedAnnotation,
           ...dimensionlessProps,
         };
       }
@@ -95,24 +125,27 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
     [annotationDefaults, annotation],
   );
 
-  const saveAnnotationNoDebounce = useCallback((newAnnotationData) => {
-    setTmpAnnotation((latest) => {
-      const initialProps = getAnnotationInitialProps(
-        latest,
-        newAnnotationData.name || annotation.name,
-      );
+  const saveAnnotationNoDebounce = useCallback(
+    (newAnnotationData) => {
+      setTmpAnnotation((latest) => {
+        const initialProps = getAnnotationInitialProps(
+          latest,
+          newAnnotationData.name || annotation.name,
+        );
 
-      return {
-        ...initialProps,
-        ...newAnnotationData,
-        id:
-          newAnnotationData.id ||
-          randomId(newAnnotationData.name || latest.name),
-        shouldSave: true,
-        neverSave: false,
-      };
-    });
-  }, []);
+        return {
+          ...initialProps,
+          ...newAnnotationData,
+          id:
+            newAnnotationData.id ||
+            randomId(newAnnotationData.name || latest.name),
+          shouldSave: true,
+          neverSave: false,
+        };
+      });
+    },
+    [getAnnotationInitialProps],
+  );
 
   useEffect(() => {
     const shouldChangeTool =
@@ -164,6 +197,7 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
         { ...annotationInitialProps, name: annotation.name },
         previewGroup,
         saveAnnotationNoDebounce,
+        moreAnnotationPreviewClasses,
       );
     }
 

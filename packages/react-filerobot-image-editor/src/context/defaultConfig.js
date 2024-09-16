@@ -1,5 +1,5 @@
 /** Internal Dependencies */
-import { MIN_CROP, TABS_IDS, TOOLS_IDS } from 'utils/constants';
+import { MIN_CROP, TOOLS_IDS } from 'utils/constants';
 
 export default {
   theme: {
@@ -34,7 +34,8 @@ export default {
     letterSpacing: 0,
     lineHeight: 1,
     align: 'left', // left, center, right
-    fontStyle: 'normal', // 'bold', 'italic', 'bold italic'
+    fontStyle: 'normal', // 'normal', 'italic'
+    fontWeight: 'normal', // 'normal', 'bold'
     onFontChange: undefined,
   },
   [TOOLS_IDS.IMAGE]: {

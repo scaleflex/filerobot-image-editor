@@ -7,6 +7,7 @@ import Label from '@scaleflex/ui/core/label';
 import restrictNumber from 'utils/restrictNumber';
 import { StyledSpacedOptionFields } from 'components/common/AnnotationOptions/AnnotationOptions.styled';
 import Slider from 'components/common/Slider';
+import { useStore } from 'hooks';
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 1000;
@@ -17,29 +18,53 @@ const TextSpacingsFields = ({
   updateAnnotation: updateText,
   t,
 }) => {
-  const { letterSpacing, lineHeight } = text;
+  const { originalSource } = useStore();
+  const { letterSpacing, lineHeight, baselineShift } = text;
 
-  const updateValue = (prop, val) => {
-    updateText({ [prop]: restrictNumber(val, MIN_VALUE, MAX_VALUE) });
+  const updateValue = (
+    prop,
+    val,
+    { min = MIN_VALUE, max = MAX_VALUE } = {},
+  ) => {
+    updateText({ [prop]: restrictNumber(val, min, max) });
   };
 
+  const maxHorizontal = originalSource?.width || MAX_VALUE;
+  const maxVertical = originalSource?.height || MAX_VALUE;
   return (
     <StyledSpacedOptionFields preventFlex>
       <Label>{t('letterSpacing')}</Label>
       <Slider
         annotation="px"
         isActive={Boolean(letterSpacing)}
-        onChange={(val) => updateValue('letterSpacing', val)}
+        onChange={(val) =>
+          updateValue('letterSpacing', val, { max: maxHorizontal })
+        }
         value={letterSpacing}
         step={SLIDER_STEP}
-        max={MAX_VALUE}
+        max={maxHorizontal}
       />
       <Label>{t('lineHeight')}</Label>
       <Slider
-        isActive={Boolean(lineHeight)}
+        isActive={Boolean(baselineShift)}
         onChange={(val) => updateValue('lineHeight', val)}
         value={lineHeight}
         step={SLIDER_STEP}
+      />
+      <Label>{t('baselineShift')}</Label>
+      <Slider
+        isActive={Boolean(baselineShift)}
+        onChange={(val) =>
+          updateValue('baselineShift', val, {
+            min: -maxVertical,
+            max: maxVertical,
+          })
+        }
+        value={baselineShift ?? 0}
+        min={-maxVertical}
+        max={maxVertical}
+        step={SLIDER_STEP}
+        hideTrack
       />
     </StyledSpacedOptionFields>
   );

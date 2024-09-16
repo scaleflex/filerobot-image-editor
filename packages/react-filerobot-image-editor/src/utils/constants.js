@@ -147,4 +147,20 @@ export const EVENTS = {
   DESIGN_REDO: 'fie-design-redo',
   DESIGN_RESET: 'fie-design-reset',
   DESIGN_UPDATE: 'fie-design-modify',
+  APPLY_TEXT_FORMAT: 'fie-apply-text-annotation-format',
+  TEXT_CONTENT_EDITED: 'fie-text-content-edited',
 };
+
+export const ALLOWED_TEXT_PART_FORMATS = [
+  'fontSize',
+  'fill',
+  'fontWeight',
+  'fontStyle',
+  'fontFamily',
+  'baselineShift',
+  'letterSpacing',
+];
+
+export const UNFOCUSED_MARKED_TEXT_SELECTOR_ID = 'FIE_text-selected-part';
+
+export const TEXT_EDITOR_ID = 'FIE_text-content-editor';
