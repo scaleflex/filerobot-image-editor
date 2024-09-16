@@ -281,7 +281,7 @@ const SaveButton = ({
         onClick={triggerSaveHandler}
         menuPosition="bottom"
         menuFromBtn
-        label={saveLabel || (menuItems.length > 0 ? t('saveAs') : t('save'))}
+        label={saveLabel || t('save')}
         menuItems={menuItems}
         menuStyle={saveButtonMenuStyle}
         wrapperStyle={saveButtonWrapperStyle}
