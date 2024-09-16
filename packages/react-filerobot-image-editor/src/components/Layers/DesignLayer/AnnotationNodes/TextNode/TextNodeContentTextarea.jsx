@@ -1,5 +1,6 @@
+/* eslint-disable react/no-array-index-key */
 /** External Dependencies */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, Fragment } from 'react';
 import { Html } from 'react-konva-utils';
 import PropTypes from 'prop-types';
 
@@ -316,13 +317,17 @@ const TextNodeContentTextarea = ({
       >
         {Array.isArray(text)
           ? // eslint-disable-next-line default-param-last
-            text.map(({ textContent, style } = {}, index) => (
+            text.map(({ textContent = '', style } = {}, index) => (
               <span
                 style={getPreparedStyle(style, originalSourceInitialScale)}
-                // eslint-disable-next-line react/no-array-index-key
                 key={index}
               >
-                {textContent}
+                {textContent.split('\n').map((lineTextContent, i) => (
+                  <Fragment key={i}>
+                    {i !== 0 && <br />}
+                    {lineTextContent}
+                  </Fragment>
+                ))}
               </span>
             ))
           : text}

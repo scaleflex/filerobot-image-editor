@@ -133,23 +133,25 @@ export const pushNodeFlattenedContent = (
   wrapperStyles = {},
   { originalSourceInitialScale = 1 } = {},
 ) => {
-  if (node.nodeName === '#text' && node.textContent) {
+  const isLineBreakNode = node.nodeName === 'BR';
+  if ((node.nodeName === '#text' && node.textContent) || isLineBreakNode) {
     const lastNode = flattenedContent[flattenedContent.length - 1];
     const startIndex = (lastNode?.endIndex || -1) + 1;
+    const nodeContent = isLineBreakNode ? '\n' : node.textContent;
 
     if (
       lastNode &&
       !lastNode.textContent.startsWith('$') &&
-      !node.textContent.startsWith('$') && // if variable keep it separate.
+      !nodeContent.startsWith('$') && // if variable keep it separate.
       JSON.stringify(wrapperStyles) === JSON.stringify(lastNode.style)
     ) {
-      lastNode.textContent = `${lastNode.textContent}${node.textContent}`;
+      lastNode.textContent = `${lastNode.textContent}${nodeContent}`;
       lastNode.endIndex = lastNode.startIndex + lastNode.textContent.length - 1;
     } else {
-      const endIndex = startIndex + node.textContent.length - 1;
+      const endIndex = startIndex + (nodeContent.length || 1) - 1;
       flattenedContent.push({
         style: wrapperStyles,
-        textContent: node.textContent,
+        textContent: nodeContent,
         startIndex,
         endIndex,
       });
@@ -182,7 +184,7 @@ export const pushNodeFlattenedContent = (
     originalSourceInitialScale,
   );
   node.childNodes.forEach((currentNode) => {
-    if (!currentNode.textContent) {
+    if (!currentNode.textContent && currentNode.nodeName !== 'BR') {
       return;
     }
 
