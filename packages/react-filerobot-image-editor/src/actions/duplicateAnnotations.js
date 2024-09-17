@@ -15,27 +15,27 @@ const duplicateAnnotations = (state, payload) => {
   payload.annotationsIds.forEach((id) => {
     const annotation = annotations[id];
     if (annotation) {
-      const clonedAnnotationId = randomId(annotation.name);
-      duplicatedAnnotations[clonedAnnotationId] = {
+      let duplicatedAnnotation = {
         ...annotation,
-        id: clonedAnnotationId,
-        label: `${annotation.label} - Copy`,
+        id: randomId(annotation.name),
+        label: `${annotation.label || annotation.id} - Copy`,
         x: annotation.x + 20,
         y: annotation.y + 20,
       };
 
       if (hasOnAnnotationAddFn) {
         const moreAnnotationData = onAnnotationAdd(
-          { ...duplicatedAnnotations[clonedAnnotationId], isDuplicated: true },
+          { ...duplicatedAnnotation, isDuplicated: true },
           state,
         );
-        duplicatedAnnotations[clonedAnnotationId] = {
-          ...duplicatedAnnotations[clonedAnnotationId],
+        duplicatedAnnotation = {
+          ...duplicatedAnnotation,
           ...moreAnnotationData,
         };
       }
 
-      duplicatedAnnotationIds.push(clonedAnnotationId);
+      duplicatedAnnotationIds.push(duplicatedAnnotation.id);
+      duplicatedAnnotations[duplicatedAnnotation.id] = duplicatedAnnotation;
     }
   });
 
