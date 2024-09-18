@@ -38,7 +38,7 @@ const StyledMenuIcon = styled(MenuItemIcon)`
 `;
 
 const StyledArrow = styled(ArrowBottom)`
-  margin-top: ${({ buttonSize }) => buttonSize === 'md' && '1px'};
+  margin-top: ${({ $buttonSize }) => $buttonSize === 'md' && '1px'};
   transform: ${({ open }) => open && `rotate(-180deg)`};
 `;
 
