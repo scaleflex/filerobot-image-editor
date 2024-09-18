@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React, { useState } from 'react';
-import { MinusOutline, PlusOutline } from '@scaleflex/icons';
+import { MinusOutline, PlusOutline, PositionCenter } from '@scaleflex/icons';
 import Menu from '@scaleflex/ui/core/menu';
 import MenuItem, { MenuItemLabel } from '@scaleflex/ui/core/menu-item';
 
@@ -75,6 +75,7 @@ const ZoomButtons = (props) => {
       toggleZoomingMenu();
       return;
     }
+
     const factorToAchieveSelected =
       resize.width || resize.height
         ? factor
@@ -124,6 +125,15 @@ const ZoomButtons = (props) => {
         className="FIE_buttons-zoom-in-btn"
       >
         <PlusOutline />
+      </StyledSmallButton>
+      <StyledSmallButton
+        onClick={() => applyZoomFactorPreset('fit')}
+        color="basic"
+        title={t('fitTitle')}
+        disabled={isZoomDisabled}
+        className="FIE_buttons-fit-btn"
+      >
+        <PositionCenter />
       </StyledSmallButton>
       <Menu
         anchorEl={zoomingMenuAnchorEl}
