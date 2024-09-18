@@ -1,5 +1,6 @@
 /** External Dependencies */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Html } from 'react-konva-utils';
 import IconButton from '@scaleflex/ui/core/icon-button';
 // import { DeleteOutline, Duplicate, LayerOrder } from '@scaleflex/icons';
@@ -10,12 +11,12 @@ import Duplicate from '@scaleflex/icons/duplicate';
 import { useStore } from 'hooks';
 import { DUPLICATE_ANNOTATIONS, REMOVE_ANNOTATIONS } from 'actions';
 import { WATERMARK_ANNOTATION_ID } from 'utils/constants';
+import isFunction from 'utils/isFunction';
 import { StyledNodeControls } from './NodeControls.styled';
 
-const NodeControls = () => {
-  const { selectionsIds = [], dispatch, config = {} } = useStore();
+const NodeControls = ({ onClickAnnotationDelete }) => {
+  const { selectionsIds = [], dispatch, config } = useStore();
   const selectionsLength = selectionsIds.length;
-
   if (selectionsLength === 0) return null;
 
   // TODO: Connect annotation ordering with useAnnotationOrdering hook.
@@ -60,12 +61,24 @@ const NodeControls = () => {
             <Duplicate />
           </IconButton>
         )}
-        <IconButton color="basic" size="sm" onClick={removeSelectedNodes}>
+        <IconButton
+          color="basic"
+          size="sm"
+          onClick={
+            isFunction(onClickAnnotationDelete)
+              ? () => onClickAnnotationDelete(removeSelectedNodes)
+              : removeSelectedNodes
+          }
+        >
           <DeleteOutline />
         </IconButton>
       </StyledNodeControls>
     </Html>
   );
+};
+
+NodeControls.propTypes = {
+  onClickAnnotationDelete: PropTypes.func,
 };
 
 export default NodeControls;

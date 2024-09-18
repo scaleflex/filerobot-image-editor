@@ -145,7 +145,7 @@ const NodesTransformer = (props) => {
       shouldOverdrawWholeArea
       {...props}
     >
-      <NodeControls />
+      <NodeControls {...props} />
     </Transformer>
   );
 };
