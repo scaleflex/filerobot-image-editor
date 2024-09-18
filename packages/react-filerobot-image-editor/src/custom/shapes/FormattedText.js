@@ -143,9 +143,18 @@ export class FormattedText extends Shape {
                 ...style,
               },
               width: 0,
-              text: textContent.substring(start - startIndex, end - startIndex),
+              text: textContent
+                // Remove the new line as it is not needed in the content anymore
+                .replaceAll('\n', '')
+                .substring(start - startIndex, end - startIndex),
             }))
-        : [{ text: textStr.slice(start, end), style: defaultFormat, width: 0 }];
+        : [
+            {
+              text: textStr.replaceAll('\n', '').slice(start, end),
+              style: defaultFormat,
+              width: 0,
+            },
+          ];
     };
     const measureParts = (parts) => {
       return parts.reduce((size, part) => {
@@ -175,7 +184,9 @@ export class FormattedText extends Shape {
       }
       this.textLines.push({
         width,
-        parts: parts.map((part) => {
+        parts: parts.map((part, i) => {
+          // remove only 1 space from the beginning of the line if found (as it is not needed if line broken as a new one).
+          part.text = i === 0 ? part.text.replace(/^\s{1}/, '') : part.text;
           // compute size if not already computed during part creation
           part.width = part.width === 0 ? this.measurePart(part) : part.width;
           return part;
@@ -184,7 +195,10 @@ export class FormattedText extends Shape {
       });
     };
 
-    lines.forEach((line) => {
+    const linesLength = lines.length;
+    for (let i = 0; i < linesLength; i += 1) {
+      const currentLine = lines[i];
+      let line = currentLine;
       let lineWidth = measureSubstring(charCount, charCount + line.length);
       let lineHeight;
 
@@ -249,7 +263,6 @@ export class FormattedText extends Shape {
                 );
               }
             }
-            // match = match.trimRight()
             const parts = findParts(
               charCount + cursor,
               charCount + cursor + low,
@@ -293,7 +306,6 @@ export class FormattedText extends Shape {
             }
             line = line.slice(low);
             cursor += low;
-            // line = line.trimLeft()
             if (line.length > 0) {
               // Check if the remaining text would fit on one line
               const foundParts = findParts(
@@ -311,7 +323,7 @@ export class FormattedText extends Shape {
             }
           } else {
             // not even one character could fit in the element, abort
-            return;
+            break;
           }
         }
       } else {
@@ -323,12 +335,12 @@ export class FormattedText extends Shape {
       // if element height is fixed, abort if adding one more line would overflow
       // so we stop here to avoid processing useless lines
       if (hasFixedHeight && currentHeight + lineHeight > maxHeight) {
-        return;
+        break;
       }
 
-      charCount += line.length;
+      charCount += currentLine.length;
       currentHeight += lineHeight;
-    });
+    }
 
     this.linesHeight = this.textLines.reduce(
       (size, line) => size + line.totalHeight,
