@@ -13,6 +13,7 @@ import useSetAnnotation from './useSetAnnotation';
 const useAnnotations = () => {
   const {
     dispatch,
+    annotationIds = [],
     annotations = {},
     designLayer,
     config: { onAnnotationAdd } = {},
@@ -37,8 +38,8 @@ const useAnnotations = () => {
     dispatch({ type: CLEAR_ANNOTATIONS_SELECTIONS });
   }, []);
 
-  const removeAnnotations = useCallback((annotationIds = [], options = {}) => {
-    if (!Array.isArray(annotationIds) || annotationIds.length === 0) {
+  const removeAnnotations = useCallback((ids = [], options = {}) => {
+    if (!Array.isArray(ids) || ids.length === 0) {
       return;
     }
 
@@ -46,7 +47,7 @@ const useAnnotations = () => {
       type: REMOVE_ANNOTATIONS,
       payload: {
         ...options,
-        annotationsIds: annotationIds,
+        annotationsIds: ids,
       },
     });
   }, []);
@@ -66,8 +67,8 @@ const useAnnotations = () => {
   }, []);
 
   const duplicateAnnotations = useCallback(
-    (annotationIds = [], options = {}) => {
-      if (!Array.isArray(annotationIds) || annotationIds.length === 0) {
+    (ids = [], options = {}) => {
+      if (!Array.isArray(ids) || ids.length === 0) {
         return;
       }
 
@@ -75,7 +76,7 @@ const useAnnotations = () => {
         type: DUPLICATE_ANNOTATIONS,
         payload: {
           ...options,
-          annotationsIds: annotationIds,
+          annotationsIds: ids,
           onAnnotationAdd,
         },
       });
@@ -90,6 +91,7 @@ const useAnnotations = () => {
 
   return useMemo(
     () => ({
+      annotationIds,
       annotations,
       selectedAnnotations,
       selectAnnotation,
@@ -101,6 +103,7 @@ const useAnnotations = () => {
       getAnnotationElementById,
     }),
     [
+      annotationIds,
       annotations,
       selectAnnotation,
       deselectAnnotations,
