@@ -55,3 +55,5 @@ export { default as useManageHistoryState } from './useManageHistoryState';
 export { default as useAnnotationOrdering } from './useAnnotationOrdering';
 
 export { default as useEditableTextId } from './useEditableTextId';
+
+export { default as useDeleteModal } from './useDeleteModal';

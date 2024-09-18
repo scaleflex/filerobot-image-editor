@@ -50,6 +50,7 @@ import updateAnnotationIds, {
 import setSelectedTextPart, {
   SET_SELECTED_TEXT_PART,
 } from './setSelectedTextPart';
+import toggleDeleteModal, { TOGGLE_DELETE_MODAL } from './toggleDeleteModal';
 
 export default {
   [SET_ORIGINAL_SOURCE]: setOriginalSource,
@@ -90,6 +91,7 @@ export default {
   [UPDATE_EXTRA_STATE]: updateExtraState,
   [INJECT_INTO_LAST_STATE]: injectIntoLastState,
   [SET_SELECTED_TEXT_PART]: setSelectedTextPart,
+  [TOGGLE_DELETE_MODAL]: toggleDeleteModal,
 };
 
 export {
@@ -110,6 +112,7 @@ export {
   SET_LATEST_COLOR,
   TOGGLE_TABS_NAVBAR,
   SET_SAVING,
+  TOGGLE_DELETE_MODAL,
   // Start of Design actions...
   ADD_FILTER,
   SET_FINETUNE,

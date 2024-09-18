@@ -10,12 +10,13 @@ import Duplicate from '@scaleflex/icons/duplicate';
 import { useStore } from 'hooks';
 import { DUPLICATE_ANNOTATIONS, REMOVE_ANNOTATIONS } from 'actions';
 import { WATERMARK_ANNOTATION_ID } from 'utils/constants';
+import useDeleteModal from 'hooks/useDeleteModal';
 import { StyledNodeControls } from './NodeControls.styled';
 
 const NodeControls = () => {
-  const { selectionsIds = [], dispatch, config = {} } = useStore();
+  const { selectionsIds = [], dispatch, config } = useStore();
   const selectionsLength = selectionsIds.length;
-
+  const { toggleDeleteModal } = useDeleteModal();
   if (selectionsLength === 0) return null;
 
   // TODO: Connect annotation ordering with useAnnotationOrdering hook.
@@ -60,7 +61,15 @@ const NodeControls = () => {
             <Duplicate />
           </IconButton>
         )}
-        <IconButton color="basic" size="sm" onClick={removeSelectedNodes}>
+        <IconButton
+          color="basic"
+          size="sm"
+          onClick={
+            config.showDeleteModalOnRemoveAnnotation
+              ? toggleDeleteModal
+              : removeSelectedNodes
+          }
+        >
           <DeleteOutline />
         </IconButton>
       </StyledNodeControls>
