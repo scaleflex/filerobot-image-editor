@@ -18,6 +18,7 @@ export default {
   redoTitle: 'Redo last operation',
   showImageTitle: 'Show original image',
   zoomInTitle: 'Zoom in',
+  fitTitle: 'Fit',
   zoomOutTitle: 'Zoom out',
   toggleZoomMenuTitle: 'Toggle zoom menu',
   adjustTab: 'Adjust',
