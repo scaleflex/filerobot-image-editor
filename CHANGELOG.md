@@ -30,6 +30,7 @@ Types of changes:
 - Annotation dimensions to be relative to the original source.
 - Removed the padding space between canvas and image.
 - In Crop, original background preview is now considering more properties of the edited image.
+- Duplicated objects behavior (on duplicating the new object is auto selected).
 
 Changed
 - removed defaultToolId and made it undefined by default.
@@ -45,6 +46,7 @@ Added
 - Justify option for horizontal text alignment.
 - Support creating a design (background color, width & height) instead of editing image only.
 - Characters/text part formatting & adding baseline shift.
+- Zoom fit button.
 
 Fixed
 - Resize issue on unlocking the ratio lock.

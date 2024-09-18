@@ -66,7 +66,7 @@ const ZoomButtons = (props) => {
   };
 
   const toggleZoomingMenu = (event) => {
-    setZoomingMenuAnchorEl(zoomingMenuAnchorEl ? null : event.target);
+    setZoomingMenuAnchorEl(zoomingMenuAnchorEl || !event ? null : event.target);
   };
 
   const applyZoomFactorPreset = (factor) => {
