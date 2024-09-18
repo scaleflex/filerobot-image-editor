@@ -98,7 +98,7 @@ const ButtonWithMenu = ({
             menuItems.length > 0 && (
               <StyledArrow
                 open={Boolean(anchorEl)}
-                buttonSize={buttonSize}
+                $buttonSize={buttonSize}
                 size={buttonSize === 'md' ? 13 : 10}
               />
             )

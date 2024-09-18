@@ -14,6 +14,7 @@ const MainCanvas = ({
   previewBgColor,
   previewBgImage,
   resetOnSourceChange,
+  onClickAnnotationDelete,
   ...props
 }) => {
   return (
@@ -27,7 +28,7 @@ const MainCanvas = ({
       {...props}
     >
       <DesignLayer />
-      <TransformersLayer />
+      <TransformersLayer onClickAnnotationDelete={onClickAnnotationDelete} />
     </MainCanvasWrapper>
   );
 };
@@ -54,6 +55,7 @@ MainCanvas.propTypes = {
     PropTypes.instanceOf(ImageBitmap),
   ]),
   resetOnSourceChange: PropTypes.bool,
+  onClickAnnotationDelete: PropTypes.func,
 };
 
 export default MainCanvas;
