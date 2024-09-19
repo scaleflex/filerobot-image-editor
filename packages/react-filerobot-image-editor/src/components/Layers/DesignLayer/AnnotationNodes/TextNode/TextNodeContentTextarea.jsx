@@ -263,6 +263,19 @@ const TextNodeContentTextarea = ({
     getFormattedText();
   };
 
+  const handleOnPaste = (event) => {
+    event.preventDefault();
+
+    const textToPaste = (event.clipboardData || window.clipboardData).getData(
+      'text',
+    );
+    const selection = window.getSelection();
+    if (!selection.rangeCount) return;
+    selection.deleteFromDocument();
+    selection.getRangeAt(0).insertNode(document.createTextNode(textToPaste));
+    selection.collapseToEnd();
+  };
+
   useEffect(() => {
     const canvas = designLayer?.getStage();
     if (window) {
@@ -290,6 +303,14 @@ const TextNodeContentTextarea = ({
     }
   }, [toolId]);
 
+  const renderTextContent = (textContent) =>
+    textContent.split('\n').map((lineTextContent, i) => (
+      <Fragment key={i}>
+        {i !== 0 && <br />}
+        {lineTextContent}
+      </Fragment>
+    ));
+
   return (
     <Html>
       <StyledTextNodeContentTextarea
@@ -304,6 +325,7 @@ const TextNodeContentTextarea = ({
         $height={height}
         $textAlign={textAlign}
         $opacity={opacity}
+        onPaste={handleOnPaste}
         // The styles that would be reused in the character formatting should be added inside style to be retrieved in teh characters formatting through elem.style.cssText
         style={{
           color: fill,
@@ -322,15 +344,10 @@ const TextNodeContentTextarea = ({
                 style={getPreparedStyle(style, originalSourceInitialScale)}
                 key={index}
               >
-                {textContent.split('\n').map((lineTextContent, i) => (
-                  <Fragment key={i}>
-                    {i !== 0 && <br />}
-                    {lineTextContent}
-                  </Fragment>
-                ))}
+                {renderTextContent(textContent)}
               </span>
             ))
-          : text}
+          : renderTextContent(text)}
       </StyledTextNodeContentTextarea>
     </Html>
   );
