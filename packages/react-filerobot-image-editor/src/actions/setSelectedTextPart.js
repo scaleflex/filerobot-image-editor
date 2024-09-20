@@ -6,8 +6,8 @@ const setSelectedTextPart = (state, payload) => ({
     hasSelection: payload.hasSelection ?? false,
     textContent: payload.textContent || '',
     element: payload.element || null,
-    startIndex: payload.startIndex || null,
-    endIndex: payload.endIndex || null,
+    startIndex: payload.startIndex ?? null,
+    endIndex: payload.endIndex ?? null,
   },
 });
 
