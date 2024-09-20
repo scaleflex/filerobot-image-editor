@@ -62,7 +62,10 @@ const useTextAnnotationEditing = (enableEvents = false) => {
     const { element, startIndex } =
       getEditableSelectedUnfocusedTextData() || {};
     if (element) {
-      if (element.firstChild?.nodeName === '#text') {
+      if (element.firstElementChild) {
+        element.firstElementChild.textContent = textContentString;
+        element.replaceChildren(element.firstElementChild);
+      } else if (element.firstChild?.nodeName === '#text') {
         const spanContainer = document.createElement('span');
         spanContainer.textContent = textContentString;
         element.replaceChildren(spanContainer);
@@ -71,7 +74,9 @@ const useTextAnnotationEditing = (enableEvents = false) => {
       }
 
       element.dataset.endIndex =
-        parseInt(startIndex, 10) + textContentString.length - 1;
+        parseInt(startIndex, 10) +
+        textContentString.replaceAll('\n', '').length -
+        1;
     }
   };
 

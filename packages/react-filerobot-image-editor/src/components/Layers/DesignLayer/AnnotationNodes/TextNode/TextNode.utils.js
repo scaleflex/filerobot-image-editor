@@ -146,9 +146,13 @@ export const pushNodeFlattenedContent = (
       JSON.stringify(wrapperStyles) === JSON.stringify(lastNode.style)
     ) {
       lastNode.textContent = `${lastNode.textContent}${nodeContent}`;
-      lastNode.endIndex = lastNode.startIndex + lastNode.textContent.length - 1;
+      lastNode.endIndex =
+        lastNode.startIndex +
+        lastNode.textContent.replaceAll('\n', '').length -
+        1;
     } else {
-      const endIndex = startIndex + (nodeContent.length || 1) - 1;
+      const endIndex =
+        startIndex + (nodeContent.replaceAll('\n').length || 1) - 1;
       flattenedContent.push({
         style: wrapperStyles,
         textContent: nodeContent,
@@ -171,7 +175,7 @@ export const pushNodeFlattenedContent = (
         // eslint-disable-next-line no-param-reassign
         markElement.dataset.endIndex =
           (parseInt(markElement.dataset.startIndex, 10) || 0) +
-          markElement.textContent.length -
+          markElement.textContent.replaceAll('\n', '').length -
           1;
       }
     }
