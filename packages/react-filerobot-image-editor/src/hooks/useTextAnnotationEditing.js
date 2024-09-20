@@ -277,6 +277,12 @@ const useTextAnnotationEditing = (enableEvents = false) => {
     setActiveFormats(currentFormats);
   };
 
+  const triggerTextSaveAndClose = () => {
+    if (editableTextId) {
+      emitCustomEvent(EVENTS.SAVE_EDITED_TEXT_CONTENT);
+    }
+  };
+
   useUpdateEffect(() => {
     if (currentAnnotation?.tmpText) {
       updateActiveFormats();
@@ -307,6 +313,7 @@ const useTextAnnotationEditing = (enableEvents = false) => {
     replaceEditableUnfocusedSelectedText,
     selectedTextPart,
     editableTextId,
+    triggerTextSaveAndClose, // calls the save current edited text event and cancel afterwards
   };
 };
 

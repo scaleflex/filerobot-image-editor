@@ -183,6 +183,7 @@ const TextNodeContentTextarea = ({
     if (event.key === 'Enter') {
       if (!event.shiftKey) {
         event.preventDefault();
+        event.stopPropagation();
         saveFormattedTextAndCancel();
       }
 
@@ -192,6 +193,7 @@ const TextNodeContentTextarea = ({
     // on esc do not set value back to node
     if (event.key === 'Escape') {
       event.preventDefault();
+      event.stopPropagation();
       cancelTextEditing();
     }
   };
@@ -266,15 +268,43 @@ const TextNodeContentTextarea = ({
   const handleOnPaste = (event) => {
     event.preventDefault();
 
-    const textToPaste = (event.clipboardData || window.clipboardData).getData(
-      'text',
-    );
+    const textToPaste = (event.clipboardData || window.clipboardData)
+      .getData('text/plain')
+      ?.split(/\r?\n/);
+
+    const textWrapper = document.createDocumentFragment();
+    textToPaste.forEach((textLine, i) => {
+      if (i !== 0) {
+        textWrapper.appendChild(document.createElement('br'));
+      }
+
+      textWrapper.appendChild(document.createTextNode(textLine));
+    });
+
     const selection = window.getSelection();
     if (!selection.rangeCount) return;
     selection.deleteFromDocument();
-    selection.getRangeAt(0).insertNode(document.createTextNode(textToPaste));
+    selection.getRangeAt(0).insertNode(textWrapper);
     selection.collapseToEnd();
   };
+
+  useEffect(() => {
+    const saveTextAndCancelWithoutSelecting = () =>
+      saveFormattedTextAndCancel(false);
+    if (window) {
+      window.addEventListener(
+        EVENTS.SAVE_EDITED_TEXT_CONTENT,
+        saveTextAndCancelWithoutSelecting,
+      );
+    }
+
+    return () => {
+      window?.removeEventListener(
+        EVENTS.SAVE_EDITED_TEXT_CONTENT,
+        saveTextAndCancelWithoutSelecting,
+      );
+    };
+  }, []);
 
   useEffect(() => {
     const canvas = designLayer?.getStage();
@@ -331,7 +361,8 @@ const TextNodeContentTextarea = ({
           color: fill,
           fontFamily,
           fontSize,
-          letterSpacing,
+          letterSpacing:
+            letterSpacing && letterSpacing * originalSourceInitialScale,
           lineHeight,
           fontWeight,
           fontStyle,

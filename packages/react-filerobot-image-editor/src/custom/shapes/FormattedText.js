@@ -80,8 +80,14 @@ export class FormattedText extends Shape {
 
   measurePart(part) {
     const context = getDummyContext();
+    const partLetterSpacing = toPrecisedFloat(
+      (part.style.letterSpacing || 1) * this.scaleFormatDimensionsBy(),
+      2,
+    );
+
     context.save();
     context.font = this.formatFont(part);
+    context.letterSpacing = `${partLetterSpacing}px`;
     const { width } = context.measureText(part.text);
     context.restore();
     return width;
@@ -487,9 +493,7 @@ export class FormattedText extends Shape {
               text: textSlice,
             };
             context.fillStrokeShape(this);
-            lineX +=
-              this.measurePart({ ...part, text: textSlice }) +
-              partLetterSpacing;
+            lineX += this.measurePart({ ...part, text: textSlice });
           }
         } else {
           this.drawState = {
@@ -498,7 +502,7 @@ export class FormattedText extends Shape {
             text: part.text,
           };
           context.fillStrokeShape(this);
-          lineX += part.width + partLetterSpacing;
+          lineX += part.width;
         }
       });
 

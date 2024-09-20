@@ -147,8 +147,9 @@ export const EVENTS = {
   DESIGN_REDO: 'fie-design-redo',
   DESIGN_RESET: 'fie-design-reset',
   DESIGN_UPDATE: 'fie-design-modify',
-  APPLY_TEXT_FORMAT: 'fie-apply-text-annotation-format',
   TEXT_CONTENT_EDITED: 'fie-text-content-edited',
+  APPLY_TEXT_FORMAT: 'fie-apply-text-annotation-format',
+  SAVE_EDITED_TEXT_CONTENT: 'fie-save-edited-text-content',
 };
 
 export const ALLOWED_TEXT_PART_FORMATS = [

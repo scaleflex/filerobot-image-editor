@@ -55,6 +55,8 @@ export { TABS_IDS as TABS, TOOLS_IDS as TOOLS } from 'utils/constants';
 
 export { ANNOTATION_NAMES_TO_COMPONENT as ANNOTATION_NAMES_TO_NODES } from 'components/Layers/DesignLayer/AnnotationNodes/AnnotationNodes.constants';
 
+export { default as emitCustomEvent } from 'utils/emitCustomEvent';
+
 export * from 'components/common';
 
 export * from 'components/Tabs';
