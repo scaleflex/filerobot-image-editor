@@ -55,6 +55,7 @@ const CHANGEABLE_ATTRS = [
   'fontWeight',
   'fontStyle',
   'fontFamily',
+  'verticalAlign',
 ];
 
 export class FormattedText extends Shape {
