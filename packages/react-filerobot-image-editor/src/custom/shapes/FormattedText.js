@@ -108,6 +108,7 @@ export class FormattedText extends Shape {
 
   computeTextParts() {
     this.textLines = [];
+    this.visibleLinesStartIndex = 0;
     const textStr = Array.isArray(this.text())
       ? this.text()
           .map(({ textContent } = {}) => textContent)
@@ -117,7 +118,10 @@ export class FormattedText extends Shape {
     const maxWidth = this.attrs.width;
     const maxHeight = this.attrs.height;
     const hasFixedWidth = maxWidth !== 'auto' && maxWidth !== undefined;
-    const hasFixedHeight = maxHeight !== 'auto' && maxHeight !== undefined;
+    const hasFixedHeightWithoutAlign =
+      maxHeight !== 'auto' && maxHeight !== undefined;
+    const hasFixedHeight =
+      hasFixedHeightWithoutAlign && this.verticalAlign() === 'top';
 
     const shouldWrap = this.wrap() !== 'none';
     const wrapAtWord = this.wrap() !== 'char' && shouldWrap;
@@ -185,9 +189,14 @@ export class FormattedText extends Shape {
     const addLine = (width, height, parts) => {
       // if element height is fixed, abort if adding one more line would overflow
       // so we don't add this line, the loop will be broken anyway
-      if (hasFixedHeight && currentHeight + height > maxHeight) {
-        return;
+      if (hasFixedHeightWithoutAlign && currentHeight + height > maxHeight) {
+        if (this.verticalAlign() === 'top') {
+          return;
+        }
+
+        this.visibleLinesStartIndex += 1;
       }
+
       this.textLines.push({
         width,
         parts: parts.map((part, i) => {
@@ -348,10 +357,18 @@ export class FormattedText extends Shape {
       currentHeight += lineHeight;
     }
 
-    this.linesHeight = this.textLines.reduce(
-      (size, line) => size + line.totalHeight,
-      0,
-    );
+    const isMiddleAligned = this.verticalAlign() === 'middle';
+    const startIndex = isMiddleAligned
+      ? this.visibleLinesStartIndex / 2
+      : this.visibleLinesStartIndex;
+    this.linesHeight = this.textLines
+      .slice(
+        Math.floor(startIndex),
+        isMiddleAligned
+          ? this.textLines.length - Math.ceil(startIndex)
+          : undefined,
+      )
+      .reduce((size, line) => size + line.totalHeight, 0);
     this.linesWidth = Math.max(...this.textLines.map((line) => line.width, 0));
   }
 
@@ -389,19 +406,29 @@ export class FormattedText extends Shape {
     context.setAttr('textAlign', 'left');
 
     // handle vertical alignment
+    const isMiddleAligned = this.verticalAlign() === 'middle';
     const padding = this.padding();
     let alignY = 0;
-    if (this.verticalAlign() === 'middle') {
+    if (isMiddleAligned) {
       alignY = (totalHeight - this.linesHeight - padding * 2) / 2;
     } else if (this.verticalAlign() === 'bottom') {
       alignY = totalHeight - this.linesHeight - padding * 2;
     }
     context.translate(padding, alignY + padding);
 
+    const startIndex = isMiddleAligned
+      ? this.visibleLinesStartIndex / 2
+      : this.visibleLinesStartIndex;
+    const visibleLines = this.textLines.slice(
+      Math.floor(startIndex),
+      isMiddleAligned
+        ? this.textLines.length - Math.ceil(startIndex)
+        : undefined,
+    );
     let y = this.textLines[0].totalHeight / 2;
     let lineIndex = 0;
-    this.textLines.forEach((line) => {
-      const isLastLine = lineIndex === this.textLines.length - 1;
+    visibleLines.forEach((line) => {
+      const isLastLine = lineIndex === visibleLines.length - 1;
       let lineX = 0;
       const lineY = 0;
       context.save();
@@ -416,10 +443,6 @@ export class FormattedText extends Shape {
       line.parts.forEach((part) => {
         const partBaselineShift = toPrecisedFloat(
           part.style.baselineShift * this.scaleFormatDimensionsBy(),
-          2,
-        );
-        const partLetterSpacing = toPrecisedFloat(
-          part.style.letterSpacing * this.scaleFormatDimensionsBy(),
           2,
         );
 
@@ -482,7 +505,7 @@ export class FormattedText extends Shape {
             // skip justify for the last line
             if (
               textSlice === ' ' &&
-              lineIndex !== this.textLines.length - 1 &&
+              lineIndex !== visibleLines.length - 1 &&
               this.align() === 'justify'
             ) {
               lineX += (totalWidth - padding * 2 - line.width) / spacesNumber;
@@ -507,8 +530,8 @@ export class FormattedText extends Shape {
       });
 
       context.restore();
-      if (typeof this.textLines[lineIndex + 1] !== 'undefined') {
-        y += this.textLines[lineIndex + 1].totalHeight;
+      if (typeof visibleLines[lineIndex + 1] !== 'undefined') {
+        y += visibleLines[lineIndex + 1].totalHeight;
       }
       lineIndex += 1;
     });
