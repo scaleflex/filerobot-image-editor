@@ -21,7 +21,7 @@ const StyledTextNodeContentTextarea = styled.div(
   user-select: text;
 
   > * {
-    vertical-align: text-top;
+    vertical-align: text-bottom;
   }
 
   mark, mark * {
