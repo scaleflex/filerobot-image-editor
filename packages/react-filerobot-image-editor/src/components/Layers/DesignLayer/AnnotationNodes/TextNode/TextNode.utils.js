@@ -50,9 +50,10 @@ export const cssStyleToJsCanvasProps = (
       (_match, matchedGroup) =>
         `${matchedGroup[0].toUpperCase()}${matchedGroup.slice(1)}`,
     );
-    jsStyles[preparedKey] = value?.toLowerCase().endsWith('px')
-      ? parseFloat(value)
-      : value;
+    jsStyles[preparedKey] =
+      value?.toLowerCase().endsWith('px') || /^[0-9]*$/.test(value)
+        ? parseFloat(value)
+        : value?.replaceAll('"', '');
   });
 
   if (jsStyles.color) {

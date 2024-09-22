@@ -20,6 +20,10 @@ const StyledTextNodeContentTextarea = styled.div(
   word-break: normal;
   user-select: text;
 
+  > * {
+    vertical-align: text-top;
+  }
+
   mark, mark * {
     background: rgba(40, 90, 195, 0.75) !important;
     color: #fff !important;

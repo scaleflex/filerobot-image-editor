@@ -403,7 +403,7 @@ export class FormattedText extends Shape {
     const totalWidth = this.getWidth();
     const totalHeight = this.getHeight();
 
-    context.setAttr('textBaseline', 'middle');
+    context.setAttr('textBaseline', 'alphabetic');
     context.setAttr('textAlign', 'left');
 
     // handle vertical alignment
@@ -426,7 +426,7 @@ export class FormattedText extends Shape {
         ? this.textLines.length - Math.ceil(startIndex)
         : undefined,
     );
-    let y = this.textLines[0].totalHeight / 2;
+    let y = this.textLines[0].totalHeight;
     let lineIndex = 0;
     visibleLines.forEach((line) => {
       const isLastLine = lineIndex === visibleLines.length - 1;
