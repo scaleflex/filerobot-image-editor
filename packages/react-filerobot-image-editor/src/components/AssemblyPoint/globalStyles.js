@@ -8,10 +8,6 @@ const FontsFaces = createGlobalStyle`
   .${ROOT_CONTAINER_CLASS_NAME} {
     font-family: ${({ theme = {} }) => theme.typography?.fontFamily || 'Arial'};
   }
-
-  .SfxModal-Wrapper * {
-    font-family: ${({ theme = {} }) => theme.typography?.fontFamily || 'Arial'};
-  }
 `;
 
 const OverrideDefaultStyles = createGlobalStyle`
