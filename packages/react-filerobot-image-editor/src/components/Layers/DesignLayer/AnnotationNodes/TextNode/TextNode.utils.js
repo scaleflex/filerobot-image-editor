@@ -1,7 +1,9 @@
 /** Internal dependencies */
 import { TEXT_EDITOR_ID } from 'utils/constants';
 import rgbaToHexWithOpacity from 'utils/rgbaToHexa';
-import toPrecisedFloat from 'utils/toPrecisedFloat';
+
+export const getQuotedFontFamily = (fontFamily) =>
+  fontFamily && `"${fontFamily.replaceAll('"', '')}"`;
 
 const jsCanvasCssPropToCssTextProp = (jsStyleKey) => {
   if (jsStyleKey === 'fill') {
@@ -30,10 +32,7 @@ export const jsStyleToCssText = (jsStyles) =>
     )
     .join(' ');
 
-export const cssStyleToJsCanvasProps = (
-  cssTextStyle,
-  originalSourceInitialScale = 1,
-) => {
+export const cssStyleToJsCanvasProps = (cssTextStyle) => {
   if (!cssTextStyle) {
     return {};
   }
@@ -70,18 +69,16 @@ export const cssStyleToJsCanvasProps = (
     delete jsStyles.transform;
   }
 
-  if (jsStyles.letterSpacing) {
-    jsStyles.letterSpacing = toPrecisedFloat(
-      parseFloat(jsStyles.letterSpacing) / originalSourceInitialScale,
-      2,
-    );
+  if (typeof jsStyles.letterSpacing !== 'undefined') {
+    jsStyles.letterSpacing = parseFloat(jsStyles.letterSpacing);
   }
 
   return jsStyles;
 };
 
-export const getNewFormattedContent = (selectedContent, newFormats) => {
+export const getNewFormattedContent = (selectedContent, formats) => {
   const newContent = [];
+  const newFormats = { ...formats };
 
   Array.from(selectedContent.childNodes).forEach((node, i) => {
     const nodeTextContent = node.textContent;
@@ -107,6 +104,11 @@ export const getNewFormattedContent = (selectedContent, newFormats) => {
         newNode.innerText = nodeTextContent;
       }
     }
+
+    if (newFormats.fontFamily) {
+      newFormats.fontFamily = getQuotedFontFamily(newFormats.fontFamily);
+    }
+
     Object.assign(newNode.style, newFormats);
 
     if (
@@ -130,7 +132,6 @@ export const pushNodeFlattenedContent = (
   flattenedContent,
   node,
   wrapperStyles = {},
-  { originalSourceInitialScale = 1 } = {},
 ) => {
   const isLineBreakNode = node.nodeName === 'BR';
   if ((node.nodeName === '#text' && node.textContent) || isLineBreakNode) {
@@ -182,24 +183,16 @@ export const pushNodeFlattenedContent = (
     return;
   }
 
-  const wrapperNodeStyle = cssStyleToJsCanvasProps(
-    node.style.cssText,
-    originalSourceInitialScale,
-  );
+  const wrapperNodeStyle = cssStyleToJsCanvasProps(node.style.cssText);
   node.childNodes.forEach((currentNode) => {
     if (!currentNode.textContent && currentNode.nodeName !== 'BR') {
       return;
     }
 
-    pushNodeFlattenedContent(
-      flattenedContent,
-      currentNode,
-      {
-        ...wrapperStyles,
-        ...wrapperNodeStyle,
-      },
-      { originalSourceInitialScale },
-    );
+    pushNodeFlattenedContent(flattenedContent, currentNode, {
+      ...wrapperStyles,
+      ...wrapperNodeStyle,
+    });
   });
 };
 
@@ -224,18 +217,13 @@ export const recursivelyRemoveCssProperties = (
   });
 };
 
-export const getCurrentSelectedNodeStyles = (
-  node,
-  currentStyles = {},
-  { originalSourceInitialScale } = {},
-) => {
+export const getCurrentSelectedNodeStyles = (node, currentStyles = {}) => {
   if (!node) {
     return currentStyles;
   }
 
   const newStyles = {
-    ...(node.style &&
-      cssStyleToJsCanvasProps(node.style.cssText, originalSourceInitialScale)),
+    ...(node.style && cssStyleToJsCanvasProps(node.style.cssText)),
     ...currentStyles,
   };
 
@@ -246,7 +234,5 @@ export const getCurrentSelectedNodeStyles = (
     return newStyles;
   }
 
-  return getCurrentSelectedNodeStyles(node.parentNode, newStyles, {
-    originalSourceInitialScale,
-  });
+  return getCurrentSelectedNodeStyles(node.parentNode, newStyles);
 };

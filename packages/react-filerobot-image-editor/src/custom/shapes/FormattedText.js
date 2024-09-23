@@ -11,9 +11,6 @@ import {
   getBooleanValidator,
 } from 'konva/lib/Validators';
 
-/** Internal dependencies */
-import toPrecisedFloat from 'utils/toPrecisedFloat';
-
 let dummyContext;
 function getDummyContext() {
   if (dummyContext) {
@@ -82,10 +79,7 @@ export class FormattedText extends Shape {
 
   measurePart(part) {
     const context = getDummyContext();
-    const partLetterSpacing = toPrecisedFloat(
-      (part.style.letterSpacing || 1) * this.scaleFormatDimensionsBy(),
-      2,
-    );
+    const partLetterSpacing = part.style.letterSpacing || 0;
 
     context.save();
     context.font = this.formatFont(part);
@@ -411,10 +405,13 @@ export class FormattedText extends Shape {
     const isMiddleAligned = this.verticalAlign() === 'middle';
     const padding = this.padding();
     let alignY = 0;
-    let y = this.textLines[0].totalHeight;
     if (isMiddleAligned) {
-      y /= 2;
-      alignY = (totalHeight - this.linesHeight - padding * 2) / 2;
+      alignY =
+        (totalHeight -
+          this.textLines[0].totalHeight / 2 -
+          this.linesHeight -
+          padding * 2) /
+        2;
     } else if (this.verticalAlign() === 'bottom') {
       alignY = totalHeight - this.linesHeight - padding * 2;
     }
@@ -429,6 +426,7 @@ export class FormattedText extends Shape {
         ? this.textLines.length - Math.ceil(startIndex)
         : undefined,
     );
+    let y = this.textLines[0].totalHeight;
     let lineIndex = 0;
     visibleLines.forEach((line) => {
       const isLastLine = lineIndex === visibleLines.length - 1;

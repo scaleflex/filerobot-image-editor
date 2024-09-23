@@ -20,30 +20,28 @@ import {
 import { StyledTextNodeContentTextarea } from './TextNode.styled';
 import {
   getNewFormattedContent,
+  getQuotedFontFamily,
   pushNodeFlattenedContent,
   recursivelyRemoveCssProperties,
 } from './TextNode.utils';
 
-const getPreparedStyle = (
-  {
-    fontWeight,
-    fontStyle,
-    fontSize,
-    fontFamily,
-    fill: color,
-    letterSpacing,
-    baselineShift,
-  },
-  originalSourceInitialScale,
-) => ({
+const getPreparedStyle = ({
+  fontWeight,
+  fontStyle,
+  fontSize,
+  fontFamily,
+  fill: color,
+  letterSpacing,
+  baselineShift,
+}) => ({
   fontWeight,
   fontStyle,
   fontSize,
   color,
-  letterSpacing: letterSpacing && letterSpacing * originalSourceInitialScale,
+  letterSpacing,
   transform: `translateY(${-baselineShift}px)`,
   display: baselineShift && 'inline-block',
-  fontFamily,
+  fontFamily: getQuotedFontFamily(fontFamily),
 });
 
 const TextNodeContentTextarea = ({
@@ -62,11 +60,7 @@ const TextNodeContentTextarea = ({
   height,
 }) => {
   const textareaRef = useRef();
-  const {
-    toolId,
-    designLayer,
-    shownImageDimensions: { originalSourceInitialScale = 1 } = {},
-  } = useStore();
+  const { toolId, designLayer } = useStore();
   const setAnnotation = useSetAnnotation();
   const {
     commitTextUpdates,
@@ -76,12 +70,7 @@ const TextNodeContentTextarea = ({
 
   const getFormattedText = () => {
     const flattenedTextContent = [];
-    pushNodeFlattenedContent(
-      flattenedTextContent,
-      textareaRef.current,
-      {},
-      { originalSourceInitialScale },
-    );
+    pushNodeFlattenedContent(flattenedTextContent, textareaRef.current, {});
 
     return flattenedTextContent;
   };
@@ -132,13 +121,13 @@ const TextNodeContentTextarea = ({
       updatedFormats.fontSize = `${updatedFormats.fontSize}px`;
     }
 
-    if (updatedFormats.letterSpacing) {
-      updatedFormats.letterSpacing = `${
-        parseFloat(updatedFormats.letterSpacing) * originalSourceInitialScale
-      }px`;
+    if (typeof updatedFormats.letterSpacing !== 'undefined') {
+      updatedFormats.letterSpacing = `${parseFloat(
+        updatedFormats.letterSpacing,
+      )}px`;
     }
 
-    if (updatedFormats.baselineShift) {
+    if (typeof updatedFormats.baselineShift !== 'undefined') {
       updatedFormats.transform = `translateY(${-updatedFormats.baselineShift}px)`;
       updatedFormats.display = 'inline-block';
       delete updatedFormats.baselineShift;
@@ -327,7 +316,7 @@ const TextNodeContentTextarea = ({
         handleOnTextFormatApply,
       );
     };
-  }, [originalSourceInitialScale]);
+  }, []);
 
   useUpdateEffect(() => {
     if (textareaRef.current) {
@@ -362,10 +351,9 @@ const TextNodeContentTextarea = ({
         // The styles that would be reused in the character formatting should be added inside style to be retrieved in teh characters formatting through elem.style.cssText
         style={{
           color: fill,
-          fontFamily,
+          fontFamily: getQuotedFontFamily(fontFamily),
           fontSize,
-          letterSpacing:
-            letterSpacing && letterSpacing * originalSourceInitialScale,
+          letterSpacing,
           lineHeight,
           fontWeight,
           fontStyle,
@@ -374,10 +362,7 @@ const TextNodeContentTextarea = ({
         {Array.isArray(text)
           ? // eslint-disable-next-line default-param-last
             text.map(({ textContent = '', style } = {}, index) => (
-              <span
-                style={getPreparedStyle(style, originalSourceInitialScale)}
-                key={index}
-              >
+              <span style={getPreparedStyle(style)} key={index}>
                 {renderTextContent(textContent)}
               </span>
             ))
