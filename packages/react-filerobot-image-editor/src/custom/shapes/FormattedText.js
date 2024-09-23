@@ -56,6 +56,7 @@ const CHANGEABLE_ATTRS = [
   'fontStyle',
   'fontFamily',
   'verticalAlign',
+  'scaleFormatDimensionsBy',
 ];
 
 export class FormattedText extends Shape {
@@ -431,7 +432,6 @@ export class FormattedText extends Shape {
     visibleLines.forEach((line) => {
       const isLastLine = lineIndex === visibleLines.length - 1;
       let lineX = 0;
-      const lineY = 0;
       context.save();
 
       // horizontal alignment
@@ -442,11 +442,6 @@ export class FormattedText extends Shape {
       }
 
       line.parts.forEach((part) => {
-        const partBaselineShift = toPrecisedFloat(
-          part.style.baselineShift * this.scaleFormatDimensionsBy(),
-          2,
-        );
-
         // style
         if (part.style.textDecoration?.includes('underline')) {
           context.save();
@@ -454,7 +449,7 @@ export class FormattedText extends Shape {
 
           context.moveTo(
             lineX,
-            y + lineY + Math.round(part.style.fontSize / 2) - partBaselineShift,
+            y + Math.round(part.style.fontSize / 2) - part.style.baselineShift,
           );
           const spacesNumber = part.text.split(' ').length - 1;
           const oneWord = spacesNumber === 0;
@@ -464,7 +459,7 @@ export class FormattedText extends Shape {
               : part.width;
           context.lineTo(
             lineX + Math.round(lineWidth),
-            y + lineY + Math.round(part.style.fontSize / 2) - partBaselineShift,
+            y + Math.round(part.style.fontSize / 2) - part.style.baselineShift,
           );
 
           // I have no idea what is real ratio
@@ -477,7 +472,7 @@ export class FormattedText extends Shape {
         if (part.style.textDecoration?.includes('line-through')) {
           context.save();
           context.beginPath();
-          context.moveTo(lineX, y + lineY - partBaselineShift);
+          context.moveTo(lineX, y - part.style.baselineShift);
           const spacesNumber = part.text.split(' ').length - 1;
           const oneWord = spacesNumber === 0;
           const lineWidth =
@@ -486,7 +481,7 @@ export class FormattedText extends Shape {
               : part.width;
           context.lineTo(
             lineX + Math.round(lineWidth),
-            y + lineY - partBaselineShift,
+            y - part.style.baselineShift,
           );
           context.lineWidth = part.style.fontSize / 15;
           context.strokeStyle = part.style.fill;
@@ -513,7 +508,7 @@ export class FormattedText extends Shape {
             }
             this.drawState = {
               x: lineX,
-              y: y + lineY - partBaselineShift,
+              y: y - part.style.baselineShift,
               text: textSlice,
             };
             context.fillStrokeShape(this);
@@ -522,7 +517,7 @@ export class FormattedText extends Shape {
         } else {
           this.drawState = {
             x: lineX,
-            y: y + lineY - partBaselineShift,
+            y: y - part.style.baselineShift,
             text: part.text,
           };
           context.fillStrokeShape(this);

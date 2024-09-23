@@ -64,10 +64,8 @@ export const cssStyleToJsCanvasProps = (
   // transform is used only for baselineShift so we are using it safely till now.
   if (jsStyles.transform) {
     // - to reverse the current direction as baseline and transform are opposite directions for each other.
-    jsStyles.baselineShift = toPrecisedFloat(
-      -parseFloat(jsStyles.transform.match(/\((.*)px\)/)[1]) /
-        originalSourceInitialScale,
-      2,
+    jsStyles.baselineShift = -parseFloat(
+      jsStyles.transform.match(/\((.*)px\)/)[1],
     );
     delete jsStyles.transform;
   }

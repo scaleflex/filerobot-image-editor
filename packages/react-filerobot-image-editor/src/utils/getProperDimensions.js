@@ -6,7 +6,7 @@ const getProperDimensions = (
   resizeDimensions,
   cropDimensions,
   shownImageDimensions,
-  originalDimensions,
+  originalDimensions = { width: 0, height: 0 },
   rotationAngle = 0,
 ) => {
   if (resizeDimensions.width && resizeDimensions.height) {

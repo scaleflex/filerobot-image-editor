@@ -1,6 +1,10 @@
 import mapNumber from './mapNumber';
 
-const mapCropBox = (crop, shownImageDimensions, toDimensions) => ({
+const mapCropBox = (
+  crop,
+  shownImageDimensions,
+  toDimensions = { width: 0, height: 0 },
+) => ({
   ...(crop.x || crop.x === 0
     ? {
         x: Math.round(

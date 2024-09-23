@@ -41,7 +41,7 @@ const getPreparedStyle = (
   fontSize,
   color,
   letterSpacing: letterSpacing && letterSpacing * originalSourceInitialScale,
-  transform: `translateY(${-baselineShift * originalSourceInitialScale}px)`,
+  transform: `translateY(${-baselineShift}px)`,
   display: baselineShift && 'inline-block',
   fontFamily,
 });
@@ -86,8 +86,9 @@ const TextNodeContentTextarea = ({
     return flattenedTextContent;
   };
 
-  const updateAnnotationWithTmpText = () => {
+  const updateAnnotationWithTmpText = (globalProps) => {
     setAnnotation({
+      ...globalProps,
       id,
       tmpText: getFormattedText(),
       dismissHistory: true,
@@ -138,9 +139,7 @@ const TextNodeContentTextarea = ({
     }
 
     if (updatedFormats.baselineShift) {
-      updatedFormats.transform = `translateY(${
-        -updatedFormats.baselineShift * originalSourceInitialScale
-      }px)`;
+      updatedFormats.transform = `translateY(${-updatedFormats.baselineShift}px)`;
       updatedFormats.display = 'inline-block';
       delete updatedFormats.baselineShift;
     }
@@ -157,6 +156,10 @@ const TextNodeContentTextarea = ({
     const targetContent = isNoSelectedText
       ? selectedUnfocusedTextElement || textareaRef.current
       : range.extractContents();
+    const isWholeTextSelected =
+      targetContent?.textContent.length ===
+      textareaRef.current?.textContent.length;
+
     const newFormatKeys = Object.keys(updatedFormats);
     if (isNoSelectedText && !selectedUnfocusedTextElement) {
       recursivelyRemoveCssProperties(textareaRef.current, newFormatKeys);
@@ -174,7 +177,7 @@ const TextNodeContentTextarea = ({
       range.insertNode(targetContent);
     }
 
-    updateAnnotationWithTmpText();
+    updateAnnotationWithTmpText(isWholeTextSelected && updatedFormats);
   };
 
   const handleTextareaKeyDown = (event) => {
