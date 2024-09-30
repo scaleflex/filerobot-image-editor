@@ -1,6 +1,5 @@
 /** External Dependencies */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
@@ -15,18 +14,14 @@ const ImageDimensionsAndDisplayToggle = () => {
 
   return (
     <ImageInfo showCompareButton>
-        {!disableZooming && (
-          <>
-            <Separator />
-            <ZoomButtons />
-          </>
-        )}
+      {!disableZooming && (
+        <>
+          <Separator />
+          <ZoomButtons />
+        </>
+      )}
     </ImageInfo>
   );
-};
-
-ImageDimensionsAndDisplayToggle.propTypes = {
-  showBackButton: PropTypes.bool,
 };
 
 export default ImageDimensionsAndDisplayToggle;
