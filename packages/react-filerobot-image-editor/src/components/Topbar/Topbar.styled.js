@@ -65,7 +65,6 @@ const StyledMenuIconButton = styled(IconButton)`
   }
 `;
 
-
 export {
   StyledTopbar,
   StyledFlexCenterAlignedContainer,
