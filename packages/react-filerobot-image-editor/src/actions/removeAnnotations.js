@@ -35,7 +35,7 @@ const removeAnnotations = (state, payload) => {
     // not stored in state, used in reducer to consider in undo/redo stacks
     isDesignState: !payload.dismissHistory,
     annotationIds: newAnnotationIds,
-    // textIdOfEditableContent: null,
+    textIdOfEditableContent: null,
     annotations: newAnnotations,
     selectionsIds: [],
   };
