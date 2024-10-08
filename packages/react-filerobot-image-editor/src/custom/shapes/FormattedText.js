@@ -83,7 +83,7 @@ export class FormattedText extends Shape {
 
     context.save();
     context.font = this.formatFont(part);
-    context.letterSpacing = `${partLetterSpacing}px`;
+    context.letterSpacing = `${partLetterSpacing}em`;
     const { width } = context.measureText(part.text);
     context.restore();
     return width;

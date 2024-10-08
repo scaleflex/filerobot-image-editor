@@ -19,7 +19,7 @@ const TextSpacingsFields = ({
   t,
 }) => {
   const { originalSource } = useStore();
-  const { letterSpacing, lineHeight, baselineShift } = text;
+  const { letterSpacing, lineHeight, baselineShift, fontSize } = text;
 
   const updateValue = (
     prop,
@@ -35,14 +35,14 @@ const TextSpacingsFields = ({
     <StyledSpacedOptionFields preventFlex>
       <Label>{t('letterSpacing')}</Label>
       <Slider
-        annotation="px"
+        annotation="em"
         isActive={Boolean(letterSpacing)}
         onChange={(val) =>
           updateValue('letterSpacing', val, { max: maxHorizontal })
         }
         value={letterSpacing}
-        step={SLIDER_STEP}
-        max={maxHorizontal}
+        step={0.01}
+        max={Math.min(fontSize, 20)}
       />
       <Label>{t('lineHeight')}</Label>
       <Slider

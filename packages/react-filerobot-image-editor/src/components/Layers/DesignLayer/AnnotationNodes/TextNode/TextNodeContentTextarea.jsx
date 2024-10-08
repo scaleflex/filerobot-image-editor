@@ -38,7 +38,7 @@ const getPreparedStyle = ({
   fontStyle,
   fontSize,
   color,
-  letterSpacing,
+  letterSpacing: letterSpacing && `${letterSpacing}em`,
   transform: `translateY(${-baselineShift}px)`,
   display: baselineShift && 'inline-block',
   fontFamily: getQuotedFontFamily(fontFamily),
@@ -124,7 +124,7 @@ const TextNodeContentTextarea = ({
     if (typeof updatedFormats.letterSpacing !== 'undefined') {
       updatedFormats.letterSpacing = `${parseFloat(
         updatedFormats.letterSpacing,
-      )}px`;
+      )}em`;
     }
 
     if (typeof updatedFormats.baselineShift !== 'undefined') {
@@ -166,7 +166,8 @@ const TextNodeContentTextarea = ({
       range.insertNode(targetContent);
     }
 
-    updateAnnotationWithTmpText(isWholeTextSelected && updatedFormats);
+    // We're passing newFormats instead of updatedFormats as theses formats will be passed to the canvas (no transformations needed then!)
+    updateAnnotationWithTmpText(isWholeTextSelected && newFormats);
   };
 
   const handleTextareaKeyDown = (event) => {
@@ -353,7 +354,7 @@ const TextNodeContentTextarea = ({
           color: fill,
           fontFamily: getQuotedFontFamily(fontFamily),
           fontSize,
-          letterSpacing,
+          letterSpacing: letterSpacing && `${letterSpacing}em`,
           lineHeight,
           fontWeight,
           fontStyle,
