@@ -244,7 +244,7 @@ const useTextAnnotationEditing = (enableEvents = false) => {
       textContent,
       element,
       startIndex,
-      endIndex,
+      endIndex, // inclusive
       hasSelection: !selection.isCollapsed || Boolean(element),
     });
 
