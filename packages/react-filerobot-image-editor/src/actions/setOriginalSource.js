@@ -8,11 +8,11 @@ const setOriginalSource = (state, payload) => {
     isDesignState: !isFirstTimeToAddSource && !payload.dismissHistory,
     feedback: {},
     zoom:
-      (payload.zoom &&
-        state.originalSource?.width !== payload.originalSource?.width) ||
-      state.originalSource?.height !== payload.originalSource.height ||
-      (payload.originalSource.src &&
-        state.originalSource?.src !== payload.originalSource.src)
+      payload.zoom &&
+      (state.originalSource?.width !== payload.originalSource?.width ||
+        state.originalSource?.height !== payload.originalSource.height ||
+        (payload.originalSource.src &&
+          state.originalSource?.src !== payload.originalSource.src))
         ? payload.zoom
         : state.zoom,
     presentOriginalSources: {

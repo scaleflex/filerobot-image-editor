@@ -139,4 +139,5 @@ export default {
   resetOnSourceChange: false,
   previewBgColor: undefined,
   previewBgImage: undefined,
+  keepZoomOnSourceChange: false,
 };

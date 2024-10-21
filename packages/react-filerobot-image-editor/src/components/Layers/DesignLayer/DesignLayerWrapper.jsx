@@ -43,12 +43,15 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
 
   const originalSourceInitialScale = useMemo(
     () =>
-      getDimensionsMinimalRatio(
-        initialCanvasWidth,
-        initialCanvasHeight,
-        originalSource.width,
-        originalSource.height,
-      ),
+      initialCanvasWidth > originalSource.width &&
+      initialCanvasHeight > originalSource.height
+        ? 1
+        : getDimensionsMinimalRatio(
+            initialCanvasWidth,
+            initialCanvasHeight,
+            originalSource.width,
+            originalSource.height,
+          ),
     [originalSource, initialCanvasWidth, initialCanvasHeight],
   );
 

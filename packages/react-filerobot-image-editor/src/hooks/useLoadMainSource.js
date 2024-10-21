@@ -29,6 +29,7 @@ const useLoadMainSource = ({
   onPluginRootResize,
   pluginRootRef,
   resetOnSourceChange: triggerResetOnSourceChange,
+  keepZoomOnSourceChange: zoomKeptOnSourceChange,
 } = {}) => {
   const {
     config,
@@ -53,10 +54,13 @@ const useLoadMainSource = ({
     updateStateFnRef,
     noCrossOrigin,
     resetOnSourceChange: configResetOnSourceChange,
+    keepZoomOnSourceChange: configKeepZoomOnSourceChange,
   } = config;
   const source = sourceToLoad || configSource;
   const resetOnSourceChange =
     triggerResetOnSourceChange ?? configResetOnSourceChange;
+  const keepZoomOnSourceChange =
+    zoomKeptOnSourceChange ?? configKeepZoomOnSourceChange;
 
   const [observeResize, unobserveElement] = useResizeObserver();
   const cloudimageQueryLoaded = useRef(false);
@@ -72,7 +76,7 @@ const useLoadMainSource = ({
         type: SET_ORIGINAL_SOURCE,
         payload: {
           originalSource: newSource,
-          ...(!resetOnSourceChange && {
+          ...(!(resetOnSourceChange || keepZoomOnSourceChange) && {
             zoom: {
               factor: DEFAULT_ZOOM_FACTOR,
               x: null,
@@ -82,7 +86,7 @@ const useLoadMainSource = ({
         },
       });
     },
-    [resetOnSourceChange],
+    [resetOnSourceChange, keepZoomOnSourceChange],
   );
 
   const setOriginalSourceIfDimensionsFound = (newSource) => {
