@@ -113,7 +113,9 @@ const ZoomButtons = (props) => {
         aria-disabled={isZoomDisabled}
         className="FIE_zoom_buttons-zoom-label"
       >
-        {`${toPrecisedFloat(previewToRealImgFactor * 100, 0) || '100'}%`}
+        {`${
+          toPrecisedFloat(Math.round(previewToRealImgFactor) * 100, 0) || '100'
+        }%`}
       </StyledZoomPercentageLabel>
       <StyledSmallButton
         onClick={zoomIn}
