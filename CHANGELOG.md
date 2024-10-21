@@ -34,7 +34,7 @@ Types of changes:
 
 Changed
 - removed defaultToolId and made it undefined by default.
-- renamed originalImage to originalSource.
+- renamed originalImage to originalSource a.
 
 Added
 - Rotate anti-clockwise button in rotation.
@@ -44,7 +44,7 @@ Added
 - `keepAnnotationEventsEnabled`, `textContentRegex`  -- to be added --
 - - `annotationComponents`, `moreAnnotationPreviewClasses`, -keepZoomOnSourceChange-  -- to be added --
 - Justify option for horizontal text alignment.
-- Support creating a design (background color, width & height) instead of editing image only.
+- Support creating a design (noHistoryRecord -- if true, won't be considered in the history state for this change --, background color, width & height) instead of editing image only.
 - Characters/text part formatting & adding baseline shift.
 - Zoom fit button.
 
