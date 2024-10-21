@@ -1,6 +1,6 @@
 /* eslint-disable */
 // THIS FILE IS NOT USED ANYWHERE, JUST FOR MENTIONING AN EXAMPLE OF CONFIG
-import DuplicateIcon from '@scaleflex/icons/duplicate';
+import CopyIcon from '@scaleflex/icons/copy-outline';
 import Social from '@scaleflex/icons/social';
 import CropClassicTv from '@scaleflex/icons/crop-classic-tv';
 import CropCinemaScope from '@scaleflex/icons/crop-cinema-scope';
@@ -337,7 +337,7 @@ const config = {
   //   },
   //   {
   //     label: '[optional] Save option 2',
-  //     icon: DuplicateIcon,
+  //     icon: CopyIcon,
   //     onClick: (_openSaveModal, saveDirectly) => saveDirectly(console.log),
   //   },
   // ],

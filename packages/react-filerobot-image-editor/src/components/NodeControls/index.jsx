@@ -3,9 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Html } from 'react-konva-utils';
 import IconButton from '@scaleflex/ui/core/icon-button';
-// import { DeleteOutline, Duplicate, LayerOrder } from '@scaleflex/icons';
+// import { DeleteOutline, CopyOutline, LayerOrder } from '@scaleflex/icons';
 import DeleteOutline from '@scaleflex/icons/delete-outline';
-import Duplicate from '@scaleflex/icons/duplicate';
+import CopyOutline from '@scaleflex/icons/copy-outline';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
@@ -58,7 +58,7 @@ const NodeControls = ({ onClickAnnotationDelete }) => {
         )} */}
         {selectionsIds[0] !== WATERMARK_ANNOTATION_ID && (
           <IconButton color="basic" size="sm" onClick={duplicateSelectedNodes}>
-            <Duplicate />
+            <CopyOutline />
           </IconButton>
         )}
         <IconButton
