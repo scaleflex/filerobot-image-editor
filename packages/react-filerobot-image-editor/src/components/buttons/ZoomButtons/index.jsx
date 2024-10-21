@@ -35,12 +35,13 @@ const ZoomButtons = (props) => {
   const isBlockerError = feedback.duration === 0;
   const [zoomingMenuAnchorEl, setZoomingMenuAnchorEl] = useState(null);
 
-  const saveZoom = (zoomFactor, isAbsoluteZoom) => {
+  const saveZoom = (zoomFactor, isAbsoluteZoom, zoomCustomLabel) => {
     dispatch({
       type: ZOOM_CANVAS,
       payload: {
         factor: zoomFactor,
         isAbsoluteZoom,
+        customLabel: zoomCustomLabel,
       },
     });
   };
@@ -69,7 +70,7 @@ const ZoomButtons = (props) => {
     setZoomingMenuAnchorEl(zoomingMenuAnchorEl || !event ? null : event.target);
   };
 
-  const applyZoomFactorPreset = (factor) => {
+  const applyZoomFactorPreset = (factor, zoomCustomLabel) => {
     if (factor === 'fit') {
       fitCanvas();
       toggleZoomingMenu();
@@ -80,15 +81,23 @@ const ZoomButtons = (props) => {
       resize.width || resize.height
         ? factor
         : factor / shownImageDimensions.originalSourceInitialScale;
-    saveZoom(factorToAchieveSelected, true);
+    saveZoom(factorToAchieveSelected, true, zoomCustomLabel);
     toggleZoomingMenu();
   };
 
+  const getPreviewedZoomLevelLabel = () => {
+    if (zoom.customLabel) {
+      return zoom.customLabel;
+    }
+
+    const previewToRealImgFactor =
+      originalSource && !resize.width && !resize.height
+        ? shownImageDimensions.originalSourceInitialScale * zoom.factor
+        : zoom.factor;
+    return `${toPrecisedFloat(previewToRealImgFactor * 100, 0) || '100'}%`;
+  };
+
   const isZoomDisabled = toolId === TOOLS_IDS.CROP || isBlockerError;
-  const previewToRealImgFactor =
-    originalSource && !resize.width && !resize.height
-      ? shownImageDimensions.originalSourceInitialScale * zoom.factor
-      : zoom.factor;
 
   return (
     <StyledZoomingWrapper className="FIE_buttons-zoom-btns" {...props}>
@@ -113,9 +122,7 @@ const ZoomButtons = (props) => {
         aria-disabled={isZoomDisabled}
         className="FIE_zoom_buttons-zoom-label"
       >
-        {`${
-          toPrecisedFloat(Math.round(previewToRealImgFactor) * 100, 0) || '100'
-        }%`}
+        {getPreviewedZoomLevelLabel()}
       </StyledZoomPercentageLabel>
       <StyledSmallButton
         onClick={zoomIn}
@@ -147,9 +154,9 @@ const ZoomButtons = (props) => {
         {ZOOM_FACTORS_PRESETS.map(({ factor, labelKey, label }) => (
           <MenuItem
             key={label || labelKey}
-            onClick={() => applyZoomFactorPreset(factor)}
+            onClick={() => applyZoomFactorPreset(factor, label)}
           >
-            <MenuItemLabel>{label ?? t(labelKey)}</MenuItemLabel>
+            <MenuItemLabel>{labelKey ? t(labelKey) : label}</MenuItemLabel>
           </MenuItem>
         ))}
       </Menu>

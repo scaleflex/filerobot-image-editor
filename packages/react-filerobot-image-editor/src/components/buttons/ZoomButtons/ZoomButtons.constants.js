@@ -6,6 +6,7 @@ export const ZOOM_FACTORS_PRESETS = [
   {
     labelKey: 'actualSize',
     factor: 1,
+    label: '100%',
   },
   {
     label: '25%',

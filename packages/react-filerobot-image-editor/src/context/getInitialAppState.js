@@ -59,6 +59,7 @@ const getInitialAppState = (config = {}) => {
       factor: DEFAULT_ZOOM_FACTOR,
       x: null,
       y: null,
+      customLabel: null,
     },
     isLoadingGlobally: true,
     selectionsIds: [],
