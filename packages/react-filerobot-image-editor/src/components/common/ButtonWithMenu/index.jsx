@@ -112,7 +112,7 @@ const ButtonWithMenu = ({
           className={`${className}-menu`}
           anchorEl={anchorEl}
           onClose={closeMenu}
-          open
+          open={Boolean(anchorEl)}
           style={menuStyle}
           position={menuPosition}
         >
