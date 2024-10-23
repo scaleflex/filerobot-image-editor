@@ -23,7 +23,7 @@ const PenOptions = ({ t }) => {
       ...config[TOOLS_IDS.PEN],
       name: TOOLS_IDS.PEN,
     },
-    false,
+    { enablePreview: false },
   );
   const canvasRef = useRef(null);
   const updatedPen = useRef({

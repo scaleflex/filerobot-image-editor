@@ -8,6 +8,7 @@ const ADDED_IMG_SPACING_PERCENT = 0.15;
 const useImageScaled = (
   padding = ADDED_IMG_SPACING_PERCENT,
   moreImageAnnotation = {},
+  annotationOpts = {},
 ) => {
   const {
     originalSource,
@@ -20,7 +21,7 @@ const useImageScaled = (
       opacity: 1,
       ...moreImageAnnotation,
     },
-    false,
+    { enablePreview: false, ...annotationOpts },
   );
 
   const updateAnnotation = (loadedImg, func, newAnnotationData = {}) => {

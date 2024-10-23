@@ -25,7 +25,10 @@ const getTextPartSharedFormats = (dimensionlessProps) => {
 };
 
 // TODO: Imporve the logic and separate the selected annotation options from handling preview and options before draw.
-const useAnnotation = (annotation = {}, enablePreview = true) => {
+const useAnnotation = (
+  annotation = {},
+  { enablePreview = true, selectToolOnAnnotationChange = true } = {},
+) => {
   const setAnnotation = useSetAnnotation();
   const {
     previewGroup,
@@ -149,7 +152,10 @@ const useAnnotation = (annotation = {}, enablePreview = true) => {
 
   useEffect(() => {
     const shouldChangeTool =
-      tmpAnnotation.name && tmpAnnotation.name !== toolId;
+      selectToolOnAnnotationChange &&
+      tmpAnnotation.name &&
+      tmpAnnotation.name !== toolId;
+
     if (shouldChangeTool) {
       selectTool(tmpAnnotation.name, true);
     }
