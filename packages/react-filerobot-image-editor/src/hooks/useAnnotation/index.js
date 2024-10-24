@@ -156,6 +156,7 @@ const useAnnotation = (
       tmpAnnotation.name &&
       tmpAnnotation.name !== toolId;
 
+    console.log('start');
     if (shouldChangeTool) {
       selectTool(tmpAnnotation.name, true);
     }
@@ -212,7 +213,7 @@ const useAnnotation = (
         stopAnnotationEventsListening();
       }
     };
-  }, [canvas, tmpAnnotation, previewGroup]);
+  }, [canvas, tmpAnnotation, previewGroup, enablePreview]);
 
   return useMemo(
     () => [tmpAnnotation, updateTmpAnnotation, saveAnnotationNoDebounce],
