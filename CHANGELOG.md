@@ -31,14 +31,13 @@ Types of changes:
 - Removed the padding space between canvas and image.
 - In Crop, original background preview is now considering more properties of the edited image.
 - Duplicated objects behavior (on duplicating the new object is auto selected).
+- Rename `backgroundColor` to `previewBgColor & `backgroundImage` to `previewBgImage`.
 
 Changed
 - removed defaultToolId and made it undefined by default.
 - renamed originalImage to originalSource a.
 
 Added
-- Rotate anti-clockwise button in rotation.
-- `previewBgColor` & `previewBgImage` params to be added as background for the canvas  -- to be added --
 - `tabsToolsIds` ==FORM==> TABS_TOOLS  -- to be added --
 - `tools` ==FORM==> TOOLS_ITEMS -- to be added -- the tool id should be the tool's name and used in the tab also.(to be checked)
 - `keepAnnotationEventsEnabled`, `textContentRegex`  -- to be added --
@@ -49,14 +48,27 @@ Added
 - Zoom fit button.
 
 Fixed
-- Resize issue on unlocking the ratio lock.
-- Backend translations endpoint
-- Undo/Redo for deleted shapes.
+- Undo/Redo or deleted shapes.
 
 NOTES:
 - {toolId === TOOLS_IDS.CROP && <CropTransformer />} when adding CropTransformer as child of TransformersLayer to be opened only while opening crop tab or to do any conditional render to avoid showing the crop transformer all the time unless needed.
 - annotationNamesToNodeComponents should use the tool's name
 - -->
+
+## v4.9.0 - 2024-10-27
+
+### Fixed
+- Resize issue on unlocking ratio lock.
+- Crop ratio wasn't considered in re-providing the whole editor's config by default (user had to interact with the canvas) ([#493](https://github.com/scaleflex/filerobot-image-editor/issues/493)).
+- Backend's translation service API.
+
+### Added
+- Rotate anti-clockwise button in rotation.
+- `backgroundColor` & `backgroundImage` params to be added as background for the canvas
+
+### Improved
+- FlipX & FlipY behaviors, now the flip is only related to the edited image but everything else is keeping its state without flipping ([#473](https://github.com/scaleflex/filerobot-image-editor/issues/473)).
+- Update the design lib. (@scaleflex/ui & @scaleflex/icons) packages.
 
 
 ## v4.8.1 - 2024-05-16
