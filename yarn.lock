@@ -1786,19 +1786,20 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@scaleflex/icons@2.6.3", "@scaleflex/icons@^2.6.3":
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-2.6.3.tgz#a2457a2f60f936f11493bf45db5af2bf2de05a96"
-  integrity sha512-xtcsQ04BlPKd0CwqYi7Y6uuAh2n/JDPVQZkRppYQrM1Mo+kMu9Djk81l6W+6EDCrAVf9fyoTcoe26QxD9SpjEg==
+"@scaleflex/icons@2.10.27", "@scaleflex/icons@^2.10.27":
+  version "2.10.27"
+  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-2.10.27.tgz#9b1afde89577de144529be19d2aa69d58b332ce4"
+  integrity sha512-3E/tqXQrsuFIeGwDHE/ANEdDCPCYrt3ETk3/Q83M5ZZaFWdFWJG3bMeVBwNP2Nuul5OMr70LH3ce3krEObz98g==
 
-"@scaleflex/ui@2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-2.7.0.tgz#ce4ec4c6973ae08474a30b7577e648610bb2c87e"
-  integrity sha512-46Hw+mvyFferRC2HDmpN3fXPtgZZQMdWunT2/EtYqK8utXrEyc41ZiiKW4X+2S3Fq/Gplg/rnd4dHQdME8etMw==
+"@scaleflex/ui@2.10.27":
+  version "2.10.27"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-2.10.27.tgz#09b008dde13e974d91b29d66ac0e7b49383c8a67"
+  integrity sha512-Id9EJjS4NWGn9V0pZRCk8YpM2PVEK8/a/BtTbgEW5L7wPI/APmZ9vGtCTM3HyTEBrfnvWmDlb0T5CfpozywKyA==
   dependencies:
     "@popperjs/core" "^2.6.0"
-    "@scaleflex/icons" "^2.6.3"
+    "@scaleflex/icons" "^2.10.27"
     "@tippyjs/react" "^4.2.6"
+    "@types/lodash.merge" "^4.6.9"
     lodash.merge "^4.6.2"
     prop-types "^15.7.2"
 
@@ -1888,6 +1889,18 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
+
+"@types/lodash.merge@^4.6.9":
+  version "4.6.9"
+  resolved "https://registry.yarnpkg.com/@types/lodash.merge/-/lodash.merge-4.6.9.tgz#93e94796997ed9a3ebe9ccf071ccaec4c6bc8fb8"
+  integrity sha512-23sHDPmzd59kUgWyKGiOMO2Qb9YtqRO/x4IhkgNUiPQ1+5MUVqi6bCZeq9nBJ17msjIMbEIO5u+XW4Kz6aGUhQ==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.17.12"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.12.tgz#25d71312bf66512105d71e55d42e22c36bcfc689"
+  integrity sha512-sviUmCE8AYdaF/KIHLDJBQgeYzPBI0vf/17NaYehBJfYD1j6/L95Slh07NlyK2iNyBNaEkb3En2jRt+a8y3xZQ==
 
 "@types/minimatch@^3.0.3":
   version "3.0.5"
