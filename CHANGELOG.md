@@ -21,6 +21,15 @@ Types of changes:
 
 ---
 
+<!-- Improved
+- FlipX & FlipY behaviors, now the flip is only related to the edited image but everything else is keeping its state without flipping.
+
+Added
+- Rotate anti-clockwise button in rotation.
+- `backgroundColor` & `backgroundImage` params to be added as background for the canvas
+Fixed
+- Resize issue on unlocking the ratio lock. -->
+
 ## v4.8.1 - 2024-05-16
 
 ### Fixed

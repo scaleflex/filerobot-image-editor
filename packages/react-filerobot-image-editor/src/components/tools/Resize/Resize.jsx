@@ -31,6 +31,14 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
     t,
   } = useStore();
 
+  const dimensions = getProperDimensions(
+    ((currentSize.width || currentSize.height) && currentSize) || resize,
+    crop,
+    shownImageDimensions,
+    originalImage,
+    rotation,
+  );
+
   const changeResize = (e) => {
     const { name, value } = e.target;
     if (parseFloat(value) < 1) {
@@ -46,11 +54,15 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
       originalImage.height,
       rotation,
     );
-    const newResize = {
-      [name]: value ? restrictNumber(value, 0, maxResizeNumber) : value,
-    };
+
     const isHeight = name === 'height';
     const secondDimensionName = isHeight ? 'width' : 'height';
+
+    const newResize = {
+      [name]: value ? restrictNumber(value, 0, maxResizeNumber) : value,
+      [secondDimensionName]: dimensions[secondDimensionName],
+    };
+
     const isRatioUnlocked = currentSize.ratioUnlocked ?? resize.ratioUnlocked;
     if (!isRatioUnlocked) {
       const originalImgRatio =
@@ -134,14 +146,6 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
       typeof resize.height === 'undefined') ||
     (originalImage.width === resize.width &&
       originalImage.height === resize.height);
-
-  const dimensions = getProperDimensions(
-    ((currentSize.width || currentSize.height) && currentSize) || resize,
-    crop,
-    shownImageDimensions,
-    originalImage,
-    rotation,
-  );
 
   const isManualChangeDisabled = resize.manualChangeDisabled;
   const isEmptyEditedWidth =

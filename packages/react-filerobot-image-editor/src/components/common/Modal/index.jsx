@@ -33,6 +33,9 @@ const Modal = ({
     if (e.key === 'Enter') {
       onDone(e);
     }
+    if (e.key === 'Escape') {
+      onCancel();
+    }
   };
 
   return (
@@ -43,6 +46,10 @@ const Modal = ({
       style={{ zIndex }}
       onKeyUp={onKeyUp}
       width={width}
+      role="dialog"
+      tabIndex={-1}
+      aria-modal="true"
+      aria-label={title}
     >
       <StyledModalTitle
         icon={<Icon size={25} />}

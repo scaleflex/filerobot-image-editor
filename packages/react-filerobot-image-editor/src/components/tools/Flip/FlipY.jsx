@@ -9,7 +9,7 @@ import { FLIP_DIRECTIONS, TOOLS_IDS } from 'utils/constants';
 import { TOGGLE_FLIP } from 'actions';
 import { usePhoneScreen, useStore } from 'hooks';
 
-const xFlipReverseSideStyle = {
+const yFlipReverseSideStyle = {
   transform: 'scaleY(-1)',
 };
 
@@ -21,15 +21,20 @@ const FlipY = ({ selectTool, isSelected, t }) => {
 
   const isPhoneScreen = usePhoneScreen(320);
 
-  const { reverseLabelOfCurrXFlipDir, reverseIconOfCurrXFlipDir } = useMemo(
+  const getFlipIcon = useCallback(
+    () => (
+      <FlipYIcon
+        size={isPhoneScreen ? 20 : 16}
+        style={isFlippedY ? yFlipReverseSideStyle : undefined}
+      />
+    ),
+    [isFlippedY, isPhoneScreen],
+  );
+
+  const { reverseLabelOfCurrYFlipDir, reverseIconOfCurrYFlipDir } = useMemo(
     () => ({
-      reverseLabelOfCurrXFlipDir: isFlippedY ? t('unFlipY') : t('flipY'),
-      reverseIconOfCurrXFlipDir: () => (
-        <FlipYIcon
-          size={isPhoneScreen ? 20 : 16}
-          style={isFlippedY ? xFlipReverseSideStyle : undefined}
-        />
-      ),
+      reverseLabelOfCurrYFlipDir: isFlippedY ? t('unFlipY') : t('flipY'),
+      reverseIconOfCurrYFlipDir: getFlipIcon,
     }),
     [isFlippedY],
   );
@@ -52,8 +57,8 @@ const FlipY = ({ selectTool, isSelected, t }) => {
     <ToolsBarItemButton
       className="FIE_flip-y-tool-button"
       id={TOOLS_IDS.FLIP_Y}
-      label={reverseLabelOfCurrXFlipDir}
-      Icon={reverseIconOfCurrXFlipDir}
+      label={reverseLabelOfCurrYFlipDir}
+      Icon={reverseIconOfCurrYFlipDir}
       onClick={handleButtonClick}
       isSelected={isSelected}
     />

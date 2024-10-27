@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, Layer } from 'react-konva';
+import { Image, Layer, Rect } from 'react-konva';
 
 /** Internal Dependencies */
 import getDimensionsMinimalRatio from 'utils/getDimensionsMinimalRatio';
@@ -33,7 +33,10 @@ const DesignLayer = () => {
     filter = null,
     adjustments: { rotation = 0, crop = {}, isFlippedX, isFlippedY } = {},
     resize,
+    isSaving,
+    config = {},
   } = useStore();
+  const { backgroundColor, backgroundImage } = config;
   const imageNodeRef = useRef();
   const previewGroupRef = useRef();
   const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
@@ -218,8 +221,7 @@ const DesignLayer = () => {
   const xPointAfterCrop =
     xPointToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.width
-      ? (isFlippedX ? -1 : 1) *
-        (imageDimensions.width / 2 -
+      ? (imageDimensions.width / 2 -
           crop.x -
           crop.width / 2 +
           cropCenterRotatedPoint.x) *
@@ -229,8 +231,7 @@ const DesignLayer = () => {
   const yPointAfterCrop =
     yPointToCenterImgInCanvas +
     (!isCurrentlyCropping && crop.height
-      ? (isFlippedY ? -1 : 1) *
-        (imageDimensions.height / 2 -
+      ? (imageDimensions.height / 2 -
           crop.y -
           crop.height / 2 +
           cropCenterRotatedPoint.y) *
@@ -241,14 +242,8 @@ const DesignLayer = () => {
 
   const yPoint = isCurrentlyCropping ? yPointNoResizeNoCrop : yPointAfterCrop;
 
-  const finalScaleX =
-    (isFlippedX ? -1 : 1) *
-    (isCurrentlyCropping ? 1 : resizedX) *
-    scaleAfterRotation;
-  const finalScaleY =
-    (isFlippedY ? -1 : 1) *
-    (isCurrentlyCropping ? 1 : resizedY) *
-    scaleAfterRotation;
+  const finalScaleX = (isCurrentlyCropping ? 1 : resizedX) * scaleAfterRotation;
+  const finalScaleY = (isCurrentlyCropping ? 1 : resizedY) * scaleAfterRotation;
 
   return (
     <Layer
@@ -265,6 +260,20 @@ const DesignLayer = () => {
       rotation={isCurrentlyCropping ? 0 : rotation}
       clipFunc={clipFunc}
     >
+      {!isSaving && (
+        <Rect
+          x={isFlippedX ? scaledSpacedOriginalImg.width : 0}
+          y={isFlippedY ? scaledSpacedOriginalImg.height : 0}
+          fill={backgroundColor}
+          fillPatternImage={backgroundImage}
+          fillPatternRepeat="repeat"
+          width={scaledSpacedOriginalImg.width}
+          height={scaledSpacedOriginalImg.height}
+          listening={false}
+          scaleX={isFlippedX ? -1 : 1}
+          scaleY={isFlippedY ? -1 : 1}
+        />
+      )}
       <Image
         id={IMAGE_NODE_ID}
         image={originalImage}
@@ -277,6 +286,8 @@ const DesignLayer = () => {
         listening={false}
         filters={finetunesAndFilter}
         ref={imageNodeRef}
+        scaleX={isFlippedX ? -1 : 1}
+        scaleY={isFlippedY ? -1 : 1}
         {...finetunesProps}
       />
       <AnnotationNodes />

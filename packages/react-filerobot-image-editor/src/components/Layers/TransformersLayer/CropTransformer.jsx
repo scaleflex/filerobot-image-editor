@@ -16,7 +16,6 @@ import {
 import { boundDragging, boundResizing } from './TransformersLayer.utils';
 import TextNode from '../DesignLayer/AnnotationNodes/TextNode';
 
-let isFirstRenderCropUpdated = false;
 const noEffectTextDimensions = {
   width: 200,
   height: 100,
@@ -58,8 +57,8 @@ const CropTransformer = () => {
 
   const saveCrop = ({ width, height, x, y }, noHistory) => {
     const newCrop = {
-      x: isFlippedX ? shownImageDimensions.width - x - width : x,
-      y: isFlippedY ? shownImageDimensions.height - y - height : y,
+      x,
+      y,
       width,
       height,
     };
@@ -93,7 +92,11 @@ const CropTransformer = () => {
     });
   };
 
-  const saveBoundedCropWithLatestConfig = (cropWidth, cropHeight) => {
+  const saveBoundedCropWithLatestConfig = (
+    cropWidth,
+    cropHeight,
+    restrictions = { noScale: true },
+  ) => {
     if (cropTransformerRef.current && cropShapeRef.current) {
       cropTransformerRef.current.nodes([cropShapeRef.current]);
     }
@@ -113,7 +116,7 @@ const CropTransformer = () => {
         attrs,
         { ...imageDimensions, abstractX: 0, abstractY: 0 },
         isCustom || isEllipse ? false : getProperCropRatio(),
-        cropSettings,
+        { ...cropSettings, ...restrictions }
       ),
       true,
     );
@@ -135,45 +138,19 @@ const CropTransformer = () => {
   }, [designLayer, originalImage, shownImageDimensions]);
 
   useEffect(() => {
-    if (shownImageDimensionsRef.current) {
-      const imageDimensions = shownImageDimensionsRef.current;
-      saveBoundedCropWithLatestConfig(
-        crop.width ?? imageDimensions.width,
-        crop.height ?? imageDimensions.height,
-      );
-    }
-  }, [cropRatio]);
-
-  useEffect(() => {
-    if (
-      cropTransformerRef.current &&
-      cropShapeRef.current &&
-      shownImageDimensionsRef.current &&
-      crop.width &&
-      crop.height
-    ) {
-      saveBoundedCropWithLatestConfig(crop.width, crop.height);
-    }
-  }, [cropSettings, shownImageDimensions.width, shownImageDimensions.height]);
-
-  useEffect(() => {
     if (shownImageDimensions) {
       shownImageDimensionsRef.current = shownImageDimensions;
-      // Used to fill in the missing crop at the first render incase of custom crop ratio provided from config so we need to apply it
       if (
-        !isFirstRenderCropUpdated &&
-        cropRatio &&
-        shownImageDimensions.x &&
+        typeof shownImageDimensions.x !== 'undefined' &&
         shownImageDimensions.width
       ) {
         saveBoundedCropWithLatestConfig(
           crop.width ?? shownImageDimensions.width,
           crop.height ?? shownImageDimensions.height,
         );
-        isFirstRenderCropUpdated = true;
       }
     }
-  }, [shownImageDimensions]);
+  }, [cropRatio, shownImageDimensions, cropSettings]);
 
   if (!designLayer) {
     return null;
@@ -230,8 +207,8 @@ const CropTransformer = () => {
 
   const { x = 0, y = 0, width, height } = attrs;
   const cropShapeProps = {
-    x: isFlippedX ? shownImageDimensions.width - x - width : x,
-    y: isFlippedY ? shownImageDimensions.height - y - height : y,
+    x,
+    y,
     ref: cropShapeRef,
     fill: '#FFFFFF',
     scaleX: 1,

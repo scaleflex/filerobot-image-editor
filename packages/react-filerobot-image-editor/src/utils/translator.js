@@ -51,7 +51,7 @@ const sendMissingTranslationsToBackend = (missingTranslations = []) =>
 
 export const getBackendTranslations = (
   language = 'en',
-  additionalTranslations,
+  additionalTranslations = {},
 ) =>
   new Promise((resolve, reject) => {
     const loweredCaseLanguage = language.toLowerCase();
@@ -102,7 +102,7 @@ export const getBackendTranslations = (
 
     xhr.open(
       'GET',
-      `https://i18n.ultrafast.io/api/export?grid=${TRANSLATIONS_GRID_UUID}`,
+      `https://i18n-fastly.ultrafast.io/api/export?grid=${TRANSLATIONS_GRID_UUID}`,
     );
     xhr.send();
   });
