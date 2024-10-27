@@ -20,15 +20,20 @@ Types of changes:
 > `- **BREAKING**: Some message`
 
 ---
+## v4.9.0 - 2024-10-27
 
-<!-- Improved
-- FlipX & FlipY behaviors, now the flip is only related to the edited image but everything else is keeping its state without flipping.
+### Fixed
+- Resize issue on unlocking ratio lock.
+- Crop ratio wasn't considered in re-providing the whole editor's config by default (user had to interact with the canvas) ([#493](https://github.com/scaleflex/filerobot-image-editor/issues/493)).
+- Backend's translation service API.
 
-Added
+### Added
 - Rotate anti-clockwise button in rotation.
 - `backgroundColor` & `backgroundImage` params to be added as background for the canvas
-Fixed
-- Resize issue on unlocking the ratio lock. -->
+
+### Improved
+- FlipX & FlipY behaviors, now the flip is only related to the edited image but everything else is keeping its state without flipping ([#473](https://github.com/scaleflex/filerobot-image-editor/issues/473)).
+- Update the design lib. (@scaleflex/ui & @scaleflex/icons) packages.
 
 ## v4.8.1 - 2024-05-16
 
