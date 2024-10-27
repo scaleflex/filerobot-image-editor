@@ -17,7 +17,6 @@ import { boundDragging, boundResizing } from './TransformersLayer.utils';
 import TextNode from '../DesignLayer/AnnotationNodes/TextNode';
 import LayersBackground from '../LayersBackground';
 
-let isFirstRenderCropUpdated = false;
 const noEffectTextDimensions = {
   width: 200,
   height: 100,
@@ -94,7 +93,11 @@ const CropTransformer = (props) => {
     });
   };
 
-  const saveBoundedCropWithLatestConfig = (cropWidth, cropHeight) => {
+  const saveBoundedCropWithLatestConfig = (
+    cropWidth,
+    cropHeight,
+    restrictions = { noScale: true },
+  ) => {
     if (cropTransformerRef.current && cropShapeRef.current) {
       cropTransformerRef.current.nodes([cropShapeRef.current]);
     }
@@ -107,14 +110,13 @@ const CropTransformer = (props) => {
       x: crop.x ?? 0,
       y: crop.y ?? 0,
     };
-
     saveCrop(
       boundResizing(
         attrs,
         attrs,
         { ...imageDimensions, abstractX: 0, abstractY: 0 },
         isCustom || isEllipse ? false : getProperCropRatio(),
-        cropSettings,
+        { ...cropSettings, ...restrictions },
       ),
       true,
     );
@@ -136,45 +138,20 @@ const CropTransformer = (props) => {
   }, [designLayer, originalSource, shownImageDimensions]);
 
   useEffect(() => {
-    if (shownImageDimensionsRef.current) {
-      const imageDimensions = shownImageDimensionsRef.current;
-      saveBoundedCropWithLatestConfig(
-        crop.width ?? imageDimensions.width,
-        crop.height ?? imageDimensions.height,
-      );
-    }
-  }, [cropRatio]);
-
-  useEffect(() => {
-    if (
-      cropTransformerRef.current &&
-      cropShapeRef.current &&
-      shownImageDimensionsRef.current &&
-      crop.width &&
-      crop.height
-    ) {
-      saveBoundedCropWithLatestConfig(crop.width, crop.height);
-    }
-  }, [cropSettings, shownImageDimensions.width, shownImageDimensions.height]);
-
-  useEffect(() => {
     if (shownImageDimensions) {
       shownImageDimensionsRef.current = shownImageDimensions;
-      // Used to fill in the missing crop at the first render incase of custom crop ratio provided from config so we need to apply it
+
       if (
-        !isFirstRenderCropUpdated &&
-        cropRatio &&
-        shownImageDimensions.x &&
+        typeof shownImageDimensions.x !== 'undefined' &&
         shownImageDimensions.width
       ) {
         saveBoundedCropWithLatestConfig(
           crop.width ?? shownImageDimensions.width,
           crop.height ?? shownImageDimensions.height,
         );
-        isFirstRenderCropUpdated = true;
       }
     }
-  }, [shownImageDimensions]);
+  }, [cropRatio, shownImageDimensions, cropSettings]);
 
   if (!designLayer) {
     return null;

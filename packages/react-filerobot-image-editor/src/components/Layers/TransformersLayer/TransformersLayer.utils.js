@@ -49,8 +49,13 @@ export const boundResizing = (
   const scaledAllowedArea = {
     x: toPrecisedFloat(allowedArea.abstractX * allowedArea.scaledBy),
     y: toPrecisedFloat(allowedArea.abstractY * allowedArea.scaledBy),
-    width: toPrecisedFloat(allowedArea.width * allowedArea.scaledBy),
-    height: toPrecisedFloat(allowedArea.height * allowedArea.scaledBy),
+    width: toPrecisedFloat(
+      allowedArea.width * (cropRestrictions.noScale ? 1 : allowedArea.scaledBy),
+    ),
+    height: toPrecisedFloat(
+      allowedArea.height *
+        (cropRestrictions.noScale ? 1 : allowedArea.scaledBy),
+    ),
   };
   const boundedDimensions = { ...newDimensions };
 

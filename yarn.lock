@@ -1641,18 +1641,18 @@
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@scaleflex/icons@2.10.24", "@scaleflex/icons@^2.10.24":
-  version "2.10.24"
-  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-2.10.24.tgz#87edfc5937758a859f53b8ab9a85f7fdd2dd4996"
-  integrity sha512-j+NfvLIjEmPz+Rci7dWkTArpg+PmyGqZYHKiyGjoz382LVPVSYnXaEPVT5a9vXlwnTlHT45HPJHBg44b8Xc26A==
+"@scaleflex/icons@2.10.27", "@scaleflex/icons@^2.10.27":
+  version "2.10.27"
+  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-2.10.27.tgz#9b1afde89577de144529be19d2aa69d58b332ce4"
+  integrity sha512-3E/tqXQrsuFIeGwDHE/ANEdDCPCYrt3ETk3/Q83M5ZZaFWdFWJG3bMeVBwNP2Nuul5OMr70LH3ce3krEObz98g==
 
-"@scaleflex/ui@2.10.26":
-  version "2.10.26"
-  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-2.10.26.tgz#563670541b99aa33769e4099051e435a636ef790"
-  integrity sha512-OJW17pZR101bOdsHjkcehW8/mL1s52RhRz3b/nN5/IuOfEgC5Qt1MlwQTFgrA3kDLcp6jrEidVrlo31FIihWHQ==
+"@scaleflex/ui@2.10.27":
+  version "2.10.27"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-2.10.27.tgz#09b008dde13e974d91b29d66ac0e7b49383c8a67"
+  integrity sha512-Id9EJjS4NWGn9V0pZRCk8YpM2PVEK8/a/BtTbgEW5L7wPI/APmZ9vGtCTM3HyTEBrfnvWmDlb0T5CfpozywKyA==
   dependencies:
     "@popperjs/core" "^2.6.0"
-    "@scaleflex/icons" "^2.10.24"
+    "@scaleflex/icons" "^2.10.27"
     "@tippyjs/react" "^4.2.6"
     "@types/lodash.merge" "^4.6.9"
     lodash.merge "^4.6.2"
