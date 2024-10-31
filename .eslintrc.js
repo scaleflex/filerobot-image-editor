@@ -48,6 +48,14 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+      {
+        "files": ["packages/react-filerobot-image-editor/src/libraries/ffmpeg-core.js"],
+        "rules": {
+          "rule-name": "off"
+        }
+      }
+    ],
   settings: {
     'import/resolver': {
       node: {
