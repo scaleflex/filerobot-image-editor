@@ -21,7 +21,6 @@ const VolumeControl = ({
 
   const onScrubEnd = () => {
     closeAudioSlider();
-    setIsAudioSliderOpen(false);
   };
 
   return (

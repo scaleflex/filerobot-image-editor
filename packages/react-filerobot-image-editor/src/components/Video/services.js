@@ -19,21 +19,24 @@ const getQueryParams = (params) => {
 };
 
 const transformResponse = (response) => {
-  if (!response.ok) {
-    return response.json().then((jsonResponse) => {
-      const error = { message: response.statusText, ...jsonResponse };
-      console.warn(error.message);
-    });
+  if (response.ok) {
+    return response.json().then((jsonResponse) => jsonResponse);
   }
-
-  return response.json().then((jsonResponse) => jsonResponse);
 };
 
 const baseUrl = import.meta.env.DEV
   ? 'http://ask-dev.filerobot.com:8732/trim/url'
   : 'https://api.filerobot.com/videos/v2/trim/url';
 
-export const trimVideo = ({ key, token, url, crop, rotation, duration }) =>
+export const trimVideo = ({
+  key,
+  token,
+  url,
+  crop,
+  rotation,
+  duration,
+  onError,
+}) =>
   fetch(`${baseUrl}?${getQueryParams({ crop, rotation })}`, {
     body: JSON.stringify([
       {
@@ -46,7 +49,9 @@ export const trimVideo = ({ key, token, url, crop, rotation, duration }) =>
     ]),
     headers: getHeaders({ key, token }),
     method: 'POST',
-  }).then(transformResponse);
+  })
+    .then(transformResponse)
+    .catch(onError);
 
-export const get = (url) =>
-  fetch(url, { method: 'GET' }).then(transformResponse);
+export const get = (url, onError) =>
+  fetch(url, { method: 'GET' }).then(transformResponse).catch(onError);

@@ -68,7 +68,7 @@ const Controls = () => {
       } else {
         setTrackProgress(mediaRef.currentTime);
       }
-    }, [1000]);
+    }, 1000);
   };
 
   const handleVideoLoaded = () => {
@@ -122,7 +122,7 @@ const Controls = () => {
 
     audioSliderTimerRef.current = setTimeout(() => {
       setIsAudioSliderOpen(false);
-    }, [1000]);
+    }, 1000);
   };
 
   const handleVolumeUp = () => {
@@ -213,6 +213,9 @@ const Controls = () => {
     }
   };
 
+  const handleWaiting = () => setIsBuffering(true);
+  const handlePlaying = () => setIsBuffering(false);
+
   const onPlay = () => {
     setIsPlaying(true);
     startTimer();
@@ -255,10 +258,6 @@ const Controls = () => {
     setIsLoopDisabled(!isLoopDisabled);
   };
 
-  const toggleBuffer = (value) => {
-    setIsBuffering(value);
-  };
-
   useEffect(() => {
     if (toolId !== null) {
       lastOpenedToolId.current = toolId;
@@ -278,8 +277,8 @@ const Controls = () => {
       mediaRef.addEventListener('canplaythrough', handleCanPlay);
       mediaRef.addEventListener('play', onPlay);
       mediaRef.addEventListener('pause', onPause);
-      mediaRef.addEventListener('waiting', () => toggleBuffer(true));
-      mediaRef.addEventListener('playing', () => toggleBuffer(false));
+      mediaRef.addEventListener('waiting', handleWaiting);
+      mediaRef.addEventListener('playing', handlePlaying);
       document.addEventListener('keydown', handleKeyboardControls);
 
       // Pause and clean up on unmount
@@ -290,8 +289,8 @@ const Controls = () => {
           mediaRef.removeEventListener('canplaythrough', handleCanPlay);
           mediaRef.removeEventListener('play', onPlay);
           mediaRef.removeEventListener('pause', onPause);
-          mediaRef.addEventListener('waiting', () => toggleBuffer(true));
-          mediaRef.addEventListener('playing', () => toggleBuffer(false));
+          mediaRef.addEventListener('waiting', handleWaiting);
+          mediaRef.addEventListener('playing', handlePlaying);
         }
 
         document.removeEventListener('keydown', handleKeyboardControls);

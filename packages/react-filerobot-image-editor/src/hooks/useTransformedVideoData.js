@@ -10,11 +10,13 @@ import { get, trimVideo } from 'components/Video/services';
 import emitCustomEvent from 'utils/emitCustomEvent';
 import { EVENTS } from 'utils/constants';
 // import extractCurrentDesignState from 'utils/extractCurrentDesignState';
+import { SET_FEEDBACK } from 'actions';
 import useStore from './useStore';
 
 const useTransformedVideoData = () => {
   const state = useStore();
   const {
+    dispatch,
     designLayer,
     shownImageDimensions,
     originalSource,
@@ -23,6 +25,17 @@ const useTransformedVideoData = () => {
     config: { useBackendProcess, backendProcess, disableResizeAfterRotation },
   } = state;
   const ffmpegRef = useRef(new FFmpeg());
+
+  const onError = (newError) => {
+    dispatch({
+      type: SET_FEEDBACK,
+      payload: {
+        feedback: {
+          message: newError.message || newError,
+        },
+      },
+    });
+  };
 
   const getMappedCropBox = () => {
     const { clipWidth, clipHeight, clipX, clipY } = designLayer.attrs;
@@ -131,12 +144,17 @@ const useTransformedVideoData = () => {
 
   const checkVideoStatus = async (response) => {
     if (response?.result[0].progress) {
-      const { ready, progress } = await get(response?.result[0].progress);
+      const { ready, progress } = await get(
+        response?.result[0].progress,
+        onError,
+      );
 
       if (!ready && progress >= 0 && progress <= 100) {
         emitCustomEvent(EVENTS.PROCESSING_VIDEO_PROGRESS, {
           progress,
         });
+        // eslint-disable-next-line no-promise-executor-return
+        await new Promise((resolve) => setTimeout(resolve, 300));
         const status = await checkVideoStatus(response);
         return status;
       }
@@ -163,6 +181,7 @@ const useTransformedVideoData = () => {
         ].join(','),
       rotation,
       duration: originalSource.duration,
+      onError,
     });
 
     const url = await checkVideoStatus(response);

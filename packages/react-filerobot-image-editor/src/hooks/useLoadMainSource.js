@@ -128,8 +128,8 @@ const useLoadMainSource = ({
   };
 
   const getSourceType = async (url) => {
-    const urlWithoutQuery = getUrlWithoutQuery(url);
     try {
+      const urlWithoutQuery = getUrlWithoutQuery(url);
       const response = await fetch(urlWithoutQuery, { method: 'HEAD' });
 
       if (response.ok) {
@@ -143,7 +143,7 @@ const useLoadMainSource = ({
           return SOURCE_TYPES.VIDEO;
         }
 
-        setError('URL is neither an image or a video:');
+        setError('URL is neither an image nor a video:');
       }
 
       return getSourceTypeByExtension(urlWithoutQuery);

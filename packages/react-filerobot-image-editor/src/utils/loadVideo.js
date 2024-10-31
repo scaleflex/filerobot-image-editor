@@ -17,8 +17,16 @@ const loadVideo = (videoSrc, options = {}) =>
     videoElement.loop = true;
 
     const load = () => {
-      videoElement.width = width || videoElement.videoWidth;
-      videoElement.height = height || videoElement.videoHeight;
+      const finalWidth = width || videoElement.videoWidth;
+      const finalHeight = height || videoElement.videoHeight;
+
+      if (!Number.isFinite(finalWidth) || !Number.isFinite(finalHeight)) {
+        reject(new Error('Invalid video dimensions'));
+        return;
+      }
+
+      videoElement.width = finalWidth;
+      videoElement.height = finalHeight;
       videoElement.removeEventListener('loadedmetadata', load);
       resolve({ newSource: videoElement, type: SOURCE_TYPES.VIDEO });
     };
