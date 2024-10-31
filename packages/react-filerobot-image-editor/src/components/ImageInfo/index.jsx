@@ -23,7 +23,7 @@ const ImageInfo = ({ children, showCompareButton = true, ...props }) => {
     resize = {},
     adjustments: { crop, rotation = 0 },
     shownImageDimensions,
-    config: { showBackButton },
+    config: { showBackButton, disableResizeAfterRotation },
     t,
   } = useStore();
 
@@ -61,6 +61,7 @@ const ImageInfo = ({ children, showCompareButton = true, ...props }) => {
       resize,
       crop,
       shownImageDimensions,
+      disableResizeAfterRotation,
       originalSource,
       rotation,
     );

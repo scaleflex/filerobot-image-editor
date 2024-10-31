@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
         moduleDirectories: [
           './packages/react-filerobot-image-editor/src',
           'node_modules',
-        ]
+        ],
       }),
       react(
         isProduction
@@ -48,6 +48,9 @@ export default defineConfig(({ mode }) => {
       ),
       isProduction && uglify(),
     ],
+    optimizeDeps: {
+      exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
+    },
     server: {
       port: 1111,
       open: true,

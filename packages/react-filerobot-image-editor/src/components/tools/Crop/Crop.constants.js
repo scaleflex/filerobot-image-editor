@@ -8,6 +8,7 @@ import ImageOutline from '@scaleflex/icons/image-outline';
 /** Internal Dependencies */
 import { CUSTOM_CROP, ELLIPSE_CROP, ORIGINAL_CROP } from 'utils/constants';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
+import isVideo from 'utils/isVideo';
 
 export const DEFAULT_CROP_PRESETS = [
   {
@@ -37,5 +38,6 @@ export const DEFAULT_CROP_PRESETS = [
     titleKey: 'ellipse',
     ratio: ELLIPSE_CROP,
     icon: Ellipse,
+    hide: ({ sourceType } = {}) => isVideo(sourceType),
   },
 ];

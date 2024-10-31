@@ -32,6 +32,7 @@ const Resize = ({
     resize,
     shownImageDimensions,
     adjustments: { crop, rotation = 0 },
+    config: { disableResizeAfterRotation },
     theme,
     t,
   } = useStore();
@@ -40,6 +41,7 @@ const Resize = ({
     ((currentSize.width || currentSize.height) && currentSize) || resize,
     crop,
     shownImageDimensions,
+    disableResizeAfterRotation,
     originalSource,
     rotation,
   );

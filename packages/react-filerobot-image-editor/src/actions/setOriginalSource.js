@@ -20,6 +20,7 @@ const setOriginalSource = (state, payload) => {
       [payload.originalSource.key || 'default']: payload.originalSource,
     },
     originalSource: payload.originalSource,
+    sourceType: payload.sourceType,
     imgSrc: payload.originalSource.src,
     bgColor: payload.originalSource.bgColor,
   };

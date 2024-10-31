@@ -6,6 +6,7 @@ const getProperDimensions = (
   resizeDimensions,
   cropDimensions,
   shownImageDimensions,
+  disableResizeAfterRotation,
   originalDimensions = { width: 0, height: 0 },
   rotationAngle = 0,
 ) => {
@@ -18,6 +19,13 @@ const getProperDimensions = (
     shownImageDimensions,
     originalDimensions,
   );
+
+  if (disableResizeAfterRotation) {
+    return mappedCropArea.width && mappedCropArea.height
+      ? mappedCropArea
+      : originalDimensions;
+  }
+
   const croppedRotatedArea = getSizeAfterRotation(
     mappedCropArea.width,
     mappedCropArea.height,

@@ -63,6 +63,7 @@ const App = (canvasProps) => {
             style={canvasStyle}
             {...canvasProps}
           />
+          {canvasProps?.children}
           {!showCanvasOnly && !isFixedAndCanvasHidableError && <ToolsBar />}
         </StyledCanvasAndTools>
       </StyledMainContent>

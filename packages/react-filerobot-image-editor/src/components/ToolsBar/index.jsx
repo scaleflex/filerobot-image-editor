@@ -31,11 +31,7 @@ const ToolsBar = ({ toolsIds, tools, selectedToolId, ...props }) => {
     },
   } = useStore();
   const currentTabId = tabId || defaultTabId;
-  const currentToolId =
-    selectedToolId ||
-    toolId ||
-    defaultToolId ||
-    tabsToolsIds[currentTabId]?.[0];
+  const currentToolId = selectedToolId || toolId || defaultToolId;
 
   const tabToolsIds = useMemo(
     () => toolsIds || tabsToolsIds[currentTabId] || [],

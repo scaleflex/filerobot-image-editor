@@ -1,3 +1,4 @@
+import { SOURCE_TYPES } from './constants';
 import extractNameFromUrl from './extractNameFromUrl';
 
 const loadImage = (imageSrc, options = {}) =>
@@ -13,7 +14,7 @@ const loadImage = (imageSrc, options = {}) =>
     imageElement.onload = () => {
       imageElement.width = width || imageElement.width;
       imageElement.height = height || imageElement.height;
-      resolve(imageElement);
+      resolve({ newSource: imageElement, type: SOURCE_TYPES.IMAGE });
     };
     imageElement.onerror = () => {
       reject(

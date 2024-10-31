@@ -11,6 +11,7 @@ import {
   UPDATE_STATE,
 } from 'actions';
 import loadImage from 'utils/loadImage';
+import loadVideo from 'utils/loadVideo';
 import {
   useResizeObserver,
   useStore,
@@ -22,7 +23,10 @@ import finetunesStrsToClasses from 'utils/finetunesStrsToClasses';
 import filterStrToClass from 'utils/filterStrToClass';
 import isSameSource from 'utils/isSameSource';
 import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
-import { DEFAULT_ZOOM_FACTOR } from 'utils/constants';
+import { DEFAULT_ZOOM_FACTOR, SOURCE_TYPES } from 'utils/constants';
+import getUrlWithoutQuery from 'utils/getUrlWithoutQuery';
+import isImageExtension from 'utils/isImageExtension';
+import isVideoExtension from 'utils/isVideoExtension';
 
 const useLoadMainSource = ({
   sourceToLoad,
@@ -71,12 +75,12 @@ const useLoadMainSource = ({
   const transformImgFn = useTransformedImgData();
 
   const setNewOriginalSource = useCallback(
-    (newSource) => {
+    ({ newSource, type }) => {
       dispatch({
         type: SET_ORIGINAL_SOURCE,
         payload: {
           originalSource: newSource,
-          dismissHistory: newSource?.noHistoryRecord,
+          sourceType: type,
           ...(!(resetOnSourceChange || keepZoomOnSourceChange) && {
             zoom: {
               factor: DEFAULT_ZOOM_FACTOR,
@@ -113,6 +117,61 @@ const useLoadMainSource = ({
     });
   }, []);
 
+  const getSourceTypeByExtension = (url) => {
+    if (isImageExtension(url)) {
+      return SOURCE_TYPES.IMAGE;
+    }
+
+    if (isVideoExtension(url)) {
+      return SOURCE_TYPES.VIDEO;
+    }
+  };
+
+  const getSourceType = async (url) => {
+    const urlWithoutQuery = getUrlWithoutQuery(url);
+    try {
+      const response = await fetch(urlWithoutQuery, { method: 'HEAD' });
+
+      if (response.ok) {
+        const contentType = response.headers.get('content-type');
+
+        if (contentType.startsWith('image/')) {
+          return SOURCE_TYPES.IMAGE;
+        }
+
+        if (contentType.startsWith('video/')) {
+          return SOURCE_TYPES.VIDEO;
+        }
+
+        setError('URL is neither an image or a video:');
+      }
+
+      return getSourceTypeByExtension(urlWithoutQuery);
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  const loadMedia = async (mediaToLoad) => {
+    const url = mediaToLoad?.src || mediaToLoad;
+    const sourceType = await getSourceType(url);
+
+    const options = {
+      name: defaultSavedImageName,
+      noCrossOrigin,
+      width: mediaToLoad?.width,
+      height: mediaToLoad?.height,
+      key: mediaToLoad?.key,
+    };
+
+    if (sourceType === SOURCE_TYPES.IMAGE) {
+      return loadImage(mediaToLoad?.src || mediaToLoad, options);
+    }
+
+    if (sourceType === SOURCE_TYPES.VIDEO) {
+      return loadVideo(mediaToLoad?.src || mediaToLoad, options);
+    }
+  };
   // We are promisifying the image loading for mixing it with other promises
   const loadAndSetOriginalSource = (imgToLoad) =>
     new Promise((resolve) => {
@@ -163,7 +222,7 @@ const useLoadMainSource = ({
           imgToLoad &&
           (typeof imgToLoad === 'string' || imgToLoad?.src)
         ) {
-          loadImage(imgToLoad?.src || imgToLoad, {
+          loadMedia(imgToLoad?.src || imgToLoad, {
             name: defaultSavedImageName,
             noCrossOrigin,
             width: imgToLoad?.width,
