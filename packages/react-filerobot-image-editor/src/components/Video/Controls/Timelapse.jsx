@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 
 /** Internal Dependencies */
 import formatSecondsToDuration from 'utils/formatSecondsToDuration';
-import Styled from './Controls.styled';
+import { StyledTimeLapse } from './Controls.styled';
 
 const TimeLapse = ({ trackProgress, duration }) => {
   const formattedProgress = formatSecondsToDuration(trackProgress);
   const formattedDuration = formatSecondsToDuration(duration);
 
   return (
-    <Styled.TimeLapse>
+    <StyledTimeLapse>
       {`${formattedProgress} / ${formattedDuration}`}
-    </Styled.TimeLapse>
+    </StyledTimeLapse>
   );
 };
 

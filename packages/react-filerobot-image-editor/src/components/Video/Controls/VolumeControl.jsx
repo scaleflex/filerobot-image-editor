@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { Volume, Mute } from '@scaleflex/icons';
 
 /** Internal Dependencies */
-import Styled from './Controls.styled';
+import {
+  StyledVolumeControlWrapper,
+  StyledIconButton,
+  StyledIcon,
+  StyledVolumeSlider,
+} from './Controls.styled';
 
 const VolumeControl = ({
   value,
@@ -24,12 +29,12 @@ const VolumeControl = ({
   };
 
   return (
-    <Styled.VolumeControlWrapper $shown={isAudioSliderOpen}>
-      <Styled.IconButton size="lg" onClick={toggleMute} color="basic">
-        <Styled.Icon $hidden={isMuted} icon={<Volume size={14} />} />
-        <Styled.Icon $hidden={!isMuted} icon={<Mute size={14} />} />
-      </Styled.IconButton>
-      <Styled.VolumeSlider
+    <StyledVolumeControlWrapper $shown={isAudioSliderOpen}>
+      <StyledIconButton size="lg" onClick={toggleMute} color="basic">
+        <StyledIcon $hidden={isMuted} icon={<Volume size={14} />} />
+        <StyledIcon $hidden={!isMuted} icon={<Mute size={14} />} />
+      </StyledIconButton>
+      <StyledVolumeSlider
         hideAnnotation
         min={0}
         max={1}
@@ -39,7 +44,7 @@ const VolumeControl = ({
         onMouseUp={onScrubEnd}
         onKeyUp={onScrubEnd}
       />
-    </Styled.VolumeControlWrapper>
+    </StyledVolumeControlWrapper>
   );
 };
 

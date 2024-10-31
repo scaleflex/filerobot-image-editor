@@ -8,7 +8,17 @@ import { SELECT_TOOL } from 'actions';
 import TimeLapse from './Timelapse';
 import PlaybackSpeedMenu from './PlaybackSpeedMenu';
 import VolumeControl from './VolumeControl';
-import Styled from './Controls.styled';
+import {
+  StyledMediaControls,
+  StyledControlsWrapper,
+  StyledPlayButton,
+  StyledPlaybackButton,
+  StyledLoadingIcon,
+  StyledSeekSlider,
+  StyledIconButton,
+  StyledIcon,
+  StyledExtraControllers,
+} from './Controls.styled';
 
 const Controls = () => {
   const dispatch = useDispatch();
@@ -301,8 +311,8 @@ const Controls = () => {
   }, [mediaRef, designLayer]);
 
   return (
-    <Styled.MediaControls>
-      <Styled.SeekSlider
+    <StyledMediaControls>
+      <StyledSeekSlider
         value={trackProgress || 0}
         step={1}
         min={0}
@@ -314,28 +324,25 @@ const Controls = () => {
         onMouseUp={onScrubEnd}
         onMouseDown={onScrubStart}
       />
-      <Styled.ControlsWrapper>
-        <Styled.PlayButton
+      <StyledControlsWrapper>
+        <StyledPlayButton
           color="basic"
           size="lg"
           disabled={!isPlaying && !isReadyRef.current}
           $disableHover={!isReadyRef.current}
           onClick={handlePlayPause}
         >
-          <Styled.LoadingIcon
+          <StyledLoadingIcon
             $hidden={isReadyRef.current && !isBuffering}
             size={40}
           />
-          <Styled.Icon $hidden={isPlaying} icon={<Play size={14} />} />
-          <Styled.Icon $hidden={!isPlaying} icon={<Pause size={14} />} />
-        </Styled.PlayButton>
-        <Styled.IconButton size="lg" onClick={toggleLoop} color="basic">
-          <Styled.Icon $hidden={isLoopDisabled} icon={<Repeat size={14} />} />
-          <Styled.Icon
-            $hidden={!isLoopDisabled}
-            icon={<NoRepeat size={14} />}
-          />
-        </Styled.IconButton>
+          <StyledIcon $hidden={isPlaying} icon={<Play size={14} />} />
+          <StyledIcon $hidden={!isPlaying} icon={<Pause size={14} />} />
+        </StyledPlayButton>
+        <StyledIconButton size="lg" onClick={toggleLoop} color="basic">
+          <StyledIcon $hidden={isLoopDisabled} icon={<Repeat size={14} />} />
+          <StyledIcon $hidden={!isLoopDisabled} icon={<NoRepeat size={14} />} />
+        </StyledIconButton>
         <VolumeControl
           value={volumeLevel}
           onChange={handleChangeVolumeLevel}
@@ -346,22 +353,22 @@ const Controls = () => {
           closeAudioSlider={closeAudioSlider}
         />
         <TimeLapse trackProgress={trackProgress} duration={duration} />
-        <Styled.ExtraControllers>
-          <Styled.PlaybackButton
+        <StyledExtraControllers>
+          <StyledPlaybackButton
             color="basic"
             onClick={handleTogglePlaybackMenu}
           >
             {`${playbackSpeed}x`}
-          </Styled.PlaybackButton>
-        </Styled.ExtraControllers>
-      </Styled.ControlsWrapper>
+          </StyledPlaybackButton>
+        </StyledExtraControllers>
+      </StyledControlsWrapper>
       <PlaybackSpeedMenu
         value={playbackSpeed}
         onClose={handleTogglePlaybackMenu}
         onClick={handleChangePlaybackSpeed}
         anchor={playbackMenuAnchor}
       />
-    </Styled.MediaControls>
+    </StyledMediaControls>
   );
 };
 

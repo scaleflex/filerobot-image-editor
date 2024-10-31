@@ -11,7 +11,7 @@ import {
 } from '@scaleflex/ui/core';
 import { Loading } from '@scaleflex/icons';
 
-const MediaControls = styled.div`
+const StyledMediaControls = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@ const MediaControls = styled.div`
   padding: 0px 16px;
 `;
 
-const SeekSlider = styled(SfxSlider)`
+const StyledSeekSlider = styled(SfxSlider)`
   appearance: none;
   height: 4px;
   border: 0;
@@ -81,7 +81,7 @@ const SeekSlider = styled(SfxSlider)`
   }
 `;
 
-const ControlsWrapper = styled.div`
+const StyledControlsWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -90,13 +90,13 @@ const ControlsWrapper = styled.div`
   background-color: ${({ theme: { palette } }) => palette[PC.BackgroundHover]};
 `;
 
-const TimeLapse = styled.p`
+const StyledTimeLapse = styled.p`
   margin: 0;
   color: ${({ theme: { palette } }) => palette[PC.TextSecondary]};
   ${({ theme: { typography } }) => typography.font[FV.LabelMediumEmphasis]};
 `;
 
-const Menu = styled(SfxMenu)`
+const StyledMenu = styled(SfxMenu)`
   transition: all 200ms ease-out;
   margin-bottom: 5px;
   ${({ $isOpen }) =>
@@ -106,7 +106,7 @@ const Menu = styled(SfxMenu)`
     `}
 `;
 
-const VolumeSlider = styled(SfxSlider)`
+const StyledVolumeSlider = styled(SfxSlider)`
   border: 0;
   width: 0;
   border-radius: 4px;
@@ -137,7 +137,7 @@ const VolumeSlider = styled(SfxSlider)`
   }
 `;
 
-const PlayButton = styled(SfxIconButton)`
+const StyledPlayButton = styled(SfxIconButton)`
   position: relative;
 
   &:active,
@@ -147,21 +147,15 @@ const PlayButton = styled(SfxIconButton)`
 
   &:hover {
     background-color: transparent;
-
-    ${({ $disableHover }) =>
-      $disableHover &&
-      css`
-        background-color: transparent;
-      `}
   }
 `;
 
-const PlaybackButton = styled(Button)`
+const StyledPlaybackButton = styled(Button)`
   border: 0;
   min-width: 40px;
 `;
 
-const LoadingIcon = styled(Loading)`
+const StyledLoadingIcon = styled(Loading)`
   position: absolute;
   animation: spinner 2s linear infinite;
   top: calc(50% - 20.5px);
@@ -177,7 +171,7 @@ const LoadingIcon = styled(Loading)`
     `}
 `;
 
-const VolumeControlWrapper = styled.div`
+const StyledVolumeControlWrapper = styled.div`
   display: flex;
   align-items: center;
   column-gap: 10px;
@@ -185,7 +179,7 @@ const VolumeControlWrapper = styled.div`
   ${({ $shown }) =>
     $shown &&
     css`
-      ${VolumeSlider} {
+      ${StyledVolumeSlider} {
         width: 56px;
 
         .SfxSlider-thumb {
@@ -194,7 +188,7 @@ const VolumeControlWrapper = styled.div`
       }
     `}
 
-  &:hover ${VolumeSlider} {
+  &:hover ${StyledVolumeSlider} {
     width: 56px;
 
     .SfxSlider-thumb {
@@ -203,7 +197,7 @@ const VolumeControlWrapper = styled.div`
   }
 `;
 
-const IconButton = styled(SfxIconButton)`
+const StyledIconButton = styled(SfxIconButton)`
   position: relative;
   width: 40px;
   height: 40px;
@@ -215,7 +209,7 @@ const IconButton = styled(SfxIconButton)`
   }
 `;
 
-const Icon = styled(({ icon, ...props }) => cloneElement(icon, props))`
+const StyledIcon = styled(({ icon, ...props }) => cloneElement(icon, props))`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -232,32 +226,30 @@ const Icon = styled(({ icon, ...props }) => cloneElement(icon, props))`
     `}
 `;
 
-const ExtraControllers = styled.div`
+const StyledExtraControllers = styled.div`
   display: flex;
   flex: 1;
   justify-content: flex-end;
   gap: 12px;
 `;
 
-const ExtraControllerBtn = styled(IconButton)`
+const StyledExtraControllerBtn = styled(StyledIconButton)`
   display: inline-flex;
 `;
 
-const Styled = {
-  MediaControls,
-  ControlsWrapper,
-  PlayButton,
-  PlaybackButton,
-  LoadingIcon,
-  SeekSlider,
-  TimeLapse,
-  Menu,
-  VolumeControlWrapper,
-  VolumeSlider,
-  IconButton,
-  Icon,
-  ExtraControllers,
-  ExtraControllerBtn,
+export {
+  StyledMediaControls,
+  StyledControlsWrapper,
+  StyledPlayButton,
+  StyledPlaybackButton,
+  StyledLoadingIcon,
+  StyledSeekSlider,
+  StyledTimeLapse,
+  StyledMenu,
+  StyledVolumeControlWrapper,
+  StyledVolumeSlider,
+  StyledIconButton,
+  StyledIcon,
+  StyledExtraControllers,
+  StyledExtraControllerBtn,
 };
-
-export default Styled;
