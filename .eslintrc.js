@@ -50,7 +50,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['packages/react-filerobot-image-editor/src/libraries/*'],
+      files: ['packages/react-filerobot-image-editor/src/libraries/**/*'],
       rules: {
         'rule-name': 'off',
       },

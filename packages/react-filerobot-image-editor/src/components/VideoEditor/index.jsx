@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 
 /** Internal Dependencies */
 import App from 'components/App';
-import AssemblyPointProviders from 'components/ImageEditor/Providers';
+import AssemblyPointProviders from 'components/Providers';
 import { TABS } from 'index';
 import Controls from 'components/VideoEditor/Controls';
 

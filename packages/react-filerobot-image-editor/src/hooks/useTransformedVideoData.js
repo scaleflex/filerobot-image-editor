@@ -1,9 +1,7 @@
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
 /** External Dependencies */
 import { useRef } from 'react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
-import { fetchFile, toBlobURL } from '@ffmpeg/util';
+import { fetchFile } from '@ffmpeg/util';
 
 /** Internal Dependencies */
 import mapCropBox from 'utils/mapCropBox';
@@ -13,10 +11,8 @@ import emitCustomEvent from 'utils/emitCustomEvent';
 import { EVENTS } from 'utils/constants';
 // import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 import { SET_FEEDBACK } from 'actions';
+import loadFfmpeg from 'utils/loadFfmpeg';
 import useStore from './useStore';
-// TODO: check with vanilla js build
-import ffmpegJs from '../libraries/ffmpeg/ffmpeg-core.js?url';
-import ffmpegWasm from '../libraries/ffmpeg/ffmpeg-core.wasm?url';
 
 const useTransformedVideoData = () => {
   const state = useStore();
@@ -61,32 +57,11 @@ const useTransformedVideoData = () => {
       : {};
   };
 
-  const load = async () => {
-    const ffmpeg = ffmpegRef.current;
-
-    // for debugging
-    // ffmpeg.on('log', ({ type, message }) => {
-    //   console.log('message', type, message);
-    // });
-
-    ffmpeg.on('progress', ({ progress, time }) => {
-      emitCustomEvent(EVENTS.PROCESSING_VIDEO_PROGRESS, {
-        progress,
-        time,
-      });
-    });
-
-    await ffmpeg.load({
-      coreURL: await toBlobURL(ffmpegJs, 'text/javascript'),
-      wasmURL: await toBlobURL(ffmpegWasm, 'application/wasm'),
-    });
-  };
-
   const processVideo = async (mappedCropBox) => {
     const ffmpeg = ffmpegRef.current;
 
     if (!ffmpeg.loaded) {
-      await load();
+      await loadFfmpeg(ffmpeg);
     }
 
     const videoData = await fetchFile(originalSource.src);

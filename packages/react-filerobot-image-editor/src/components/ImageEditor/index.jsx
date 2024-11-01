@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 
 /** Internal Dependencies */
 import App from 'components/App';
-import AssemblyPointProviders from './Providers';
+import AssemblyPointProviders from 'components/Providers';
 
 const ImageEditor = (props) => (
   <AssemblyPointProviders {...props}>

@@ -4,7 +4,7 @@ export { default } from 'components/ImageEditor';
 export { default as VideoEditor } from 'components/VideoEditor';
 
 /** State management & UI controls exports */
-export { default as FilerobotImageEditorProvider } from 'components/ImageEditor/Providers';
+export { default as FilerobotImageEditorProvider } from 'components/Providers';
 
 export { default as App } from 'components/App';
 
