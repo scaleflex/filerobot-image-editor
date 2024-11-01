@@ -191,34 +191,34 @@ const Controls = () => {
   };
 
   const handleKeyboardControls = (event) => {
-    const { keyCode } = event;
+    const { key } = event;
 
-    switch (keyCode) {
-      case 32: // space
-      case 75: // 'k'
+    switch (key) {
+      case ' ':
+      case 'k':
         event.preventDefault();
         return handlePlayPause();
 
-      case 39: // arrowRight
+      case 'ArrowRight':
         event.preventDefault();
         return handleSeek(5);
 
-      case 37: // arrowLeft
+      case 'ArrowLeft':
         event.preventDefault();
         return handleSeek(-5);
 
-      case 38: // arrowUp
+      case 'ArrowUp':
         event.preventDefault();
-
         return handleVolumeUp();
 
-      case 40: // arrowDown
+      case 'ArrowDown':
         event.preventDefault();
         return handleVolumeDown();
 
-      case 77: // 'm'
+      case 'm':
         event.preventDefault();
         return handleToggleMute();
+
       default:
     }
   };
@@ -365,7 +365,7 @@ const Controls = () => {
       <PlaybackSpeedMenu
         value={playbackSpeed}
         onClose={handleTogglePlaybackMenu}
-        onClick={handleChangePlaybackSpeed}
+        getOnClickCbkFunction={handleChangePlaybackSpeed}
         anchor={playbackMenuAnchor}
       />
     </StyledMediaControls>

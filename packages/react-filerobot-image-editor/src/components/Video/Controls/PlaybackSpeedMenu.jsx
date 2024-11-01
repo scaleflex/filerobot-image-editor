@@ -7,7 +7,12 @@ import { StyledMenu } from './Controls.styled';
 
 const PLAYBACK_OPTIONS = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
 
-const PlaybackSpeedMenu = ({ value, anchor, onClose, onClick }) => {
+const PlaybackSpeedMenu = ({
+  value,
+  anchor,
+  onClose,
+  getOnClickCbkFunction,
+}) => {
   return (
     <StyledMenu
       open={Boolean(anchor)}
@@ -18,7 +23,7 @@ const PlaybackSpeedMenu = ({ value, anchor, onClose, onClick }) => {
       $isOpen={Boolean(anchor)}
     >
       {PLAYBACK_OPTIONS.map((option) => (
-        <MenuItem key={option} onClick={onClick(option)}>
+        <MenuItem key={option} onClick={getOnClickCbkFunction(option)}>
           {option}
         </MenuItem>
       ))}
@@ -30,7 +35,7 @@ PlaybackSpeedMenu.propTypes = {
   value: PropTypes.number,
   anchor: PropTypes.instanceOf(Object),
   onClose: PropTypes.func,
-  onClick: PropTypes.func,
+  getOnClickCbkFunction: PropTypes.func,
 };
 
 export default PlaybackSpeedMenu;
