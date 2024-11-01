@@ -62,6 +62,10 @@ export const POSSIBLE_IMAGE_TYPES = [
   'apng',
 ];
 
+export const SUPPORTED_VIDEO_TYPES = ['mp4'];
+export const POSSIBLE_VIDEO_TYPES = [...SUPPORTED_VIDEO_TYPES];
+export const DEFAULT_VIDEO_TYPE = SUPPORTED_VIDEO_TYPES[0];
+
 export const DEFAULT_IMAGE_TYPE = SUPPORTED_IMAGE_TYPES[0];
 
 export const POINTER_ICONS = {
@@ -150,6 +154,8 @@ export const EVENTS = {
   TEXT_CONTENT_EDITED: 'fie-text-content-edited',
   APPLY_TEXT_FORMAT: 'fie-apply-text-annotation-format',
   SAVE_EDITED_TEXT_CONTENT: 'fie-save-edited-text-content',
+  PROCESSING_VIDEO_START: 'fie-video-process-start',
+  PROCESSING_VIDEO_PROGRESS: 'fie-video-process-progress',
 };
 
 export const ALLOWED_TEXT_PART_FORMATS = [
@@ -165,3 +171,8 @@ export const ALLOWED_TEXT_PART_FORMATS = [
 export const UNFOCUSED_MARKED_TEXT_SELECTOR_ID = 'FIE_text-selected-part';
 
 export const TEXT_EDITOR_ID = 'FIE_text-content-editor';
+
+export const SOURCE_TYPES = {
+  IMAGE: 'image',
+  VIDEO: 'video',
+};

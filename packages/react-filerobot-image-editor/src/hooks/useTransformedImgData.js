@@ -240,7 +240,7 @@ const useTransformedImgData = () => {
     }
 
     return {
-      imageData: finalImgPassedObject,
+      data: finalImgPassedObject,
       designState: finalImgDesignState,
       hideLoadingSpinner,
     };

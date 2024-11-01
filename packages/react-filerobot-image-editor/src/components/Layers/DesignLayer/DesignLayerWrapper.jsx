@@ -11,12 +11,12 @@ import { SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import { useStore } from 'hooks';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import getCenterRotatedPoint from 'utils/getCenterRotatedPoint';
+import isImage from 'utils/isImage';
 import LayersBackground from '../LayersBackground';
 
 const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
   const designLayerRef = useRef();
   const imageNodeRef = useRef();
-
   const {
     initialCanvasWidth,
     initialCanvasHeight,
@@ -26,8 +26,10 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
     toolId,
     canvasScale,
     originalSource = {},
+    sourceType,
     adjustments: { rotation = 0, crop = {} } = {},
     resize,
+    config: { disableResizeAfterRotation },
   } = useStore();
   const isCurrentlyCropping = toolId === TOOLS_IDS.CROP;
 
@@ -156,22 +158,25 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
     imageDimensions.height,
     rotation,
   );
-  const scaleAfterRotation = !isCurrentlyCropping
-    ? getDimensionsMinimalRatio(
-        imageDimensions.width,
-        imageDimensions.height,
-        sizeAfterRotation.width,
-        sizeAfterRotation.height,
-      )
-    : 1;
+  const scaleAfterRotation =
+    !isCurrentlyCropping && !disableResizeAfterRotation
+      ? getDimensionsMinimalRatio(
+          imageDimensions.width,
+          imageDimensions.height,
+          sizeAfterRotation.width,
+          sizeAfterRotation.height,
+        )
+      : 1;
 
   useEffect(() => {
-    if (originalSource) {
+    if (originalSource && isImage(sourceType)) {
       cacheImageNode();
     }
 
     return () => {
-      imageNodeRef?.current?.clearCache();
+      if (isImage(sourceType)) {
+        imageNodeRef?.current?.clearCache();
+      }
     };
   }, [originalSource]);
 

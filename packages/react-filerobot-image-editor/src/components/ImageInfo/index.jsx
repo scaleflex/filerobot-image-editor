@@ -23,7 +23,7 @@ const ImageInfo = ({ children, showCompareButton = true, ...props }) => {
     resize = {},
     adjustments: { crop, rotation = 0 },
     shownImageDimensions,
-    config: { showBackButton },
+    config: { showBackButton, disableResizeAfterRotation },
     t,
   } = useStore();
 
@@ -57,13 +57,14 @@ const ImageInfo = ({ children, showCompareButton = true, ...props }) => {
 
   const dimensions =
     originalSource &&
-    getProperDimensions(
+    getProperDimensions({
       resize,
       crop,
       shownImageDimensions,
+      disableResizeAfterRotation,
       originalSource,
       rotation,
-    );
+    });
 
   const isCompareButtonShown = showCompareButton && originalSource?.src;
   return (

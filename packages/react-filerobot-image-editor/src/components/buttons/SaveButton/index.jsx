@@ -1,9 +1,8 @@
+/* eslint-disable react/no-unstable-nested-components */
 /** External Dependencies */
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import MenuItem from '@scaleflex/ui/core/menu-item';
-import { Image2 } from '@scaleflex/icons';
-import Label from '@scaleflex/ui/core/label';
+import { Image2, Video2 } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useStore, useTransformedImgData } from 'hooks';
@@ -14,22 +13,16 @@ import {
   ELLIPSE_CROP,
   SUPPORTED_IMAGE_TYPES,
   DEFAULT_SAVE_QUALITY,
+  SUPPORTED_VIDEO_TYPES,
 } from 'utils/constants';
 import { SET_FEEDBACK, SET_SAVING } from 'actions';
-import Modal from 'components/common/Modal';
-import Slider from 'components/common/Slider';
 import restrictNumber from 'utils/restrictNumber';
-import { Resize } from 'components/tools/Resize';
 import ButtonWithMenu from 'components/common/ButtonWithMenu';
-import {
-  StyledFileExtensionSelect,
-  StyledFileNameInput,
-  StyledQualityWrapper,
-  StyledResizeOnSave,
-  StyledResizeOnSaveLabel,
-} from './SaveButton.styled';
+import useTransformedVideoData from 'hooks/useTransformedVideoData';
+import isImage from 'utils/isImage';
+import getSupportedExtensions from 'utils/getSupportedExtensions';
+import SaveModal from './SaveModal';
 
-const sliderStyle = { marginBottom: 16 };
 const saveButtonWrapperStyle = { minWidth: 67, width: 'fit-content' }; // 67px same width as tabs bar
 const saveButtonMenuStyle = { marginLeft: 12 };
 
@@ -45,7 +38,6 @@ const SaveButton = ({
   const state = useStore();
   const optionSaveFnRef = useRef();
   const {
-    theme,
     dispatch,
     originalSource,
     resize,
@@ -54,6 +46,8 @@ const SaveButton = ({
     feedback,
     hasUndo,
     t,
+    sourceType,
+    theme,
     adjustments: { crop } = {},
     config: {
       onClose,
@@ -71,14 +65,13 @@ const SaveButton = ({
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [imageFileInfo, setImageFileInfo] = useState({
+  const [mediaFileInfo, setMediaFileInfo] = useState({
     quality: getDefaultSaveQuality(defaultSavedImageQuality),
   });
   const transformImgFn = useTransformedImgData();
-  const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(
-    imageFileInfo.extension,
-  );
+  const transformVideoFn = useTransformedVideoData();
   const isBlockerError = feedback.duration === 0;
+  const isImageFile = isImage(sourceType);
 
   const cancelModal = () => {
     if (isFieSaveMounted && isModalOpened) {
@@ -87,21 +80,22 @@ const SaveButton = ({
     }
   };
 
-  const handleSave = () => {
-    const transformedData = transformImgFn(imageFileInfo, false, true);
+  const finalizeSaving = () => {
+    dispatch({
+      type: SET_SAVING,
+      payload: { isSaving: false },
+    });
+  };
+
+  const afterTransform = (transformedData) => {
     const onSaveFn = optionSaveFnRef.current || onSave || configOnSave;
+
     const savingResult = onSaveFn(
-      transformedData.imageData,
+      transformedData.data,
       transformedData.designState,
     );
 
-    const finalizeSaving = () => {
-      dispatch({
-        type: SET_SAVING,
-        payload: { isSaving: false },
-      });
-    };
-
+    finalizeSaving();
     if (savingResult instanceof Promise) {
       savingResult.finally(finalizeSaving);
     } else {
@@ -111,6 +105,32 @@ const SaveButton = ({
     optionSaveFnRef.current = null;
     if (closeAfterSave && onClose) {
       onClose(CLOSING_REASONS.AFTER_SAVE, haveNotSavedChanges);
+    }
+  };
+
+  const setError = (newError) => {
+    dispatch({
+      type: SET_FEEDBACK,
+      payload: {
+        feedback: {
+          message: newError.message || newError,
+        },
+      },
+    });
+  };
+
+  const handleSave = () => {
+    const transformedData = isImageFile
+      ? transformImgFn(mediaFileInfo, false, true)
+      : transformVideoFn(mediaFileInfo);
+
+    if (transformedData instanceof Promise) {
+      transformedData.then(afterTransform).catch((error) => {
+        setError(error);
+        finalizeSaving();
+      });
+    } else {
+      afterTransform(transformedData);
     }
   };
 
@@ -127,7 +147,7 @@ const SaveButton = ({
       return;
     }
 
-    if (!imageFileInfo.name || !imageFileInfo.extension) {
+    if (!mediaFileInfo.name || !mediaFileInfo.extension) {
       dispatch({
         type: SET_FEEDBACK,
         payload: {
@@ -142,28 +162,13 @@ const SaveButton = ({
     startSaving();
   };
 
-  const changeFileName = (e) => {
-    const name = e.target.value;
-    setImageFileInfo({
-      ...imageFileInfo,
-      name,
-    });
-  };
-
-  const changeQuality = (newQuality) => {
-    setImageFileInfo({
-      ...imageFileInfo,
-      quality: restrictNumber(newQuality / 100, 0.01, 1),
-    });
-  };
-
   const triggerSaveHandler = () => {
     if (disableSaveIfNoChanges && !hasUndo) {
       return;
     }
 
     if (useCloudimage) {
-      const transformedCloudimageData = transformImgFn(imageFileInfo);
+      const transformedCloudimageData = transformImgFn(mediaFileInfo);
       const onSaveFn = optionSaveFnRef.current || onSave || configOnSave;
       onSaveFn(
         transformedCloudimageData.imageData,
@@ -175,23 +180,13 @@ const SaveButton = ({
     if (
       !optionSaveFnRef.current &&
       typeof onBeforeSave === 'function' &&
-      onBeforeSave(imageFileInfo) === false
+      onBeforeSave(mediaFileInfo) === false
     ) {
       validateInfoThenSave();
       return;
     }
 
     setIsModalOpened(true);
-  };
-
-  const resizeImageFile = (newSize) => {
-    setImageFileInfo({
-      ...imageFileInfo,
-      size: {
-        ...imageFileInfo.size,
-        ...newSize,
-      },
-    });
   };
 
   const changeSaveFnAndTriggerAnother = (saveFn, fnToTrigger) => {
@@ -206,16 +201,46 @@ const SaveButton = ({
   };
 
   const setFileNameAndExtension = () => {
+    const { supportedTypes } = getSupportedExtensions(sourceType);
     const { name, extension } = getFileFullName(
       defaultSavedImageName || originalSource.name || defaultName,
       forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
         ? 'png'
-        : SUPPORTED_IMAGE_TYPES.includes(
-            defaultSavedImageType?.toLowerCase(),
-          ) && defaultSavedImageType,
+        : supportedTypes.includes(defaultSavedImageType?.toLowerCase()) &&
+            defaultSavedImageType,
+      sourceType,
     );
 
-    setImageFileInfo({ ...imageFileInfo, name, extension });
+    setMediaFileInfo({ ...mediaFileInfo, name, extension });
+  };
+
+  const changeFileName = (e) => {
+    const name = e.target.value;
+    setMediaFileInfo({
+      ...mediaFileInfo,
+      name,
+    });
+  };
+
+  const changeQuality = (newQuality) => {
+    setMediaFileInfo({
+      ...mediaFileInfo,
+      quality: restrictNumber(newQuality / 100, 0.01, 1),
+    });
+  };
+
+  const resizeMediaFile = (newSize) => {
+    setMediaFileInfo({
+      ...mediaFileInfo,
+      size: {
+        ...mediaFileInfo.size,
+        ...newSize,
+      },
+    });
+  };
+
+  const selectFileExtension = (extension) => {
+    setMediaFileInfo({ ...mediaFileInfo, extension });
   };
 
   useEffect(() => {
@@ -225,14 +250,14 @@ const SaveButton = ({
   }, [originalSource]);
 
   useEffect(() => {
-    if (originalSource && (!imageFileInfo.name || !imageFileInfo.extension)) {
+    if (originalSource && (!mediaFileInfo.name || !mediaFileInfo.extension)) {
       setFileNameAndExtension();
     }
   }, [isModalOpened]);
 
   useEffect(() => {
-    setImageFileInfo({
-      ...imageFileInfo,
+    setMediaFileInfo({
+      ...mediaFileInfo,
       size: {
         width: resize.width,
         height: resize.height,
@@ -273,6 +298,22 @@ const SaveButton = ({
         }))
       : [];
 
+  const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(
+    mediaFileInfo.extension,
+  );
+
+  const commonModalProps = {
+    modalProps,
+    open: isModalOpened,
+    fileInfo: mediaFileInfo,
+    onCancel: cancelModal,
+    onFileNameChange: changeFileName,
+    onSelectFileExtension: selectFileExtension,
+    onQualityChange: changeQuality,
+    onResize: resizeMediaFile,
+    onDone: validateInfoThenSave,
+  };
+
   return (
     <>
       <ButtonWithMenu
@@ -293,78 +334,26 @@ const SaveButton = ({
         noMargin
         {...props}
       />
-      {isModalOpened && (
-        <Modal
-          className="FIE_save-modal"
-          title={t('saveAsModalTitle')}
-          // eslint-disable-next-line react/no-unstable-nested-components
-          Icon={(iconProps) => (
-            <Image2 color={theme.palette['accent-primary']} {...iconProps} />
-          )}
-          isOpened={isModalOpened}
-          onCancel={cancelModal}
-          onDone={validateInfoThenSave}
-          doneLabel={t('save')}
-          cancelLabel={t('cancel')}
-          doneButtonColor="primary"
-          areButtonsDisabled={isLoadingGlobally}
-          zIndex={11110}
-          {...modalProps}
-        >
-          <StyledFileNameInput
-            className="FIE_save-file-name-input"
-            value={imageFileInfo.name}
-            onChange={changeFileName}
-            size="sm"
-            label={t('name')}
-            placeholder={t('imageName')}
-            error={!imageFileInfo.name}
-            fullWidth
-            focusOnMount
+      {isModalOpened &&
+        (isImageFile ? (
+          <SaveModal
+            icon={(iconProps) => (
+              <Image2 color={theme.palette['accent-primary']} {...iconProps} />
+            )}
+            isQualityAcceptable={isQualityAcceptable}
+            supportedTypes={SUPPORTED_IMAGE_TYPES}
+            {...commonModalProps}
           />
-          <StyledFileExtensionSelect
-            className="FIE_save-extension-selector"
-            onChange={(ext) =>
-              setImageFileInfo({ ...imageFileInfo, extension: ext })
-            }
-            value={imageFileInfo.extension}
-            label={t('format')}
-            placeholder={t('extension')}
-            size="sm"
-            fullWidth
-          >
-            {SUPPORTED_IMAGE_TYPES.map((ext) => (
-              <MenuItem key={ext} value={ext}>
-                {ext}
-              </MenuItem>
-            ))}
-          </StyledFileExtensionSelect>
-          {isQualityAcceptable && (
-            <StyledQualityWrapper className="FIE_save-quality-wrapper">
-              <Label>{t('quality')}</Label>
-              <Slider
-                annotation="%"
-                min={1}
-                max={100}
-                onChange={changeQuality}
-                value={parseInt(imageFileInfo.quality * 100, 10)}
-                width="100%"
-                style={sliderStyle}
-              />
-            </StyledQualityWrapper>
-          )}
-          <StyledResizeOnSave className="FIE_save-resize-wrapper">
-            <StyledResizeOnSaveLabel>{t('resize')}</StyledResizeOnSaveLabel>
-            <Resize
-              onChange={resizeImageFile}
-              currentSize={imageFileInfo?.size || {}}
-              hideResetButton
-              alignLeft
-              alignment="space-between"
-            />
-          </StyledResizeOnSave>
-        </Modal>
-      )}
+        ) : (
+          <SaveModal
+            icon={(iconProps) => (
+              <Video2 color={theme.palette['accent-primary']} {...iconProps} />
+            )}
+            supportedTypes={SUPPORTED_VIDEO_TYPES}
+            hideResizeSection
+            {...commonModalProps}
+          />
+        ))}
     </>
   );
 };

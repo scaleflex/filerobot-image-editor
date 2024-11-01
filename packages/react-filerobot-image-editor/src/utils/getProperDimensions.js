@@ -2,31 +2,35 @@
 import getSizeAfterRotation from './getSizeAfterRotation';
 import mapCropBox from './mapCropBox';
 
-const getProperDimensions = (
-  resizeDimensions,
-  cropDimensions,
+const getProperDimensions = ({
+  resize,
+  crop,
   shownImageDimensions,
-  originalDimensions = { width: 0, height: 0 },
-  rotationAngle = 0,
-) => {
-  if (resizeDimensions.width && resizeDimensions.height) {
-    return resizeDimensions;
+  disableResizeAfterRotation,
+  originalSource = { width: 0, height: 0 },
+  rotation = 0,
+}) => {
+  if (resize.width && resize.height) {
+    return resize;
   }
 
-  const mappedCropArea = mapCropBox(
-    cropDimensions,
-    shownImageDimensions,
-    originalDimensions,
-  );
+  const mappedCropArea = mapCropBox(crop, shownImageDimensions, originalSource);
+
+  if (disableResizeAfterRotation) {
+    return mappedCropArea.width && mappedCropArea.height
+      ? mappedCropArea
+      : originalSource;
+  }
+
   const croppedRotatedArea = getSizeAfterRotation(
     mappedCropArea.width,
     mappedCropArea.height,
-    rotationAngle,
+    rotation,
   );
-  if (resizeDimensions.width || resizeDimensions.height) {
+  if (resize.width || resize.height) {
     return {
-      width: resizeDimensions.width || croppedRotatedArea.width,
-      height: resizeDimensions.height || croppedRotatedArea.height,
+      width: resize.width || croppedRotatedArea.width,
+      height: resize.height || croppedRotatedArea.height,
     };
   }
 
@@ -34,11 +38,11 @@ const getProperDimensions = (
     (croppedRotatedArea.width &&
       croppedRotatedArea.height &&
       croppedRotatedArea) || {
-      ...originalDimensions,
+      ...originalSource,
       ...getSizeAfterRotation(
-        originalDimensions.width,
-        originalDimensions.height,
-        rotationAngle,
+        originalSource.width,
+        originalSource.height,
+        rotation,
       ),
     }
   );

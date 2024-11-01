@@ -18,7 +18,9 @@ module.exports = {
   plugins: ['react', 'prettier'],
   rules: {
     'no-unused-vars': 'warn',
+    'consistent-return': 'off',
     'import/no-cycle': 'off',
+    'default-param-last': 'off',
     'import/no-extraneous-dependencies': [
       'error',
       {
@@ -46,6 +48,14 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['packages/react-filerobot-image-editor/src/libraries/**/*'],
+      rules: {
+        'rule-name': 'off',
+      },
+    },
+  ],
   settings: {
     'import/resolver': {
       node: {

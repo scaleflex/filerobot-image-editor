@@ -32,17 +32,20 @@ const Resize = ({
     resize,
     shownImageDimensions,
     adjustments: { crop, rotation = 0 },
+    config: { disableResizeAfterRotation },
     theme,
     t,
   } = useStore();
 
-  const dimensions = getProperDimensions(
-    ((currentSize.width || currentSize.height) && currentSize) || resize,
+  const dimensions = getProperDimensions({
+    resize:
+      ((currentSize.width || currentSize.height) && currentSize) || resize,
     crop,
     shownImageDimensions,
+    disableResizeAfterRotation,
     originalSource,
     rotation,
-  );
+  });
 
   const changeResize = (e) => {
     const { name, value } = e.target;

@@ -1,6 +1,8 @@
 /** External Dependencies */
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { MoveDownOutline, MoveUpOutline } from '@scaleflex/icons';
+import { Menu } from '@scaleflex/ui/core';
 
 /** Internal Dependencies */
 import { SET_CROP, SET_RESIZE, ZOOM_CANVAS } from 'actions';
@@ -9,8 +11,7 @@ import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styl
 import { DEFAULT_ZOOM_FACTOR, ORIGINAL_CROP, TOOLS_IDS } from 'utils/constants';
 import toPrecisedFloat from 'utils/toPrecisedFloat';
 import getZoomFitFactor from 'utils/getZoomFitFactor';
-import { MoveDownOutline, MoveUpOutline } from '@scaleflex/icons';
-import { Menu } from '@scaleflex/ui/core';
+import isVideo from 'utils/isVideo';
 import { DEFAULT_CROP_PRESETS } from './Crop.constants';
 import CropPresetGroupsList from './CropPresetGroupsFolder';
 import CropPresetItem from './CropPresetItem';
@@ -27,6 +28,7 @@ const CropPresetsOption = ({ anchorEl = null, onClose }) => {
     adjustments: {
       crop: { ratio: appliedRatio, ratioTitleKey, ratioFolderKey } = {},
     } = {},
+    sourceType,
     shownImageDimensions,
     config,
     theme,
@@ -41,11 +43,14 @@ const CropPresetsOption = ({ anchorEl = null, onClose }) => {
       presetsFolders = [],
       lockCropAreaAt,
     } = cropConfig;
-    const defaultPresets = lockCropAreaAt
-      ? DEFAULT_CROP_PRESETS.filter((item) => !item.hide?.({ lockCropAreaAt }))
-      : DEFAULT_CROP_PRESETS;
+    const defaultPresets =
+      lockCropAreaAt || isVideo(sourceType)
+        ? DEFAULT_CROP_PRESETS.filter(
+            (item) => !item.hide?.({ lockCropAreaAt, sourceType }),
+          )
+        : DEFAULT_CROP_PRESETS;
     return [...presetsFolders, ...defaultPresets, ...presetsItems];
-  }, [cropConfig]);
+  }, [cropConfig, sourceType]);
 
   const changeCropRatio = (e, newCropRatio, cropProps) => {
     e.stopPropagation();

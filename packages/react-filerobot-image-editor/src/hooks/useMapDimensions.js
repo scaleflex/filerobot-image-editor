@@ -8,17 +8,19 @@ const useMapDimensions = () => {
     originalSource,
     resize = {},
     adjustments: { crop, rotation = 0 },
+    config: { disableResizeAfterRotation },
     shownImageDimensions,
   } = useStore();
 
   const getCanvasDimensions = () =>
-    getProperDimensions(
+    getProperDimensions({
       resize,
       crop,
       shownImageDimensions,
+      disableResizeAfterRotation,
       originalSource,
       rotation,
-    );
+    });
 
   const mapDimensionsToOriginal = (dimensions) => {
     const canvasDimensions = getCanvasDimensions();
