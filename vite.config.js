@@ -41,7 +41,7 @@ export default defineConfig(({ mode }) => {
           ? {
               babel: {
                 configFile: true,
-                ignore: [/node_modules/],
+                ignore: [/node_modules|src\/libraries/],
               },
             }
           : {},
