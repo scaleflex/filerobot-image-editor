@@ -13,14 +13,14 @@ const useMapDimensions = () => {
   } = useStore();
 
   const getCanvasDimensions = () =>
-    getProperDimensions(
+    getProperDimensions({
       resize,
       crop,
       shownImageDimensions,
       disableResizeAfterRotation,
       originalSource,
       rotation,
-    );
+    });
 
   const mapDimensionsToOriginal = (dimensions) => {
     const canvasDimensions = getCanvasDimensions();

@@ -2,14 +2,14 @@
 import getSizeAfterRotation from './getSizeAfterRotation';
 import mapCropBox from './mapCropBox';
 
-const getProperDimensions = (
+const getProperDimensions = ({
   resizeDimensions,
   cropDimensions,
   shownImageDimensions,
   disableResizeAfterRotation,
   originalDimensions = { width: 0, height: 0 },
   rotationAngle = 0,
-) => {
+}) => {
   if (resizeDimensions.width && resizeDimensions.height) {
     return resizeDimensions;
   }

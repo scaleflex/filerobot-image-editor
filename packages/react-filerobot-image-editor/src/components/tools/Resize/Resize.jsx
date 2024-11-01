@@ -37,14 +37,15 @@ const Resize = ({
     t,
   } = useStore();
 
-  const dimensions = getProperDimensions(
-    ((currentSize.width || currentSize.height) && currentSize) || resize,
+  const dimensions = getProperDimensions({
+    resize:
+      ((currentSize.width || currentSize.height) && currentSize) || resize,
     crop,
     shownImageDimensions,
     disableResizeAfterRotation,
     originalSource,
     rotation,
-  );
+  });
 
   const changeResize = (e) => {
     const { name, value } = e.target;

@@ -99,14 +99,14 @@ const useTransformedVideoData = () => {
 
     const dimensions =
       originalSource &&
-      getProperDimensions(
+      getProperDimensions({
         resize,
         crop,
         shownImageDimensions,
         disableResizeAfterRotation,
         originalSource,
         rotation,
-      );
+      });
 
     const filters = [];
 
