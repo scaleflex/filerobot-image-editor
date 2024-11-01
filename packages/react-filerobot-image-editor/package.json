@@ -1,6 +1,6 @@
 {
   "name": "react-filerobot-image-editor",
-  "version": "5.0.0-beta.59",
+  "version": "5.0.0-beta.60",
   "license": "MIT",
   "author": "Scaleflex",
   "homepage": "https://github.com/scaleflex/filerobot-image-editor#readme",
@@ -29,13 +29,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.17.2",
+    "@ffmpeg/ffmpeg": "0.12.10",
+    "@ffmpeg/util": "0.12.1",
     "@scaleflex/icons": "2.10.27",
     "@scaleflex/ui": "2.10.27",
     "konva": "9.3.6",
     "prop-types": "15.7.2",
-    "react-konva-utils": "1.0.6",
-    "@ffmpeg/ffmpeg": "0.12.10",
-    "@ffmpeg/util": "0.12.1"
+    "react-konva-utils": "1.0.6"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
