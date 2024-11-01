@@ -53,5 +53,6 @@
         ]
       ]
     }
-  }
+  },
+  "ignore":  ["packages/react-filerobot-image-editor/src/libraries"]
 }
