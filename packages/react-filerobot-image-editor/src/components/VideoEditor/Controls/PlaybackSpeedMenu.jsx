@@ -15,6 +15,7 @@ const PlaybackSpeedMenu = ({
 }) => {
   return (
     <StyledMenu
+      className="FIE_video-controls-speed-menu"
       open={Boolean(anchor)}
       onClose={onClose}
       anchorEl={anchor}
@@ -23,7 +24,11 @@ const PlaybackSpeedMenu = ({
       $isOpen={Boolean(anchor)}
     >
       {PLAYBACK_OPTIONS.map((option) => (
-        <MenuItem key={option} onClick={getOnClickCbkFunction(option)}>
+        <MenuItem
+          className="FIE_video-controls-speed-menuitem"
+          key={option}
+          onClick={getOnClickCbkFunction(option)}
+        >
           {option}
         </MenuItem>
       ))}

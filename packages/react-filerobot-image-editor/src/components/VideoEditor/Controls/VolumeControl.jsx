@@ -29,12 +29,29 @@ const VolumeControl = ({
   };
 
   return (
-    <StyledVolumeControlWrapper $shown={isAudioSliderOpen}>
-      <StyledIconButton size="lg" onClick={toggleMute} color="basic">
-        <StyledIcon $hidden={isMuted} icon={<Volume size={14} />} />
-        <StyledIcon $hidden={!isMuted} icon={<Mute size={14} />} />
+    <StyledVolumeControlWrapper
+      className="FIE_video-controls-volume-wrapper"
+      $shown={isAudioSliderOpen}
+    >
+      <StyledIconButton
+        className="FIE_video-controls-volume-button"
+        size="lg"
+        onClick={toggleMute}
+        color="basic"
+      >
+        <StyledIcon
+          className="FIE_video-controls-volume-icon"
+          $hidden={isMuted}
+          icon={<Volume size={14} />}
+        />
+        <StyledIcon
+          className="FIE_video-controls-mute-icon"
+          $hidden={!isMuted}
+          icon={<Mute size={14} />}
+        />
       </StyledIconButton>
       <StyledVolumeSlider
+        className="FIE_video-controls-volume-slider"
         hideAnnotation
         min={0}
         max={1}

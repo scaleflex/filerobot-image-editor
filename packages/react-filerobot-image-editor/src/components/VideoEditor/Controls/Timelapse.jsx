@@ -10,7 +10,7 @@ const TimeLapse = ({ trackProgress, duration }) => {
   const formattedDuration = formatSecondsToDuration(duration);
 
   return (
-    <StyledTimeLapse>
+    <StyledTimeLapse className="FIE_video-controls-time-lapse">
       {`${formattedProgress} / ${formattedDuration}`}
     </StyledTimeLapse>
   );

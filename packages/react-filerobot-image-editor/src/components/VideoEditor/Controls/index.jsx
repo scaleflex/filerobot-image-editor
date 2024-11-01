@@ -313,6 +313,7 @@ const Controls = () => {
   return (
     <StyledMediaControls>
       <StyledSeekSlider
+        className="FIE_video-controls-slider"
         value={trackProgress || 0}
         step={1}
         min={0}
@@ -326,6 +327,7 @@ const Controls = () => {
       />
       <StyledControlsWrapper>
         <StyledPlayButton
+          className="FIE_video-controls-play"
           color="basic"
           size="lg"
           disabled={!isPlaying && !isReadyRef.current}
@@ -333,15 +335,37 @@ const Controls = () => {
           onClick={handlePlayPause}
         >
           <StyledLoadingIcon
+            className="FIE_video-controls-loading"
             $hidden={isReadyRef.current && !isBuffering}
             size={40}
           />
-          <StyledIcon $hidden={isPlaying} icon={<Play size={14} />} />
-          <StyledIcon $hidden={!isPlaying} icon={<Pause size={14} />} />
+          <StyledIcon
+            className="FIE_video-controls-play-icon"
+            $hidden={isPlaying}
+            icon={<Play size={14} />}
+          />
+          <StyledIcon
+            className="FIE_video-controls-pause-icon"
+            $hidden={!isPlaying}
+            icon={<Pause size={14} />}
+          />
         </StyledPlayButton>
-        <StyledIconButton size="lg" onClick={toggleLoop} color="basic">
-          <StyledIcon $hidden={isLoopDisabled} icon={<Repeat size={14} />} />
-          <StyledIcon $hidden={!isLoopDisabled} icon={<NoRepeat size={14} />} />
+        <StyledIconButton
+          className="FIE_video-controls-loop-button"
+          size="lg"
+          onClick={toggleLoop}
+          color="basic"
+        >
+          <StyledIcon
+            className="FIE_video-controls-loop-enabled-icon"
+            $hidden={isLoopDisabled}
+            icon={<Repeat size={14} />}
+          />
+          <StyledIcon
+            className="FIE_video-controls-loop-disabled-icon"
+            $hidden={!isLoopDisabled}
+            icon={<NoRepeat size={14} />}
+          />
         </StyledIconButton>
         <VolumeControl
           value={volumeLevel}
@@ -355,6 +379,7 @@ const Controls = () => {
         <TimeLapse trackProgress={trackProgress} duration={duration} />
         <StyledExtraControllers>
           <StyledPlaybackButton
+            className="FIE_video-controls-playback-button"
             color="basic"
             onClick={handleTogglePlaybackMenu}
           >
