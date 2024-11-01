@@ -108,7 +108,7 @@ const useLoadMainSource = ({
     if (newSource?.width && newSource.height) {
       const newSourceClone = { ...newSource };
       delete newSourceClone.src;
-      setNewOriginalSource(newSourceClone);
+      setNewOriginalSource({ newSource: newSourceClone });
       return true;
     }
 
@@ -210,13 +210,13 @@ const useLoadMainSource = ({
           }
           if (!imgToLoad.complete) {
             imgToLoad.addEventListener('load', () => {
-              setNewOriginalSource(imgToLoad);
+              setNewOriginalSource({ newSource: imgToLoad });
               triggerResolve();
             });
             return;
           }
 
-          setNewOriginalSource(imgToLoad);
+          setNewOriginalSource({ newSource: imgToLoad });
           triggerResolve();
         } else if (
           imgToLoad &&

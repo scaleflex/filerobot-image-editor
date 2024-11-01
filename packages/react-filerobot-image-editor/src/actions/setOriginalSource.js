@@ -1,3 +1,5 @@
+import { SOURCE_TYPES } from 'utils/constants';
+
 export const SET_ORIGINAL_SOURCE = 'SET_ORIGINAL_SOURCE';
 
 const setOriginalSource = (state, payload) => {
@@ -20,7 +22,7 @@ const setOriginalSource = (state, payload) => {
       [payload.originalSource.key || 'default']: payload.originalSource,
     },
     originalSource: payload.originalSource,
-    sourceType: payload.sourceType,
+    sourceType: payload.sourceType || SOURCE_TYPES.IMAGE,
     imgSrc: payload.originalSource.src,
     bgColor: payload.originalSource.bgColor,
   };
