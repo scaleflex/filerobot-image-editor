@@ -5,10 +5,10 @@ import React, { memo } from 'react';
 import App from 'components/App';
 import AssemblyPointProviders from './Providers';
 
-const AssemblyPoint = (props) => (
+const ImageEditor = (props) => (
   <AssemblyPointProviders {...props}>
     <App />
   </AssemblyPointProviders>
 );
 
-export default memo(AssemblyPoint);
+export default memo(ImageEditor);

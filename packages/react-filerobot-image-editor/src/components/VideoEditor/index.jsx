@@ -3,11 +3,11 @@ import React, { memo } from 'react';
 
 /** Internal Dependencies */
 import App from 'components/App';
-import AssemblyPointProviders from 'components/AssemblyPoint/Providers';
+import AssemblyPointProviders from 'components/ImageEditor/Providers';
 import { TABS } from 'index';
-import Controls from 'components/Video/Controls';
+import Controls from 'components/VideoEditor/Controls';
 
-const Video = (props) => (
+const VideoEditor = (props) => (
   <AssemblyPointProviders
     {...props}
     tabsIds={[TABS.ADJUST]}
@@ -20,4 +20,4 @@ const Video = (props) => (
   </AssemblyPointProviders>
 );
 
-export default memo(Video);
+export default memo(VideoEditor);

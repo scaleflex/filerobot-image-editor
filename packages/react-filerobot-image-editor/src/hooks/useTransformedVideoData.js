@@ -8,7 +8,7 @@ import { fetchFile, toBlobURL } from '@ffmpeg/util';
 /** Internal Dependencies */
 import mapCropBox from 'utils/mapCropBox';
 import getProperDimensions from 'utils/getProperDimensions';
-import { get, trimVideo } from 'components/Video/services';
+import { get, trimVideo } from 'components/VideoEditor/VideoEditor.services';
 import emitCustomEvent from 'utils/emitCustomEvent';
 import { EVENTS } from 'utils/constants';
 // import extractCurrentDesignState from 'utils/extractCurrentDesignState';
@@ -62,7 +62,6 @@ const useTransformedVideoData = () => {
   };
 
   const load = async () => {
-    const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
     const ffmpeg = ffmpegRef.current;
 
     // for debugging

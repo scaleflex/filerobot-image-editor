@@ -1,10 +1,10 @@
 // Main component with the rich canvas contains all the features.
-export { default } from 'components/AssemblyPoint';
+export { default } from 'components/ImageEditor';
 
-export { default as Video } from 'components/Video';
+export { default as VideoEditor } from 'components/VideoEditor';
 
 /** State management & UI controls exports */
-export { default as FilerobotImageEditorProvider } from 'components/AssemblyPoint/Providers';
+export { default as FilerobotImageEditorProvider } from 'components/ImageEditor/Providers';
 
 export { default as App } from 'components/App';
 
