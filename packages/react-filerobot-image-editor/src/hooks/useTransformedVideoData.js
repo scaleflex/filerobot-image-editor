@@ -90,10 +90,12 @@ const useTransformedVideoData = () => {
     }
 
     const videoData = await fetchFile(originalSource.src);
+    const fileInputName = 'input.mp4';
+    const fileOutputName = 'output.mp4';
 
-    ffmpeg.writeFile('input.mp4', videoData);
+    ffmpeg.writeFile(fileInputName, videoData);
 
-    const finalCommand = ['-i', 'input.mp4'];
+    const finalCommand = ['-i', fileInputName];
 
     const dimensions =
       originalSource &&
@@ -136,8 +138,8 @@ const useTransformedVideoData = () => {
       finalCommand.push('-vf', filters.join(','));
     }
 
-    await ffmpeg.exec([...finalCommand, '-c:v', 'libx264', 'output.mp4']);
-    const data = await ffmpeg.readFile('output.mp4');
+    await ffmpeg.exec([...finalCommand, '-c:v', 'libx264', fileOutputName]);
+    const data = await ffmpeg.readFile(fileOutputName);
     const videoBlob = new Blob([data.buffer], { type: 'video/mp4' });
 
     return videoBlob;
@@ -154,8 +156,9 @@ const useTransformedVideoData = () => {
         emitCustomEvent(EVENTS.PROCESSING_VIDEO_PROGRESS, {
           progress,
         });
-        // eslint-disable-next-line no-promise-executor-return
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        await new Promise((resolve) => {
+          setTimeout(resolve, 300);
+        });
         const status = await checkVideoStatus(response);
         return status;
       }
@@ -166,7 +169,7 @@ const useTransformedVideoData = () => {
     }
   };
 
-  async function getTransformedBackendData(mappedCropBox) {
+  const getTransformedBackendData = async (mappedCropBox) => {
     const response = await trimVideo({
       key: backendProcess.key,
       token: backendProcess.token,
@@ -187,7 +190,7 @@ const useTransformedVideoData = () => {
 
     const url = await checkVideoStatus(response);
     return url;
-  }
+  };
 
   const getTransformedVideoData = async (mediaFileInfo) => {
     const mappedCropBox = getMappedCropBox();

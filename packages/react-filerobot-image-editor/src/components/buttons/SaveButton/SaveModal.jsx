@@ -49,7 +49,6 @@ const SaveModal = ({
     <Modal
       className="FIE_save-modal"
       title={t('saveAsModalTitle')}
-      // eslint-disable-next-line react/no-unstable-nested-components
       Icon={icon}
       isOpened={open}
       onCancel={onCancel}
@@ -119,14 +118,22 @@ const SaveModal = ({
 
 SaveModal.propTypes = {
   onSave: PropTypes.func,
-  modalProps: PropTypes.instanceOf(Object),
-  fileInfo: PropTypes.instanceOf(Object),
+  modalProps: PropTypes.shape({}),
+  fileInfo: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    extension: PropTypes.string.isRequired,
+    quality: PropTypes.number,
+    size: PropTypes.shape({
+      width: PropTypes.number,
+      height: PropTypes.number,
+    }),
+  }).isRequired,
   open: PropTypes.bool,
   isQualityAcceptable: PropTypes.bool,
-  icon: PropTypes.func,
+  icon: PropTypes.elementType,
   supportedTypes: PropTypes.arrayOf(PropTypes.string),
   hideResizeSection: PropTypes.bool,
-  onDone: PropTypes.func,
+  onDone: PropTypes.func.isRequired,
   onFileNameChange: PropTypes.func,
   onSelectFileExtension: PropTypes.func,
   onQualityChange: PropTypes.func,

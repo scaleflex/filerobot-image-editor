@@ -28,6 +28,16 @@ import getUrlWithoutQuery from 'utils/getUrlWithoutQuery';
 import isImageExtension from 'utils/isImageExtension';
 import isVideoExtension from 'utils/isVideoExtension';
 
+const getSourceTypeByExtension = (url) => {
+  if (isImageExtension(url)) {
+    return SOURCE_TYPES.IMAGE;
+  }
+
+  if (isVideoExtension(url)) {
+    return SOURCE_TYPES.VIDEO;
+  }
+};
+
 const useLoadMainSource = ({
   sourceToLoad,
   onPluginRootResize,
@@ -116,16 +126,6 @@ const useLoadMainSource = ({
       },
     });
   }, []);
-
-  const getSourceTypeByExtension = (url) => {
-    if (isImageExtension(url)) {
-      return SOURCE_TYPES.IMAGE;
-    }
-
-    if (isVideoExtension(url)) {
-      return SOURCE_TYPES.VIDEO;
-    }
-  };
 
   const getSourceType = async (url) => {
     try {

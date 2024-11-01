@@ -71,6 +71,7 @@ const SaveButton = ({
   const transformImgFn = useTransformedImgData();
   const transformVideoFn = useTransformedVideoData();
   const isBlockerError = feedback.duration === 0;
+  const isImageFile = isImage(sourceType);
 
   const cancelModal = () => {
     if (isFieSaveMounted && isModalOpened) {
@@ -119,7 +120,7 @@ const SaveButton = ({
   };
 
   const handleSave = () => {
-    const transformedData = isImage(sourceType)
+    const transformedData = isImageFile
       ? transformImgFn(mediaFileInfo, false, true)
       : transformVideoFn(mediaFileInfo);
 
@@ -228,7 +229,7 @@ const SaveButton = ({
     });
   };
 
-  const resizeImageFile = (newSize) => {
+  const resizeMediaFile = (newSize) => {
     setMediaFileInfo({
       ...mediaFileInfo,
       size: {
@@ -309,7 +310,7 @@ const SaveButton = ({
     onFileNameChange: changeFileName,
     onSelectFileExtension: selectFileExtension,
     onQualityChange: changeQuality,
-    onResize: resizeImageFile,
+    onResize: resizeMediaFile,
     onDone: validateInfoThenSave,
   };
 
@@ -334,7 +335,7 @@ const SaveButton = ({
         {...props}
       />
       {isModalOpened &&
-        (isImage(sourceType) ? (
+        (isImageFile ? (
           <SaveModal
             icon={(iconProps) => (
               <Image2 color={theme.palette['accent-primary']} {...iconProps} />
