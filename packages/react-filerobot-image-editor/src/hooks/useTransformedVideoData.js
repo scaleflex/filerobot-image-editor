@@ -194,18 +194,18 @@ const useTransformedVideoData = () => {
       height: mediaFileInfo.size.height || mappedCropBox.height,
     };
 
-    // const finalVideoDesignState = {
-    //   ...extractCurrentDesignState(state),
-    //   shownImageDimensions: {
-    //     width: state.shownImageDimensions.width,
-    //     height: state.shownImageDimensions.height,
-    //     scaledBy: state.shownImageDimensions.scaledBy,
-    //   },
-    // };
+    const finalVideoDesignState = {
+      // ...extractCurrentDesignState(state),
+      shownImageDimensions: {
+        width: state.shownImageDimensions.width,
+        height: state.shownImageDimensions.height,
+        scaledBy: state.shownImageDimensions.scaledBy,
+      },
+    };
 
     return {
       data: finalVideoPassedObject,
-      // designState: finalVideoDesignState,
+      designState: finalVideoDesignState,
     };
   };
   return getTransformedVideoData;
