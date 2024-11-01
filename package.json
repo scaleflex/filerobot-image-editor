@@ -68,7 +68,7 @@
     "rollup-plugin-uglify": "^6.0.4",
     "source-map-explorer": "^2.5.2",
     "styled-components": "^5.3.10",
-    "vite": "^6.0.0-beta.2"
+    "vite": "^5.4.10"
   },
   "scripts": {
     "fix": "prettier-eslint \"packages/**/src/**/*.(js|jsx)\"",
