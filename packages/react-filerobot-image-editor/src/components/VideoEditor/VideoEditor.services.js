@@ -24,10 +24,11 @@ const transformResponse = (response) => {
   }
 };
 
-const baseUrl = import.meta.env.DEV
-  ? 'http://ask-dev.filerobot.com:8732/trim/url'
-  : 'https://api.filerobot.com/videos/v2/trim/url';
+// const baseUrl = import.meta.env.DEV
+//   ? 'http://ask-dev.filerobot.com:8732/trim/url'
+//   : 'https://api.filerobot.com/videos/v2/trim/url';
 
+const baseUrl = 'http://ask-dev.filerobot.com:8732/trim/url';
 export const trimVideo = ({
   key,
   token,
