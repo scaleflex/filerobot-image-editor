@@ -42,11 +42,6 @@ const Trim = () => {
     [segments, trackProgress],
   );
 
-  const disableSplitButton =
-    currentSegmentIndex === -1 ||
-    // segments.length === 2 ||
-    !isReady;
-
   const updateSegmentBounds = (newStartTime, newEndTime, segmentIndex) => {
     const updatedSegments = [...segments];
     updatedSegments[segmentIndex] = {
@@ -275,7 +270,7 @@ const Trim = () => {
           color="link-secondary"
           startIcon={<Split />}
           onClick={splitSegment}
-          disabled={disableSplitButton}
+          disabled={currentSegmentIndex === -1 || !isReady}
         >
           {`${t('splitAt')} ${formatSecondsToDuration(trackProgress)}`}
         </Button>
