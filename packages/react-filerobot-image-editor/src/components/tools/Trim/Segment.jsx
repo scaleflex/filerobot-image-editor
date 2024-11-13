@@ -1,5 +1,8 @@
+/** External Dependencies */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
+
+/** Internal Dependencies */
 import { useStore } from 'hooks';
 import PropTypes from 'prop-types';
 import {
@@ -27,6 +30,7 @@ const Segment = ({
   const [segmentPixelStart, setSegmentPixelStart] = useState(0);
   const [segmentPixelEnd, setSegmentPixelEnd] = useState(0);
   const [dragStartX, setDragStartX] = useState(null);
+
   const leftHandleRef = useRef(null);
   const segmentHandleRef = useRef(null);
   const rightHandleRef = useRef(null);
@@ -35,16 +39,12 @@ const Segment = ({
   const segmentWidth = segmentPixelEnd - segmentPixelStart;
 
   const getMappedTime = useCallback(
-    (pixel) => {
-      return pixelToTime(pixel, trimContainerWidth, duration);
-    },
+    (pixel) => pixelToTime(pixel, trimContainerWidth, duration),
     [trimContainerWidth, duration],
   );
 
   const getMappedPixel = useCallback(
-    (time) => {
-      return timeToPixel(time, trimContainerWidth, duration);
-    },
+    (time) => timeToPixel(time, trimContainerWidth, duration),
     [trimContainerWidth, duration],
   );
 
