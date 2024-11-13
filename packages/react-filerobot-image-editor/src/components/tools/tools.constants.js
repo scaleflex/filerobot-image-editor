@@ -19,6 +19,7 @@ import { ArrowButton, ArrowOptions } from './Arrow';
 import { PolygonButton, PolygonOptions } from './Polygon';
 import { Resize } from './Resize';
 import { Watermark } from './Watermark';
+import { Trim } from './Trim';
 
 export const TOOLS_ITEMS = {
   [TOOLS_IDS.CROP]: {
@@ -117,6 +118,10 @@ export const TOOLS_ITEMS = {
     id: TOOLS_IDS.RESIZE,
     Item: Resize,
   },
+  [TOOLS_IDS.TRIM]: {
+    id: TOOLS_IDS.TRIM,
+    Item: Trim,
+  },
 };
 
 export const TABS_TOOLS = {
@@ -146,4 +151,5 @@ export const TABS_TOOLS = {
     TOOLS_IDS.ARROW,
   ],
   [TABS_IDS.RESIZE]: [TOOLS_IDS.RESIZE],
+  [TABS_IDS.TRIM]: [TOOLS_IDS.TRIM],
 };

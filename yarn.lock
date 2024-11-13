@@ -1858,18 +1858,18 @@
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@scaleflex/icons@2.10.27", "@scaleflex/icons@^2.10.27":
-  version "2.10.27"
-  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-2.10.27.tgz#9b1afde89577de144529be19d2aa69d58b332ce4"
-  integrity sha512-3E/tqXQrsuFIeGwDHE/ANEdDCPCYrt3ETk3/Q83M5ZZaFWdFWJG3bMeVBwNP2Nuul5OMr70LH3ce3krEObz98g==
+"@scaleflex/icons@2.10.30", "@scaleflex/icons@^2.10.30":
+  version "2.10.30"
+  resolved "https://registry.yarnpkg.com/@scaleflex/icons/-/icons-2.10.30.tgz#2fee727e2fe5dfb92828f28bc0df9af0a2b4b73a"
+  integrity sha512-RVBWaV1Apc6QXVOMt8WMp4d1NR0eXT9NANI5kFw/dOsao8QfFusL9QyQoOIMhozXHnkHTKGSg6RYwGR2cSRBBA==
 
-"@scaleflex/ui@2.10.27":
-  version "2.10.27"
-  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-2.10.27.tgz#09b008dde13e974d91b29d66ac0e7b49383c8a67"
-  integrity sha512-Id9EJjS4NWGn9V0pZRCk8YpM2PVEK8/a/BtTbgEW5L7wPI/APmZ9vGtCTM3HyTEBrfnvWmDlb0T5CfpozywKyA==
+"@scaleflex/ui@2.10.30":
+  version "2.10.30"
+  resolved "https://registry.yarnpkg.com/@scaleflex/ui/-/ui-2.10.30.tgz#a7a53a55a4b7797782fb2b87b2043b37f419e4ad"
+  integrity sha512-Et2XbsNZ3uwnBUTwHjyAbGwmFFHRICKoULEnhu2MDyAd5vS+Y7Su4oBPYUYrUEPoqJwwgZhqYNPI4ePR8vc2YQ==
   dependencies:
     "@popperjs/core" "^2.6.0"
-    "@scaleflex/icons" "^2.10.27"
+    "@scaleflex/icons" "^2.10.30"
     "@tippyjs/react" "^4.2.6"
     "@types/lodash.merge" "^4.6.9"
     lodash.merge "^4.6.2"
@@ -3095,6 +3095,11 @@ clone@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
+
+clsx@^1.1.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
 
 cmd-shim@5.0.0:
   version "5.0.0"
@@ -7187,6 +7192,14 @@ react-dom@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.2"
+
+react-draggable@4.4.6:
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-4.4.6.tgz#63343ee945770881ca1256a5b6fa5c9f5983fe1e"
+  integrity sha512-LtY5Xw1zTPqHkVmtM3X8MUOxNDOUhv/khTgBgrUvwaS064bwVvxT+q5El0uUFNx5IEPKXuRejr7UqLwBIg5pdw==
+  dependencies:
+    clsx "^1.1.1"
+    prop-types "^15.8.1"
 
 react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"

@@ -8,6 +8,7 @@ declare const TABS = {
   WATERMARK: 'Watermark',
   ANNOTATE: 'Annotate',
   RESIZE: 'Resize',
+  TRIM: 'Trim'
 } as const;
 
 declare const TOOLS = {
@@ -35,6 +36,7 @@ declare const TOOLS = {
   WATERMARK: 'Watermark',
   PEN: 'Pen',
   RESIZE: 'Resize',
+  TRIM: 'Trim'
 } as const;
 
 // TABS_IDS

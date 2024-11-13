@@ -5,6 +5,9 @@ import { Play, Pause, Repeat, NoRepeat } from '@scaleflex/icons';
 /** Internal Dependencies */
 import { useDispatch, useStore } from 'hooks';
 import { SELECT_TOOL } from 'actions';
+import { EVENTS, TABS_IDS } from 'utils/constants';
+import emitCustomEvent from 'utils/emitCustomEvent';
+import { getCurrentSegmentIndex } from 'components/tools/Trim/Trim.utils';
 import TimeLapse from './Timelapse';
 import PlaybackSpeedMenu from './PlaybackSpeedMenu';
 import VolumeControl from './VolumeControl';
@@ -22,8 +25,13 @@ import {
 
 const Controls = () => {
   const dispatch = useDispatch();
-  const { originalSource: mediaRef, designLayer, toolId } = useStore();
-
+  const {
+    originalSource: mediaRef,
+    designLayer,
+    toolId,
+    tabId,
+    trim: { segments = [] },
+  } = useStore();
   const [trackProgress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackEnded, setTrackEnded] = useState(false);
@@ -38,7 +46,7 @@ const Controls = () => {
   const [isLoopDisabled, setIsLoopDisabled] = useState(false);
   const [isBuffering, setIsBuffering] = useState(false);
 
-  const intervalRef = useRef();
+  const animationFrameId = useRef();
   const audioSliderTimerRef = useRef();
   const isReadyRef = useRef(false);
   const wasPlayingRef = useRef(false);
@@ -67,18 +75,66 @@ const Controls = () => {
     requestAnimationFrame(drawDesignLayer);
   };
 
-  const startTimer = () => {
-    // Clear any timers already running
-    clearInterval(intervalRef.current);
+  const updateVideoProgress = () => {
+    if (mediaRef.ended) {
+      setTrackEnded(true);
+      setIsPlaying(false);
+    } else {
+      setTrackProgress(mediaRef.currentTime);
+    }
+  };
 
-    intervalRef.current = setInterval(() => {
-      if (mediaRef.ended) {
-        setTrackEnded(true);
-        setIsPlaying(false);
+  const handleTrimSegments = (isPlayStart = false) => {
+    if (
+      segments.length === 0 ||
+      (!isPlayStart && (mediaRef.readyState === 2 || mediaRef.readyState === 1))
+    )
+      return;
+
+    const currentTime = Number(mediaRef.currentTime.toFixed(2));
+    const nextCurrentTime = currentTime + 0.1;
+
+    const currentSegmentIndex = getCurrentSegmentIndex(
+      segments,
+      isPlayStart ? nextCurrentTime : currentTime,
+    );
+
+    if (isPlayStart && currentSegmentIndex === -1) {
+      const nextSegment = segments.find(
+        (segment) => segment.start > currentTime,
+      );
+      mediaRef.currentTime = nextSegment?.start || segments[0]?.start || 0;
+      return;
+    }
+
+    const currentSegment = segments[currentSegmentIndex];
+    if (currentSegment && currentTime >= currentSegment.end - 0.1) {
+      const nextSegment = segments[currentSegmentIndex + 1];
+      if (nextSegment) {
+        mediaRef.currentTime = nextSegment.start;
+      } else if (mediaRef.loop) {
+        mediaRef.currentTime = segments[0].start;
       } else {
-        setTrackProgress(mediaRef.currentTime);
+        mediaRef.pause();
       }
-    }, 1000);
+    }
+  };
+
+  const cancelAnimation = () => {
+    cancelAnimationFrame(animationFrameId.current);
+    animationFrameId.current = null;
+  };
+
+  const updateVideoProgressWhilePlaying = () => {
+    cancelAnimation();
+
+    const animate = () => {
+      handleTrimSegments();
+      updateVideoProgress();
+      animationFrameId.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameId.current = requestAnimationFrame(animate);
   };
 
   const handleVideoLoaded = () => {
@@ -149,21 +205,25 @@ const Controls = () => {
   };
 
   const handleSeek = (value) => {
-    clearInterval(intervalRef.current);
-
     const newTime = mediaRef.currentTime + value;
+
     if (!Number.isFinite(newTime)) {
       return;
     }
 
-    mediaRef.currentTime = newTime;
+    const clampedTime = Math.max(0, Math.min(newTime, mediaRef.duration));
 
-    setTrackProgress(mediaRef.currentTime);
-    startTimer();
+    mediaRef.currentTime = clampedTime;
+
+    emitCustomEvent(EVENTS.SEEK_VIDEO, {
+      time: clampedTime,
+    });
+    updateVideoProgress();
   };
 
   const handlePlay = () => {
     if (!isReadyRef.current) return;
+    handleTrimSegments(true);
     mediaRef.play();
     drawDesignLayer();
     selectTool(null);
@@ -224,17 +284,22 @@ const Controls = () => {
   };
 
   const handleWaiting = () => setIsBuffering(true);
+
   const handlePlaying = () => setIsBuffering(false);
+
+  const handleTrimSliderScrub = () => {
+    updateVideoProgress();
+  };
 
   const onPlay = () => {
     setIsPlaying(true);
-    startTimer();
+    updateVideoProgressWhilePlaying();
   };
 
   const onPause = () => {
     setIsPlaying(false);
-    clearInterval(intervalRef.current);
     selectTool(lastOpenedToolId.current);
+    cancelAnimation();
   };
 
   const onScrubStart = () => {
@@ -243,12 +308,11 @@ const Controls = () => {
   };
 
   const onScrub = (_, value) => {
-    clearInterval(intervalRef.current);
     mediaRef.currentTime = value;
 
     setIsSeeking(true);
     setIsPlaying(false);
-    setTrackProgress(mediaRef.currentTime);
+    updateVideoProgress();
   };
 
   const onScrubEnd = () => {
@@ -260,7 +324,6 @@ const Controls = () => {
       selectTool(lastOpenedToolId.current);
     }
     setIsSeeking(false);
-    startTimer();
   };
 
   const toggleLoop = () => {
@@ -285,46 +348,59 @@ const Controls = () => {
 
       mediaRef.addEventListener('loadedmetadata', handleVideoLoaded);
       mediaRef.addEventListener('canplaythrough', handleCanPlay);
-      mediaRef.addEventListener('play', onPlay);
       mediaRef.addEventListener('pause', onPause);
       mediaRef.addEventListener('waiting', handleWaiting);
       mediaRef.addEventListener('playing', handlePlaying);
       document.addEventListener('keydown', handleKeyboardControls);
+      window.addEventListener(EVENTS.SCRUB_VIDEO, handleTrimSliderScrub);
 
-      // Pause and clean up on unmount
       return () => {
         if (mediaRef) {
           mediaRef.pause();
           mediaRef.removeEventListener('loadedmetadata', handleVideoLoaded);
-          mediaRef.removeEventListener('canplaythrough', handleCanPlay);
-          mediaRef.removeEventListener('play', onPlay);
           mediaRef.removeEventListener('pause', onPause);
-          mediaRef.addEventListener('waiting', handleWaiting);
-          mediaRef.addEventListener('playing', handlePlaying);
+          mediaRef.removeEventListener('canplaythrough', handleCanPlay);
+          mediaRef.removeEventListener('waiting', handleWaiting);
+          mediaRef.removeEventListener('playing', handlePlaying);
+          window.removeEventListener(EVENTS.SCRUB_VIDEO, handleTrimSliderScrub);
         }
 
         document.removeEventListener('keydown', handleKeyboardControls);
         resetControls();
-        clearInterval(intervalRef.current);
+        cancelAnimation();
       };
     }
   }, [mediaRef, designLayer]);
 
+  useEffect(() => {
+    if (mediaRef && designLayer) {
+      mediaRef.addEventListener('play', onPlay);
+
+      return () => {
+        if (mediaRef) {
+          mediaRef.removeEventListener('play', onPlay);
+        }
+      };
+    }
+  }, [mediaRef, designLayer, segments]);
+
   return (
     <StyledMediaControls>
-      <StyledSeekSlider
-        className="FIE_video-controls-slider"
-        value={trackProgress || 0}
-        step={1}
-        min={0}
-        hideAnnotation
-        labelTooltip="off"
-        max={duration || 0}
-        $forceShow={trackEnded || !isPlaying || isSeeking}
-        onChange={onScrub}
-        onMouseUp={onScrubEnd}
-        onMouseDown={onScrubStart}
-      />
+      {tabId !== TABS_IDS.TRIM && (
+        <StyledSeekSlider
+          className="FIE_video-controls-slider"
+          value={trackProgress || 0}
+          step={1}
+          min={0}
+          hideAnnotation
+          labelTooltip="off"
+          max={duration || 0}
+          $forceShow={trackEnded || !isPlaying || isSeeking}
+          onChange={onScrub}
+          onMouseUp={onScrubEnd}
+          onMouseDown={onScrubStart}
+        />
+      )}
       <StyledControlsWrapper>
         <StyledPlayButton
           className="FIE_video-controls-play"

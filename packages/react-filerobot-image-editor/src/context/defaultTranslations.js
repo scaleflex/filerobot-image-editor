@@ -117,4 +117,7 @@ export default {
   px: 'px',
   invalidTextContent: 'Invalid text content',
   baselineShift: 'Baseline shift',
+  trimTab: 'Trim',
+  delete: 'Delete',
+  splitAt: 'Split at',
 };
