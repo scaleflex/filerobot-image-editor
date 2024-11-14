@@ -31,7 +31,7 @@ const useTransformedVideoData = () => {
     resize = {},
     adjustments: { crop = {}, rotation = 0, isFlippedY, isFlippedX } = {},
     config: { useBackendProcess, backendProcess, disableResizeAfterRotation },
-    trim: { segments },
+    trim: { segments = [] },
   } = state;
   const ffmpegRef = useRef(new FFmpeg());
 
@@ -161,6 +161,7 @@ const useTransformedVideoData = () => {
     }
 
     await ffmpeg.exec([...finalCommand, '-c:v', 'libx264', fileOutputName]);
+
     if (segments && segments.length > 0) {
       await ffmpeg.deleteFile('concatenated.mp4');
       await ffmpeg.deleteFile('concat.txt');
@@ -234,8 +235,8 @@ const useTransformedVideoData = () => {
           mappedCropBox.x,
           mappedCropBox.y,
         ].join(','),
-      rotation,
-      flip: flip.join(''),
+      rotation: rotation || undefined,
+      flip: flip.length > 0 ? flip.join('') : undefined,
       duration: originalSource.duration,
       onError,
     };
