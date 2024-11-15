@@ -1,5 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable no-await-in-loop */
 /** External Dependencies */
 import { useRef } from 'react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';

@@ -211,12 +211,12 @@ const Controls = () => {
       return;
     }
 
-    const clampedTime = Math.max(0, Math.min(newTime, mediaRef.duration));
+    const seekedTime = Math.max(0, Math.min(newTime, mediaRef.duration));
 
-    mediaRef.currentTime = clampedTime;
+    mediaRef.currentTime = seekedTime;
 
     emitCustomEvent(EVENTS.SEEK_VIDEO, {
-      time: clampedTime,
+      time: seekedTime,
     });
     updateVideoProgress();
   };

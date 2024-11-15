@@ -12,7 +12,7 @@ import {
   StyledSegmentWrapper,
 } from './Trim.styled';
 import { pixelToTime, timeToPixel } from './Trim.utils';
-import { MIN_SEGMENT_WIDTH } from './Trims.constants';
+import { MIN_SEGMENT_WIDTH } from './Trim.constants';
 
 const Segment = ({
   sliderRef,

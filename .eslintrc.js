@@ -21,6 +21,8 @@ module.exports = {
     'consistent-return': 'off',
     'import/no-cycle': 'off',
     'default-param-last': 'off',
+    'no-plusplus': 'off',
+    'no-await-in-loop': 'off',
     'import/no-extraneous-dependencies': [
       'error',
       {

@@ -33,7 +33,7 @@ const ToolsBar = ({ toolsIds, tools, selectedToolId, ...props }) => {
   const currentTabId = tabId || defaultTabId;
   const currentToolId = selectedToolId || toolId || defaultToolId;
   const showOutsideCarousel =
-    currentTabId !== (TABS_IDS.WATERMARK || TABS_IDS.TRIM);
+    currentTabId !== TABS_IDS.WATERMARK || currentTabId !== TABS_IDS.TRIM;
   const availableTools = tools || configTools;
 
   const tabToolsIds = useMemo(

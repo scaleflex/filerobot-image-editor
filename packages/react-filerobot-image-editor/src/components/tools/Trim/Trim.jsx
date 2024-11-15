@@ -1,5 +1,11 @@
 /** External Dependencies */
-import React, { useRef, useEffect, useState, useMemo } from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from 'react';
 import { Button } from '@scaleflex/ui/core';
 import { DeleteOutline, Split } from '@scaleflex/icons';
 
@@ -20,7 +26,7 @@ import {
   StyledSlider,
   StyledSegmentSkeleton,
 } from './Trim.styled';
-import { SPLIT_THRESHOLD } from './Trims.constants';
+import { SPLIT_THRESHOLD } from './Trim.constants';
 
 const Trim = () => {
   const {
@@ -239,6 +245,15 @@ const Trim = () => {
     ));
   };
 
+  const Rail = useCallback(
+    () => (
+      <StyledRailWrapper>
+        <StyledRailLine />
+      </StyledRailWrapper>
+    ),
+    [],
+  );
+
   return (
     <StyledTrimWrapper className="FIE_trim-wrapper">
       {!isReady && <StyledSegmentSkeleton width="100%" height="72px" />}
@@ -255,12 +270,7 @@ const Trim = () => {
         onChange={onScrub}
         hidden={!isReady}
         components={{
-          // eslint-disable-next-line react/no-unstable-nested-components
-          Rail: () => (
-            <StyledRailWrapper>
-              <StyledRailLine />
-            </StyledRailWrapper>
-          ),
+          Rail,
           Thumb: StyledTrimSliderThumb,
         }}
       />
