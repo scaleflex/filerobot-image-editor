@@ -50,6 +50,7 @@ import updateAnnotationIds, {
 import setSelectedTextPart, {
   SET_SELECTED_TEXT_PART,
 } from './setSelectedTextPart';
+import setTrim, { SET_TRIM } from './setTrim';
 
 export default {
   [SET_ORIGINAL_SOURCE]: setOriginalSource,
@@ -81,6 +82,7 @@ export default {
   [REMOVE_ANNOTATIONS]: removeAnnotations,
   [DUPLICATE_ANNOTATIONS]: duplicateAnnotations,
   [UPDATE_ANNOTATION_IDS]: updateAnnotationIds,
+  [SET_TRIM]: setTrim,
   // End of Design actions.
   [UNDO]: undo,
   [REDO]: redo,

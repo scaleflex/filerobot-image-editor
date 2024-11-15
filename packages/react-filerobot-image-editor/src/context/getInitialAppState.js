@@ -47,6 +47,7 @@ const getInitialAppState = (config = {}) => {
     annotationIds: [],
     annotations: {},
     resize: {},
+    trim: {},
     // --- End of design states ---
     shownImageDimensions: {},
     ...loadedConfigPrepared, // if provided it would override the above design states

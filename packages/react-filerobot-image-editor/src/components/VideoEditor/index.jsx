@@ -10,7 +10,7 @@ import Controls from 'components/VideoEditor/Controls';
 const VideoEditor = (props) => (
   <AssemblyPointProviders
     {...props}
-    tabsIds={[TABS.ADJUST]}
+    tabsIds={[TABS.ADJUST, TABS.TRIM]}
     disableResizeAfterRotation
     defaultTabId={TABS.ADJUST}
   >

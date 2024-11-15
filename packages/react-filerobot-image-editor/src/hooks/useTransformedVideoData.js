@@ -6,12 +6,17 @@ import { fetchFile } from '@ffmpeg/util';
 /** Internal Dependencies */
 import mapCropBox from 'utils/mapCropBox';
 import getProperDimensions from 'utils/getProperDimensions';
-import { get, trimVideo } from 'components/VideoEditor/VideoEditor.services';
+import {
+  get,
+  transformVideo,
+  trimVideo,
+} from 'components/VideoEditor/VideoEditor.services';
 import emitCustomEvent from 'utils/emitCustomEvent';
 import { EVENTS } from 'utils/constants';
 // import extractCurrentDesignState from 'utils/extractCurrentDesignState';
 import { SET_FEEDBACK } from 'actions';
 import loadFfmpeg from 'utils/loadFfmpeg';
+import formatSecondsToDuration from 'utils/formatSecondsToDuration';
 import useStore from './useStore';
 
 const useTransformedVideoData = () => {
@@ -24,6 +29,7 @@ const useTransformedVideoData = () => {
     resize = {},
     adjustments: { crop = {}, rotation = 0, isFlippedY, isFlippedX } = {},
     config: { useBackendProcess, backendProcess, disableResizeAfterRotation },
+    trim: { segments = [] },
   } = state;
   const ffmpegRef = useRef(new FFmpeg());
 
@@ -65,10 +71,49 @@ const useTransformedVideoData = () => {
     }
 
     const videoData = await fetchFile(originalSource.src);
-    const fileInputName = 'input.mp4';
+    let fileInputName = 'input.mp4';
     const fileOutputName = 'output.mp4';
 
     ffmpeg.writeFile(fileInputName, videoData);
+
+    if (segments && segments.length > 0) {
+      let concatContent = '';
+
+      for (let i = 0; i < segments.length; i++) {
+        const segmentOutput = `segment_${i}.mp4`;
+        const { start, end } = segments[i];
+        await ffmpeg.exec([
+          '-i',
+          fileInputName,
+          '-ss',
+          start.toString(),
+          '-to',
+          end.toString(),
+          '-c:v',
+          'libx264',
+          '-c:a',
+          'aac',
+          segmentOutput,
+        ]);
+
+        concatContent += `file ${segmentOutput}\n`;
+      }
+
+      await ffmpeg.writeFile('concat.txt', concatContent);
+      await ffmpeg.exec([
+        '-f',
+        'concat',
+        '-safe',
+        '0',
+        '-i',
+        'concat.txt',
+        '-c',
+        'copy',
+        'concatenated.mp4',
+      ]);
+
+      fileInputName = 'concatenated.mp4';
+    }
 
     const finalCommand = ['-i', fileInputName];
 
@@ -114,6 +159,15 @@ const useTransformedVideoData = () => {
     }
 
     await ffmpeg.exec([...finalCommand, '-c:v', 'libx264', fileOutputName]);
+
+    if (segments && segments.length > 0) {
+      await ffmpeg.deleteFile('concatenated.mp4');
+      await ffmpeg.deleteFile('concat.txt');
+      for (let i = 0; i < segments.length; i++) {
+        await ffmpeg.deleteFile(`segment_${i}.mp4`);
+      }
+    }
+
     const data = await ffmpeg.readFile(fileOutputName);
     const videoBlob = new Blob([data.buffer], { type: 'video/mp4' });
 
@@ -139,13 +193,34 @@ const useTransformedVideoData = () => {
       }
 
       if (ready && progress === 100) {
-        return response?.result[0]?.trimmed;
+        return response?.result[0]?.transformed || response?.result[0]?.trimmed;
       }
     }
   };
 
+  const getTimeData = () => {
+    return segments
+      .map((segment) => {
+        return `('${formatSecondsToDuration(
+          segment.start,
+          true,
+        )}','${formatSecondsToDuration(segment.end, true)}')`;
+      })
+      .join(',');
+  };
+
   const getTransformedBackendData = async (mappedCropBox) => {
-    const response = await trimVideo({
+    const flip = [];
+
+    if (isFlippedX) {
+      flip.push('h');
+    }
+
+    if (isFlippedY) {
+      flip.push('v');
+    }
+
+    const commonProps = {
       key: backendProcess.key,
       token: backendProcess.token,
       url: originalSource.src,
@@ -159,9 +234,15 @@ const useTransformedVideoData = () => {
           mappedCropBox.y,
         ].join(','),
       rotation,
+      flip: flip.length > 0 ? flip.join('') : undefined,
       duration: originalSource.duration,
       onError,
-    });
+    };
+
+    const response =
+      segments.length > 0
+        ? await trimVideo({ ...commonProps, trimTimeData: getTimeData() })
+        : await transformVideo({ ...commonProps });
 
     const url = await checkVideoStatus(response);
     return url;
@@ -172,11 +253,7 @@ const useTransformedVideoData = () => {
     let finalVideoPassedObject = {};
     emitCustomEvent(EVENTS.PROCESSING_VIDEO_START, { file: mediaFileInfo });
 
-    if (
-      useBackendProcess &&
-      Object.keys(backendProcess).length > 0 &&
-      !(isFlippedX || isFlippedY) // until backend supports flip transformation
-    ) {
+    if (useBackendProcess && Object.keys(backendProcess).length > 0) {
       finalVideoPassedObject.videoUrl = await getTransformedBackendData(
         mappedCropBox,
       );

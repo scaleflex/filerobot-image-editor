@@ -17,6 +17,7 @@ export const TABS_IDS = {
   WATERMARK: 'Watermark',
   ANNOTATE: 'Annotate',
   RESIZE: 'Resize',
+  TRIM: 'Trim',
 };
 
 export const TOOLS_IDS = {
@@ -44,6 +45,7 @@ export const TOOLS_IDS = {
   WATERMARK: 'Watermark',
   PEN: 'Pen',
   RESIZE: 'Resize',
+  TRIM: 'Trim',
 };
 
 export const FLIP_DIRECTIONS = {
@@ -156,6 +158,8 @@ export const EVENTS = {
   SAVE_EDITED_TEXT_CONTENT: 'fie-save-edited-text-content',
   PROCESSING_VIDEO_START: 'fie-video-process-start',
   PROCESSING_VIDEO_PROGRESS: 'fie-video-process-progress',
+  SEEK_VIDEO: 'fie-seek-video',
+  SCRUB_VIDEO: 'fie-scrub-video',
 };
 
 export const ALLOWED_TEXT_PART_FORMATS = [

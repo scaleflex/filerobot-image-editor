@@ -5,7 +5,7 @@ import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 import { FontVariant as FV } from '@scaleflex/ui/utils/types/typography';
 
 const StyledToolsBar = styled.div`
-  width: fit-content;
+  width: ${({ width }) => width};
   margin: 0 auto;
   max-width: 99.5%;
   max-height: 170px;

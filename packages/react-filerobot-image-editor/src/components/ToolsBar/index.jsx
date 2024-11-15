@@ -32,12 +32,14 @@ const ToolsBar = ({ toolsIds, tools, selectedToolId, ...props }) => {
   } = useStore();
   const currentTabId = tabId || defaultTabId;
   const currentToolId = selectedToolId || toolId || defaultToolId;
+  const showOutsideCarousel =
+    currentTabId !== TABS_IDS.WATERMARK || currentTabId !== TABS_IDS.TRIM;
+  const availableTools = tools || configTools;
 
   const tabToolsIds = useMemo(
     () => toolsIds || tabsToolsIds[currentTabId] || [],
     [toolsIds, tabsToolsIds, currentTabId],
   );
-  const availableTools = tools || configTools;
 
   const selectTool = useCallback((newToolId) => {
     dispatch({
@@ -114,7 +116,11 @@ const ToolsBar = ({ toolsIds, tools, selectedToolId, ...props }) => {
   }, []);
 
   return (
-    <StyledToolsBar className="FIE_tools-bar-wrapper" {...props}>
+    <StyledToolsBar
+      className="FIE_tools-bar-wrapper"
+      width={currentTabId === TABS_IDS.TRIM ? '100%' : 'fit-content'}
+      {...props}
+    >
       <ToolsBarItemOptionsWrapper isPhoneScreen={isPhoneScreen}>
         {ToolOptionsComponent && <ToolOptionsComponent t={t} />}
       </ToolsBarItemOptionsWrapper>
@@ -123,7 +129,7 @@ const ToolsBar = ({ toolsIds, tools, selectedToolId, ...props }) => {
           className="FIE_tools-bar"
           isPhoneScreen={isPhoneScreen}
         >
-          {currentTabId !== TABS_IDS.WATERMARK ? (
+          {!showOutsideCarousel ? (
             <Carousel className="FIE_tools" style={style}>
               {items}
             </Carousel>
