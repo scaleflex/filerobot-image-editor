@@ -235,7 +235,7 @@ const useTransformedVideoData = () => {
           mappedCropBox.x,
           mappedCropBox.y,
         ].join(','),
-      rotation: rotation || undefined,
+      rotation,
       flip: flip.length > 0 ? flip.join('') : undefined,
       duration: originalSource.duration,
       onError,
