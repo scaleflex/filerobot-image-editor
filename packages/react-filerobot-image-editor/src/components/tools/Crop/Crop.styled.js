@@ -28,7 +28,6 @@ const StyledRatioDescription = styled(Label)`
 `;
 
 const StyledMenu = styled.div`
-  min-width: 270px;
   border-radius: 4px;
   overflow: hidden;
   background-color: ${({ theme: { palette } }) =>

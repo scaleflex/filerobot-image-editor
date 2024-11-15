@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 import Label from '@scaleflex/ui/core/label';
 import { Color as PC } from '@scaleflex/ui/utils/types/palette';
+import Menu from '@scaleflex/ui/core/menu';
 
 const StyledOptions = styled.div`
   display: flex;
@@ -139,6 +140,10 @@ const StyledIconLabel = styled(Label)`
   color: ${({ theme: { palette } }) => palette[PC.TextPrimary]};
 `;
 
+const StyledOptionsPopUp = styled(Menu)`
+  width: auto;
+`;
+
 export {
   StyledTwoColumnsContainer,
   StyledColumn,
@@ -148,4 +153,5 @@ export {
   StyledOptionsWrapper,
   StyledOptionPopupContent,
   StyledIconLabel,
+  StyledOptionsPopUp,
 };
