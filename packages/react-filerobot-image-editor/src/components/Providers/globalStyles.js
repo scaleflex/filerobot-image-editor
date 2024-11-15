@@ -19,9 +19,6 @@ const OverrideDefaultStyles = createGlobalStyle`
     box-sizing: border-box;
 
     .SfxPopper-root .SfxMenu-root {
-      overflow: visible;
-      width: max-content;
-
       .SfxMenuItem-prefix {
         margin-right: 6px;
       }

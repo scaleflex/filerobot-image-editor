@@ -3,7 +3,6 @@ import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { usePhoneScreen, useStore } from 'hooks';
 import { Label } from '@scaleflex/ui/core';
-import Menu from '@scaleflex/ui/core/menu';
 import Transparency from '@scaleflex/icons/transparency';
 import Shadow from '@scaleflex/icons/shadow';
 import Stroke from '@scaleflex/icons/stroke';
@@ -19,6 +18,7 @@ import {
   StyledOptions,
   StyledOptionsWrapper,
   StyledIconWrapper,
+  StyledOptionsPopUp,
 } from './AnnotationOptions.styled';
 import { POPPABLE_OPTIONS } from './AnnotationOptions.constants';
 import ColorInput from '../ColorInput';
@@ -145,7 +145,7 @@ const AnnotationOptions = ({
       </StyledOptionsWrapper>
 
       {OptionPopupComponent && (
-        <Menu
+        <StyledOptionsPopUp
           className="FIE_annotation-option-popup"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -163,7 +163,7 @@ const AnnotationOptions = ({
               />
             )}
           </StyledOptionPopupContent>
-        </Menu>
+        </StyledOptionsPopUp>
       )}
     </StyledOptions>
   );
