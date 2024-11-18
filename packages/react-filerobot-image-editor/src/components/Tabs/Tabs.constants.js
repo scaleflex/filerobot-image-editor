@@ -12,7 +12,7 @@ import {
 /** Internal Dependencies */
 import { TABS_IDS } from 'utils/constants';
 
-export const AVAILABLE_TABS = [
+export const AVAILABLE_IMAGE_TABS = [
   {
     id: TABS_IDS.ADJUST,
     labelKey: 'adjustTab',
@@ -39,6 +39,19 @@ export const AVAILABLE_TABS = [
     labelKey: 'annotateTabLabel',
     icon: Annotate,
     hideFn: ({ useCloudimage }) => useCloudimage,
+  },
+  {
+    id: TABS_IDS.RESIZE,
+    labelKey: 'resizeTab',
+    icon: Resize,
+  },
+];
+
+export const AVAILABLE_VIDEO_TABS = [
+  {
+    id: TABS_IDS.ADJUST,
+    labelKey: 'adjustTab',
+    icon: CropFrame,
   },
   {
     id: TABS_IDS.RESIZE,

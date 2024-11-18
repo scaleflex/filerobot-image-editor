@@ -3,32 +3,37 @@ import { useMemo } from 'react';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
-import { AVAILABLE_TABS } from '../Tabs.constants';
+import isVideo from 'utils/isVideo';
+import { AVAILABLE_IMAGE_TABS, AVAILABLE_VIDEO_TABS } from '../Tabs.constants';
 
 const useTabs = (customTabsIds) => {
   const {
     config: { tabsIds: configTabsIds, useCloudimage },
+    sourceType,
   } = useStore();
 
   const tabsIds = customTabsIds || configTabsIds;
+  const availableTabs = isVideo(sourceType)
+    ? AVAILABLE_VIDEO_TABS
+    : AVAILABLE_IMAGE_TABS;
 
   const chosenTabs = useMemo(() => {
     let tabs = [];
     if (Object.keys(tabsIds).length > 0) {
-      AVAILABLE_TABS.forEach((tab) => {
+      availableTabs.forEach((tab) => {
         const index = tabsIds.indexOf(tab.id);
         if (index !== -1) {
           tabs[index] = tab;
         }
       });
     } else {
-      tabs = AVAILABLE_TABS;
+      tabs = availableTabs;
     }
 
-    return (tabs.length > 0 ? tabs : AVAILABLE_TABS).filter(
+    return (tabs.length > 0 ? tabs : availableTabs).filter(
       ({ hideFn }) => !hideFn || !hideFn({ useCloudimage }),
     );
-  }, [tabsIds]);
+  }, [sourceType, tabsIds]);
 
   return chosenTabs;
 };
