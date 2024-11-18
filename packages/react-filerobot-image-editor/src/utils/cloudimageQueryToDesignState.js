@@ -190,8 +190,13 @@ const cloudimageQueryToDesignState = (
       designState = deepMerge(designState, operationDesignStateObject, true);
     }
   });
-  const { cropX2, cropY2, crop, watermark, ...unPreparedDesignState } =
-    designState;
+  const {
+    cropX2,
+    cropY2,
+    crop = {},
+    watermark,
+    ...unPreparedDesignState
+  } = designState;
 
   if (designState.adjustments?.isFlippedX) {
     crop.x = shownImageDimensions.width - (cropX2 || 0);
