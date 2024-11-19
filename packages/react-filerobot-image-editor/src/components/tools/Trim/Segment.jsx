@@ -7,6 +7,7 @@ import { useStore } from 'hooks';
 import PropTypes from 'prop-types';
 import {
   StyledHandle,
+  StyledRightHandle,
   StyledSegment,
   StyledSegmentHandle,
   StyledSegmentWrapper,
@@ -152,7 +153,7 @@ const Segment = ({
         <Draggable
           axis="x"
           bounds="parent"
-          position={{ x: -12, y: 0 }}
+          position={{ x: -10, y: 0 }}
           nodeRef={leftHandleRef}
           onStart={handleDragStart}
           onDrag={handleDragLeft}
@@ -174,7 +175,7 @@ const Segment = ({
           <StyledSegmentHandle
             className="FIE_segment-handle"
             ref={segmentHandleRef}
-            style={{ width: `${segmentWidth - 40}px` }}
+            style={{ width: `${segmentWidth - 42}px` }}
           />
         </Draggable>
         <Draggable
@@ -186,7 +187,7 @@ const Segment = ({
           onDrag={handleDragRight}
           onStop={handleDragStop}
         >
-          <StyledHandle
+          <StyledRightHandle
             className="FIE_segment-right-handle"
             ref={rightHandleRef}
           />

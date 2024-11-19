@@ -30,7 +30,6 @@ const MainCanvasWrapper = ({
     onPluginRootResize,
     pluginRootRef,
   });
-
   const providedAppContext = useMemo(
     () => ({
       ...currentAppContextData,

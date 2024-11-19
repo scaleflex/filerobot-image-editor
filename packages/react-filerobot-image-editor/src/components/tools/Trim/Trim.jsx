@@ -156,7 +156,6 @@ const Trim = () => {
   };
 
   const onScrub = (_, value) => {
-    cancelAnimation();
     mediaRef.currentTime = value;
     setTrackProgress(value);
     emitCustomEvent(EVENTS.SCRUB_VIDEO, {

@@ -140,16 +140,20 @@ const StyledSegmentHandle = styled.div`
   &:active {
     cursor: grabbing;
   }
-  left: 8px;
+  left: 10px;
 `;
 
 const StyledHandle = styled.div`
   position: absolute;
   top: 0;
-  left: -10px;
-  width: 30px;
+  left: 0px;
+  width: 20px;
   height: 100%;
   cursor: col-resize;
+`;
+
+const StyledRightHandle = styled(StyledHandle)`
+  left: -10px;
 `;
 
 const StyledTrimButtonsWrapper = styled.div`
@@ -170,5 +174,6 @@ export {
   StyledSegment,
   StyledSegmentHandle,
   StyledHandle,
+  StyledRightHandle,
   StyledTrimButtonsWrapper,
 };

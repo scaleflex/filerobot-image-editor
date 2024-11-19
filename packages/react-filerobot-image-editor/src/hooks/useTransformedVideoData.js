@@ -17,6 +17,7 @@ import { EVENTS } from 'utils/constants';
 import { SET_FEEDBACK } from 'actions';
 import loadFfmpeg from 'utils/loadFfmpeg';
 import formatSecondsToDuration from 'utils/formatSecondsToDuration';
+import isBlobFile from 'utils/isBlobFile';
 import useStore from './useStore';
 
 const useTransformedVideoData = () => {
@@ -28,7 +29,12 @@ const useTransformedVideoData = () => {
     originalSource,
     resize = {},
     adjustments: { crop = {}, rotation = 0, isFlippedY, isFlippedX } = {},
-    config: { useBackendProcess, backendProcess, disableResizeAfterRotation },
+    config: {
+      source,
+      useBackendProcess,
+      backendProcess,
+      disableResizeAfterRotation,
+    },
     trim: { segments = [] },
   } = state;
   const ffmpegRef = useRef(new FFmpeg());
@@ -220,10 +226,13 @@ const useTransformedVideoData = () => {
       flip.push('v');
     }
 
+    const data = isBlobFile(source) ? { source } : { url: originalSource.src };
+
     const commonProps = {
       key: backendProcess.key,
       token: backendProcess.token,
-      url: originalSource.src,
+      data,
+      path: isBlobFile(source) ? 'upload' : 'url',
       crop:
         mappedCropBox.width &&
         mappedCropBox.height &&
@@ -241,7 +250,10 @@ const useTransformedVideoData = () => {
 
     const response =
       segments.length > 0
-        ? await trimVideo({ ...commonProps, trimTimeData: getTimeData() })
+        ? await trimVideo({
+            ...commonProps,
+            data: { ...data, time_data: getTimeData() },
+          })
         : await transformVideo({ ...commonProps });
 
     const url = await checkVideoStatus(response);

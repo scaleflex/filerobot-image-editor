@@ -120,4 +120,5 @@ export default {
   trimTab: 'Trim',
   delete: 'Delete',
   splitAt: 'Split at',
+  mediaSourceError: 'URL is neither an image nor a video',
 };

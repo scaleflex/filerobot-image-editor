@@ -27,6 +27,7 @@ const extractCurrentDesignState = (state, useStateAsConfig) => {
     presentOriginalSources:
       state.presentOriginalSources || initialAppState.presentOriginalSources,
     extra: state.extra || initialAppState.extra,
+    trim: state.trim || initialAppState.trim,
   };
 };
 

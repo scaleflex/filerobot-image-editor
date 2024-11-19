@@ -24,9 +24,9 @@ import filterStrToClass from 'utils/filterStrToClass';
 import isSameSource from 'utils/isSameSource';
 import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
 import { DEFAULT_ZOOM_FACTOR, SOURCE_TYPES } from 'utils/constants';
-import getUrlWithoutQuery from 'utils/getUrlWithoutQuery';
 import isImageExtension from 'utils/isImageExtension';
 import isVideoExtension from 'utils/isVideoExtension';
+import isBlobFile from 'utils/isBlobFile';
 
 const getSourceTypeByExtension = (url) => {
   if (isImageExtension(url)) {
@@ -85,11 +85,11 @@ const useLoadMainSource = ({
   const transformImgFn = useTransformedImgData();
 
   const setNewOriginalSource = useCallback(
-    ({ newSource, type }) => {
+    ({ newSource, type } = {}) => {
       dispatch({
         type: SET_ORIGINAL_SOURCE,
         payload: {
-          originalSource: newSource,
+          originalSource: newSource || {},
           sourceType: type,
           ...(!(resetOnSourceChange || keepZoomOnSourceChange) && {
             zoom: {
@@ -127,50 +127,67 @@ const useLoadMainSource = ({
     });
   }, []);
 
-  const getSourceType = async (url) => {
+  const getUrl = (mediaToLoad) =>
+    isBlobFile(mediaToLoad)
+      ? URL.createObjectURL(mediaToLoad)
+      : mediaToLoad?.src || mediaToLoad;
+
+  const getContentType = async (mediaToLoad, url) => {
+    if (isBlobFile(mediaToLoad)) {
+      return mediaToLoad.type;
+    }
+    const response = await fetch(url, { method: 'HEAD' });
+    if (response.ok) {
+      return response.headers.get('content-type');
+    }
+  };
+
+  const getSourceData = async (mediaToLoad) => {
+    let url = '';
     try {
-      const urlWithoutQuery = getUrlWithoutQuery(url);
-      const response = await fetch(urlWithoutQuery, { method: 'HEAD' });
+      url = getUrl(mediaToLoad);
+      const contentType = await getContentType(mediaToLoad, url);
 
-      if (response.ok) {
-        const contentType = response.headers.get('content-type');
-
-        if (contentType.startsWith('image/')) {
-          return SOURCE_TYPES.IMAGE;
-        }
-
-        if (contentType.startsWith('video/')) {
-          return SOURCE_TYPES.VIDEO;
-        }
-
-        setError('URL is neither an image nor a video:');
+      if (contentType.startsWith('image/')) {
+        return { sourceUrl: url, sourceType: SOURCE_TYPES.IMAGE };
       }
 
-      return getSourceTypeByExtension(urlWithoutQuery);
+      if (contentType.startsWith('video/')) {
+        return { sourceUrl: url, sourceType: SOURCE_TYPES.VIDEO };
+      }
+
+      return {
+        sourceUrl: url,
+        sourceType: getSourceTypeByExtension(url),
+      };
     } catch (error) {
       setError(error);
+      return {
+        sourceUrl: url,
+        sourceType: getSourceTypeByExtension(url),
+      };
     }
   };
 
   const loadMedia = async (mediaToLoad) => {
-    const url = mediaToLoad?.src || mediaToLoad;
-    const sourceType = await getSourceType(url);
-
+    const { sourceUrl, sourceType } = await getSourceData(mediaToLoad);
     const options = {
-      name: defaultSavedImageName,
+      name: mediaToLoad?.name || defaultSavedImageName,
       noCrossOrigin,
       width: mediaToLoad?.width,
       height: mediaToLoad?.height,
       key: mediaToLoad?.key,
     };
 
-    if (sourceType === SOURCE_TYPES.IMAGE) {
-      return loadImage(mediaToLoad?.src || mediaToLoad, options);
+    if (sourceType === SOURCE_TYPES.IMAGE && sourceUrl) {
+      return loadImage(sourceUrl, options);
     }
 
-    if (sourceType === SOURCE_TYPES.VIDEO) {
-      return loadVideo(mediaToLoad?.src || mediaToLoad, options);
+    if (sourceType === SOURCE_TYPES.VIDEO && sourceUrl) {
+      return loadVideo(sourceUrl, options);
     }
+
+    return Promise.reject(t('mediaSourceError'));
   };
   // We are promisifying the image loading for mixing it with other promises
   const loadAndSetOriginalSource = (imgToLoad) =>
@@ -220,7 +237,9 @@ const useLoadMainSource = ({
           triggerResolve();
         } else if (
           imgToLoad &&
-          (typeof imgToLoad === 'string' || imgToLoad?.src)
+          (typeof imgToLoad === 'string' ||
+            imgToLoad instanceof Blob ||
+            imgToLoad?.src)
         ) {
           loadMedia(imgToLoad?.src || imgToLoad, {
             name: defaultSavedImageName,

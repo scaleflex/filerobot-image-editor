@@ -11,8 +11,8 @@ const reset = (state, payload) => {
   const resettedDesignState = extractCurrentDesignState(
     {
       ...payload.config,
-      imgSrc: firstOriginalSource.src || state.imgSrc,
-      bgColor: firstOriginalSource.bgColor,
+      imgSrc: firstOriginalSource?.src || state.imgSrc,
+      bgColor: firstOriginalSource?.bgColor,
       originalSource: firstOriginalSource,
     },
     true,

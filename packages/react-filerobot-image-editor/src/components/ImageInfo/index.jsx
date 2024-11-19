@@ -7,6 +7,7 @@ import Compare from '@scaleflex/icons/compare';
 import { TOGGLE_ORIGINAL_IMAGE_DISPLAY } from 'actions';
 import { usePhoneScreen, useStore } from 'hooks';
 import getProperDimensions from 'utils/getProperDimensions';
+import isImage from 'utils/isImage';
 import {
   StyledSmallButton,
   StyledDimensionsLabel,
@@ -20,6 +21,7 @@ const ImageInfo = ({ children, showCompareButton = true, ...props }) => {
     dispatch,
     isResetted = true,
     originalSource,
+    sourceType,
     resize = {},
     adjustments: { crop, rotation = 0 },
     shownImageDimensions,
@@ -66,7 +68,8 @@ const ImageInfo = ({ children, showCompareButton = true, ...props }) => {
       rotation,
     });
 
-  const isCompareButtonShown = showCompareButton && originalSource?.src;
+  const isCompareButtonShown =
+    showCompareButton && originalSource?.src && isImage(sourceType);
   return (
     <StyledImageOptionsButtons
       className="FIE_image_info"

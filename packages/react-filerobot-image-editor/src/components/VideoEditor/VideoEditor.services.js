@@ -1,6 +1,8 @@
-const getHeaders = ({ key, token }) => {
+import isBlobFile from 'utils/isBlobFile';
+
+const getDefaultHeaders = ({ key, token, headers }) => {
   return {
-    'Content-Type': 'application/json',
+    ...headers,
     'Filerobot-Key': key,
     'Filerobot-Token': token,
   };
@@ -16,9 +18,30 @@ const getQueryParams = (params) => {
   return new URLSearchParams(filteredParams).toString();
 };
 
-const transformResponse = (response) => {
+const getData = (data) => {
+  if (isBlobFile(data?.source)) {
+    const formData = new FormData();
+    formData.append('file', data.source, data.name);
+
+    if (data.time_data) {
+      formData.append('time_data', data.time_data);
+    }
+    return formData;
+  }
+
+  return JSON.stringify([data]);
+};
+
+const transformResponse = async (response) => {
   if (response.ok) {
     return response.json().then((jsonResponse) => jsonResponse);
+  }
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    const error =
+      errorData?.message || errorData?.result?.msg || errorData?.result?.hint;
+    return Promise.reject(error);
   }
 };
 
@@ -29,23 +52,26 @@ const baseUrl = import.meta.env.DEV
 export const trimVideo = ({
   key,
   token,
-  url,
+  data,
+  path = 'url',
   crop,
   rotation,
-  trimTimeData,
   flip,
   onError,
 }) =>
   fetch(
-    `${baseUrl}/trim/url?${getQueryParams({ crop, rotate: rotation, flip })}`,
+    `${baseUrl}/trim/${path}?${getQueryParams({
+      crop,
+      rotate: rotation,
+      flip,
+    })}`,
     {
-      body: JSON.stringify([
-        {
-          url,
-          time_data: trimTimeData,
-        },
-      ]),
-      headers: getHeaders({ key, token }),
+      body: getData(data),
+      headers: getDefaultHeaders({
+        key,
+        token,
+        ...(!isBlobFile(data?.source) && { contentType: 'application/json' }),
+      }),
       method: 'POST',
     },
   )
@@ -55,26 +81,30 @@ export const trimVideo = ({
 export const transformVideo = ({
   key,
   token,
-  url,
+  data,
+  path = 'url',
   crop,
   rotation,
   flip,
   onError,
 }) =>
   fetch(
-    `${baseUrl}/transformations/url?${getQueryParams({
+    `${baseUrl}/transformations/${path}?${getQueryParams({
       crop,
       rotate: rotation,
       flip,
     })}`,
     {
-      body: JSON.stringify([{ url }]),
-      headers: getHeaders({ key, token }),
+      body: getData(data),
+      headers: getDefaultHeaders({
+        key,
+        token,
+        ...(!isBlobFile(data?.source) && { contentType: 'application/json' }),
+      }),
       method: 'POST',
     },
   )
     .then(transformResponse)
     .catch(onError);
-
 export const get = (url, onError) =>
   fetch(url, { method: 'GET' }).then(transformResponse).catch(onError);

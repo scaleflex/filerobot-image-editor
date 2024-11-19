@@ -26,6 +26,7 @@ const FeedbackPopup = ({ anchorOrigin = defaultAnchorOrigin }) => {
   }
 
   const onClose = () => {
+    if (feedback.duration === 0) return;
     dispatch({
       type: SET_FEEDBACK,
       payload: {
