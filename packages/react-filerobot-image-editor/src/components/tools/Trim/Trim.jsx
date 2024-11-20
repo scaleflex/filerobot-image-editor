@@ -26,7 +26,6 @@ import {
   StyledSlider,
   StyledSegmentSkeleton,
 } from './Trim.styled';
-import { SPLIT_THRESHOLD } from './Trim.constants';
 
 const Trim = () => {
   const {
@@ -71,10 +70,12 @@ const Trim = () => {
     const leftSegmentDuration = splitPoint - currentSegment.start;
     const rightSegmentDuration = currentSegment.end - splitPoint;
 
-    if (leftSegmentDuration < SPLIT_THRESHOLD) {
-      splitPoint = currentSegment.start + SPLIT_THRESHOLD;
-    } else if (rightSegmentDuration < SPLIT_THRESHOLD) {
-      splitPoint = currentSegment.end - SPLIT_THRESHOLD;
+    const dynamicSplitThreshold = duration * 0.05;
+
+    if (leftSegmentDuration < dynamicSplitThreshold) {
+      splitPoint = currentSegment.start + dynamicSplitThreshold;
+    } else if (rightSegmentDuration < dynamicSplitThreshold) {
+      splitPoint = currentSegment.end - dynamicSplitThreshold;
     }
 
     if (
