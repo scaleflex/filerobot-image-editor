@@ -20,8 +20,8 @@ const Segment = ({
   duration,
   segment,
   segmentIndex = 0,
+  currentSegmentIndex,
   updateVideoProgress,
-  trackProgress,
   trimContainerWidth,
   getSegmentBounds,
   updateSegmentBounds,
@@ -137,9 +137,7 @@ const Segment = ({
     };
   }, []);
 
-  const isHighlighted =
-    trackProgress >= getMappedTime(segmentPixelStart) &&
-    trackProgress < getMappedTime(segmentPixelEnd);
+  const isHighlighted = currentSegmentIndex === segmentIndex;
 
   return (
     <StyledSegmentWrapper className="FIE_trim-segment-wrapper">
@@ -207,7 +205,7 @@ Segment.propTypes = {
     end: PropTypes.number.isRequired,
   }),
   segmentIndex: PropTypes.number,
-  trackProgress: PropTypes.number.isRequired,
+  currentSegmentIndex: PropTypes.number,
   trimContainerWidth: PropTypes.number.isRequired,
   getSegmentBounds: PropTypes.func.isRequired,
   updateVideoProgress: PropTypes.func.isRequired,

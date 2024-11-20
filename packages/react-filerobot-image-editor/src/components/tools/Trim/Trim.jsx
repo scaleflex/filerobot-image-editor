@@ -70,7 +70,7 @@ const Trim = () => {
     const leftSegmentDuration = splitPoint - currentSegment.start;
     const rightSegmentDuration = currentSegment.end - splitPoint;
 
-    const dynamicSplitThreshold = duration * 0.05;
+    const dynamicSplitThreshold = Math.max(duration * 0.05, 1);
 
     if (leftSegmentDuration < dynamicSplitThreshold) {
       splitPoint = currentSegment.start + dynamicSplitThreshold;
@@ -228,6 +228,7 @@ const Trim = () => {
       updateVideoProgress,
       getSegmentBounds,
       updateSegmentBounds,
+      currentSegmentIndex,
     };
 
     if (segments.length === 0) {
