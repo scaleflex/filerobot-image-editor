@@ -280,7 +280,7 @@ const Trim = () => {
           color="link-secondary"
           startIcon={<Split />}
           onClick={splitSegment}
-          disabled={currentSegmentIndex === -1 || !isReady}
+          disabled={currentSegmentIndex === -1 || !isReady || trackProgress < 1}
         >
           {`${t('splitAt')} ${formatSecondsToDuration(trackProgress)}`}
         </Button>
