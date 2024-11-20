@@ -26,6 +26,7 @@ import {
   StyledSlider,
   StyledSegmentSkeleton,
 } from './Trim.styled';
+import { MIN_SEGMENT_WIDTH } from './Trim.constants';
 
 const Trim = () => {
   const {
@@ -66,21 +67,28 @@ const Trim = () => {
       end: duration,
     };
 
-    let splitPoint = trackProgress;
-    const leftSegmentDuration = splitPoint - currentSegment.start;
-    const rightSegmentDuration = currentSegment.end - splitPoint;
+    const segmentStartPx = timeToPixel(
+      currentSegment.start,
+      trimContainerWidth,
+      duration,
+    );
+    const segmentEndPx = timeToPixel(
+      currentSegment.end,
+      trimContainerWidth,
+      duration,
+    );
+    const splitPointPx = timeToPixel(
+      trackProgress,
+      trimContainerWidth,
+      duration,
+    );
 
-    const dynamicSplitThreshold = Math.max(duration * 0.05, 1);
-
-    if (leftSegmentDuration < dynamicSplitThreshold) {
-      splitPoint = currentSegment.start + dynamicSplitThreshold;
-    } else if (rightSegmentDuration < dynamicSplitThreshold) {
-      splitPoint = currentSegment.end - dynamicSplitThreshold;
-    }
+    const leftSegmentWidth = splitPointPx - segmentStartPx;
+    const rightSegmentWidth = segmentEndPx - splitPointPx;
 
     if (
-      splitPoint === currentSegment.start ||
-      splitPoint === currentSegment.end
+      leftSegmentWidth < MIN_SEGMENT_WIDTH ||
+      rightSegmentWidth < MIN_SEGMENT_WIDTH
     ) {
       return;
     }
@@ -89,8 +97,8 @@ const Trim = () => {
     newSegments.splice(
       currentSegmentIndex,
       1,
-      { start: currentSegment.start, end: splitPoint },
-      { start: splitPoint, end: currentSegment.end },
+      { start: currentSegment.start, end: trackProgress },
+      { start: trackProgress, end: currentSegment.end },
     );
 
     dispatch({
