@@ -18,7 +18,7 @@ const StyledToolsBar = styled.div`
 `;
 
 const StyledToolsBarItems = styled.div`
-  padding: 8px 16px 16px 16px;
+  padding: 16px;
   display: flex;
   gap: 12px;
   align-items: center;
@@ -34,7 +34,7 @@ const StyledToolsBarItems = styled.div`
 `;
 
 const StyledToolsBarItemButton = styled.div(
-  ({ theme, isPhoneScreen }) => `
+  ({ theme, isPhoneScreen, disabled }) => `
     display: flex;
     gap: 6px;
     border-radius: 2px;
@@ -44,15 +44,19 @@ const StyledToolsBarItemButton = styled.div(
 
     svg {
       color: ${theme.palette[PC.IconsPrimary]};
+
+      ${disabled && `color: ${theme.palette[PC.IconsMuted]};`}
     }
 
     &,
     * {
-      cursor: pointer;
+      cursor: ${disabled ? 'not-allowed' : 'pointer'};
     }
 
     &:hover {
       ${!isPhoneScreen && `background: ${theme.palette['bg-primary-active']};`}
+
+      ${disabled && `background: transparent;`}
     }
 
     &[aria-selected='true'] {
@@ -79,8 +83,10 @@ const StyledToolsBarItemButton = styled.div(
 );
 
 const StyledToolsBarItemButtonLabel = styled(Label)(
-  ({ theme, isPhoneScreen }) => css`
-    color: ${theme.palette[PC.TextPrimary]};
+  ({ theme, isPhoneScreen, disabled }) => css`
+    color: ${disabled
+      ? theme.palette[PC.TextPlaceholder]
+      : theme.palette[PC.TextPrimary]};
     ${isPhoneScreen && theme.typography.font[FV.LabelExtraSmallUp]};
   `,
 );

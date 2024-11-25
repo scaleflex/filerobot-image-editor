@@ -6,15 +6,16 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
-import { Button } from '@scaleflex/ui/core';
 import { DeleteOutline, Split } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
 import formatSecondsToDuration from 'utils/formatSecondsToDuration';
 import { SET_TRIM } from 'actions/setTrim';
-import { EVENTS } from 'utils/constants';
+import { EVENTS, TOOLS_IDS } from 'utils/constants';
 import emitCustomEvent from 'utils/emitCustomEvent';
+import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
+import { StyledToolsBarItemButtonLabel } from 'components/ToolsBar/ToolsBar.styled';
 import { getCurrentSegmentIndex, timeToPixel } from './Trim.utils';
 import Segment from './Segment';
 import {
@@ -263,6 +264,8 @@ const Trim = () => {
     [],
   );
 
+  const splitButtonDisabled =
+    currentSegmentIndex === -1 || !isReady || trackProgress < 1;
   return (
     <StyledTrimWrapper className="FIE_trim-wrapper">
       {!isReady && <StyledSegmentSkeleton width="100%" height="72px" />}
@@ -284,26 +287,38 @@ const Trim = () => {
         }}
       />
       <StyledTrimButtonsWrapper className="FIE_trim-buttons-wrapper">
-        <Button
+        <ToolsBarItemButton
           className="FIE_trim-split-button"
-          color="link-secondary"
-          startIcon={<Split />}
+          id={TOOLS_IDS.TRIM}
+          Icon={Split}
           onClick={splitSegment}
-          disabled={currentSegmentIndex === -1 || !isReady || trackProgress < 1}
+          disabled={splitButtonDisabled}
         >
-          {`${t('splitAt')} ${formatSecondsToDuration(trackProgress)}`}
-        </Button>
-        <Button
+          <StyledToolsBarItemButtonLabel
+            className="FIE_trim-split-button-label"
+            disabled={splitButtonDisabled}
+          >
+            {t('splitAt')} {formatSecondsToDuration(trackProgress)}
+          </StyledToolsBarItemButtonLabel>
+        </ToolsBarItemButton>
+        <ToolsBarItemButton
           className="FIE_trim-delete-button"
-          color="link-secondary"
-          startIcon={<DeleteOutline />}
+          id={TOOLS_IDS.TRIM}
+          Icon={DeleteOutline}
           onClick={deleteSelectedSegment}
           disabled={
             currentSegmentIndex === -1 || segments.length <= 1 || !isReady
           }
         >
-          {t('delete')}
-        </Button>
+          <StyledToolsBarItemButtonLabel
+            className="FIE_trim-delete-button-label"
+            disabled={
+              currentSegmentIndex === -1 || segments.length <= 1 || !isReady
+            }
+          >
+            {t('delete')}
+          </StyledToolsBarItemButtonLabel>
+        </ToolsBarItemButton>
       </StyledTrimButtonsWrapper>
     </StyledTrimWrapper>
   );

@@ -17,6 +17,7 @@ const ToolsBarItemButton = ({
   isSelected = false,
   children,
   className,
+  disabled = false,
 }) => {
   const isPhoneScreen = usePhoneScreen(320);
 
@@ -30,10 +31,14 @@ const ToolsBarItemButton = ({
       onClick={handleClick}
       aria-selected={isSelected}
       isPhoneScreen={isPhoneScreen}
+      disabled={disabled}
     >
       <Icon size={isPhoneScreen ? 20 : 16} />
       {label && (
-        <StyledToolsBarItemButtonLabel isPhoneScreen={isPhoneScreen}>
+        <StyledToolsBarItemButtonLabel
+          isPhoneScreen={isPhoneScreen}
+          disabled={disabled}
+        >
           {label}
         </StyledToolsBarItemButtonLabel>
       )}
@@ -49,6 +54,7 @@ ToolsBarItemButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
+  disabled: PropTypes.bool,
   Icon: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.func,
