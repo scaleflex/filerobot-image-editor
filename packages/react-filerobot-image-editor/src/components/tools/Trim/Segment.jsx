@@ -89,7 +89,7 @@ const Segment = ({
   const handleTimelineDragStart = (e) => {
     isInternalUpdate.current = true;
     mediaRef.pause();
-    updateVideoProgress(getMappedTime(segmentPixelStart));
+
     setDragStartX({
       mouseX: e.clientX,
       startPos: segmentPixelStart,
@@ -108,14 +108,16 @@ const Segment = ({
 
     setSegmentPixelStart(newStart);
     setSegmentPixelEnd(newStart + segmentWidth);
-    updateVideoProgress(getMappedTime(newStart));
   };
 
-  const handleTimelineDragStop = () => {
+  const handleTimelineDragStop = (e) => {
+    const sliderRect = sliderRef.current?.getBoundingClientRect();
     const startTime = getMappedTime(segmentPixelStart);
     const endTime = getMappedTime(segmentPixelEnd);
+    const mousePosition = e.clientX - sliderRect.left;
 
     setDragStartX(null);
+    updateVideoProgress(getMappedTime(mousePosition));
     updateSegmentBounds(startTime, endTime, segmentIndex);
     setTimeout(() => {
       isInternalUpdate.current = false;
