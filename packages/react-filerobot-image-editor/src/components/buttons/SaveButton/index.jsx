@@ -350,7 +350,6 @@ const SaveButton = ({
               <Video2 color={theme.palette['accent-primary']} {...iconProps} />
             )}
             supportedTypes={SUPPORTED_VIDEO_TYPES}
-            hideResizeSection
             {...commonModalProps}
           />
         ))}

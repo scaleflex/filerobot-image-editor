@@ -69,7 +69,7 @@ const useTransformedVideoData = () => {
       : {};
   };
 
-  const processVideo = async (mappedCropBox) => {
+  const processVideo = async (mappedCropBox, resizeDimensions) => {
     const ffmpeg = ffmpegRef.current;
 
     if (!ffmpeg.loaded) {
@@ -123,17 +123,6 @@ const useTransformedVideoData = () => {
 
     const finalCommand = ['-i', fileInputName];
 
-    const dimensions =
-      originalSource &&
-      getProperDimensions({
-        resize,
-        crop,
-        shownImageDimensions,
-        disableResizeAfterRotation,
-        originalSource,
-        rotation,
-      });
-
     const filters = [];
 
     if (isFlippedX) {
@@ -150,9 +139,14 @@ const useTransformedVideoData = () => {
       );
     }
 
-    if (dimensions?.width && dimensions?.height) {
+    if (
+      resizeDimensions?.width &&
+      resizeDimensions?.height &&
+      originalSource.width !== resizeDimensions.width &&
+      originalSource.height !== resizeDimensions.height
+    ) {
       filters.push(
-        `scale=trunc(${dimensions.width}/2)*2:trunc(${dimensions.height}/2)*2`,
+        `scale=trunc(${resizeDimensions.width}/2)*2:trunc(${resizeDimensions.height}/2)*2`,
       );
     }
 
@@ -215,7 +209,7 @@ const useTransformedVideoData = () => {
       .join(',');
   };
 
-  const getTransformedBackendData = async (mappedCropBox) => {
+  const getTransformedBackendData = async (mappedCropBox, resizeDimensions) => {
     const flip = [];
 
     if (isFlippedX) {
@@ -242,6 +236,13 @@ const useTransformedVideoData = () => {
           mappedCropBox.x,
           mappedCropBox.y,
         ].join(','),
+      resize:
+        resizeDimensions?.width &&
+        resizeDimensions?.height &&
+        originalSource.width !== resizeDimensions.width &&
+        originalSource.height !== resizeDimensions.height
+          ? `${resizeDimensions.width},${resizeDimensions.height}`
+          : undefined,
       rotation,
       flip: flip.length > 0 ? flip.join('') : undefined,
       duration: originalSource.duration,
@@ -262,15 +263,35 @@ const useTransformedVideoData = () => {
 
   const getTransformedVideoData = async (mediaFileInfo) => {
     const mappedCropBox = getMappedCropBox();
+    const dimensions =
+      originalSource &&
+      getProperDimensions({
+        resize,
+        crop,
+        shownImageDimensions,
+        disableResizeAfterRotation,
+        originalSource,
+        rotation,
+      });
+
+    const finalResizeDimensions = {
+      ...dimensions,
+      ...mediaFileInfo.size,
+    };
+
     let finalVideoPassedObject = {};
     emitCustomEvent(EVENTS.PROCESSING_VIDEO_START, { file: mediaFileInfo });
 
     if (useBackendProcess && Object.keys(backendProcess).length > 0) {
       finalVideoPassedObject.videoUrl = await getTransformedBackendData(
         mappedCropBox,
+        finalResizeDimensions,
       );
     } else {
-      finalVideoPassedObject.videoBlob = await processVideo(mappedCropBox);
+      finalVideoPassedObject.videoBlob = await processVideo(
+        mappedCropBox,
+        finalResizeDimensions,
+      );
     }
 
     finalVideoPassedObject = {

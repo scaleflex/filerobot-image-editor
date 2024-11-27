@@ -55,6 +55,7 @@ export const trimVideo = ({
   data,
   path = 'url',
   crop,
+  resize,
   rotation,
   flip,
   onError,
@@ -62,6 +63,7 @@ export const trimVideo = ({
   fetch(
     `${baseUrl}/trim/${path}?${getQueryParams({
       crop,
+      resize,
       rotate: rotation,
       flip,
     })}`,
@@ -84,6 +86,7 @@ export const transformVideo = ({
   data,
   path = 'url',
   crop,
+  resize,
   rotation,
   flip,
   onError,
@@ -91,6 +94,7 @@ export const transformVideo = ({
   fetch(
     `${baseUrl}/transformations/${path}?${getQueryParams({
       crop,
+      resize,
       rotate: rotation,
       flip,
     })}`,
