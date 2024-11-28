@@ -7,7 +7,7 @@ import { useDispatch, useStore } from 'hooks';
 import { SELECT_TOOL } from 'actions';
 import { EVENTS, TABS_IDS } from 'utils/constants';
 import emitCustomEvent from 'utils/emitCustomEvent';
-import { getCurrentSegmentIndex } from 'components/tools/Trim/Trim.utils';
+import { getCurrentSegmentIndex } from 'components/VideoEditor/Tools/Trim/Trim.utils';
 import TimeLapse from './Timelapse';
 import PlaybackSpeedMenu from './PlaybackSpeedMenu';
 import VolumeControl from './VolumeControl';

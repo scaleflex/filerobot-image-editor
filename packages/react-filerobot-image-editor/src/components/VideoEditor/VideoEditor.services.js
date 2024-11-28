@@ -3,8 +3,8 @@ import isBlobFile from 'utils/isBlobFile';
 const getDefaultHeaders = ({ key, token, headers }) => {
   return {
     ...headers,
-    'Filerobot-Key': key,
-    'Filerobot-Token': token,
+    'X-Filerobot-Key': key,
+    'X-Filerobot-Token': token,
   };
 };
 
@@ -45,7 +45,7 @@ const transformResponse = async (response) => {
   }
 };
 
-const baseUrl = import.meta.env.DEV
+const baseUrl = !import.meta.env.DEV
   ? 'http://ask-dev.filerobot.com:8732'
   : 'https://api.filerobot.com/videos/v2';
 
@@ -72,7 +72,9 @@ export const trimVideo = ({
       headers: getDefaultHeaders({
         key,
         token,
-        ...(!isBlobFile(data?.source) && { contentType: 'application/json' }),
+        ...(!isBlobFile(data?.source) && {
+          'Content-Type': 'application/json',
+        }),
       }),
       method: 'POST',
     },
@@ -103,7 +105,9 @@ export const transformVideo = ({
       headers: getDefaultHeaders({
         key,
         token,
-        ...(!isBlobFile(data?.source) && { contentType: 'application/json' }),
+        ...(!isBlobFile(data?.source) && {
+          'Content-Type': 'application/json',
+        }),
       }),
       method: 'POST',
     },

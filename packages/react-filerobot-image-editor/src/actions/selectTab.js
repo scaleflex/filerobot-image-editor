@@ -1,4 +1,4 @@
-import { TABS_TOOLS } from 'components/tools/tools.constants';
+import { TABS_TOOLS } from 'components/Shared/Tools/tools.constants';
 import { POINTER_ICONS, TABS_IDS } from 'utils/constants';
 import isAnnotationTool from 'utils/isAnnotationTool';
 

@@ -17,7 +17,7 @@ import {
 import {
   cssStyleToJsCanvasProps,
   getCurrentSelectedNodeStyles,
-} from 'components/Layers/DesignLayer/AnnotationNodes/TextNode/TextNode.utils';
+} from 'components/Shared/Layers/DesignLayer/AnnotationNodes/TextNode/TextNode.utils';
 import useStore from './useStore';
 import useEditableTextId from './useEditableTextId';
 import useSetAnnotation from './useSetAnnotation';
