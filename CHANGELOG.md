@@ -40,7 +40,7 @@ Changed
 Added
 - `tabsToolsIds` ==FORM==> TABS_TOOLS  -- to be added --
 - `tools` ==FORM==> TOOLS_ITEMS -- to be added -- the tool id should be the tool's name and used in the tab also.(to be checked)
-- `keepAnnotationEventsEnabled`, `textContentRegex`  -- to be added --
+- `keepAnnotationEventsEnabled`, `textContentRegex`, `showFitCenterZoomButton`  -- to be added --
 - - `annotationComponents`, `moreAnnotationPreviewClasses`, -keepZoomOnSourceChange-  -- to be added --
 - Justify option for horizontal text alignment.
 - Support creating a design (noHistoryRecord -- if true, won't be considered in the history state for this change --, background color, width & height) instead of editing image only.
