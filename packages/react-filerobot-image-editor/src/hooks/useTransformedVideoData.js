@@ -220,7 +220,9 @@ const useTransformedVideoData = () => {
       flip.push('v');
     }
 
-    const data = isBlobFile(source) ? { source } : { url: originalSource.src };
+    const data = isBlobFile(source)
+      ? { source }
+      : { url: backendProcess.url || originalSource.src };
 
     const commonProps = {
       key: backendProcess.key,
