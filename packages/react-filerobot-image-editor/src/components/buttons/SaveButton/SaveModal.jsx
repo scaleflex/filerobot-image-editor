@@ -79,6 +79,7 @@ const SaveModal = ({
         placeholder={t('extension')}
         size="sm"
         fullWidth
+        readOnly={supportedTypes.length === 1}
       >
         {supportedTypes.map((ext) => (
           <MenuItem key={ext} value={ext}>
