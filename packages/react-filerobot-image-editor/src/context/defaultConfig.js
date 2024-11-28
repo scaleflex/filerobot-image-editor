@@ -140,4 +140,5 @@ export default {
   previewBgColor: undefined,
   previewBgImage: undefined,
   keepZoomOnSourceChange: false,
+  showFitCenterZoomButton: true,
 };
