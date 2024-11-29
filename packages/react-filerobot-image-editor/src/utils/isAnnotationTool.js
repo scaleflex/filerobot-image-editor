@@ -1,4 +1,4 @@
-import { TABS_TOOLS } from 'components/tools/tools.constants';
+import { TABS_TOOLS } from 'components/Shared/tools/tools.constants';
 import { TABS_IDS } from './constants';
 
 const isAnnotationTool = (toolId) =>
