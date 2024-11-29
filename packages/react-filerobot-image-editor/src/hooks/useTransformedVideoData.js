@@ -44,7 +44,7 @@ const useTransformedVideoData = () => {
       type: SET_FEEDBACK,
       payload: {
         feedback: {
-          message: newError.message || newError,
+          message: newError?.message || newError,
         },
       },
     });
