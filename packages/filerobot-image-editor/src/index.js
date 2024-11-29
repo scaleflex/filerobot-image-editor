@@ -3,7 +3,7 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 
 /** Internal Dependencies */
-import AssemblyPoint, { TOOLS, TABS, VideoEditor } from 'react-filerobot-image-editor/src/';
+import ImageEditor, { TOOLS, TABS } from 'react-filerobot-image-editor/src/';
 import deepMerge from 'react-filerobot-image-editor/src/utils/deepMerge';
 
 class FilerobotImageEditor {
@@ -51,11 +51,7 @@ class FilerobotImageEditor {
       this.#root = createRoot(this.container);
     }
 
-    if(this.config.isVideo){
-      this.#root.render(createElement(VideoEditor, this.config));
-    } else{
-      this.#root.render(createElement(AssemblyPoint, this.config));
-    }
+    this.#root.render(createElement(ImageEditor, this.config));
   }
 
   terminate() {
