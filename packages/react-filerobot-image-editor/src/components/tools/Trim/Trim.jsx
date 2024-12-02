@@ -35,11 +35,14 @@ const Trim = () => {
     originalSource: mediaRef,
     trim: { segments = [] },
     t,
+    config,
   } = useStore();
   const [trackProgress, setTrackProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [trimContainerWidth, setTrimContainerWidth] = useState(0);
   const [isReady, setIsReady] = useState(false);
+
+  const { sliderStep } = config[TOOLS_IDS.TRIM];
 
   const sliderRef = useRef(null);
   const animationFrameId = useRef();
@@ -274,7 +277,7 @@ const Trim = () => {
         className="FIE_trim-slider"
         min={0}
         max={duration || 0}
-        step={0.5}
+        step={sliderStep}
         value={trackProgress || 0}
         hideTrack
         hideAnnotation

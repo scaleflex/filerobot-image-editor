@@ -27,6 +27,8 @@ import { DEFAULT_ZOOM_FACTOR, SOURCE_TYPES } from 'utils/constants';
 import isImageExtension from 'utils/isImageExtension';
 import isVideoExtension from 'utils/isVideoExtension';
 import isBlobFile from 'utils/isBlobFile';
+import isImage from 'utils/isImage';
+import useTransformedVideoData from './useTransformedVideoData';
 
 const getSourceTypeByExtension = (url) => {
   if (isImageExtension(url)) {
@@ -52,6 +54,7 @@ const useLoadMainSource = ({
     originalSource,
     shownImageDimensions,
     t,
+    sourceType,
   } = useStore();
   const {
     useCloudimage,
@@ -62,9 +65,9 @@ const useLoadMainSource = ({
     useBackendTranslations,
     translations,
     language,
-    defaultSavedImageName,
+    defaultSavedMediaName,
     observePluginContainerSize,
-    getCurrentImgDataFnRef,
+    getCurrentMediaDataFnRef,
     updateStateFnRef,
     noCrossOrigin,
     resetOnSourceChange: configResetOnSourceChange,
@@ -83,6 +86,7 @@ const useLoadMainSource = ({
   // as it won't be possible to have the latest value of the state variable in js event handler.
   const haveNotSavedChangesRef = useRef(haveNotSavedChanges);
   const transformImgFn = useTransformedImgData();
+  const transformVideoFn = useTransformedVideoData();
 
   const setNewOriginalSource = useCallback(
     ({ newSource, type } = {}) => {
@@ -170,20 +174,22 @@ const useLoadMainSource = ({
   };
 
   const loadMedia = async (mediaToLoad) => {
-    const { sourceUrl, sourceType } = await getSourceData(mediaToLoad);
+    const { sourceUrl, sourceType: mediaType } = await getSourceData(
+      mediaToLoad,
+    );
     const options = {
-      name: mediaToLoad?.name || defaultSavedImageName,
+      name: mediaToLoad?.name || defaultSavedMediaName,
       noCrossOrigin,
       width: mediaToLoad?.width,
       height: mediaToLoad?.height,
       key: mediaToLoad?.key,
     };
 
-    if (sourceType === SOURCE_TYPES.IMAGE && sourceUrl) {
+    if (mediaType === SOURCE_TYPES.IMAGE && sourceUrl) {
       return loadImage(sourceUrl, options);
     }
 
-    if (sourceType === SOURCE_TYPES.VIDEO && sourceUrl) {
+    if (mediaType === SOURCE_TYPES.VIDEO && sourceUrl) {
       return loadVideo(sourceUrl, options);
     }
 
@@ -221,9 +227,9 @@ const useLoadMainSource = ({
       // may resolve immediately in some cases, e.g. memory cache.
       setTimeout(() => {
         if (imgToLoad instanceof HTMLImageElement) {
-          if (!imgToLoad.name && defaultSavedImageName) {
+          if (!imgToLoad.name && defaultSavedMediaName) {
             // eslint-disable-next-line no-param-reassign
-            imgToLoad.name = defaultSavedImageName;
+            imgToLoad.name = defaultSavedMediaName;
           }
           if (!imgToLoad.complete) {
             imgToLoad.addEventListener('load', () => {
@@ -242,7 +248,7 @@ const useLoadMainSource = ({
             imgToLoad?.src)
         ) {
           loadMedia(imgToLoad?.src || imgToLoad, {
-            name: defaultSavedImageName,
+            name: defaultSavedMediaName,
             noCrossOrigin,
             width: imgToLoad?.width,
             height: imgToLoad?.height,
@@ -370,10 +376,20 @@ const useLoadMainSource = ({
   }, [updateStateFnRef, dispatch]);
 
   useEffect(() => {
-    if (getCurrentImgDataFnRef && typeof getCurrentImgDataFnRef === 'object') {
-      getCurrentImgDataFnRef.current = transformImgFn;
+    if (
+      getCurrentMediaDataFnRef &&
+      typeof getCurrentMediaDataFnRef === 'object'
+    ) {
+      getCurrentMediaDataFnRef.current = (
+        mediaFileInfo,
+        pixelRatio,
+        keepLoadingSpinnerShown,
+      ) =>
+        isImage(sourceType)
+          ? transformImgFn(mediaFileInfo, pixelRatio, keepLoadingSpinnerShown)
+          : transformVideoFn(mediaFileInfo);
     }
-  }, [transformImgFn]);
+  }, [transformImgFn, sourceType]);
 
   useEffect(() => {
     haveNotSavedChangesRef.current = haveNotSavedChanges;

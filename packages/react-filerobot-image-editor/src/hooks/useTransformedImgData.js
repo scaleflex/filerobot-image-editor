@@ -30,7 +30,7 @@ const useTransformedImgData = () => {
       savingPixelRatio,
       previewPixelRatio,
       forceToPngInEllipticalCrop,
-      defaultSavedImageType,
+      defaultSavedMediaType,
       useCloudimage,
       cloudimage,
       [TOOLS_IDS.CROP]: cropConfig,
@@ -123,8 +123,8 @@ const useTransformedImgData = () => {
           forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
             ? 'png'
             : SUPPORTED_IMAGE_TYPES.includes(
-                defaultSavedImageType?.toLowerCase(),
-              ) && defaultSavedImageType,
+                defaultSavedMediaType?.toLowerCase(),
+              ) && defaultSavedMediaType,
         )),
       ...currentImgFileInfo,
     };

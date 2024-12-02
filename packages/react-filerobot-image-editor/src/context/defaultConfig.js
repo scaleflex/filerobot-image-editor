@@ -92,6 +92,9 @@ export default {
     angle: 60,
     componentType: 'slider', // slider | buttons
   },
+  [TOOLS_IDS.TRIM]: {
+    sliderStep: 0.5,
+  },
   tabsIds: [],
   defaultTabId: null,
   defaultToolId: null,
@@ -99,8 +102,8 @@ export default {
   onSave: undefined,
   onBeforeSave: undefined,
   closeAfterSave: false,
-  defaultSavedImageName: undefined,
-  defaultSavedImageType: null,
+  defaultSavedMediaName: undefined,
+  defaultSavedMediaType: null,
   defaultSavedImageQuality: 0.92,
   forceToPngInEllipticalCrop: false,
   useBackendTranslations: true,
@@ -129,7 +132,7 @@ export default {
   },
   observePluginContainerSize: false,
   showCanvasOnly: false,
-  getCurrentImgDataFnRef: undefined,
+  getCurrentMediaDataFnRef: undefined,
   onModify: undefined,
   useZoomPresetsMenu: true,
   disableZooming: false,
@@ -140,4 +143,18 @@ export default {
   previewBgColor: undefined,
   previewBgImage: undefined,
   keepZoomOnSourceChange: false,
+  disableResizeAfterRotation: false,
+  useBackendProcess: false,
+  backendProcess: {
+    token: '',
+    key: '',
+  },
+  videoControls: {
+    autoplay: false,
+    loop: false,
+    defaultVolume: 0.5,
+    playbackSpeedMenuItems: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+    defaultPlaybackSpeed: 1,
+    sliderStep: 1,
+  },
 };

@@ -300,8 +300,8 @@ export interface FilerobotImageEditorConfig {
   onSave?: onSaveFunction;
   onClose?: (closeReason: closingReasons, haveNotSavedChanges: boolean) => void;
   closeAfterSave?: boolean;
-  defaultSavedImageName?: string;
-  defaultSavedImageType?: 'png' | 'jpeg' | 'jpg' | 'webp';
+  defaultSavedMediaName?: string;
+  defaultSavedMediaType?: 'png' | 'jpeg' | 'jpg' | 'webp' | 'mp4';
   defaultSavedImageQuality?: number;
   forceToPngInEllipticalCrop?: boolean;
   useBackendTranslations?: boolean;
@@ -340,7 +340,7 @@ export interface FilerobotImageEditorConfig {
   };
   observePluginContainerSize?: boolean;
   showCanvasOnly?: boolean;
-  getCurrentImgDataFnRef?:
+  getCurrentMediaDataFnRef?:
     | RefObject
     | {
         current?: getCurrentImgDataFunction;

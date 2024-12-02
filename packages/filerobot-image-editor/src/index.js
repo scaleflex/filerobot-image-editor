@@ -10,7 +10,7 @@ class FilerobotImageEditor {
   static TABS = TABS;
   static TOOLS = TOOLS;
   #root;
-  #getCurrentImgDataFnRef;
+  #getCurrentMediaDataFnRef;
   #updateStateFnRef;
 
   constructor(container, config = {}) {
@@ -24,10 +24,10 @@ class FilerobotImageEditor {
     }
 
     this.#root = createRoot(this.container);
-    this.#getCurrentImgDataFnRef = {};
+    this.#getCurrentMediaDataFnRef = {};
     this.#updateStateFnRef = {};
 
-    this.getCurrentImgData = this.getCurrentImgData.bind(this);
+    this.getCurrentMediaData = this.getCurrentMediaData.bind(this);
     this.render = this.render.bind(this);
     this.terminate = this.terminate.bind(this);
     this.updateState = this.updateState.bind(this);
@@ -43,13 +43,14 @@ class FilerobotImageEditor {
 
     this.config = {
       ...this.config,
-      getCurrentImgDataFnRef: this.#getCurrentImgDataFnRef,
+      getCurrentMediaDataFnRef: this.#getCurrentMediaDataFnRef,
       updateStateFnRef: this.#updateStateFnRef,
     };
 
     if (!this.#root._internalRoot) {
       this.#root = createRoot(this.container);
     }
+
 
     this.#root.render(createElement(AssemblyPoint, this.config));
   }
@@ -58,10 +59,10 @@ class FilerobotImageEditor {
     this.#root.unmount();
   }
 
-  getCurrentImgData(imageFileInfo, pixelRatio, keepLoadingSpinnerShown) {
+  getCurrentMediaData(mediaFileInfo, pixelRatio, keepLoadingSpinnerShown) {
     return (
-      this.#getCurrentImgDataFnRef?.current?.(
-        imageFileInfo,
+      this.#getCurrentMediaDataFnRef?.current?.(
+        mediaFileInfo,
         pixelRatio,
         keepLoadingSpinnerShown,
       ) || {}

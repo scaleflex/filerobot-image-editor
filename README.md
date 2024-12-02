@@ -125,9 +125,11 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
   <summary>Prerequisites Installation (Click to show)</summary>
 
 - react, react-dom, react-konva & styled-components:
+
 ```bash
 npm install --save react react-dom react-konva styled-components
 ```
+
 </details>
 
 <hr />
@@ -507,7 +509,9 @@ By default once the user makes any change/edit on the image and hasn't saved the
 
 If `true` Close button on the top right will be hidden and back button will be shown on the top left (with replacing positions of save & history buttons).
 
-#### `defaultSavedImageName`
+#### `defaultSavedMediaName`
+
+**PREVIOUSLY**: `defaultSavedImageName`
 
 <u>Type:</u> `string`
 
@@ -515,9 +519,11 @@ If `true` Close button on the top right will be hidden and back button will be s
 
 <u>Default:</u> undefined
 
-The image file name used as default name for the image's file that will be saved if not provided the name will be extracted from provided image's src.
+The image file name used as default name for the media's file that will be saved if not provided the name will be extracted from provided media's src.
 
-#### `defaultSavedImageType`
+#### `defaultSavedMediaType`
+
+**PREVIOUSLY**: `defaultSavedImageType`
 
 <u>Type:</u> `string`
 
@@ -525,9 +531,9 @@ The image file name used as default name for the image's file that will be saved
 
 <u>Default:</u> `png`
 
-Possible values: `'png' | 'jpeg' | 'jpg' | 'webp'`
+Possible values: `'png' | 'jpeg' | 'jpg' | 'webp' | 'mp4'`
 
-The default type used and selected in saving the image (the user has the possibility to change it from the saving modal).
+The default type used and selected in saving the media (the user has the possibility to change it from the saving modal).
 
 > NOTE: Quality modification will be applied to `jpeg`, `jpg` and `webp` types in returned [`base64`](#onsave) format only while saving the image by the default behavior.
 
@@ -835,7 +841,7 @@ The available options for arrow annotation tool in additon to the annotationsCom
 The available options for watermark tool, the watermark is using the options of text and image annotation tools mentioned above depending on the watermark chosen,
 
 | Property                        | Type                                                                                      | Default (possible values)              | Description                                                                                                                                                                                                                                                                                                                                    |
-| ------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | **`gallery`**                   | (string                                                                                   | { url: string, previewUrl: string })[] | []                                                                                                                                                                                                                                                                                                                                             | Watermark images urls which are considered to show a list of available watermarks to be used by the user directly from watermark tab |
 | **`textScalingRatio`**          | number                                                                                    | 0.33                                   | Ratio for text scaling                                                                                                                                                                                                                                                                                                                         |
 | **`imageScalingRatio`**         | number                                                                                    | 0.33                                   | Ratio for image scaling                                                                                                                                                                                                                                                                                                                        |
@@ -1154,7 +1160,9 @@ Hides all the UI of the plugin including (save & close buttons, tabs & tools bar
 
 > This prop might be useful if are using the editor in different ways in the same project, (ex. using the editor in doing different transformations for quick photo editing & using the editor after uploading some profile photo to crop the photo only and dismiss other transformations).
 
-#### `getCurrentImgDataFnRef`
+#### `getCurrentMediaDataFnRef`
+
+**PREVIOUSLY**: `getCurrentImgDataFnRef`
 
 <u>Type:</u> `React Ref | Object`
 
@@ -1162,27 +1170,36 @@ Hides all the UI of the plugin including (save & close buttons, tabs & tools bar
 
 <u>Default:</u> undefined
 
-If provided the canvas processing/saving/manipulating function will be assigned as `.current` property to this passed `Object | React Ref` to be used/called somewhere else other than the default save button and returns both the final transformed image data object & current design state which are same as params as [`onSave callback`](#onsave),
+If provided the canvas processing/saving/manipulating function will be assigned as `.current` property to this passed `Object | React Ref` to be used/called somewhere else other than the default save button and returns both the final transformed media data object & current design state which are same as params as [`onSave callback`](#onsave),
 
 The passed object/ref becomes with the following syntax after assigning internally
 
 ```js
 {
   current: (
-    imageFileInfo = {},
+    mediaFileInfo = {},
     pixelRatio = false,
     keepLoadingSpinnerShown = false,
-  ) => ({
-    imageData, // An object has the current image data & info
-    designState, // An object contains the current design state of the image's editor
-    hideLoadingSpinner, // A function hides the loading spinner on calling if not already hidden (useful in case you have provided `keepLoadingSpinnerShown` param with `true` and wants to hide the spinner after finishing some operation from ur side)
-  });
+  ) => {
+    // For images - returns object immediately
+    return {
+      data, // An object has the current image data & info
+      designState, // An object contains the current design state of the image editor
+      hideLoadingSpinner, // A function hides the loading spinner on calling if not already hidden
+    }
+
+    // For videos - returns Promise
+    return Promise<{
+      data, // An object has the current video data & info
+      designState, // An object contains the current design state of the video editor
+    }>;
+  }
 }
 ```
 
 The function has the following params:
 
-- _`imageFIleInfo`_: An object, defines the info of the file to be considered while saving, and contains the following properties:
+- _`mediaFileInfo`_: An object, defines the info of the file to be considered while saving, and contains the following properties:
   ```js
   {
     name,
@@ -1357,6 +1374,7 @@ Triggered once the user clicks either close/cancel button or back button, if not
 - _`haveNotSavedChanges`_: A boolean value, true means the user has clicked the close button before saving latest changes otherwise he closed after saving.
 
 #### `onBack`
+
 <!-- Speciailized for back button -->
 
 <hr />
@@ -1396,13 +1414,15 @@ Initializes/rerenders the plugin with the possibility to provide an additional c
 
 Unmounts the plugin's container from the page to be removed.
 
-#### `getCurrentImgData`
+#### `getCurrentMediaData`
 
-<u>Type:</u> `function getCurrentImgData (imageFileInfo, pixelRatio, keepLoadingSpinnerShown)`
+**PREVIOUSLY**: `getCurrentImgData`
+
+<u>Type:</u> `function getCurrentMediaData (mediaFileInfo, pixelRatio, keepLoadingSpinnerShown)`
 
 <u>Supported version:</u> +v4.0.0
 
-Calling the function will trigger the function responsible for handling/manipulating the current image operations and have the possible final results of the current image data besides the current design state, it's the bridge for the function mentioned here [`getCurrentImgDataFnRef`](#getcurrentimgdatafnref).
+Calling the function will trigger the function responsible for handling/manipulating the current media operations and have the possible final results of the current media data besides the current design state, it's the bridge for the function mentioned here [`getCurrentMediaDataFnRef`](#getcurrentmediadatafnref).
 
 <hr />
 

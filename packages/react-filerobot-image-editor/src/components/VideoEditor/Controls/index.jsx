@@ -31,19 +31,29 @@ const Controls = () => {
     toolId,
     tabId,
     trim: { segments = [] },
+    config: {
+      videoControls: {
+        autoplay,
+        loop,
+        defaultVolume,
+        playbackSpeedMenuItems,
+        defaultPlaybackSpeed,
+        sliderStep,
+      },
+    },
   } = useStore();
   const [trackProgress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackEnded, setTrackEnded] = useState(false);
   const [duration, setDuration] = useState(0);
-  const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [playbackSpeed, setPlaybackSpeed] = useState(defaultPlaybackSpeed);
   const [playbackMenuAnchor, setPlaybackMenuAnchor] = useState();
-  const [volumeLevel, setVolumeLevel] = useState(1);
+  const [volumeLevel, setVolumeLevel] = useState(defaultVolume);
   const [beforeMutedVolumeLevel, setBeforeMutedVolumeLevel] = useState(0);
   const [isSeeking, setIsSeeking] = useState(false);
   const [isAudioSliderOpen, setIsAudioSliderOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [isLoopDisabled, setIsLoopDisabled] = useState(false);
+  const [isLoopDisabled, setIsLoopDisabled] = useState(!loop);
   const [isBuffering, setIsBuffering] = useState(false);
 
   const animationFrameId = useRef();
@@ -350,6 +360,11 @@ const Controls = () => {
     if (mediaRef && designLayer) {
       mediaRef.load();
 
+      mediaRef.autoplay = autoplay;
+      mediaRef.loop = loop;
+      mediaRef.volume = defaultVolume;
+      mediaRef.playbackRate = defaultPlaybackSpeed;
+
       mediaRef.addEventListener('loadedmetadata', handleVideoLoaded);
       mediaRef.addEventListener('canplaythrough', handleCanPlay);
       mediaRef.addEventListener('pause', onPause);
@@ -394,7 +409,7 @@ const Controls = () => {
         <StyledSeekSlider
           className="FIE_video-controls-slider"
           value={trackProgress || 0}
-          step={1}
+          step={sliderStep}
           min={0}
           hideAnnotation
           labelTooltip="off"
@@ -472,6 +487,7 @@ const Controls = () => {
         onClose={handleTogglePlaybackMenu}
         getOnClickCbkFunction={handleChangePlaybackSpeed}
         anchor={playbackMenuAnchor}
+        playbackSpeedMenuItems={playbackSpeedMenuItems}
       />
     </StyledMediaControls>
   );

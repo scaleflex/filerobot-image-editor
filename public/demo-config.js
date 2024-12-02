@@ -348,9 +348,9 @@ const config = {
   // language: 'en', // available same as on backend ('en', 'fr', 'de', 'it', 'pt', 'es', 'nl', 'pl', 'ro')
   // avoidChangesNotSavedAlertOnLeave: false, // true => user tries to close the tab and the it is not
   // loadableDesignState: null, // if provided, it will be used in loading the design state, [TODO: NEEDS TO BE IMPROVED]
-  // defaultSavedImageType: null, // 'png', 'jpeg' & 'webp' => 'png' must be provided you want the image to be transparent and use elliptical crop || null (defaualt) means use the same provided image extension (extracted from the image's src url), if it was unknwon PNG will be used
+  // defaultSavedMediaType: null, // 'png', 'jpeg' & 'webp' | 'mp4' => 'png' must be provided you want the image to be transparent and use elliptical crop || null (defaualt) means use the same provided image extension (extracted from the image's src url), if it was unknwon PNG will be used
   // defaultSavedImageQuality: 0.92, // Min: 0.1, Max: 1, (1% - 100%) applied for 'jpg', 'jpeg' & 'webp' only
-  // defaultSavedImageName: '',
+  // defaultSavedMediaName: '',
   // forceToPngInEllipticalCrop: false, // in case the develop wants to force the saved image to be PNG if there is elliptical crop is done otherwise the provided savedImageType would be used.
   onClose: () => console.log('Act closing 👅'), // if we have value then close button will be shown unless showBackButton is true then if onClose has value the back button will be shown otherwise nothing will be shown.
   // onBack: () => console.log('Going back! 👅'), // if we have value then close button will be shown unless showBackButton is true then if onClose has value the back button will be shown otherwise nothing will be shown.
@@ -374,7 +374,7 @@ const config = {
   // },
   // observePluginContainerSize: true,
   // showCanvasOnly: true,
-  // getCurrentImgDataFnRef: saveFnRef,
+  // getCurrentMediaDataFnRef: saveFnRef,
   // onModify: (currentDesignState) => {
   //   console.log('current design state', currentDesignState);
   //   const savedImgData = saveFnRef.current({ name: 'Custom name ' });
@@ -405,6 +405,12 @@ const config = {
   //     hideFn: () => false
   //   }
   // },
+  useBackendProcess: true,
+  backendProcess: {
+    token: 'fyeonxrm',
+    key: 'SASS__v1.05__QNxcTOwEDMyAjN1IjOwlAMwAjMyoDcp1WdJADMwIjM60GctVXCwADMyIjOtVXCxcDN6QWamlAMwIzN6U2Zhlwbp5SZy9GdzJXah5SbyhnbvVWemxRbyhnbvVWem9SbvNmL09mYvJXZslmZuUmcvR3cc8WauUmcvR3cylWYukGch5SbyhnbvVWemxRbyhnbvVWem9SbvNmL09mYvJXZslmZukGchthOklAN3ITMxcDMzcTM6Q3c__6d5a9f93ba',
+  },
+  disableResizeAfterRotation: false
 };
 
 export default config;

@@ -55,8 +55,8 @@ const SaveButton = ({
       onBeforeSave,
       onSave: configOnSave,
       forceToPngInEllipticalCrop,
-      defaultSavedImageName,
-      defaultSavedImageType,
+      defaultSavedMediaName,
+      defaultSavedMediaType,
       defaultSavedImageQuality = DEFAULT_SAVE_QUALITY,
       useCloudimage,
       moreSaveOptions,
@@ -202,12 +202,15 @@ const SaveButton = ({
 
   const setFileNameAndExtension = () => {
     const { supportedTypes } = getSupportedExtensions(sourceType);
-    const { name, extension } = getFileFullName(
-      defaultSavedImageName || originalSource.name || defaultName,
-      forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
+    const appendedExtension =
+      forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP && isImageFile
         ? 'png'
-        : supportedTypes.includes(defaultSavedImageType?.toLowerCase()) &&
-            defaultSavedImageType,
+        : supportedTypes.includes(defaultSavedMediaType?.toLowerCase()) &&
+          defaultSavedMediaType;
+
+    const { name, extension } = getFileFullName(
+      defaultSavedMediaName || originalSource.name || defaultName,
+      appendedExtension,
       sourceType,
     );
 
