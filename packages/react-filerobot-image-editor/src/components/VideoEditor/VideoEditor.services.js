@@ -3,8 +3,8 @@ import isBlobFile from 'utils/isBlobFile';
 const getDefaultHeaders = ({ key, token, headers }) => {
   return {
     ...headers,
-    'Filerobot-Key': key,
-    'Filerobot-Token': token,
+    'X-Filerobot-Key': key,
+    'X-Filerobot-Token': token,
   };
 };
 
@@ -55,6 +55,7 @@ export const trimVideo = ({
   data,
   path = 'url',
   crop,
+  resize,
   rotation,
   flip,
   onError,
@@ -62,6 +63,7 @@ export const trimVideo = ({
   fetch(
     `${baseUrl}/trim/${path}?${getQueryParams({
       crop,
+      resize,
       rotate: rotation,
       flip,
     })}`,
@@ -70,7 +72,9 @@ export const trimVideo = ({
       headers: getDefaultHeaders({
         key,
         token,
-        ...(!isBlobFile(data?.source) && { contentType: 'application/json' }),
+        ...(!isBlobFile(data?.source) && {
+          'Content-Type': 'application/json',
+        }),
       }),
       method: 'POST',
     },
@@ -84,6 +88,7 @@ export const transformVideo = ({
   data,
   path = 'url',
   crop,
+  resize,
   rotation,
   flip,
   onError,
@@ -91,6 +96,7 @@ export const transformVideo = ({
   fetch(
     `${baseUrl}/transformations/${path}?${getQueryParams({
       crop,
+      resize,
       rotate: rotation,
       flip,
     })}`,
@@ -99,7 +105,9 @@ export const transformVideo = ({
       headers: getDefaultHeaders({
         key,
         token,
-        ...(!isBlobFile(data?.source) && { contentType: 'application/json' }),
+        ...(!isBlobFile(data?.source) && {
+          'Content-Type': 'application/json',
+        }),
       }),
       method: 'POST',
     },

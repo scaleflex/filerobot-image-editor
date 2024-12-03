@@ -251,6 +251,10 @@ const Controls = () => {
   };
 
   const handleKeyboardControls = (event) => {
+    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      return;
+    }
+
     const { key } = event;
 
     switch (key) {
