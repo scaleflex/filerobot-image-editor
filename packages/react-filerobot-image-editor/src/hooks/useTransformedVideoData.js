@@ -69,6 +69,11 @@ const useTransformedVideoData = () => {
       : {};
   };
 
+  const isResizeDimensionsValid = (dimensions) =>
+    dimensions?.width &&
+    originalSource.width !== dimensions.width &&
+    originalSource.height !== dimensions.height;
+
   const processVideo = async (mappedCropBox, resizeDimensions) => {
     const ffmpeg = ffmpegRef.current;
 
@@ -139,12 +144,7 @@ const useTransformedVideoData = () => {
       );
     }
 
-    if (
-      resizeDimensions?.width &&
-      resizeDimensions?.height &&
-      originalSource.width !== resizeDimensions.width &&
-      originalSource.height !== resizeDimensions.height
-    ) {
+    if (isResizeDimensionsValid(resizeDimensions)) {
       filters.push(
         `scale=trunc(${resizeDimensions.width}/2)*2:trunc(${resizeDimensions.height}/2)*2`,
       );
@@ -238,13 +238,9 @@ const useTransformedVideoData = () => {
           mappedCropBox.x,
           mappedCropBox.y,
         ].join(','),
-      resize:
-        resizeDimensions?.width &&
-        resizeDimensions?.height &&
-        originalSource.width !== resizeDimensions.width &&
-        originalSource.height !== resizeDimensions.height
-          ? `${resizeDimensions.width},${resizeDimensions.height}`
-          : undefined,
+      resize: isResizeDimensionsValid(resizeDimensions)
+        ? `${resizeDimensions.width},${resizeDimensions.height}`
+        : undefined,
       rotation,
       flip: flip.length > 0 ? flip.join('') : undefined,
       duration: originalSource.duration,
