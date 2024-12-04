@@ -45,7 +45,7 @@ const transformResponse = async (response) => {
   }
 };
 
-const baseUrl = import.meta.env.DEV
+const baseUrl = !import.meta.env.DEV
   ? 'http://ask-dev.filerobot.com:8732'
   : 'https://api.filerobot.com/videos/v2';
 
