@@ -62,6 +62,7 @@ export const trimVideo = ({
 }) =>
   fetch(
     `${baseUrl}/trim/${path}?${getQueryParams({
+      include_cdn: false,
       crop,
       resize,
       rotate: rotation,
@@ -95,6 +96,7 @@ export const transformVideo = ({
 }) =>
   fetch(
     `${baseUrl}/transformations/${path}?${getQueryParams({
+      include_cdn: false,
       crop,
       resize,
       rotate: rotation,
