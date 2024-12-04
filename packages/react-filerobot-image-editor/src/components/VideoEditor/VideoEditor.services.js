@@ -4,7 +4,7 @@ const getDefaultHeaders = ({ key, token, headers }) => {
   return {
     ...headers,
     'X-Filerobot-Key': key,
-    'X-Filerobot-Token': token,
+    'Filerobot-Token': token,
   };
 };
 
