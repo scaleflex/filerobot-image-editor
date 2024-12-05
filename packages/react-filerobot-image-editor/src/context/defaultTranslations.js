@@ -121,4 +121,15 @@ export default {
   delete: 'Delete',
   splitAt: 'Split at',
   mediaSourceError: 'URL is neither an image nor a video',
+  exportProgress: 'Export in progress',
+  exportCompleted: 'Export completed',
+  exportError: 'Export failed',
+  done: 'Done',
+  exportProgressHint:
+    'Please wait for the export to complete before navigating away, otherwise the process will be cancelled. ',
+  exportCompletedHint:
+    'Export completed successfully. You can close the window.',
+  exportErrorHint:
+    'Something went wrong. The video export was interrupted. Please try again.',
+  ok: 'Ok',
 };

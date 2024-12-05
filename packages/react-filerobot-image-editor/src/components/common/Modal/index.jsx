@@ -16,7 +16,7 @@ const Modal = ({
   Icon,
   onDone,
   onCancel,
-  doneLabel = 'Yes',
+  doneLabel,
   cancelLabel = 'No',
   isOpened = false,
   doneButtonStyle,
@@ -29,6 +29,10 @@ const Modal = ({
   width,
   isWarning = false,
   isError = false,
+  hideShadow = false,
+  iconMarginBottom,
+  iconPadding,
+  disableOverlayClick = false,
 }) => {
   const onKeyUp = (e) => {
     if (e.key === 'Enter') {
@@ -57,16 +61,20 @@ const Modal = ({
       tabIndex={-1}
       aria-modal="true"
       aria-label={title}
+      disableOverlayClick={disableOverlayClick}
     >
       <StyledModalTitle
         icon={<Icon size={25} />}
         iconShadow
+        hideShadow={hideShadow}
         isWarning={isWarning}
         isError={isError}
         onClose={onCancel}
         primary={title}
         secondary={hint}
         variant="with-icon"
+        iconMarginBottom={iconMarginBottom}
+        iconPadding={iconPadding}
       />
       {children && <ModalContent>{children}</ModalContent>}
       <StyledModalActions align="center">
@@ -78,16 +86,18 @@ const Modal = ({
         >
           {cancelLabel}
         </Button>
-        <Button
-          color={doneButtonColor}
-          onClick={onDone}
-          size="md"
-          warning={isWarning}
-          style={doneButtonStyle}
-          disabled={areButtonsDisabled}
-        >
-          {doneLabel}
-        </Button>
+        {doneLabel && (
+          <Button
+            color={doneButtonColor}
+            onClick={onDone}
+            size="md"
+            warning={isWarning}
+            style={doneButtonStyle}
+            disabled={areButtonsDisabled}
+          >
+            {doneLabel}
+          </Button>
+        )}
       </StyledModalActions>
     </StyledModal>
   );
@@ -96,7 +106,7 @@ const Modal = ({
 Modal.propTypes = {
   title: PropTypes.string.isRequired,
   Icon: PropTypes.instanceOf(Object).isRequired,
-  onDone: PropTypes.func.isRequired,
+  onDone: PropTypes.func,
   onCancel: PropTypes.func.isRequired,
   hint: PropTypes.string,
   isOpened: PropTypes.bool,
@@ -112,6 +122,10 @@ Modal.propTypes = {
   width: PropTypes.string,
   isWarning: PropTypes.bool,
   isError: PropTypes.bool,
+  hideShadow: PropTypes.bool,
+  iconMarginBottom: PropTypes.number,
+  iconPadding: PropTypes.number,
+  disableOverlayClick: PropTypes.bool,
 };
 
 export default Modal;

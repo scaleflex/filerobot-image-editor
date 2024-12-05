@@ -10,7 +10,7 @@ import emitCustomEvent from 'utils/emitCustomEvent';
 // import ffmpegJs from '../libraries/ffmpeg/ffmpeg-core.js?url';
 // import ffmpegWasm from '../libraries/ffmpeg/ffmpeg-core.wasm?url';
 
-const loadFfmpeg = async (ffmpegRef) => {
+const loadFfmpeg = async (ffmpegRef, onProgress) => {
   const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
   // for debugging
   // ffmpeg.on('log', ({ type, message }) => {
@@ -18,6 +18,9 @@ const loadFfmpeg = async (ffmpegRef) => {
   // });
 
   ffmpegRef.on('progress', ({ progress, time }) => {
+    if (typeof onProgress === 'function') {
+      onProgress(progress);
+    }
     emitCustomEvent(EVENTS.PROCESSING_VIDEO_PROGRESS, {
       progress,
       time,

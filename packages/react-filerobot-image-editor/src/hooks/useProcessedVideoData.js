@@ -14,16 +14,14 @@ import {
 import emitCustomEvent from 'utils/emitCustomEvent';
 import { EVENTS } from 'utils/constants';
 // import extractCurrentDesignState from 'utils/extractCurrentDesignState';
-import { SET_FEEDBACK } from 'actions';
 import loadFfmpeg from 'utils/loadFfmpeg';
 import formatSecondsToDuration from 'utils/formatSecondsToDuration';
 import isBlobFile from 'utils/isBlobFile';
 import useStore from './useStore';
 
-const useTransformedVideoData = () => {
+const useProcessedVideoData = () => {
   const state = useStore();
   const {
-    dispatch,
     designLayer,
     shownImageDimensions,
     originalSource,
@@ -38,17 +36,7 @@ const useTransformedVideoData = () => {
     trim: { segments = [] },
   } = state;
   const ffmpegRef = useRef(new FFmpeg());
-
-  const onError = (newError) => {
-    dispatch({
-      type: SET_FEEDBACK,
-      payload: {
-        feedback: {
-          message: newError?.message || newError,
-        },
-      },
-    });
-  };
+  const abortControllerRef = useRef(null);
 
   const getMappedCropBox = () => {
     const { clipWidth, clipHeight, clipX, clipY } = designLayer.attrs;
@@ -74,11 +62,15 @@ const useTransformedVideoData = () => {
     originalSource.width !== dimensions.width &&
     originalSource.height !== dimensions.height;
 
-  const processVideo = async (mappedCropBox, resizeDimensions) => {
+  const processVideoByFrontend = async (
+    mappedCropBox,
+    resizeDimensions,
+    onProgress,
+  ) => {
     const ffmpeg = ffmpegRef.current;
 
     if (!ffmpeg.loaded) {
-      await loadFfmpeg(ffmpeg);
+      await loadFfmpeg(ffmpeg, onProgress);
     }
 
     const videoData = await fetchFile(originalSource.src);
@@ -174,28 +166,13 @@ const useTransformedVideoData = () => {
     return videoBlob;
   };
 
-  const checkVideoStatus = async (response) => {
-    if (response?.result[0].progress) {
-      const { ready, progress } = await get(
-        response?.result[0].progress,
-        onError,
-      );
-
-      if (!ready && progress >= 0 && progress <= 100) {
-        emitCustomEvent(EVENTS.PROCESSING_VIDEO_PROGRESS, {
-          progress,
-        });
-        await new Promise((resolve) => {
-          setTimeout(resolve, 300);
-        });
-        const status = await checkVideoStatus(response);
-        return status;
-      }
-
-      if (ready && progress === 100) {
-        return response?.result[0]?.transformed || response?.result[0]?.trimmed;
-      }
+  const emitProgressEvent = (progress, onProgress) => {
+    if (typeof onProgress === 'function') {
+      onProgress(progress);
     }
+    emitCustomEvent(EVENTS.PROCESSING_VIDEO_PROGRESS, {
+      progress,
+    });
   };
 
   const getTimeData = () => {
@@ -209,7 +186,25 @@ const useTransformedVideoData = () => {
       .join(',');
   };
 
-  const getTransformedBackendData = async (mappedCropBox, resizeDimensions) => {
+  const processVideoByBackend = async (mediaFileInfo, signal) => {
+    const mappedCropBox = getMappedCropBox();
+
+    const dimensions =
+      originalSource &&
+      getProperDimensions({
+        resize,
+        crop,
+        shownImageDimensions,
+        disableResizeAfterRotation,
+        originalSource,
+        rotation,
+      });
+
+    const finalResizeDimensions = {
+      ...dimensions,
+      ...mediaFileInfo.size,
+    };
+
     const flip = [];
 
     if (isFlippedX) {
@@ -238,13 +233,13 @@ const useTransformedVideoData = () => {
           mappedCropBox.x,
           mappedCropBox.y,
         ].join(','),
-      resize: isResizeDimensionsValid(resizeDimensions)
-        ? `${resizeDimensions.width},${resizeDimensions.height}`
+      resize: isResizeDimensionsValid(finalResizeDimensions)
+        ? `${finalResizeDimensions.width},${finalResizeDimensions.height}`
         : undefined,
       rotation,
       flip: flip.length > 0 ? flip.join('') : undefined,
       duration: originalSource.duration,
-      onError,
+      signal,
     };
 
     const response =
@@ -255,41 +250,73 @@ const useTransformedVideoData = () => {
           })
         : await transformVideo({ ...commonProps });
 
-    const url = await checkVideoStatus(response);
-    return url;
+    return { response, mediaFileInfo };
   };
 
-  const getTransformedVideoData = async (mediaFileInfo) => {
+  const checkVideoStatus = async ({
+    response,
+    mediaFileInfo,
+    onProgress,
+    isRecursive = true,
+    signal,
+  }) => {
+    if (response?.result[0].progress) {
+      const url =
+        response?.result[0]?.transformed || response?.result[0]?.trimmed;
+      const { ready, progress } =
+        (await get(response?.result[0].progress, signal)) || {};
+
+      if (!ready && progress >= 0 && progress <= 100) {
+        if (progress !== 100) {
+          emitProgressEvent(progress, onProgress);
+        }
+
+        if (isRecursive) {
+          await new Promise((resolve) => {
+            setTimeout(resolve, 300);
+          });
+          const status = await checkVideoStatus({
+            response,
+            mediaFileInfo,
+            onProgress,
+            isRecursive,
+            signal,
+          });
+          return status;
+        }
+
+        return {
+          retrigger: true,
+          progress,
+        };
+      }
+
+      if (ready && progress === 100) {
+        if (isBlobFile(source)) {
+          const blob = await get(url);
+          emitProgressEvent(progress, onProgress);
+          return blob;
+        }
+
+        emitProgressEvent(progress, onProgress);
+
+        return {
+          retrigger: false,
+          result: url,
+          mediaFileInfo,
+        };
+      }
+    }
+  };
+
+  const getFinalVideoData = (mediaFileInfo, result) => {
     const mappedCropBox = getMappedCropBox();
-    const dimensions =
-      originalSource &&
-      getProperDimensions({
-        resize,
-        crop,
-        shownImageDimensions,
-        disableResizeAfterRotation,
-        originalSource,
-        rotation,
-      });
-
-    const finalResizeDimensions = {
-      ...dimensions,
-      ...mediaFileInfo.size,
-    };
-
     let finalVideoPassedObject = {};
-    emitCustomEvent(EVENTS.PROCESSING_VIDEO_START, { file: mediaFileInfo });
 
-    if (useBackendProcess && Object.keys(backendProcess).length > 0) {
-      finalVideoPassedObject.videoUrl = await getTransformedBackendData(
-        mappedCropBox,
-        finalResizeDimensions,
-      );
+    if (isBlobFile(result)) {
+      finalVideoPassedObject.videoBlob = result;
     } else {
-      finalVideoPassedObject.videoBlob = await processVideo(
-        mappedCropBox,
-        finalResizeDimensions,
-      );
+      finalVideoPassedObject.videoUrl = result;
     }
 
     finalVideoPassedObject = {
@@ -316,7 +343,44 @@ const useTransformedVideoData = () => {
       designState: finalVideoDesignState,
     };
   };
-  return getTransformedVideoData;
+
+  const abortVideoProcessing = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+  };
+
+  const processVideo = async (mediaFileInfo, onProgress) => {
+    emitCustomEvent(EVENTS.PROCESSING_VIDEO_START, { file: mediaFileInfo });
+
+    abortControllerRef.current = new AbortController();
+    const { signal } = abortControllerRef.current;
+
+    let result = {};
+    if (useBackendProcess && Object.keys(backendProcess).length > 0) {
+      const { response } = await processVideoByBackend(mediaFileInfo, signal);
+
+      result = await checkVideoStatus({
+        response,
+        mediaFileInfo,
+        onProgress,
+        signal,
+      });
+    } else {
+      result = await processVideoByFrontend(onProgress);
+    }
+
+    return getFinalVideoData(mediaFileInfo, result);
+  };
+
+  return {
+    processVideo,
+    processVideoByBackend,
+    checkVideoStatus,
+    getFinalVideoData,
+    abortVideoProcessing,
+  };
 };
 
-export default useTransformedVideoData;
+export default useProcessedVideoData;

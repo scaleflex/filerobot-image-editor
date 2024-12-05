@@ -18,9 +18,10 @@ import {
 import { SET_FEEDBACK, SET_SAVING } from 'actions';
 import restrictNumber from 'utils/restrictNumber';
 import ButtonWithMenu from 'components/common/ButtonWithMenu';
-import useTransformedVideoData from 'hooks/useTransformedVideoData';
 import isImage from 'utils/isImage';
 import getSupportedExtensions from 'utils/getSupportedExtensions';
+import ExportModal from 'components/common/ExportModal';
+import useProcessedVideoData from 'hooks/useProcessedVideoData';
 import SaveModal from './SaveModal';
 
 const saveButtonWrapperStyle = { minWidth: 67, width: 'fit-content' }; // 67px same width as tabs bar
@@ -36,7 +37,6 @@ const SaveButton = ({
   ...props
 }) => {
   const state = useStore();
-  const optionSaveFnRef = useRef();
   const {
     dispatch,
     originalSource,
@@ -65,11 +65,24 @@ const SaveButton = ({
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isExportModalOpened, setIsExportModalOpened] = useState(false);
+  const [exportError, setExportError] = useState(null);
   const [mediaFileInfo, setMediaFileInfo] = useState({
     quality: getDefaultSaveQuality(defaultSavedImageQuality),
   });
+  const [progress, setProgress] = useState(0);
   const transformImgFn = useTransformedImgData();
-  const transformVideoFn = useTransformedVideoData();
+  const {
+    processVideo: transformVideoFn,
+    processVideoByBackend,
+    checkVideoStatus,
+    getFinalVideoData,
+    abortVideoProcessing,
+  } = useProcessedVideoData();
+
+  const optionSaveFnRef = useRef();
+  const isExternalSaveCb = useRef(false);
+
   const isBlockerError = feedback.duration === 0;
   const isImageFile = isImage(sourceType);
 
@@ -83,10 +96,9 @@ const SaveButton = ({
   const finalizeSaving = () => {
     dispatch({
       type: SET_SAVING,
-      payload: { isSaving: false },
+      payload: { isSaving: false, isLoadingGlobally: false },
     });
   };
-
   const afterTransform = (transformedData) => {
     const onSaveFn = optionSaveFnRef.current || onSave || configOnSave;
 
@@ -109,6 +121,7 @@ const SaveButton = ({
   };
 
   const setError = (newError) => {
+    setExportError(newError.message || newError);
     dispatch({
       type: SET_FEEDBACK,
       payload: {
@@ -119,15 +132,34 @@ const SaveButton = ({
     });
   };
 
+  const onProgress = (newProgress) => {
+    setProgress(newProgress);
+  };
+
   const handleSave = () => {
+    if (isExternalSaveCb.current) {
+      const onSaveFn = optionSaveFnRef.current || onSave || configOnSave;
+
+      onSaveFn({
+        mediaFile: mediaFileInfo,
+        processVideo: processVideoByBackend,
+        checkVideoStatus,
+        getFinalVideoData,
+      });
+      isExternalSaveCb.current = false;
+      return;
+    }
+
     const transformedData = isImageFile
       ? transformImgFn(mediaFileInfo, false, true)
-      : transformVideoFn(mediaFileInfo);
+      : transformVideoFn(mediaFileInfo, onProgress);
 
     if (transformedData instanceof Promise) {
       transformedData.then(afterTransform).catch((error) => {
-        setError(error);
-        finalizeSaving();
+        if (error.name !== 'AbortError') {
+          setError(error);
+          finalizeSaving();
+        }
       });
     } else {
       afterTransform(transformedData);
@@ -135,8 +167,17 @@ const SaveButton = ({
   };
 
   const startSaving = () => {
-    dispatch({ type: SET_SAVING, payload: { isSaving: true } });
+    dispatch({
+      type: SET_SAVING,
+      payload: { isSaving: true, isLoadingGlobally: isImageFile },
+    });
+
+    if (!isImageFile && !isExternalSaveCb.current) {
+      setIsExportModalOpened(true);
+    }
+
     setIsModalOpened(false);
+
     setTimeout(handleSave, 3);
   };
 
@@ -189,9 +230,14 @@ const SaveButton = ({
     setIsModalOpened(true);
   };
 
-  const changeSaveFnAndTriggerAnother = (saveFn, fnToTrigger) => {
+  const changeSaveFnAndTriggerAnother = (
+    saveFn,
+    fnToTrigger,
+    isExternalSaveCallback,
+  ) => {
     if (typeof saveFn === 'function') {
       optionSaveFnRef.current = saveFn;
+      isExternalSaveCb.current = isExternalSaveCallback;
       fnToTrigger();
     } else {
       console.error(
@@ -241,6 +287,13 @@ const SaveButton = ({
 
   const selectFileExtension = (extension) => {
     setMediaFileInfo({ ...mediaFileInfo, extension });
+  };
+
+  const closeExportModal = () => {
+    setIsExportModalOpened(false);
+    setProgress(0);
+    setExportError(null);
+    abortVideoProcessing();
   };
 
   useEffect(() => {
@@ -293,6 +346,24 @@ const SaveButton = ({
                       ),
                     (saveCallback) =>
                       changeSaveFnAndTriggerAnother(saveCallback, startSaving),
+                  )
+              : undefined,
+          onSaveVideoCb:
+            typeof option.onSaveVideoCb === 'function'
+              ? () =>
+                  option.onSaveVideoCb(
+                    (saveCallback) =>
+                      changeSaveFnAndTriggerAnother(
+                        saveCallback,
+                        triggerSaveHandler,
+                        true,
+                      ),
+                    (saveCallback) =>
+                      changeSaveFnAndTriggerAnother(
+                        saveCallback,
+                        startSaving,
+                        true,
+                      ),
                   )
               : undefined,
         }))
@@ -353,6 +424,15 @@ const SaveButton = ({
             {...commonModalProps}
           />
         ))}
+
+      {isExportModalOpened && !isImageFile && (
+        <ExportModal
+          open={isExportModalOpened}
+          progress={progress}
+          onCancel={closeExportModal}
+          error={exportError}
+        />
+      )}
     </>
   );
 };
