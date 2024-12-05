@@ -123,7 +123,9 @@ const ButtonWithMenu = ({
                   className={`${className}-menu-item`}
                   key={item.key}
                   active={item.isActive}
-                  onClick={() => handleMenuItemClick(item.onClick)}
+                  onClick={() =>
+                    handleMenuItemClick(item.onSaveVideoCb || item.onClick)
+                  }
                   size={buttonSize}
                 >
                   {item.icon && (
