@@ -33,6 +33,8 @@ const Modal = ({
   iconMarginBottom,
   iconPadding,
   disableOverlayClick = false,
+  modalActionsStyles,
+  modalTitleStyles,
 }) => {
   const onKeyUp = (e) => {
     if (e.key === 'Enter') {
@@ -75,9 +77,10 @@ const Modal = ({
         variant="with-icon"
         iconMarginBottom={iconMarginBottom}
         iconPadding={iconPadding}
+        style={modalTitleStyles}
       />
       {children && <ModalContent>{children}</ModalContent>}
-      <StyledModalActions align="center">
+      <StyledModalActions align="center" style={modalActionsStyles}>
         <Button
           color={cancelButtonColor}
           onClick={onCancel}
@@ -126,6 +129,8 @@ Modal.propTypes = {
   iconMarginBottom: PropTypes.number,
   iconPadding: PropTypes.number,
   disableOverlayClick: PropTypes.bool,
+  modalActionsStyles: PropTypes.instanceOf(Object),
+  modalTitleStyles: PropTypes.instanceOf(Object),
 };
 
 export default Modal;

@@ -34,7 +34,7 @@ const StyledSpinner = styled(Loading)`
 const StyledSpinnerText = styled.div`
   ${({ theme: { typography } }) => typography.font[FV.LabelMediumEmphasis]};
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;

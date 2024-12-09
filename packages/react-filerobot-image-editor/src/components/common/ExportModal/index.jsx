@@ -70,6 +70,8 @@ const ExportModal = ({ open, progress, onCancel, error }) => {
         hideShadow
         iconMarginBottom={0}
         iconPadding={12}
+        modalActionsStyles={{ padding: '24px 32px 32px 32px' }}
+        modalTitleStyles={{ padding: '24px 32px 0 32px' }}
         disableOverlayClick={progress < 100 && !error}
       />
     )
