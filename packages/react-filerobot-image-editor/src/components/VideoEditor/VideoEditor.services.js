@@ -3,8 +3,8 @@ import isBlobFile from 'utils/isBlobFile';
 const getDefaultHeaders = ({ key, token, headers }) => {
   return {
     ...headers,
-    'X-Filerobot-Key': key,
-    'X-Filerobot-Token': token,
+    ...(key && { 'X-Filerobot-Key': key }),
+    ...(token && { 'Filerobot-Token': token }),
   };
 };
 
@@ -33,8 +33,15 @@ const getData = (data) => {
 };
 
 const transformResponse = async (response) => {
+  const contentType = response.headers.get('content-type');
   if (response.ok) {
-    return response.json().then((jsonResponse) => jsonResponse);
+    if (contentType === 'application/json') {
+      return response.json().then((jsonResponse) => jsonResponse);
+    }
+
+    if (contentType?.includes('video/mp4')) {
+      return response.blob();
+    }
   }
 
   if (!response.ok) {
@@ -59,9 +66,11 @@ export const trimVideo = ({
   rotation,
   flip,
   onError,
+  signal,
 }) =>
   fetch(
     `${baseUrl}/trim/${path}?${getQueryParams({
+      include_cdn: false,
       crop,
       resize,
       rotate: rotation,
@@ -77,6 +86,7 @@ export const trimVideo = ({
         }),
       }),
       method: 'POST',
+      signal,
     },
   )
     .then(transformResponse)
@@ -91,10 +101,11 @@ export const transformVideo = ({
   resize,
   rotation,
   flip,
-  onError,
+  signal,
 }) =>
   fetch(
     `${baseUrl}/transformations/${path}?${getQueryParams({
+      include_cdn: false,
       crop,
       resize,
       rotate: rotation,
@@ -110,9 +121,9 @@ export const transformVideo = ({
         }),
       }),
       method: 'POST',
+      signal,
     },
-  )
-    .then(transformResponse)
-    .catch(onError);
-export const get = (url, onError) =>
-  fetch(url, { method: 'GET' }).then(transformResponse).catch(onError);
+  ).then(transformResponse);
+
+export const get = (url, signal) =>
+  fetch(url, { method: 'GET', signal }).then(transformResponse);
