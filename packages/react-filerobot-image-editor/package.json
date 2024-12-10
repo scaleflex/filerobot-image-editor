@@ -36,8 +36,7 @@
     "konva": "9.3.6",
     "prop-types": "15.7.2",
     "react-draggable": "4.4.6",
-    "react-konva-utils": "1.0.7",
-    "terser": "5.37.0"
+    "react-konva-utils": "1.0.7"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
