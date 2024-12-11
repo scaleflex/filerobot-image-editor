@@ -11,12 +11,23 @@ const StyledModal = styled(Modal)`
 `;
 
 const StyledModalTitle = styled(modalTitle)(
-  ({ theme, isWarning, isError }) => css`
+  ({
+    theme,
+    isWarning,
+    isError,
+    hideShadow,
+    iconMarginBottom = 8,
+    iconPadding = 14.5,
+  }) => css`
     padding-bottom: 0;
 
     .SfxModalTitle-Icon {
       background-color: ${(isWarning && theme.palette[PC.Orange_0_1_Overlay]) ||
       (isError && theme.palette[PC.Error_0_12_Opacity])};
+
+      ${hideShadow && 'background-color: transparent;'}
+      margin-bottom: ${iconMarginBottom}px;
+      padding: ${iconPadding}px;
     }
 
     .SfxModalTitle-LabelPrimary {
