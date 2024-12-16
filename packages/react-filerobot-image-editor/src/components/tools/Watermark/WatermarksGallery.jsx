@@ -57,6 +57,7 @@ const WatermarksGallery = ({
         return (
           <StyledWatermarkGalleryItem
             className="FIE_watermark-selected-item"
+            data-testid="FIE-watermark-gallery-item"
             onClick={(e) =>
               isSameUrl
                 ? getWatermarkImgAndSelect(e)
@@ -66,6 +67,7 @@ const WatermarksGallery = ({
             aria-selected={watermarkUrl === currentWatermarkUrl}
           >
             <img
+              data-testid="FIE-watermark-gallery-item-image"
               src={previewUrl}
               alt="Failed to load."
               crossOrigin="Anonymous"

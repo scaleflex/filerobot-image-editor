@@ -143,6 +143,7 @@ const NodesTransformer = (props) => {
       enabledAnchors={enabledAnchors}
       flipEnabled={!useCloudimage && !textAnnotations[0]}
       shouldOverdrawWholeArea
+      data-testid="FIE-nodes-transformer"
       {...props}
     >
       <NodeControls {...props} />

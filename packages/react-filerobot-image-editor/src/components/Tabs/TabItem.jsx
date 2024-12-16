@@ -17,10 +17,14 @@ const TabItem = ({ id, label, Icon, isSelected = false, onClick }) => {
       className="FIE_tab"
       aria-selected={isSelected}
       onClick={handleClick}
+      data-testid={`FIE-tab-${id.toLowerCase()}`}
     >
-      <Icon size={24} />
+      <Icon size={24} data-testid={`FIE-tab-item-icon-${id.toLowerCase()}`} />
       {label && (
-        <StyledTabItemLabel className="FIE_tab-label">
+        <StyledTabItemLabel
+          className="FIE_tab-label"
+          data-testid={`FIE-tab-item-label-${id.toLowerCase()}`}
+        >
           {label}
         </StyledTabItemLabel>
       )}

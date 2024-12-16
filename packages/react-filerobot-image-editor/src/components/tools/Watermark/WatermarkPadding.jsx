@@ -35,6 +35,7 @@ const WatermarkPadding = ({ watermark, saveWatermark, t }) => {
     <>
       <StyledIconWrapper
         className="FIE_watermark-padding-triggerer"
+        data-testid="FIE-watermark-padding-triggerer"
         title={t('padding')}
         onClick={openOptionPopup}
         active={anchorEl}
@@ -43,6 +44,7 @@ const WatermarkPadding = ({ watermark, saveWatermark, t }) => {
       </StyledIconWrapper>
       <Menu
         className="FIE_watermark-padding-popup"
+        data-testid="FIE-watermark-padding-popup"
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={closeOptionPopup}

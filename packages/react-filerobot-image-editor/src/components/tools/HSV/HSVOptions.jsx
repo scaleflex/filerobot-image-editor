@@ -50,6 +50,7 @@ const HSVOptions = ({ t }) => {
         <StyledSliderWrapper>
           <Slider
             className="FIE_hue-option"
+            data-testid="FIE-hue-option"
             min={0}
             step={1}
             max={259}
@@ -60,6 +61,7 @@ const HSVOptions = ({ t }) => {
           <StyledSliderInput
             value={finetuneProps.hue ?? DEFAULT_VALUE.hue}
             onChange={({ target: { value } }) => changeValue('hue', value)}
+            data-testid="FIE-hue-option-input"
           />
         </StyledSliderWrapper>
       </StyledSliderContainer>
@@ -70,6 +72,7 @@ const HSVOptions = ({ t }) => {
         <StyledSliderWrapper>
           <Slider
             className="FIE_saturation-option"
+            data-testid="FIE-saturation-option"
             min={-2}
             step={0.5}
             max={10}
@@ -78,6 +81,7 @@ const HSVOptions = ({ t }) => {
             style={sliderStyle}
           />
           <StyledSliderInput
+            data-testid="FIE-saturation-option-input"
             value={finetuneProps.saturation ?? DEFAULT_VALUE.saturation}
             onChange={({ target: { value } }) =>
               changeValue('saturation', value)
@@ -92,6 +96,7 @@ const HSVOptions = ({ t }) => {
         <StyledSliderWrapper>
           <Slider
             className="FIE_value-option"
+            data-testid="FIE-value-option"
             min={-2}
             step={0.1}
             max={2}
@@ -100,6 +105,7 @@ const HSVOptions = ({ t }) => {
             style={sliderStyle}
           />
           <StyledSliderInput
+            data-testid="FIE-value-option-input"
             value={finetuneProps.value ?? DEFAULT_VALUE.value}
             onChange={({ target: { value } }) => changeValue('value', value)}
           />

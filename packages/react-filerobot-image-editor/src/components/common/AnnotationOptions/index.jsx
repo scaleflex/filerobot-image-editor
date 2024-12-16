@@ -34,6 +34,7 @@ const AnnotationOptions = ({
   hidePositionField = false,
   className,
   showTransparentColor,
+  dataTestId,
   ...rest
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -115,6 +116,7 @@ const AnnotationOptions = ({
     <StyledOptions
       className={`FIE_annotations-options${className ? ` ${className}` : ''}`}
       isPhoneScreen={isPhoneScreen}
+      data-testid={dataTestId}
     >
       {!hideFillOption && (
         <ColorInput
@@ -147,6 +149,7 @@ const AnnotationOptions = ({
       {OptionPopupComponent && (
         <StyledOptionsPopUp
           className="FIE_annotation-option-popup"
+          data-testid="FIE-annotation-option-popup"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={toggleOptionPopup}
@@ -180,6 +183,7 @@ AnnotationOptions.propTypes = {
   hidePositionField: PropTypes.bool,
   showTransparentColor: PropTypes.bool,
   className: PropTypes.string,
+  dataTestId: PropTypes.string,
 };
 
 export default AnnotationOptions;

@@ -39,9 +39,10 @@ const CropPresetItem = ({
       active={isActive}
       onClick={handleOnClick}
       isAccordion={isAccordion}
+      data-testid="FIE-crop-preset-item"
     >
       {Icon && (
-        <StyledMenuItemIcon>
+        <StyledMenuItemIcon data-testid="FIE-crop-preset-item-icon">
           {typeof Icon === 'string' ? (
             // eslint-disable-next-line react/no-danger
             <span dangerouslySetInnerHTML={{ __html: Icon }} />
@@ -51,10 +52,14 @@ const CropPresetItem = ({
         </StyledMenuItemIcon>
       )}
 
-      <StyledMenuItemLabel>{t(titleKey)}</StyledMenuItemLabel>
+      <StyledMenuItemLabel data-testid="FIE-crop-preset-item-label">
+        {t(titleKey)}
+      </StyledMenuItemLabel>
 
       {description && (
-        <StyledRatioDescription>{description}</StyledRatioDescription>
+        <StyledRatioDescription data-testid="FIE-crop-preset-item-description">
+          {description}
+        </StyledRatioDescription>
       )}
     </StyledMenuItem>
   );

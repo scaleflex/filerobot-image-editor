@@ -388,6 +388,7 @@ const SaveButton = ({
   return (
     <>
       <ButtonWithMenu
+        data-testid="FIE-save-button"
         className="FIE_buttons-save-btn"
         color="primary"
         onClick={triggerSaveHandler}

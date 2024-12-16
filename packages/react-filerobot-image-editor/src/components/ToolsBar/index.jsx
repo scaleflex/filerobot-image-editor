@@ -127,6 +127,7 @@ const ToolsBar = ({ toolsIds, tools, selectedToolId, ...props }) => {
       {items && (
         <StyledToolsBarItems
           className="FIE_tools-bar"
+          data-testid="FIE-tools-bar-items"
           isPhoneScreen={isPhoneScreen}
         >
           {!showOutsideCarousel ? (

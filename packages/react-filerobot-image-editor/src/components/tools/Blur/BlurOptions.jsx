@@ -34,13 +34,20 @@ const BlurOptions = ({ t }) => {
   };
 
   return (
-    <StyledSliderContainer className="FIE_blur-option-wrapper">
-      <StyledSliderLabel className="FIE_blur-option-label">
+    <StyledSliderContainer
+      className="FIE_blur-option-wrapper"
+      data-testid="FIE-blur-option-wrapper"
+    >
+      <StyledSliderLabel
+        className="FIE_blur-option-label"
+        data-testid="FIE-blur-option-label"
+      >
         {t('blur')}
       </StyledSliderLabel>
       <StyledSliderWrapper>
         <Slider
           className="FIE_blur-option"
+          data-testid="FIE-blur-option"
           min={MIN_VALUE}
           max={MAX_VALUE}
           width="124px"
@@ -51,6 +58,7 @@ const BlurOptions = ({ t }) => {
         <StyledSliderInput
           value={finetuneProps.blurRadius ?? DEFAULT_VALUE.blurRadius}
           onChange={({ target: { value } }) => changeValue(value)}
+          data-testid="FIE-blur-option-input"
         />
       </StyledSliderWrapper>
     </StyledSliderContainer>

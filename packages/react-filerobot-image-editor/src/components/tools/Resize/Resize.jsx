@@ -167,6 +167,7 @@ const Resize = ({
     >
       <StyledResizeInput
         className="FIE_resize-width-option"
+        data-testid="FIE-resize-width-option"
         value={isEmptyEditedWidth ? '' : dimensions.width}
         name="width"
         onChange={isManualChangeDisabled ? undefined : changeResize}
@@ -181,6 +182,7 @@ const Resize = ({
       />
       <StyledRatioLockIcon
         className="FIE_resize-ratio-locker"
+        data-testid="FIE-resize-ratio-locker"
         title={t('toggleRatioLockTitle')}
         onClick={isManualChangeDisabled ? undefined : toggleRatioLock}
         color="basic"
@@ -195,6 +197,7 @@ const Resize = ({
       </StyledRatioLockIcon>
       <StyledResizeInput
         className="FIE_resize-height-option"
+        data-testid="FIE-resize-height-option"
         value={isEmptyEditedHeight ? '' : dimensions.height}
         name="height"
         onChange={isManualChangeDisabled ? undefined : changeResize}
@@ -210,6 +213,7 @@ const Resize = ({
       {!hideResetButton && (
         <StyledResetButton
           className="FIE_resize-reset-button"
+          data-testid="FIE-resize-reset-button"
           size="sm"
           color="basic"
           onClick={

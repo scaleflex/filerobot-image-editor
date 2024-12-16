@@ -34,13 +34,20 @@ const ContrastOptions = ({ t }) => {
   };
 
   return (
-    <StyledSliderContainer className="FIE_contrast-option-wrapper">
-      <StyledSliderLabel className="FIE_contrast-option-label">
+    <StyledSliderContainer
+      className="FIE_contrast-option-wrapper"
+      data-testid="FIE-contrast-option-wrapper"
+    >
+      <StyledSliderLabel
+        className="FIE_contrast-option-label"
+        data-testid="FIE-contrast-option-label"
+      >
         {t('contrastTool')}
       </StyledSliderLabel>
       <StyledSliderWrapper>
         <Slider
           className="FIE_contrast-option"
+          data-testid="FIE-contrast-option"
           min={MIN_VALUE}
           max={MAX_VALUE}
           width="124px"
@@ -49,6 +56,7 @@ const ContrastOptions = ({ t }) => {
           style={sliderStyle}
         />
         <StyledSliderInput
+          data-testid="FIE-contrast-option-input"
           value={finetuneProps.contrast ?? DEFAULT_VALUE.contrast}
           onChange={({ target: { value } }) => changeValue(value)}
         />

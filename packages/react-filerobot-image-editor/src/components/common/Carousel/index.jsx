@@ -109,6 +109,7 @@ const Carousel = ({ children, style, className }) => {
   return (
     <StyledCarouselWrapper
       className={`${className}-wrapper`}
+      data-testid="FIE-carousel-wrapper"
       style={style}
       onMouseDown={startScrollByDragging}
       onTouchStart={startScrollByDragging}
@@ -116,15 +117,21 @@ const Carousel = ({ children, style, className }) => {
       {isPrevArrowShown && (
         <StyledPrevArrowWrapper
           className="FIE_carousel-prev-button"
+          data-testid="FIE-carousel-prev-button"
           onClick={scrollToPrev}
         >
           <ArrowLeftOutline />
         </StyledPrevArrowWrapper>
       )}
-      <StyledCarousel className={`${className}-items`} ref={carouselRef}>
+      <StyledCarousel
+        className={`${className}-items`}
+        data-testid="FIE-carousel-items"
+        ref={carouselRef}
+      >
         {childrenArray.map((child) => (
           <StyledCarouselItem
             className={`${className}-item-wrapper FIE_carousel-item`}
+            data-testid="FIE-carousel-item"
             key={child.key}
           >
             {child}
@@ -134,6 +141,7 @@ const Carousel = ({ children, style, className }) => {
       {isNextArrowShown && (
         <StyledNextArrowWrapper
           className="FIE_carousel-next-button"
+          data-testid="FIE-carousel-next-button"
           onClick={scrollToNext}
         >
           <ArrowRightOutline />

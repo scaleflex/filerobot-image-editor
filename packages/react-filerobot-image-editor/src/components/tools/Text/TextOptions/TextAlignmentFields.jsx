@@ -26,18 +26,21 @@ const TextAlignmentFields = ({
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('left')}
         active={align === 'left'}
+        data-testid="FIE-text-alignment-left"
       >
         <TextAlignLeft />
       </StyledIconWrapper>
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('center')}
         active={align === 'center'}
+        data-testid="FIE-text-alignment-center"
       >
         <TextAlignCenter />
       </StyledIconWrapper>
       <StyledIconWrapper
         onClick={() => changeHorizontalAlignment('right')}
         active={align === 'right'}
+        data-testid="FIE-text-alignment-right"
       >
         <TextAlignLeft style={rightAlignmentCssTransform} />
       </StyledIconWrapper>

@@ -14,6 +14,7 @@ const ImagesGallery = ({
 }) => (
   <Popper
     className="FIE_image-tool-gallery"
+    data-testid="FIE-image-tool-gallery"
     anchorEl={anchorEl}
     open={Boolean(anchorEl)}
     position="top"
@@ -25,12 +26,14 @@ const ImagesGallery = ({
         <StyledImageWrapper
           key={originalUrl}
           onClick={() => onSelect(originalUrl)}
+          data-testid="FIE-image-tool-gallery-item"
         >
           <img
             src={previewUrl}
             alt={previewUrl}
             crossOrigin="Anonymous"
             draggable={false}
+            data-testid="FIE-image-tool-gallery-item-image"
           />
         </StyledImageWrapper>
       ))}

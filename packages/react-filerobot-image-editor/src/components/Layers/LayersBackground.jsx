@@ -66,6 +66,7 @@ const LayersBackground = ({
           scaleX={isFlippedX ? -1 : 1}
           scaleY={isFlippedY ? -1 : 1}
           filters={finetunesAndFilter}
+          data-testid="FIE-layers-preview-background"
           {...usedFinetuneProps}
         />
       )}
@@ -81,6 +82,7 @@ const LayersBackground = ({
           listening={false}
           fill={source.bgColor}
           filters={finetunesAndFilter}
+          data-testid="FIE-layers-background-color"
           {...usedFinetuneProps}
         />
       )}
@@ -99,6 +101,7 @@ const LayersBackground = ({
           ref={imageNodeRef}
           scaleX={isFlippedX ? -1 : 1}
           scaleY={isFlippedY ? -1 : 1}
+          data-testid="FIE-layers-image"
           {...usedFinetuneProps}
         />
       )}

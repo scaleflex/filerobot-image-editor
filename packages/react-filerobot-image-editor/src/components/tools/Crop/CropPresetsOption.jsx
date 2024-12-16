@@ -142,11 +142,13 @@ const CropPresetsOption = ({ anchorEl = null, onClose }) => {
         <StyledToolsBarItemButtonLabel
           className="FIE_crop-tool-label FIE_selected-crop-preset-label"
           isPhoneScreen={isPhoneScreen}
+          data-testid="FIE-crop-tool-label"
         >
           {t(toolTitleKey)}
         </StyledToolsBarItemButtonLabel>
         <StyledOpenMenuButton
           className="FIE_crop-presets-opener-button"
+          data-testid="FIE-crop-presets-opener-button"
           color="link-secondary"
           size="lg"
         >
@@ -160,6 +162,7 @@ const CropPresetsOption = ({ anchorEl = null, onClose }) => {
 
       <Menu
         className="FIE_crop-presets-menu"
+        data-testid="FIE-crop-presets-menu"
         anchorEl={anchorEl}
         enableOverlay
         onClose={onClose}

@@ -30,6 +30,7 @@ const Spinner = ({
     <StyledSpinnerContainer
       showInline={showInline}
       className="FIE_spinner-wrapper"
+      data-testid="FIE-spinner-wrapper"
     >
       {!children ? (
         renderSpinnerIcon()

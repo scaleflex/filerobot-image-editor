@@ -32,12 +32,17 @@ const ToolsBarItemButton = ({
       aria-selected={isSelected}
       isPhoneScreen={isPhoneScreen}
       disabled={disabled}
+      data-testid={`FIE-tools-bar-item-button-${id.toLowerCase()}`}
     >
-      <Icon size={isPhoneScreen ? 20 : 16} />
+      <Icon
+        size={isPhoneScreen ? 20 : 16}
+        data-testid={`FIE-tools-bar-item-button-icon-${id.toLowerCase()}`}
+      />
       {label && (
         <StyledToolsBarItemButtonLabel
           isPhoneScreen={isPhoneScreen}
           disabled={disabled}
+          data-testid={`FIE-tools-bar-item-button-label-${id.toLowerCase()}`}
         >
           {label}
         </StyledToolsBarItemButtonLabel>

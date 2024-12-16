@@ -19,6 +19,7 @@ const RectOptions = ({ t }) => {
   return (
     <AnnotationOptions
       className="FIE_rect-tool-options"
+      dataTestId="FIE_rect-tool-options"
       moreOptionsPopupComponentsObj={rectOptionsPopupComponents}
       morePoppableOptionsPrepended={RECT_POPPABLE_OPTIONS}
       annotation={rect}

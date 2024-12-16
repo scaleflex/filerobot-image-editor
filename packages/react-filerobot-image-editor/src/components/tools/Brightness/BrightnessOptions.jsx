@@ -34,13 +34,20 @@ const BrightnessOptions = ({ t }) => {
   };
 
   return (
-    <StyledSliderContainer className="FIE_brightness-option-wrapper">
-      <StyledSliderLabel className="FIE_brightness-option-label">
+    <StyledSliderContainer
+      className="FIE_brightness-option-wrapper"
+      data-testid="FIE-brightness-option-wrapper"
+    >
+      <StyledSliderLabel
+        className="FIE_brightness-option-label"
+        data-testid="FIE-brightness-option-label"
+      >
         {t('brightness')}
       </StyledSliderLabel>
       <StyledSliderWrapper>
         <Slider
           className="FIE_brightness-option"
+          data-testid="FIE-brightness-option"
           min={MIN_VALUE}
           step={0.05}
           max={MAX_VALUE}
@@ -50,6 +57,7 @@ const BrightnessOptions = ({ t }) => {
           style={sliderStyle}
         />
         <StyledSliderInput
+          data-testid="FIE-brightness-option-input"
           value={finetuneProps.brightness ?? DEFAULT_VALUE.brightness}
           onChange={({ target: { value } }) => changeValue(value)}
         />

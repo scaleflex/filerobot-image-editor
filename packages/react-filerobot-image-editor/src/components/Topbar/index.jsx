@@ -39,12 +39,17 @@ const Topbar = ({ onMainMenuButtonClick, ...props }) => {
 
   return (
     <StyledTopbar
+      data-testid="FIE-topbar"
       className="FIE_topbar"
       isPhoneScreen={isPhoneScreen}
       {...props}
     >
-      <StyledMainButtonsWrapper className="FIE_topbar-buttons-wrapper">
+      <StyledMainButtonsWrapper
+        data-testid="FIE-topbar-main-buttons"
+        className="FIE_topbar-buttons-wrapper"
+      >
         <StyledMenuIconButton
+          data-testid="FIE-topbar-menu-button"
           className="FIE_topbar-tabs-navbar-toggle_btn"
           size={isPhoneScreen ? 'sm' : 'lg'}
           color="basic"
@@ -56,13 +61,14 @@ const Topbar = ({ onMainMenuButtonClick, ...props }) => {
       </StyledMainButtonsWrapper>
 
       <StyledFlexCenterAlignedContainer
+        data-testid="FIE-topbar-center-options"
         className="FIE_topbar-center-options"
         showBackButton={showBackButton}
       >
         <ImageDimensionsAndDisplayToggle />
       </StyledFlexCenterAlignedContainer>
 
-      <StyledControlButtonsWrapper>
+      <StyledControlButtonsWrapper data-testid="FIE-topbar-control-buttons">
         <HistoryButtons />
 
         {showBackButton ? (

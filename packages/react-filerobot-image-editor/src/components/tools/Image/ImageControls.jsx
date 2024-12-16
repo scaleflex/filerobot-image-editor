@@ -8,6 +8,7 @@ import AnnotationOptions from 'components/common/AnnotationOptions';
 const ImageControls = ({ image, saveImage, children, t }) => (
   <AnnotationOptions
     className="FIE_image-tool-options"
+    dataTestId="FIE_image-tool-options"
     annotation={image}
     updateAnnotation={saveImage}
     t={t}

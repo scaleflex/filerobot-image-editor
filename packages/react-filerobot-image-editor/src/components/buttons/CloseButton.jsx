@@ -33,6 +33,7 @@ const CloseButton = ({ onClose, prefix, ...props }) => {
         discardReason={CLOSING_REASONS.CLOSE_BUTTON}
       >
         <StyledCloseButton
+          data-testid="FIE-close-button"
           className="FIE_buttons-close-btn"
           color="basic"
           size="md"

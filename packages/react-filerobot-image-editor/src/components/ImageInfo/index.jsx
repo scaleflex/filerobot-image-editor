@@ -73,20 +73,25 @@ const ImageInfo = ({ children, showCompareButton = true, ...props }) => {
   return (
     <StyledImageOptionsButtons
       className="FIE_image_info"
+      data-testid="FIE-image-info-wrapper"
       isPhoneScreen={isPhoneScreen}
       {...props}
     >
-      <StyledDimensionsLabel title={t('imageDimensionsHoverTitle')}>
+      <StyledDimensionsLabel
+        data-testid="FIE-image-dimensions-label"
+        title={t('imageDimensionsHoverTitle')}
+      >
         {`${dimensions?.width || t('width')} × ${
           dimensions?.height || t('height')
         } ${t('px')}`}
       </StyledDimensionsLabel>
 
       {(children || isCompareButtonShown) && (
-        <StyledDimensionsButtons>
+        <StyledDimensionsButtons data-testid="FIE-image-dimensions-buttons">
           {isCompareButtonShown && (
             <StyledSmallButton
               color="basic"
+              data-testid="FIE-compare-button"
               onMouseDown={isResetted ? undefined : showOriginalImage}
               onTouchStart={isResetted ? undefined : showOriginalImage}
               disabled={isResetted}

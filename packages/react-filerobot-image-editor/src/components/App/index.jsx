@@ -42,6 +42,7 @@ const App = (canvasProps) => {
       showTabsDrawer={isTabletScreen}
       ref={pluginRootRef}
       $size={rootSize}
+      data-testid="FIE-root"
     >
       {!showCanvasOnly && (
         <>

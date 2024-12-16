@@ -38,7 +38,11 @@ const ZoomButtons = ({ showFitCenterButton = true, ...props }) => {
   const showFitButton = showFitCenterZoomButton && showFitCenterButton;
 
   return (
-    <StyledZoomingWrapper className="FIE_buttons-zoom-btns" {...props}>
+    <StyledZoomingWrapper
+      className="FIE_buttons-zoom-btns"
+      data-testid="FIE-zoom-buttons-wrapper"
+      {...props}
+    >
       <StyledSmallButton
         onClick={zoomOut}
         color="basic"
@@ -47,6 +51,7 @@ const ZoomButtons = ({ showFitCenterButton = true, ...props }) => {
         // TODO: Check about showBackButton
         showBackButton={showBackButton}
         className="FIE_buttons-zoom-out-btn"
+        data-testid="FIE-zoom-out-button"
       >
         <MinusOutline />
       </StyledSmallButton>
@@ -59,6 +64,7 @@ const ZoomButtons = ({ showFitCenterButton = true, ...props }) => {
         }
         aria-disabled={isZoomDisabled}
         className="FIE_zoom_buttons-zoom-label"
+        data-testid="FIE-zoom-percentage-label"
       >
         {getPreviewedZoomLevelLabel()}
       </StyledZoomPercentageLabel>
@@ -70,6 +76,7 @@ const ZoomButtons = ({ showFitCenterButton = true, ...props }) => {
         // TODO: Check about showBackButton
         showBackButton={showBackButton}
         className="FIE_buttons-zoom-in-btn"
+        data-testid="FIE-zoom-in-button"
       >
         <PlusOutline />
       </StyledSmallButton>
@@ -80,6 +87,7 @@ const ZoomButtons = ({ showFitCenterButton = true, ...props }) => {
           title={t('fitTitle')}
           disabled={isZoomDisabled}
           className="FIE_buttons-fit-btn"
+          data-testid="FIE-fit-button"
         >
           <PositionCenter />
         </StyledSmallButton>
@@ -90,11 +98,13 @@ const ZoomButtons = ({ showFitCenterButton = true, ...props }) => {
         open={Boolean(zoomingMenuAnchorEl)}
         position="bottom"
         className="FIE_buttons-zoom-menu"
+        data-testid="FIE-zoom-menu"
       >
         {ZOOM_FACTORS_PRESETS.map(({ factor, labelKey, label }) => (
           <MenuItem
             key={label || labelKey}
             onClick={() => applyZoomFactorPreset(factor, label)}
+            data-testid="FIE-zoom-menu-item"
           >
             <MenuItemLabel>{labelKey ? t(labelKey) : label}</MenuItemLabel>
           </MenuItem>

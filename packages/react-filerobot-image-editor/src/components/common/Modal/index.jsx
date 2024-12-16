@@ -53,6 +53,7 @@ const Modal = ({
 
   return (
     <StyledModal
+      data-testid="FIE-modal-container"
       className={className}
       open={isOpened}
       onClose={onCancel}
@@ -66,6 +67,7 @@ const Modal = ({
       disableOverlayClick={disableOverlayClick}
     >
       <StyledModalTitle
+        data-testid="FIE-modal-title"
         icon={<Icon size={25} />}
         iconShadow
         hideShadow={hideShadow}
@@ -79,9 +81,16 @@ const Modal = ({
         iconPadding={iconPadding}
         style={modalTitleStyles}
       />
-      {children && <ModalContent>{children}</ModalContent>}
-      <StyledModalActions align="center" style={modalActionsStyles}>
+      {children && (
+        <ModalContent data-testid="FIE-modal-content">{children}</ModalContent>
+      )}
+      <StyledModalActions
+        data-testid="FIE-modal-actions"
+        align="center"
+        style={modalActionsStyles}
+      >
         <Button
+          data-testid="FIE-modal-cancel-button"
           color={cancelButtonColor}
           onClick={onCancel}
           size="md"
@@ -91,6 +100,7 @@ const Modal = ({
         </Button>
         {doneLabel && (
           <Button
+            data-testid="FIE-modal-confirm-button"
             color={doneButtonColor}
             onClick={onDone}
             size="md"

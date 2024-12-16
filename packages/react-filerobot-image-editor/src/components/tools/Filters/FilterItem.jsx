@@ -55,6 +55,7 @@ const FilterItem = ({
   return (
     <StyledFilterItem
       className="FIE_filters-item"
+      data-testid={`FIE_filters-item-${filterLabel.toLowerCase()}`}
       onClick={handleFilterApplying}
       aria-selected={isActive}
     >

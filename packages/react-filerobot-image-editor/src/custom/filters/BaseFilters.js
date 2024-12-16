@@ -5,10 +5,12 @@ const BaseFilters = {
 
     for (let i = 0; i < len; i += 4) {
       for (const filter of filters) {
-        [pixels[i], pixels[i + 1], pixels[i + 2]] = filter(
-          [pixels[i], pixels[i + 1], pixels[i + 2]],
-        );
-      };
+        [pixels[i], pixels[i + 1], pixels[i + 2]] = filter([
+          pixels[i],
+          pixels[i + 1],
+          pixels[i + 2],
+        ]);
+      }
     }
   },
 
@@ -67,11 +69,12 @@ const BaseFilters = {
       r * 0.272 * value + g * 0.534 * value + b * (1 - 0.869 * value),
     ];
   },
-  adjustRGB: (adjustingRGB) => (pixelRGB) => [
-    pixelRGB[0] * adjustingRGB[0], // R
-    pixelRGB[1] * adjustingRGB[1], // G
-    pixelRGB[2] * adjustingRGB[2], // B
-  ],
+  adjustRGB: (adjustingRGB) => (pixelRGB) =>
+    [
+      pixelRGB[0] * adjustingRGB[0], // R
+      pixelRGB[1] * adjustingRGB[1], // G
+      pixelRGB[2] * adjustingRGB[2], // B
+    ],
   // RGBV => [R, G, B, Value]
   colorFilter: (colorRGBV) => (pixelRGB) => {
     const r = pixelRGB[0];

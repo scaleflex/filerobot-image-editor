@@ -33,6 +33,7 @@ const CropPresetGroupsFolder = ({
   return (
     <StyledMenuItem
       isListItem
+      data-testid="FIE-crop-presets-groups-folder"
       list={[
         {
           content: t(titleKey),

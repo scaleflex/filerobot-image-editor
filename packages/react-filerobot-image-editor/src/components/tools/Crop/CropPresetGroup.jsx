@@ -39,6 +39,7 @@ const CropPresetGroup = ({
       label={t(groupTitleKey)}
       onChange={toggleExpand}
       expanded={isExpanded}
+      data-testid="FIE-crop-presets-group"
     >
       {items.map(
         ({

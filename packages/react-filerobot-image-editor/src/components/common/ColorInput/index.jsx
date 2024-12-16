@@ -80,6 +80,7 @@ const ColorInput = ({ onChange, color, colorFor, showTransparentColor }) => {
     <>
       <StyledPickerTrigger
         className="FIE_color-picker-triggerer"
+        data-testid="FIE-color-picker-triggerer"
         onClick={togglePicker}
         $color={currentColor}
         onChange={onChange}

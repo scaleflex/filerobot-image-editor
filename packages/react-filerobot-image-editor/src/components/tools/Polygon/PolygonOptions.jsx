@@ -19,6 +19,7 @@ const PolygonOptions = ({ t }) => {
   return (
     <AnnotationOptions
       className="FIE_polygon-tool-options"
+      dataTestId="FIE_polygon-tool-options"
       morePoppableOptionsPrepended={POLYGON_POPPABLE_OPTIONS}
       moreOptionsPopupComponentsObj={polygonOptionsPopupComponents}
       annotation={polygon}
