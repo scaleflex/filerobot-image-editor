@@ -8,7 +8,11 @@ import ResetButton from './ResetButton';
 import UndoButton from './UndoButton';
 
 const HistoryButtons = (props) => (
-  <StyledHistoryButtons className="FIE_buttons-history-btns" {...props}>
+  <StyledHistoryButtons
+    className="FIE_buttons-history-btns"
+    data-testid="FIE-history-buttons"
+    {...props}
+  >
     <ResetButton />
     <UndoButton />
     <RedoButton />

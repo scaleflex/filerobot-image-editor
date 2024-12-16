@@ -86,6 +86,7 @@ const RotateOptions = () => {
   return (
     <StyledRotationOptions>
       <StyledRotateButton
+        data-testid="FIE-rotate-reset-button"
         size="sm"
         color="basic"
         onClick={(e) => changeRotation(e, rotation - 90)}
@@ -94,6 +95,7 @@ const RotateOptions = () => {
       </StyledRotateButton>
       <StyledRotationSlider
         className="FIE_rotate-slider"
+        data-testid="FIE-rotate-slider"
         showCurrentMarkText
         min={-180}
         max={180}
@@ -103,6 +105,7 @@ const RotateOptions = () => {
         onChange={changeRotation}
       />
       <StyledRotateButton
+        data-testid="FIE-rotate-reset-button"
         size="sm"
         color="basic"
         onClick={(e) => changeRotation(e, rotation + 90)}

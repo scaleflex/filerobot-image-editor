@@ -21,13 +21,15 @@ const TabsDrawer = (props) => {
   return (
     <StyledTabsDrawer
       className="FIE_tabs-drawer"
+      data-testid="FIE-tabs-drawer"
       open={showTabsNavbar}
       onClose={() => toggleTabsNavbar(false)}
       disablePortal
       {...props}
     >
-      <DrawerHeader>
+      <DrawerHeader data-testid="FIE-tabs-drawer-header">
         <Button
+          data-testid="FIE-tabs-drawer-menu-button"
           color="link-basic-secondary"
           startIcon={<Menu />}
           onClick={() => toggleTabsNavbar(false)}
@@ -35,8 +37,8 @@ const TabsDrawer = (props) => {
           {t('tabsMenu')}
         </Button>
       </DrawerHeader>
-      <DrawerBody>
-        <DrawerList>
+      <DrawerBody data-testid="FIE-tabs-drawer-body">
+        <DrawerList data-testid="FIE-tabs-drawer-list">
           <Tabs TabItemWrapper={DrawerItem} />
         </DrawerList>
       </DrawerBody>

@@ -242,6 +242,7 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
       scaleY={finalScaleY}
       rotation={isCurrentlyCropping ? 0 : rotation}
       clipFunc={clipFunc}
+      data-testid="FIE-design-layer"
       {...props}
     >
       <LayersBackground

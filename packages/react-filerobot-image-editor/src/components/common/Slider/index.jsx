@@ -8,6 +8,7 @@ import { StyledSlider } from './Slider.styled';
 const Slider = ({ onChange, ...props }) => {
   return (
     <StyledSlider
+      data-testid="FIE-slider"
       annotation=""
       onChange={(_e, val) => (onChange ? onChange(val) : undefined)}
       hideAnnotation

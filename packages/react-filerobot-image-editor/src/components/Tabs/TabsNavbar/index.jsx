@@ -14,7 +14,11 @@ const TabsNavbar = (props) => {
   }
 
   return (
-    <StyledTabsNavbar className="FIE_tabs_navbar" {...props}>
+    <StyledTabsNavbar
+      className="FIE_tabs_navbar"
+      data-testid="FIE-tabs-navbar"
+      {...props}
+    >
       <Tabs />
     </StyledTabsNavbar>
   );

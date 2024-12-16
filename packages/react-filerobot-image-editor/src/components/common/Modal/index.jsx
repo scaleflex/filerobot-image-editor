@@ -47,6 +47,7 @@ const Modal = ({
 
   return (
     <StyledModal
+      data-testid="FIE-modal-container"
       className={className}
       open={isOpened}
       onClose={onCancel}
@@ -59,6 +60,7 @@ const Modal = ({
       aria-label={title}
     >
       <StyledModalTitle
+        data-testid="FIE-modal-title"
         icon={<Icon size={25} />}
         iconShadow
         isWarning={isWarning}
@@ -68,9 +70,12 @@ const Modal = ({
         secondary={hint}
         variant="with-icon"
       />
-      {children && <ModalContent>{children}</ModalContent>}
-      <StyledModalActions align="center">
+      {children && (
+        <ModalContent data-testid="FIE-modal-content">{children}</ModalContent>
+      )}
+      <StyledModalActions data-testid="FIE-modal-actions" align="center">
         <Button
+          data-testid="FIE-modal-cancel-button"
           color={cancelButtonColor}
           onClick={onCancel}
           size="md"
@@ -79,6 +84,7 @@ const Modal = ({
           {cancelLabel}
         </Button>
         <Button
+          data-testid="FIE-modal-confirm-button"
           color={doneButtonColor}
           onClick={onDone}
           size="md"

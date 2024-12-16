@@ -30,16 +30,19 @@ const OpacityField = ({ annotation, updateAnnotation, t }) => {
   };
 
   return (
-    <StyledOptionPopupContent disablePadding>
+    <StyledOptionPopupContent data-testid="FIE-opacity-field" disablePadding>
       <Label>{t('transparency')}</Label>
       <StyledSpacedOptionFields>
         <Slider
+          data-testid="FIE-opacity-field-slider"
           annotation="%"
           onChange={changeOpacity}
           value={opacityValue}
           noMargin
         />
-        <StyledIconLabel>{`${opacityValue}%`}</StyledIconLabel>
+        <StyledIconLabel data-testid="FIE-opacity-field-label">
+          {`${opacityValue}%`}
+        </StyledIconLabel>
       </StyledSpacedOptionFields>
     </StyledOptionPopupContent>
   );

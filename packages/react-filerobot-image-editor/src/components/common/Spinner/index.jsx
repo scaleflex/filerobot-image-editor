@@ -12,8 +12,15 @@ const Spinner = ({ isLoading, theme }) => {
   }
 
   return (
-    <StyledSpinnerWrapper className="FIE_spinner-wrapper">
-      <StyledSpinner size={50} color={theme.palette[PC.AccentStateless]} />
+    <StyledSpinnerWrapper
+      data-testid="FIE-spinner-wrapper"
+      className="FIE_spinner-wrapper"
+    >
+      <StyledSpinner
+        data-testid="FIE-spinner"
+        size={50}
+        color={theme.palette[PC.AccentStateless]}
+      />
     </StyledSpinnerWrapper>
   );
 };

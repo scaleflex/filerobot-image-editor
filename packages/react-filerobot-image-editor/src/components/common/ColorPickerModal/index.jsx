@@ -31,6 +31,7 @@ const ColorPickerModal = ({
 
   return (
     <Styled.ColorPickerModal
+      data-testid="FIE-color-picker-modal"
       onClose={onClose}
       open={open}
       fullWidth
@@ -43,25 +44,38 @@ const ColorPickerModal = ({
           icon={<ColorPickerIcon size={29} />}
           iconShadow
           variant="with-icon"
+          data-testid="FIE-color-picker-modal-title"
         />
       )}
 
       <ModalContent>
-        <Styled.ColorPickerWrap hideModalTitle={hideModalTitle}>
+        <Styled.ColorPickerWrap
+          hideModalTitle={hideModalTitle}
+          data-testid="FIE-color-picker-wrap"
+        >
           <ColorPicker
             onChange={onChange}
             pinnedColors={pinnedColors}
             defaultColor={defaultColor}
             showTransparentColor={showTransparentColor}
+            data-testid="FIE-color-picker"
           />
         </Styled.ColorPickerWrap>
       </ModalContent>
 
-      <Styled.ModalActions>
-        <Button color="basic" onClick={onClose}>
+      <Styled.ModalActions data-testid="FIE-color-picker-modal-actions">
+        <Button
+          color="basic"
+          onClick={onClose}
+          data-testid="FIE-color-picker-modal-cancel-button"
+        >
           {t('cancel')}
         </Button>
-        <Button color="primary" onClick={onApply}>
+        <Button
+          color="primary"
+          onClick={onApply}
+          data-testid="FIE-color-picker-modal-apply-button"
+        >
           {t('apply')}
         </Button>
       </Styled.ModalActions>

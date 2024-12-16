@@ -12,6 +12,7 @@ const RedoButton = (props) => {
   return (
     <StyledHistoryButton
       className="FIE_buttons-redo-btn"
+      data-testid="FIE-redo-button"
       color="basic"
       size="sm"
       onClick={hasRedo ? redo : undefined}

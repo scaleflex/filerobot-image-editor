@@ -97,6 +97,7 @@ const MainCanvasWrapper = ({
       />
       <CanvasContainer
         className="FIE_canvas-container"
+        data-testid="FIE-canvas-container"
         ref={canvasContainerRef}
         {...props}
       >

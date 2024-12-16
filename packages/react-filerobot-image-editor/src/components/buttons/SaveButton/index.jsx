@@ -276,6 +276,7 @@ const SaveButton = ({
   return (
     <>
       <ButtonWithMenu
+        data-testid="FIE-save-button"
         className="FIE_buttons-save-btn"
         color="primary"
         onClick={triggerSaveHandler}
@@ -312,6 +313,7 @@ const SaveButton = ({
           {...modalProps}
         >
           <StyledFileNameInput
+            data-testid="FIE-save-filename-input"
             className="FIE_save-file-name-input"
             value={imageFileInfo.name}
             onChange={changeFileName}
@@ -323,6 +325,7 @@ const SaveButton = ({
             focusOnMount
           />
           <StyledFileExtensionSelect
+            data-testid="FIE-save-extension-select"
             className="FIE_save-extension-selector"
             onChange={(ext) =>
               setImageFileInfo({ ...imageFileInfo, extension: ext })
@@ -340,9 +343,13 @@ const SaveButton = ({
             ))}
           </StyledFileExtensionSelect>
           {isQualityAcceptable && (
-            <StyledQualityWrapper className="FIE_save-quality-wrapper">
+            <StyledQualityWrapper
+              data-testid="FIE-save-quality-wrapper"
+              className="FIE_save-quality-wrapper"
+            >
               <Label>{t('quality')}</Label>
               <Slider
+                data-testid="FIE-save-quality-slider"
                 annotation="%"
                 min={1}
                 max={100}
@@ -353,7 +360,10 @@ const SaveButton = ({
               />
             </StyledQualityWrapper>
           )}
-          <StyledResizeOnSave className="FIE_save-resize-wrapper">
+          <StyledResizeOnSave
+            data-testid="FIE-save-resize-wrapper"
+            className="FIE_save-resize-wrapper"
+          >
             <StyledResizeOnSaveLabel>{t('resize')}</StyledResizeOnSaveLabel>
             <Resize
               onChange={resizeImageFile}

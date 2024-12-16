@@ -83,12 +83,14 @@ const ButtonWithMenu = ({
     <>
       <StyledButtonWrapper
         className={`${className}-wrapper`}
+        data-testid="FIE-button-with-menu-wrapper"
         style={wrapperStyle}
         ref={buttonRef}
         noMargin={noMargin}
       >
         <StyledMainButton
           className={`${className}-button`}
+          data-testid="FIE-button-with-menu-button"
           color={color}
           size={buttonSize}
           title={title}
@@ -97,6 +99,7 @@ const ButtonWithMenu = ({
           endIcon={
             menuItems.length > 0 && (
               <StyledArrow
+                data-testid="FIE-button-with-menu-arrow"
                 open={Boolean(anchorEl)}
                 $buttonSize={buttonSize}
                 size={buttonSize === 'md' ? 13 : 10}
@@ -110,6 +113,7 @@ const ButtonWithMenu = ({
       {hasMultipleMenuItems && (
         <StyledMenu
           className={`${className}-menu`}
+          data-testid="FIE-button-with-menu-menu"
           anchorEl={anchorEl}
           onClose={closeMenu}
           open={Boolean(anchorEl)}
@@ -121,13 +125,17 @@ const ButtonWithMenu = ({
               item && (
                 <StyledMenuItem
                   className={`${className}-menu-item`}
+                  data-testid="FIE-button-with-menu-menu-item"
                   key={item.key}
                   active={item.isActive}
                   onClick={() => handleMenuItemClick(item.onClick)}
                   size={buttonSize}
                 >
                   {item.icon && (
-                    <StyledMenuIcon size={buttonSize}>
+                    <StyledMenuIcon
+                      size={buttonSize}
+                      data-testid="FIE-button-with-menu-menu-item-icon"
+                    >
                       {typeof item.icon === 'string' ? (
                         // eslint-disable-next-line react/no-danger
                         <span dangerouslySetInnerHTML={{ __html: item.icon }} />
@@ -136,7 +144,9 @@ const ButtonWithMenu = ({
                       )}
                     </StyledMenuIcon>
                   )}
-                  <MenuItemLabel>{item.label}</MenuItemLabel>
+                  <MenuItemLabel data-testid="FIE-button-with-menu-menu-item-label">
+                    {item.label}
+                  </MenuItemLabel>
                 </StyledMenuItem>
               ),
           )}

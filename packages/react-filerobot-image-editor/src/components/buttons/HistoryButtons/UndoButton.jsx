@@ -13,6 +13,7 @@ const UndoButton = (props) => {
   return (
     <StyledHistoryButton
       className="FIE_buttons-undo-btn"
+      data-testid="FIE-undo-button"
       color="basic"
       size="sm"
       onClick={hasUndo ? undo : undefined}

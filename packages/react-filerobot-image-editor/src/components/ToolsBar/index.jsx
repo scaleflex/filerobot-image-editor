@@ -118,17 +118,29 @@ const ToolsBar = ({ toolsIds, tools, selectedToolId, ...props }) => {
   }, []);
 
   return (
-    <StyledToolsBar className="FIE_tools-bar-wrapper" {...props}>
-      <ToolsBarItemOptionsWrapper isPhoneScreen={isPhoneScreen}>
+    <StyledToolsBar
+      className="FIE_tools-bar-wrapper"
+      data-testid="FIE-tools-bar-wrapper"
+      {...props}
+    >
+      <ToolsBarItemOptionsWrapper
+        data-testid="FIE-tools-bar-item-options-wrapper"
+        isPhoneScreen={isPhoneScreen}
+      >
         {ToolOptionsComponent && <ToolOptionsComponent t={t} />}
       </ToolsBarItemOptionsWrapper>
       {items && (
         <StyledToolsBarItems
           className="FIE_tools-bar"
+          data-testid="FIE-tools-bar-items"
           isPhoneScreen={isPhoneScreen}
         >
           {currentTabId !== TABS_IDS.WATERMARK ? (
-            <Carousel className="FIE_tools" style={style}>
+            <Carousel
+              className="FIE_tools"
+              style={style}
+              data-testid="FIE-tools-bar-carousel"
+            >
               {items}
             </Carousel>
           ) : (

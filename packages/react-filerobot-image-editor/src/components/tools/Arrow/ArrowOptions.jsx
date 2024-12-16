@@ -15,6 +15,7 @@ const ArrowOptions = ({ t }) => {
   return (
     <AnnotationOptions
       className="FIE_arrow-tool-options"
+      dataTestId="FIE-arrow-tool-options"
       annotation={arrow}
       updateAnnotation={saveArrow}
       t={t}

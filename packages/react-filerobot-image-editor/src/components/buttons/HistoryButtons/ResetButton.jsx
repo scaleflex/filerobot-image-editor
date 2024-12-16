@@ -16,6 +16,7 @@ const ResetButton = (props) => {
     <ResetConfirmationModal>
       <StyledHistoryButton
         className="FIE_buttons-reset-btn"
+        data-testid="FIE-reset-button"
         color="basic"
         size="sm"
         disabled={isResetted || isBlockerError}

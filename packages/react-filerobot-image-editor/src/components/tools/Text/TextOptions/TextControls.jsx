@@ -61,6 +61,7 @@ const TextControls = ({ text: tmpTextAnnotation, saveText, children }) => {
   return (
     <AnnotationOptions
       className="FIE_text-tool-options"
+      dataTestId="FIE_text-tool-options"
       annotation={text}
       updateAnnotation={updateTargetTextFormats}
       morePoppableOptionsPrepended={!useCloudimage ? TEXT_POPPABLE_OPTIONS : []}
@@ -92,6 +93,7 @@ const TextControls = ({ text: tmpTextAnnotation, saveText, children }) => {
       )}
       <StyledFontSizeInput
         className="FIE_text-size-option"
+        data-testid="FIE-text-size-option"
         value={text.fontSize || ''}
         name="fontSize"
         onChange={(e) =>
@@ -108,6 +110,7 @@ const TextControls = ({ text: tmpTextAnnotation, saveText, children }) => {
           <>
             <StyledIconWrapper
               className="FIE_text-bold-option"
+              data-testid="FIE-text-bold-option"
               active={text.fontWeight === 'bold'}
               onClick={() =>
                 updateTargetTextFormats({
@@ -120,6 +123,7 @@ const TextControls = ({ text: tmpTextAnnotation, saveText, children }) => {
             </StyledIconWrapper>
             <StyledIconWrapper
               className="FIE_text-italic-option"
+              data-testid="FIE-text-italic-option"
               active={text.fontStyle === 'italic'}
               onClick={() =>
                 updateTargetTextFormats({

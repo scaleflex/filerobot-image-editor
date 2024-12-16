@@ -49,6 +49,7 @@ const WarmthOptions = ({ t }) => {
           style={sliderStyle}
         />
         <StyledSliderInput
+          data-testid="FIE-warmth-option-input"
           value={finetuneProps.warmth ?? DEFAULT_VALUE.warmth}
           onChange={({ target: { value } }) => changeValue(value)}
         />
