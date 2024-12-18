@@ -35,6 +35,7 @@ const BackButton = ({ onBack, backLabel, ...props }) => {
     >
       <Button
         className="FIE_buttons-back-btn"
+        data-testid="FIE_buttons-back-btn"
         color="link-secondary"
         size="sm"
         startIcon={<ArrowLeftOutline />}

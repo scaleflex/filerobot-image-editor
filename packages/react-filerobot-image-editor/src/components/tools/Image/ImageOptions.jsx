@@ -135,6 +135,7 @@ const ImageOptions = () => {
     <ImageControls image={image} saveImage={saveImage} t={t}>
       <ButtonWithMenu
         className="FIE_image-tool-add-option"
+        dataTestId="FIE_image-tool-add-option"
         color="secondary"
         label={t('addImage')}
         title={t('addImageTitle')}

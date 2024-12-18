@@ -29,6 +29,7 @@ const ButtonWithMenu = ({
   buttonRef,
   noMargin,
   buttonSize = 'sm',
+  dataTestId,
 }) => {
   const { t } = useStore();
   const isMounted = useRef(true);
@@ -90,7 +91,7 @@ const ButtonWithMenu = ({
       >
         <StyledMainButton
           className={`${className}-button`}
-          data-testid="FIE-button-with-menu-button"
+          data-testid={dataTestId || 'FIE-button-with-menu-button'}
           color={color}
           size={buttonSize}
           title={title}
@@ -166,6 +167,7 @@ ButtonWithMenu.propTypes = {
   wrapperStyle: PropTypes.instanceOf(Object),
   buttonRef: PropTypes.instanceOf(Object),
   buttonSize: PropTypes.string,
+  dataTestId: PropTypes.string,
 };
 
 export default ButtonWithMenu;
