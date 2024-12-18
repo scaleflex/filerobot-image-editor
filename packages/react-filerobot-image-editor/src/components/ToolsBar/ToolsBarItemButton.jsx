@@ -17,6 +17,7 @@ const ToolsBarItemButton = ({
   isSelected = false,
   children,
   className,
+  dataTestId,
 }) => {
   const isPhoneScreen = usePhoneScreen(320);
 
@@ -30,17 +31,13 @@ const ToolsBarItemButton = ({
       onClick={handleClick}
       aria-selected={isSelected}
       isPhoneScreen={isPhoneScreen}
-      data-testid={`FIE-tools-bar-item-button-${id.toLowerCase()}`}
+      data-testid={
+        dataTestId || `FIE-tools-bar-item-button-${id.toLowerCase()}`
+      }
     >
-      <Icon
-        size={isPhoneScreen ? 20 : 16}
-        data-testid={`FIE-tools-bar-item-button-icon-${id.toLowerCase()}`}
-      />
+      <Icon size={isPhoneScreen ? 20 : 16} />
       {label && (
-        <StyledToolsBarItemButtonLabel
-          isPhoneScreen={isPhoneScreen}
-          data-testid={`FIE-tools-bar-item-button-label-${id.toLowerCase()}`}
-        >
+        <StyledToolsBarItemButtonLabel isPhoneScreen={isPhoneScreen}>
           {label}
         </StyledToolsBarItemButtonLabel>
       )}
@@ -56,6 +53,7 @@ ToolsBarItemButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
+  dataTestId: PropTypes.string,
   Icon: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.func,

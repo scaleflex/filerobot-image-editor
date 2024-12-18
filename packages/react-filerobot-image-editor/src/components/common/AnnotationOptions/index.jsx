@@ -135,6 +135,7 @@ const AnnotationOptions = ({
             option && (
               <StyledIconWrapper
                 className="FIE_annotation-option-triggerer"
+                data-testid={`FIE-annotation-option-triggerer-${option.name}`}
                 key={option.name}
                 title={t(option.titleKey)}
                 onClick={(e) => toggleOptionPopup(e, option.name)}

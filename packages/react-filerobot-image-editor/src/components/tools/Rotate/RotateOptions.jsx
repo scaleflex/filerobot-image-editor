@@ -86,7 +86,7 @@ const RotateOptions = () => {
   return (
     <StyledRotationOptions>
       <StyledRotateButton
-        data-testid="FIE-rotate-reset-button"
+        data-testid="FIE-rotate-reset-button-left"
         size="sm"
         color="basic"
         onClick={(e) => changeRotation(e, rotation - 90)}
@@ -105,7 +105,7 @@ const RotateOptions = () => {
         onChange={changeRotation}
       />
       <StyledRotateButton
-        data-testid="FIE-rotate-reset-button"
+        data-testid="FIE-rotate-reset-button-right"
         size="sm"
         color="basic"
         onClick={(e) => changeRotation(e, rotation + 90)}

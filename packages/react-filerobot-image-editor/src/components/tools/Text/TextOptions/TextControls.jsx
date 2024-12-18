@@ -74,6 +74,7 @@ const TextControls = ({ text: tmpTextAnnotation, saveText, children }) => {
       {Array.isArray(fonts) && fonts.length > 1 && (
         <StyledFontFamilySelect
           className="FIE_text-font-family-option"
+          data-testid="FIE-text-font-family-option"
           onChange={changeFontFamily}
           value={text.fontFamily?.toLowerCase()}
           placeholder={t('fontFamily')}

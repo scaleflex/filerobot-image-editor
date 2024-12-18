@@ -125,17 +125,14 @@ const ButtonWithMenu = ({
               item && (
                 <StyledMenuItem
                   className={`${className}-menu-item`}
-                  data-testid="FIE-button-with-menu-menu-item"
+                  data-testid={`FIE-button-with-menu-menu-item-${item.label}`}
                   key={item.key}
                   active={item.isActive}
                   onClick={() => handleMenuItemClick(item.onClick)}
                   size={buttonSize}
                 >
                   {item.icon && (
-                    <StyledMenuIcon
-                      size={buttonSize}
-                      data-testid="FIE-button-with-menu-menu-item-icon"
-                    >
+                    <StyledMenuIcon size={buttonSize}>
                       {typeof item.icon === 'string' ? (
                         // eslint-disable-next-line react/no-danger
                         <span dangerouslySetInnerHTML={{ __html: item.icon }} />
@@ -144,9 +141,7 @@ const ButtonWithMenu = ({
                       )}
                     </StyledMenuIcon>
                   )}
-                  <MenuItemLabel data-testid="FIE-button-with-menu-menu-item-label">
-                    {item.label}
-                  </MenuItemLabel>
+                  <MenuItemLabel>{item.label}</MenuItemLabel>
                 </StyledMenuItem>
               ),
           )}
