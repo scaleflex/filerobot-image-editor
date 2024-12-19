@@ -156,7 +156,6 @@ const useAnnotation = (
       tmpAnnotation.name &&
       tmpAnnotation.name !== toolId;
 
-    console.log('start');
     if (shouldChangeTool) {
       selectTool(tmpAnnotation.name, true);
     }
