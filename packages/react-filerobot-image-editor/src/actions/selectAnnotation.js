@@ -32,7 +32,9 @@ const selectAnnotation = (state, payload) => {
 
   return {
     ...state,
-    textIdOfEditableContent: null,
+    textIdOfEditableContent: payload.keepTextEditing
+      ? state.textIdOfEditableContent
+      : null,
     selectionsIds: newSelectionsIds,
     toolId: payload.toolId || state.toolId,
   };

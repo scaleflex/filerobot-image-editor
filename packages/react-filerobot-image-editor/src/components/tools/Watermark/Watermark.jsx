@@ -209,6 +209,7 @@ const Watermark = () => {
         type: SELECT_ANNOTATION,
         payload: {
           annotationId: 'watermark',
+          keepTextEditing: true,
         },
       });
     }
