@@ -199,11 +199,17 @@ const cloudimageQueryToDesignState = (
   } = designState;
 
   if (designState.adjustments?.isFlippedX) {
-    crop.x = shownImageDimensions.width - (cropX2 || 0);
+    crop.x =
+      crop?.lockCropAreaAt || crop?.noEffect
+        ? 0
+        : shownImageDimensions.width - (cropX2 || 0);
   }
 
   if (designState.adjustments?.isFlippedY) {
-    crop.y = shownImageDimensions.height - (cropY2 || 0);
+    crop.y =
+      crop?.lockCropAreaAt || crop?.noEffect
+        ? 0
+        : shownImageDimensions.height - (cropY2 || 0);
   }
 
   const validDesignState = {
