@@ -23,6 +23,10 @@ const StyledOptions = styled.div`
   svg {
     color: ${({ theme: { palette } }) => palette[PC.IconsPrimary]};
   }
+
+  button svg {
+    color: currentColor;
+  }
 `;
 
 const StyledOptionsWrapper = styled.div`

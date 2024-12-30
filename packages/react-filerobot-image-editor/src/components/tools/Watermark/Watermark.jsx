@@ -15,6 +15,7 @@ import ImageControls from 'components/tools/Image/ImageControls';
 import { usePhoneScreen, useSetAnnotation, useStore } from 'hooks';
 import { FEEDBACK_STATUSES, TOOLS_IDS } from 'utils/constants';
 import HiddenUploadInput from 'components/common/HiddenUploadInput';
+import { Plus, PlusOutline } from '@scaleflex/icons';
 import {
   StyledControlsWrapper,
   StyledWatermarkWrapper,
@@ -232,11 +233,14 @@ const Watermark = () => {
   ];
 
   const addWatermarkLabel = () => {
-    if (isPhoneScreen) return t('plus');
+    if (isPhoneScreen) return <Plus />;
 
-    if (menuItems[0]) return t('addWatermark');
-
-    return t('addTextWatermark');
+    return (
+      <>
+        <PlusOutline />
+        {menuItems[0] ? t('addWatermark') : t('addTextWatermark')}
+      </>
+    );
   };
 
   const renderWatermarkPadding = () => (

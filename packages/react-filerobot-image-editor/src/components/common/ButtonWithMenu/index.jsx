@@ -157,7 +157,7 @@ ButtonWithMenu.propTypes = {
   className: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   title: PropTypes.string,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   color: PropTypes.string,
   menuFromBtn: PropTypes.bool,
   noMargin: PropTypes.bool,

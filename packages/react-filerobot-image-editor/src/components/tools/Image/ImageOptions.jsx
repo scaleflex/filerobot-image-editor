@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React, { useMemo, useRef, useState } from 'react';
-import { Images, UploadOutline } from '@scaleflex/icons';
+import { Images, PlusOutline, UploadOutline } from '@scaleflex/icons';
 
 /** Internal Dependencies */
 import { useImageScaled, useStore } from 'hooks';
@@ -137,7 +137,12 @@ const ImageOptions = () => {
         className="FIE_image-tool-add-option"
         dataTestId="FIE_image-tool-add-option"
         color="secondary"
-        label={t('addImage')}
+        label={
+          <>
+            <PlusOutline />
+            {t('addImage')}
+          </>
+        }
         title={t('addImageTitle')}
         menuPosition="top"
         menuItems={menuItems}

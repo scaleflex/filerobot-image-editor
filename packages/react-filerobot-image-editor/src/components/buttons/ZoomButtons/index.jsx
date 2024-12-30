@@ -1,7 +1,7 @@
 /** External Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MinusOutline, PlusOutline, PositionCenter } from '@scaleflex/icons';
+import { Minus, Plus, PositionCenter } from '@scaleflex/icons';
 import Menu from '@scaleflex/ui/core/menu';
 import MenuItem, { MenuItemLabel } from '@scaleflex/ui/core/menu-item';
 
@@ -53,7 +53,7 @@ const ZoomButtons = ({ showFitCenterButton = true, ...props }) => {
         className="FIE_buttons-zoom-out-btn"
         data-testid="FIE-zoom-out-button"
       >
-        <MinusOutline />
+        <Minus />
       </StyledSmallButton>
       <StyledZoomPercentageLabel
         title={t('toggleZoomMenuTitle')}
@@ -78,7 +78,7 @@ const ZoomButtons = ({ showFitCenterButton = true, ...props }) => {
         className="FIE_buttons-zoom-in-btn"
         data-testid="FIE-zoom-in-button"
       >
-        <PlusOutline />
+        <Plus />
       </StyledSmallButton>
       {showFitButton && (
         <StyledSmallButton
