@@ -20,6 +20,11 @@ Types of changes:
 > `- **BREAKING**: Some message`
 
 ---
+## v4.9.1 - 2024-12-30
+
+### Fixed
+- Watermark menu overlay was blocking the UI ([#502](https://github.com/scaleflex/filerobot-image-editor/issues/502) & ([#514](https://github.com/scaleflex/filerobot-image-editor/issues/514))).
+
 ## v4.9.0 - 2024-10-27
 
 ### Fixed
