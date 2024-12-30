@@ -77,6 +77,7 @@ const useLoadMainSource = ({
         payload: {
           originalSource: newSource,
           dismissHistory: newSource?.noHistoryRecord,
+          keepPrevZoomRatio: keepZoomOnSourceChange,
           ...(!(resetOnSourceChange || keepZoomOnSourceChange) && {
             zoom: {
               factor: DEFAULT_ZOOM_FACTOR,

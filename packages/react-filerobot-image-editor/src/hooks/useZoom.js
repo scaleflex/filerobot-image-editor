@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { ZOOM_CANVAS } from 'actions';
 import getZoomFitFactor from 'utils/getZoomFitFactor';
 import { DEFAULT_ZOOM_FACTOR, TOOLS_IDS } from 'utils/constants';
-import toPrecisedFloat from 'utils/toPrecisedFloat';
+import getShownImageZoomPercentage from 'utils/getShownImageZoomPercentage';
 import useStore from './useStore';
 
 const MULTIPLY_ZOOM_FACTOR = 1.1;
@@ -79,11 +79,13 @@ const useZoom = () => {
       return zoom.customLabel;
     }
 
-    const previewToRealImgFactor =
-      originalSource && !resize.width && !resize.height
-        ? shownImageDimensions.originalSourceInitialScale * zoom.factor
-        : zoom.factor;
-    return `${toPrecisedFloat(previewToRealImgFactor * 100, 0) || '100'}%`;
+    const zoomPercentage = getShownImageZoomPercentage({
+      originalSource,
+      resize,
+      shownImageDimensions,
+      zoom,
+    });
+    return `${zoomPercentage}%`;
   };
 
   const isZoomDisabled = toolId === TOOLS_IDS.CROP || isBlockerError;

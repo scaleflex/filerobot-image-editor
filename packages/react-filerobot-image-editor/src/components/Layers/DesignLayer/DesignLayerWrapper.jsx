@@ -11,6 +11,7 @@ import { SET_SHOWN_IMAGE_DIMENSIONS } from 'actions';
 import { useStore } from 'hooks';
 import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import getCenterRotatedPoint from 'utils/getCenterRotatedPoint';
+import getOriginalSourceInitialScale from 'utils/getOriginalSourceInitialScale';
 import LayersBackground from '../LayersBackground';
 
 const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
@@ -43,15 +44,11 @@ const DesignLayerWrapper = ({ children, previewGroupRef, ...props }) => {
 
   const originalSourceInitialScale = useMemo(
     () =>
-      initialCanvasWidth >= originalSource.width &&
-      initialCanvasHeight >= originalSource.height
-        ? 1
-        : getDimensionsMinimalRatio(
-            initialCanvasWidth,
-            initialCanvasHeight,
-            originalSource.width,
-            originalSource.height,
-          ),
+      getOriginalSourceInitialScale({
+        initialCanvasWidth,
+        initialCanvasHeight,
+        originalSource,
+      }),
     [originalSource, initialCanvasWidth, initialCanvasHeight],
   );
 
