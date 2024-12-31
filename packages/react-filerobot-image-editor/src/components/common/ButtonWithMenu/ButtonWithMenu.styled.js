@@ -20,6 +20,11 @@ const StyledMainButton = styled(Button)`
   .SfxButton-EndIcon {
     margin-left: 7px;
   }
+
+  .SfxButton-Label {
+    display: flex;
+    gap: 4px;
+  }
 `;
 
 const StyledMenu = styled(Menu)`
