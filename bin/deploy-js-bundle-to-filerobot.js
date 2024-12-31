@@ -5,7 +5,7 @@ const { createReadStream } = require('fs');
 const { join } = require('path');
 const {
   version: originalVersion,
-} = require('../packages/filerobot-image-editor/package.json');
+} = require('../lerna.json');
 
 const splittedVersion = originalVersion.split('.');
 const version = splittedVersion
@@ -58,7 +58,6 @@ const deploy = (sassKey, uploadToSubFolder) => {
     method: 'POST',
     body: formData,
     headers: {
-      'Content-Type': 'multipart/form-data',
       'X-Filerobot-Key': sassKey,
     },
   })
