@@ -1,4 +1,6 @@
 /** Internal dependencies */
+import calculateZoomData from 'utils/calculateZoomData';
+import { DEFAULT_ZOOM_FACTOR } from 'utils/constants';
 import getOriginalSourceInitialScale from 'utils/getOriginalSourceInitialScale';
 import getShownImageZoomPercentage from 'utils/getShownImageZoomPercentage';
 
@@ -23,16 +25,18 @@ const setOriginalSource = (state, payload) => {
     // but first load it is not defined here cause the canvas size wasn't defined it.
     const newSourceInitialScale = getOriginalSourceInitialScale({
       initialCanvasWidth: state.initialCanvasWidth,
-      initialCanvasHeight: state.initialCanvasWidth,
+      initialCanvasHeight: state.initialCanvasHeight,
       originalSource: payload.originalSource,
     });
 
     const factor =
       getShownImageZoomPercentage(state) / 100 / newSourceInitialScale;
-    zoom = {
-      ...state.zoom,
-      factor,
-    };
+    zoom = calculateZoomData(
+      { ...zoom, x: state.canvasWidth / 2, y: state.canvasHeight / 2, factor },
+      { factor: DEFAULT_ZOOM_FACTOR, x: null, y: null, customLabel: null },
+      state.canvasWidth,
+      state.canvasHeight,
+    );
   }
 
   return {

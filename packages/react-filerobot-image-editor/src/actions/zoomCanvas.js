@@ -46,7 +46,7 @@ const zoomCanvas = (state, payload) => {
 
     newZoomData = calculateZoomData(
       { ...newZoomPoint, factor: newZoomFactor },
-      // `isAbsoluteZoom` means we don't depend on the old zoom, and we are going to zoom & pan assuming it's happening for firsst time.
+      // `isAbsoluteZoom` means we don't depend on the old zoom, and we are going to zoom & pan assuming it's happening for first time.
       payload.isAbsoluteZoom
         ? { factor: DEFAULT_ZOOM_FACTOR, x: null, y: null, customLabel: null }
         : state.zoom,

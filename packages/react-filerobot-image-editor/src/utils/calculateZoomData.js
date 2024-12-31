@@ -3,6 +3,7 @@ import { DEFAULT_ZOOM_FACTOR } from './constants';
 const calculateZoomData = (newZoom, oldZoom, canvasWidth, canvasHeight) => {
   if (newZoom.factor === DEFAULT_ZOOM_FACTOR) {
     return {
+      ...newZoom,
       x: 0,
       y: 0,
       factor: DEFAULT_ZOOM_FACTOR,
@@ -40,6 +41,7 @@ const calculateZoomData = (newZoom, oldZoom, canvasWidth, canvasHeight) => {
   }
 
   return {
+    ...newZoom,
     ...newPos,
     factor: newZoom.factor,
   };
