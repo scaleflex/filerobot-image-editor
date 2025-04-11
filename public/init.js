@@ -27,7 +27,7 @@ const copyButtons = document.querySelectorAll('.copy-button');
 const accordions = document.querySelectorAll('[data-accordion]');
 
 let useCloudimage = false;
-const { TABS } = FilerobotImageEditor;
+const { TABS, TOOLS } = FilerobotImageEditor;
 
 const EXAMPLE_CODE_TABS = {
   'js-code-tab': jsCodeWrapper,
@@ -50,6 +50,17 @@ const selectedTabs = [
   TABS.RESIZE,
 ];
 
+const selectedAnnotationTools = [
+  TOOLS.TEXT,
+  TOOLS.IMAGE,
+  TOOLS.RECT,
+  TOOLS.ELLIPSE,
+  TOOLS.POLYGON,
+  TOOLS.PEN,
+  TOOLS.LINE,
+  TOOLS.ARROW,
+];
+
 const IMG_EDITOR_TABS = {
   adjust: TABS.ADJUST,
   finetune: TABS.FINETUNE,
@@ -63,6 +74,7 @@ const pluginConfig = {
   ...config,
   source: 'https://scaleflex.cloudimg.io/v7/demo/river.png',
   tabsIds: selectedTabs,
+  annotationToolsIds: selectedAnnotationTools,
   defaultTabId: TABS.ADJUST,
   defaultToolId: null,
   observePluginContainerSize: true,
@@ -207,7 +219,6 @@ function changeModeHandler() {
 
     useCloudimage = false;
   }
-
   filerobotImageEditor.render({ useCloudimage, tabsIds: [...selectedTabs] });
 }
 

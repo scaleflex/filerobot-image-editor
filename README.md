@@ -435,6 +435,20 @@ import VanillaFilerobotImageEditor from 'filerobot-image-editor';
 const { TABS, TOOLS } = VanillaFilerobotImageEditor;
 ```
 
+#### `annotationToolsIds`
+
+<u>Type:</u> `string[]`
+
+<u>Supported version:</u> +v4.0.0
+
+<u>Default:</u> `[]`
+
+The provided tools in annotation will be shown to the user, if empty array provided or left by default all tools in annotation will be shown.
+
+```
+['Text', 'Image', 'Rect', 'Ellipse', 'Polygon', 'Pen', 'Line', 'Arrow']
+```
+
 #### `defaultTabId`
 
 <u>Type:</u> `string`

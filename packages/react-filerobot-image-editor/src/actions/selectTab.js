@@ -9,12 +9,12 @@ const selectTab = (state, payload) =>
     : {
         ...state,
         tabId: payload.tabId,
-        toolId: TABS_TOOLS[payload.tabId][0],
+        toolId: TABS_TOOLS[payload.tabId][payload.toolId],
         selectionsIds: [],
         pointerCssIcon:
           payload.tabId === TABS_IDS.ANNOTATE
             ? POINTER_ICONS.DRAW
             : POINTER_ICONS.DEFAULT,
-      };
+};
 
 export default selectTab;

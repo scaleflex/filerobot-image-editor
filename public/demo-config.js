@@ -351,6 +351,7 @@ const config = {
   // forceToPngInEllipticalCrop: false, // in case the develop wants to force the saved image to be PNG if there is elliptical crop is done otherwise the provided savedImageType would be used.
   // onClose: () => console.log('Act closing 👅'), // if we have value then close button will be shown unless showBackButton is true then if onClose has value the back button will be shown otherwise nothing will be shown.
   // tabsIds: [TABS.ADJUST, TABS.WATERMARK],
+  // annotationToolsIds: [],
   // savingPixelRatio: 4,
   previewPixelRatio: window.devicePixelRatio * 4,
   // defaultTabId: TABS.ADJUST,

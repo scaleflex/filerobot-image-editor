@@ -292,6 +292,7 @@ export interface FilerobotImageEditorConfig {
   };
   // TABS_IDS
   tabsIds?: availableTabs[] | [];
+  annotationToolsIds?: availableTools[] | [];
   defaultTabId?: availableTabs;
   defaultToolId?: availableTools;
   onBeforeSave?: (savedImageData: savedImageData) => void | boolean;

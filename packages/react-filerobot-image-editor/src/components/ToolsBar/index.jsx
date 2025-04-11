@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 /** Internal Depepdencneis */
 import { SELECT_TOOL } from 'actions';
-import { TABS_TOOLS, TOOLS_ITEMS } from 'components/tools/tools.constants';
-import { TABS_IDS } from 'utils/constants';
+import { TABS_TOOLS, TOOLS_ITEMS, AVAILABLE_ANNOTATIONS_TOOLS } from 'components/tools/tools.constants';
+import { TABS_IDS, TOOLS_IDS } from 'utils/constants';
 import { useStore } from 'hooks';
 import Carousel from 'components/common/Carousel';
 import { StyledToolsBar, StyledToolsBarItems } from './ToolsBar.styled';
@@ -21,7 +21,7 @@ const ToolsBar = ({ isPhoneScreen }) => {
     toolId,
     annotations,
     selectionsIds = [],
-    config: { defaultTabId, defaultToolId, useCloudimage },
+    config: { annotationToolsIds, defaultTabId, defaultToolId, useCloudimage },
   } = useStore();
   const currentTabId = tabId || defaultTabId;
   const currentToolId =
@@ -41,25 +41,46 @@ const ToolsBar = ({ isPhoneScreen }) => {
     });
   }, []);
 
-  const items = useMemo(
-    () =>
-      tabTools.map((id) => {
-        const { Item, hideFn } = TOOLS_ITEMS[id];
+  const items = useMemo(() => {
+    console.log({TABS_IDS, TABS_TOOLS: TABS_TOOLS.Annotate, tabTools});
+    const shouldShowTool = (id) =>
+      !TOOLS_ITEMS[id]?.hideFn || !TOOLS_ITEMS[id].hideFn({ useCloudimage });
+  
+    const renderItem = (id) => {
+      const { Item, hideFn } = TOOLS_ITEMS[id];
+      if (!Item || (hideFn && hideFn({ useCloudimage }))) return null;
+  
+      return (
+        <Item
+          key={id}
+          selectTool={selectTool}
+          t={t}
+          isSelected={currentToolId === id}
+        />
+      );
+    };
 
-        return (
-          Item &&
-          (!hideFn || !hideFn({ useCloudimage })) && (
-            <Item
-              key={id}
-              selectTool={selectTool}
-              t={t}
-              isSelected={currentToolId === id}
-            />
-          )
-        );
-      }),
-    [tabTools, currentToolId],
-  );
+    if (currentTabId === TABS_IDS.ANNOTATE) {
+      let orderedToolIds = [];
+  
+      if (annotationToolsIds.length > 0) {
+        orderedToolIds = TABS_TOOLS.Annotate.reduce((acc, id) => {
+          const index = annotationToolsIds.indexOf(id);
+          if (index !== -1) acc[index] = id;
+          return acc;
+        }, []);
+        console.log({orderedToolIds});
+      } else {
+        orderedToolIds = [...TABS_TOOLS.Annotate];
+      }
+  
+      return (orderedToolIds.length ? orderedToolIds : TABS_TOOLS.Annotate)
+        .filter(shouldShowTool)
+        .map(renderItem);
+    }
+  
+    return tabTools.map(renderItem);
+  }, [currentTabId, tabTools, annotationToolsIds, currentToolId, useCloudimage]);
 
   const ToolOptionsComponent = useMemo(() => {
     if (!currentToolId) {
