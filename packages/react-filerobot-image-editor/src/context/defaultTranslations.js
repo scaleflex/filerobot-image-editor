@@ -113,4 +113,9 @@ export default {
   height: 'Height',
   plus: '+',
   cropItemNoEffect: 'No preview available for this crop item',
+  square1X1: 'Square 1:1',
+  portrait4X5: 'Portrait 4:5',
+  widescreen16X9: '16:9',
+  standard4X3: '4:3',
+  portrait9X16: '9:16',
 };

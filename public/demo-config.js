@@ -173,6 +173,8 @@ const config = {
     // minHeight: 300,
     // autoResize: false,
     // lockCropAreaAt: 'center-center',
+    // dynamicButtons: true,
+    // ratio: 'custom',
     presetsItems: [
       {
         titleKey: 'classicTv',
