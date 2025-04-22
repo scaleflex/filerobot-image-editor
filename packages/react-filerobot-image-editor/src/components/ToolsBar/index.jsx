@@ -23,7 +23,7 @@ const ToolsBar = ({ isPhoneScreen, dynamicButtons, upperToolbar }) => {
     toolId,
     annotations,
     selectionsIds = [],
-    config: { defaultTabId, defaultToolId, useCloudimage, Crop },
+    config: { defaultTabId, defaultToolId, useCloudimage, Crop = {} },
     dynamicCropToolId,
   } = useStore();
   const currentTabId = tabId || defaultTabId;
@@ -38,16 +38,19 @@ const ToolsBar = ({ isPhoneScreen, dynamicButtons, upperToolbar }) => {
     return tools.filter((tool) => !toolsToExclude.includes(tool));
   }, [currentTabId, dynamicButtons]);
 
-  const selectTool = useCallback((newToolId) => {
-    dispatch({
-      type: SELECT_TOOL,
-      payload: {
-        toolId: newToolId,
-        dynamicButtons: Crop.dynamicButtons,
-        dynamicCropToolId: '',
-      },
-    });
-  }, []);
+  const selectTool = useCallback(
+    (newToolId) => {
+      dispatch({
+        type: SELECT_TOOL,
+        payload: {
+          toolId: newToolId,
+          dynamicButtons: Crop.dynamicButtons,
+          dynamicCropToolId: '',
+        },
+      });
+    },
+    [Crop.dynamicButtons],
+  );
 
   const allPresets = useMemo(() => {
     const { presetsItems = [], presetsFolders = [], lockCropAreaAt } = Crop;
@@ -58,7 +61,7 @@ const ToolsBar = ({ isPhoneScreen, dynamicButtons, upperToolbar }) => {
     return dynamicButtons
       ? [...presetsItems]
       : [...presetsFolders, ...defaultPresets, ...presetsItems];
-  }, [Crop]);
+  }, [Crop, dynamicButtons]);
 
   const items = useMemo(() => {
     if (upperToolbar) {

@@ -5,7 +5,7 @@ const selectTool = (state, payload) => {
     ? {
         ...state,
         ...(payload?.dynamicButtons && {
-          dynamicCropToolId: payload.dynamicToolId,
+          dynamicCropToolId: payload.dynamicCropToolId,
         }),
       }
     : {
@@ -13,7 +13,7 @@ const selectTool = (state, payload) => {
         toolId: payload.toolId,
         selectionsIds: payload.keepSelections ? state.selectionsIds : [],
         ...(payload?.dynamicButtons && {
-          dynamicCropToolId: payload.dynamicToolId,
+          dynamicCropToolId: payload.dynamicCropToolId,
         }),
       };
 };

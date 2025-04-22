@@ -38,7 +38,7 @@ const CustomCropButtons = (props) => {
       payload: {
         toolId: TOOLS_IDS.CROP,
         dynamicButtons: cropConfig.dynamicButtons,
-        dynamicToolId: cropProps.ratioTitleKey,
+        dynamicCropToolId: cropProps.ratioTitleKey,
       },
     });
 
@@ -73,7 +73,7 @@ const CustomCropButtons = (props) => {
     <ToolsBarItemButton
       key={customKey}
       className="FIE_text-tool-button"
-      id={TOOLS_IDS.CUSTOMCROP}
+      id={TOOLS_IDS.CROP}
       label={t(item.titleKey)}
       Icon={item.icon}
       onClick={(id, e) =>
