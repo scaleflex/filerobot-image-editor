@@ -7,6 +7,7 @@ import restrictNumber from 'utils/restrictNumber';
 import ColorInput from 'components/common/ColorInput';
 import { StyledSpacedOptionFields } from './AnnotationOptions.styled';
 import Slider from '../Slider';
+import { StyledSliderInput } from 'components/tools/tools.styled';
 
 const MIN_PERCENTANGE = 0;
 const MAX_PERCENTANGE = 100;
@@ -30,6 +31,10 @@ const StrokeFields = ({ annotation, updateAnnotation }) => {
 
   return (
     <StyledSpacedOptionFields>
+      <StyledSliderInput
+          value={strokeWidth}
+          onChange={({ target: { value } }) => changeStrokeWidth(value)}
+        />
       <Slider
         annotation="px"
         onChange={changeStrokeWidth}

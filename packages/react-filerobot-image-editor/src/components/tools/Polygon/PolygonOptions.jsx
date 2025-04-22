@@ -25,6 +25,7 @@ const PolygonOptions = ({ t }) => {
       updateAnnotation={savePolygon}
       t={t}
       hidePositionField
+      hideStrokeField
     />
   );
 };

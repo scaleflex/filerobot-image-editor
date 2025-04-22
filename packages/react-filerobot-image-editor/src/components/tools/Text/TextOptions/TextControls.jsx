@@ -125,6 +125,7 @@ const TextControls = ({ text, saveText, children }) => {
       moreOptionsPopupComponentsObj={
         !useCloudimage ? textOptionsPopupComponents : {}
       }
+      hideStrokeField
       t={t}
     >
       {Array.isArray(fonts) && fonts.length > 1 && (

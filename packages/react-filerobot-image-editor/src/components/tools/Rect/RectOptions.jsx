@@ -23,6 +23,7 @@ const RectOptions = ({ t }) => {
       morePoppableOptionsPrepended={RECT_POPPABLE_OPTIONS}
       annotation={rect}
       updateAnnotation={saveRect}
+      hideStrokeField
       t={t}
     />
   );

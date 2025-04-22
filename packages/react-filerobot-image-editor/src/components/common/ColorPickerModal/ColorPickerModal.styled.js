@@ -22,9 +22,6 @@ const ColorPickerWrap = styled.div`
     .SfxColorPicker-select {
       width: 100px;
     }
-    .SfxInput-root {
-      width: 190px !important;
-    }
   }
 
   .SfxColorPicker-icon {
