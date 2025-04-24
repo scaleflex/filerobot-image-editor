@@ -53,13 +53,9 @@ const AnnotationOptions = ({
         name: POPPABLE_OPTIONS.OPACITY,
         Icon: Transparency,
       },
-      ...(!useCloudimage && hideStrokeField
+      ...(!useCloudimage
         ? [
-            { titleKey: 'stroke', name: POPPABLE_OPTIONS.STROKE, Icon: Stroke },
-            { titleKey: 'shadow', name: POPPABLE_OPTIONS.SHADOW, Icon: Shadow },
-          ]
-        : !useCloudimage
-        ? [
+            ...(hideStrokeField ? [{ titleKey: 'stroke', name: POPPABLE_OPTIONS.STROKE, Icon: Stroke }] : []),
             { titleKey: 'shadow', name: POPPABLE_OPTIONS.SHADOW, Icon: Shadow },
           ]
         : []),
@@ -126,7 +122,12 @@ const AnnotationOptions = ({
       className={`FIE_annotations-options${className ? ` ${className}` : ''}`}
       isPhoneScreen={isPhoneScreen}
     >
-      { !hideStrokeField && <StrokeFields annotation={annotation} updateAnnotation={updateAnnotation} /> }
+      { !hideStrokeField && (
+        <StrokeFields 
+          annotation={annotation} 
+          updateAnnotation={updateAnnotation} 
+        /> 
+      )}
       { !hideFillOption && (
         <ColorInput
           color={annotation.fill}

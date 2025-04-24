@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 /** Internal Dependencies */
 import restrictNumber from 'utils/restrictNumber';
 import ColorInput from 'components/common/ColorInput';
+import { StyledSliderInput } from 'components/tools/tools.styled';
 import { StyledSpacedOptionFields } from './AnnotationOptions.styled';
 import Slider from '../Slider';
-import { StyledSliderInput } from 'components/tools/tools.styled';
 
 const MIN_PERCENTANGE = 0;
 const MAX_PERCENTANGE = 100;
