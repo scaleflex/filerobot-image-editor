@@ -106,6 +106,7 @@ export default {
   translations: null,
   language: 'en',
   avoidChangesNotSavedAlertOnLeave: false,
+  avoidChangesNotSavedAlertOnClose: false,
   loadableDesignState: null,
   moreSaveOptions: [],
   savingPixelRatio: 4,

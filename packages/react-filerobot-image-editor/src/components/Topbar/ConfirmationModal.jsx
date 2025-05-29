@@ -17,7 +17,7 @@ const ConfirmationModal = ({ children, isReset }) => {
     dispatch,
     isResetted = true,
     haveNotSavedChanges,
-    config: { onClose },
+    config: { onClose, avoidChangesNotSavedAlertOnClose },
   } = useStore();
 
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -33,10 +33,6 @@ const ConfirmationModal = ({ children, isReset }) => {
     setIsModalOpened(false);
   };
 
-  const openModal = () => {
-    setIsModalOpened(true);
-  };
-
   const dispatchReset = useCallback(() => {
     dispatch({ type: RESET, payload: { config } });
     cancelModal();
@@ -47,6 +43,15 @@ const ConfirmationModal = ({ children, isReset }) => {
 
     onClose(CLOSING_REASONS.CLOSE_BUTTON, haveNotSavedChanges);
     dispatchReset();
+  };
+
+  const openModal = () => {
+    // Don't open the modal if avoidChangesNotSavedAlertOnClose is true
+    if (avoidChangesNotSavedAlertOnClose) {
+      closeWithReason();
+      return;
+    }
+    setIsModalOpened(true);
   };
 
   return (

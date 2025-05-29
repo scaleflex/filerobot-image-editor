@@ -497,6 +497,16 @@ If provided will be used in overriding the default translations arrived locally 
 
 By default once the user makes any change/edit on the image and hasn't saved the image yet and tried to leave the page before saving then a browser's confirmation would be shown asking him if he really wants to leave before saving, `true` means it won't be shown.
 
+#### `avoidChangesNotSavedAlertOnClose`
+
+<u>Type:</u> `boolean`
+
+<u>Supported version:</u> +v5.0.0
+
+<u>Default:</u> `false`
+
+By default once the user makes any change/edit on the image and hasn't saved the image yet and then clicks on the close button, a confirmation modal will be shown asking if they really want to close without saving. Setting this to `true` will skip showing the confirmation modal and close immediately.
+
 #### `showBackButton`
 
 <u>Type:</u> `boolean`
