@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 /** Internal Depepdencneis */
 import { SELECT_TOOL } from 'actions';
-import { TABS_TOOLS, TOOLS_ITEMS} from 'components/tools/tools.constants';
+import { TABS_TOOLS, TOOLS_ITEMS } from 'components/tools/tools.constants';
 import { TABS_IDS } from 'utils/constants';
 import { useStore } from 'hooks';
 import Carousel from 'components/common/Carousel';
@@ -62,8 +62,10 @@ const ToolsBar = ({ isPhoneScreen }) => {
 
     if (currentTabId === TABS_IDS.ANNOTATE) {
       const annotateToolIds = annotationToolsIds.length
-      ? annotationToolsIds.map((_, index) => TABS_TOOLS.Annotate.find(id => annotationToolsIds.indexOf(id) === index)).filter(Boolean)
-      : TABS_TOOLS.Annotate;
+        ? annotationToolsIds.filter((toolId) =>
+            TABS_TOOLS.Annotate.includes(toolId),
+          )
+        : TABS_TOOLS.Annotate;
 
       return annotateToolIds.filter(isToolVisible).map(renderItem);
     }

@@ -37,11 +37,25 @@ declare const TOOLS = {
   RESIZE: 'Resize',
 } as const;
 
+declare const ANNOTATION_TOOLS = {
+  TEXT: 'Text',
+  IMAGE: 'Image',
+  RECT: 'Rect',
+  ELLIPSE: 'Ellipse',
+  POLYGON: 'Polygon',
+  PEN: 'Pen',
+  LINE: 'Line',
+  ARROW: 'Arrow',
+} as const;
+
 // TABS_IDS
 type availableTabs = typeof TABS[keyof typeof TABS];
 
 // TOOLS_IDS
 type availableTools = typeof TOOLS[keyof typeof TOOLS];
+
+// ANNOTATION_TOOLS_IDS
+type availableAnnotationTools = typeof ANNOTATION_TOOLS[keyof typeof ANNOTATION_TOOLS];
 
 type lineCap = 'butt' | 'round' | 'square';
 
@@ -292,7 +306,7 @@ export interface FilerobotImageEditorConfig {
   };
   // TABS_IDS
   tabsIds?: availableTabs[] | [];
-  annotationToolsIds?: availableTools[] | [];
+  annotationToolsIds?: availableAnnotationTools[] | [];
   defaultTabId?: availableTabs;
   defaultToolId?: availableTools;
   onBeforeSave?: (savedImageData: savedImageData) => void | boolean;
