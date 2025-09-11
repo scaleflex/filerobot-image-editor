@@ -62,9 +62,7 @@ const ToolsBar = ({ isPhoneScreen }) => {
 
     if (currentTabId === TABS_IDS.ANNOTATE) {
       const annotateToolIds = annotationToolsIds.length
-        ? annotationToolsIds.filter((toolId) =>
-            TABS_TOOLS.Annotate.includes(toolId),
-          )
+        ? annotationToolsIds.filter((toolId) =>TABS_TOOLS.Annotate.includes(toolId))
         : TABS_TOOLS.Annotate;
 
       return annotateToolIds.filter(isToolVisible).map(renderItem);
