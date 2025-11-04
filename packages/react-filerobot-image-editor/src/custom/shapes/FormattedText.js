@@ -453,25 +453,62 @@ export class FormattedTextFIE extends Shape {
         lineX += (totalWidth - line.width - padding * 2) / 2;
       }
 
-      const { positions } = this.calculateLineMetrics(
-        line.parts,
-        context,
-        true,
-        totalWidth,
-        padding,
-        isLastLine,
-      );
-      positions.forEach((pos) => {
-        const { x, shiftY, current } = pos;
-        context.setAttr('font', this.formatFont(current));
-        this.fill(current.style.fill);
+      // First, compute spacesNumber
+      let spacesNumber = 0;
+      line.parts.forEach((part) => {
+        spacesNumber += part.text.split(' ').length - 1;
+      });
+      const extraPerSpace =
+        this.align() === 'justify' &&
+        lineIndex !== visibleLines.length - 1 &&
+        spacesNumber > 0
+          ? (totalWidth - padding * 2 - line.width) / spacesNumber
+          : 0;
+
+      // Then the drawing
+      const allChars = [];
+      line.parts.forEach((part) => {
+        Array.from(part.text).forEach((char) =>
+          allChars.push({ char, style: part.style }),
+        );
+      });
+      let currentX = lineX;
+      for (let i = 0; i < allChars.length; i += 1) {
+        const { char, style } = allChars[i];
+        const font = this.formatFont({ style });
+        context.font = font;
+        this.fill(style.fill);
         this.drawState = {
-          x: lineX + x,
-          y: y + shiftY,
-          text: current.text,
+          x: currentX,
+          y: y - style.baselineShift,
+          text: char,
         };
         context.fillStrokeShape(this);
-      });
+        if (i < allChars.length - 1) {
+          const charWidth = context.measureText(char).width;
+          const next = allChars[i + 1];
+          let kerning = 0;
+          const sameStyle =
+            style.fontFamily === next.style.fontFamily &&
+            style.fontSize === next.style.fontSize &&
+            style.fontWeight === next.style.fontWeight &&
+            style.fontStyle === next.style.fontStyle;
+          if (sameStyle) {
+            const pair = char + next.char;
+            const pairWidth = context.measureText(pair).width;
+            const nextWidth = context.measureText(next.char).width;
+            kerning = pairWidth - charWidth - nextWidth;
+          }
+          const letterSpacingPx =
+            style.letterSpacing * (style.fontSize ?? this.fontSize());
+          currentX += charWidth + kerning + letterSpacingPx;
+          if (char === ' ') {
+            currentX += extraPerSpace;
+          }
+        } else {
+          currentX += context.measureText(char).width;
+        }
+      }
 
       context.restore();
       if (typeof visibleLines[lineIndex + 1] !== 'undefined') {
@@ -520,113 +557,44 @@ export class FormattedTextFIE extends Shape {
     return true;
   }
 
-  calculateLineMetrics(
-    parts,
-    context,
-    forDrawing = false,
-    totalWidth = 0,
-    padding = 0,
-    isLastLine = false,
-  ) {
-    const allChars = [];
-    parts.forEach((part) => {
-      Array.from(part.text).forEach((char) => {
-        allChars.push({ text: char, style: part.style, part });
-      });
-    });
-    const positions = [];
-    let lineX = 0;
-    let totalSpaces = 0;
-    allChars.forEach((c) => {
-      if (c.text === ' ') totalSpaces += 1;
-    });
-    let naturalWidth = 0;
-    // First pass to compute natural width
-    let tempX = 0;
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < allChars.length; i++) {
-      const current = allChars[i];
-      const font = this.formatFont(current);
-      context.font = font;
-      if (i > 0) {
-        const previous = allChars[i - 1];
-        let kerning = 0;
-        const sameStyle =
-          previous.style.fontFamily === current.style.fontFamily &&
-          previous.style.fontSize === current.style.fontSize &&
-          previous.style.fontWeight === current.style.fontWeight &&
-          previous.style.fontStyle === current.style.fontStyle;
-        if (sameStyle) {
-          const pair = previous.text + current.text;
-          const pairWidth = context.measureText(pair).width;
-          const prevWidth = context.measureText(previous.text).width;
-          const currWidth = context.measureText(current.text).width;
-          kerning = pairWidth - prevWidth - currWidth;
-        }
-        tempX += kerning;
-        const letterSpacingPx =
-          current.style.letterSpacing *
-          (current.style.fontSize ?? this.fontSize());
-        tempX += letterSpacingPx;
-      }
-      const charWidth = context.measureText(current.text).width;
-      tempX += charWidth;
-    }
-    naturalWidth = tempX;
-    const extraPerSpace =
-      totalSpaces > 0 && !isLastLine && this.align() === 'justify'
-        ? (totalWidth - padding * 2 - naturalWidth) / totalSpaces
-        : 0;
-    // Second pass for positions (only if forDrawing)
-    if (forDrawing) {
-      lineX = 0;
-      // eslint-disable-next-line no-plusplus
-      for (let i = 0; i < allChars.length; i++) {
-        const current = allChars[i];
-        const font = this.formatFont(current);
-        context.font = font;
-        let addExtra = 0;
-        if (current.text === ' ') {
-          addExtra = extraPerSpace;
-        }
-        if (i > 0) {
-          const previous = allChars[i - 1];
-          let kerning = 0;
-          const sameStyle =
-            previous.style.fontFamily === current.style.fontFamily &&
-            previous.style.fontSize === current.style.fontSize &&
-            previous.style.fontWeight === current.style.fontWeight &&
-            previous.style.fontStyle === current.style.fontStyle;
-          if (sameStyle) {
-            const pair = previous.text + current.text;
-            const pairWidth = context.measureText(pair).width;
-            const prevWidth = context.measureText(previous.text).width;
-            const currWidth = context.measureText(current.text).width;
-            kerning = pairWidth - prevWidth - currWidth;
-          }
-          lineX += kerning;
-          const letterSpacingPx =
-            current.style.letterSpacing *
-            (current.style.fontSize ?? this.fontSize());
-          lineX += letterSpacingPx;
-        }
-        lineX += addExtra;
-        positions.push({
-          x: lineX,
-          shiftY: -current.style.baselineShift,
-          current,
-        });
-        const charWidth = context.measureText(current.text).width;
-        lineX += charWidth;
-      }
-    }
-    return { positions, naturalWidth, finalWidth: lineX };
-  }
+  // Replace the calculateLineMetrics and measureLineWidth with this simplified version focused on correct spacing order
 
   measureLineWidth(parts) {
-    const dummy = getDummyContext();
-    const { naturalWidth } = this.calculateLineMetrics(parts, dummy, false);
-    return naturalWidth;
+    const context = getDummyContext();
+    const allChars = [];
+    parts.forEach((part) => {
+      Array.from(part.text).forEach((char) =>
+        allChars.push({ char, style: part.style }),
+      );
+    });
+    let totalWidth = 0;
+    for (let i = 0; i < allChars.length; i += 1) {
+      const { char, style } = allChars[i];
+      const font = this.formatFont({ style });
+      context.font = font;
+      const charWidth = context.measureText(char).width;
+      totalWidth += charWidth;
+      if (i < allChars.length - 1) {
+        const next = allChars[i + 1];
+        let kerning = 0;
+        const sameStyle =
+          style.fontFamily === next.style.fontFamily &&
+          style.fontSize === next.style.fontSize &&
+          style.fontWeight === next.style.fontWeight &&
+          style.fontStyle === next.style.fontStyle;
+        if (sameStyle) {
+          const pair = char + next.char;
+          const pairWidth = context.measureText(pair).width;
+          const nextWidth = context.measureText(next.char).width;
+          kerning = pairWidth - charWidth - nextWidth;
+        }
+        totalWidth += kerning;
+        const letterSpacingPx =
+          style.letterSpacing * (style.fontSize ?? this.fontSize());
+        totalWidth += letterSpacingPx;
+      }
+    }
+    return totalWidth;
   }
 }
 
