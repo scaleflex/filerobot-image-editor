@@ -80,7 +80,7 @@ export class FormattedTextFIE extends Shape {
     )}`;
   }
 
-  measurePart(part, excludeLetterSpacing = false) {
+  measurePart(part) {
     const context = getDummyContext();
     const partLetterSpacing = part.style.letterSpacing || 0;
     const partLetterSpacingPx =
@@ -88,11 +88,7 @@ export class FormattedTextFIE extends Shape {
 
     context.save();
     context.font = this.formatFont(part);
-    // Only apply letterSpacing to context if not excluding it
-    // This is important for measuring individual characters where spacing is applied manually
-    if (!excludeLetterSpacing) {
-      context.letterSpacing = `${partLetterSpacingPx}px`;
-    }
+    context.letterSpacing = `${partLetterSpacingPx}px`;
     const { width } = context.measureText(part.text);
     context.restore();
     return width;
@@ -504,10 +500,9 @@ export class FormattedTextFIE extends Shape {
         if (part.style.letterSpacing !== 0 || this.align() === 'justify') {
           const spacesNumber = part.text.split(' ').length - 1;
           const array = Array.from(part.text);
-          const partLetterSpacingPx =
+          const letterSpacingPx =
             (part.style.letterSpacing || 0) *
             (part.style.fontSize ?? this.fontSize());
-
           for (let li = 0; li < array.length; li += 1) {
             const textSlice = array[li];
             // skip justify for the last line
@@ -524,13 +519,11 @@ export class FormattedTextFIE extends Shape {
               text: textSlice,
             };
             context.fillStrokeShape(this);
-            // Measure character width WITHOUT letterSpacing applied, then add spacing manually
-            // This ensures correct positioning, especially for negative letter spacing values
-            const charWidth = this.measurePart(
-              { ...part, text: textSlice },
-              true,
-            );
-            lineX += charWidth + partLetterSpacingPx;
+            const charWidth = this.measurePart({ ...part, text: textSlice });
+            lineX += charWidth;
+            if (li < array.length - 1) {
+              lineX += letterSpacingPx;
+            }
           }
         } else {
           this.drawState = {
