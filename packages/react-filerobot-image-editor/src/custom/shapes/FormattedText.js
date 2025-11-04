@@ -82,16 +82,22 @@ export class FormattedTextFIE extends Shape {
 
   measurePart(part) {
     const context = getDummyContext();
-    const partLetterSpacing = part.style.letterSpacing || 0;
-    const partLetterSpacingPx =
-      partLetterSpacing * (part.style.fontSize ?? this.fontSize());
-
-    context.save();
+    const letterSpacing = part.style.letterSpacing || 0;
+    const fontSize = part.style.fontSize ?? this.fontSize();
+    const letterSpacingPx = letterSpacing * fontSize;
     context.font = this.formatFont(part);
-    context.letterSpacing = `${partLetterSpacingPx}px`;
-    const { width } = context.measureText(part.text);
-    context.restore();
-    return width;
+    if (letterSpacing === 0) {
+      return context.measureText(part.text).width;
+    }
+    const chars = Array.from(part.text);
+    let totalWidth = 0;
+    for (let i = 0; i < chars.length; i += 1) {
+      totalWidth += context.measureText(chars[i]).width;
+      if (i < chars.length - 1) {
+        totalWidth += letterSpacingPx;
+      }
+    }
+    return totalWidth;
   }
 
   getDefaultTextPartFormat() {
@@ -500,9 +506,9 @@ export class FormattedTextFIE extends Shape {
         if (part.style.letterSpacing !== 0 || this.align() === 'justify') {
           const spacesNumber = part.text.split(' ').length - 1;
           const array = Array.from(part.text);
-          const letterSpacingPx =
-            (part.style.letterSpacing || 0) *
-            (part.style.fontSize ?? this.fontSize());
+          const partLetterSpacing = part.style.letterSpacing || 0;
+          const partFontSize = part.style.fontSize ?? this.fontSize();
+          const letterSpacingPx = partLetterSpacing * partFontSize;
           for (let li = 0; li < array.length; li += 1) {
             const textSlice = array[li];
             // skip justify for the last line
