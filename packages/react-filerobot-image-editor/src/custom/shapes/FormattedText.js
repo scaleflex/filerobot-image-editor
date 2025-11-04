@@ -83,10 +83,12 @@ export class FormattedTextFIE extends Shape {
   measurePart(part) {
     const context = getDummyContext();
     const partLetterSpacing = part.style.letterSpacing || 0;
+    const partLetterSpacingPx =
+      partLetterSpacing * (part.style.fontSize ?? this.fontSize());
 
     context.save();
     context.font = this.formatFont(part);
-    context.letterSpacing = `${partLetterSpacing}em`;
+    context.letterSpacing = `${partLetterSpacingPx}px`;
     const { width } = context.measureText(part.text);
     context.restore();
     return width;
