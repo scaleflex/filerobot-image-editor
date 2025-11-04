@@ -496,18 +496,21 @@ export class FormattedTextFIE extends Shape {
         this.fill(part.style.fill);
         context.setAttr('font', this.formatFont(part));
 
+        // Set letter spacing for the part
+        const partLetterSpacingEm = part.style.letterSpacing || 0;
+        const partLetterSpacingPx =
+          partLetterSpacingEm * (part.style.fontSize ?? this.fontSize());
+        context.letterSpacing = `${partLetterSpacingPx}px`;
+
         // text
-        if (part.style.letterSpacing !== 0 || this.align() === 'justify') {
+        if (this.align() === 'justify') {
+          // For justify alignment, draw character by character to add extra spacing
           const spacesNumber = part.text.split(' ').length - 1;
           const array = Array.from(part.text);
           for (let li = 0; li < array.length; li += 1) {
             const textSlice = array[li];
             // skip justify for the last line
-            if (
-              textSlice === ' ' &&
-              lineIndex !== visibleLines.length - 1 &&
-              this.align() === 'justify'
-            ) {
+            if (textSlice === ' ' && lineIndex !== visibleLines.length - 1) {
               lineX += (totalWidth - padding * 2 - line.width) / spacesNumber;
             }
             this.drawState = {
@@ -519,6 +522,8 @@ export class FormattedTextFIE extends Shape {
             lineX += this.measurePart({ ...part, text: textSlice });
           }
         } else {
+          // For letter spacing or normal text, draw the full string at once
+          // This allows the canvas to properly apply letter spacing
           this.drawState = {
             x: lineX,
             y: y - part.style.baselineShift,
