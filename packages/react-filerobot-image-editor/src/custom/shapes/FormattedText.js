@@ -86,17 +86,19 @@ export class FormattedTextFIE extends Shape {
     const fontSize = part.style.fontSize ?? this.fontSize();
     const letterSpacingPx = letterSpacing * fontSize;
     context.font = this.formatFont(part);
-    if (letterSpacing === 0) {
-      return context.measureText(part.text).width;
-    }
     const chars = Array.from(part.text);
-    let totalWidth = 0;
-    for (let i = 0; i < chars.length; i += 1) {
-      totalWidth += context.measureText(chars[i]).width;
-      if (i < chars.length - 1) {
-        totalWidth += letterSpacingPx;
-      }
+    if (chars.length === 0) {
+      return 0;
     }
+    let totalWidth = 0;
+    for (let i = 0; i < chars.length - 1; i += 1) {
+      const charWidth = context.measureText(chars[i]).width;
+      const nextWidth = context.measureText(chars[i + 1]).width;
+      const pairWidth = context.measureText(chars[i] + chars[i + 1]).width;
+      const kerning = pairWidth - charWidth - nextWidth;
+      totalWidth += charWidth + kerning + letterSpacingPx;
+    }
+    totalWidth += context.measureText(chars[chars.length - 1]).width;
     return totalWidth;
   }
 
@@ -525,10 +527,18 @@ export class FormattedTextFIE extends Shape {
               text: textSlice,
             };
             context.fillStrokeShape(this);
-            const charWidth = this.measurePart({ ...part, text: textSlice });
-            lineX += charWidth;
             if (li < array.length - 1) {
-              lineX += letterSpacingPx;
+              const nextSlice = array[li + 1];
+              const charWidth = context.measureText(textSlice).width;
+              const nextWidth = context.measureText(nextSlice).width;
+              const pairWidth = context.measureText(
+                textSlice + nextSlice,
+              ).width;
+              const kerning = pairWidth - charWidth - nextWidth;
+              lineX += charWidth + kerning + letterSpacingPx;
+            } else {
+              const charWidth = context.measureText(textSlice).width;
+              lineX += charWidth;
             }
           }
         } else {
