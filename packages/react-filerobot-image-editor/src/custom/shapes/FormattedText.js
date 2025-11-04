@@ -80,7 +80,7 @@ export class FormattedTextFIE extends Shape {
     )}`;
   }
 
-  measurePart(part) {
+  measurePart(part, excludeLetterSpacing = false) {
     const context = getDummyContext();
     const partLetterSpacing = part.style.letterSpacing || 0;
     const partLetterSpacingPx =
@@ -88,7 +88,11 @@ export class FormattedTextFIE extends Shape {
 
     context.save();
     context.font = this.formatFont(part);
-    context.letterSpacing = `${partLetterSpacingPx}px`;
+    // Only apply letterSpacing to context if not excluding it
+    // This is important for measuring individual characters where spacing is applied manually
+    if (!excludeLetterSpacing) {
+      context.letterSpacing = `${partLetterSpacingPx}px`;
+    }
     const { width } = context.measureText(part.text);
     context.restore();
     return width;
@@ -496,21 +500,22 @@ export class FormattedTextFIE extends Shape {
         this.fill(part.style.fill);
         context.setAttr('font', this.formatFont(part));
 
-        // Set letter spacing for the part
-        const partLetterSpacingEm = part.style.letterSpacing || 0;
-        const partLetterSpacingPx =
-          partLetterSpacingEm * (part.style.fontSize ?? this.fontSize());
-        context.letterSpacing = `${partLetterSpacingPx}px`;
-
         // text
-        if (this.align() === 'justify') {
-          // For justify alignment, draw character by character to add extra spacing
+        if (part.style.letterSpacing !== 0 || this.align() === 'justify') {
           const spacesNumber = part.text.split(' ').length - 1;
           const array = Array.from(part.text);
+          const partLetterSpacingPx =
+            (part.style.letterSpacing || 0) *
+            (part.style.fontSize ?? this.fontSize());
+
           for (let li = 0; li < array.length; li += 1) {
             const textSlice = array[li];
             // skip justify for the last line
-            if (textSlice === ' ' && lineIndex !== visibleLines.length - 1) {
+            if (
+              textSlice === ' ' &&
+              lineIndex !== visibleLines.length - 1 &&
+              this.align() === 'justify'
+            ) {
               lineX += (totalWidth - padding * 2 - line.width) / spacesNumber;
             }
             this.drawState = {
@@ -519,11 +524,15 @@ export class FormattedTextFIE extends Shape {
               text: textSlice,
             };
             context.fillStrokeShape(this);
-            lineX += this.measurePart({ ...part, text: textSlice });
+            // Measure character width WITHOUT letterSpacing applied, then add spacing manually
+            // This ensures correct positioning, especially for negative letter spacing values
+            const charWidth = this.measurePart(
+              { ...part, text: textSlice },
+              true,
+            );
+            lineX += charWidth + partLetterSpacingPx;
           }
         } else {
-          // For letter spacing or normal text, draw the full string at once
-          // This allows the canvas to properly apply letter spacing
           this.drawState = {
             x: lineX,
             y: y - part.style.baselineShift,
