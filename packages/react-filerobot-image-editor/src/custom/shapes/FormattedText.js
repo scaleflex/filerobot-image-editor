@@ -90,13 +90,25 @@ export class FormattedTextFIE extends Shape {
       return context.measureText(part.text).width;
     }
     const chars = Array.from(part.text);
-    let totalWidth = 0;
-    for (let i = 0; i < chars.length; i += 1) {
-      totalWidth += context.measureText(chars[i]).width;
-      if (i < chars.length - 1) {
-        totalWidth += letterSpacingPx;
-      }
+    if (chars.length === 0) {
+      return 0;
     }
+    if (chars.length === 1) {
+      return context.measureText(chars[0]).width;
+    }
+    let totalWidth = 0;
+    for (let i = 0; i < chars.length - 1; i += 1) {
+      const currentChar = chars[i];
+      const nextChar = chars[i + 1];
+      const currentWidth = context.measureText(currentChar).width;
+      const pairWidth = context.measureText(currentChar + nextChar).width;
+      const nextWidth = context.measureText(nextChar).width;
+      // Kerning is the difference between pair width and sum of individual widths
+      const kerning = pairWidth - currentWidth - nextWidth;
+      totalWidth += currentWidth + kerning + letterSpacingPx;
+    }
+    // Add the last character width
+    totalWidth += context.measureText(chars[chars.length - 1]).width;
     return totalWidth;
   }
 
@@ -525,10 +537,15 @@ export class FormattedTextFIE extends Shape {
               text: textSlice,
             };
             context.fillStrokeShape(this);
-            const charWidth = this.measurePart({ ...part, text: textSlice });
+            const charWidth = context.measureText(textSlice).width;
             lineX += charWidth;
             if (li < array.length - 1) {
-              lineX += letterSpacingPx;
+              // Apply kerning between current and next character
+              const nextChar = array[li + 1];
+              const pairWidth = context.measureText(textSlice + nextChar).width;
+              const nextWidth = context.measureText(nextChar).width;
+              const kerning = pairWidth - charWidth - nextWidth;
+              lineX += kerning + letterSpacingPx;
             }
           }
         } else {
