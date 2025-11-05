@@ -195,7 +195,7 @@ export class FormattedTextFIE extends Shape {
     let currentHeight = 0;
     let charCount = 0;
 
-    const addLine = (width, height, parts) => {
+    const addLine = (width, height, parts, offset) => {
       // if element height is fixed, abort if adding one more line would overflow
       // so we don't add this line, the loop will be broken anyway
       if (hasFixedHeightWithoutAlign && currentHeight + height > maxHeight) {
@@ -208,6 +208,7 @@ export class FormattedTextFIE extends Shape {
 
       this.textLines.push({
         width,
+        offset,
         parts: parts.map((part, i) => {
           // remove only 1 space from the beginning of the line if found (as it is not needed if line broken as a new one).
           part.text = i === 0 ? part.text.replace(/^\s{1}/, '') : part.text;
@@ -217,6 +218,42 @@ export class FormattedTextFIE extends Shape {
         }),
         totalHeight: height,
       });
+    };
+
+    const calculateEffectiveLineMetrics = (parts) => {
+      const dummy = getDummyContext();
+      const allChars = [];
+      parts.forEach((part) => {
+        Array.from(part.text).forEach((char) =>
+          allChars.push({
+            char,
+            style: part.style,
+          }),
+        );
+      });
+      let currentX = 0;
+      let minX = 0;
+      let maxX = 0;
+      const positions = [];
+      for (let i = 0; i < allChars.length; i += 1) {
+        const { char, style } = allChars[i];
+        const font = this.formatFont({ style });
+        dummy.font = font;
+        positions.push(currentX);
+        const charWidth = dummy.measureText(char).width;
+        currentX += charWidth;
+        maxX = Math.max(maxX, currentX);
+        if (i < allChars.length - 1) {
+          const letterSpacingPx =
+            style.letterSpacing * (style.fontSize ?? this.fontSize());
+          currentX += letterSpacingPx;
+          maxX = Math.max(maxX, currentX);
+          minX = Math.min(minX, currentX);
+        }
+      }
+      const effectiveWidth = maxX - minX;
+      const offset = -minX;
+      return { effectiveWidth, offset };
     };
 
     const linesLength = lines.length;
@@ -291,8 +328,10 @@ export class FormattedTextFIE extends Shape {
               charCount + cursor,
               charCount + cursor + low,
             ).filter((part) => part.text);
+            const { effectiveWidth: effWidth1, offset: off1 } =
+              calculateEffectiveLineMetrics(parts);
             lineHeight = measureHeightParts(parts);
-            addLine(this.measureLineWidth(parts), lineHeight, parts);
+            addLine(effWidth1, lineHeight, parts, off1);
             currentHeight += lineHeight;
             if (
               !shouldWrap ||
@@ -336,11 +375,13 @@ export class FormattedTextFIE extends Shape {
                 charCount + cursor,
                 charCount + cursor + line.length,
               );
+              const { effectiveWidth: effWidth2, offset: off2 } =
+                calculateEffectiveLineMetrics(foundParts);
               lineWidth = measureParts(foundParts);
               if (lineWidth <= maxWidth && foundParts) {
                 // if it does, add the line and break out of the loop
                 const height = measureHeightParts(foundParts);
-                addLine(lineWidth, height, foundParts);
+                addLine(effWidth2, height, foundParts, off2);
                 currentHeight += height;
                 break;
               }
@@ -352,8 +393,10 @@ export class FormattedTextFIE extends Shape {
         }
       } else {
         const parts = findParts(charCount, charCount + line.length);
+        const { effectiveWidth: effWidth3, offset: off3 } =
+          calculateEffectiveLineMetrics(parts);
         lineHeight = measureHeightParts(parts);
-        addLine(lineWidth, lineHeight, parts);
+        addLine(effWidth3, lineHeight, parts, off3);
       }
 
       // if element height is fixed, abort if adding one more line would overflow
@@ -472,7 +515,7 @@ export class FormattedTextFIE extends Shape {
           allChars.push({ char, style: part.style }),
         );
       });
-      let currentX = lineX;
+      let currentX = lineX + line.offset;
       for (let i = 0; i < allChars.length; i += 1) {
         const { char, style } = allChars[i];
         const font = this.formatFont({ style });
