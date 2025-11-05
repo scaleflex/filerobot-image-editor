@@ -501,7 +501,7 @@ export class FormattedTextFIE extends Shape {
           }
           const letterSpacingPx =
             style.letterSpacing * (style.fontSize ?? this.fontSize());
-          currentX += charWidth + kerning + letterSpacingPx;
+          currentX += charWidth + letterSpacingPx;
           if (char === ' ') {
             currentX += extraPerSpace;
           }
@@ -575,20 +575,6 @@ export class FormattedTextFIE extends Shape {
       const charWidth = context.measureText(char).width;
       totalWidth += charWidth;
       if (i < allChars.length - 1) {
-        const next = allChars[i + 1];
-        let kerning = 0;
-        const sameStyle =
-          style.fontFamily === next.style.fontFamily &&
-          style.fontSize === next.style.fontSize &&
-          style.fontWeight === next.style.fontWeight &&
-          style.fontStyle === next.style.fontStyle;
-        if (sameStyle) {
-          const pair = char + next.char;
-          const pairWidth = context.measureText(pair).width;
-          const nextWidth = context.measureText(next.char).width;
-          kerning = pairWidth - charWidth - nextWidth;
-        }
-        totalWidth += kerning;
         const letterSpacingPx =
           style.letterSpacing * (style.fontSize ?? this.fontSize());
         totalWidth += letterSpacingPx;
