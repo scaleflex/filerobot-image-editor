@@ -83,17 +83,21 @@ export class FormattedTextFIE extends Shape {
   measurePart(part) {
     const context = getDummyContext();
     const letterSpacing = part.style.letterSpacing || 0;
-    const fontSize = part.style.fontSize ?? this.fontSize();
-    const scale = this.scaleFormatDimensionsBy();
-    const letterSpacingPx = letterSpacing * fontSize * scale;
+    const letterSpacingPx = letterSpacing;
     context.font = this.formatFont(part);
     if (letterSpacing === 0) {
       return context.measureText(part.text).width;
     }
     const chars = Array.from(part.text);
+    if (chars.length === 1) {
+      return context.measureText(part.text).width + letterSpacingPx;
+    }
     let totalWidth = 0;
     for (let i = 0; i < chars.length; i += 1) {
-      totalWidth += context.measureText(chars[i]).width + letterSpacingPx;
+      totalWidth += context.measureText(chars[i]).width;
+      if (i < chars.length - 1) {
+        totalWidth += letterSpacingPx;
+      }
     }
     return totalWidth;
   }
@@ -457,9 +461,7 @@ export class FormattedTextFIE extends Shape {
 
           context.moveTo(
             lineX,
-            y +
-              Math.round(part.style.fontSize / 2) -
-              part.style.baselineShift * this.scaleFormatDimensionsBy(),
+            y + Math.round(part.style.fontSize / 2) - part.style.baselineShift,
           );
           const spacesNumber = part.text.split(' ').length - 1;
           const oneWord = spacesNumber === 0;
@@ -469,9 +471,7 @@ export class FormattedTextFIE extends Shape {
               : part.width;
           context.lineTo(
             lineX + Math.round(lineWidth),
-            y +
-              Math.round(part.style.fontSize / 2) -
-              part.style.baselineShift * this.scaleFormatDimensionsBy(),
+            y + Math.round(part.style.fontSize / 2) - part.style.baselineShift,
           );
 
           // I have no idea what is real ratio
@@ -484,10 +484,7 @@ export class FormattedTextFIE extends Shape {
         if (part.style.textDecoration?.includes('line-through')) {
           context.save();
           context.beginPath();
-          context.moveTo(
-            lineX,
-            y - part.style.baselineShift * this.scaleFormatDimensionsBy(),
-          );
+          context.moveTo(lineX, y - part.style.baselineShift);
           const spacesNumber = part.text.split(' ').length - 1;
           const oneWord = spacesNumber === 0;
           const lineWidth =
@@ -496,7 +493,7 @@ export class FormattedTextFIE extends Shape {
               : part.width;
           context.lineTo(
             lineX + Math.round(lineWidth),
-            y - part.style.baselineShift * this.scaleFormatDimensionsBy(),
+            y - part.style.baselineShift,
           );
           context.lineWidth = part.style.fontSize / 15;
           context.strokeStyle = part.style.fill;
@@ -512,9 +509,7 @@ export class FormattedTextFIE extends Shape {
           const spacesNumber = part.text.split(' ').length - 1;
           const array = Array.from(part.text);
           const partLetterSpacing = part.style.letterSpacing || 0;
-          const partFontSize = part.style.fontSize ?? this.fontSize();
-          const scale = this.scaleFormatDimensionsBy();
-          const letterSpacingPx = partLetterSpacing * partFontSize * scale;
+          const letterSpacingPx = partLetterSpacing;
           for (let li = 0; li < array.length; li += 1) {
             const textSlice = array[li];
             // skip justify for the last line
@@ -527,17 +522,23 @@ export class FormattedTextFIE extends Shape {
             }
             this.drawState = {
               x: lineX,
-              y: y - part.style.baselineShift * this.scaleFormatDimensionsBy(),
+              y: y - part.style.baselineShift,
               text: textSlice,
             };
             context.fillStrokeShape(this);
-            const charWidth = this.measurePart({ ...part, text: textSlice });
-            lineX += charWidth + letterSpacingPx;
+            const charWidth = context.measureText(textSlice).width;
+            lineX += charWidth;
+            if (li < array.length - 1) {
+              lineX += letterSpacingPx;
+            }
+          }
+          if (array.length === 1) {
+            lineX += letterSpacingPx;
           }
         } else {
           this.drawState = {
             x: lineX,
-            y: y - part.style.baselineShift * this.scaleFormatDimensionsBy(),
+            y: y - part.style.baselineShift,
             text: part.text,
           };
           context.fillStrokeShape(this);

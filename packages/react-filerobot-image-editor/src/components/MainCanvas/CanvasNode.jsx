@@ -144,7 +144,7 @@ const CanvasNode = ({ children }) => {
   const mapKeyboardKeys = (e) => {
     if (
       !e.target.isContentEditable &&
-      (e.key === ' ' || e.key === 'Control') &&
+      (e.key === ' ' || e.key === 'Control' || e.key === 'Meta') &&
       !e.repeat &&
       zoom.factor > defaultZoomFactor &&
       isZoomEnabled
