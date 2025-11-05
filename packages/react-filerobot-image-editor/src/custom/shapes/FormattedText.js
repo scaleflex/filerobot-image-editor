@@ -86,19 +86,17 @@ export class FormattedTextFIE extends Shape {
     const fontSize = part.style.fontSize ?? this.fontSize();
     const letterSpacingPx = letterSpacing * fontSize;
     context.font = this.formatFont(part);
+    if (letterSpacing === 0) {
+      return context.measureText(part.text).width;
+    }
     const chars = Array.from(part.text);
-    if (chars.length === 0) {
-      return 0;
-    }
     let totalWidth = 0;
-    for (let i = 0; i < chars.length - 1; i += 1) {
-      const charWidth = context.measureText(chars[i]).width;
-      const nextWidth = context.measureText(chars[i + 1]).width;
-      const pairWidth = context.measureText(chars[i] + chars[i + 1]).width;
-      const kerning = pairWidth - charWidth - nextWidth;
-      totalWidth += charWidth + kerning + letterSpacingPx;
+    for (let i = 0; i < chars.length; i += 1) {
+      totalWidth += context.measureText(chars[i]).width;
+      if (i < chars.length - 1) {
+        totalWidth += letterSpacingPx;
+      }
     }
-    totalWidth += context.measureText(chars[chars.length - 1]).width;
     return totalWidth;
   }
 
@@ -195,7 +193,7 @@ export class FormattedTextFIE extends Shape {
     let currentHeight = 0;
     let charCount = 0;
 
-    const addLine = (width, height, parts, offset) => {
+    const addLine = (width, height, parts) => {
       // if element height is fixed, abort if adding one more line would overflow
       // so we don't add this line, the loop will be broken anyway
       if (hasFixedHeightWithoutAlign && currentHeight + height > maxHeight) {
@@ -208,7 +206,6 @@ export class FormattedTextFIE extends Shape {
 
       this.textLines.push({
         width,
-        offset,
         parts: parts.map((part, i) => {
           // remove only 1 space from the beginning of the line if found (as it is not needed if line broken as a new one).
           part.text = i === 0 ? part.text.replace(/^\s{1}/, '') : part.text;
@@ -218,42 +215,6 @@ export class FormattedTextFIE extends Shape {
         }),
         totalHeight: height,
       });
-    };
-
-    const calculateEffectiveLineMetrics = (parts) => {
-      const dummy = getDummyContext();
-      const allChars = [];
-      parts.forEach((part) => {
-        Array.from(part.text).forEach((char) =>
-          allChars.push({
-            char,
-            style: part.style,
-          }),
-        );
-      });
-      let currentX = 0;
-      let minX = 0;
-      let maxX = 0;
-      const positions = [];
-      for (let i = 0; i < allChars.length; i += 1) {
-        const { char, style } = allChars[i];
-        const font = this.formatFont({ style });
-        dummy.font = font;
-        positions.push(currentX);
-        const charWidth = dummy.measureText(char).width;
-        currentX += charWidth;
-        maxX = Math.max(maxX, currentX);
-        if (i < allChars.length - 1) {
-          const letterSpacingPx =
-            style.letterSpacing * (style.fontSize ?? this.fontSize());
-          currentX += letterSpacingPx;
-          maxX = Math.max(maxX, currentX);
-          minX = Math.min(minX, currentX);
-        }
-      }
-      const effectiveWidth = maxX - minX;
-      const offset = -minX;
-      return { effectiveWidth, offset };
     };
 
     const linesLength = lines.length;
@@ -328,10 +289,8 @@ export class FormattedTextFIE extends Shape {
               charCount + cursor,
               charCount + cursor + low,
             ).filter((part) => part.text);
-            const { effectiveWidth: effWidth1, offset: off1 } =
-              calculateEffectiveLineMetrics(parts);
             lineHeight = measureHeightParts(parts);
-            addLine(effWidth1, lineHeight, parts, off1);
+            addLine(measureParts(parts), lineHeight, parts);
             currentHeight += lineHeight;
             if (
               !shouldWrap ||
@@ -375,13 +334,11 @@ export class FormattedTextFIE extends Shape {
                 charCount + cursor,
                 charCount + cursor + line.length,
               );
-              const { effectiveWidth: effWidth2, offset: off2 } =
-                calculateEffectiveLineMetrics(foundParts);
               lineWidth = measureParts(foundParts);
               if (lineWidth <= maxWidth && foundParts) {
                 // if it does, add the line and break out of the loop
                 const height = measureHeightParts(foundParts);
-                addLine(effWidth2, height, foundParts, off2);
+                addLine(lineWidth, height, foundParts);
                 currentHeight += height;
                 break;
               }
@@ -393,10 +350,8 @@ export class FormattedTextFIE extends Shape {
         }
       } else {
         const parts = findParts(charCount, charCount + line.length);
-        const { effectiveWidth: effWidth3, offset: off3 } =
-          calculateEffectiveLineMetrics(parts);
         lineHeight = measureHeightParts(parts);
-        addLine(effWidth3, lineHeight, parts, off3);
+        addLine(lineWidth, lineHeight, parts);
       }
 
       // if element height is fixed, abort if adding one more line would overflow
@@ -496,62 +451,96 @@ export class FormattedTextFIE extends Shape {
         lineX += (totalWidth - line.width - padding * 2) / 2;
       }
 
-      // First, compute spacesNumber
-      let spacesNumber = 0;
       line.parts.forEach((part) => {
-        spacesNumber += part.text.split(' ').length - 1;
-      });
-      const extraPerSpace =
-        this.align() === 'justify' &&
-        lineIndex !== visibleLines.length - 1 &&
-        spacesNumber > 0
-          ? (totalWidth - padding * 2 - line.width) / spacesNumber
-          : 0;
+        // style
+        if (part.style.textDecoration?.includes('underline')) {
+          context.save();
+          context.beginPath();
 
-      // Then the drawing
-      const allChars = [];
-      line.parts.forEach((part) => {
-        Array.from(part.text).forEach((char) =>
-          allChars.push({ char, style: part.style }),
-        );
-      });
-      let currentX = lineX + line.offset;
-      for (let i = 0; i < allChars.length; i += 1) {
-        const { char, style } = allChars[i];
-        const font = this.formatFont({ style });
-        context.font = font;
-        this.fill(style.fill);
-        this.drawState = {
-          x: currentX,
-          y: y - style.baselineShift,
-          text: char,
-        };
-        context.fillStrokeShape(this);
-        if (i < allChars.length - 1) {
-          const charWidth = context.measureText(char).width;
-          const next = allChars[i + 1];
-          let kerning = 0;
-          const sameStyle =
-            style.fontFamily === next.style.fontFamily &&
-            style.fontSize === next.style.fontSize &&
-            style.fontWeight === next.style.fontWeight &&
-            style.fontStyle === next.style.fontStyle;
-          if (sameStyle) {
-            const pair = char + next.char;
-            const pairWidth = context.measureText(pair).width;
-            const nextWidth = context.measureText(next.char).width;
-            kerning = pairWidth - charWidth - nextWidth;
-          }
-          const letterSpacingPx =
-            style.letterSpacing * (style.fontSize ?? this.fontSize());
-          currentX += charWidth + letterSpacingPx;
-          if (char === ' ') {
-            currentX += extraPerSpace;
+          context.moveTo(
+            lineX,
+            y + Math.round(part.style.fontSize / 2) - part.style.baselineShift,
+          );
+          const spacesNumber = part.text.split(' ').length - 1;
+          const oneWord = spacesNumber === 0;
+          const lineWidth =
+            this.align() === 'justify' && isLastLine && !oneWord
+              ? totalWidth - padding * 2
+              : part.width;
+          context.lineTo(
+            lineX + Math.round(lineWidth),
+            y + Math.round(part.style.fontSize / 2) - part.style.baselineShift,
+          );
+
+          // I have no idea what is real ratio
+          // just /15 looks good enough
+          context.lineWidth = part.style.fontSize / 15;
+          context.strokeStyle = part.style.fill;
+          context.stroke();
+          context.restore();
+        }
+        if (part.style.textDecoration?.includes('line-through')) {
+          context.save();
+          context.beginPath();
+          context.moveTo(lineX, y - part.style.baselineShift);
+          const spacesNumber = part.text.split(' ').length - 1;
+          const oneWord = spacesNumber === 0;
+          const lineWidth =
+            this.align() === 'justify' && isLastLine && !oneWord
+              ? totalWidth - padding * 2
+              : part.width;
+          context.lineTo(
+            lineX + Math.round(lineWidth),
+            y - part.style.baselineShift,
+          );
+          context.lineWidth = part.style.fontSize / 15;
+          context.strokeStyle = part.style.fill;
+          context.stroke();
+          context.restore();
+        }
+
+        this.fill(part.style.fill);
+        context.setAttr('font', this.formatFont(part));
+
+        // text
+        if (part.style.letterSpacing !== 0 || this.align() === 'justify') {
+          const spacesNumber = part.text.split(' ').length - 1;
+          const array = Array.from(part.text);
+          const partLetterSpacing = part.style.letterSpacing || 0;
+          const partFontSize = part.style.fontSize ?? this.fontSize();
+          const letterSpacingPx = partLetterSpacing * partFontSize;
+          for (let li = 0; li < array.length; li += 1) {
+            const textSlice = array[li];
+            // skip justify for the last line
+            if (
+              textSlice === ' ' &&
+              lineIndex !== visibleLines.length - 1 &&
+              this.align() === 'justify'
+            ) {
+              lineX += (totalWidth - padding * 2 - line.width) / spacesNumber;
+            }
+            this.drawState = {
+              x: lineX,
+              y: y - part.style.baselineShift,
+              text: textSlice,
+            };
+            context.fillStrokeShape(this);
+            const charWidth = this.measurePart({ ...part, text: textSlice });
+            lineX += charWidth;
+            if (li < array.length - 1) {
+              lineX += letterSpacingPx;
+            }
           }
         } else {
-          currentX += context.measureText(char).width;
+          this.drawState = {
+            x: lineX,
+            y: y - part.style.baselineShift,
+            text: part.text,
+          };
+          context.fillStrokeShape(this);
+          lineX += part.width;
         }
-      }
+      });
 
       context.restore();
       if (typeof visibleLines[lineIndex + 1] !== 'undefined') {
@@ -598,32 +587,6 @@ export class FormattedTextFIE extends Shape {
   // eslint-disable-next-line class-methods-use-this
   getStrokeScaleEnabled() {
     return true;
-  }
-
-  // Replace the calculateLineMetrics and measureLineWidth with this simplified version focused on correct spacing order
-
-  measureLineWidth(parts) {
-    const context = getDummyContext();
-    const allChars = [];
-    parts.forEach((part) => {
-      Array.from(part.text).forEach((char) =>
-        allChars.push({ char, style: part.style }),
-      );
-    });
-    let totalWidth = 0;
-    for (let i = 0; i < allChars.length; i += 1) {
-      const { char, style } = allChars[i];
-      const font = this.formatFont({ style });
-      context.font = font;
-      const charWidth = context.measureText(char).width;
-      totalWidth += charWidth;
-      if (i < allChars.length - 1) {
-        const letterSpacingPx =
-          style.letterSpacing * (style.fontSize ?? this.fontSize());
-        totalWidth += letterSpacingPx;
-      }
-    }
-    return totalWidth;
   }
 }
 
