@@ -86,9 +86,17 @@ export class FormattedTextFIE extends Shape {
     const fontSize = part.style.fontSize ?? this.fontSize();
     const letterSpacingPx = letterSpacing * fontSize;
     context.font = this.formatFont(part);
+
+    // Always use manual calculation for consistency with rendering
+    // Ensure no letter-spacing is applied to measurements
+    if ('letterSpacing' in context) {
+      context.letterSpacing = '0px';
+    }
+
     if (letterSpacing === 0) {
       return context.measureText(part.text).width;
     }
+
     const chars = Array.from(part.text);
     if (chars.length === 0) {
       return 0;
@@ -96,6 +104,7 @@ export class FormattedTextFIE extends Shape {
     if (chars.length === 1) {
       return context.measureText(chars[0]).width;
     }
+
     let totalWidth = 0;
     for (let i = 0; i < chars.length - 1; i += 1) {
       const currentChar = chars[i];
@@ -515,12 +524,25 @@ export class FormattedTextFIE extends Shape {
         context.setAttr('font', this.formatFont(part));
 
         // text
-        if (part.style.letterSpacing !== 0 || this.align() === 'justify') {
+        const partLetterSpacing = part.style.letterSpacing || 0;
+        const partFontSize = part.style.fontSize ?? this.fontSize();
+        const letterSpacingPx = partLetterSpacing * partFontSize;
+
+        // Set letter-spacing on context if supported
+        if ('letterSpacing' in context) {
+          context.setAttr('letterSpacing', `${letterSpacingPx}px`);
+        }
+
+        if (partLetterSpacing !== 0 || this.align() === 'justify') {
           const spacesNumber = part.text.split(' ').length - 1;
           const array = Array.from(part.text);
-          const partLetterSpacing = part.style.letterSpacing || 0;
-          const partFontSize = part.style.fontSize ?? this.fontSize();
-          const letterSpacingPx = partLetterSpacing * partFontSize;
+
+          // Manual spacing calculation for all cases (simpler and more predictable)
+          // Temporarily disable native letter-spacing to measure characters individually
+          if ('letterSpacing' in context) {
+            context.setAttr('letterSpacing', '0px');
+          }
+
           for (let li = 0; li < array.length; li += 1) {
             const textSlice = array[li];
             // skip justify for the last line
