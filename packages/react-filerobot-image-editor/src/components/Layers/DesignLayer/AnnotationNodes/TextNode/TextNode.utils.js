@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /** Internal dependencies */
 import { TEXT_EDITOR_ID } from 'utils/constants';
 import getNodeText from 'utils/getNodeText';
@@ -249,4 +250,88 @@ export const getCurrentSelectedNodeStyles = (node, currentStyles = {}) => {
   }
 
   return getCurrentSelectedNodeStyles(node.parentNode, newStyles);
+};
+
+export const createTextChangeTracker = () => {
+  let previousText = '';
+
+  return {
+    trackChange: (currentText) => {
+      const selection = window.getSelection();
+      let caretPosition = 0;
+
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const textareaElement = document.getElementById(TEXT_EDITOR_ID);
+
+        if (textareaElement) {
+          // Create a new range from the start of the element to the caret position
+          const measureRange = document.createRange();
+          measureRange.setStart(textareaElement, 0);
+          measureRange.setEnd(range.startContainer, range.startOffset);
+
+          // Get the text content of this range, which gives us all text up to the caret
+          const textUpToCaret = measureRange.toString();
+          caretPosition = textUpToCaret.length;
+        } else {
+          // Fallback: use the offset within the node
+          caretPosition = range.startOffset;
+        }
+      }
+
+      let diff = 0;
+      let isReplacement = false;
+
+      // Calculate the difference between previous and current text
+      if (previousText !== currentText) {
+        // Find the first differing character
+        let i = 0;
+        while (
+          i < previousText.length &&
+          i < currentText.length &&
+          previousText[i] === currentText[i]
+        ) {
+          i++;
+        }
+
+        // Find the last differing character from the end
+        let j = previousText.length - 1;
+        let k = currentText.length - 1;
+        while (j >= i && k >= i && previousText[j] === currentText[k]) {
+          j--;
+          k--;
+        }
+
+        // Calculate diff: positive for addition, negative for removal
+        diff = currentText.length - previousText.length;
+
+        // Check if this is a replacement operation (text selected and replaced)
+        const tmpSelection = window.getSelection();
+        if (tmpSelection.rangeCount > 0 && !tmpSelection.isCollapsed) {
+          const range = tmpSelection.getRangeAt(0);
+          const selectedText = range.toString();
+
+          if (selectedText.length > 0) {
+            // This is a replacement operation
+            isReplacement = true;
+          }
+        }
+      }
+
+      // Update previous values
+      previousText = currentText;
+
+      return {
+        charsCountDiff: diff,
+        isReplacement,
+        caretPosition,
+        text: currentText,
+      };
+    },
+
+    // Reset function for when editing starts
+    reset: (initialText = '') => {
+      previousText = initialText;
+    },
+  };
 };

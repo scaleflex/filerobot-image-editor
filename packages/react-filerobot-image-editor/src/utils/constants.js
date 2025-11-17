@@ -151,6 +151,7 @@ export const EVENTS = {
   DESIGN_RESET: 'fie-design-reset',
   DESIGN_UPDATE: 'fie-design-modify',
   TEXT_CONTENT_EDITED: 'fie-text-content-edited',
+  TEXT_CONTENT_CHANGING: 'fie-text-content-changing',
   APPLY_TEXT_FORMAT: 'fie-apply-text-annotation-format',
   SAVE_EDITED_TEXT_CONTENT: 'fie-save-edited-text-content',
 };
