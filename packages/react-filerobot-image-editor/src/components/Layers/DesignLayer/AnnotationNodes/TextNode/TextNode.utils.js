@@ -254,6 +254,7 @@ export const getCurrentSelectedNodeStyles = (node, currentStyles = {}) => {
 
 export const createTextChangeTracker = () => {
   let previousText = '';
+  let previousSelection = null;
 
   return {
     trackChange: (currentText) => {
@@ -280,6 +281,8 @@ export const createTextChangeTracker = () => {
       }
 
       let diff = 0;
+      let usedText = '';
+      let removedText = '';
       let isReplacement = false;
 
       // Calculate the difference between previous and current text
@@ -302,30 +305,49 @@ export const createTextChangeTracker = () => {
           k--;
         }
 
-        // Calculate diff: positive for addition, negative for removal
-        diff = currentText.length - previousText.length;
+        // Check if there was a previous selection that suggests replacement
+        if (previousSelection && previousSelection.length > 0) {
+          // This is likely a replacement operation
+          isReplacement = true;
+          removedText = previousSelection;
+          usedText = currentText.slice(i, k + 1);
+          // Calculate net diff: new text length minus removed text length
+          diff = usedText.length - removedText.length;
+        } else {
+          // Calculate diff: positive for addition, negative for removal
+          diff = currentText.length - previousText.length;
 
-        // Check if this is a replacement operation (text selected and replaced)
-        const tmpSelection = window.getSelection();
-        if (tmpSelection.rangeCount > 0 && !tmpSelection.isCollapsed) {
-          const range = tmpSelection.getRangeAt(0);
-          const selectedText = range.toString();
-
-          if (selectedText.length > 0) {
-            // This is a replacement operation
-            isReplacement = true;
+          // Determine the used text (what was added or removed)
+          if (diff > 0) {
+            // Text was added
+            usedText = currentText.slice(i, i + diff);
+          } else if (diff < 0) {
+            // Text was removed
+            usedText = previousText.slice(i, i + Math.abs(diff));
+          } else {
+            // Text was replaced (equal length change)
+            usedText = currentText.slice(i, k + 1);
           }
         }
+      }
+
+      // Store current selection state for next change detection
+      if (selection.rangeCount > 0 && !selection.isCollapsed) {
+        const range = selection.getRangeAt(0);
+        previousSelection = range.toString();
+      } else {
+        previousSelection = null;
       }
 
       // Update previous values
       previousText = currentText;
 
       return {
-        charsCountDiff: diff,
+        diff,
+        usedText,
+        removedText: isReplacement ? removedText : '',
         isReplacement,
         caretPosition,
-        text: currentText,
       };
     },
 
