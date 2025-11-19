@@ -119,6 +119,11 @@ const useTextAnnotationEditing = (enableEvents = false) => {
           tmpText: undefined,
         });
       }
+
+      emitCustomEvent(EVENTS.TEXT_CONTENT_CHANGE_CANCELLED, {
+        annotationId: currentAnnotation.id,
+        textContent: currentAnnotation.text,
+      });
     },
     [editableTextId, setAnnotation],
   );

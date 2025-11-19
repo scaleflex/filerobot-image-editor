@@ -154,6 +154,7 @@ export const EVENTS = {
   TEXT_CONTENT_CHANGING: 'fie-text-content-changing',
   APPLY_TEXT_FORMAT: 'fie-apply-text-annotation-format',
   SAVE_EDITED_TEXT_CONTENT: 'fie-save-edited-text-content',
+  TEXT_CONTENT_CHANGE_CANCELLED: 'fie-text-content-change-cancelled',
 };
 
 export const ALLOWED_TEXT_PART_FORMATS = [
