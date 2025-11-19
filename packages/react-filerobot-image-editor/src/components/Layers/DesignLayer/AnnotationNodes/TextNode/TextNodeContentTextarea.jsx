@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /** External Dependencies */
-import React, { useRef, useEffect, Fragment } from 'react';
+import React, { useRef, useEffect, Fragment, useCallback } from 'react';
 import { Html } from 'react-konva-utils';
 import PropTypes from 'prop-types';
 
@@ -24,7 +24,7 @@ import {
   getQuotedFontFamily,
   pushNodeFlattenedContent,
   recursivelyRemoveCssProperties,
-  createTextChangeTracker,
+  dispatchTextContentChangingEvent,
 } from './TextNode.utils';
 
 const getPreparedStyle = ({
@@ -62,7 +62,7 @@ const TextNodeContentTextarea = ({
   height,
 }) => {
   const textareaRef = useRef();
-  const textChangeTracker = useRef();
+  const previousTextRef = useRef('');
   const { toolId, designLayer } = useStore();
   const setAnnotation = useSetAnnotation();
   const {
@@ -78,10 +78,6 @@ const TextNodeContentTextarea = ({
     return flattenedTextContent;
   };
 
-  const getPlainText = () => {
-    return textareaRef.current?.innerText || '';
-  };
-
   const updateAnnotationWithTmpText = (globalProps) => {
     setAnnotation({
       ...globalProps,
@@ -89,6 +85,33 @@ const TextNodeContentTextarea = ({
       tmpText: getFormattedText(),
       dismissHistory: true,
     });
+  };
+
+  const assignTextextareaRef = useCallback((node) => {
+    textareaRef.current = node;
+
+    if (textareaRef.current) {
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.selectNodeContents(textareaRef.current);
+      range.collapse(false);
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      // Initialize previous text
+      previousTextRef.current = textareaRef.current.innerText;
+    }
+  }, []);
+
+  const handleInputChange = () => {
+    if (textareaRef.current) {
+      const changes = dispatchTextContentChangingEvent(
+        textareaRef,
+        previousTextRef.current,
+      );
+      previousTextRef.current = changes.newText;
+      updateAnnotationWithTmpText();
+    }
   };
 
   const saveFormattedText = () => {
@@ -100,16 +123,6 @@ const TextNodeContentTextarea = ({
     if (saveFormattedText()) {
       cancelTextEditing(false, reselectAfterSaving);
     }
-  };
-
-  const dispatchTextContentChanged = (changeData) => {
-    const event = new CustomEvent(EVENTS.TEXT_CONTENT_CHANGING, {
-      detail: {
-        ...changeData,
-        annotationId: id,
-      },
-    });
-    window.dispatchEvent(event);
   };
 
   const handleCanvasClick = () => {
@@ -305,15 +318,12 @@ const TextNodeContentTextarea = ({
     selection.deleteFromDocument();
     selection.getRangeAt(0).insertNode(textWrapper);
     selection.collapseToEnd();
+
+    // Dispatch text content changing event after paste
+    handleInputChange();
   };
 
   useEffect(() => {
-    textChangeTracker.current = createTextChangeTracker();
-    // Initialize with current text content
-    if (textareaRef.current) {
-      textChangeTracker.current.reset(getPlainText());
-    }
-
     const saveTextAndCancelWithoutSelecting = () =>
       saveFormattedTextAndCancel(false);
     if (window) {
@@ -321,15 +331,6 @@ const TextNodeContentTextarea = ({
         EVENTS.SAVE_EDITED_TEXT_CONTENT,
         saveTextAndCancelWithoutSelecting,
       );
-
-      if (textareaRef.current) {
-        const range = document.createRange();
-        const selection = window.getSelection();
-        range.selectNodeContents(textareaRef.current);
-        range.collapse(false);
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
     }
 
     return () => {
@@ -339,36 +340,6 @@ const TextNodeContentTextarea = ({
       );
     };
   }, []);
-
-  const handleInput = () => {
-    if (textChangeTracker.current && textareaRef.current) {
-      const currentText = getPlainText();
-      const changeData = textChangeTracker.current.trackChange(
-        currentText,
-        textareaRef.current,
-      );
-      if (changeData.diff !== 0 || changeData.usedText) {
-        dispatchTextContentChanged(changeData);
-      }
-    }
-  };
-
-  const handleKeyDown = (event) => {
-    handleTextareaKeyDown(event);
-  };
-
-  const handlePaste = (event) => {
-    handleOnPaste(event);
-
-    // Track paste operation after the event is handled and DOM is updated
-    setTimeout(() => {
-      if (textChangeTracker.current && textareaRef.current) {
-        const currentText = getPlainText();
-        const changeData = textChangeTracker.current.trackChange(currentText);
-        dispatchTextContentChanged(changeData);
-      }
-    }, 10); // Small delay to ensure DOM is fully updated after paste
-  };
 
   useEffect(() => {
     const canvas = designLayer?.getStage();
@@ -409,18 +380,18 @@ const TextNodeContentTextarea = ({
     <Html>
       <StyledTextNodeContentTextarea
         id={TEXT_EDITOR_ID}
-        ref={textareaRef}
-        onKeyDown={handleKeyDown}
+        ref={assignTextextareaRef}
+        onKeyDown={handleTextareaKeyDown}
         onBlur={keepSelectionOnBlur}
         onFocus={disregardSelectionEffect}
+        onInput={handleInputChange}
         contentEditable
         suppressContentEditableWarning
         $width={width}
         $height={height}
         $textAlign={textAlign}
         $opacity={opacity}
-        onPaste={handlePaste}
-        onInput={handleInput}
+        onPaste={handleOnPaste}
         // The styles that would be reused in the character formatting should be added inside style to be retrieved in teh characters formatting through elem.style.cssText
         style={{
           color: fill,

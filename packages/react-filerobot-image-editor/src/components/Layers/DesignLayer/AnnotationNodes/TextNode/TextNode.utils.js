@@ -1,6 +1,7 @@
 /* eslint-disable no-plusplus */
 /** Internal dependencies */
-import { TEXT_EDITOR_ID } from 'utils/constants';
+import { EVENTS, TEXT_EDITOR_ID } from 'utils/constants';
+import emitCustomEvent from 'utils/emitCustomEvent';
 import getNodeText from 'utils/getNodeText';
 import rgbaToHexWithOpacity from 'utils/rgbaToHexa';
 
@@ -252,108 +253,76 @@ export const getCurrentSelectedNodeStyles = (node, currentStyles = {}) => {
   return getCurrentSelectedNodeStyles(node.parentNode, newStyles);
 };
 
-export const createTextChangeTracker = () => {
-  let previousText = '';
-  let previousSelection = null;
+export const calculateTextChanges = (textareaRef, previousText) => {
+  const currentText = textareaRef.current.innerText;
+  const selection = window.getSelection();
+
+  let caretPosition = 0;
+  if (selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0);
+    const preCaretRange = range.cloneRange();
+    preCaretRange.selectNodeContents(textareaRef.current);
+    preCaretRange.setEnd(range.endContainer, range.endOffset);
+    caretPosition = preCaretRange.toString().length;
+  }
+
+  // Calculate character difference
+  let charsDiff = 0;
+
+  if (previousText !== undefined) {
+    charsDiff = currentText.length - previousText.length;
+
+    // Find the actual changed text (for paste/input operations)
+    if (charsDiff > 0) {
+      // Text was replaced (same length but different content)
+      // Find the changed portion by comparing character by character
+      let startDiff = 0;
+      let endDiff = 0;
+
+      // Find where the difference starts
+      while (
+        startDiff < previousText.length &&
+        startDiff < currentText.length &&
+        previousText[startDiff] === currentText[startDiff]
+      ) {
+        startDiff++;
+      }
+
+      // Find where the difference ends from the end
+      while (
+        endDiff < previousText.length - startDiff &&
+        endDiff < currentText.length - startDiff &&
+        previousText[previousText.length - 1 - endDiff] ===
+          currentText[currentText.length - 1 - endDiff]
+      ) {
+        endDiff++;
+      }
+
+      const removedText = previousText.slice(
+        startDiff,
+        previousText.length - endDiff,
+      );
+      const addedText = currentText.slice(
+        startDiff,
+        currentText.length - endDiff,
+      );
+
+      charsDiff = addedText.length - removedText.length;
+    }
+  }
 
   return {
-    trackChange: (currentText) => {
-      const selection = window.getSelection();
-      let caretPosition = 0;
-
-      if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const textareaElement = document.getElementById(TEXT_EDITOR_ID);
-
-        if (textareaElement) {
-          // Create a new range from the start of the element to the caret position
-          const measureRange = document.createRange();
-          measureRange.setStart(textareaElement, 0);
-          measureRange.setEnd(range.startContainer, range.startOffset);
-
-          // Get the text content of this range, which gives us all text up to the caret
-          const textUpToCaret = measureRange.toString();
-          caretPosition = textUpToCaret.length;
-        } else {
-          // Fallback: use the offset within the node
-          caretPosition = range.startOffset;
-        }
-      }
-
-      let diff = 0;
-      let usedText = '';
-      let removedText = '';
-      let isReplacement = false;
-
-      // Calculate the difference between previous and current text
-      if (previousText !== currentText) {
-        // Find the first differing character
-        let i = 0;
-        while (
-          i < previousText.length &&
-          i < currentText.length &&
-          previousText[i] === currentText[i]
-        ) {
-          i++;
-        }
-
-        // Find the last differing character from the end
-        let j = previousText.length - 1;
-        let k = currentText.length - 1;
-        while (j >= i && k >= i && previousText[j] === currentText[k]) {
-          j--;
-          k--;
-        }
-
-        // Check if there was a previous selection that suggests replacement
-        if (previousSelection && previousSelection.length > 0) {
-          // This is likely a replacement operation
-          isReplacement = true;
-          removedText = previousSelection;
-          usedText = currentText.slice(i, k + 1);
-          // Calculate net diff: new text length minus removed text length
-          diff = usedText.length - removedText.length;
-        } else {
-          // Calculate diff: positive for addition, negative for removal
-          diff = currentText.length - previousText.length;
-
-          // Determine the used text (what was added or removed)
-          if (diff > 0) {
-            // Text was added
-            usedText = currentText.slice(i, i + diff);
-          } else if (diff < 0) {
-            // Text was removed
-            usedText = previousText.slice(i, i + Math.abs(diff));
-          } else {
-            // Text was replaced (equal length change)
-            usedText = currentText.slice(i, k + 1);
-          }
-        }
-      }
-
-      // Store current selection state for next change detection
-      if (selection.rangeCount > 0 && !selection.isCollapsed) {
-        const range = selection.getRangeAt(0);
-        previousSelection = range.toString();
-      } else {
-        previousSelection = null;
-      }
-
-      // Update previous values
-      previousText = currentText;
-
-      return {
-        diff,
-        usedText,
-        removedText: isReplacement ? removedText : '',
-        isReplacement,
-        caretPosition,
-      };
-    },
-
-    // Reset function for when editing starts
-    reset: (initialText = '') => {
-      previousText = initialText;
-    },
+    charsDiff,
+    oldText: previousText,
+    newText: currentText,
+    oldCaretPosition: caretPosition - charsDiff,
+    caretPosition,
   };
+};
+
+export const dispatchTextContentChangingEvent = (textareaRef, previousText) => {
+  const changes = calculateTextChanges(textareaRef, previousText);
+  emitCustomEvent(EVENTS.TEXT_CONTENT_CHANGING, changes);
+
+  return changes;
 };
