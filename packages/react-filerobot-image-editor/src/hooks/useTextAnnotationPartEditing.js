@@ -98,13 +98,17 @@ const useTextAnnotationPartEditing = () => {
     annotationText = annotationText.map((part) => {
       const { startIndex, endIndex } = part;
       if (contentStartIndex >= startIndex && contentEndIndex <= endIndex) {
+        const newContent =
+          part.textContent.slice(0, contentStartIndex - startIndex) +
+          newTextContent +
+          part.textContent.slice(contentEndIndex - endIndex);
         const newStartIndex =
           typeof startIndex !== 'undefined'
             ? newestEndIndex ?? startIndex
             : undefined;
         newestEndIndex =
           typeof newStartIndex !== 'undefined'
-            ? newStartIndex + newTextContent.length
+            ? newStartIndex + newContent.length
             : endIndex;
 
         return {
@@ -113,10 +117,7 @@ const useTextAnnotationPartEditing = () => {
             startIndex: newStartIndex,
             endIndex: newestEndIndex,
           }),
-          textContent:
-            part.textContent.slice(0, contentStartIndex - part.startIndex) +
-            newTextContent +
-            part.textContent.slice(contentEndIndex - part.startIndex),
+          textContent: newContent,
         };
       }
 
