@@ -78,8 +78,8 @@ const useTextAnnotationPartEditing = () => {
 
   const updateAnnotationTextSliceUsingIndices = ({
     annotationId,
-    startIndex,
-    endIndex,
+    startIndex: contentStartIndex,
+    endIndex: contentEndIndex,
     newTextContent,
     emitUpdateEvent = true,
   }) => {
@@ -94,11 +94,29 @@ const useTextAnnotationPartEditing = () => {
       ? currentAnnotationText
       : [{ textContent: currentAnnotationText }];
 
+    let newestEndIndex;
     annotationText = annotationText.map((part) => {
-      if (startIndex === part.startIndex && endIndex === part.endIndex) {
+      const { startIndex, endIndex } = part;
+      if (contentStartIndex >= startIndex && contentEndIndex <= endIndex) {
+        const newStartIndex =
+          typeof startIndex !== 'undefined'
+            ? newestEndIndex ?? startIndex
+            : undefined;
+        newestEndIndex =
+          typeof newStartIndex !== 'undefined'
+            ? newStartIndex + newTextContent.length
+            : endIndex;
+
         return {
           ...part,
-          textContent: newTextContent,
+          ...(typeof newStartIndex !== 'undefined' && {
+            startIndex: newStartIndex,
+            endIndex: newestEndIndex,
+          }),
+          textContent:
+            part.textContent.slice(0, contentStartIndex - part.startIndex) +
+            newTextContent +
+            part.textContent.slice(contentEndIndex - part.startIndex),
         };
       }
 
