@@ -108,6 +108,7 @@ const TextNodeContentTextarea = ({
       const changes = dispatchTextContentChangingEvent(
         textareaRef,
         previousTextRef.current,
+        id,
       );
       previousTextRef.current = changes.newText;
       updateAnnotationWithTmpText();

@@ -320,9 +320,16 @@ export const calculateTextChanges = (textareaRef, previousText) => {
   };
 };
 
-export const dispatchTextContentChangingEvent = (textareaRef, previousText) => {
+export const dispatchTextContentChangingEvent = (
+  textareaRef,
+  previousText,
+  annotationId,
+) => {
   const changes = calculateTextChanges(textareaRef, previousText);
-  emitCustomEvent(EVENTS.TEXT_CONTENT_CHANGING, changes);
+  emitCustomEvent(EVENTS.TEXT_CONTENT_CHANGING, {
+    ...changes,
+    annotationId,
+  });
 
   return changes;
 };
