@@ -76,11 +76,56 @@ const useTextAnnotationPartEditing = () => {
     }
   };
 
+  const updateAnnotationTextSliceUsingIndices = ({
+    annotationId,
+    startIndex,
+    endIndex,
+    newTextContent,
+    emitUpdateEvent = true,
+  }) => {
+    const currentAnnotation = annotations[annotationId] || {};
+    const currentAnnotationText =
+      currentAnnotation.defaultText || currentAnnotation.text;
+    if (!currentAnnotation) {
+      return;
+    }
+
+    let annotationText = Array.isArray(currentAnnotationText)
+      ? currentAnnotationText
+      : [{ textContent: currentAnnotationText }];
+
+    annotationText = annotationText.map((part) => {
+      if (startIndex === part.startIndex && endIndex === part.endIndex) {
+        return {
+          ...part,
+          textContent: newTextContent,
+        };
+      }
+
+      return part;
+    });
+
+    setAnnotation({
+      id: annotationId,
+      text: annotationText,
+      tmpText: undefined,
+    });
+
+    if (emitUpdateEvent) {
+      emitCustomEvent(EVENTS.TEXT_CONTENT_EDITED, {
+        id: editableTextId,
+        textContent: annotationText,
+        annotation: { ...currentAnnotation, text: annotationText },
+      });
+    }
+  };
+
   return {
     selectedTextPart,
     setCurrentSelectedText,
     editableTextId,
     updateAnnotationTextSlice,
+    updateAnnotationTextSliceUsingIndices,
   };
 };
 
