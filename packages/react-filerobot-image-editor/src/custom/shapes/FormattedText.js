@@ -191,6 +191,18 @@ export class FormattedTextFIE extends Shape {
         }),
       );
     };
+    // Calculate trimmed height for vertical trim (cap height to baseline + descent)
+    // Similar to Figma's vertical trim feature with "cap height" option
+    const measureTrimmedHeightParts = (parts) => {
+      const maxFontSize = Math.max(
+        ...parts.map((part) => part.style.fontSize ?? this.fontSize()),
+      );
+      // Cap height is the height of capital letters (A, L, etc.) - typically ~0.7 * fontSize
+      // Trimmed height = cap height (from top of capitals to baseline)
+      // Descent is excluded so descenders hang outside the bounding box
+      const capHeight = maxFontSize * 0.7; // Height of capital letters
+      return capHeight; // Trimmed height from cap height to baseline
+    };
 
     let currentHeight = 0;
     let charCount = 0;
@@ -206,6 +218,8 @@ export class FormattedTextFIE extends Shape {
         this.visibleLinesStartIndex += 1;
       }
 
+      // Calculate trimmed height for vertical trim (cap height to baseline + descent)
+      const trimmedHeight = measureTrimmedHeightParts(parts);
       this.textLines.push({
         width,
         parts: parts.map((part, i) => {
@@ -216,6 +230,7 @@ export class FormattedTextFIE extends Shape {
           return part;
         }),
         totalHeight: height,
+        trimmedHeight, // Height from cap height to baseline (descenders hang outside)
       });
     };
 
@@ -370,14 +385,50 @@ export class FormattedTextFIE extends Shape {
     const startIndex = isMiddleAligned
       ? this.visibleLinesStartIndex / 2
       : this.visibleLinesStartIndex;
-    this.linesHeight = this.textLines
-      .slice(
-        Math.floor(startIndex),
-        isMiddleAligned
-          ? this.textLines.length - Math.ceil(startIndex)
-          : undefined,
-      )
-      .reduce((size, line) => size + line.totalHeight, 0);
+    // Use trimmed heights for bounding box calculation (vertical trim like Figma)
+    // For vertical trim: first line starts at cap height, last line ends at descent
+    const visibleTextLines = this.textLines.slice(
+      Math.floor(startIndex),
+      isMiddleAligned
+        ? this.textLines.length - Math.ceil(startIndex)
+        : undefined,
+    );
+
+    if (visibleTextLines.length === 0) {
+      this.linesHeight = 0;
+    } else {
+      const firstLine = visibleTextLines[0];
+
+      // Calculate cap height for first line
+      const firstLineMaxFontSize = Math.max(
+        ...firstLine.parts.map(
+          (part) => part.style.fontSize ?? this.fontSize(),
+        ),
+      );
+
+      const firstLineCapHeight = firstLineMaxFontSize * 0.7; // Cap height (where first baseline is)
+      // Add very small gap above cap height (much smaller than before to match Figma)
+      const topGap = firstLineMaxFontSize * 0.02; // Very small gap above capitals
+
+      // Calculate total height:
+      // - Top gap: small space above capitals
+      // - First line baseline is at capHeight (capitals sit below top gap)
+      // - Lines are spaced by totalHeight (baseline to baseline)
+      // - Last line ends at baseline (descenders hang outside, below the bounding box)
+      if (visibleTextLines.length === 1) {
+        // Single line: top gap + cap height to baseline (descenders hang outside)
+        this.linesHeight = topGap + firstLineCapHeight;
+      } else {
+        // Multiple lines:
+        // Start: top gap + capHeight (first baseline position)
+        // Spacing: (n-1) lines * totalHeight (baseline to baseline spacing)
+        // End: at last baseline (descenders hang outside)
+        const spacingHeight = visibleTextLines
+          .slice(0, -1) // All lines except last
+          .reduce((sum, line) => sum + line.totalHeight, 0);
+        this.linesHeight = topGap + firstLineCapHeight + spacingHeight;
+      }
+    }
     this.linesWidth = Math.max(...this.textLines.map((line) => line.width, 0));
   }
 
@@ -439,7 +490,22 @@ export class FormattedTextFIE extends Shape {
         ? this.textLines.length - Math.ceil(startIndex)
         : undefined,
     );
-    let y = this.textLines[0].totalHeight;
+    // Initialize y to the baseline position for the first line
+    // For vertical trim (cap height), we position the baseline below a small top gap
+    // Cap height is the height of capital letters (A, L, etc.) - typically ~0.7 * fontSize
+    // We add a small gap above so capital letters don't touch the top border
+    const firstLineMaxFontSize = Math.max(
+      ...this.textLines[0].parts.map(
+        (part) => part.style.fontSize ?? this.fontSize(),
+      ),
+    );
+    // Calculate the baseline position based on cap height with top gap
+    // For alphabetic baseline with vertical trim, the baseline is at cap height + top gap
+    // This positions capital letters below the top border with a small gap
+    const capHeight = firstLineMaxFontSize * 0.7; // Height of capital letters (A, L, etc.)
+    const topGap = firstLineMaxFontSize * 0.02; // Very small gap above capitals (to match Figma)
+    // Baseline is positioned at top gap + cap height so capitals sit below the top border
+    let y = topGap + capHeight;
     let lineIndex = 0;
     visibleLines.forEach((line) => {
       const isLastLine = lineIndex === visibleLines.length - 1;
