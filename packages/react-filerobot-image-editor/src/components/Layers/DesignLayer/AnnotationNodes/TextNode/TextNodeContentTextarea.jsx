@@ -120,8 +120,11 @@ const TextNodeContentTextarea = ({
     return commitTextUpdates(innerText, getFormattedText());
   };
 
-  const saveFormattedTextAndCancel = (reselectAfterSaving = true) => {
-    if (saveFormattedText()) {
+  const saveFormattedTextAndCancel = (
+    reselectAfterSaving = true,
+    avoidEditingCancel = false,
+  ) => {
+    if (saveFormattedText() && !avoidEditingCancel) {
       cancelTextEditing(false, reselectAfterSaving);
     }
   };
@@ -325,8 +328,11 @@ const TextNodeContentTextarea = ({
   };
 
   useEffect(() => {
-    const saveTextAndCancelWithoutSelecting = () =>
-      saveFormattedTextAndCancel(false);
+    const saveTextAndCancelWithoutSelecting = ({
+      detail: { avoidEditingCancel = false },
+    } = {}) => {
+      saveFormattedTextAndCancel(false, avoidEditingCancel);
+    };
     if (window) {
       window.addEventListener(
         EVENTS.SAVE_EDITED_TEXT_CONTENT,

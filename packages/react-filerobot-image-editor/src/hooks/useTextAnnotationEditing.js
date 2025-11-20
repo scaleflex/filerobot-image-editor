@@ -128,7 +128,13 @@ const useTextAnnotationEditing = (enableEvents = false) => {
     [editableTextId, setAnnotation],
   );
 
-  const commitTextUpdates = (textContent = '', tmpFormattedText = []) => {
+  const commitTextUpdates = (
+    textContent = '',
+    tmpFormattedText = [],
+    options = {},
+  ) => {
+    const { cancelEditingAfterCommit = false } = options;
+
     if (textContentRegex && textContentRegex.test(textContent)) {
       dispatch({
         type: SET_FEEDBACK,
@@ -157,7 +163,9 @@ const useTextAnnotationEditing = (enableEvents = false) => {
       });
     }
 
-    cancelTextEditing(false);
+    if (cancelEditingAfterCommit) {
+      cancelTextEditing(false);
+    }
     return true;
   };
 

@@ -76,11 +76,75 @@ const useTextAnnotationPartEditing = () => {
     }
   };
 
+  const updateAnnotationTextSliceUsingIndices = ({
+    annotationId,
+    startIndex: contentStartIndex,
+    endIndex: contentEndIndex,
+    newTextContent,
+    emitUpdateEvent = true,
+  }) => {
+    const currentAnnotation = annotations[annotationId] || {};
+    const currentAnnotationText =
+      currentAnnotation.defaultText || currentAnnotation.text;
+    if (!currentAnnotation) {
+      return;
+    }
+
+    let annotationText = Array.isArray(currentAnnotationText)
+      ? currentAnnotationText
+      : [{ textContent: currentAnnotationText }];
+
+    let newestEndIndex;
+    annotationText = annotationText.map((part) => {
+      const { startIndex, endIndex } = part;
+      if (contentStartIndex >= startIndex && contentEndIndex <= endIndex) {
+        const newContent =
+          part.textContent.slice(0, contentStartIndex - startIndex) +
+          newTextContent +
+          part.textContent.slice(contentEndIndex - endIndex);
+        const newStartIndex =
+          typeof startIndex !== 'undefined'
+            ? newestEndIndex ?? startIndex
+            : undefined;
+        newestEndIndex =
+          typeof newStartIndex !== 'undefined'
+            ? newStartIndex + newContent.length
+            : endIndex;
+
+        return {
+          ...part,
+          ...(typeof newStartIndex !== 'undefined' && {
+            startIndex: newStartIndex,
+            endIndex: newestEndIndex,
+          }),
+          textContent: newContent,
+        };
+      }
+
+      return part;
+    });
+
+    setAnnotation({
+      id: annotationId,
+      text: annotationText,
+      tmpText: undefined,
+    });
+
+    if (emitUpdateEvent) {
+      emitCustomEvent(EVENTS.TEXT_CONTENT_EDITED, {
+        id: editableTextId,
+        textContent: annotationText,
+        annotation: { ...currentAnnotation, text: annotationText },
+      });
+    }
+  };
+
   return {
     selectedTextPart,
     setCurrentSelectedText,
     editableTextId,
     updateAnnotationTextSlice,
+    updateAnnotationTextSliceUsingIndices,
   };
 };
 
