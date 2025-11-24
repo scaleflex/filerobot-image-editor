@@ -39,12 +39,12 @@ const useTextAnnotationPartEditing = () => {
 
     let newestEndIndex;
     annotationText = annotationText.map(({ textContent, ...rest }) => {
+      if (!textContent) {
+        return rest;
+      }
+
       const { startIndex, endIndex } = rest;
-      const newTextContent = (
-        textContent ||
-        currentAnnotationText ||
-        ''
-      ).replace(searchValue, replaceValue);
+      const newTextContent = textContent.replace(searchValue, replaceValue);
 
       const newStartIndex =
         typeof startIndex !== 'undefined'
