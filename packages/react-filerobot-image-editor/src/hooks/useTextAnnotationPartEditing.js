@@ -110,7 +110,9 @@ const useTextAnnotationPartEditing = () => {
         const newContent =
           part.textContent.slice(0, usedContentStartIndex - usedStartIndex) +
           newTextContent +
-          part.textContent.slice(usedContentEndIndex - usedEndIndex);
+          part.textContent.slice(
+            usedContentEndIndex - usedEndIndex || part.textContent.length,
+          );
         const newStartIndex =
           typeof startIndex !== 'undefined'
             ? newestEndIndex ?? startIndex
@@ -148,6 +150,7 @@ const useTextAnnotationPartEditing = () => {
     }
   };
 
+  window.xyz = updateAnnotationTextSliceUsingIndices;
   return {
     selectedTextPart,
     setCurrentSelectedText,
