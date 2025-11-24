@@ -418,7 +418,7 @@ const TextNodeContentTextarea = ({
         {Array.isArray(text)
           ? // eslint-disable-next-line default-param-last
             text.map(({ textContent = '', style } = {}, index) => (
-              <span style={getPreparedStyle(style)} key={index}>
+              <span style={getPreparedStyle(style || {})} key={index}>
                 {renderTextContent(textContent)}
               </span>
             ))
