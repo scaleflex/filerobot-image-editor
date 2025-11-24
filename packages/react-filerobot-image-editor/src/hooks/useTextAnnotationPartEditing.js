@@ -108,9 +108,9 @@ const useTextAnnotationPartEditing = () => {
         usedContentEndIndex <= usedEndIndex
       ) {
         const newContent =
-          part.textContent.slice(0, usedContentStartIndex - startIndex) +
+          part.textContent.slice(0, usedContentStartIndex - usedStartIndex) +
           newTextContent +
-          part.textContent.slice(usedContentEndIndex - endIndex);
+          part.textContent.slice(usedContentEndIndex - usedEndIndex);
         const newStartIndex =
           typeof startIndex !== 'undefined'
             ? newestEndIndex ?? startIndex
