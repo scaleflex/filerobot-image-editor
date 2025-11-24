@@ -99,19 +99,20 @@ const useTextAnnotationPartEditing = () => {
       const { startIndex, endIndex } = part;
 
       const usedContentStartIndex = contentStartIndex ?? 0;
-      const usedContentEndIndex = contentEndIndex ?? part.textContent.length;
+      const usedContentText = part.textContent || currentAnnotationText || '';
+      const usedContentEndIndex = contentEndIndex ?? usedContentText.length;
       const usedStartIndex = startIndex ?? 0;
-      const usedEndIndex = endIndex ?? part.textContent.length;
+      const usedEndIndex = endIndex ?? usedContentText.length;
 
       if (
         usedContentStartIndex >= usedStartIndex &&
         usedContentEndIndex <= usedEndIndex
       ) {
         const newContent =
-          part.textContent.slice(0, usedContentStartIndex - usedStartIndex) +
+          usedContentText.slice(0, usedContentStartIndex - usedStartIndex) +
           newTextContent +
-          part.textContent.slice(
-            usedContentEndIndex - usedEndIndex || part.textContent.length,
+          usedContentText.slice(
+            usedContentEndIndex - usedEndIndex || usedContentText.length,
           );
         const newStartIndex =
           typeof startIndex !== 'undefined'
