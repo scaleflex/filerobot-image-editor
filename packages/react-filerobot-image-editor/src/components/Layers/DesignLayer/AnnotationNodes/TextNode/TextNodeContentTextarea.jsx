@@ -98,8 +98,13 @@ const TextNodeContentTextarea = ({
       selection.removeAllRanges();
       selection.addRange(range);
 
-      // Initialize previous text
+      // Initialize previous text (synchronousl in-case we need to use it immediately)
       previousTextRef.current = textareaRef.current.innerText;
+
+      // We need to use setTimeout to ensure the textarea is using the latest innerText (after the input event is triggered and the previousTextRef is updated)
+      setTimeout(() => {
+        previousTextRef.current = textareaRef.current.innerText;
+      }, 0);
     }
   }, []);
 

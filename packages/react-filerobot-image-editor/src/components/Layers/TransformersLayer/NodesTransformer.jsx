@@ -7,11 +7,13 @@ import {
   NODES_TRANSFORMER_ID,
   POINTER_ICONS,
   TOOLS_IDS,
+  EVENTS,
 } from 'utils/constants';
 import { useEditableTextId, useStore } from 'hooks';
 import { CHANGE_POINTER_ICON, ENABLE_TEXT_CONTENT_EDIT } from 'actions';
 import debounce from 'utils/debounce';
 import NodeControls from 'components/NodeControls';
+import emitCustomEvent from 'utils/emitCustomEvent';
 
 let isUnMounted = false;
 
@@ -61,6 +63,10 @@ const NodesTransformer = (props) => {
 
   const enableTextContentChangeOnDblClick = () => {
     if (selections.length === 1 && selections[0].name() === TOOLS_IDS.TEXT) {
+      emitCustomEvent(EVENTS.TEXT_CONTENT_EDIT_STARTING, {
+        annotationId: selections[0].id(),
+      });
+
       dispatch({
         type: ENABLE_TEXT_CONTENT_EDIT,
         payload: {
