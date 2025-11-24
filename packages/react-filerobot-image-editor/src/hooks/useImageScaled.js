@@ -42,13 +42,13 @@ const useImageScaled = (
     );
 
     const newAnnotation = {
-      name: TOOLS_IDS.IMAGE,
       image: loadedImg,
       x: layerCropX + layerWidth / 2 - (loadedImg.width * newImgRatio) / 2,
       y: layerCropY + layerHeight / 2 - (loadedImg.height * newImgRatio) / 2,
       width: loadedImg.width * newImgRatio,
       height: loadedImg.height * newImgRatio,
       ...newAnnotationData,
+      name: TOOLS_IDS.IMAGE,
     };
 
     func(newAnnotation);
