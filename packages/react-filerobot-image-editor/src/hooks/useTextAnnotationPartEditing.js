@@ -40,7 +40,11 @@ const useTextAnnotationPartEditing = () => {
     let newestEndIndex;
     annotationText = annotationText.map(({ textContent, ...rest }) => {
       const { startIndex, endIndex } = rest;
-      const newTextContent = textContent.replace(searchValue, replaceValue);
+      const newTextContent = (
+        textContent ||
+        currentAnnotationText ||
+        ''
+      ).replace(searchValue, replaceValue);
 
       const newStartIndex =
         typeof startIndex !== 'undefined'
@@ -151,7 +155,6 @@ const useTextAnnotationPartEditing = () => {
     }
   };
 
-  window.xyz = updateAnnotationTextSliceUsingIndices;
   return {
     selectedTextPart,
     setCurrentSelectedText,
