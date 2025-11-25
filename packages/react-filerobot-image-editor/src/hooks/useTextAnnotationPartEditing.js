@@ -80,6 +80,69 @@ const useTextAnnotationPartEditing = () => {
     }
   };
 
+  const updateAnnotationTextSlices = (
+    annotationId,
+    searchReplacePairs = [],
+    { annotationTextProperty = 'defaultText', emitUpdateEvent = true } = {},
+  ) => {
+    const currentAnnotation = annotations[annotationId] || {};
+    const currentAnnotationText =
+      currentAnnotation[annotationTextProperty] || currentAnnotation.text;
+    if (
+      !currentAnnotation ||
+      !Array.isArray(searchReplacePairs) ||
+      searchReplacePairs.length === 0
+    ) {
+      return;
+    }
+
+    let annotationText = Array.isArray(currentAnnotationText)
+      ? currentAnnotationText
+      : [{ textContent: currentAnnotationText }];
+
+    let newestEndIndex;
+    annotationText = annotationText.map((part) => {
+      const updatedPart = { ...part };
+
+      let currentText = updatedPart.textContent || currentAnnotationText || '';
+      searchReplacePairs.forEach(({ searchValue, replaceValue }) => {
+        currentText = currentText.replace(searchValue, replaceValue);
+      });
+
+      const newStartIndex =
+        typeof updatedPart.startIndex !== 'undefined'
+          ? newestEndIndex ?? updatedPart.startIndex
+          : undefined;
+      newestEndIndex =
+        typeof newStartIndex !== 'undefined'
+          ? newStartIndex + currentText.length
+          : updatedPart.endIndex;
+
+      return {
+        ...updatedPart,
+        textContent: currentText,
+        ...(typeof newStartIndex !== 'undefined' && {
+          startIndex: newStartIndex,
+          endIndex: newestEndIndex,
+        }),
+      };
+    });
+
+    setAnnotation({
+      id: annotationId,
+      text: annotationText,
+      tmpText: undefined,
+    });
+
+    if (emitUpdateEvent) {
+      emitCustomEvent(EVENTS.TEXT_CONTENT_EDITED, {
+        id: editableTextId,
+        textContent: annotationText,
+        annotation: { ...currentAnnotation, text: annotationText },
+      });
+    }
+  };
+
   const updateAnnotationTextSliceUsingIndices = ({
     annotationId,
     startIndex: contentStartIndex,
@@ -259,6 +322,7 @@ const useTextAnnotationPartEditing = () => {
     setCurrentSelectedText,
     editableTextId,
     updateAnnotationTextSlice,
+    updateAnnotationTextSlices,
     updateAnnotationTextSliceUsingIndices,
     updateAnnotationTextSlicesUsingIndices,
   };
