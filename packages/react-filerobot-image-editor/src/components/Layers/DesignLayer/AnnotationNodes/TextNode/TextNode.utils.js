@@ -162,8 +162,8 @@ export const pushNodeFlattenedContent = (
 
     if (
       lastNode &&
-      !lastNode.textContent.startsWith('$') &&
-      !nodeContent.startsWith('$') && // if variable keep it separate.
+      !lastNode.isDetached &&
+      node.parentNode?.dataset?.detached !== 'true' && // if detached element don't merge it with the previous element.
       JSON.stringify(wrapperStyles) === JSON.stringify(lastNode.style)
     ) {
       lastNode.textContent = `${lastNode.textContent}${nodeContent}`;
@@ -175,6 +175,7 @@ export const pushNodeFlattenedContent = (
         textContent: nodeContent,
         startIndex,
         endIndex,
+        isDetached: node.parentNode?.dataset?.detached === 'true',
       });
     }
 

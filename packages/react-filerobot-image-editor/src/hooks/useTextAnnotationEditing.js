@@ -54,7 +54,10 @@ const useTextAnnotationEditing = (enableEvents = false) => {
     };
   };
 
-  const replaceEditableUnfocusedSelectedText = (textContentString) => {
+  const replaceEditableUnfocusedSelectedText = (
+    textContentString,
+    isDetached = false, // if the text is detached from the text node, it means it's a new text node (separated from the text node on a new node).
+  ) => {
     if (!textContentString) {
       return;
     }
@@ -75,6 +78,10 @@ const useTextAnnotationEditing = (enableEvents = false) => {
 
       element.dataset.endIndex =
         parseInt(startIndex, 10) + textContentString.length;
+
+      if (element.firstElementChild && isDetached) {
+        element.firstElementChild.dataset.detached = 'true';
+      }
     }
   };
 

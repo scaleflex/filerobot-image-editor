@@ -248,11 +248,11 @@ const TextNodeContentTextarea = ({
         }
 
         const prevNode = index > 0 ? nodes[index - 1] : undefined;
-        const isVariable = node.textContent.startsWith('$');
+        const isDetachedNode = node.dataset?.detached === 'true';
         if (
           prevNode?.nodeName === '#text' &&
           node.nodeName === '#text' &&
-          !isVariable
+          !isDetachedNode
         ) {
           prevNode.textContent = `${prevNode.textContent}${node.textContent}`;
         } else {
@@ -263,7 +263,7 @@ const TextNodeContentTextarea = ({
       if (
         markElement.previousSibling?.nodeName === '#text' &&
         childNodes[0].nodeName === '#text' &&
-        !childNodes[0].textContent.startsWith('$')
+        childNodes[0].dataset?.detached !== 'true'
       ) {
         childNodes[0].textContent = `${markElement.previousSibling.textContent}${childNodes[0].textContent}`;
         markElement.previousSibling.remove();
@@ -273,7 +273,7 @@ const TextNodeContentTextarea = ({
       if (
         markElement.nextSibling?.nodeName === '#text' &&
         lastChildNode.nodeName === '#text' &&
-        !lastChildNode.textContent.startsWith('$')
+        lastChildNode.dataset?.detached !== 'true'
       ) {
         lastChildNode.textContent = `${lastChildNode.textContent}${markElement.nextSibling.textContent}`;
         markElement.nextSibling.remove();
@@ -417,11 +417,17 @@ const TextNodeContentTextarea = ({
       >
         {Array.isArray(text)
           ? // eslint-disable-next-line default-param-last
-            text.map(({ textContent = '', style } = {}, index) => (
-              <span style={getPreparedStyle(style || {})} key={index}>
-                {renderTextContent(textContent)}
-              </span>
-            ))
+            text.map(
+              ({ textContent = '', style, isDetached } = {}, index = 0) => (
+                <span
+                  style={getPreparedStyle(style || {})}
+                  key={index}
+                  data-detached={isDetached}
+                >
+                  {renderTextContent(textContent)}
+                </span>
+              ),
+            )
           : renderTextContent(text)}
       </StyledTextNodeContentTextarea>
     </Html>
