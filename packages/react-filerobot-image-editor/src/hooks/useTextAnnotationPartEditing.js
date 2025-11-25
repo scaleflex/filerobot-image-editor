@@ -155,12 +155,112 @@ const useTextAnnotationPartEditing = () => {
     }
   };
 
+  const updateAnnotationTextSlicesUsingIndices = (
+    annotationId,
+    textSlices = [],
+    { annotationTextProperty = 'defaultText', emitUpdateEvent = true } = {},
+  ) => {
+    const currentAnnotation = annotations[annotationId] || {};
+    const currentAnnotationText =
+      currentAnnotation[annotationTextProperty] || currentAnnotation.text;
+    if (
+      !currentAnnotation ||
+      !Array.isArray(textSlices) ||
+      textSlices.length === 0
+    ) {
+      return;
+    }
+
+    let annotationText = Array.isArray(currentAnnotationText)
+      ? currentAnnotationText
+      : [{ textContent: currentAnnotationText }];
+
+    let newestEndIndex;
+    annotationText = annotationText.map((part) => {
+      let updatedPart = part;
+
+      let startIndexOffset = 0;
+      [...textSlices]
+        .sort((a, b) => (a.startIndex ?? 0) - (b.startIndex ?? 0))
+        .forEach(
+          ({
+            startIndex: contentStartIndex,
+            endIndex: contentEndIndex,
+            newTextContent,
+          }) => {
+            const usedContentText =
+              updatedPart.textContent || currentAnnotationText || '';
+            const usedStartIndex = updatedPart.startIndex ?? 0;
+            const usedEndIndex = updatedPart.endIndex ?? usedContentText.length;
+            const usedContentStartIndex = contentStartIndex ?? 0;
+            const usedContentEndIndex =
+              contentEndIndex ?? usedContentText.length;
+
+            if (
+              usedContentStartIndex >= usedStartIndex &&
+              usedContentEndIndex <= usedEndIndex
+            ) {
+              const newContent =
+                usedContentText.slice(
+                  0,
+                  usedContentStartIndex - usedStartIndex + startIndexOffset,
+                ) +
+                newTextContent +
+                usedContentText.slice(
+                  usedContentEndIndex - usedEndIndex || usedContentText.length,
+                );
+
+              startIndexOffset +=
+                newContent.length - (usedContentText.length ?? 0) ?? 0;
+
+              updatedPart = {
+                ...updatedPart,
+                textContent: newContent,
+              };
+            }
+          },
+        );
+
+      const newStartIndex =
+        typeof updatedPart.startIndex !== 'undefined'
+          ? newestEndIndex ?? updatedPart.startIndex
+          : undefined;
+      newestEndIndex =
+        typeof newStartIndex !== 'undefined'
+          ? newStartIndex + (updatedPart.textContent?.length ?? 0)
+          : updatedPart.endIndex;
+
+      return {
+        ...updatedPart,
+        ...(typeof newStartIndex !== 'undefined' && {
+          startIndex: newStartIndex,
+          endIndex: newestEndIndex,
+        }),
+      };
+    });
+
+    setAnnotation({
+      id: annotationId,
+      text: annotationText,
+      tmpText: undefined,
+    });
+
+    if (emitUpdateEvent) {
+      emitCustomEvent(EVENTS.TEXT_CONTENT_EDITED, {
+        id: editableTextId,
+        textContent: annotationText,
+        annotation: { ...currentAnnotation, text: annotationText },
+      });
+    }
+  };
+
   return {
     selectedTextPart,
     setCurrentSelectedText,
     editableTextId,
     updateAnnotationTextSlice,
     updateAnnotationTextSliceUsingIndices,
+    updateAnnotationTextSlicesUsingIndices,
   };
 };
 
