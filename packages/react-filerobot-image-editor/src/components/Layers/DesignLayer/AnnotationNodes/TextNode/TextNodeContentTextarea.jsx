@@ -46,6 +46,8 @@ const getPreparedStyle = ({
   fontFamily: getQuotedFontFamily(fontFamily),
 });
 
+let timeoutId;
+
 const TextNodeContentTextarea = ({
   id,
   fill,
@@ -88,9 +90,15 @@ const TextNodeContentTextarea = ({
   };
 
   const updatePreviousTextRef = () => {
-    setTimeout(() => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
       if (textareaRef.current) {
-        previousTextRef.current = textareaRef.current.innerText;
+        previousTextRef.current = Array.isArray(text)
+          ? text.map(({ textContent = '' } = {}) => textContent).join('')
+          : text;
       }
     }, 0);
   };
@@ -342,30 +350,22 @@ const TextNodeContentTextarea = ({
       saveFormattedTextAndCancel(false, avoidEditingCancel);
     };
 
-    if (window) {
-      window.addEventListener(
-        EVENTS.SAVE_EDITED_TEXT_CONTENT,
-        saveTextAndCancelWithoutSelecting,
-      );
-
-      window.addEventListener(
-        EVENTS.TEXT_CONTENT_EDIT_STARTING,
-        updatePreviousTextRef,
-      );
-    }
+    window?.addEventListener(
+      EVENTS.SAVE_EDITED_TEXT_CONTENT,
+      saveTextAndCancelWithoutSelecting,
+    );
 
     return () => {
       window?.removeEventListener(
         EVENTS.SAVE_EDITED_TEXT_CONTENT,
         saveTextAndCancelWithoutSelecting,
       );
-
-      window.removeEventListener(
-        EVENTS.TEXT_CONTENT_EDIT_STARTING,
-        updatePreviousTextRef,
-      );
     };
   }, []);
+
+  useEffect(() => {
+    updatePreviousTextRef();
+  }, [text]);
 
   useEffect(() => {
     const canvas = designLayer?.getStage();
@@ -384,6 +384,8 @@ const TextNodeContentTextarea = ({
         EVENTS.APPLY_TEXT_FORMAT,
         handleOnTextFormatApply,
       );
+
+      timeoutId = null;
     };
   }, []);
 
@@ -411,6 +413,7 @@ const TextNodeContentTextarea = ({
         onBlur={keepSelectionOnBlur}
         onFocus={disregardSelectionEffect}
         onInput={handleInputChange}
+        onChange={console.log}
         contentEditable
         suppressContentEditableWarning
         $width={width}
