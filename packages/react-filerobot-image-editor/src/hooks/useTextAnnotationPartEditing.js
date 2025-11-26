@@ -83,7 +83,11 @@ const useTextAnnotationPartEditing = () => {
   const updateAnnotationTextSlices = (
     annotationId,
     searchReplacePairs = [],
-    { annotationTextProperty = 'defaultText', emitUpdateEvent = true } = {},
+    {
+      annotationTextProperty = 'defaultText',
+      emitUpdateEvent = true,
+      dismissHistory = false,
+    } = {},
   ) => {
     const currentAnnotation = annotations[annotationId] || {};
     const currentAnnotationText =
@@ -132,6 +136,7 @@ const useTextAnnotationPartEditing = () => {
       id: annotationId,
       text: annotationText,
       tmpText: undefined,
+      dismissHistory,
     });
 
     if (emitUpdateEvent) {
@@ -139,6 +144,7 @@ const useTextAnnotationPartEditing = () => {
         id: editableTextId,
         textContent: annotationText,
         annotation: { ...currentAnnotation, text: annotationText },
+        dismissHistory,
       });
     }
   };
@@ -221,7 +227,11 @@ const useTextAnnotationPartEditing = () => {
   const updateAnnotationTextSlicesUsingIndices = (
     annotationId,
     textSlices = [],
-    { annotationTextProperty = 'defaultText', emitUpdateEvent = true } = {},
+    {
+      annotationTextProperty = 'defaultText',
+      emitUpdateEvent = true,
+      dismissHistory = false,
+    } = {},
   ) => {
     const currentAnnotation = annotations[annotationId] || {};
     const currentAnnotationText =
@@ -306,6 +316,7 @@ const useTextAnnotationPartEditing = () => {
       id: annotationId,
       text: annotationText,
       tmpText: undefined,
+      dismissHistory,
     });
 
     if (emitUpdateEvent) {
@@ -313,6 +324,7 @@ const useTextAnnotationPartEditing = () => {
         id: editableTextId,
         textContent: annotationText,
         annotation: { ...currentAnnotation, text: annotationText },
+        dismissHistory,
       });
     }
   };

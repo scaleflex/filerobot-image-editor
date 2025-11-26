@@ -87,6 +87,12 @@ const TextNodeContentTextarea = ({
     });
   };
 
+  const updatePreviousTextRef = () => {
+    if (textareaRef.current) {
+      previousTextRef.current = textareaRef.current.innerText;
+    }
+  };
+
   const assignTextextareaRef = useCallback((node) => {
     textareaRef.current = node;
 
@@ -99,12 +105,7 @@ const TextNodeContentTextarea = ({
       selection.addRange(range);
 
       // Initialize previous text (synchronousl in-case we need to use it immediately)
-      previousTextRef.current = textareaRef.current.innerText;
-
-      // We need to use setTimeout to ensure the textarea is using the latest innerText (after the input event is triggered and the previousTextRef is updated)
-      setTimeout(() => {
-        previousTextRef.current = textareaRef.current.innerText;
-      }, 0);
+      updatePreviousTextRef();
     }
   }, []);
 
@@ -338,10 +339,17 @@ const TextNodeContentTextarea = ({
     } = {}) => {
       saveFormattedTextAndCancel(false, avoidEditingCancel);
     };
+
     if (window) {
       window.addEventListener(
         EVENTS.SAVE_EDITED_TEXT_CONTENT,
         saveTextAndCancelWithoutSelecting,
+      );
+
+      window.addEventListener(
+        EVENTS.TEXT_CONTENT_EDIT_STARTING,
+        updatePreviousTextRef,
+        { once: true },
       );
     }
 
@@ -349,6 +357,12 @@ const TextNodeContentTextarea = ({
       window?.removeEventListener(
         EVENTS.SAVE_EDITED_TEXT_CONTENT,
         saveTextAndCancelWithoutSelecting,
+      );
+
+      window.removeEventListener(
+        EVENTS.TEXT_CONTENT_EDIT_STARTING,
+        updatePreviousTextRef,
+        { once: true },
       );
     };
   }, []);
