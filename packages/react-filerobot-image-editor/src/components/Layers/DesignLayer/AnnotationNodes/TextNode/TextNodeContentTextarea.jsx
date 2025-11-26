@@ -88,9 +88,11 @@ const TextNodeContentTextarea = ({
   };
 
   const updatePreviousTextRef = () => {
-    if (textareaRef.current) {
-      previousTextRef.current = textareaRef.current.innerText;
-    }
+    setTimeout(() => {
+      if (textareaRef.current) {
+        previousTextRef.current = textareaRef.current.innerText;
+      }
+    }, 0);
   };
 
   const assignTextextareaRef = useCallback((node) => {
@@ -105,7 +107,7 @@ const TextNodeContentTextarea = ({
       selection.addRange(range);
 
       // Initialize previous text (synchronousl in-case we need to use it immediately)
-      updatePreviousTextRef();
+      previousTextRef.current = textareaRef.current.innerText;
     }
   }, []);
 
@@ -349,7 +351,6 @@ const TextNodeContentTextarea = ({
       window.addEventListener(
         EVENTS.TEXT_CONTENT_EDIT_STARTING,
         updatePreviousTextRef,
-        { once: true },
       );
     }
 
@@ -362,7 +363,6 @@ const TextNodeContentTextarea = ({
       window.removeEventListener(
         EVENTS.TEXT_CONTENT_EDIT_STARTING,
         updatePreviousTextRef,
-        { once: true },
       );
     };
   }, []);
