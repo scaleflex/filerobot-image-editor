@@ -108,9 +108,9 @@ const useTextAnnotationPartEditing = () => {
     annotationText = annotationText.map((part) => {
       const updatedPart = { ...part };
 
-      let currentText = updatedPart.textContent || currentAnnotationText || '';
+      let currentText = updatedPart.textContent || '';
       searchReplacePairs.forEach(({ searchValue, replaceValue }) => {
-        currentText = currentText.replace(searchValue, replaceValue);
+        currentText = currentText?.replace(searchValue, replaceValue);
       });
 
       const newStartIndex =
@@ -148,8 +148,6 @@ const useTextAnnotationPartEditing = () => {
       });
     }
   };
-
-  window.xyz = updateAnnotationTextSlices;
 
   const updateAnnotationTextSliceUsingIndices = ({
     annotationId,
