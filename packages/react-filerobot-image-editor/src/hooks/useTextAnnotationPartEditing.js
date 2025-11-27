@@ -149,6 +149,8 @@ const useTextAnnotationPartEditing = () => {
     }
   };
 
+  window.xyz = updateAnnotationTextSlices;
+
   const updateAnnotationTextSliceUsingIndices = ({
     annotationId,
     startIndex: contentStartIndex,

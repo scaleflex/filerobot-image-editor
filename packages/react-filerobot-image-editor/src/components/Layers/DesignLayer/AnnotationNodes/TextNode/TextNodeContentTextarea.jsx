@@ -413,7 +413,6 @@ const TextNodeContentTextarea = ({
         onBlur={keepSelectionOnBlur}
         onFocus={disregardSelectionEffect}
         onInput={handleInputChange}
-        onChange={console.log}
         contentEditable
         suppressContentEditableWarning
         $width={width}
