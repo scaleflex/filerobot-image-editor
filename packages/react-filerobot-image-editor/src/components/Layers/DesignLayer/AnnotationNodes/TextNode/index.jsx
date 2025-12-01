@@ -13,7 +13,8 @@ const FormattedText = 'FormattedTextFIE';
 const TextNode = ({
   id,
   name,
-  text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet tortor quis odio facilisis, id aliquet nulla facilisis. Etiam tincidunt tempor odio nec placerat.',
+  fullText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet tortor quis odio facilisis, id aliquet nulla facilisis. Etiam tincidunt tempor odio nec placerat.',
+  text = fullText,
   fontFamily = 'Arial',
   fontSize = 14,
   fontStyle,
@@ -67,6 +68,7 @@ const TextNode = ({
       opacity={opacity || 0}
       fill={fill}
       text={text}
+      fullText={fullText}
       fontFamily={fontFamily}
       fontStyle={fontStyle}
       fontWeight={fontWeight}
@@ -131,6 +133,7 @@ TextNode.propTypes = {
       }),
     ),
   ]).isRequired,
+  fullText: PropTypes.string,
   fontFamily: PropTypes.string,
   fontStyle: PropTypes.string,
   fontWeight: PropTypes.string,
