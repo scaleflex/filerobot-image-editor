@@ -115,14 +115,18 @@ export class FormattedTextFIE extends Shape {
     };
   }
 
-  computeTextParts() {
-    this.textLines = [];
-    this.visibleLinesStartIndex = 0;
-    const textStr = Array.isArray(this.text())
+  fullText() {
+    return Array.isArray(this.text())
       ? this.text()
           .map(({ textContent } = {}) => textContent)
           .join('')
       : this.text();
+  }
+
+  computeTextParts() {
+    this.textLines = [];
+    this.visibleLinesStartIndex = 0;
+    const textStr = this.fullText();
     const lines = textStr.split('\n');
     const maxWidth = this.attrs.width;
     const maxHeight = this.attrs.height;
@@ -156,17 +160,19 @@ export class FormattedTextFIE extends Shape {
                 (end >= startIndex && end <= endIndex) ||
                 (startIndex >= start && endIndex <= end),
             )
-            .map(({ textContent, style = {}, startIndex = 0 } = {}) => ({
-              style: {
-                ...defaultFormat,
-                ...style,
-              },
-              width: 0,
-              text: textContent
-                // Remove the new line as it is not needed in the content anymore
-                .substring(start - startIndex, end - startIndex)
-                .replaceAll('\n', ''),
-            }))
+            .map(
+              ({ style = {}, startIndex = 0, endIndex = Infinity } = {}) => ({
+                style: {
+                  ...defaultFormat,
+                  ...style,
+                },
+                width: 0,
+                text: this.fullText()
+                  // Remove the new line as it is not needed in the content anymore
+                  .slice(Math.max(start, startIndex), Math.min(end, endIndex))
+                  .replaceAll('\n', ''),
+              }),
+            )
         : [
             {
               text: textStr.slice(start, end).replaceAll('\n', ''),
