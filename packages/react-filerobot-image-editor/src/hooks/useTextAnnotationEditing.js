@@ -160,6 +160,7 @@ const useTextAnnotationEditing = (enableEvents = false) => {
         id: editableTextId,
         text: tmpFormattedText,
         tmpText: undefined,
+        fullText: textContent,
       });
 
       emitCustomEvent(EVENTS.TEXT_CONTENT_EDITED, {
