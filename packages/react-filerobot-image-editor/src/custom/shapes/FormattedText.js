@@ -483,13 +483,13 @@ export class FormattedTextFIE extends Shape {
     const padding = this.padding();
     let alignY = 0;
     if (isMiddleAligned) {
-      alignY =
-        (totalHeight -
-          this.textLines[0].totalHeight / 2 -
-          this.linesHeight -
-          padding * 2) /
-        2;
+      // Center the text block vertically within the inner box
+      // Inner box height = totalHeight - padding * 2
+      // Free space = innerHeight - textHeight
+      // We place half of the free space above the text block
+      alignY = (totalHeight - this.linesHeight - padding * 2) / 2;
     } else if (this.verticalAlign() === 'bottom') {
+      // Place the text block flush with the bottom of the inner box
       alignY = totalHeight - this.linesHeight - padding * 2;
     }
     context.translate(padding, alignY + padding);

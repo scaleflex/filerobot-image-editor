@@ -59,6 +59,7 @@ const TextNodeContentTextarea = ({
   letterSpacing,
   lineHeight,
   textAlign,
+  verticalAlign,
   text,
   width,
   height,
@@ -418,6 +419,7 @@ const TextNodeContentTextarea = ({
         $width={width}
         $height={height}
         $textAlign={textAlign}
+        $verticalAlign={verticalAlign}
         $opacity={opacity}
         onPaste={handleOnPaste}
         // The styles that would be reused in the character formatting should be added inside style to be retrieved in teh characters formatting through elem.style.cssText
@@ -471,6 +473,7 @@ TextNodeContentTextarea.propTypes = {
   fontWeight: PropTypes.string,
   fontStyle: PropTypes.string,
   textAlign: PropTypes.string,
+  verticalAlign: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
   opacity: PropTypes.number,

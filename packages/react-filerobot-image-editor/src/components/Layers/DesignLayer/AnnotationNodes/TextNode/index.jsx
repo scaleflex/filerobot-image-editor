@@ -38,6 +38,7 @@ const TextNode = ({
   letterSpacing,
   lineHeight,
   align = 'left',
+  verticalAlign = 'top',
   autoWidth = false,
   autoHeight = false,
   visible,
@@ -51,6 +52,10 @@ const TextNode = ({
 
   const textX = x || 0;
   const textY = y || 0;
+
+  // Note: Horizontal alignment (left / center / right) is handled internally by
+  // FormattedText and via CSS in TextNodeContentTextarea, so we keep the Group
+  // positioned at the node's original coordinates.
 
   const textNode = (
     <FormattedText
@@ -76,6 +81,7 @@ const TextNode = ({
       letterSpacing={letterSpacing || 0}
       lineHeight={typeof lineHeight !== 'number' ? 1 : lineHeight}
       align={align}
+      verticalAlign={verticalAlign}
       x={isBeingEdited ? 0 : textX}
       y={isBeingEdited ? 0 : textY}
       rotation={isBeingEdited ? 0 : rotation}
@@ -103,6 +109,7 @@ const TextNode = ({
         letterSpacing={letterSpacing}
         lineHeight={lineHeight}
         textAlign={align}
+        verticalAlign={verticalAlign}
         width={width}
         height={height}
       />
@@ -142,6 +149,7 @@ TextNode.propTypes = {
   letterSpacing: PropTypes.number,
   lineHeight: PropTypes.number,
   align: PropTypes.string,
+  verticalAlign: PropTypes.string,
 };
 
 export default TextNode;
