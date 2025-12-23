@@ -304,7 +304,6 @@ const config = {
     imageScalingRatio: 0.33,
   },
   [TOOLS.TEXT]: {
-    // fullText: 'Filerobot...',
     text: 'Filerobot...',
     //   fonts: ['Arial', 'another', { label: 'Tahoma', value: 'Tahoma' }, 'hey-there'], // must be loaded in the website or the user have them on his system
     //   fontFamily: 'test',

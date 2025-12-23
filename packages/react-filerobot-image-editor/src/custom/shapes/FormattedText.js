@@ -47,7 +47,6 @@ const CHANGEABLE_ATTRS = [
   'width',
   'height',
   'text',
-  'fullText',
   'fontSize',
   'fill',
   'fontWeight',
@@ -116,13 +115,7 @@ export class FormattedTextFIE extends Shape {
     };
   }
 
-  getFullText() {
-    // If fullText attribute is explicitly provided, use it
-    if (this.attrs.fullText !== undefined) {
-      return this.attrs.fullText;
-    }
-
-    // Otherwise, compute it from text array or return text directly
+  fullText() {
     return Array.isArray(this.text())
       ? this.text()
           .map(({ textContent } = {}) => textContent)
@@ -133,7 +126,7 @@ export class FormattedTextFIE extends Shape {
   computeTextParts() {
     this.textLines = [];
     this.visibleLinesStartIndex = 0;
-    const textStr = this.getFullText();
+    const textStr = this.fullText();
     const lines = textStr.split('\n');
     const maxWidth = this.attrs.width;
     const maxHeight = this.attrs.height;
@@ -174,7 +167,7 @@ export class FormattedTextFIE extends Shape {
                   ...style,
                 },
                 width: 0,
-                text: this.getFullText()
+                text: this.fullText()
                   // Remove the new line as it is not needed in the content anymore
                   .slice(Math.max(start, startIndex), Math.min(end, endIndex))
                   .replaceAll('\n', ''),
@@ -850,21 +843,6 @@ Factory.addGetterSetter(
  * text.text([{ textContent: 'Hello there', style: { fontSize: 24, fill: 'green' }, startIndex: 0 }])
  */
 Factory.addGetterSetter(FormattedTextFIE, 'text');
-
-/**
- * get/set fullText - the complete text string (optional)
- * @name Konva.Text#fullText
- * @method
- * @param {String} fullText
- * @returns {String}
- * @example
- * // get fullText
- * var fullText = text.fullText();
- *
- * // set fullText
- * text.fullText('Complete text content');
- */
-Factory.addGetterSetter(FormattedTextFIE, 'fullText');
 
 /**
  * get/set font family
