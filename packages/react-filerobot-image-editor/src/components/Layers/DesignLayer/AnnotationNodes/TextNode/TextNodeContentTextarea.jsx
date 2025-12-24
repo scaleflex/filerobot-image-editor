@@ -175,7 +175,7 @@ const TextNodeContentTextarea = ({
     if (typeof updatedFormats.letterSpacing !== 'undefined') {
       updatedFormats.letterSpacing = `${parseFloat(
         updatedFormats.letterSpacing,
-      )}em`;
+      )}px`;
     }
 
     if (typeof updatedFormats.baselineShift !== 'undefined') {
