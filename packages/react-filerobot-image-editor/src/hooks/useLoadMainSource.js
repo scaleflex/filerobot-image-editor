@@ -44,6 +44,7 @@ const useLoadMainSource = ({
     updateStateFnRef,
     resetOnSourceChange: configResetOnSourceChange,
     keepZoomOnSourceChange: configKeepZoomOnSourceChange,
+    translationsGridUuid,
   } = config;
   const resetOnSourceChange =
     triggerResetOnSourceChange ?? configResetOnSourceChange;
@@ -137,7 +138,7 @@ const useLoadMainSource = ({
     const initialRequestsPromisesFn = () => [
       loadAndSetOriginalSource(loadableDesignState?.imgSrc || source),
       ...(useBackendTranslations
-        ? [getBackendTranslations(translations, language)]
+        ? [getBackendTranslations(translations, translationsGridUuid, language)]
         : []),
     ];
 
@@ -155,7 +156,7 @@ const useLoadMainSource = ({
         );
       }
     };
-  }, []);
+  }, [translationsGridUuid]);
 
   useEffect(() => {
     if (updateStateFnRef && typeof updateStateFnRef === 'object') {

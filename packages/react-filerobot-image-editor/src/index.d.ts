@@ -397,6 +397,7 @@ export interface FilerobotImageEditorConfig {
   resetOnSourceChange?: boolean;
   previewBgColor?: string;
   previewBgImage?: HTMLImageElement;
+  translationsGridUuid?: string;
 }
 
 declare const FilerobotImageEditor: FunctionComponent<FilerobotImageEditorConfig>;
