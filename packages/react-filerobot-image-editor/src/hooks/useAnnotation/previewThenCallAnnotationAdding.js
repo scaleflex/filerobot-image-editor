@@ -17,7 +17,7 @@ const eventsOptions = {
   passive: true,
 };
 
-const MIN_PIXELS = 1;
+const MIN_PIXELS = 10;
 
 let shownAnnotationPreview = null;
 let textAnnotationWrappedRect = null;
