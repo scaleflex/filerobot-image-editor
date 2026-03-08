@@ -350,7 +350,7 @@ export class FormattedTextFIE extends Shape {
               break;
             }
             line = line.slice(low);
-            cursor += low + NEWLINE_COUNT_CONST;
+            cursor += low;
             if (line.length > 0) {
               // Check if the remaining text would fit on one line
               const foundParts = findParts(
