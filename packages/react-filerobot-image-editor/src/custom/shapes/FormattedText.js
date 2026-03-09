@@ -54,6 +54,7 @@ const CHANGEABLE_ATTRS = [
   'fontFamily',
   'verticalAlign',
   'scaleFormatDimensionsBy',
+  'shrink',
 ];
 
 const NEWLINE_COUNT_CONST = 1;
@@ -62,6 +63,8 @@ const NEWLINE_COUNT_CONST = 1;
 export class FormattedTextFIE extends Shape {
   constructor(config) {
     super(config);
+    this._shrinkScale = 1;
+    this._isTextTruncated = false;
     // update text data for certain attr changes
     CHANGEABLE_ATTRS.forEach((attr) => {
       this.on(`${attr}Change.konva`, this.computeTextParts);
@@ -103,13 +106,14 @@ export class FormattedTextFIE extends Shape {
   }
 
   getDefaultTextPartFormat() {
+    const scale = this._shrinkScale || 1;
     return {
-      fontSize: this.fontSize(),
+      fontSize: this.fontSize() * scale,
       fill: this.fill(),
       fontWeight: this.fontWeight(),
       fontStyle: this.fontStyle(),
       baselineShift: 0,
-      letterSpacing: this.letterSpacing(),
+      letterSpacing: this.letterSpacing() * scale,
       fontVariant: this.fontVariant(),
       fontFamily: this.fontFamily(),
     };
@@ -123,7 +127,8 @@ export class FormattedTextFIE extends Shape {
       : this.text();
   }
 
-  computeTextParts() {
+  _computeTextLayout() {
+    this._isTextTruncated = false;
     this.textLines = [];
     this.visibleLinesStartIndex = 0;
     const textStr = this.fullText();
@@ -152,6 +157,7 @@ export class FormattedTextFIE extends Shape {
       : 0;
 
     const findParts = (start, end) => {
+      const shrinkScale = this._shrinkScale || 1;
       return Array.isArray(this.text()) && this.text().length > 0
         ? this.text()
             .filter(
@@ -160,19 +166,29 @@ export class FormattedTextFIE extends Shape {
                 (end >= startIndex && end <= endIndex) ||
                 (startIndex >= start && endIndex <= end),
             )
-            .map(
-              ({ style = {}, startIndex = 0, endIndex = Infinity } = {}) => ({
-                style: {
-                  ...defaultFormat,
-                  ...style,
-                },
+            .map(({ style = {}, startIndex = 0, endIndex = Infinity } = {}) => {
+              const mergedStyle = {
+                ...defaultFormat,
+                ...style,
+              };
+              if (style.fontSize != null) {
+                mergedStyle.fontSize = style.fontSize * shrinkScale;
+              }
+              if (style.letterSpacing != null) {
+                mergedStyle.letterSpacing = style.letterSpacing * shrinkScale;
+              }
+              if (style.baselineShift != null) {
+                mergedStyle.baselineShift = style.baselineShift * shrinkScale;
+              }
+              return {
+                style: mergedStyle,
                 width: 0,
                 text: this.fullText()
                   // Remove the new line as it is not needed in the content anymore
                   .slice(Math.max(start, startIndex), Math.min(end, endIndex))
                   .replaceAll('\n', ''),
-              }),
-            )
+              };
+            })
         : [
             {
               text: textStr.slice(start, end).replaceAll('\n', ''),
@@ -319,6 +335,7 @@ export class FormattedTextFIE extends Shape {
               !shouldWrap ||
               (hasFixedHeight && currentHeight + lineHeight > maxHeight)
             ) {
+              this._isTextTruncated = true;
               const lastLine = this.textLines[this.textLines.length - 1];
               if (lastLine) {
                 if (shouldAddEllipsis) {
@@ -368,6 +385,7 @@ export class FormattedTextFIE extends Shape {
             }
           } else {
             // not even one character could fit in the element, abort
+            this._isTextTruncated = true;
             break;
           }
         }
@@ -380,6 +398,7 @@ export class FormattedTextFIE extends Shape {
       // if element height is fixed, abort if adding one more line would overflow
       // so we stop here to avoid processing useless lines
       if (hasFixedHeight && currentHeight + lineHeight > maxHeight) {
+        this._isTextTruncated = true;
         break;
       }
 
@@ -436,6 +455,51 @@ export class FormattedTextFIE extends Shape {
       }
     }
     this.linesWidth = Math.max(...this.textLines.map((line) => line.width, 0));
+  }
+
+  computeTextParts() {
+    this._shrinkScale = 1;
+    this._computeTextLayout(); // (1) Compute initial layout with full font size (no shrink)
+
+    const shrinkPercent = this.shrink();
+    if (!shrinkPercent || shrinkPercent <= 0 || !this._isTextTruncated) {
+      return; // no shrink needed — exits with 1 call
+    }
+
+    const baseFontSize = this.fontSize();
+    if (!baseFontSize) {
+      return; // no font size — exits with 1 call
+    }
+
+    const minScale = 1 - Math.min(shrinkPercent, 100) / 100;
+
+    this._shrinkScale = minScale;
+    this._computeTextLayout(); // (2) Compute layout with reduced font size at maximum shrink percentage
+    if (this._isTextTruncated) {
+      return; // even max shrink doesn't fit — exits with 2 calls
+    }
+
+    let low = minScale;
+    let high = 1;
+    const precision = 0.5 / baseFontSize;
+    let iterations = 0;
+
+    while (high - low > precision && iterations < 20) {
+      const mid = (low + high) / 2;
+      this._shrinkScale = mid;
+      this._computeTextLayout(); // (3..N) Compute layout with reduced font size at current shrink percentage - binary search.
+      if (this._isTextTruncated) {
+        high = mid;
+      } else {
+        low = mid;
+      }
+      iterations += 1;
+    }
+
+    if (this._shrinkScale !== low) {
+      this._shrinkScale = low;
+      this._computeTextLayout(); // (N+1) Compute layout with final shrink percentage at best scale that fits.
+    }
   }
 
   getHeight() {
@@ -937,3 +1001,16 @@ Factory.addGetterSetter(FormattedTextFIE, 'fontWeight', NORMAL);
  */
 
 Factory.addGetterSetter(FormattedTextFIE, 'scaleFormatDimensionsBy', 1);
+
+/**
+ * get/set shrink percentage. When set to a positive number (0–100),
+ * defines the maximum percentage by which the font size may be reduced
+ * so the text fits within its bounding box.
+ * E.g. shrink(30) allows the font to shrink by up to 30%.
+ * A value of 0 disables shrinking.
+ * @name FormattedTextFIE#shrink
+ * @method
+ * @param {Number} shrink
+ * @returns {Number}
+ */
+Factory.addGetterSetter(FormattedTextFIE, 'shrink', 0, getNumberValidator());

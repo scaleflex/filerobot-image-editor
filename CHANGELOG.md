@@ -32,6 +32,8 @@ Types of changes:
 - In Crop, original background preview is now considering more properties of the edited image.
 - Duplicated objects behavior (on duplicating the new object is auto selected).
 - Rename `backgroundColor` to `previewBgColor & `backgroundImage` to `previewBgImage`.
+- Drop the tiny created objects/annotations that created using tiny drag on the canvas.
+- Default text annotation's font size by making it dynamically set based on the original image dimensions and default to 16.
 
 Changed
 - removed defaultToolId and made it undefined by default.
@@ -47,9 +49,11 @@ Added
 - Characters/text part formatting & adding baseline shift.
 - Zoom fit button.
 - AI tab and ObjectRemoval tool -- their docs are missing, to be added --.
+- Font shrink to fit functionality (`shrink` property).
 
 Fixed
 - Undo/Redo or deleted shapes.
+- Text annotation new-line was dismissing the new-line's first character.
 
 NOTES:
 - {toolId === TOOLS_IDS.CROP && <CropTransformer />} when adding CropTransformer as child of TransformersLayer to be opened only while opening crop tab or to do any conditional render to avoid showing the crop transformer all the time unless needed.

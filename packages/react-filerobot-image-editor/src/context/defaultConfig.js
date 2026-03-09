@@ -36,6 +36,7 @@ export default {
     align: 'left', // left, center, right
     fontStyle: 'normal', // 'normal', 'italic'
     fontWeight: 'normal', // 'normal', 'bold'
+    shrink: 0,
     onFontChange: undefined,
   },
   [TOOLS_IDS.IMAGE]: {

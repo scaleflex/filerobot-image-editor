@@ -43,6 +43,7 @@ const TextNode = ({
   visible,
   padding,
   fontWeight,
+  shrink = 0,
   originalSourceInitialScale,
   ...otherProps
 }) => {
@@ -75,6 +76,7 @@ const TextNode = ({
       fontFamily={fontFamily}
       fontStyle={fontStyle}
       fontWeight={fontWeight}
+      shrink={shrink}
       fontSize={fontSize || 1}
       letterSpacing={letterSpacing || 0}
       lineHeight={typeof lineHeight !== 'number' ? 1 : lineHeight}
@@ -147,6 +149,7 @@ TextNode.propTypes = {
   lineHeight: PropTypes.number,
   align: PropTypes.string,
   verticalAlign: PropTypes.string,
+  shrink: PropTypes.number,
 };
 
 export default TextNode;
