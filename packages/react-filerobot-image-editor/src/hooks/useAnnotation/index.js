@@ -10,6 +10,7 @@ import {
   useStore,
   useUpdateEffect,
 } from 'hooks';
+import getScaledFontSize from 'utils/getScaledFontSize';
 import previewThenCallAnnotationAdding from './previewThenCallAnnotationAdding';
 import useDebouncedCallback from '../useDebouncedCallback';
 
@@ -36,14 +37,22 @@ const useAnnotation = (
     selectionsIds = [],
     config,
     toolId,
+    originalSource,
   } = useStore();
   const { moreAnnotationPreviewClasses } = config;
   const selectTool = useSelectTool();
   const selectedAnnotationName = annotations[selectionsIds[0]]?.name;
+  const resolvedName = annotation.name || selectedAnnotationName;
   const annotationDefaults = {
     ...config.annotationsCommon,
-    ...config[annotation.name || selectedAnnotationName],
+    ...config[resolvedName],
   };
+  if (resolvedName === TOOLS_IDS.TEXT && annotationDefaults.fontSize == null) {
+    annotationDefaults.fontSize = getScaledFontSize(
+      originalSource?.width,
+      originalSource?.height,
+    );
+  }
   const [tmpAnnotation, setTmpAnnotation] = useState(() => ({
     ...annotationDefaults,
     ...annotation,

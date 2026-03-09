@@ -15,7 +15,7 @@ const TextNode = ({
   name,
   text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet tortor quis odio facilisis, id aliquet nulla facilisis. Etiam tincidunt tempor odio nec placerat.',
   fontFamily = 'Arial',
-  fontSize = 14,
+  fontSize = 16,
   fontStyle,
   fill = '#000',
   x,
