@@ -33,7 +33,6 @@ Types of changes:
 - Duplicated objects behavior (on duplicating the new object is auto selected).
 - Rename `backgroundColor` to `previewBgColor & `backgroundImage` to `previewBgImage`.
 - Drop the tiny created objects/annotations that created using tiny drag on the canvas.
-- Default text annotation's font size by making it dynamically set based on the original image dimensions and default to 16.
 
 Changed
 - removed defaultToolId and made it undefined by default.

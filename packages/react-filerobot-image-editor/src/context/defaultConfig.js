@@ -30,7 +30,7 @@ export default {
       'Sans-serif',
       { label: 'Comic Sans', value: 'Comic-sans' },
     ],
-    fontSize: undefined,
+    fontSize: 14,
     letterSpacing: 0,
     lineHeight: 1,
     align: 'left', // left, center, right
