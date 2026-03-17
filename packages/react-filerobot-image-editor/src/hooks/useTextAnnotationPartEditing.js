@@ -248,68 +248,73 @@ const useTextAnnotationPartEditing = () => {
       ? currentAnnotationText
       : [{ textContent: currentAnnotationText }];
 
+    // Process slices in reverse order (highest startIndex first) so that
+    // replacing later ranges doesn't shift indices for earlier slices.
+    const sortedSlices = [...textSlices].sort(
+      (a, b) => (b.startIndex ?? 0) - (a.startIndex ?? 0),
+    );
+
+    sortedSlices.forEach(
+      ({ startIndex: sliceStart, endIndex: sliceEnd, newTextContent }) => {
+        const usedSliceStart = sliceStart ?? 0;
+        const usedSliceEnd = sliceEnd ?? 0;
+        let isFirstOverlap = true;
+
+        annotationText = annotationText.map((part) => {
+          const partText = part.textContent || '';
+          const partStart = part.startIndex ?? 0;
+          const partEnd = part.endIndex ?? partStart + partText.length;
+
+          // Check for any overlap between slice range and part range
+          if (usedSliceStart < partEnd && usedSliceEnd > partStart) {
+            const overlapStart = Math.max(usedSliceStart, partStart);
+            const overlapEnd = Math.min(usedSliceEnd, partEnd);
+
+            const textBefore = partText.slice(0, overlapStart - partStart);
+            const textAfter = partText.slice(overlapEnd - partStart);
+
+            let newContent;
+            if (isFirstOverlap) {
+              // First overlapping part gets the replacement text
+              newContent = textBefore + newTextContent + textAfter;
+              isFirstOverlap = false;
+            } else {
+              // Subsequent overlapping parts just remove the covered portion
+              newContent = textBefore + textAfter;
+            }
+
+            return {
+              ...part,
+              textContent: newContent,
+            };
+          }
+
+          return part;
+        });
+      },
+    );
+
+    // Recalculate startIndex/endIndex for all parts
     let newestEndIndex;
     annotationText = annotationText.map((part) => {
-      let updatedPart = part;
-
-      let startIndexOffset = 0;
-      [...textSlices]
-        .sort((a, b) => (a.startIndex ?? 0) - (b.startIndex ?? 0))
-        .forEach(
-          ({
-            startIndex: contentStartIndex,
-            endIndex: contentEndIndex,
-            newTextContent,
-          }) => {
-            const usedContentText =
-              updatedPart.textContent || currentAnnotationText || '';
-            const usedStartIndex = updatedPart.startIndex ?? 0;
-            const usedEndIndex = updatedPart.endIndex ?? usedContentText.length;
-            const usedContentStartIndex = contentStartIndex ?? 0;
-            const usedContentEndIndex =
-              contentEndIndex ?? usedContentText.length;
-
-            if (
-              usedContentStartIndex >= usedStartIndex &&
-              usedContentEndIndex <= usedEndIndex
-            ) {
-              const newContent =
-                usedContentText.slice(
-                  0,
-                  usedContentStartIndex - usedStartIndex + startIndexOffset,
-                ) +
-                newTextContent +
-                usedContentText.slice(
-                  usedContentEndIndex - usedEndIndex || usedContentText.length,
-                );
-
-              startIndexOffset +=
-                newContent.length - (usedContentText.length ?? 0) ?? 0;
-
-              updatedPart = {
-                ...updatedPart,
-                textContent: newContent,
-              };
-            }
-          },
-        );
-
       const newStartIndex =
-        typeof updatedPart.startIndex !== 'undefined'
-          ? newestEndIndex ?? updatedPart.startIndex
+        typeof part.startIndex !== 'undefined'
+          ? newestEndIndex ?? part.startIndex
           : undefined;
       newestEndIndex =
         typeof newStartIndex !== 'undefined'
-          ? newStartIndex + (updatedPart.textContent?.length ?? 0)
-          : updatedPart.endIndex;
+          ? newStartIndex + (part.textContent?.length ?? 0)
+          : part.endIndex;
 
-      return {
-        ...updatedPart,
+      const recalculated = {
+        ...part,
         ...(typeof newStartIndex !== 'undefined' && {
           startIndex: newStartIndex,
           endIndex: newestEndIndex,
         }),
       };
+
+      return recalculated;
     });
 
     setAnnotation({
