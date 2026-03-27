@@ -9,4 +9,5 @@ const selectTool = (state, payload) =>
         selectionsIds: payload.keepSelections ? state.selectionsIds : [],
       };
 
+
 export default selectTool;

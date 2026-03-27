@@ -8,11 +8,13 @@ import { useStore } from 'hooks';
 import { SELECT_TAB } from 'actions';
 import TabItem from './TabItem';
 import { AVAILABLE_TABS } from './Tabs.constants';
+import { TABS_IDS } from 'utils/constants';
 
 const Tabs = ({ toggleMainMenu, isDrawer }) => {
   const {
     t,
     tabId = null,
+    toolId,
     dispatch,
     config: { defaultTabId, tabsIds, useCloudimage },
   } = useStore();
@@ -20,10 +22,13 @@ const Tabs = ({ toggleMainMenu, isDrawer }) => {
   const currentTabId = tabId || defaultTabId;
 
   const selectTab = useCallback((newTabId) => {
+    const annotateToolIdKey = newTabId === TABS_IDS.ANNOTATE ? toolId : null;
+
     dispatch({
       type: SELECT_TAB,
       payload: {
         tabId: newTabId,
+        toolId: annotateToolIdKey,
       },
     });
 

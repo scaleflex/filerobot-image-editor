@@ -21,7 +21,7 @@ const ToolsBar = ({ isPhoneScreen }) => {
     toolId,
     annotations,
     selectionsIds = [],
-    config: { defaultTabId, defaultToolId, useCloudimage },
+    config: { annotationToolsIds, defaultTabId, defaultToolId, useCloudimage },
   } = useStore();
   const currentTabId = tabId || defaultTabId;
   const currentToolId =
@@ -41,25 +41,35 @@ const ToolsBar = ({ isPhoneScreen }) => {
     });
   }, []);
 
-  const items = useMemo(
-    () =>
-      tabTools.map((id) => {
-        const { Item, hideFn } = TOOLS_ITEMS[id];
+  const items = useMemo(() => {
+    const isToolVisible = (id) => {
+      const tool = TOOLS_ITEMS[id];
+      return tool?.Item && (!tool.hideFn || !tool.hideFn({ useCloudimage }));
+    };
+  
+    const renderItem = (id) => {
+      const { Item } = TOOLS_ITEMS[id];
+  
+      return (
+        <Item
+          key={id}
+          selectTool={selectTool}
+          t={t}
+          isSelected={currentToolId === id}
+        />
+      );
+    };
 
-        return (
-          Item &&
-          (!hideFn || !hideFn({ useCloudimage })) && (
-            <Item
-              key={id}
-              selectTool={selectTool}
-              t={t}
-              isSelected={currentToolId === id}
-            />
-          )
-        );
-      }),
-    [tabTools, currentToolId],
-  );
+    if (currentTabId === TABS_IDS.ANNOTATE) {
+      const annotateToolIds = annotationToolsIds.length
+        ? annotationToolsIds.filter((toolId) =>TABS_TOOLS.Annotate.includes(toolId))
+        : TABS_TOOLS.Annotate;
+
+      return annotateToolIds.filter(isToolVisible).map(renderItem);
+    }
+  
+    return tabTools.filter(isToolVisible).map(renderItem);
+  }, [currentTabId, tabTools, annotationToolsIds, currentToolId, useCloudimage]);
 
   const ToolOptionsComponent = useMemo(() => {
     if (!currentToolId) {
