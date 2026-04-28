@@ -53,7 +53,9 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
   </strong>
 </p>
 
-<!-- GIF Link TO BE ADDED... -->
+<p align="center">
+  <img src="./public/assets/Demo.gif" alt="Filerobot Image Editor Demo" />
+</p>
 
 ## Features
 
