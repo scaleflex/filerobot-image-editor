@@ -289,7 +289,7 @@ const CropTransformer = () => {
         borderStroke={theme.palette['accent-primary']}
         borderStrokeWidth={2}
         borderDash={[4]}
-        keepRatio={!isCustom || !isEllipse}
+        keepRatio={!isCustom && !isEllipse}
         ref={cropTransformerRef}
         boundBoxFunc={(absOldBox, absNewBox) =>
           boundResizing(
