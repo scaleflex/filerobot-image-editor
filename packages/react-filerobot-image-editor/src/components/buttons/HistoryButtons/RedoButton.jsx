@@ -1,4 +1,5 @@
 /** External Dependencies */
+import React from 'react';
 import Redo from '@scaleflex/icons/redo';
 
 /** Internal Dependencies */

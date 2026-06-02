@@ -1,4 +1,5 @@
 /** External Dependencies */
+import React from 'react';
 import { BrushOutline, EraserOutline } from '@scaleflex/icons';
 import PropTypes from 'prop-types';
 import { TooltipV2 } from '@scaleflex/ui/core';

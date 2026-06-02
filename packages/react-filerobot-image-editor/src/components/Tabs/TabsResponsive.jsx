@@ -1,3 +1,6 @@
+/** External Dependencies */
+import React from 'react';
+
 /** Internal dependencies */
 import { TabsDrawer, TabsNavbar } from 'components/Tabs';
 import { useTabletScreen } from 'hooks';

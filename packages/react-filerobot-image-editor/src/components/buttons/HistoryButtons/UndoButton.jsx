@@ -1,4 +1,5 @@
 /** External Dependencies */
+import React from 'react';
 import Undo from '@scaleflex/icons/undo';
 
 /** Internal Dependencies */
