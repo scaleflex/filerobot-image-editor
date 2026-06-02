@@ -1,5 +1,5 @@
 /** External Dependencies */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Circle, Square, Tick } from '@scaleflex/icons';
 import { MenuItem, MenuItemIcon, MenuItemLabel } from '@scaleflex/ui/core';

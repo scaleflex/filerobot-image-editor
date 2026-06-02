@@ -45,5 +45,5 @@
   "scripts": {
     "build:lib": "rimraf lib && cross-env BABEL_ENV=production NODE_ENV=production babel src -d lib --config-file ../../babel.config.json -D"
   },
-  "gitHead": "aea5b6ed854e5b016be1352517fe0305202c5924"
+  "gitHead": "2baca13697921d2d0952aa73ce05c599ca500692"
 }
