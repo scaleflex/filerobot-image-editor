@@ -3,7 +3,7 @@ import React, { memo, useCallback, useEffect, useState, useRef } from 'react';
 
 /** Internal Dependencies */
 import MainCanvas from 'components/MainCanvas';
-import { ROOT_CONTAINER_CLASS_NAME } from 'utils/constants';
+import { ROOT_CONTAINER_CLASS_NAME, TABS_IDS } from 'utils/constants';
 import Topbar from 'components/Topbar';
 import Tabs from 'components/Tabs';
 import ToolsBar from 'components/ToolsBar';
@@ -50,6 +50,7 @@ const App = () => {
     t,
     theme,
     feedback = {},
+    tabId,
   } = useStore();
   const {
     loadableDesignState,
@@ -67,6 +68,7 @@ const App = () => {
     updateStateFnRef,
     noCrossOrigin,
     resetOnImageSourceChange,
+    Crop,
   } = config;
 
   const showTabsDrawer = window.matchMedia('(max-width: 760px)').matches;
@@ -335,8 +337,22 @@ const App = () => {
             className="FIE_editor-content"
             showTabsDrawer={showTabsDrawer}
           >
+            {Crop?.dynamicButtons &&
+              !showCanvasOnly &&
+              tabId === TABS_IDS.ADJUST && (
+                <ToolsBar
+                  isPhoneScreen={isPhoneScreen}
+                  dynamicButtons={Crop?.dynamicButtons || false}
+                  upperToolbar
+                />
+              )}
             <MainCanvas />
-            {!showCanvasOnly && <ToolsBar isPhoneScreen={isPhoneScreen} />}
+            {!showCanvasOnly && (
+              <ToolsBar
+                isPhoneScreen={isPhoneScreen}
+                dynamicButtons={Crop?.dynamicButtons || false}
+              />
+            )}
           </StyledCanvasAndTools>
         </StyledMainContent>
       )}
