@@ -7,7 +7,7 @@ import { Temprature as WarmthIcon } from '@scaleflex/icons/tempreture';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const Warmth = ({ selectTool, isSelected, t }) => (
+const Warmth = ({ selectTool, isSelected = false, t }) => (
   <ToolsBarItemButton
     className="FIE_warmth-tool-button"
     id={TOOLS_IDS.WARMTH}
@@ -17,10 +17,6 @@ const Warmth = ({ selectTool, isSelected, t }) => (
     isSelected={isSelected}
   />
 );
-
-Warmth.defaultProps = {
-  isSelected: false,
-};
 
 Warmth.propTypes = {
   selectTool: PropTypes.func.isRequired,

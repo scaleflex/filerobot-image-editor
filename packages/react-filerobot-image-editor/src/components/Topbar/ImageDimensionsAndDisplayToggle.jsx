@@ -16,7 +16,10 @@ import {
 } from './Topbar.styled';
 import CanvasZooming from './CanvasZooming';
 
-const ImageDimensionsAndDisplayToggle = ({ showBackButton, isPhoneScreen }) => {
+const ImageDimensionsAndDisplayToggle = ({
+  showBackButton = false,
+  isPhoneScreen = false,
+}) => {
   const {
     dispatch,
     isResetted = true,
@@ -94,11 +97,6 @@ const ImageDimensionsAndDisplayToggle = ({ showBackButton, isPhoneScreen }) => {
       </StyledDimensionsButtons>
     </StyledImageOptionsButtons>
   );
-};
-
-ImageDimensionsAndDisplayToggle.defaultProps = {
-  showBackButton: false,
-  isPhoneScreen: false,
 };
 
 ImageDimensionsAndDisplayToggle.propTypes = {

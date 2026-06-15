@@ -11,8 +11,10 @@ import deepMerge from 'utils/deepMerge';
 import assignFinetuneNamesToKonva from 'utils/assignFinetuneNamesToKonva';
 import { FontsFaces, OverrideDefaultStyles } from './globalStyles';
 
-const AssemblyPoint = (props) => {
-  const { source, useCloudimage, cloudimage } = props;
+const AssemblyPoint = ({ source,
+  useCloudimage = false,
+  cloudimage = {},
+}) => {
   if (
     !source ||
     (typeof source !== 'string' && !(source instanceof HTMLImageElement))
@@ -33,7 +35,11 @@ const AssemblyPoint = (props) => {
     assignFinetuneNamesToKonva();
   }, [])
 
-  const defaultAndProvidedConfigMerged = deepMerge(defaultConfig, props);
+  const defaultAndProvidedConfigMerged = deepMerge(defaultConfig, {
+    source,
+    useCloudimage,
+    cloudimage,
+  });
 
   return (
     <React.StrictMode>
@@ -46,11 +52,6 @@ const AssemblyPoint = (props) => {
       </ThemeProvider>
     </React.StrictMode>
   );
-};
-
-AssemblyPoint.defaultProps = {
-  useCloudimage: false,
-  cloudimage: {},
 };
 
 AssemblyPoint.propTypes = {

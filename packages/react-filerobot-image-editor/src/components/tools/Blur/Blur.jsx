@@ -7,7 +7,7 @@ import { Blur as BlurIcon } from '@scaleflex/icons/blur';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const Blur = ({ selectTool, isSelected, t }) => (
+const Blur = ({ selectTool, isSelected = false, t }) => (
   <ToolsBarItemButton
     className="FIE_blur-tool-button"
     id={TOOLS_IDS.BLUR}
@@ -17,10 +17,6 @@ const Blur = ({ selectTool, isSelected, t }) => (
     isSelected={isSelected}
   />
 );
-
-Blur.defaultProps = {
-  isSelected: false,
-};
 
 Blur.propTypes = {
   selectTool: PropTypes.func.isRequired,

@@ -7,17 +7,21 @@ import { Text } from 'react-konva';
 import nodesCommonPropTypes from '../nodesCommonPropTypes';
 
 const TextNode = ({
+  text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet tortor quis odio facilisis, id aliquet nulla facilisis. Etiam tincidunt tempor odio nec placerat.',
+  fontFamily = 'Arial',
+  fontSize = 14,
+  fill = '#000',
+  width = 0,
+  height = 0,
+  letterSpacing = undefined,
+  lineHeight = undefined,
+  align = 'left',
+
   id,
   name,
-  text,
-  fontFamily,
-  fontSize,
   fontStyle,
-  fill,
   x,
   y,
-  width,
-  height,
   scaleX,
   scaleY,
   rotation,
@@ -30,12 +34,10 @@ const TextNode = ({
   shadowColor,
   shadowOpacity,
   opacity,
-  letterSpacing,
-  lineHeight,
-  align,
   ...otherProps
 }) => (
   <Text
+    {...nodesCommonPropTypes.defaults}
     id={id}
     name={name}
     rotation={rotation}
@@ -65,19 +67,6 @@ const TextNode = ({
     {...otherProps}
   />
 );
-
-TextNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet tortor quis odio facilisis, id aliquet nulla facilisis. Etiam tincidunt tempor odio nec placerat.',
-  fontFamily: 'Arial',
-  fontSize: 14,
-  fill: '#000',
-  width: 0,
-  height: 0,
-  letterSpacing: undefined,
-  lineHeight: undefined,
-  align: 'left',
-};
 
 TextNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

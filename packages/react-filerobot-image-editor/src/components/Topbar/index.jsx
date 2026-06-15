@@ -21,7 +21,7 @@ import {
 } from './Topbar.styled';
 import BackButton from './BackButton';
 
-const Topbar = ({ toggleMainMenu }) => {
+const Topbar = ({ toggleMainMenu = () => {} }) => {
   const {
     config: { showBackButton },
   } = useStore();
@@ -63,10 +63,6 @@ const Topbar = ({ toggleMainMenu }) => {
       </StyledControlButtonsWrapper>
     </StyledTopbar>
   );
-};
-
-Topbar.defaultProps = {
-  toggleMainMenu: () => {},
 };
 
 Topbar.propTypes = {

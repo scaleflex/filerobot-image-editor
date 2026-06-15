@@ -14,19 +14,19 @@ import {
 } from './ButtonWithMenu.styled';
 
 const ButtonWithMenu = ({
-  onClick,
-  title,
-  label,
-  color,
-  menuFromBtn,
+  onClick = undefined,
+  title = '',
+  label = '',
+  color = 'primary',
+  menuFromBtn = false,
   menuItems,
   menuPosition = 'bottom',
   disabled = false,
   className,
-  menuStyle,
-  wrapperStyle,
-  buttonRef,
-  noMargin,
+  menuStyle = undefined,
+  wrapperStyle = undefined,
+  buttonRef = undefined,
+  noMargin = false,
 }) => {
   const { t } = useStore();
   const isMounted = useRef(true);
@@ -134,20 +134,6 @@ const ButtonWithMenu = ({
       )}
     </>
   );
-};
-
-ButtonWithMenu.defaultProps = {
-  title: '',
-  label: '',
-  color: 'primary',
-  menuFromBtn: false,
-  noMargin: false,
-  menuPosition: 'bottom',
-  onClick: undefined,
-  disabled: false,
-  menuStyle: undefined,
-  wrapperStyle: undefined,
-  buttonRef: undefined,
 };
 
 ButtonWithMenu.propTypes = {

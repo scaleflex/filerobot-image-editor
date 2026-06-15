@@ -20,7 +20,12 @@ import {
   StyledResetButton,
 } from './Resize.styled';
 
-const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
+const Resize = ({
+  onChange = undefined,
+  currentSize = {},
+  hideResetButton = false,
+  alignment = 'center',
+}) => {
   const {
     dispatch,
     originalImage,
@@ -214,13 +219,6 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
       )}
     </StyledResizeWrapper>
   );
-};
-
-Resize.defaultProps = {
-  onChange: undefined,
-  currentSize: {},
-  hideResetButton: false,
-  alignment: 'center',
 };
 
 Resize.propTypes = {

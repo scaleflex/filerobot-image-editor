@@ -9,7 +9,7 @@ import { RESET } from 'actions';
 import Modal from 'components/common/Modal';
 import { CLOSING_REASONS } from 'utils/constants';
 
-const ConfirmationModal = ({ children, isReset }) => {
+const ConfirmationModal = ({ children, isReset = false }) => {
   const {
     t,
     theme,
@@ -76,10 +76,6 @@ const ConfirmationModal = ({ children, isReset }) => {
       )}
     </>
   );
-};
-
-ConfirmationModal.defaultProps = {
-  isReset: false,
 };
 
 ConfirmationModal.propTypes = {

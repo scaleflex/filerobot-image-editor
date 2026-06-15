@@ -7,7 +7,7 @@ import Line from '@scaleflex/icons/line';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const LineButton = ({ selectTool, isSelected, t }) => (
+const LineButton = ({ selectTool, isSelected = false, t }) => (
   <ToolsBarItemButton
     className="FIE_line-tool-button"
     id={TOOLS_IDS.LINE}
@@ -17,10 +17,6 @@ const LineButton = ({ selectTool, isSelected, t }) => (
     isSelected={isSelected}
   />
 );
-
-LineButton.defaultProps = {
-  isSelected: false,
-};
 
 LineButton.propTypes = {
   selectTool: PropTypes.func.isRequired,

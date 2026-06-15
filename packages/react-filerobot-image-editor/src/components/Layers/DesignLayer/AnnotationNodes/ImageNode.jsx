@@ -8,13 +8,14 @@ import loadImage from 'utils/loadImage';
 import nodesCommonPropTypes from '../nodesCommonPropTypes';
 
 const ImageNode = ({
+  width = 0,
+  height = 0,
+
   id,
   name,
   image,
   x,
   y,
-  width,
-  height,
   scaleX,
   scaleY,
   rotation,
@@ -45,6 +46,7 @@ const ImageNode = ({
 
   return (
     <Image
+      {...nodesCommonPropTypes.defaults}
       id={id}
       name={name}
       rotation={rotation}
@@ -68,12 +70,6 @@ const ImageNode = ({
       {...otherProps}
     />
   );
-};
-
-ImageNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  width: 0,
-  height: 0,
 };
 
 ImageNode.propTypes = {

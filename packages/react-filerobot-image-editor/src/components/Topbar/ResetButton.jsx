@@ -8,7 +8,7 @@ import { useStore } from 'hooks';
 import { StyledHistoryButton } from './Topbar.styled';
 import ConfirmationModal from './ConfirmationModal';
 
-const ResetButton = ({ margin }) => {
+const ResetButton = ({ margin = undefined }) => {
   const { isResetted = true, feedback, t } = useStore();
 
   const isBlockerError = feedback.duration === 0;
@@ -27,10 +27,6 @@ const ResetButton = ({ margin }) => {
       </StyledHistoryButton>
     </ConfirmationModal>
   );
-};
-
-ResetButton.defaultProps = {
-  margin: undefined,
 };
 
 ResetButton.propTypes = {

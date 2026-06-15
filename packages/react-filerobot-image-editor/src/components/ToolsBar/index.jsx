@@ -13,7 +13,7 @@ import ToolsBarItemOptionsWrapper from './ToolsBarItemOptionsWrapper';
 
 const style = { maxWidth: '100%', width: '100%' };
 
-const ToolsBar = ({ isPhoneScreen }) => {
+const ToolsBar = ({ isPhoneScreen = false }) => {
   const {
     t,
     dispatch,
@@ -117,10 +117,6 @@ const ToolsBar = ({ isPhoneScreen }) => {
       )}
     </StyledToolsBar>
   );
-};
-
-ToolsBar.defaultProps = {
-  isPhoneScreen: false,
 };
 
 ToolsBar.propTypes = {

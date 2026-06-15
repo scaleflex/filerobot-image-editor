@@ -8,7 +8,7 @@ import { REDO } from 'actions';
 import { useStore } from 'hooks';
 import { StyledHistoryButton } from './Topbar.styled';
 
-const RedoButton = ({ margin }) => {
+const RedoButton = ({ margin = undefined }) => {
   const { dispatch, hasRedo = false, t } = useStore();
   const dispatchRedo = useCallback(() => {
     dispatch({ type: REDO });
@@ -27,10 +27,6 @@ const RedoButton = ({ margin }) => {
       <Redo />
     </StyledHistoryButton>
   );
-};
-
-RedoButton.defaultProps = {
-  margin: undefined,
 };
 
 RedoButton.propTypes = {

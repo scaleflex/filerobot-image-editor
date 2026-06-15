@@ -20,7 +20,7 @@ import { ZOOM_FACTORS_PRESETS } from './Topbar.constants';
 
 const MULTIPLY_ZOOM_FACTOR = 1.1;
 
-const CanvasZooming = ({ showBackButton }) => {
+const CanvasZooming = ({ showBackButton = false }) => {
   const {
     dispatch,
     zoom = {},
@@ -148,10 +148,6 @@ const CanvasZooming = ({ showBackButton }) => {
       </Menu>
     </StyledZoomingWrapper>
   );
-};
-
-CanvasZooming.defaultProps = {
-  showBackButton: false,
 };
 
 CanvasZooming.propTypes = {

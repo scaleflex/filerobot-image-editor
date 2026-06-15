@@ -15,7 +15,7 @@ const MAX_FILTER_PREVIEW_HEIGHT = 45;
 
 const FilterItem = ({
   filterLabel,
-  filterFn,
+  filterFn = undefined,
   applyFilter,
   isActive,
   image,
@@ -80,10 +80,6 @@ const FilterItem = ({
       </FilterItemLabel>
     </StyledFilterItem>
   );
-};
-
-FilterItem.defaultProps = {
-  filterFn: undefined,
 };
 
 FilterItem.propTypes = {

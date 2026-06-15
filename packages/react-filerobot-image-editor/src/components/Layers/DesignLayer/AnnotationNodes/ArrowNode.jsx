@@ -7,19 +7,20 @@ import { Arrow } from 'react-konva';
 import nodesCommonPropTypes from '../nodesCommonPropTypes';
 
 const ArrowNode = ({
+  stroke = '#000000',
+  strokeWidth = 6,
+  fill = undefined,
+  lineCap = 'butt',
+  pointerLength = undefined,
+  pointerWidth = undefined,
+
   id,
   name,
-  fill,
-  pointerLength,
-  pointerWidth,
   scaleX,
   scaleY,
   rotation,
   annotationEvents,
   points,
-  lineCap,
-  stroke,
-  strokeWidth,
   shadowOffsetX,
   shadowOffsetY,
   shadowBlur,
@@ -29,6 +30,7 @@ const ArrowNode = ({
   ...otherProps
 }) => (
   <Arrow
+    {...nodesCommonPropTypes.defaults}
     id={id}
     name={name}
     rotation={rotation}
@@ -53,16 +55,6 @@ const ArrowNode = ({
     {...otherProps}
   />
 );
-
-ArrowNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  stroke: '#000000',
-  strokeWidth: 6,
-  fill: undefined,
-  lineCap: 'butt',
-  pointerLength: undefined,
-  pointerWidth: undefined,
-};
 
 ArrowNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

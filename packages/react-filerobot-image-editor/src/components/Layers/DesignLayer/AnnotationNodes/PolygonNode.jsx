@@ -7,16 +7,17 @@ import { RegularPolygon } from 'react-konva';
 import nodesCommonPropTypes from '../nodesCommonPropTypes';
 
 const PolygonNode = ({
+  fill = '#000',
+  sides = 3,
+
   id,
   name,
-  fill,
   x,
   y,
   radius,
   scaleX,
   scaleY,
   rotation,
-  sides,
   annotationEvents,
   stroke,
   strokeWidth,
@@ -29,6 +30,7 @@ const PolygonNode = ({
   ...otherProps
 }) => (
   <RegularPolygon
+    {...nodesCommonPropTypes.defaults}
     id={id}
     name={name}
     rotation={rotation}
@@ -53,12 +55,6 @@ const PolygonNode = ({
     {...otherProps}
   />
 );
-
-PolygonNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  fill: '#000',
-  sides: 3,
-};
 
 PolygonNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

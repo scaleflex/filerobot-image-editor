@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 /** Internal Dependencies */
 import AnnotationOptions from 'components/common/AnnotationOptions';
 
-const ImageControls = ({ image, saveImage, children, t }) => (
+const ImageControls = ({ image, saveImage, children = null, t }) => (
   <AnnotationOptions
     className="FIE_image-tool-options"
     annotation={image}
@@ -16,10 +16,6 @@ const ImageControls = ({ image, saveImage, children, t }) => (
     {children}
   </AnnotationOptions>
 );
-
-ImageControls.defaultProps = {
-  children: null,
-};
 
 ImageControls.propTypes = {
   image: PropTypes.instanceOf(Object).isRequired,

@@ -11,19 +11,20 @@ import {
 } from './Crop.styled';
 
 const CropPresetItem = ({
+  Icon = undefined,
+  width = undefined,
+  height = undefined,
+  disableManualResize = false,
+  isAccordion = false,
+  noEffect = false,
+
   titleKey,
   description,
   ratio,
   onClick,
-  Icon,
   isActive,
-  isAccordion,
   theme,
-  width,
-  height,
   t,
-  disableManualResize,
-  noEffect,
 }) => {
   const handleOnClick = (e) =>
     onClick(e, ratio, {
@@ -58,15 +59,6 @@ const CropPresetItem = ({
       )}
     </StyledMenuItem>
   );
-};
-
-CropPresetItem.defaultProps = {
-  Icon: undefined,
-  width: undefined,
-  height: undefined,
-  disableManualResize: false,
-  isAccordion: false,
-  noEffect: false,
 };
 
 CropPresetItem.propTypes = {

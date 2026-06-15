@@ -11,7 +11,7 @@ import { StyledPickerTrigger } from './ColorInput.styled';
 const pinnedColorsKey = 'FIE_pinnedColors';
 
 // colorFor is used to save the latest color for a specific purpose (e.g. fill/shadow/stroke)
-const ColorInput = ({ onChange, color, colorFor }) => {
+const ColorInput = ({ onChange, color = undefined, colorFor }) => {
   const {
     selectionsIds = [],
     config: { annotationsCommon = {} },
@@ -98,10 +98,6 @@ const ColorInput = ({ onChange, color, colorFor }) => {
       />
     </>
   );
-};
-
-ColorInput.defaultProps = {
-  color: undefined,
 };
 
 ColorInput.propTypes = {

@@ -15,7 +15,7 @@ import {
   StyledPrevArrowWrapper,
 } from './Carousel.styled';
 
-const Carousel = ({ children, style, className }) => {
+const Carousel = ({ children, style = null, className }) => {
   const scrollingByDraggingLatestX = useRef(false);
   const carouselRef = useRef();
   const [observeResize] = useResizeObserver();
@@ -141,10 +141,6 @@ const Carousel = ({ children, style, className }) => {
       )}
     </StyledCarouselWrapper>
   );
-};
-
-Carousel.defaultProps = {
-  style: null,
 };
 
 Carousel.propTypes = {

@@ -14,7 +14,7 @@ import { useStore } from 'hooks';
 import { StyledDrawer } from 'components/App/App.styled';
 import Tabs from 'components/Tabs';
 
-const TabsDrawer = ({ toggleMainMenu }) => {
+const TabsDrawer = ({ toggleMainMenu = () => {} }) => {
   const { t, showTabsMenu } = useStore();
 
   return (
@@ -40,10 +40,6 @@ const TabsDrawer = ({ toggleMainMenu }) => {
       </DrawerBody>
     </StyledDrawer>
   );
-};
-
-TabsDrawer.defaultProps = {
-  toggleMainMenu: () => {},
 };
 
 TabsDrawer.propTypes = {

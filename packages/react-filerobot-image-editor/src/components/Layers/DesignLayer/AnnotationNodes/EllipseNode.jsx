@@ -7,13 +7,14 @@ import { Ellipse } from 'react-konva';
 import nodesCommonPropTypes from '../nodesCommonPropTypes';
 
 const EllipseNode = ({
+  fill = '#000',
+  radiusX = 0,
+  radiusY = 0,
+
   id,
   name,
-  fill,
   x,
   y,
-  radiusX,
-  radiusY,
   scaleX,
   scaleY,
   rotation,
@@ -29,6 +30,7 @@ const EllipseNode = ({
   ...otherProps
 }) => (
   <Ellipse
+    {...nodesCommonPropTypes.defaults}
     id={id}
     name={name}
     rotation={rotation}
@@ -53,13 +55,6 @@ const EllipseNode = ({
     {...otherProps}
   />
 );
-
-EllipseNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  fill: '#000',
-  radiusX: 0,
-  radiusY: 0,
-};
 
 EllipseNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

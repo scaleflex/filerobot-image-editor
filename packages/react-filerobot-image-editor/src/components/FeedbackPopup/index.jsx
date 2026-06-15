@@ -18,7 +18,7 @@ const ERROR_TO_ROBOT_STATUS = {
   [FEEDBACK_STATUSES.WARNING]: 'warning',
 };
 
-const FeedbackPopup = ({ anchorOrigin }) => {
+const FeedbackPopup = ({ anchorOrigin = defaultAnchorOrigin }) => {
   const { feedback = {}, dispatch } = useStore();
 
   if (!feedback.message) {
@@ -45,10 +45,6 @@ const FeedbackPopup = ({ anchorOrigin }) => {
       onClose={onClose}
     />
   );
-};
-
-FeedbackPopup.defaultProps = {
-  anchorOrigin: defaultAnchorOrigin,
 };
 
 FeedbackPopup.propTypes = {

@@ -7,13 +7,15 @@ import { Rect } from 'react-konva';
 import nodesCommonPropTypes from '../nodesCommonPropTypes';
 
 const RectNode = ({
+  fill = '#000',
+  cornerRadius = 0,
+  width = 0,
+  height = 0,
+
   id,
   name,
-  fill,
   x,
   y,
-  width,
-  height,
   scaleX,
   scaleY,
   rotation,
@@ -26,10 +28,10 @@ const RectNode = ({
   shadowColor,
   shadowOpacity,
   opacity,
-  cornerRadius,
   ...otherProps
 }) => (
   <Rect
+    {...nodesCommonPropTypes.defaults}
     id={id}
     name={name}
     rotation={rotation}
@@ -53,14 +55,6 @@ const RectNode = ({
     {...otherProps}
   />
 );
-
-RectNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  fill: '#000',
-  cornerRadius: 0,
-  width: 0,
-  height: 0,
-};
 
 RectNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

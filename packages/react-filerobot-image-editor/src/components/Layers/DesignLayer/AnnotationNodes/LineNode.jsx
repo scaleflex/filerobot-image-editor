@@ -7,26 +7,28 @@ import { Line } from 'react-konva';
 import nodesCommonPropTypes from '../nodesCommonPropTypes';
 
 const LineNode = ({
+  stroke = '#000000',
+  strokeWidth = 1,
+  lineCap = 'butt', // butt/round/square
+  annotationEvents = {},
+  tension = undefined,
+
   id,
   name,
   scaleX,
   scaleY,
   rotation,
-  annotationEvents,
   points,
-  lineCap,
-  stroke,
-  strokeWidth,
   shadowOffsetX,
   shadowOffsetY,
   shadowBlur,
   shadowColor,
   shadowOpacity,
-  tension,
   opacity,
   ...otherProps
 }) => (
   <Line
+    {...nodesCommonPropTypes.defaults}
     id={id}
     name={name}
     rotation={rotation}
@@ -50,15 +52,6 @@ const LineNode = ({
     {...otherProps}
   />
 );
-
-LineNode.defaultProps = {
-  ...nodesCommonPropTypes.defaults,
-  stroke: '#000000',
-  strokeWidth: 1,
-  lineCap: 'butt', // butt/round/square
-  annotationEvents: {},
-  tension: undefined,
-};
 
 LineNode.propTypes = {
   ...nodesCommonPropTypes.definitions,

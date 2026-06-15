@@ -12,7 +12,7 @@ import { StyledWatermarkGalleryItem } from './Watermark.styled';
 const WatermarksGallery = ({
   addImgWatermark,
   loadAndSetWatermarkImg,
-  style,
+  style = undefined,
 }) => {
   const { config, annotations, dispatch, t } = useStore();
 
@@ -76,10 +76,6 @@ const WatermarksGallery = ({
       })}
     </Carousel>
   );
-};
-
-WatermarksGallery.defaultProps = {
-  style: undefined,
 };
 
 WatermarksGallery.propTypes = {

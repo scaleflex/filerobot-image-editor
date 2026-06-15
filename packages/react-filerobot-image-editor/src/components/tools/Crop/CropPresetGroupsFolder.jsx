@@ -10,7 +10,7 @@ import { StyledMenuItem, StyledMenuItemIcon } from './Crop.styled';
 
 const CropPresetGroupsFolder = ({
   titleKey,
-  Icon,
+  Icon = undefined,
   theme,
   groups,
   onItemSelect,
@@ -72,10 +72,6 @@ const CropPresetGroupsFolder = ({
       ]}
     />
   );
-};
-
-CropPresetGroupsFolder.defaultProps = {
-  Icon: undefined,
 };
 
 CropPresetGroupsFolder.propTypes = {

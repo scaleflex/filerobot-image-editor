@@ -7,16 +7,12 @@ import { Color as PC } from '@scaleflex/ui/utils/types/palette';
 
 import { StyledSpinnerWrapper, StyledSpinner } from './Spinner.styled';
 
-const Spinner = ({ theme }) => {
+const Spinner = ({ theme = {} }) => {
   return (
     <StyledSpinnerWrapper className="FIE_spinner-wrapper">
       <StyledSpinner size={50} color={theme.palette[PC.AccentStateless]} />
     </StyledSpinnerWrapper>
   );
-};
-
-Spinner.defaultProps = {
-  theme: {},
 };
 
 Spinner.propTypes = {

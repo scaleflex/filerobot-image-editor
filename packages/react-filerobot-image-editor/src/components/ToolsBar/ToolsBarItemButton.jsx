@@ -10,12 +10,13 @@ import {
 } from './ToolsBar.styled';
 
 const ToolsBarItemButton = ({
-  id,
-  label,
+  isSelected = false,
+  id = undefined,
+  children = null,
+  label = '',
+
   onClick,
   Icon,
-  isSelected,
-  children,
   className,
 }) => {
   const isPhoneScreen = usePhoneScreen(320);
@@ -40,13 +41,6 @@ const ToolsBarItemButton = ({
       {children}
     </StyledToolsBarItemButton>
   );
-};
-
-ToolsBarItemButton.defaultProps = {
-  isSelected: false,
-  id: undefined,
-  children: null,
-  label: '',
 };
 
 ToolsBarItemButton.propTypes = {

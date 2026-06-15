@@ -7,7 +7,7 @@ import { Polygon as PolygonIcon } from '@scaleflex/icons/polygon';
 import ToolsBarItemButton from 'components/ToolsBar/ToolsBarItemButton';
 import { TOOLS_IDS } from 'utils/constants';
 
-const PolygonButton = ({ selectTool, isSelected, t }) => (
+const PolygonButton = ({ selectTool, isSelected = false, t }) => (
   <ToolsBarItemButton
     className="FIE_polygon-tool-button"
     id={TOOLS_IDS.POLYGON}
@@ -17,10 +17,6 @@ const PolygonButton = ({ selectTool, isSelected, t }) => (
     isSelected={isSelected}
   />
 );
-
-PolygonButton.defaultProps = {
-  isSelected: false,
-};
 
 PolygonButton.propTypes = {
   selectTool: PropTypes.func.isRequired,

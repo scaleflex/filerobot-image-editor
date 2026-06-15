@@ -26,7 +26,7 @@ import {
   deactivateTextChange,
 } from './handleTextChangeArea';
 
-const TextControls = ({ text, saveText, children }) => {
+const TextControls = ({ text, saveText, children = null }) => {
   const { dispatch, textIdOfEditableContent, designLayer, t, config } =
     useStore();
   const { useCloudimage } = config;
@@ -183,10 +183,6 @@ const TextControls = ({ text, saveText, children }) => {
       </StyledToolsWrapper>
     </AnnotationOptions>
   );
-};
-
-TextControls.defaultProps = {
-  children: null,
 };
 
 TextControls.propTypes = {
