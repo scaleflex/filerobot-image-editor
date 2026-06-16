@@ -17,6 +17,7 @@ const EllipseOptions = ({ t }) => {
       className="FIE_ellipse-tool-options"
       annotation={ellipse}
       updateAnnotation={saveEllipse}
+      hideStrokeField
       t={t}
     />
   );

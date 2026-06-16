@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 /** Internal Dependencies */
 import restrictNumber from 'utils/restrictNumber';
 import ColorInput from 'components/common/ColorInput';
+import { StyledSliderInput } from 'components/tools/tools.styled';
 import { StyledSpacedOptionFields } from './AnnotationOptions.styled';
 import Slider from '../Slider';
 
@@ -30,6 +31,10 @@ const StrokeFields = ({ annotation, updateAnnotation }) => {
 
   return (
     <StyledSpacedOptionFields>
+      <StyledSliderInput
+          value={strokeWidth}
+          onChange={({ target: { value } }) => changeStrokeWidth(value)}
+        />
       <Slider
         annotation="px"
         onChange={changeStrokeWidth}

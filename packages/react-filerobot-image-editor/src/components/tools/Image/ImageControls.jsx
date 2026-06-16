@@ -12,6 +12,7 @@ const ImageControls = ({ image, saveImage, children, t }) => (
     updateAnnotation={saveImage}
     t={t}
     hideFillOption
+    hideStrokeField
   >
     {children}
   </AnnotationOptions>

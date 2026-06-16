@@ -31,6 +31,7 @@ const AnnotationOptions = ({
   annotation,
   updateAnnotation,
   hideFillOption,
+  hideStrokeField,
   hidePositionField,
   className,
   ...rest
@@ -54,17 +55,19 @@ const AnnotationOptions = ({
       },
       ...(!useCloudimage
         ? [
-            { titleKey: 'stroke', name: POPPABLE_OPTIONS.STROKE, Icon: Stroke },
+            ...(hideStrokeField ? [{ titleKey: 'stroke', name: POPPABLE_OPTIONS.STROKE, Icon: Stroke }] : []),
             { titleKey: 'shadow', name: POPPABLE_OPTIONS.SHADOW, Icon: Shadow },
           ]
         : []),
-      !hidePositionField
-        ? {
-            titleKey: 'position',
-            name: POPPABLE_OPTIONS.POSITION,
-            Icon: Position,
-          }
-        : undefined,
+      ...(!hidePositionField
+        ? [
+            {
+              titleKey: 'position',
+              name: POPPABLE_OPTIONS.POSITION,
+              Icon: Position,
+            },
+          ]
+        : []),
     ],
     [morePoppableOptionsPrepended],
   );
@@ -89,7 +92,11 @@ const AnnotationOptions = ({
 
   const changeAnnotationFill = useCallback(
     (newFill) => {
-      updateAnnotation({ fill: newFill });
+      if (!hideStrokeField) {
+        updateAnnotation({ stroke: newFill });
+      } else {
+        updateAnnotation({ fill: newFill });
+      }
     },
     [updateAnnotation],
   );
@@ -115,7 +122,13 @@ const AnnotationOptions = ({
       className={`FIE_annotations-options${className ? ` ${className}` : ''}`}
       isPhoneScreen={isPhoneScreen}
     >
-      {!hideFillOption && (
+      { !hideStrokeField && (
+        <StrokeFields 
+          annotation={annotation} 
+          updateAnnotation={updateAnnotation} 
+        /> 
+      )}
+      { !hideFillOption && (
         <ColorInput
           color={annotation.fill}
           onChange={changeAnnotationFill}
@@ -173,6 +186,7 @@ AnnotationOptions.defaultProps = {
   moreOptionsPopupComponentsObj: {},
   morePoppableOptionsAppended: [],
   hideFillOption: false,
+  hideStrokeField: false,
   hidePositionField: false,
   className: undefined,
 };
@@ -182,6 +196,7 @@ AnnotationOptions.propTypes = {
   updateAnnotation: PropTypes.func.isRequired,
   children: PropTypes.node,
   hideFillOption: PropTypes.bool,
+  hideStrokeField: PropTypes.bool,
   morePoppableOptionsPrepended: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   morePoppableOptionsAppended: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   moreOptionsPopupComponentsObj: PropTypes.instanceOf(Object),

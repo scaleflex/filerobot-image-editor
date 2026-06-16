@@ -10,6 +10,15 @@ import { StyledPickerTrigger } from './ColorInput.styled';
 
 const pinnedColorsKey = 'FIE_pinnedColors';
 
+const presetPinnedColors = [
+  '#000000',
+  '#ff0000',
+  '#00ff00',
+  '#0000ff',
+  '#ffff00',
+  '#ffffff',
+];
+
 // colorFor is used to save the latest color for a specific purpose (e.g. fill/shadow/stroke)
 const ColorInput = ({ onChange, color, colorFor }) => {
   const {
@@ -23,27 +32,27 @@ const ColorInput = ({ onChange, color, colorFor }) => {
   const [currentColor, setCurrentColor] = useState(
     () => latestColor || color || annotationsCommon.fill,
   );
-  const [pinnedColors, setPinnedColors] = useState(
-    window?.localStorage
-      ? JSON.parse(localStorage.getItem(pinnedColorsKey) || '[]')
-      : [],
-  );
+  const [pinnedColors, setPinnedColors] = useState(() => {
+    if (window?.localStorage) {
+      const savedColors = localStorage.getItem(pinnedColorsKey);
+      return savedColors ? JSON.parse(savedColors) : presetPinnedColors;
+    }
+    return presetPinnedColors;
+  });
   const initialColor = useRef(currentColor);
 
   const changePinnedColors = (newPinnedColors) => {
-    if (!window?.localStorage) {
-      return;
-    }
-    const localStoragePinnedColors =
-      window.localStorage.getItem(pinnedColorsKey);
-    if (JSON.stringify(newPinnedColors) !== localStoragePinnedColors) {
-      const maxOfSavedColors = 9;
-      const pinnedColorsToSave = newPinnedColors.slice(-maxOfSavedColors);
-      window.localStorage.setItem(
-        pinnedColorsKey,
-        JSON.stringify(pinnedColorsToSave),
-      );
-      setPinnedColors(pinnedColorsToSave);
+    if (!window?.localStorage) return;
+
+    const localStoragePinnedColors = localStorage.getItem(pinnedColorsKey);
+    const currentPinnedColors = localStoragePinnedColors
+      ? JSON.parse(localStoragePinnedColors)
+      : presetPinnedColors;
+
+
+    if (JSON.stringify(newPinnedColors) !== JSON.stringify(currentPinnedColors)) {
+      localStorage.setItem(pinnedColorsKey, JSON.stringify(newPinnedColors));
+      setPinnedColors(newPinnedColors);
     }
   };
 
