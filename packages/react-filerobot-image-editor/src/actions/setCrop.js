@@ -40,9 +40,22 @@ const setCrop = (state, payload) => {
   //   return state;
   // }
 
+  const hasCropSizeChanged = ['ratio', 'width', 'height', 'noEffect'].some(
+    (key) => oldCrop[key] !== newCrop[key],
+  );
+  const shouldResetResize = !payload.dismissHistory && hasCropSizeChanged;
+
   return {
     ...state,
     isDesignState: !payload.dismissHistory,
+    resize: shouldResetResize
+      ? {
+          width: undefined,
+          height: undefined,
+          ratioUnlocked: false,
+          manualChangeDisabled: false,
+        }
+      : state.resize,
     adjustments: {
       ...state.adjustments,
       crop: {
