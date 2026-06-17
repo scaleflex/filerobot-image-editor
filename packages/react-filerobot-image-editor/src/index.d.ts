@@ -316,6 +316,7 @@ export interface FilerobotImageEditorConfig {
     | 'ro'
     | string;
   avoidChangesNotSavedAlertOnLeave?: boolean;
+  avoidChangesNotSavedAlertOnClose?: boolean;
   loadableDesignState?: imageDesignState;
   showBackButton?: boolean;
   savingPixelRatio: number;

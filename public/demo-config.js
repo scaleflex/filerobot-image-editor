@@ -344,6 +344,7 @@ const config = {
   // translations: null,
   // language: 'en', // available same as on backend ('en', 'fr', 'de', 'it', 'pt', 'es', 'nl', 'pl', 'ro')
   // avoidChangesNotSavedAlertOnLeave: false, // true => user tries to close the tab and the it is not
+  // avoidChangesNotSavedAlertOnClose: false, // true => don't show confirmation modal when closing the editor
   // loadableDesignState: null, // if provided, it will be used in loading the design state, [TODO: NEEDS TO BE IMPROVED]
   // defaultSavedImageType: null, // 'png', 'jpeg' & 'webp' => 'png' must be provided you want the image to be transparent and use elliptical crop || null (defaualt) means use the same provided image extension (extracted from the image's src url), if it was unknwon PNG will be used
   // defaultSavedImageQuality: 0.92, // Min: 0.1, Max: 1, (1% - 100%) applied for 'jpg', 'jpeg' & 'webp' only
