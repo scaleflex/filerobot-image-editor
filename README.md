@@ -33,15 +33,16 @@
 	<br />
 	<a href="https://scaleflex.github.io/filerobot-image-editor/">Editor Preview</a>
   •
-	<a href="https://www.filerobot.com/en/home">Learn more about Filerobot</a>
+	<a href="https://www.filerobot.com/en/home">Learn more about Scaleflex
+	</a>
   •
 	<a href="https://codesandbox.io/s/holy-resonance-j0n5z">CodeSandbox</a>
 
 </p>
 
-# Filerobot Image Editor (FIE)
+# Scaleflex Image Editor (formerly Filerobot)
 
-The Filerobot Image Editor is the easiest way to integrate an easy-to-use image editor in your web application. Integrated with few lines of code, your users will be able to apply basic transformations like resize, crop, flip, finetune, annotate, watermark and various filters to any image.
+The Scaelflex Image Editor is the easiest way to integrate an easy-to-use image editor in your web application. Integrated with few lines of code, your users will be able to apply basic transformations like resize, crop, flip, finetune, annotate, watermark and various filters to any image.
 
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Edit,%20resize,%20and%20filter%20any%20image&url=https://scaleflex.github.io/filerobot-image-editor/&via=filerobot&hashtags=uploader,image_resizing,image_editor,image_cropping)
 
@@ -1419,4 +1420,4 @@ All contributions are super welcomed!
 
 ## License
 
-Filerobot Image Editor is provided under [MIT License](https://opensource.org/licenses/MIT)
+Scaleflex Image Editor is provided under [MIT License](https://opensource.org/licenses/MIT)
