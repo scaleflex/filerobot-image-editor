@@ -5,11 +5,10 @@ import Konva from 'konva';
 
 /** Internal Dependencies */
 import { useStore } from 'hooks';
-import { SET_CROP, SET_FEEDBACK } from 'actions';
+import { SET_CROP } from 'actions';
 import {
   CUSTOM_CROP,
   ELLIPSE_CROP,
-  FEEDBACK_STATUSES,
   ORIGINAL_CROP,
   TOOLS_IDS,
 } from 'utils/constants';
@@ -30,7 +29,6 @@ const CropTransformer = (props) => {
     originalSource,
     shownImageDimensions,
     adjustments: { crop = {}, isFlippedX, isFlippedY } = {},
-    resize = {},
     config,
     t,
   } = useStore();
@@ -63,25 +61,6 @@ const CropTransformer = (props) => {
       width,
       height,
     };
-
-    const isOldCropBiggerThanResize =
-      crop.width >= resize.width && crop.height >= resize.height;
-    if (
-      resize.width &&
-      resize.height &&
-      (width < resize.width || height < resize.height) &&
-      isOldCropBiggerThanResize
-    ) {
-      dispatch({
-        type: SET_FEEDBACK,
-        payload: {
-          feedback: {
-            message: t('cropSizeLowerThanResizedWarning'),
-            status: FEEDBACK_STATUSES.WARNING,
-          },
-        },
-      });
-    }
 
     dispatch({
       type: SET_CROP,
