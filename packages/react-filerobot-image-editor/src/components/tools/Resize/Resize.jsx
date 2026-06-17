@@ -9,7 +9,6 @@ import { Reset } from '@scaleflex/icons';
 import { SET_RESIZE, ZOOM_CANVAS } from 'actions';
 import { useStore } from 'hooks';
 import getProperDimensions from 'utils/getProperDimensions';
-import getSizeAfterRotation from 'utils/getSizeAfterRotation';
 import getZoomFitFactor from 'utils/getZoomFitFactor';
 import restrictNumber from 'utils/restrictNumber';
 import { DEFAULT_ZOOM_FACTOR } from 'utils/constants';
@@ -54,12 +53,6 @@ const Resize = ({
       originalSource.height * 10,
     );
 
-    const originalImgSizeAfterRotation = getSizeAfterRotation(
-      originalSource.width,
-      originalSource.height,
-      rotation,
-    );
-
     const isHeight = name === 'height';
     const secondDimensionName = isHeight ? 'width' : 'height';
 
@@ -70,12 +63,10 @@ const Resize = ({
 
     const isRatioUnlocked = currentSize.ratioUnlocked ?? resize.ratioUnlocked;
     if (!isRatioUnlocked) {
-      const originalImgRatio =
-        originalImgSizeAfterRotation.width /
-        originalImgSizeAfterRotation.height;
+      const currentImgRatio = dimensions.width / dimensions.height;
       newResize[secondDimensionName] = isHeight
-        ? Math.round(newResize[name] * originalImgRatio)
-        : Math.round(newResize[name] / originalImgRatio);
+        ? Math.round(newResize[name] * currentImgRatio)
+        : Math.round(newResize[name] / currentImgRatio);
     }
 
     if (
