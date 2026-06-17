@@ -30,6 +30,13 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
     t,
   } = useStore();
 
+  const baseDimensions = getProperDimensions(
+    {},
+    crop,
+    shownImageDimensions,
+    originalImage,
+    rotation,
+  );
   const dimensions = getProperDimensions(
     ((currentSize.width || currentSize.height) && currentSize) || resize,
     crop,
@@ -58,7 +65,7 @@ const Resize = ({ onChange, currentSize, hideResetButton, alignment }) => {
 
     const isRatioUnlocked = currentSize.ratioUnlocked ?? resize.ratioUnlocked;
     if (!isRatioUnlocked) {
-      const currentImgRatio = dimensions.width / dimensions.height;
+      const currentImgRatio = baseDimensions.width / baseDimensions.height;
       newResize[secondDimensionName] = isHeight
         ? Math.round(newResize[name] * currentImgRatio)
         : Math.round(newResize[name] / currentImgRatio);
